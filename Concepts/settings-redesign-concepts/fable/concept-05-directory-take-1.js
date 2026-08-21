@@ -234,6 +234,117 @@
     var w = stage.clientWidth || window.innerWidth;
     rootEl.classList.toggle('is-narrow', w < 920);
     rootEl.classList.toggle('is-tight', w >= 920 && w < 1200);
+    syncTopFit();
+  }
+
+  /* One fitting pass for the topbar, always measured from the fully
+     untruncated state so the two clamps can never chase each other:
+     clear the Back clamp, let the crumb trail fit itself, then hand the
+     Back label whatever shortfall is genuinely left over. */
+  function syncTopFit() {
+    clearBackFit();
+    syncCrumbTight();
+    syncBackFit();
+  }
+
+  /* Crumbs hold their full text by default (min-width: max-content,
+     flex-shrink 0), so nothing is ever sub-pixel-shaved into a spurious
+     ellipsis. Only when the trail measurably overflows its box do we set
+     .is-crumb-tight and hand out integer max-widths: the longest ancestor
+     crumbs give up space first, the current page crumb only as a last
+     resort. Always measured from the untruncated state, so no flapping. */
+  function syncCrumbTight() {
+    if (!rootEl || !topEl) return;
+    var nav = topEl.querySelector('.c05-crumbs');
+    rootEl.classList.remove('is-crumb-tight');
+    if (!nav) return;
+    nav.style.minWidth = '';
+    var crumbEls = Array.prototype.slice.call(nav.querySelectorAll('.c05-crumb'));
+    crumbEls.forEach(function (el) { el.style.maxWidth = ''; });
+    var last = nav.lastElementChild;
+    if (!crumbEls.length || !last) return;
+    var navR = nav.getBoundingClientRect();
+    if (navR.width < 1) return; /* hidden (narrow layouts) */
+    /* Fractional measurements throughout: the engine's max-content for the
+       trail under-measures its children by a couple of px (fractional
+       advance accumulation), and integer scrollWidth rounding fabricates
+       phantom overflow, so neither can be trusted here. */
+    var need = last.getBoundingClientRect().right - navR.left + 1;
+    if (need <= navR.width + 0.5) return; /* every crumb already fits */
+    /* How much width the row can still surrender: leftover spacer plus
+       whatever the topbar search field can shrink before its floor. */
+    var spacer = topEl.querySelector('.c05-top-flex');
+    var slack = spacer ? Math.max(0, spacer.getBoundingClientRect().width - 8) : 0;
+    var search = topEl.querySelector('.c05-search-top');
+    if (search) {
+      var sMin = parseFloat(getComputedStyle(search).minWidth) || 0;
+      slack += Math.max(0, search.getBoundingClientRect().width - sMin);
+    }
+    if (slack >= need - navR.width - 0.5) {
+      /* the row can afford the full trail: pin the trail wide enough and
+         let flex reclaim the difference from the spacer / search field */
+      nav.style.minWidth = Math.ceil(need) + 'px';
+      return;
+    }
+    /* genuinely tight: pin the trail at everything the row can give, then
+       truncate the longest ancestors first; the current page crumb only
+       gives space as a last resort */
+    var avail = Math.floor(navR.width + slack);
+    nav.style.minWidth = avail + 'px';
+    rootEl.classList.add('is-crumb-tight');
+    var over = need - avail + 1;
+    var items = crumbEls.map(function (el) {
+      return { el: el, w: el.getBoundingClientRect().width, here: el.classList.contains('is-here') };
+    });
+    var order = items.filter(function (it) { return !it.here; })
+      .sort(function (a, b) { return b.w - a.w; })
+      .concat(items.filter(function (it) { return it.here; }));
+    order.forEach(function (it) {
+      if (over <= 0) return;
+      var floorW = it.here ? 72 : 44;
+      var give = Math.min(over, Math.max(0, it.w - floorW));
+      if (give > 0) {
+        it.el.style.maxWidth = Math.floor(it.w - give) + 'px';
+        over -= give;
+      }
+    });
+  }
+
+  function clearBackFit() {
+    if (rootEl) rootEl.classList.remove('is-back-tight');
+    if (!topEl) return;
+    var label = topEl.querySelector('.c05-back-label');
+    if (label) label.style.maxWidth = '';
+  }
+
+  /* The Back label ellipsizes only when the header has actually run out of
+     room. At rest it holds the whole destination name (min-width:max-content),
+     so "Back to AI Brains & Providers" renders in full wherever the space
+     exists — including the narrow layouts, where the old fixed 120px clamp
+     cut it short with ~180px of empty header beside it. The row's own
+     yielders go first (the search field shrinks to its 170px floor and the
+     flexible spacer collapses); if the last element still overhangs the
+     content edge after that, take exactly the overhang from the label, never
+     below a floor that keeps "Back to" plus the leading word readable. The
+     button's title attribute carries the full text in that case. */
+  function syncBackFit() {
+    if (!rootEl || !topEl) return;
+    var label = topEl.querySelector('.c05-back-label');
+    var last = topEl.lastElementChild;
+    if (!label || !last) return;
+    var topR = topEl.getBoundingClientRect();
+    if (topR.width < 1) return; /* not laid out yet */
+    var padRight = parseFloat(getComputedStyle(topEl).paddingRight) || 0;
+    /* Fractional measurement: the spacer's flex-grow pins the trailing
+       element exactly on the content edge whenever the row fits, so any
+       real overhang shows up here as a positive number. */
+    var over = last.getBoundingClientRect().right - (topR.right - padRight);
+    if (over <= 0.5) return; /* the full label fits — leave it alone */
+    var w = label.getBoundingClientRect().width;
+    var give = Math.min(over + 1, Math.max(0, w - 96));
+    if (give <= 0.5) return; /* already at the floor; honest overflow beats a stub */
+    rootEl.classList.add('is-back-tight');
+    label.style.maxWidth = Math.floor(w - give) + 'px';
   }
 
   function queueRender() {
@@ -344,10 +455,13 @@
       try { r = window.PM2.search.resolveRid(f); } catch (e) { r = null; }
       if (r && r.dest) {
         var d = r.dest;
-        if (d.settingId) return { settingId: d.settingId, rid: f };
-        if (d.sectionId) return { itemId: d.sectionId, rid: f };
-        if (d.objectId) return { objectId: d.objectId, rid: f };
-        if (d.managerId) return { managerId: d.managerId, rid: f };
+        var spec = { rid: f };
+        if (r.availability) { spec.availability = r.availability; spec.label = r.label; }
+        if (d.settingId) { spec.settingId = d.settingId; return spec; }
+        if (d.sectionId) { spec.itemId = d.sectionId; return spec; }
+        if (d.objectId) { spec.objectId = d.objectId; return spec; }
+        if (d.managerId) { spec.managerId = d.managerId; return spec; }
+        return spec.availability ? spec : null;
       }
       return null;
     }
@@ -457,7 +571,24 @@
     if (!el && spec.objectId) el = mainEl.querySelector('[data-object-id="' + cssEsc(spec.objectId) + '"]');
     if (!el && spec.managerId) el = mainEl.querySelector('[data-manager="' + cssEsc(spec.managerId) + '"]');
     if (!el && view.kind === 'all' && spec.settingId) { landAllRow(spec.settingId); return; }
+    if (!el) {
+      /* the addressed thing has no row of its own on this surface (e.g. an
+         unavailable capability inside a reserved owner shell): land on the
+         surface head so the reveal is still exact and visible */
+      el = mainEl.querySelector('.c05-mgr-head') || mainEl.querySelector('.c05-sub-head') ||
+           mainEl.querySelector('.c05-dom-head-card');
+    }
     if (!el) return;
+
+    /* availability reason travels with the focus rid: say it at the landing */
+    if (spec.availability) {
+      var note = document.createElement('div');
+      note.className = 'c05-avail-note';
+      note.setAttribute('data-avail-note', '1');
+      note.innerHTML = '<span class="c05-avail-word">Not available</span><span>' +
+        (spec.label ? '<strong>' + esc(spec.label) + '</strong> — ' : '') + esc(spec.availability) + '</span>';
+      el.parentNode.insertBefore(note, el.nextSibling);
+    }
 
     locateTimers.forEach(clearTimeout);
     locateTimers = [];
@@ -551,7 +682,7 @@
     if (!isHome) {
       var pv = (v.kind === 'copy') ? (v.under || { kind: 'home' }) : v;
       var back = parentOf(v.kind === 'copy' ? v : v);
-      h += '<button type="button" class="c05-back" data-act="back" title="Back to ' + esc(parentName(v)) + '">' +
+      h += '<button type="button" class="c05-back" data-act="back" data-pm2-back title="Back to ' + esc(parentName(v)) + '">' +
         '<span class="c05-back-arrow" aria-hidden="true">&#8592;</span><span class="c05-back-label">Back to ' + esc(parentName(v)) + '</span></button>';
       h += '<nav class="c05-crumbs" aria-label="Breadcrumb">';
       crumbSegs().forEach(function (s, i) {
@@ -568,7 +699,7 @@
     if (!isHome && v.kind !== 'search') {
       h += '<div class="c05-search c05-search-top" id="c05TopSearchWrap">' +
         '<span class="c05-search-ico">' + ico('search') + '</span>' +
-        '<input type="text" id="c05TopSearch" class="c05-search-input" placeholder="Search settings" ' +
+        '<input type="text" id="c05TopSearch" data-pm2-search-input class="c05-search-input" placeholder="Search settings" ' +
         'autocomplete="off" spellcheck="false" aria-label="Search all settings">' +
         '<span class="c05-kbd-hint">Ctrl K</span>' +
         '<div class="c05-drop" id="c05TopDrop" hidden></div></div>';
@@ -578,6 +709,7 @@
       '<span class="c05-identity-role">' + esc(store.data.project.role) + '</span></span>';
     h += '<button type="button" class="c05-close" data-act="close-settings">' + ico('close') + '<span>Close Settings</span></button>';
     topEl.innerHTML = h;
+    syncTopFit();
 
     var input = byId('c05TopSearch');
     if (input) wireSearchField(input, byId('c05TopDrop'));
@@ -641,6 +773,7 @@
     };
     if (map[act]) return map[act];
     var t = obj(target);
+    if (t.settingId) return { route: 'setting', settingId: t.settingId };
     if (t.cat) return { route: 'dest', cat: t.cat, sub: t.sub || null };
     return destHome();
   }
@@ -661,7 +794,7 @@
     /* search hero */
     h += '<div class="c05-search c05-search-hero" id="c05HeroWrap">' +
       '<span class="c05-search-ico">' + ico('search') + '</span>' +
-      '<input type="text" id="c05HeroSearch" class="c05-search-input" ' +
+      '<input type="text" id="c05HeroSearch" data-pm2-search-input class="c05-search-input" ' +
       'placeholder="Search settings, providers, models, tools&hellip;" autocomplete="off" spellcheck="false" ' +
       'aria-label="Search all settings">' +
       '<span class="c05-kbd-hint">Ctrl K</span>' +
@@ -833,10 +966,22 @@
 
     if (advanced.length) {
       var openAdv = !!ui.advOpen[advKey];
+      /* a collapsed fold must not hide row states: summarize them on the fold */
+      var advErrors = advanced.filter(function (r) { return r.state === 'error'; }).length;
+      var advPending = advanced.filter(function (r) { return r.state !== 'normal' && r.state !== 'error'; }).length;
+      var foldFlags = '';
+      if (advErrors) {
+        foldFlags += '<span class="c05-fold-flag" data-tone="error">' +
+          (advErrors === 1 ? '1 validation error inside' : advErrors + ' validation errors inside') + '</span>';
+      }
+      if (advPending) {
+        foldFlags += '<span class="c05-fold-flag" data-tone="attention">' +
+          (advPending === 1 ? '1 row needs review' : advPending + ' rows need review') + '</span>';
+      }
       h += '<section class="c05-adv-sec">' +
         '<button type="button" class="c05-adv-toggle" data-act="adv" data-key="' + esc(advKey) + '" aria-expanded="' + openAdv + '">' +
         '<span class="c05-adv-caret' + (openAdv ? ' is-open' : '') + '" aria-hidden="true">&#8250;</span>' +
-        'Advanced (' + advanced.length + ')</button>';
+        'Advanced (' + advanced.length + ')' + foldFlags + '</button>';
       if (openAdv) {
         h += '<div class="c05-rows">';
         advanced.forEach(function (r, i) {
@@ -875,7 +1020,7 @@
     var h = '<div class="c05-row' + stateCls + '" data-setting-id="' + esc(row.id) + '">';
     h += '<div class="c05-row-line">';
     h += '<div class="c05-row-main"><span class="c05-row-label">' + esc(row.label) + '</span>';
-    arr(row.badges).forEach(function (b) { h += '<span class="c05-tag">' + esc(b) + '</span>'; });
+    arr(row.badges).forEach(function (b) { h += '<span class="c05-tag">' + esc(humanKey(b)) + '</span>'; });
     h += '<span class="c05-row-desc">' + esc(row.desc) + '</span></div>';
     h += '<div class="c05-row-side">';
     arr(row.chips).forEach(function (c) {
@@ -947,7 +1092,7 @@
     if (c.type === 'select' || c.type === 'radio') {
       return '<button type="button" class="c05-select" data-act="select" data-setting="' + id + '"' + dis +
         ' aria-haspopup="menu" aria-label="' + esc(row.label) + '">' +
-        '<span>' + esc(row.valueLabel || 'Choose') + '</span><span class="c05-select-caret" aria-hidden="true">&#8964;</span></button>';
+        '<span>' + esc(humanOption(row.valueLabel) || 'Choose') + '</span><span class="c05-select-caret" aria-hidden="true">&#8964;</span></button>';
     }
     if (c.type === 'multiselect') {
       return '<button type="button" class="c05-select" data-act="multi" data-setting="' + id + '"' + dis +
@@ -1020,7 +1165,7 @@
       h += '<div class="c05-mgr-detail" id="c05MgrDetail">';
       h += '<div class="c05-opstrip" id="c05OpStrip"' + (ui.lastOp ? '' : ' hidden') + '>' + (ui.lastOp ? opStripHtml(ui.lastOp) : '') + '</div>';
       if (narrow) {
-        h += '<button type="button" class="c05-mgr-backlist" data-act="mgr-list">' +
+        h += '<button type="button" class="c05-mgr-backlist" data-act="mgr-list" data-pm2-back aria-label="Back to ' + esc(def.title) + '">' +
           '<span aria-hidden="true">&#8592;</span> ' + esc(def.title) + '</button>';
       }
       if (hasPages && objectId && vm.pages[objectId]) {
@@ -1319,7 +1464,7 @@
   }
 
   /* enum-ish option values render as words, never raw tokens (mirrors the
-     store's own valueLabel treatment) */
+     store's own valueLabel treatment, plus single-word lowercase values) */
   function humanOption(v) {
     var s = String(v == null ? '' : v);
     if (/^[a-z0-9]+(?:[_-][a-z0-9]+)+$/.test(s)) {
@@ -1327,6 +1472,7 @@
         return sp + ch.toUpperCase();
       });
     }
+    if (/^[a-z][a-z0-9]*$/.test(s)) return s.charAt(0).toUpperCase() + s.slice(1);
     return s;
   }
 
@@ -1816,7 +1962,7 @@
         'The link pointed at <span class="c05-mono">' + esc(missing) + '</span>, which is not in this project&rsquo;s inventory. The closest matches are below.</span></div>';
     }
     h += '<div class="c05-search c05-search-hero"><span class="c05-search-ico">' + ico('search') + '</span>' +
-      '<input type="text" id="c05SearchPageInput" class="c05-search-input" value="' + esc(q) + '" ' +
+      '<input type="text" id="c05SearchPageInput" data-pm2-search-input class="c05-search-input" value="' + esc(q) + '" ' +
       'placeholder="Search settings, providers, models, tools&hellip;" autocomplete="off" spellcheck="false" aria-label="Search all settings">' +
       '<div class="c05-drop" id="c05SearchPageDrop" hidden></div></div>';
 
@@ -1899,7 +2045,7 @@
     if (c.result) {
       h += '<span class="c05-top-flex"></span><button type="button" class="c05-btn is-primary" data-act="copy-done">Done</button>';
     } else {
-      if (c.step > 1) h += '<button type="button" class="c05-btn" data-act="copy-back"' + (c.applying ? ' disabled' : '') + '>Back</button>';
+      if (c.step > 1) h += '<button type="button" class="c05-btn" data-act="copy-back" data-pm2-back aria-label="Back to previous step"' + (c.applying ? ' disabled' : '') + '>Back</button>';
       h += '<span class="c05-top-flex"></span>';
       h += '<button type="button" class="c05-btn" data-act="copy-cancel"' + (c.applying ? ' disabled' : '') + '>Cancel</button>';
       if (c.step === 1) {

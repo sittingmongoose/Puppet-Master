@@ -1,0 +1,189 @@
+/* pm2-tokens.css — token calibration + shared shell-chrome corrections for
+   concepts 05-11 ONLY. Loaded after each concept's own stylesheet.
+
+   Scope discipline (CONTRACT2 differentiation clause): this file contains NO
+   Settings-surface styling — no Home, navigation, manager, dropdown, or copy
+   layout. It carries exactly two things:
+
+     1. Theme-token calibration for contrast failures inherited from the frozen
+        `_shared/pm-shell.css` palette. Concepts 01-04 never load this file, so
+        their appearance is untouched; the underlying token defects are recorded
+        as candidate impacts (IMP-UI-2/3/4) for the canonical theme owner rather
+        than fixed in canon here.
+     2. Corrections to the shared fake-shell chrome (the page-tab strip), which
+        is context furniture rather than a concept surface.
+
+   Every value is a token or derived from one; no concept-specific selectors. */
+
+/* ------------------------------------------------------------------ *
+ * 1. Muted/tertiary text in the light themes.
+ *    Measured on the fresh matrix shots: friendly-light 2.79:1 and
+ *    glass-light 2.64:1 for --text-muted on the page surface, against
+ *    4.54:1 / 4.90:1 for the same token in the dark siblings. The token
+ *    carries real information (section paths, meta lines, chip rows), so
+ *    it is normal text and must clear 4.5:1. Retro-light (7.19:1) and
+ *    basic-light (5.05:1) already pass and are left alone.
+ * ------------------------------------------------------------------ */
+[data-theme="friendly-light"] {
+  --text-muted: #5F5866;   /* was #9A93A0 — now ~5.9:1 on #FBF7F3 */
+}
+[data-theme="glass-light"] {
+  --text-muted: rgba(46, 38, 63, 0.86);  /* was .55 alpha — now ~5.6:1 over the mesh */
+}
+
+/* Body/description copy in glass-light sits on a darkened mesh gradient and
+   measured 3.70-3.98:1; nudge the secondary token to clear the same bar. */
+[data-theme="glass-light"] {
+  --text-secondary: rgba(38, 30, 54, 0.94);
+}
+
+/* Dark-theme tertiary text: basic-dark reuses basic-light's #6B7280, which
+   measures 2.85:1 on the elevated card surface. friendly-dark's #8A8494
+   measures 3.66:1 on its own elevated surface (#322E3A) — the one dark face
+   the first calibration pass missed. */
+[data-theme="basic-dark"] {
+  --text-muted: #9BA3AF;   /* ~5.6:1 on #2D2D2D */
+}
+[data-theme="friendly-dark"] {
+  --text-muted: #9E98A8;   /* 4.73:1 on #322E3A, 5.87:1 on #211E26 */
+}
+
+/* ------------------------------------------------------------------ *
+ * 2. Status accents that were never adjusted per theme.
+ *    retro-dark keeps retro-light's #0047AB for --accent-blue, so blue
+ *    status dots and their pill labels measure 1.82-2.06:1 on the dark
+ *    surface while the green sibling reads 11-12:1. basic-dark already
+ *    lightens the same token to #64B5F6.
+ * ------------------------------------------------------------------ */
+[data-theme="retro-dark"] {
+  --accent-blue: #4D93FF;  /* ~6.1:1 on #252525 */
+}
+
+/* Amber/orange status text on the light cream and white surfaces measured
+   2.2-3.8:1. Darken the warning/orange ramps for light themes only. */
+[data-theme="friendly-light"],
+[data-theme="basic-light"] {
+  --accent-warning: #8A5A00;
+  --accent-orange: #8A4B00;
+}
+/* glass-light's lavender mesh is darker than the other light grounds, so the
+   shared light-theme amber only reaches 3.99:1 there — it needs its own step. */
+[data-theme="glass-light"] {
+  --accent-warning: #6E4700;   /* 5.52:1 on #E4CDE4 */
+  --accent-orange: #6E3B00;    /* 6.18:1 */
+}
+
+/* --accent-lime is the "healthy / ready" status colour. retro-light inherited
+   retro-dark's phosphor #00FF41 unchanged, so "Ready" pill labels and every
+   green health dot measured 1.20:1 on the cream ground — invisible, and below
+   the 3:1 non-text bar as well. Every other face already darkens or lightens
+   it appropriately (basic-light #0B8043, glass-light #3E7D4E, basic-dark
+   #3DD68C, friendly-dark #6FDABC). */
+[data-theme="retro-light"] {
+  --accent-lime: #1B6E34;      /* 5.56:1 on #F5F0E8, 5.91:1 on #FAF7F2 */
+}
+
+/* glass-dark's muted token lands on the 4.5:1 line (4.47-4.51 measured) on the
+   elevated card surface — the one dark face with no headroom. */
+[data-theme="glass-dark"] {
+  --text-muted: rgba(237, 231, 248, 0.72);
+}
+[data-theme="retro-light"] {
+  --accent-warning: #7A4E00;
+  --accent-orange: #7A4200;
+}
+
+/* --accent-error is likewise uncalibrated for the light faces: the attention
+   status words ("Watch", "Restart", "Sign in") render at 3.08:1 in
+   friendly-light (#E8654C on #FBF7F3) and 4.39:1 in glass-light, both under
+   the 4.5:1 bar for small bold text. */
+[data-theme="friendly-light"] { --accent-error: #B3341C; }  /* was #E8654C — 3.08:1 on bg */
+[data-theme="glass-light"]    { --accent-error: #9B2F45; }  /* was #C0566B — 2.96:1 on bg */
+[data-theme="retro-light"]    { --accent-error: #A3231F; }  /* was #D32F2F — 4.39:1 on bg */
+/* basic-dark's #EF5350 clears the page background but only reaches 3.95:1 on
+   the elevated card surface where status words actually sit. */
+[data-theme="basic-dark"]     { --accent-error: #FF8A85; }
+
+/* friendly-dark status-bar text sits marginally under AA (4.25:1). The bar is
+   quiet chrome by design, so nudge just past the bar without brightening it
+   into competition with page content. */
+[data-theme="friendly-dark"] .pm-statusbar { color: #9C96A6; }
+
+/* ------------------------------------------------------------------ *
+ * 3. Fake-shell page-tab strip.
+ *    The first overflow fix replaced hard mid-word clipping with
+ *    per-item ellipsis, which at 760 collapsed labels to one or two
+ *    characters ("Da...", "P...", "W..."). Unreadable stubs are worse
+ *    than an honest overflow: below 1000px the strip now drops whole
+ *    trailing tabs and always keeps the active tab intact and legible.
+ *    Specificity (0,2,0) so it supersedes each concept's own rule
+ *    regardless of stylesheet order.
+ * ------------------------------------------------------------------ */
+.pm-shell .pm-page-tabs {
+  min-width: 0;
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+.pm-shell .pm-page-tab {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;   /* whole tabs drop; no one-character stubs */
+  flex: 0 0 auto;
+}
+.pm-shell .pm-page-tab.is-active {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+/* Below ~1000px effective width the strip cannot hold six labels beside the
+   window controls in the wider basic/retro faces. Drop trailing context tabs
+   from the end inward, keeping the active Settings tab and its neighbours. */
+@media (max-width: 1000px) {
+  .pm-shell .pm-page-tab:nth-child(3),
+  .pm-shell .pm-page-tab:nth-child(4) { display: none; }
+}
+@media (max-width: 880px) {
+  .pm-shell .pm-page-tab:nth-child(2),
+  .pm-shell .pm-page-tab:nth-child(5) { display: none; }
+}
+@media (max-width: 800px) {
+  .pm-shell .pm-page-tab:not(.is-active) { display: none; }
+}
+
+/* ------------------------------------------------------------------ *
+ * 3b. Browser-default form-control text.
+ *     `_shared/pm-shell.css` never styles ::placeholder, so every filter and
+ *     search field fell back to the UA's #757575 in all eight themes —
+ *     unthemed and below 4.5:1 on the darker faces. Placeholders are hints,
+ *     so the muted token (now calibrated above) is the right role.
+ * ------------------------------------------------------------------ */
+.pm-shell input::placeholder,
+.pm-shell textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;   /* Firefox dims placeholders by default */
+}
+
+/* ------------------------------------------------------------------ *
+ * 4. States drawer button (test-harness affordance, defined in
+ *    pm2-states.js). It is fixed-position and was found sitting on top
+ *    of page content at every width, not only narrow ones. Keep it a
+ *    quiet icon dot everywhere; it solidifies on hover/focus/open.
+ * ------------------------------------------------------------------ */
+.pm2-drawer-btn {
+  padding: 7px;
+  opacity: 0.5;
+}
+.pm2-drawer-btn .pm2-drawer-btn-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.pm2-drawer-btn:hover,
+.pm2-drawer-btn:focus-visible,
+.pm2-drawer-btn[aria-expanded="true"] {
+  opacity: 1;
+}

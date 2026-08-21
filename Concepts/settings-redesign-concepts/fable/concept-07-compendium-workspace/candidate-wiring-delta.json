@@ -21,7 +21,7 @@
       "ui_element_id": "c07.row.control",
       "ui_command_id": "cmd.settings.value.set",
       "canonical_owner": "Settings schema/registry",
-      "validation_permission": "store.setValue validates by type/options/bounds; managed and unavailable rows render disabled controls",
+      "validation_permission": "store.setValue validates by type/options/bounds; managed and unavailable rows render a read-only state chip (no live control), origin in the state note and Details",
       "mutation_or_operation": "store.values[id] updated; changedFromDefault recomputed; recents prepended",
       "expected_event_types": ["value", "receipt"],
       "receipt": "Setting updated — <label> is now <value>",

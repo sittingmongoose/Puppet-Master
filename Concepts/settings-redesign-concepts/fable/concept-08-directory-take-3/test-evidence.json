@@ -1,0 +1,235 @@
+{
+ "schema": "pm2.test_evidence.builder.v1",
+ "conceptId": "c08",
+ "stem": "concept-08-directory-take-3",
+ "generated": "2026-08-20",
+ "note": "Builder self-run checks. The Phase-C harness is the final writer. All commands run from the fable folder; screenshots were written to a temp dir under /tmp, LOOKED AT with the Read tool, and the temp dir deleted afterward.",
+ "syntax": {
+  "command": "node --check concept-08-directory-take-3.js",
+  "result": "PASS (re-run 2026-08-21 after the round-3c search-dropdown timer fix; JS changes are the copy-stepper cell wrapper and the cancellable focusout close)"
+ },
+ "boot_checks": [
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html",
+   "result": "PASS (1280px, 13 routes — includes both setting probes)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=760",
+   "result": "PASS (760px, 13 routes)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=900",
+   "result": "PASS (900px, 13 routes)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=2500",
+   "result": "PASS (2500px, 13 routes)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --routes=<24 manager routes part 1>",
+   "result": "PASS (all pm2-managers.js families + code/extension managers)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --routes=<23 manager routes part 2>",
+   "result": "PASS (remaining system managers + all 9 deferred owner shells)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --routes=<all 12 dest/<cat> routes>",
+   "result": "PASS",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --routes=<11 provider object tab routes incl. free-community routes/catalog, opencode server, cursor-cli setup, crew page>",
+   "result": "PASS",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --theme=glass-light --routes=home,dest/ai,manager/m.providers,all,copy (+ home,dest/safety,manager/m.permissions with shots)",
+   "result": "PASS",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --theme=retro-dark --routes=home,dest/ai,manager/m.providers,all,copy (with shots)",
+   "result": "PASS",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --scenario=first-run (default routes + shots home/m.providers)",
+   "result": "PASS",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --scenario=offline (default routes + shots home/dest/web)",
+   "result": "PASS",
+   "consoleErrors": 0
+  },
+  {
+   "command": "boot-check --fixture=fx.import-conflict (default routes)",
+   "result": "PASS",
+   "consoleErrors": 0
+  },
+  {
+   "command": "post Phase-C back-affordance fix: boot-check default 13 routes at 1280 + 760 + 2500, plus header screenshots (manager object page, domain, search route, copy) at 1280 and 760 — VIEWED",
+   "result": "PASS everywhere; Back pill visible and named on every non-Home surface at all widths; search route now carries the bar (Back to Settings Home + crumbs + single Close, no duplicate search field); no layout break at 760 (bar wraps: Back+Close row, full-width search row)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width={760,1280,2500} (post page-tab fix, 2026-08-20)",
+   "result": "PASS x3 (13 routes each)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=760",
+   "result": "PASS (760px, 13 routes) — re-run after the round-2 States-dot safe band",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=1280",
+   "result": "PASS (1280px, 13 routes) — re-run after the round-2 States-dot safe band",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=2500",
+   "result": "PASS (2500px, 13 routes) — re-run after the round-2 States-dot safe band",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=760",
+   "result": "PASS (760px, 13 routes) — re-run after the round-3 sign-off fixes (on-accent ink + copy-stepper connectors)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=1280",
+   "result": "PASS (1280px, 13 routes) — re-run after the round-3 sign-off fixes (on-accent ink + copy-stepper connectors)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width=2500",
+   "result": "PASS (2500px, 13 routes) — re-run after the round-3 sign-off fixes (on-accent ink + copy-stepper connectors)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width={1280,760}",
+   "result": "PASS x2 (13 routes each) — re-run after the round-3b switch-knob on-accent fix",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/boot-check.js concept-08-directory-take-3.html --width={1280,760}",
+   "result": "PASS x2 (13 routes each) — re-run after the round-3c search-dropdown timer fix",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/harness/run-suite.js search --concepts=08 --out=<tmp> (x5 consecutive)",
+   "result": "21/21, 21/21, 21/21, 21/21, 21/21 — five clean consecutive runs after the fix (the same command recorded 19/21 before it, failing route-duplicate-api-key-back-restores and route-deferred-manager-back-restores)",
+   "consoleErrors": 0
+  },
+  {
+   "command": "node tools/harness/run-suite.js state --concepts=08 --out=<tmp>",
+   "result": "17/17 — run after the timer fix as regression insurance for the route/render paths it touches",
+   "consoleErrors": 0
+  }
+ ],
+ "deep_link_spot_checks": [
+  {
+   "link": "#/setting/system.health.platform-diagnostics",
+   "result": "PASS — system domain page, advanced disclosure auto-opened, exact row centered with pm2-located ring and focus (screenshot inspected)"
+  },
+  {
+   "link": "#/setting/system.health.diagnostics-verbosity (stale rev-2 id, not in the 828-row inventory)",
+   "result": "PASS — honest 'not in this project's settings' surface with the linked id in a technical block, guidance links, breadcrumb Settings / Not found; no crash, no blank, nothing changed (screenshot inspected)"
+  },
+  {
+   "link": "#/search/notifcations",
+   "result": "PASS — typo tolerated, notification results render (also case typo-notifications in search-route-matrix)"
+  },
+  {
+   "link": "#/search/flux capacitor",
+   "result": "PASS — honest empty card with guidance links (Browse all settings / Settings Home)"
+  },
+  {
+   "link": "#/manager/m.providers",
+   "result": "PASS — attention statgrid + grouped provider card roster + honest actions row (screenshot inspected)"
+  },
+  {
+   "link": "#/copy?instant=1",
+   "result": "PASS — full flow walked over CDP: legacy source Vault Migration (2024) → all categories → preview {add 11, replace 1, unchanged 1, unavailable 3, conflict 5; 21 table rows; credential note shown} → apply → receipt rcpt.copy.1 / restore point rp.copy.1 → value code.execution.k8s-cluster-wide actually written → rollback restored it exactly"
+  }
+ ],
+ "search_walk": {
+  "harness": "scratchpad CDP walk (temp; drives the live page: in-page PM2.search.query, UI-equivalent landing with focus rid, browser Back)",
+  "result": "24/24 cases pass — recorded verbatim in search-route-matrix.json",
+  "covered_case_kinds": [
+   "grouped",
+   "duplicate-label (api key x2, rate limits x2)",
+   "typo (notifcations/apperance/permisions)",
+   "no-results (flux capacitor)",
+   "unavailable (wsl, video)",
+   "manager-object (sound pack, worktree, installation)",
+   "manager",
+   "deep-row (platform diagnostics advanced row, claude model)",
+   "workflow (cursor setup, sign-in, repair)",
+   "action",
+   "help",
+   "diagnostic",
+   "back-restores (asserted on every landed case: route, query text, result list)"
+  ],
+  "consoleErrors": 0
+ },
+ "states_walked": {
+  "scenarios": {
+   "baseline": "mixed states co-exhibited (restart-required terminal theme, reconnect-required connections, managed bash guard, changed-elsewhere formatters, glass-transparency unavailable under non-glass theme)",
+   "first-run": "setup banner 'Nothing is set up yet', empty attention with guidance, recents empty-state, zero changed counts, providers not set up (screenshots inspected)",
+   "offline": "'Working offline' banner, unavailable web/provider rows with reasons + last-known-good notes (screenshots inspected)",
+   "calm | attention-heavy | usage-exhausted | invocation-failed | managed-workspace": "render through the same scenario-aware banner/attention/notice pipeline (attention capped 4 baseline / 8 heavy; banner only where warranted); walked via the States drawer during development, not screenshot-inspected individually"
+  },
+  "fixtures": "fx.import-conflict boot-checked green across default routes; fx.loading-cached shows the refresh ribbon on domain headers and provider activity; fx.validation-error / restart / reconnect / changed-elsewhere / theme-fallback surface through resolveRow states on their rows; provider-side permanent states (shadowed install, manual-only Ollama, ask-first Codex update, rolled-back Copilot, usage-unavailable) inspected on the providers screenshots",
+  "url_applied_state_note": "URL-applied scenarios are ephemeral (no pin=1): the concept reads PM2.states.activeScenario() and data.notices rather than the persisted store key — this was a real bug found and fixed during self-verification (first-run/offline originally rendered as baseline)."
+ },
+ "stress": {
+  "route": "#/all?stress=1&instant=1",
+  "result": "2,828 records reported, 27 live DOM rows at top of list / 17 at bottom after scroll-to-end (windowed); synthetic rows visibly marked 'Stress fixture' and non-navigating (toast explains); zero console errors"
+ },
+ "screenshots_inspected": [
+  "home (friendly-dark 1280 + 760 + glass-light + retro-dark + first-run + offline)",
+  "search dropdown open ('api key', duplicate labels disambiguated by path/note)",
+  "dest/ai domain page (manager blocks + subgroup rows + states)",
+  "manager/m.providers root and claude overview (status cards + quick actions + tabs), claude installs at 760",
+  "all settings (facets + windowed list)",
+  "copy step 1 (friendly-dark + retro-dark)",
+  "setting probes: platform-diagnostics landing + stale-id not-found surface",
+  "round-2 re-shots: All Settings at scroll-top, mid-list and at the true end of the virtualised list (friendly-dark 1280, friendly-light 1280, basic-dark 1280, friendly-dark 760) — States-dot safe band and faded scroll edge",
+  "round-2 token check: home at 1280 (friendly-light + basic-dark), home at 760 (friendly-dark), manager/m.providers at 1280 (friendly-light)",
+  "round-3 sign-off re-shots (temp dir, LOOKED AT, deleted): copy at 1280 in friendly-light, glass-light, friendly-dark and glass-dark (primary button legible in all four, stepper one row with connectors); copy at 760 in friendly-dark, basic-light and retro-light (stepper wraps clean, no connectors); copy step 1 with a source picked at 1280 in friendly-light and glass-light (the ENABLED accent-filled primary with the new ink)",
+  "round-3b switch check (temp dir, LOOKED AT, deleted): dest/general at 1280 in glass-light and friendly-light — checked toggles read unambiguously ON, the knob now dark against the accent track instead of near-white on near-white"
+ ],
+ "issues_found_and_fixed": [
+  "attention headline/consequence and search result path/sub rendered inline (display:block)",
+  "value chips echoed the control's own value (suppressed for interactive controls)",
+  "sectionId lost at landing because the URL grammar omits it — locate() now re-resolves the focus rid via PM2.search.resolveRid",
+  "manager-level search results had no pm2-located element — tab-section/header fallback added",
+  "URL-applied scenarios rendered as baseline (activeScenario()/notices now authoritative)",
+  "legacy 2024 source date rendered without its year",
+  "duplicate Detail buttons and self-referential Open buttons on roster items",
+  "Phase-C: data-pm2-back hook was missing (bar Back existed on manager/domain surfaces but unhooked; the search route had no Back at all) — hook added everywhere incl. copy step-backs; search route now renders the beacon bar; domain-subgroup routes now back to their domain instead of Home; data-pm2-search-input added by orchestrator patch",
+  "Visual audit 2026-08-20 (findings 2/3/4): shell page-tab overflow at 760px — friendly clipped 'Usage' mid-glyph, basic dropped Usage+Settings at an item boundary, retro shaved the active Settings pill to a ~3px sliver. Concept CSS now sets .pm-page-tabs{min-width:0;overflow:hidden}, .pm-page-tab{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}, .pm-page-tab.is-active{flex-shrink:0}: inactive tabs ellipsize, the active Settings tab is always fully visible. Re-shot friendly/basic/glass/retro dark at 760 (home + manager/m.providers) and inspected with Read — no mid-glyph clips, active tab whole in all four themes.",
+  "Visual audit 2026-08-20 (finding 1): floating States pill occluding the GITHUB COPILOT needs-attention card body at 760 on manager/m.providers was fixed centrally (_shared2/pm2-states.js drawer button collapses to a translucent icon dot at ≤920px). Re-shot and confirmed on this concept: card copy reads through to 'active Copilot Pro seat.' with no occlusion.",
+  "Visual audit round 2 2026-08-21 (finding 1, minor/overflow): on All Settings the floating States affordance sat on top of the last in-view row's value chip (audit crop: 'Text Size' at 1280, 'UI Scale' 100% at 760), hiding that setting's only displayed value. The affordance is position:fixed at the viewport's bottom-right with z-index 9000, so it hovers over whatever the column paints in that corner at EVERY scroll offset, not just at the end of the list — bottom padding does not fix it, because padding lives inside the scroll box and scrolls with the content, clearing only the very last row. Fix: shorten the scroll VIEWPORT. This concept scrolls the shell stage directly, so the concept CSS now sets .pm-stage{margin-bottom:48px} (34px button offset + 32px button height - 24px statusbar = 42px of real intrusion, plus 6px clearance). The band sits outside the scroll box, so rows that used to pass under the dot now scroll above it. The band paints the same var(--background) as .pm-shell and .c08-root (transparent alike under the glass themes), so the column reads unbroken down to the statusbar; a 22px linear-gradient mask on the stage fades the new scroll edge so the row it cuts reads as 'more below' instead of bisected. Three consequences handled: (i) the toast host is position:fixed inside the stage and a masked element becomes the containing block for fixed descendants, so concept JS re-parents #c08Toasts to <body> — measured afterwards at 560-720 x .. -866, i.e. still centred on the viewport with opacity 1; (ii) .c08-copy-bar's sticky offset moved from bottom:0 to bottom:22px so its buttons never dim at the scroll edge (measured at 950/1000/1100/1280 with a forced-overflow 700px-tall window: bar bottom 580 vs fade start 606, clear); (iii) .c08-drop's max-height went from min(58vh,560px) to min(58vh - 48px,512px) so a long result list still ends above the scroll edge on short windows (was clipped at 1280x700 before the trim, clear after). .c08-page's trailing padding dropped 72px -> 24px so the whitespace between the last row and the statusbar is unchanged at 72px total. Verified with a paint-level CDP probe: the drawer button and panel are forced pointer-events:none, then document.elementFromPoint hit-tests a 3px grid over the button's whole rect at every scroll offset of 10 routes x 760/1280/2500 — zero points resolve to an element inside .c08-root, and the stage's bottom edge measures 6px above the button's top edge everywhere. Negative control (margin-bottom overridden to 0) reproduces the defect at 121 grid points at 760 and 165 at 1280, all .c08-all-row, so the probe is not a no-op. Re-shot and inspected with Read at 900px height: All Settings at scroll-top (the audit's frame — the 'Text Size' 15 chip is fully legible and the dot sits below the scroll edge), mid-list and at the true end (friendly-dark + friendly-light + basic-dark at 1280, friendly-dark at 760), plus home at 1280 (basic-dark, friendly-light), home at 760 (friendly-dark), copy at 1280 and manager/m.providers at 1280. Finding gone; no route regressed.",
+  "Visual audit round 2 2026-08-21 (central token pass): _shared2/pm2-tokens.css (loaded after this concept's stylesheet) now carries the theme-token contrast corrections and keeps the States drawer button a quiet translucent icon dot at every width. Checked on this concept's surfaces at 1280 in friendly-light (home + manager/m.providers) and basic-dark (home + all) — nothing reads too heavy: headings stay at the concept's display weight, secondary/muted body copy is unchanged in weight and only slightly firmer in tone, and no chip, status word or attention word darkened into a false-emphasis state.",
+  "Visual audit round 3 2026-08-21 (finding 2, minor/contrast): on the Copy route the primary Continue button painted its label with var(--background) — the PAGE ground, not an on-accent colour — so the two light faces whose --accent-primary is mid-luminance rendered near-white text on a light fill: glass-light 1.64:1 and friendly-light 1.74:1 measured in the audit shots, against 3.21/3.56:1 for the identical control in the dark faces. Two causes, both fixed. (i) INK: the concept now defines --c08-on-accent = color-mix(in srgb, var(--accent-primary) 12%, #000) — a dark ink cut from each face's OWN accent — with retro-light and basic-light overridden to var(--surface-elevated) because their accents are deep blues that want the light ink. .c08-btn-primary and the accent-filled .c08-cat-tile-box tick both use it. Measured on the rendered pixels (pure-python-equivalent PNG decode + WCAG luminance, enabled state, label vs its own fill): retro-dark 12.82, friendly-dark 9.38, basic-dark 8.25, glass-dark 8.03, retro-light 7.89, basic-light 7.04, friendly-light 6.08, glass-light 4.86 — all eight clear 4.5:1. The category tick on the same fill measures 4.04-8.27:1. (ii) DISABLED: the audit shot caught the button in its disabled state, which was `opacity:.55` over the enabled skin; opacity composites the whole control toward the ground, so even with the corrected ink the label would still have measured ~2.3:1 in friendly-light. .c08-btn[disabled] is now painted from tokens instead — background var(--surface-alt), border var(--border), color var(--text-muted), no opacity — measured on the shipped shots at glass-light 8.05, basic-dark 6.91, retro-light 6.76, friendly-light 5.99, friendly-dark 5.50, retro-dark 5.10, basic-light 4.73, glass-dark 4.65. The three :hover rules gained :not([disabled]) so a disabled button cannot pick the hover skin back up.",
+  "Visual audit round 3 2026-08-21 (finding 1, minor/layout): on the Copy route at 760 the four-step wizard stepper wrapped 3+1 and left a chevron connector dangling at the end of row 1 pointing into empty space, while step 4 opened row 2 with no connector before it (audit measurement: chevron at x=638-640,y=311 in basic-light/dark; row 2 a single pill flush at the x=52 margin). Cause: connectors were siblings of the pills in one wrapping flex row, so a wrap could break the pair. Fix, both halves: (i) copyStepsHtml now emits each connector INSIDE the .c08-copy-step-cell of the step it leads into, so a connector can never be separated from its pill; (ii) below 1000px the connectors are dropped entirely rather than leading a wrapped row — the numbered pills carry the sequence. The 1000px breakpoint was chosen by measurement: with connectors shown, the single-row threshold is 768px friendly, 773px retro, 840px glass, 927px basic, so 1000px clears the widest face with room for font-metric drift (and matches the shell's own narrow breakpoint). Verified by driving the page in all eight themes at 760/900/1000/1100/1179/1181/1280/1400/2500: four cells at every cell, zero dangling connectors, zero row-leading connectors, and connectors present exactly when the row is unbroken.",
+  "Round-3 verification of the central token pass (NOT this concept's change — checked, not redone): _shared2/pm2-tokens.css now themes ::placeholder, lifts friendly-dark --text-muted and corrects the light-theme/basic-dark --accent-error. Read back live from the concept page per theme: ::placeholder resolves to the muted token in all eight faces (no UA #757575 left) — friendly-light rgb(95,88,102), friendly-dark rgb(158,152,168), glass-light rgba(46,38,63,.86), basic-dark rgb(155,163,175), retro-light rgb(82,79,73), basic-light rgb(92,100,112), glass-dark rgba(237,231,248,.55), retro-dark rgb(144,144,144); friendly-dark --text-muted = #9E98A8; --accent-error = #B3341C friendly-light, #9B2F45 glass-light, #A3231F retro-light, #FF8A85 basic-dark.",
+  "Round 3b 2026-08-21 (same defect class as the primary-button ink, found by sweeping the stylesheet for var(--background) used as foreground): .c08-switch[aria-checked=\"true\"]::after painted the ON knob with var(--background) while the track under it is var(--accent-primary) — the page ground again, not an on-accent role. In glass-light that put a near-white knob (#E4CDE4) on the lavender track (#8B6ED9) at ~2.75:1, under the 3:1 bar for a non-text UI component. The knob now takes var(--c08-on-accent). Measured on rendered pixels, ON knob vs its own track: retro-dark 12.82, friendly-dark 9.38, basic-dark 8.25, glass-dark 8.03, retro-light 7.89, basic-light 7.04, friendly-light 6.08, glass-light 4.86 — all eight clear 3:1 with margin (and in fact clear 4.5:1). The OFF knob was left alone and re-measured for regression (--text-secondary on --surface-alt): glass-light 11.67, basic-light 8.86, glass-dark 8.84, retro-light 8.07, friendly-dark 7.13, basic-dark 6.72, retro-dark 6.69, friendly-light 4.98. Full sweep of the stylesheet's accent-filled surfaces afterwards: the only three elements that paint a foreground on an --accent-primary fill are .c08-btn-primary, the pressed .c08-cat-tile-box tick and this knob, and all three now use --c08-on-accent; .c08-op-fill is a bare progress bar with nothing on top, and every other accent surface is the 12% --accent-soft tint carrying normal text tokens. No var(--background) is left in a foreground position — the two remaining uses are page/band BACKGROUNDS (.c08-root and the States-dot safe band).",
+  "Round 3c 2026-08-21 (definitive closing battery, intermittent): route-<case>-back-restores failed roughly half the time in the search suite — 'history.back() did not restore the query and its results'. Diagnosed by replaying the suite's own routeCase with the harness helpers (real CDP mouse click, real key events) plus page-side instrumentation of every PM2.route.go and hashchange. The routing was never at fault: after Back the hash and data-pm2-route were always correct (#/search/<q> / search/<q>), and a sample taken immediately after history.back() showed the restored dropdown with 20-24 visible [data-rid] results. They were then WIPED before the harness's next poll sample. The race: picking a result with a real mouse click moves focus out of .c08-search-wrap, which schedules the polite 120ms focusout close. chooseResult navigates in the same gesture, Back can land the search surface again inside those 120ms, and the stale timer then fired against the PREVIOUS (now detached) wrap — `wrap.contains(document.activeElement)` is false for a detached node, so the guard passed and it set ui.search.open=false and emptied the dropdown host that the restore had just filled. Whether the harness sampled before or after the timer decided pass/fail, which is why it looked like flake. Fix (deterministic, no timing dependence): the timer is now owned (ui.searchBlurTimer), re-scheduling cancels the previous one, openDest() cancels any pending close on EVERY navigation (a navigation decides the dropdown state, not a timer scheduled against the surface it replaced), and the callback refuses to act unless its wrap is still in the document AND is still the live active wrap. Evidence: an aggressive replay that calls history.back() the instant .pm2-located appears (no settle) failed 9/12 before the fix and 0/16 after it, across theme / api key / rate limits / providers. The polite close itself still works — verified by measurement: 24 results open, 0 after an outside click, 0 after Escape, and a result click still lands on setting/general.visual.theme. Then five consecutive full search-suite runs: 21/21 every time."
+ ],
+ "not_covered_by_builder": [
+  "keyboard-only walkthrough was not script-driven (focus styles and Esc ladder implemented and spot-tested via the search/menu handlers; the Phase-C harness should assert them)",
+  "remaining four themes (friendly-light, glass-dark, retro-light, basic-*) rely on token discipline; only the two breaker themes were screenshot-inspected",
+  "the copy verify-failure branch (automatic restore) is implemented per PM2.copy's contract but was not forced in a walk"
+ ]
+}

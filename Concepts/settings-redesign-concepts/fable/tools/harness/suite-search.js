@@ -37,16 +37,43 @@ async function uiQuery(ctx, page, q, opts) {
   const expectNone = opts && opts.expectNone;
   await L.hashRoute(page, "home", {}, 180);
   page.clearDiagnostics();
+  // Re-resolve the input FRESH before every query (concepts may re-render it;
+  // CONTRACT2 now requires [data-pm2-search-input], which the finder prefers).
   let input = await L.findSearchInput(page);
   if (!input.found) return { ok: false, why: "no search input found", results: [] };
-  let typed = await L.typeQuery(page, q);
-  if (!typed) {
+  // Clear FIRST (real key events), let the dropdown react, then snapshot the
+  // rendered result set. Typing the same query twice in a row now produces a
+  // real change from the post-clear state instead of a false stale verdict; a
+  // dropdown that keeps showing the previous query's results is caught below.
+  let cleared = await L.clearSearchViaKeys(page);
+  if (!cleared) {
     input = await L.findSearchInput(page);
-    typed = input.found && (await L.typeQuery(page, q));
-    if (!typed) return { ok: false, why: "search input vanished mid-run", results: [] };
+    cleared = input.found && (await L.clearSearchViaKeys(page));
+    if (!cleared) return { ok: false, why: "could not focus/clear the search input", results: [] };
   }
-  const results = await L.waitResults(page, expectNone ? 1600 : 3500);
-  return { ok: true, results: results || [], strategy: input.strategy || null };
+  await L.settle(page, 140);
+  const prev = await L.collectRids(page);
+  let typed = await L.typeCharsViaKeys(page, q);
+  if (!typed.ok) {
+    input = await L.findSearchInput(page);
+    typed = input.found ? await L.typeQueryKeys(page, q) : { ok: false, method: null };
+    if (!typed.ok) return { ok: false, why: "could not type into the search input", results: [] };
+  }
+  const outcome = await L.waitResultsChanged(page, prev.map((r) => r.rid), expectNone ? 2200 : 3500);
+  if (!outcome) {
+    if (prev.length) {
+      return {
+        ok: false, stale: true, results: prev,
+        why: "stale-dropdown: rendered [data-rid] set never changed from the previous query",
+        strategy: input.strategy || null, method: typed.method
+      };
+    }
+    return { ok: true, results: [], strategy: input.strategy || null, method: typed.method };
+  }
+  return {
+    ok: true, results: outcome.results, marker: outcome.marker || null,
+    strategy: input.strategy || null, method: typed.method
+  };
 }
 
 function summarize(results) {
@@ -136,13 +163,20 @@ async function runBattery(ctx, page, label, stash) {
 
   for (const c of cases) {
     const run = await uiQuery(ctx, page, c.q, { expectNone: c.expectNone });
-    if (!run.ok) { ctx.record(label, c.name, false, run.why); continue; }
+    if (!run.ok) {
+      ctx.record(label, c.name, false, run.stale ? {
+        kind: "stale-dropdown", why: run.why,
+        staleResults: summarize(run.results), method: run.method, strategy: run.strategy
+      } : run.why);
+      continue;
+    }
     stash[c.q] = run.results;
     const verdict = c.judgeAsync ? await c.judgeAsync(run.results) : c.judge(run.results);
     const diag = ctx.lib.snapDiagnostics(page);
     const errs = diag.errors.concat(diag.pageErrors);
     ctx.record(label, c.name, verdict.pass && errs.length === 0, {
       note: verdict.note,
+      typedVia: run.method,
       consoleErrors: errs.slice(0, 3),
       results: summarize(run.results)
     });
@@ -156,7 +190,13 @@ async function routeCase(ctx, page, label, name, query, rid, opts) {
   const L = ctx.lib;
   const relaxed = opts && opts.relaxed; // unavailable results may honestly refuse to navigate
   const run = await uiQuery(ctx, page, query);
-  if (!run.ok) { ctx.record(label, name, false, run.why); return; }
+  if (!run.ok) {
+    ctx.record(label, name, false, run.stale ? {
+      kind: "stale-dropdown", why: run.why, query,
+      staleResults: summarize(run.results), method: run.method
+    } : run.why);
+    return;
+  }
   if (!flatRids(run.results).includes(rid)) {
     ctx.record(label, name, false, { why: "target rid not rendered for query", query, rid, results: summarize(run.results) });
     return;
@@ -175,8 +215,8 @@ async function routeCase(ctx, page, label, name, query, rid, opts) {
   if (!click.clicked) { ctx.record(label, name, false, { why: "could not click result", rid }); return; }
 
   if (relaxed) {
-    await L.settle(page, 500);
-    const state = await page.evaluate(function (info) {
+    const probe = { availability: resolved && resolved.availability };
+    let state = await L.pollInPage(page, function (info) {
       var a = document.documentElement.getAttribute("data-pm2-route") || "";
       var loc = document.querySelector(".pm2-located");
       var t = (document.body.innerText || "").toLowerCase();
@@ -184,9 +224,21 @@ async function routeCase(ctx, page, label, name, query, rid, opts) {
       if (info && info.availability) {
         reasonShown = t.indexOf(String(info.availability).toLowerCase().slice(0, 40)) !== -1;
       }
-      if (!reasonShown) reasonShown = /unavailable|not available|isn.t available|requires|needs|cannot|can.t/.test(t);
+      if (!reasonShown) {
+        reasonShown = /unavailable|not available|isn.t available|requires|needs|cannot|can.t|no connected|no provider|not offered|doesn.t (offer|support)|unsupported/.test(t);
+      }
+      if (!loc && !reasonShown) return null;
       return { attr: a, located: !!loc, reasonShown: reasonShown };
-    }, { availability: resolved && resolved.availability });
+    }, probe, 2500, 120);
+    if (!state) {
+      state = await page.evaluate(function () {
+        return {
+          attr: document.documentElement.getAttribute("data-pm2-route") || "",
+          located: !!document.querySelector(".pm2-located"),
+          reasonShown: false
+        };
+      });
+    }
     const diag = L.snapDiagnostics(page);
     const errs = diag.errors.concat(diag.pageErrors);
     ctx.record(label, name, errs.length === 0 && (state.located || state.reasonShown), {
@@ -202,6 +254,19 @@ async function routeCase(ctx, page, label, name, query, rid, opts) {
     for (var i = 0; i < tokens.length; i++) { if (a.indexOf(tokens[i]) === -1) return null; }
     return document.querySelector(".pm2-located") ? { attr: a } : null;
   }, tokens, 4500, 80);
+
+  if (landed) {
+    // the locator class lands before a smooth scroll settles; give the reveal
+    // up to 2s to bring the row into the viewport before measuring
+    await L.pollInPage(page, function () {
+      var loc = document.querySelector(".pm2-located");
+      if (!loc) return null;
+      var r = loc.getBoundingClientRect();
+      var vh = window.innerHeight, vw = window.innerWidth;
+      return (r.top >= -2 && r.left >= -2 && r.right <= vw + 2 &&
+        (r.bottom <= vh + 2 || (r.top < vh * 0.5 && r.height > vh * 0.6))) ? true : null;
+    }, null, 2000, 100);
+  }
 
   const detail = await page.evaluate(function () {
     var loc = document.querySelector(".pm2-located");

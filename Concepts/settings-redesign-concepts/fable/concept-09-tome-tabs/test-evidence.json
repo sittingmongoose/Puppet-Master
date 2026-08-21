@@ -1,0 +1,205 @@
+{
+ "schema": "pm2.test_evidence.builder.v1",
+ "conceptId": "c09",
+ "concept": "fable · 09 Chapters (concept-09-tome-tabs)",
+ "generated": "2026-08-20",
+ "note": "Builder self-run checks only; the Phase-C harness is the final writer. Every result below was actually executed in this sandbox (headless Chromium over file:// via tools/harness/cdp.js). Nothing is projected.",
+ "boot_checks": [
+  {
+   "cmd": "node --check concept-09-tome-tabs.js",
+   "result": "clean"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html",
+   "result": "PASS (1280px, 13 routes, zero console errors/warnings, no overflow)"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html --width=760",
+   "result": "PASS (760px, 13 routes)"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html --width=2500",
+   "result": "PASS (2500px, 13 routes)"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html --theme=glass-light",
+   "result": "PASS (1280px, glass-light, 13 routes)"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html --theme=retro-dark",
+   "result": "PASS (1280px, retro-dark, 13 routes)"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html --scenario=first-run",
+   "result": "PASS (13 routes)"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html --scenario=offline",
+   "result": "PASS (13 routes)"
+  },
+  {
+   "cmd": "node tools/boot-check.js concept-09-tome-tabs.html --fixture=fx.import-conflict",
+   "result": "PASS (13 routes)"
+  }
+ ],
+ "functional_walks": [
+  {
+   "id": "search-matrix",
+   "detail": "22 live search cases (typed query, dropdown result clicked by data-rid): all landed on the exact element with focus + pm2-located, and browser Back restored the query AND its result list. Covers grouped kinds, three duplicate-label 'API key' credentials, typo probes (notifcations/apperance/permisions), the flux-capacitor no-results state (honest empty + All Settings escape), unavailable capability (u:m.files/mount.0 with reason), deep object rows (installation, model, sound pack, worktree session), setup/sign-in/repair workflows, diagnostic and manager results.",
+   "pass": true
+  },
+  {
+   "id": "copy-transaction",
+   "detail": "Full #/copy flow with instant=1: source Tastebook -> all categories -> preview (29 new / 2 replaced / 0 unchanged / 0 unavailable / 0 conflicts, credential note shown, item inspection opened) -> apply (staged op: restore point, determinate apply, verify) -> receipt rcpt.copy.1 with restore point rp.copy.1 -> Rollback restored exactly and the panel reported it.",
+   "pass": true
+  },
+  {
+   "id": "escape-ladder",
+   "detail": "From #/manager/m.providers/claude/accounts: Esc -> manager/m.providers (detail closed), Esc -> dest/ai, Esc -> home, Esc -> stays home. Popup menus and the search dropdown close first when open (verified separately).",
+   "pass": true
+  },
+  {
+   "id": "edit-validation",
+   "detail": "Per-Run Token Budget: 50 rejected inline with 'Per-Run Token Budget must be at least 1,000.' (row-level error, value untouched); 90000 accepted, changed-from-default dot appeared, receipt emitted.",
+   "pass": true
+  },
+  {
+   "id": "menu-and-toggle",
+   "detail": "Select control opened a layered popup menu (8 options, checked item marked), Esc closed it and focus returned to the invoker; a toggle switch flipped true->false through store.setValue with the row re-rendered in place.",
+   "pass": true
+  },
+  {
+   "id": "manager-sweep",
+   "detail": "All 47 manager routes opened: shell retained (titlebar/statusbar/breadcrumb/search/project chip/Close), Back names the parent chapter, real content rendered, zero console errors. 4 routes re-checked at 760px: spine becomes top strip, push navigation, no rail overlay, no horizontal scroll.",
+   "pass": true
+  },
+  {
+   "id": "deep-link-real",
+   "detail": "#/setting/system.health.platform-diagnostics lands exactly: row revealed out of the advanced disclosure, scrolled, focused, pm2-located.",
+   "pass": true
+  },
+  {
+   "id": "deep-link-stale",
+   "detail": "#/setting/system.health.diagnostics-verbosity (not in the 828-row inventory) shows an honest notice on the System & Advanced chapter — 'The link pointed at a setting this Project does not have… Showing its chapter instead.' No blank page, no console error.",
+   "pass": true
+  }
+ ],
+ "states_walked": [
+  {
+   "state": "scenario=first-run",
+   "seen": "Home shows real empty states: guidance in Needs attention ('You are starting fresh…'), 'No changes yet' in Recent changes, chapter counts without changed badges."
+  },
+  {
+   "state": "scenario=offline",
+   "seen": "One critical banner (network paused, cached values stay visible), Offline attention item, web provider rows unavailable with reasons (2 rows on dest/web/providers)."
+  },
+  {
+   "state": "scenario=usage-exhausted",
+   "seen": "One critical banner; the usage attention item rewritten to 'Claude usage window is exhausted'."
+  },
+  {
+   "state": "scenario=managed-workspace",
+   "seen": "62 managed read-only rows on the Permissions & Safety chapter, each with origin in the Details drawer."
+  },
+  {
+   "state": "fixture=fx.import-conflict",
+   "seen": "Home attention gains 'A settings import is waiting for review'; m.lifecycle shows the staged preview: counts, 3 conflicts with here/incoming values and links, invalid + migrated keys, staged restore point rp.settings.auto-0805."
+  },
+  {
+   "state": "fixture=fx.validation-error",
+   "seen": "web.fetch.cost-hard-cap renders state=error with the field-level message; Home attention gains the two-failures notice."
+  },
+  {
+   "state": "fixture=fx.rollback-complete",
+   "seen": "'Rollback complete' notice in the Home attention list."
+  },
+  {
+   "state": "fixture=fx.loading-cached",
+   "seen": "Cached values stay visible; provider activity sections show the refreshing note."
+  },
+  {
+   "state": "stress=1",
+   "seen": "All Settings reports '2,828 of 828 settings (+ synthetic stress records)'; only 19 rows live in the DOM (windowed); synthetic rows carry the dashed 'Stress fixture' badge and never route as inventory."
+  },
+  {
+   "state": "provider permanent states",
+   "seen": "m.providers surfaces usage-exhausted-with-fallback (Claude), signed-in-cannot-invoke (Copilot), expired sign-in (Antigravity), multi-install shadowing + unknown-owner manual-only (Ollama update refused with reason), ask-first Codex update, verification-failed->rolled-back Copilot repair, explicit official-source Cursor CLI setup steps."
+  }
+ ],
+ "widths_eyeballed": [
+  "1280 (all key surfaces screenshotted and reviewed: Home, dest/ai, m.providers root + claude/accounts detail, All Settings, Copy step 1, search dropdown, onboarding shell, deep-link landing)",
+  "760 (narrow: spine top strip, full-width push layers, Back names location)",
+  "2500 (bounded measure, no deserts)"
+ ],
+ "known_limits": [
+  "list/keyvalue controls render value summaries with contents in the Details drawer; they are not editable inline (no fake editors).",
+  "Deferred owner shells are read-only by contract; their only affordances are navigation.",
+  "test-evidence is builder-run; Phase-C harness supersedes this file."
+ ],
+ "visual_audit_fixes": {
+  "date": "2026-08-20",
+  "note": "Post-audit fix pass for the 9 confirmed Phase-C visual findings. Every fix re-verified in this sandbox: node --check clean; boot-check PASS at 760/1280/2500 (13 routes each); matrix suite 89/89 across all 8 themes x 760/1280/2500; managers suite 49/49.",
+  "fixes": [
+   {
+    "findings": [
+     1,
+     6
+    ],
+    "what": "Shell titlebar page-tab clipping at 760 (friendly themes: 'Usage' cut to 'Us', 'Settings' dropped). Concept CSS now gives .pm-page-tabs min-width:0/overflow:hidden and each .pm-page-tab min-width:0 + ellipsis, with the active tab flex-shrink:0. Verified: all six tabs ellipsize within the wrap at 760 in friendly-dark and friendly-light; active Settings tab renders whole."
+   },
+   {
+    "findings": [
+     3,
+     4,
+     5,
+     8
+    ],
+    "what": "Chapter rail 'Extensio...' truncation in glass and basic themes at every width. The spine is now font-tolerant: shrink-to-fit width (min 148px, max 244px) inside a new .c09-spine-wrap, so each theme's font sets the rail measure; the label ellipsis was replaced by a clip-with-3px-pad because the widest label defines the intrinsic width and LayoutUnit rounding of that exact equality rendered a spurious ellipsis. Verified: all 12 chapter labels render in full at 1280 and 2500 in glass-dark/glass-light/basic-dark/basic-light (probe: zero truncated labels; screenshots re-eyeballed)."
+   },
+   {
+    "findings": [
+     9
+    ],
+    "what": "Narrow top chapter strip hard-clipped mid-glyph at the right viewport edge with no affordance. The wrap now carries scroll-position-driven edge-fade masks (has-left/has-right classes from a scroll listener; masks sit on the non-scrolling wrap so they stay pinned). Verified by pixel sampling retro-dark/retro-light 760: glyph contrast decays to background across the final 34px (previously full-contrast glyph pixels at x=759), and the classes flip when scrolled to either end."
+   },
+   {
+    "findings": [
+     2,
+     7
+    ],
+    "what": "AI Providers action wall (9 buttons) with the Ollama ownership caption breaking the grid. The page now opens with Refresh provider status + Set up the Cursor CLI plus a Maintenance overflow button (count badge) that opens the concept's popup menu with the 7 secondary actions; the disabled Ollama entry keeps its ownership reason as a caption bound inside its own menu item. Any inline unavailable action now renders as one bordered card (button + reason together) so captions can never interleave between unrelated buttons. Verified at 1280 and 760 in basic and glass themes."
+   },
+   {
+    "findings": [],
+    "what": "Contract-audit addition: data-pm2-back stamped on every Back affordance (head Back, layer-edge peel buttons, all three copy-step Backs with 'Back to <step>' aria-labels). Verified by DOM query: visible [data-pm2-back] present on manager/m.providers at 1280 (4, incl. edge peels) and 760 (1), and on the copy wizard step 2."
+   }
+  ]
+ },
+ "visual_audit_fixes_round2": {
+  "date": "2026-08-21",
+  "note": "Second-round re-audit pass for the 3 confirmed minors on concept-09. Two of the three (nav truncation at 760) were resolved in the shared token layer _shared2/pm2-tokens.css, which this page links after its own stylesheet; the third (light-theme orange) was also resolved there. This round therefore verifies rather than re-fixes, plus one concept-owned tidy-up. Re-verified in this sandbox (headless Chromium over file:// via tools/harness/cdp.js): node --check clean; boot-check PASS at 760 / 1280 / 2500 (13 routes each, zero console errors/warnings, no overflow), re-run after the CSS edit.",
+  "fixes": [
+   {
+    "findings": [
+     1,
+     2
+    ],
+    "what": "Shell page-tab strip collapsing to one- and two-character stubs at 760 ('Da...', 'W...', 'U...'). Resolved centrally: _shared2/pm2-tokens.css now drops whole trailing tabs below 1000px instead of ellipsizing, and always keeps the active tab intact. Concept-owned follow-up: this stylesheet's own guard (concept-09-tome-tabs.css, shell page-tab overflow block) changed text-overflow from ellipsis to clip and its comment now records that the shared layer owns the behaviour, so the rule can never reintroduce stubs if that layer is ever absent. VERIFIED by 4x crops of the titlebar nav band: friendly-dark-760, basic-dark-760 and friendly-light-760 render exactly one whole, fully legible 'Settings' pill with no stubs and no mid-glyph cut; basic-dark at 900 and retro-light at 1000 degrade gracefully to 'Dashboard Projects Usage Settings', all whole."
+   },
+   {
+    "findings": [
+     3
+    ],
+    "what": "Orange status/action text on light cream and white surfaces at 2.5-3.8:1. Resolved centrally by darkening --accent-warning / --accent-orange for the light themes; this concept re-derives no orange of its own (every orange surface here is var(--accent-warning), and the only color-mix uses are the c09-banner border at 45% and its background wash at 10%, not text), so the token fix reaches every affected string. VERIFIED by pixel sampling: retro-light dest/ai row-note 'One connected account signed out on the provider side.' 2.53 -> 6.74:1 (#7A4E00 on #FAF7F2); retro-light home 'Sign in' 6.74:1; retro-light copy-route 'Some values may not carry over' 6.12:1; basic-light home 'Sign in' 3.79 -> 5.93:1 (#8A5A00 on #FFFFFF); basic-light manager/m.providers action rows 'Not signed in' and 'Not installed' 5.93:1; friendly-light dest/ai row-note 5.06:1; glass-light home 'Sign in' 5.15:1."
+   },
+   {
+    "findings": [],
+    "what": "Regression checks after the shared token recalibration. Chapter-rail labels: all 12 render in full with no truncation in glass-dark and retro-light at 1280 (4x crops of the Personas / Extensions / System block) - the font-tolerant spine fix still holds. Text hierarchy under the darker light-theme --text-muted: glass-light keeps a clean three-tier split (primary 17:1-class, secondary 11.61:1, muted 7.89:1) and basic-light reads 5.98:1 on muted meta; friendly-light muted (#5F5866, 6.83:1 on white) now sits marginally darker than its secondary (#6B6473, 5.68:1), but the tiers are still separated by size and weight and the chapter card reads correctly at 3x - calm hierarchy intact, not flattened."
+   },
+   {
+    "findings": [],
+    "what": "RESIDUAL, not concept-owned: friendly-light --accent-error (#E8654C, frozen _shared/pm-shell.css) measures 3.28:1 on #FFFFFF and 2.88:1 on #F5EFEA, so attention-tone status words ('Watch', 'Restart', 'Reconnect') stay below 4.5:1 in that one theme. The round-2 central pass darkened --accent-warning / --accent-orange but not --accent-error. Every other theme passes (retro-light 4.66:1, basic-light 5.62:1, glass-light 6.36:1, friendly-dark 5.75:1). This concept applies the token unmodified via the shared .pm-status-word rules; the correction belongs to the token layer, not here. Tone is not color-only (weight 700 + underline), so the state stays readable."
+   }
+  ]
+ }
+}

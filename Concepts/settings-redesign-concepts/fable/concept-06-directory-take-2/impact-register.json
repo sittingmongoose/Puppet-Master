@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-06-directory-take-2",
+  "concept_name": "Longform",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "note": "Concept register only. Everything here is provisional evidence from the Longform prototype; canon (Plans, inventory, Command Catalog, Wiring Matrix) is untouched and adjudicated later.",
+  "plan_owner_impacts": [
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "kind": "extends",
+      "evidence": "Longform proves an editorial, list-led Settings composition: a persistent text-led domain rail beside one bounded-measure reading column (~76ch even at 2500px), twelve full-width destination rows instead of cards, ruled More/Advanced folds keeping 4-8 rows per heading, and in-flow manager detail sheets that push content instead of overlaying. Deep links (#/home, #/dest, #/manager, #/setting, #/search, #/all, #/copy) ride pm2-route with real Back/Forward."
+    },
+    {
+      "owner": "Plans/settings_inventory.json",
+      "kind": "conflicts",
+      "evidence": "The rev-2 deep-link probe id system.health.diagnostics-verbosity is absent from the generated 828-row PM2_INVENTORY (only the _shared extension dataset carries it). Longform renders stale/unknown setting deep links as an honest 'Not in this project's settings' surface (raw id shown, recovery links to the domain, search, All Settings, Home); the real probe row system.health.platform-diagnostics lands exactly with focus + locator. Inventory and probe list must be reconciled before canon minting."
+    },
+    {
+      "owner": "Plans/UI_Command_Catalog.md",
+      "kind": "extends",
+      "evidence": "Navigation, search selection, copy transaction, and manager actions all route through one dest-object grammar (route/cat/sub/managerId/objectId/tab/settingId plus focus=<rid>); the catalog's cmd.settings.navigate family should accept exactly this payload."
+    },
+    {
+      "owner": "Plans/Permissions_System.md",
+      "kind": "reuses",
+      "evidence": "Permissions & FileSafe renders from the shared registry view model only (rules roster, doom-loop form, FileSafe checks); Longform adds no new permission semantics, confirming the headless model is sufficient for a fully different composition."
+    },
+    {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "kind": "extends",
+      "evidence": "Provider rosters keep the shared resolver strings verbatim: multi-install selected/shadowed cards, unknown-owner manual-only refusal (Ollama update action renders disabled with the reason and returns an honest refusal), ask-first Codex update, verification-failed rollback history, and the explicit official-source Cursor CLI setup steps with host/environment choices."
+    },
+    {
+      "owner": "Plans/storage-plan.md",
+      "kind": "reuses",
+      "evidence": "Project Hosting & Files, Project Sync & Move, and Full Server Backup appear only as reachable read-only insertion shells naming storage-plan.md as owner, with return contracts rendered verbatim; no backend state was fabricated."
+    },
+    {
+      "owner": "Settings copy/import policy (Plans/settings lifecycle owners)",
+      "kind": "extends",
+      "evidence": "Copy Settings runs as a quiet focused dialog: source, category counts, full preview (add/replace/unchanged/unavailable/conflict with item inspection), credential-by-reference note, restore point, atomic verified apply, receipt with working rollback — walked end-to-end in the c06 verify suite including rollback."
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "row": "system.health.diagnostics-verbosity",
+      "status": "missing-from-pm2-inventory",
+      "note": "Stale rev-2 probe id, not one of the 828 generated rows. Longform diagnoses it with an honest not-found surface (never a blank page, never a fabricated row); the current probe row is system.health.platform-diagnostics."
+    },
+    {
+      "row": "zz-stress.* synthetic records",
+      "status": "correctly-excluded",
+      "note": "Stress records surface only in All Settings and search, always marked 'Stress fixture', never mixed into domain browsing."
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "area": "row states",
+      "note": "resolveRow's state vocabulary (normal/managed/unavailable/restart-required/reconnect-required/changed-elsewhere/error) rendered cleanly in a single-column editorial row without extra metadata columns; stateNote as an italic line under the row is sufficient at every width."
+    },
+    {
+      "area": "tiers",
+      "note": "The two-tier simple/advanced split maps to Longform's ruled folds, but subgroups of ~23 rows still need an editorial cut (first 7 rows, then 'More …'); a curated 'lead' flag per subgroup would remove the arbitrary slice."
+    }
+  ],
+  "command_id_impacts": [
+    { "pointer": "candidate-command-delta.json" }
+  ],
+  "wiring_impacts": [
+    { "pointer": "candidate-wiring-delta.json" }
+  ],
+  "dry_component_impacts": [
+    { "pointer": "candidate-dry-delta.json" }
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "area": "localStorage",
+      "note": "Only pm.settingsConcepts.fable.concept-06-directory-take-2.* keys are written (shell prefs plus pm2-states persistence). No other storage."
+    },
+    {
+      "area": "op events",
+      "note": "All staged work (manager actions, copy apply/rollback) surfaces PM2.states op payloads verbatim; determinate progress shown only when the payload carries completed/total."
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "supersedes": "chip/bloom no-sidebar Settings architecture",
+      "note": "Longform is another persistent-workspace proof: rail + reading column coexist with the Activity Bar; no floating chip surface anywhere."
+    },
+    {
+      "supersedes": "scope selectors in Settings rows",
+      "note": "legacyScope renders only inside the row Details drawer as impact prose; no Global/Project control exists anywhere in the concept."
+    }
+  ],
+  "slint_port_impacts": [
+    {
+      "area": "virtualized index",
+      "note": "All Settings windowing (fixed 62px rows, spacer technique) maps directly to a Slint ListView with a row-height model; filters are pure functions over the flat inventory list."
+    },
+    {
+      "area": "in-flow detail sheet",
+      "note": "The manager sheet is an ordinary element inserted into the column flow (no overlay, no measured geometry), portable as a conditional child component; tabs are plain state."
+    },
+    {
+      "area": "entrance motion",
+      "note": "Fade-and-rise uses one keyframe with a per-element index variable, capped at 9 steps — equivalent to sequenced opacity/offset animations on a ListView; reduced-motion collapses via the shared kill switches with no JS dependence on transitionend."
+    }
+  ],
+  "test_fixtures": [
+    { "id": "boot-check-3-widths", "proof": "PASS at 1280, 760, 2500 across the default 12-route walk (zero console errors/warnings, no overflow)." },
+    { "id": "c06-verify-suite", "proof": "18/18 interactive checks: search landing sequence, Back restore, duplicate labels, typo, no-results, toggle/number editing, copy apply+rollback, escape ladder, fold auto-reveal, stress windowing." },
+    { "id": "search-route-matrix", "proof": "20/20 walked cases recorded in search-route-matrix.json." }
+  ]
+}

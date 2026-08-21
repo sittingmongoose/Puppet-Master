@@ -1,0 +1,5 @@
+{
+  "label": "javascript:app.js:syntax",
+  "status": "FAIL",
+  "detail": "/mnt/data/work/pm56_pro_reaudit/app.js:86\n    warning:'<path d=\"M12 3 2.8 20h18.4z\"/><path d=\"M12 9v5M12 17h.01\"/>\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nSyntaxError: Invalid or unexpected token\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v22.16.0\n"
+}

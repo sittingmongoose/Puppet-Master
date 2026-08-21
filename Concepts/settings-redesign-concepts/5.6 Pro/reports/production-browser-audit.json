@@ -1,0 +1,21 @@
+{
+  "overall": "FAIL",
+  "startedAt": "2026-08-21T04:48:27.545Z",
+  "passed": 0,
+  "failed": 1,
+  "warnings": [],
+  "checks": [
+    {
+      "name": "runner:completed",
+      "status": "FAIL",
+      "detail": {
+        "error": "Error: Playwright not available\n    at load (file:///mnt/data/work/pm56_pro_reaudit/tests/production-browser-audit.mjs:4:205)\n    at async file:///mnt/data/work/pm56_pro_reaudit/tests/production-browser-audit.mjs:16:13"
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "screenshots": 0,
+  "inventory": {},
+  "finishedAt": "2026-08-21T04:48:27.546Z"
+}

@@ -1,0 +1,12 @@
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+
+Error: Cannot find module '/mnt/data/work/pm56_pro_reaudit/tests/final-certification.mjs'
+    at node:internal/modules/cjs/loader:1401:15
+    at node:internal/main/check_syntax:33:20 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v22.16.0

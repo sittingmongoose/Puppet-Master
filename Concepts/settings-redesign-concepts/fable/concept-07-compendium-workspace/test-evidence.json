@@ -5,9 +5,9 @@
   "generated": "2026-08-20",
   "note": "Builder self-run checks. The Phase-C harness is the final writer of authoritative results; nothing below is fabricated — every row was executed against the real page over CDP (file://).",
   "boot_checks": [
-    { "cmd": "node tools/boot-check.js concept-07-compendium-workspace.html", "result": "PASS (1280px, 12 default routes, zero console errors/warnings, no overflow)" },
-    { "cmd": "node tools/boot-check.js concept-07-compendium-workspace.html --width=760", "result": "PASS (760px, 12 routes)" },
-    { "cmd": "node tools/boot-check.js concept-07-compendium-workspace.html --width=2500", "result": "PASS (2500px, 12 routes)" },
+    { "cmd": "node tools/boot-check.js concept-07-compendium-workspace.html", "result": "PASS (1280px, 13 default routes incl. both setting/system.health.platform-diagnostics and the stale diagnostics-verbosity probe, zero console errors/warnings, no overflow)" },
+    { "cmd": "node tools/boot-check.js concept-07-compendium-workspace.html --width=760", "result": "PASS (760px, 13 routes)" },
+    { "cmd": "node tools/boot-check.js concept-07-compendium-workspace.html --width=2500", "result": "PASS (2500px, 13 routes)" },
     { "cmd": "node tools/boot-check.js ... --theme=glass-light --routes=home,dest/general,all,manager/m.providers/claude,copy", "result": "PASS (twice; one earlier run hit the harness's own profile-cleanup ENOTEMPTY race after all shots were written)" },
     { "cmd": "node tools/boot-check.js ... --theme=retro-dark --routes=home,dest/safety,all,manager/m.permissions", "result": "PASS" },
     { "cmd": "node tools/boot-check.js ... --scenario=first-run --routes=home,dest/ai,copy", "result": "PASS" },
@@ -15,7 +15,7 @@
   ],
   "functional_walk": {
     "driver": "CDP walker driving the real UI (typed queries, clicked dropdown results, pressed browser Back, clicked through the whole copy flow)",
-    "search_route_cases": { "total": 22, "failed": 0, "file": "search-route-matrix.json" },
+    "search_route_cases": { "total": 23, "failed": 0, "file": "search-route-matrix.json" },
     "manager_routes": { "total": 47, "failed": 0, "file": "manager-route-matrix.json" },
     "console_errors": 0,
     "page_exceptions": 0,
@@ -68,6 +68,77 @@
   "shared_module_findings": [
     "pm2-states applyScenario/setFixtures with persist:false (the URL-ephemeral path used by pm2-route) never mirror into store.get('scenario'|'fixtures'), so store.attention() and the pm2-store row-state fallback read stale state. Worked around locally by mirroring into store._setSession on the 'scenario' event; the shared fix belongs in pm2-states.",
     "tools/boot-check.js (harness cdp.js) occasionally crashes at teardown with ENOTEMPTY rmdir of the chromium profile after a successful walk — a cleanup race, not a page failure; reruns pass.",
-    "The default boot-check probe setting/system.health.diagnostics-verbosity does not exist in PM2_INVENTORY (828 rows); c07 lands honestly on System & Advanced with an explanation, so the route still passes."
-  ]
+    "The legacy probe id setting/system.health.diagnostics-verbosity does not exist in PM2_INVENTORY (828 rows); c07 lands honestly on System & Advanced with an explanation. boot-check now also probes the real setting/system.health.platform-diagnostics, which lands exactly (advanced tier auto-opens, focus + pm2-located + About panel). Both pass.",
+    "Shared step sections use two field shapes: providers emit {label, detail} while m.lifecycle and m.cleanup emit {title, note}. The steps renderer handles both; a shared normalization would be cleaner."
+  ],
+  "visual_audit_fixes_2026-08-20": {
+    "fixer": "X07 visual-audit fixer; all six confirmed findings addressed in concept-07 CSS/JS only, re-verified over CDP (file://) with regenerated screenshots inspected via the Read tool, temp shot dirs deleted",
+    "fixes": [
+      "titlebar page-tab clipping at 760 (retro 'Usag', basic 'Orchestra', active Settings tab pushed out entirely): concept CSS now lets inactive .pm-page-tab items shrink with ellipsis (min-width:0; overflow:hidden; text-overflow:ellipsis) while .pm-page-tab.is-active never shrinks — all six tabs render in every theme at 760, Settings always fully visible",
+      "providers-manager ownership caption split the wrapping action toolbar (glass 1280/760) and wedged mid-group detaching 'Set up the Cursor CLI' (basic 760): action buttons are now one contiguous wrapping group; unavailable-action reasons render after the group as indented border-left footnotes prefixed with the owning action's bolded label, linked back via aria-describedby",
+      "manager-route compact header clipped at 1280 in basic themes ('AI Brains & Provid' breadcrumb, 'Search setting' placeholder against the Ctrl K chip): topbar now wraps instead of clipping, breadcrumb segments ellipsize (per-crumb min-width:0), and the search input ellipsizes its placeholder — no mid-glyph clipping at any width/theme",
+      "floating States pill occlusion of the copy-route legacy-source footnote was fixed centrally in _shared2/pm2-states.js; re-shot retro/friendly/basic 760 copy and confirmed the footnote reads complete with the collapsed pill clear of it",
+      "u:/d: search-result rids never located after landing (findByFocus had no branch; d: sections marked advanced rendered collapsed so the target was absent): findByFocus now resolves u:/d: like o: (objectId segment, bare-id fallback, manager-head last resort), and a pending locate that targets an advanced section auto-opens it before render — verified live: u:m.media/m-video lands on data-item-id=m-video focused+located, d:m.context/ctx.cache opens Prompt caching and locates the section, u:env.win.wsl falls back to the manager head focused",
+      "primary Back affordance now carries the CONTRACT2-required data-pm2-back hook (single topbar Back button covers every non-Home surface)"
+    ],
+    "verified": [
+      "node --check clean on concept-07-compendium-workspace.js",
+      "boot-check PASS at 760 / 1280 / 2500 (13 default routes each, zero console noise, no overflow)",
+      "boot-check PASS with shots: friendly-dark 760 (home, manager/m.providers, copy), basic-dark 760 (home, manager/m.providers, copy), retro-dark 760 (home, copy), glass-dark 1280 (manager/m.providers), basic-dark 1280 (manager/m.providers) — every PNG inspected, all six findings gone, no new defects",
+      "CDP probe: [data-pm2-back] present+visible on manager route; u: and d: dropdown clicks land located and focused"
+    ]
+  },
+  "verification_pass_2026-08-20": {
+    "verifier": "takeover agent (original builder killed by session limit); all checks re-run against the real page over CDP, every screenshot inspected with the Read tool, temp shot dirs deleted",
+    "reruns": [
+      "boot-check PASS at 1280 / 760 / 2500 (13 routes each, zero console noise)",
+      "boot-check PASS --theme=glass-light (home,all,dest/ai,manager/m.providers,copy) and --theme=retro-dark (home,all,manager/m.providers)",
+      "copy flow walked twice end-to-end: Tastebook (29 add / 2 replace, apply 31, rollback exact) and Vault Migration legacy (5 conflicts + 3 unavailable rendered, conflict rows expandable with per-kind stories)",
+      "search dropdown walked: grouped (context wind), duplicate-label (api key x5 providers), typo (apperance), no-results (flux capacitor); landing sequence verified (route + pm2-located + focus + About panel + Back restores query and results)",
+      "5 matrix cases re-walked live for the corrected rows: h:teach.last-match-wins, u:m.media/m-video (availability reason shown in dropdown), o:m.sounds/pack.peonping-classic, o:m.sourceControl/wt.fix-scrollspy, s:system.health.platform-diagnostics",
+      "scenarios walked: first-run (empty attention + recents guidance), offline (one banner, providers unreachable with last-known-good, web rows unavailable), managed-workspace (chip instead of control, origin in Details); fixtures: fx.import-conflict (staged preview 12/9/3/1/2 with conflict rows), fx.validation-error (error visible after fix below)",
+      "stress=1: 2,875 records, 15-21 live DOM rows at any scroll depth, stress rows clearly labeled"
+    ],
+    "defects_found_and_fixed": [
+      "manager steps sections rendered empty for m.lifecycle / m.cleanup ({title, note} step shape unhandled) — renderer now accepts both shared shapes",
+      "provider detail tab bar was overflow-x:auto with the scrollbar hidden, so tabs 7-8 (Activity, Advanced) were invisible and undiscoverable at 1280 — tab bar now wraps",
+      "fx.validation-error rows (web.fetch.cost-hard-cap, system.mcp.remote-url) are advanced-tier and sat invisible behind the closed Advanced disclosure — an error state now auto-opens its disclosure, and other attention states annotate the toggle with an honest count",
+      "completed ops strip followed the user to every later manager page — finished-clean ops (done/canceled) are pruned on navigation, unresolved outcomes stay visible",
+      "unknown manager objectId (e.g. manager/m.providers/prov.nope) fell back to the overview silently — now explains the miss in a notice first",
+      "copy apply/preview/rollback {ok:false} results re-rendered silently — an honest failure notice now names the reason",
+      "import-preview conflict rows showed raw setting ids — now resolve to human labels when the row exists"
+    ]
+  },
+  "visual_audit_fixes_round2_2026-08-21": {
+    "fixer": "X07 second-round visual-audit fixer. Six re-audit findings; the two nav findings were resolved centrally in _shared2/pm2-tokens.css and are only re-verified here. Everything else is concept-07 CSS only (no JS change) and was re-verified over CDP (file://) with regenerated screenshots read back; temp shot dirs deleted.",
+    "findings_addressed": [
+      {
+        "finding": "#1/#2/#3 [major, residual x2] the fixed States affordance still painted over page content in the bottom-right corner - the 'Details' link and the 'Auto (highest priority)' select on the dest/ai 'Default Account Per Provider' row (retro-dark / retro-light / basic-dark / basic-light 1280), the Web & Search card description tail on basic 1280 home, the provider external-link glyph on glass 1280 manager/m.providers, and the 'Retro Effects' On chip on glass 760 all.",
+        "root_cause": "pm2-states.js mounts the drawer button position:fixed at right:16px / bottom:34px, z-index 9000. The central fix made it a quiet 42x32 icon dot but did not take it out of the content flow, so it still hovers over whatever the concept paints in that corner at every scroll offset - bottom padding inside the scroller cannot help, because padding scrolls with the content.",
+        "fix": "`.c07-main > .c07-content` now takes `margin-bottom: 48px`, shortening the scroll viewport itself (34px button offset + 32px button height - 24px statusbar = 42px of real intrusion, plus 6px clearance). The band sits outside the scroll box, so no row, control or description can be painted under the dot; the rows that used to sit there scroll above it instead. The same band + fade is applied to `.c07-root.is-narrow.nav-open .c07-rail`, which is the full-width scrolling pane in that one state. A 22px bottom fade mask on the scroller reads the new scroll edge as 'more below' rather than as a bisected row, and `.c07-pane` bottom padding drops 60px -> 26px (narrow 48px -> 22px) so trailing whitespace stays proportionate: the last row clears the dot by 26 + 48 = 74px at the end of the scroll.",
+        "verified": "paint-level probe (elementFromPoint over the dot's rect + 4px margin with the dot made pointer-transparent, so the check is clip-aware): 8 themes x 2 widths (760/1280) x 5 routes (home, dest/ai, manager/m.providers, all, copy) = 80 cells, 0 occluded. Before the fix the same probe reported c07-row-details-btn, c07-cat-desc and pm-chip-value under the dot."
+      },
+      {
+        "finding": "#6 [minor] light-theme muted text and semantic accents measured 2.0-3.7:1 (descriptions, card metadata, facet labels, status bar, Needs-attention action words).",
+        "fix": "The token calibration landed centrally in _shared2/pm2-tokens.css; this pass removed the two places where concept-07 re-derived those tokens with an extra opacity pass (`.c07-crumbs .c07-crumb-sep` opacity .6 and `.c07-copy-step-sep` opacity .5 - both now use --text-muted straight), and swapped `.c07-project-chip`'s invisible --border-light outline for --border so the breadcrumb chip reads as a chip rather than as loose floating text.",
+        "verified": "runtime contrast probe (computed color composited over the first opaque ancestor background) across all four light themes on home / dest-ai / copy. Every sampled muted and semantic-accent element now clears 4.5:1 - lowest is 4.73:1 (basic-light statusbar / rail labels / project chip / crumb separator). Cited failures: 'Watch' / 'Restart' / 'Sign in' .pm-status-word 2.22-3.28:1 -> 5.01:1 (basic-light), 5.93:1 (friendly-light and glass-light), 6.35:1 (retro-light); friendly-light card metadata 2.98:1 -> 6.83:1; friendly-light card description -> 5.68:1; friendly-light project chip 2.17:1 -> 5.99:1; friendly-light statusbar 2.02:1 -> 5.99:1."
+      },
+      {
+        "finding": "#4/#5 [minor] the 760px titlebar nav degraded labels to one- and two-character stubs ('D...', 'P...', 'W...', 'Or...', 'U...').",
+        "fix": "Resolved centrally: _shared2/pm2-tokens.css drops whole trailing tabs below 1000px and keeps the active tab intact. Concept-07's own superseded rules (`.pm-page-tab { text-overflow: ellipsis }` and `.pm-page-tab.is-active { flex-shrink: 0 }`) and their now-false comment were deleted so nothing competes with the shared rule; only the nav's clipping context (`.pm-page-tabs { min-width: 0; overflow: hidden }`) stays.",
+        "verified": "friendly-dark-760-home and basic-dark-760-home re-shot and read at 2x: the strip shows only the whole, fully legible active 'Settings' tab - no ellipsis stubs, no mid-glyph clipping."
+      }
+    ],
+    "verified": [
+      "node --check clean on concept-07-compendium-workspace.js (unchanged this pass)",
+      "node tools/boot-check.js concept-07-compendium-workspace.html --width=1280 -> PASS (13 routes)",
+      "node tools/boot-check.js concept-07-compendium-workspace.html --width=760 -> PASS (13 routes)",
+      "node tools/boot-check.js concept-07-compendium-workspace.html --width=2500 -> PASS (13 routes)",
+      "screenshots regenerated and read back for every cited cell: retro-dark / retro-light / basic-dark / basic-light 1280 dest-ai (States overlap), basic-dark + basic-light 1280 home, glass-dark 1280 dest-ai and manager-m.providers, glass-dark + glass-light 760 all, friendly-light 1280 all, glass-light + friendly-light 1280 home (contrast), friendly-dark + basic-dark 760 home (nav)",
+      "spot-checked the new bottom band at other widths and on a non-scrolling route: retro-dark 2500 home, glass-light 1700 manager-m.providers, friendly-dark 900 home, basic-light 1280 copy (copy fits the viewport, so the legacy-source footnote renders complete and well clear of the dot, with no fade artifact)"
+    ],
+    "files_touched": [
+      "concept-07-compendium-workspace.css"
+    ]
+  }
 }

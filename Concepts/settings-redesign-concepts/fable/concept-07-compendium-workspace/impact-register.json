@@ -37,7 +37,7 @@
     {
       "owner": "Settings schema/registry",
       "kind": "conflicts",
-      "evidence": "The harness deep-link probe setting system.health.diagnostics-verbosity does not exist in pm2-inventory (828 rows); the concept lands honestly on System & Advanced with an explanation instead. The census between the rev-2 dataset and the pm2 inventory should be reconciled before the probe id is treated as canonical."
+      "evidence": "The legacy rev-2 probe id system.health.diagnostics-verbosity does not exist in pm2-inventory (828 rows); the concept lands honestly on System & Advanced with an explanation instead. boot-check now probes both that stale id (honest fallback) and the real system.health.platform-diagnostics (exact landing with focus + pm2-located) — c07 passes both. The census between the rev-2 dataset and the pm2 inventory should still be reconciled."
     }
   ],
   "concept_local_state": [

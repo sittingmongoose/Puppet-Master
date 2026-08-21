@@ -7,6 +7,24 @@
    Motion: gentle scale/fade only — nothing slides far. All transitions are
    killed by the three pm-shell reduced-motion switches automatically. */
 
+/* ================= on-accent ink ================= */
+/* Anything painted ON an --accent-primary fill (primary button label, the
+   category-tile tick) needs a foreground chosen against that fill, not against
+   the page. The old `var(--background)` was the page ground, so it only ever
+   worked where the ground happens to contrast with the accent — the four dark
+   faces and the two whose accent is a deep blue. In friendly-light and
+   glass-light the accent is mid-luminance, so the label came out near-white on
+   light blue / lavender and measured 1.7:1 and 1.6:1.
+   The ink below is 12% of each face's OWN accent over black — a dark, hue-
+   matched ink — measured against that face's --accent-primary:
+     retro-dark 12.87:1 · basic-dark 8.27:1 · glass-dark 8.05:1
+     friendly-dark 9.39:1 · friendly-light 6.10:1 · glass-light 4.86:1
+   retro-light (#0047AB) and basic-light (#0056B3) are deep enough to want the
+   light ink instead; --surface-elevated gives 7.89:1 and 7.04:1 there. */
+:root { --c08-on-accent: color-mix(in srgb, var(--accent-primary) 12%, #000); }
+[data-theme="retro-light"],
+[data-theme="basic-light"] { --c08-on-accent: var(--surface-elevated); }
+
 /* ================= stage & root ================= */
 
 .c08-root {
@@ -117,7 +135,11 @@
 
 /* ================= page enter motion (gentle scale/fade) ================= */
 
-.c08-page { flex: 1 1 auto; padding-bottom: 72px; }
+/* Trailing breathing room. Trimmed from 72px: the 48px States-dot safe band
+   below the scroller (see "bottom-right corner safety" at the foot of this
+   file) now carries the rest, so the whitespace between the last row and the
+   statusbar is unchanged at 72px total. */
+.c08-page { flex: 1 1 auto; padding-bottom: 24px; }
 .c08-enter { animation: c08-enter var(--motion-med) var(--ease-out) 1; }
 @keyframes c08-enter {
   0% { opacity: 0; transform: scale(.988); }
@@ -219,7 +241,10 @@
   left: 0;
   right: 0;
   z-index: 140;
-  max-height: min(58vh, 560px);
+  /* 58vh less the 48px States-dot safe band at the foot of the scroller, so a
+     long result list still ends above the scroll edge on short windows rather
+     than being clipped by it; the panel scrolls internally either way. */
+  max-height: min(58vh - 48px, 512px);
   overflow: auto;
   background: var(--surface-elevated);
   border: 1px solid var(--border);
@@ -756,18 +781,29 @@
   transition: background var(--motion-fast) var(--ease-default),
               transform var(--motion-fast) var(--ease-default);
 }
-.c08-btn:hover { background: var(--accent-soft); }
-.c08-btn:active { transform: scale(.985); }
+.c08-btn:hover:not([disabled]) { background: var(--accent-soft); }
+.c08-btn:active:not([disabled]) { transform: scale(.985); }
 .c08-btn i[data-ico] { width: 15px; height: 15px; }
-.c08-btn[disabled] { opacity: .55; cursor: not-allowed; }
+/* Disabled used to be a .55-opacity crush of the enabled skin. Opacity
+   composites the WHOLE control toward whatever is behind it, so both the fill
+   and the label drift to the ground colour and the label's own contrast
+   collapses (measured 1.6-2.0:1 in the light faces even after the ink fix).
+   Paint the state from tokens instead: quiet, flat, and readable everywhere. */
+.c08-btn[disabled] {
+  cursor: not-allowed;
+  background: var(--surface-alt);
+  border-color: var(--border);
+  color: var(--text-muted);
+  box-shadow: none;
+}
 .c08-btn-primary {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
-  color: var(--background);
+  color: var(--c08-on-accent);
 }
-.c08-btn-primary:hover { background: color-mix(in srgb, var(--accent-primary) 86%, var(--text-primary)); }
+.c08-btn-primary:hover:not([disabled]) { background: color-mix(in srgb, var(--accent-primary) 86%, var(--text-primary)); }
 .c08-btn-quiet { border-color: transparent; background: transparent; color: var(--text-secondary); }
-.c08-btn-quiet:hover { color: var(--text-primary); background: var(--accent-soft); }
+.c08-btn-quiet:hover:not([disabled]) { color: var(--text-primary); background: var(--accent-soft); }
 
 /* toggle switch */
 .c08-switch {
@@ -803,7 +839,11 @@
   background: var(--accent-primary);
   border-color: var(--accent-primary);
 }
-.c08-switch[aria-checked="true"]::after { left: 23px; background: var(--background); }
+/* Checked knob sits ON the accent track, so it takes the on-accent ink for the
+   same reason the primary button's label does — var(--background) was the page
+   ground and left the knob at 2.75:1 against the track in glass-light, under
+   the 3:1 bar for a UI component. */
+.c08-switch[aria-checked="true"]::after { left: 23px; background: var(--c08-on-accent); }
 .c08-switch[disabled] { opacity: .5; cursor: not-allowed; }
 
 /* select trigger + popup menu (PM popup family: layered, Esc, flip) */
@@ -1305,6 +1345,15 @@
   gap: 6px;
   flex-wrap: wrap;
 }
+/* A step and the connector that leads INTO it are one cell, so a wrap can
+   never strand a chevron at the end of a row pointing into empty space (which
+   is what a flat sep-as-sibling row did at 760: three pills + a dangling '>',
+   then step 4 alone on row two with no connector before it). */
+.c08-copy-step-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 .c08-copy-step {
   display: inline-flex;
   align-items: center;
@@ -1325,7 +1374,17 @@
 }
 .c08-copy-step[data-state="done"] { color: var(--text-secondary); }
 .c08-copy-step[data-state="done"] .c08-step-n { border-color: var(--accent-primary); color: var(--accent-primary); }
-.c08-copy-step-sep { color: var(--text-muted); opacity: .5; }
+.c08-copy-step-sep { display: inline-flex; color: var(--text-muted); opacity: .5; }
+/* Below the width where all four cells comfortably share a line, the
+   connectors come off entirely rather than leading a wrapped row, and the
+   numbered pills carry the sequence on their own. Measured single-row
+   thresholds with connectors shown: friendly 768px, retro 773px, glass 840px,
+   basic 927px — so 1000px (the shell's own narrow breakpoint) clears the
+   widest face with room for font-metric drift. */
+@media (max-width: 1000px) {
+  .c08-copy-step-sep { display: none; }
+  .c08-copy-steps { gap: 8px; }
+}
 
 .c08-src-grid {
   margin-top: 18px;
@@ -1392,7 +1451,7 @@
   height: 20px;
   border: 1px solid var(--border);
   border-radius: var(--radius-xs);
-  color: var(--background);
+  color: var(--c08-on-accent);   /* the tick sits on the accent fill below */
 }
 .c08-cat-tile[aria-pressed="true"] .c08-cat-tile-box { background: var(--accent-primary); border-color: var(--accent-primary); }
 .c08-cat-tile-box i[data-ico] { width: 13px; height: 13px; visibility: hidden; }
@@ -1528,3 +1587,54 @@
   outline: 2px solid var(--accent-primary);
   outline-offset: 1px;
 }
+
+/* ================= shell page-tab overflow (visual-audit fix) =================
+   At 760px the titlebar nav used to clip 'Usage' mid-glyph (friendly), drop
+   Usage+Settings at an item boundary (basic), or shave the active Settings pill
+   to a sliver (retro). Inactive tabs may ellipsize; the active tab never shrinks
+   and stays fully visible at every width in every theme. */
+
+.pm-page-tabs { min-width: 0; overflow: hidden; }
+.pm-page-tab {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pm-page-tab.is-active { flex-shrink: 0; }
+
+/* ================= bottom-right corner safety (visual-audit fix, round 2) ====
+   The States drawer button is a shared test-harness affordance, position:fixed
+   at the viewport's bottom-right (a 42x32 box, inset 16px right / 34px bottom)
+   with z-index 9000, so it hovers over whatever the content column paints in
+   that corner — at EVERY scroll offset, not only at the end of the list. The
+   audit caught it covering the value chip of the last in-view All Settings row
+   ('Text Size' at 1280, 'UI Scale' at 760): a chip is that row's only displayed
+   value, so covering it hides the setting's state outright.
+
+   Bottom padding does not fix this. Padding lives inside the scroll box and
+   scrolls with the content, so it only ever clears the very last row. Shorten
+   the scroll VIEWPORT instead: this concept scrolls the shell stage directly,
+   so a bottom margin on the stage lifts the scroll edge clear of the button.
+   34px button offset + 32px button height - 24px statusbar = 42px of real
+   intrusion, plus 6px of clearance = 48px. Nothing is lost — the band sits
+   outside the scroll viewport, so rows that used to pass under the dot now
+   simply scroll above it, and the band paints the same var(--background) as
+   .pm-shell and .c08-root (transparent alike under the glass themes), so the
+   column reads unbroken down to the statusbar. */
+
+.pm-stage {
+  margin-bottom: 48px;
+  /* The band moves the scroll edge 48px up the column, so the row it cuts is
+     no longer flush against the statusbar; fading the last 22px reads that
+     edge as "more below" instead of as a bisected row. Cheap, theme-neutral
+     (it masks whatever the theme paints) and clear of the only
+     backdrop-filter layer in the shell, which lives in the titlebar. The one
+     position:fixed descendant, the toast host, is re-parented to <body> in
+     the concept JS so the mask's containing block does not capture it. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent 100%);
+}
+/* the copy flow's sticky action bar rests above the fade rather than inside
+   it, so its buttons never dim at the scroll edge */
+.c08-copy-bar { bottom: 22px; }

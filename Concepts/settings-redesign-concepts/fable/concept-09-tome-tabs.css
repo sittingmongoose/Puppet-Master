@@ -25,8 +25,24 @@
 
 /* ================= chapter spine (right edge) ================= */
 
+/* wrap: a non-scrolling shell around the spine. It carries the edge-fade
+   masks in narrow mode (masks on the scroller itself would travel with the
+   scrolled content) and lets the spine shrink-to-fit its labels. */
+.c09-spine-wrap {
+  flex: 0 0 auto;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Font-tolerant width: every theme font sets its own measure, so the spine
+   sizes to its widest chapter label (clamped) instead of a fixed 148px that
+   only fit the friendly font. */
 .c09-spine {
-  flex: 0 0 148px;
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 148px;
+  max-width: 244px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -77,9 +93,14 @@
 .c09-tab-ico i[data-ico] { width: 15px; height: 15px; }
 .c09-tab-label {
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+  /* The spine is content-sized now, so labels always fit; ellipsis is gone
+     because the widest label DEFINES the intrinsic width, and LayoutUnit
+     rounding of that exact equality used to render a spurious 'Extensio...'.
+     Overflow clips at the padding box, so the 3px pad absorbs any subpixel
+     shortfall invisibly. */
+  padding-right: 3px;
 }
 .c09-tab-home { margin-bottom: 2px; }
 .c09-spine-rule {
@@ -952,6 +973,20 @@
 .c09-menu-item[aria-checked="true"] { font-weight: 700; }
 .c09-menu-label { flex: 1; min-width: 0; }
 .c09-menu-note { color: var(--text-muted); font-size: var(--fs-xs); }
+/* action menu items: leading icon instead of a check mark, and an optional
+   caption block bound to its own item (e.g. why an action is unavailable) */
+.c09-menu-ico { display: inline-flex; width: 14px; flex: none; color: var(--text-muted); margin-top: 1px; }
+.c09-menu-ico i[data-ico] { width: 13px; height: 13px; }
+.c09-menu-item.has-sub { align-items: flex-start; }
+.c09-menu-sub {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+}
 
 /* ================= manager pages ================= */
 
@@ -972,8 +1007,22 @@
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border-light);
 }
-.c09-action-off { display: flex; flex-direction: column; gap: 3px; max-width: 260px; }
+/* an unavailable action renders as one bordered card: button + its caption
+   stay visually bound, so the caption never floats between unrelated buttons */
+.c09-action-off {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 300px;
+  padding: 8px 10px;
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--surface-alt);
+}
+.c09-action-off .c09-btn { align-self: flex-start; }
 .c09-action-reason { color: var(--text-muted); font-size: var(--fs-2xs); line-height: 1.4; }
+.c09-action-menu .c09-caret { width: 6px; height: 6px; color: var(--text-muted); margin-left: 2px; }
+.c09-action-menu .c09-badge { margin-left: 2px; }
 
 .c09-mtabs {
   display: flex;
@@ -1542,9 +1591,16 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
    The shell rail never overlays this content. */
 
 .c09-root.is-narrow { flex-direction: column; }
-.c09-root.is-narrow .c09-spine {
+.c09-root.is-narrow .c09-spine-wrap {
   order: -1;
   flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+}
+.c09-root.is-narrow .c09-spine {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: none;
   flex-direction: row;
   align-items: stretch;
   gap: 2px;
@@ -1554,6 +1610,22 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
   overflow-y: hidden;
   border-left: none;
   border-bottom: 1px solid var(--border-light);
+}
+/* edge fades: JS stamps has-left/has-right on the wrap while more chapter
+   tabs continue past that edge, so the strip never hard-clips mid-glyph
+   without an affordance. Masks fade to transparent, so every theme
+   (including glass) shows its own backdrop through the fade. */
+.c09-root.is-narrow .c09-spine-wrap.has-right {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent);
+}
+.c09-root.is-narrow .c09-spine-wrap.has-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 34px);
+  mask-image: linear-gradient(to right, transparent, #000 34px);
+}
+.c09-root.is-narrow .c09-spine-wrap.has-left.has-right {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 34px, #000 calc(100% - 34px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 34px, #000 calc(100% - 34px), transparent);
 }
 .c09-root.is-narrow .c09-tab {
   width: auto;
@@ -1594,3 +1666,15 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
   .c09-body { max-width: 980px; }
   .c09-manager.c09-body, .c09-all.c09-body { max-width: 1240px; }
 }
+
+/* ================= shell page-tab overflow guard =================
+   At narrow widths the friendly-font titlebar nav hard-clipped 'Usage' mid-word
+   ('Us') and cut 'Settings' entirely. The first pass here ellipsized inactive
+   tabs, which at 760 collapsed them to one-character stubs ('Da…', 'W…').
+   Whole-tab dropping now lives in _shared2/pm2-tokens.css, which owns the
+   shared fake-shell chrome for every concept that loads it and supersedes
+   these rules (specificity 0,2,0). Kept here as a no-stub floor so the strip
+   still clips whole rather than mid-glyph if that layer is ever absent. */
+.pm-page-tabs { min-width: 0; overflow: hidden; }
+.pm-page-tab { min-width: 0; overflow: hidden; text-overflow: clip; white-space: nowrap; }
+.pm-page-tab.is-active { flex-shrink: 0; }

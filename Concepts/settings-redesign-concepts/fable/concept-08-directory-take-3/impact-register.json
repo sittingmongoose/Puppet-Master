@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "c08-beacon",
+  "stem": "concept-08-directory-take-3",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "note": "Concept register only — nothing here edits canon; the implementation audit adjudicates. Beacon is the broad, airy directory take: seven large Home cards over the 12 inventory categories, summary-first provider manager, full-width copy flow.",
+  "home_card_mapping": {
+    "note": "The packet requires a complete documented mapping when Home shows fewer domains than the 12 inventory categories. This is that mapping; it is also rendered live on the Home cards (every category appears as a destination row with its count on exactly one card, and all 12 #/dest/<cat> routes stay first-class).",
+    "cards": [
+      { "card": "Everyday & Appearance", "categories": ["general"] },
+      { "card": "Providers & AI", "categories": ["ai"] },
+      { "card": "Safety", "categories": ["safety"] },
+      { "card": "Code & Collaboration", "categories": ["code", "branching"] },
+      { "card": "Planning & Memory", "categories": ["planning", "memory", "personas"] },
+      { "card": "Web & Media", "categories": ["web", "media"] },
+      { "card": "Extensions & System", "categories": ["extensions", "system"] }
+    ]
+  },
+  "plan_owner_impacts": [
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "kind": "extends",
+      "evidence": "Beacon proves the spacious-directory composition: a bounded 1480px measure that stays composed at 2500px, seven icon/title/purpose cards with category sub-listings, a hero search over content, one scenario-gated critical banner, and a compact attention list. Motion is gentle scale/fade only (c08-enter, card lift); deep pages keep a sticky beacon bar (named Back, breadcrumb, persistent search, Close Settings)."
+    },
+    {
+      "owner": "Plans/settings_inventory.json",
+      "kind": "extends + conflicts",
+      "evidence": "All 828 rows render from PM2_INVENTORY via store.resolveRow/rowsFor; browsing reaches every row (subgroup sections + per-subgroup advanced disclosure). CONFLICT: the rev-2 canonical deep-link probe id system.health.diagnostics-verbosity is absent from this inventory; Beacon renders an honest 'not in this project's settings' surface for stale ids and lands system.health.platform-diagnostics exactly. The census discrepancy between probe registries and the inventory should be resolved before new ids are minted."
+    },
+    {
+      "owner": "Plans/Provider system owners (Models_System.md / CLI_Bridged_Providers.md / Multi-Account.md)",
+      "kind": "extends",
+      "evidence": "Summary-first provider pages answer the human questions as a status-card grid (connected, account in use, included, usage-end behavior, models, setup/repair) with the what-next ladder, before any tabbed detail. Explicit quick actions are honest: Set up appears only with a real setupOffer, Repair only when an installation truly offers repair, the local Ollama update stays refused with the manual-only reason, and the Cursor CLI setup tab renders official source + exact host/environment choice with sign-in as a separate step."
+    },
+    {
+      "owner": "Plans/Project copy owner (packet section 04)",
+      "kind": "extends",
+      "evidence": "The copy transaction as a FULL-WIDTH page: steps across the top, selectable category tiles with counts, wide preview table (add/replace/unchanged/unavailable/conflict per row with current/incoming values and notes), credential-by-reference note, sticky confirm bar naming the restore point, staged atomic apply with verify, receipt with working rollback (walked end-to-end: 11 adds applied and restored exactly). One-time language throughout; no sync affordance exists."
+    },
+    {
+      "owner": "Plans/UI_Command_Catalog.md",
+      "kind": "extends",
+      "evidence": "Navigation is exclusively dest-object routing through PM2.route (cmd.settings.navigate family); search selection routes by rid only. The locate step resolves a focus rid back through PM2.search.resolveRid because the URL grammar carries manager/object/tab but not sectionId — a real contract detail the command family should record."
+    },
+    {
+      "owner": "Plans/Permissions_System.md",
+      "kind": "reuses",
+      "evidence": "Permissions & FileSafe renders from the shared manager view model in Beacon's grammar (status cards + rows + advanced drawers); managed rows carry origin in Details. No new permission semantics are minted here."
+    },
+    {
+      "owner": "Settings schema/registry",
+      "kind": "extends",
+      "evidence": "Row states normal/managed/unavailable/restart-required/reconnect-required/changed-elsewhere/error all render with state notes and silhouette-differentiated chips; interactive controls suppress value-echo chips so the chip vocabulary carries only extra meaning (managed, unavailable, differs, recommended, not-set)."
+    },
+    {
+      "owner": "Wiring matrix owner",
+      "kind": "extends",
+      "evidence": "Keystone traces registered in candidate-wiring-delta.json, all flagged concept_local_state: value set with validation, search landing sequence, copy preview/apply/rollback, provider triggers, missing-setting fallback."
+    },
+    {
+      "owner": "Plans/FinalGUISpec.md Theme System Addendum",
+      "kind": "reuses",
+      "evidence": "Token-only styling across all 8 themes (verified in glass-light and retro-dark); one backdrop-filter layer total (the shared titlebar); reduced-motion behavior relies on the three pm-shell kill switches and no JS transitionend dependency."
+    },
+    {
+      "owner": "Slint 1.17.1 portability owner",
+      "kind": "extends",
+      "evidence": "Explicit ui state machine (view/menu/search/copy/all facets), stable model ids everywhere, All Settings windowed at ~27 live rows against 2,828 records under stress, popup menus and drawers as data-driven state — no DOM-geometry-derived semantics."
+    }
+  ]
+}

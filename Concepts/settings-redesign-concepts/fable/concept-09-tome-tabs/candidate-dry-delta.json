@@ -1,0 +1,314 @@
+{
+ "schema_id": "pm.settings_candidate_dry_delta.v1",
+ "concept_id": "concept-09-tome-tabs",
+ "model": "fable",
+ "note": "DRY census for c09: what is shared-headless vs concept-native per family. Provisional; single-owner boundaries (ResourceGovernor, ObservableWork, doom-loop, FileSafe floor) are consumed read-only through m.dry and never re-implemented.",
+ "entries": [
+  {
+   "family": "Settings Home",
+   "status": "demonstrated",
+   "concept_component": "renderHome (hero search, attention incl. fixture notices, 12-chapter TOC, subordinate utilities)",
+   "variance_notes": "Concept-native composition; data from store.counts/attention/recents + data.notices. No shared HTML."
+  },
+  {
+   "family": "Settings Search",
+   "status": "demonstrated",
+   "concept_component": "c09 search component (per-layer field, anchored dropdown, rid routing, back-restore via #/search route)",
+   "variance_notes": "Index and scoring are shared-headless (PM2.search); presentation, grouping, keyboard model, and landing choreography are concept-native."
+  },
+  {
+   "family": "Settings Workspace",
+   "status": "demonstrated",
+   "concept_component": "layer stack machine (planFor/renderStack) + renderDomain chapter pages",
+   "variance_notes": "Layered depth with named under-edges is unique to c09; sibling concepts must not share this geometry."
+  },
+  {
+   "family": "Ordinary setting grammar",
+   "status": "demonstrated",
+   "concept_component": "rowHtml/controlHtml/drawerHtml over store.resolveRow",
+   "variance_notes": "THE shared row view model renders through concept-native markup: chips, status words, inline controls, details drawer."
+  },
+  {
+   "family": "Provider / Account / Model / Installation",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.providers",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Context & Instructions",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.context",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Memory",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.memory",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Personas",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.personas",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Goal & Automation",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.goal",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Crew",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.crew",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Permissions & FileSafe",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.permissions",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Back Seat Driver",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.bsd",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Notifications & Sounds",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.notifications",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Sound Library / Uploads / Packs",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: generic table/card sections with detail drawers for m.sounds",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Appearance / themes / fonts / motion",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.appearance",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Spellcheck & Dictionaries",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.spellcheck",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Desktop / Tray / Window",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.desktop",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Teacher / Help",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: generic table/card sections with detail drawers for m.teacher",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Doctor",
+   "status": "demonstrated",
+   "concept_component": "c09 healthHtml status-word checks for m.doctor",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "File Manager / Editor",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.files",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Terminal",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.terminal",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "LSP",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.lsp",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Formatters",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: generic table/card sections with detail drawers for m.formatters",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Commands & Shortcuts",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: generic table/card sections with detail drawers for m.commands",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "MCP",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.mcp",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Skills",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: generic table/card sections with detail drawers for m.skills",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Plugins",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: generic table/card sections with detail drawers for m.plugins",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Tools",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: generic table/card sections with detail drawers for m.tools",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Testing & Debug",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: sectioned document + local section-tab row (documentModeHtml) for m.testing",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Storage & Retention",
+   "status": "demonstrated",
+   "concept_component": "c09 healthHtml status-word checks for m.storage",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Backup & Restore",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.backup",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Settings Lifecycle",
+   "status": "demonstrated",
+   "concept_component": "c09 previewHtml staged-transaction rendering + ops strip for m.lifecycle",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "History & Sessions",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.history",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Runtime Artifacts / Project Outputs",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.artifacts",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Source Control / Worktrees",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.sourceControl",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "GitHub Actions",
+   "status": "demonstrated",
+   "concept_component": "c09 healthHtml status-word checks for m.actions",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Containers & Registries",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.containers",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Web / Search / Fetch / Crawl",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.web",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Project Search Index",
+   "status": "demonstrated",
+   "concept_component": "c09 healthHtml status-word checks for m.searchIndex",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Workspace Cleanup",
+   "status": "demonstrated",
+   "concept_component": "c09 previewHtml staged-transaction rendering + ops strip for m.cleanup",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Media & Output",
+   "status": "demonstrated",
+   "concept_component": "c09 manager layer: roster rail + tabbed object detail (objectDetailHtml/rosterRailHtml) for m.media",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "DRY Method visible state where exposed",
+   "status": "demonstrated",
+   "concept_component": "c09 healthHtml status-word checks for m.dry",
+   "variance_notes": "View model from shared def.model(store) (single source of truth); rendering, tabs, drawers, and motion are c09-native. Actions via shared def.actions -> truthful ops."
+  },
+  {
+   "family": "Product Onboarding",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.onboarding",
+   "variance_notes": "No fabricated backend: owner named (Product Onboarding owner thread (first-run flow owner; separ…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Installation / Deployment",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.deployment",
+   "variance_notes": "No fabricated backend: owner named (Release_Supply_Chain.md (installer and deployment supply cha…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Server Claim / Bootstrap",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.serverClaim",
+   "variance_notes": "No fabricated backend: owner named (Server Backbone return (Post-Return Reconciliation v6)…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Servers / Execution Hosts / Clients",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.servers",
+   "variance_notes": "No fabricated backend: owner named (Server Backbone return (Post-Return Reconciliation v6, secti…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Project Hosting & Files",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.hosting",
+   "variance_notes": "No fabricated backend: owner named (storage-plan.md…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Remote Access",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.remote",
+   "variance_notes": "No fabricated backend: owner named (Server Backbone return, section 10…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Project Sync / Move",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.projectSync",
+   "variance_notes": "No fabricated backend: owner named (storage-plan.md (Project Sync owner)…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Puppet Master application/content updates",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.appUpdates",
+   "variance_notes": "No fabricated backend: owner named (Release_Supply_Chain.md…), return contract rendered verbatim, zero actions."
+  },
+  {
+   "family": "Full Server backup owner flow",
+   "status": "deferred_named_owner",
+   "concept_component": "c09 deferredShellHtml (owner card + insertion contract + read-only sections) for m.serverBackup",
+   "variance_notes": "No fabricated backend: owner named (storage-plan.md…), return contract rendered verbatim, zero actions."
+  }
+ ]
+}

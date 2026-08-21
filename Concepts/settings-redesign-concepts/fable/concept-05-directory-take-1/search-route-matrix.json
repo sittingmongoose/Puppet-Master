@@ -1,0 +1,513 @@
+{
+  "schema": "pm2.search_route_matrix.v1",
+  "conceptId": "c05",
+  "concept": "Waypoint",
+  "stem": "concept-05-directory-take-1",
+  "generated": "2026-08-20",
+  "method": "Every case walked live in headless Chromium via the sandbox CDP driver: query typed into the Home hero field, result picked from the anchored dropdown by rid, landing inspected (route stamp, located element, focus, pm2-located), then history.back() checked for query+results restoration on the #/search surface.",
+  "note": "The rev-2 probe id system.health.diagnostics-verbosity is absent from PM2_INVENTORY; the real probe row is system.health.platform-diagnostics (deep-link case recorded in test-evidence.json). Unknown setting addresses render an honest not-found search surface.",
+  "cases": [
+    {
+      "query": "notifcations",
+      "caseKind": "typo -> setting",
+      "rid": "s:general.interaction.notifications-enabled",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Interaction & Defaults",
+        "Notifications"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "general",
+        "sub": "interaction",
+        "settingId": "general.interaction.notifications-enabled"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=setting/general.interaction.notifications-enabled located=div data-setting-id=general.interaction.notifications-enabled",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "apperance",
+      "caseKind": "typo -> manager",
+      "rid": "m:m.appearance",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Appearance"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "general",
+        "managerId": "m.appearance"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.appearance located=button data-manager=m.appearance",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "permisions",
+      "caseKind": "typo -> setting",
+      "rid": "s:safety.rules.permission-preset",
+      "path": [
+        "Settings",
+        "Permissions & Safety",
+        "Rules & Presets",
+        "Permission Preset"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "safety",
+        "sub": "rules",
+        "settingId": "safety.rules.permission-preset"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=setting/safety.rules.permission-preset located=div data-setting-id=safety.rules.permission-preset",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "api key",
+      "caseKind": "duplicate-label credential (Anthropic)",
+      "rid": "o:m.providers/claude.key",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "API key"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "accounts",
+        "sectionId": "acct.claude-api",
+        "cat": "ai"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.providers/claude/accounts located=div data-item-id=acct.claude-api",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "api key",
+      "caseKind": "duplicate-label credential (OpenRouter)",
+      "rid": "o:m.providers/openrouter.key",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "OpenRouter",
+        "API key"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "openrouter",
+        "tab": "accounts",
+        "cat": "ai"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.providers/openrouter/accounts located=button data-object-id=openrouter data-manager=m.providers",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "rate limits",
+      "caseKind": "duplicate-label limits page",
+      "rid": "o:m.providers/antigravity.limits",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Antigravity CLI",
+        "Rate limits"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "antigravity",
+        "tab": "limits",
+        "cat": "ai"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.providers/antigravity/limits located=button data-object-id=antigravity data-manager=m.providers",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "flux capacitor",
+      "caseKind": "no results",
+      "rid": null,
+      "path": null,
+      "dest": null,
+      "expectedLanding": "honest empty state, no dead end",
+      "actualLanding": "dropdown explains: No matches for “flux capacitor”.Check the spelling, try a different word, or browse the co",
+      "focus": "n/a",
+      "highlight": "n/a",
+      "backRestores": "n/a",
+      "pass": true
+    },
+    {
+      "query": "wsl",
+      "caseKind": "unavailable capability with reason",
+      "rid": "u:env.win.wsl",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Servers & Hosts",
+        "This computer (Windows)",
+        "Linux through WSL (Ubuntu)"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "system",
+        "managerId": "m.servers",
+        "objectId": "host.win-desktop",
+        "reason": "Off is healthy. Using Windows tools only. Setup appears only when a selected capability needs Linux."
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located; availability reason shown",
+      "actualLanding": "route=manager/m.servers/host.win-desktop located=header class=c05-mgr-head availNote=\"Not availableLinux through WSL (Ubuntu) — Off is healthy. Using Windows tools on\"",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "set up cursor",
+      "caseKind": "setup workflow",
+      "rid": "w:setup.cursor-cli",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Cursor CLI",
+        "Set up Cursor CLI"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers",
+        "objectId": "cursor-cli",
+        "tab": "setup"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.providers/cursor-cli/setup located=button data-object-id=cursor-cli data-manager=m.providers",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "sign in",
+      "caseKind": "sign-in workflow",
+      "rid": "w:signin.antigravity",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Antigravity CLI",
+        "Sign in to Antigravity CLI"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers",
+        "objectId": "antigravity",
+        "tab": "accounts"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located; availability reason shown",
+      "actualLanding": "route=manager/m.providers/antigravity/accounts located=button data-object-id=antigravity data-manager=m.providers availNote=\"Not availableSign in to Antigravity CLI — An account is signed out on this machi\"",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "default model",
+      "caseKind": "exact setting",
+      "rid": "s:ai.models.default-model",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "Models & Defaults",
+        "Default Model"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "ai",
+        "sub": "models",
+        "settingId": "ai.models.default-model"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=setting/ai.models.default-model located=div data-setting-id=ai.models.default-model",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "theme",
+      "caseKind": "grouped kinds for one query",
+      "rid": "s:general.visual.theme",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Visual Style",
+        "Theme"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "general",
+        "sub": "visual",
+        "settingId": "general.visual.theme"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=setting/general.visual.theme located=div data-setting-id=general.visual.theme",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "providers",
+      "caseKind": "manager",
+      "rid": "m:m.providers",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.providers located=button data-object-id=claude data-manager=m.providers",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "worktree",
+      "caseKind": "deep object row (worktree)",
+      "rid": "o:m.sourceControl/wt.fix-scrollspy",
+      "path": [
+        "Settings",
+        "Branching & Collaboration",
+        "Source Control & Worktrees",
+        "fix/scrollspy-deadband"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.sourceControl",
+        "objectId": "wt.fix-scrollspy",
+        "cat": "branching"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.sourceControl/wt.fix-scrollspy located=header class=c05-mgr-head",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "sound pack",
+      "caseKind": "deep object row (sound pack)",
+      "rid": "o:m.sounds/pack.openpeon-vol2",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Sound Library",
+        "OpenPeon Vol. 2"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.sounds",
+        "sectionId": "pack.openpeon-vol2",
+        "cat": "general"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.sounds located=div data-item-id=pack.openpeon-vol2",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "installation",
+      "caseKind": "deep object row (installation)",
+      "rid": "o:m.providers/antigravity.inst.inst.antigravity.installer",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Antigravity CLI",
+        "Antigravity CLI (official installer) installation"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "antigravity",
+        "tab": "installs",
+        "sectionId": "inst.inst.antigravity.installer",
+        "cat": "ai"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.providers/antigravity/installs located=div data-item-id=inst.inst.antigravity.installer",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "doctor",
+      "caseKind": "diagnostic / health",
+      "rid": "m:m.doctor",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Doctor"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "system",
+        "managerId": "m.doctor"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.doctor located=button data-manager=m.doctor",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "explain",
+      "caseKind": "help topic (Teacher)",
+      "rid": "h:teach.last-match-wins",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Teacher & Help",
+        "Why the last matching rule wins"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.teacher",
+        "sectionId": "teach.last-match-wins",
+        "cat": "general"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.teacher located=div data-item-id=teach.last-match-wins",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "context",
+      "caseKind": "manager (memory domain)",
+      "rid": "m:m.context",
+      "path": [
+        "Settings",
+        "Memory & Context",
+        "Context & Instructions"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "memory",
+        "managerId": "m.context"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.context located=button data-manager=m.context",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "crawl pages",
+      "caseKind": "exact setting (number)",
+      "rid": "s:web.fetch.crawl-max-pages",
+      "path": [
+        "Settings",
+        "Web & Search",
+        "Fetch & Crawl Policy",
+        "Crawl: Max Pages"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "web",
+        "sub": "fetch",
+        "settingId": "web.fetch.crawl-max-pages"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=setting/web.fetch.crawl-max-pages located=div data-setting-id=web.fetch.crawl-max-pages",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "run token budget",
+      "caseKind": "exact setting (validated number)",
+      "rid": "s:memory.limits.run-token-budget",
+      "path": [
+        "Settings",
+        "Memory & Context",
+        "Limits & Budgets",
+        "Per-Run Token Budget"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "memory",
+        "sub": "limits",
+        "settingId": "memory.limits.run-token-budget"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=setting/memory.limits.run-token-budget located=div data-setting-id=memory.limits.run-token-budget",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "backup",
+      "caseKind": "manager (system domain)",
+      "rid": "m:m.backup",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Backup & Restore"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "system",
+        "managerId": "m.backup"
+      },
+      "expectedLanding": "route per dest; exact element scrolled, focused, calm pm2-located",
+      "actualLanding": "route=manager/m.backup located=button data-manager=m.backup",
+      "focus": true,
+      "highlight": true,
+      "backRestores": true,
+      "pass": true
+    }
+  ]
+}

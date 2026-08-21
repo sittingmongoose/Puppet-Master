@@ -1,0 +1,493 @@
+{
+  "schema": "pm2.search_route_matrix.v1",
+  "conceptId": "concept-06-directory-take-2",
+  "generated": "2026-08-20",
+  "method": "Every case walked live over CDP against the built page (this file records what actually happened, including any failures).",
+  "cases": [
+    {
+      "query": "api key",
+      "rid": "s:ai.accounts.anthropic-api-key",
+      "caseKind": "grouped+deep-row",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "Accounts & Sign-in",
+        "Anthropic API Key"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "ai",
+        "sub": "accounts",
+        "settingId": "ai.accounts.anthropic-api-key"
+      },
+      "expectedLanding": "ai/accounts row anthropic-api-key",
+      "actualLanding": "route=setting/ai.accounts.anthropic-api-key; pm2-located on ai.accounts.anthropic-api-key",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "api key",
+      "rid": "o:m.providers/claude.key",
+      "caseKind": "duplicate-label credential",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "API key"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "accounts",
+        "sectionId": "acct.claude-api",
+        "cat": "ai"
+      },
+      "expectedLanding": "m.providers claude accounts sheet, acct.claude-api anchor",
+      "actualLanding": "route=manager/m.providers/claude/accounts; pm2-located on acct.claude-api",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "api key",
+      "rid": "o:m.providers/openrouter.key",
+      "caseKind": "duplicate-label credential",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "OpenRouter",
+        "API key"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "openrouter",
+        "tab": "accounts",
+        "cat": "ai"
+      },
+      "expectedLanding": "m.providers openrouter accounts sheet",
+      "actualLanding": "route=manager/m.providers/openrouter/accounts; pm2-located on openrouter",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "rate limit",
+      "rid": "o:m.providers/claude.limits",
+      "caseKind": "duplicate-label page",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "Rate limits"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "limits",
+        "cat": "ai"
+      },
+      "expectedLanding": "m.providers claude limits tab",
+      "actualLanding": "route=manager/m.providers/claude/limits; pm2-located on claude",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "rate limit",
+      "rid": "o:m.providers/copilot.limits",
+      "caseKind": "duplicate-label page",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "GitHub Copilot",
+        "Rate limits"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "copilot",
+        "tab": "limits",
+        "cat": "ai"
+      },
+      "expectedLanding": "m.providers copilot limits tab",
+      "actualLanding": "route=manager/m.providers/copilot/limits; pm2-located on copilot",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "notifcations",
+      "rid": "s:general.interaction.notifications-enabled",
+      "caseKind": "typo probe",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Interaction & Defaults",
+        "Notifications"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "general",
+        "sub": "interaction",
+        "settingId": "general.interaction.notifications-enabled"
+      },
+      "expectedLanding": "general/interaction row notifications-enabled",
+      "actualLanding": "route=setting/general.interaction.notifications-enabled; pm2-located on general.interaction.notifications-enabled",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "apperance",
+      "rid": "m:m.appearance",
+      "caseKind": "typo probe -> manager",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Appearance"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "general",
+        "managerId": "m.appearance"
+      },
+      "expectedLanding": "m.appearance manager page",
+      "actualLanding": "route=manager/m.appearance; pm2-located on element:c06-h1",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "permisions",
+      "rid": "m:m.permissions",
+      "caseKind": "typo probe -> manager",
+      "path": [
+        "Settings",
+        "Permissions & Safety",
+        "Permissions & FileSafe"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "safety",
+        "managerId": "m.permissions"
+      },
+      "expectedLanding": "m.permissions manager page",
+      "actualLanding": "route=manager/m.permissions; pm2-located on element:c06-h1",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "flux capacitor",
+      "rid": null,
+      "caseKind": "no-results probe",
+      "path": [],
+      "dest": null,
+      "expectedLanding": "no navigation; guidance empty state in dropdown",
+      "actualLanding": "guidance shown: No matches for “flux capacitor”.Nothing in settings, managers, accounts, actions, or help ",
+      "focus": "stays in the search field",
+      "highlight": "none (no navigation)",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "cursor cli",
+      "rid": "w:setup.cursor-cli",
+      "caseKind": "setup workflow",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Cursor CLI",
+        "Set up Cursor CLI"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers",
+        "objectId": "cursor-cli",
+        "tab": "setup"
+      },
+      "expectedLanding": "m.providers cursor-cli setup surface",
+      "actualLanding": "route=manager/m.providers/cursor-cli/setup; pm2-located on cursor-cli",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "sign in",
+      "rid": "w:signin.copilot",
+      "caseKind": "sign-in workflow with availability note",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "GitHub Copilot",
+        "Sign in to GitHub Copilot"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers",
+        "objectId": "copilot",
+        "tab": "accounts"
+      },
+      "expectedLanding": "m.providers copilot page",
+      "actualLanding": "route=manager/m.providers/copilot/accounts; pm2-located on copilot",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "worktree",
+      "rid": "o:m.sourceControl/wt.goal-142",
+      "caseKind": "deep object row (worktree)",
+      "path": [
+        "Settings",
+        "Branching & Collaboration",
+        "Source Control & Worktrees",
+        "goal/142-settings-bakeoff"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.sourceControl",
+        "objectId": "wt.goal-142",
+        "cat": "branching"
+      },
+      "expectedLanding": "m.sourceControl worktree wt.goal-142",
+      "actualLanding": "route=manager/m.sourceControl/wt.goal-142; pm2-located on wt.goal-142",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "sound pack",
+      "rid": "o:m.sounds/pack.openpeon-vol2",
+      "caseKind": "deep object row (sound pack)",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Sound Library",
+        "OpenPeon Vol. 2"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.sounds",
+        "sectionId": "pack.openpeon-vol2",
+        "cat": "general"
+      },
+      "expectedLanding": "m.sounds pack.openpeon-vol2",
+      "actualLanding": "route=manager/m.sounds; pm2-located on pack.openpeon-vol2",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "installation",
+      "rid": "o:m.providers/claude.inst.inst.claude.npm",
+      "caseKind": "deep object row (installation)",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "Claude CLI (npm, this computer) installation"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "installs",
+        "sectionId": "inst.inst.claude.npm",
+        "cat": "ai"
+      },
+      "expectedLanding": "m.providers claude installs sheet, inst anchor",
+      "actualLanding": "route=manager/m.providers/claude/installs; pm2-located on inst.inst.claude.npm",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "doctor",
+      "rid": "d:m.doctor/doc.providers",
+      "caseKind": "diagnostic result",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Doctor",
+        "AI connection health"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.doctor",
+        "sectionId": "doc.providers",
+        "cat": "system"
+      },
+      "expectedLanding": "m.doctor providers check",
+      "actualLanding": "route=manager/m.doctor; pm2-located on doc.providers",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "voice",
+      "rid": "u:m.media/m-video",
+      "caseKind": "unavailable capability with reason",
+      "path": [
+        "Settings",
+        "Media & Output",
+        "Media & Output",
+        "Video generation"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.media",
+        "objectId": "m-video",
+        "cat": "media",
+        "reason": "No connected provider offers video generation. Connect a media provider with video support to enable this."
+      },
+      "expectedLanding": "m.media video route entry (honest unavailable state)",
+      "actualLanding": "route=manager/m.media/m-video; pm2-located on m-video",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "screen",
+      "rid": "h:teach.custom-theme",
+      "caseKind": "help/teacher topic",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Teacher & Help",
+        "Create a custom theme from a base"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.teacher",
+        "sectionId": "teach.custom-theme",
+        "cat": "general"
+      },
+      "expectedLanding": "m.teacher custom-theme topic",
+      "actualLanding": "route=manager/m.teacher; pm2-located on teach.custom-theme",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "notifcations",
+      "rid": "a:act.notif.test",
+      "caseKind": "action result",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Notifications & Sounds",
+        "Send a masked test notification"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "general",
+        "managerId": "m.notifications"
+      },
+      "expectedLanding": "m.notifications action surface",
+      "actualLanding": "route=manager/m.notifications; pm2-located on act.notif.test",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "default model",
+      "rid": "s:ai.models.default-model",
+      "caseKind": "changed-from-default deep row",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "Models & Defaults",
+        "Default Model"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "ai",
+        "sub": "models",
+        "settingId": "ai.models.default-model"
+      },
+      "expectedLanding": "ai/models row default-model",
+      "actualLanding": "route=setting/ai.models.default-model; pm2-located on ai.models.default-model",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "theme",
+      "rid": "s:general.visual.theme",
+      "caseKind": "grouped kinds present",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Visual Style",
+        "Theme"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "general",
+        "sub": "visual",
+        "settingId": "general.visual.theme"
+      },
+      "expectedLanding": "general/visual row theme",
+      "actualLanding": "route=setting/general.visual.theme; pm2-located on general.visual.theme",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    },
+    {
+      "query": "platform diagnostics",
+      "rid": "s:system.health.platform-diagnostics",
+      "caseKind": "canonical deep-link probe row",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Health & Doctor",
+        "Run Deep Diagnostics"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "system",
+        "sub": "health",
+        "settingId": "system.health.platform-diagnostics"
+      },
+      "expectedLanding": "system/health row platform-diagnostics",
+      "actualLanding": "route=setting/system.health.platform-diagnostics; pm2-located on system.health.platform-diagnostics",
+      "focus": "focus on landing element",
+      "highlight": "calm pm2-located decay applied",
+      "backRestores": true,
+      "pass": true
+    }
+  ]
+}

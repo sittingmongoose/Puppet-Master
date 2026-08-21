@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "c05",
+  "concept": "Waypoint",
+  "stem": "concept-05-directory-take-1",
+  "model": "fable",
+  "note": "Everything here is provisional and concept_local_state. Canon is never minted in a concept register; the implementation audit censuses Plans/UI_Command_Catalog.md and adjudicates exact ids.",
+  "census": {
+    "canon_source": "Plans/UI_Command_Catalog.md",
+    "observation": "Waypoint drives every surface through one dest grammar plus the shared trigger registry; it needs no per-destination command ids at all. Any surviving cmd.settings.open_* aliases collapse into cmd.settings.navigate {dest}.",
+    "flags": [
+      {
+        "id": "cmd.settings.open_*",
+        "disposition": "supersede-into-family",
+        "note": "Per-destination openers are aliases of cmd.settings.navigate {dest}; the dest object carries cat/sub/managerId/objectId/tab/settingId exactly as PM2.route serializes it."
+      },
+      {
+        "id": "cmd.settings.prev_manager / cmd.settings.next_manager",
+        "disposition": "retire",
+        "note": "Managers are not slides; Waypoint exposes no sequential manager navigation anywhere. Back is one level out, always named."
+      },
+      {
+        "id": "cmd.settings.scope.*",
+        "disposition": "retire",
+        "note": "Project-only model: no scope selectors exist. Legacy scope words appear only as impact prose inside row Details."
+      }
+    ]
+  },
+  "families_exercised": [
+    "navigation (cmd.settings.navigate {dest} + focus rid)",
+    "search (cmd.settings.search {query}; selection routes by rid/dest, never index)",
+    "value mutation (cmd.settings.set {settingId, value} -> store.setValue with validation receipts)",
+    "copy transaction (preview / apply / rollback against PM2.copy tokens and receipts)",
+    "manager actions (shared trigger registry: provider-refresh, catalog-refresh, reconnect, invoke-test, install-scan, install-update, install-repair, install-acquire, backup-now, index-rebuild, cleanup-dry-run, ...)"
+  ],
+  "families_exercised_note": "All five families run through shared modules (PM2.route, PM2.search, store.setValue, PM2.copy, def.actions->PM2.states.op); the concept adds zero private verbs.",
+  "new_candidates": [
+    {
+      "id": "cmd.settings.navigate",
+      "distinguishes": "navigation",
+      "provisional": true,
+      "concept_local_state": true,
+      "payload": "{ dest: {route, cat?, sub?, managerId?, objectId?, tab?, settingId?, query?}, focus?: rid }",
+      "note": "The single navigation verb behind cards, destination rows, rail, breadcrumb, attention items, banner actions, jump buttons, and search selection. Focus rid drives the exact-row landing sequence."
+    },
+    {
+      "id": "cmd.settings.search",
+      "distinguishes": "query",
+      "provisional": true,
+      "concept_local_state": true,
+      "payload": "{ query }",
+      "note": "Materializes as the #/search/<query> history entry so Back deterministically restores the query and its result list."
+    },
+    {
+      "id": "cmd.settings.set",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "concept_local_state": true,
+      "payload": "{ settingId, value, source:'settings' }",
+      "note": "Validation failures return {ok:false,error} and render inline at the row; success emits the value event and a receipt. No optimistic UI."
+    },
+    {
+      "id": "cmd.settings.copy.preview | apply | rollback",
+      "distinguishes": "transaction",
+      "provisional": true,
+      "concept_local_state": true,
+      "payload": "{ sourceId, catIds } | { token } | { receiptId }",
+      "note": "Maps 1:1 to PM2.copy; apply is restore-point -> atomic write -> read-back verify; rollback restores exactly and re-emits a value batch."
+    },
+    {
+      "id": "cmd.settings.reveal",
+      "distinguishes": "presentation",
+      "provisional": true,
+      "concept_local_state": true,
+      "payload": "{ rid }",
+      "note": "The landing tail of navigate: scroll to center, focus, calm decaying pm2-located; when the rid names an unavailable capability the availability reason is surfaced at the landing (u: results land on the owner-shell head with the reason note)."
+    }
+  ],
+  "drift_census_2026_08_13": {
+    "status": "not-re-censused-here",
+    "note": "This concept register does not re-count the catalog; the 2026-08-13 performance/provider adjudications are honored behaviorally (no probe storms, explicit CLI acquisition, truthful ObservableWork) rather than re-adjudicated."
+  }
+}

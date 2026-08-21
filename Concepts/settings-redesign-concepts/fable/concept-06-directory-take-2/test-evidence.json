@@ -1,0 +1,235 @@
+{
+  "schema": "pm2.test_evidence.builder.v1",
+  "conceptId": "concept-06-directory-take-2",
+  "conceptName": "Longform",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "role": "builder self-run checks; the Phase-C harness is the final writer",
+  "syntax": {
+    "node_check": "PASS (node --check concept-06-directory-take-2.js)"
+  },
+  "boot_check": {
+    "tool": "tools/boot-check.js (13-route walk: home, dest/general, dest/ai, manager/m.providers, manager/m.permissions, manager/m.lifecycle, all, copy, search/rate limit, setting/system.health.platform-diagnostics, setting/system.health.diagnostics-verbosity, search/notifcations, search/flux capacitor)",
+    "runs": [
+      {
+        "args": "default (1280x900)",
+        "result": "PASS"
+      },
+      {
+        "args": "--width=760",
+        "result": "PASS"
+      },
+      {
+        "args": "--width=2500",
+        "result": "PASS"
+      },
+      {
+        "args": "--scenario=first-run",
+        "result": "PASS"
+      },
+      {
+        "args": "--scenario=offline",
+        "result": "PASS"
+      },
+      {
+        "args": "--fixture=fx.import-conflict --routes=home,manager/m.lifecycle,dest/system",
+        "result": "PASS"
+      },
+      {
+        "args": "--theme=glass-light --routes=home,dest/ai,manager/m.providers,all,copy",
+        "result": "PASS"
+      },
+      {
+        "args": "--theme=retro-dark --routes=home,dest/ai,manager/m.providers,all,copy",
+        "result": "PASS"
+      }
+    ],
+    "notes": "Zero console errors/warnings, zero page exceptions, no body/stage horizontal overflow, route stamp verified on every walked route."
+  },
+  "interactive_suite": {
+    "tool": "scratchpad c06-verify.js (CDP-driven)",
+    "result": "18/18 PASS",
+    "checks": [
+      "search dropdown opens anchored beneath the field with data-rid results",
+      "route carries search state (search/<query>)",
+      "duplicate-label API key objects present (3)",
+      "result selection performs the full landing sequence (route, pm2-located, focus inside target)",
+      "manager detail sheet opens in-flow",
+      "Back restores the search query AND the result list",
+      "typo query notifcations returns results",
+      "flux capacitor renders the guidance empty state",
+      "toggle edits its value (synchronous flip + store confirmation)",
+      "number validation failure surfaces the store's error sentence inline",
+      "copy preview shows five counts, item inspection list, credential-by-reference note",
+      "copy apply produces verified receipt with working rollback affordance",
+      "rollback restores exactly and records it on the receipt",
+      "escape ladder: object -> manager -> domain -> home -> stops at home",
+      "setting deep link auto-reveals rows hidden inside More/Advanced folds",
+      "All Settings stays windowed under stress (19 DOM rows over 2,828 records)",
+      "no console errors/warnings across the whole walk"
+    ]
+  },
+  "deep_link_spot_checks": [
+    {
+      "link": "#/setting/system.health.platform-diagnostics",
+      "result": "PASS - row found, visible (folds auto-opened), pm2-located on the row, focus inside"
+    },
+    {
+      "link": "#/setting/system.health.diagnostics-verbosity",
+      "result": "PASS - stale rev-2 id renders the honest 'Not in this project's settings' surface with the raw id and four recovery links; no crash, no blank page"
+    },
+    {
+      "link": "#/manager/m.providers (bare)",
+      "result": "PASS - whole-manager landing locates the editorial header (pm2-located + focus), identical to the search-click path"
+    },
+    {
+      "link": "#/manager/m.appearance?focus=m:m.appearance",
+      "result": "PASS - header landing via focus rid"
+    },
+    {
+      "link": "#/manager/m.providers/claude/models",
+      "result": "PASS - in-flow sheet located and focused, Models tab selected"
+    },
+    {
+      "link": "#/manager/m.onboarding",
+      "result": "PASS - deferred shell header located; owner + return contract rendered"
+    },
+    {
+      "link": "#/search/notifcations",
+      "result": "PASS - typo-tolerant results in the anchored dropdown"
+    },
+    {
+      "link": "#/copy?instant=1",
+      "result": "PASS - quiet dialog, instant timescale"
+    },
+    {
+      "link": "scenario=first-run",
+      "result": "PASS - setup banner, honest empty attention and recents, 0 changed"
+    },
+    {
+      "link": "scenario=offline",
+      "result": "PASS - offline attention entry, web rows unavailable with reasons, controls locked"
+    },
+    {
+      "link": "fixture=fx.import-conflict",
+      "result": "PASS - m.lifecycle staged import preview shows counts, conflicts with dests, invalid keys, legacy migrations"
+    }
+  ],
+  "search_route_matrix": {
+    "file": "search-route-matrix.json",
+    "result": "21/21 walked cases pass (every case executed over CDP; results recorded from the live run)"
+  },
+  "visual_selfcheck": {
+    "method": "boot-check --shots to a /tmp scratchpad dir; every PNG opened and inspected with the Read tool; temp dirs deleted after",
+    "surfaces_viewed": [
+      "Home (friendly-dark 1280, glass-light 1280, retro-dark 1280, narrow 760, first-run, offline)",
+      "dest/general and dest/ai (editorial rows, manager lists, folds)",
+      "manager/m.providers roster + claude models/accounts sheets (1280 + 760 + retro-dark)",
+      "manager/m.lifecycle (steps + staged import preview)",
+      "All Settings index, Copy dialog step 1, search dropdown open, setting deep-link landing, stale-id not-found surface"
+    ],
+    "issues_found_and_fixed": [
+      "search dropdown painted under later rise-animating sections (stacking context) -> z-index on search containers",
+      "steps sections using title/note keys rendered empty -> tolerant renderer",
+      "duplicate value chips beside controls -> default chip suppressed / custom compressed to 'Changed'; locked list rows drop the control-slot chip",
+      "stale probe id originally faked as an ext-dataset row -> replaced with the honest not-found surface",
+      "URL-applied scenarios left store.get('scenario') stale (shared gap) -> active-scenario read + session-key sync workaround",
+      "whole-manager search landings had no locator target -> editorial header landing on both click and deep-link paths"
+    ]
+  },
+  "shared_module_findings": [
+    "pm2-inventory.js: rev-2 probe id system.health.diagnostics-verbosity is not among the 828 rows (exists only in _shared/pm-demo-data-ext.js).",
+    "pm2-states.js + pm2-route.js: applyScenario(id, {persist:false}) never writes the 'scenario' store key (not even via _setSession), so store.get('scenario') and store.attention()'s internal gating stay 'baseline' for URL-applied scenarios; worked around locally (activeScenario() + guarded session-key sync).",
+    "pm2-managers2.js steps sections use {title, note} while pm2-managers.js uses {label, detail}; renderers must accept both."
+  ],
+  "known_limitations": [
+    "Domain-page inventory rows are not virtualized (visible run is bounded to ~7 per subgroup with the rest behind folds, so worst-case initial DOM stays well under the 40-row threshold; All Settings is fully windowed).",
+    "list/keyvalue collections render read-only summaries + Details entries; no collection editor was built (no fake affordances shown).",
+    "Search dropdown is bounded to 40 results with a total count line; there is no 'view all results' expansion surface."
+  ],
+  "visual_audit_fixes": {
+    "date": "2026-08-20",
+    "source": "confirmed visual-audit findings for concept-06 (8 findings)",
+    "fixes": [
+      {
+        "findings": "F4/F5/F7 (major, clipping): shell page-tabs hard-clipped mid-word at 760 (friendly 'Us', basic 'Orchestrato'), active Settings tab pushed out of view",
+        "change": "concept CSS: .pm-page-tabs{min-width:0;overflow:hidden}; .pm-page-tab{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}; .pm-page-tab.is-active{flex-shrink:0}",
+        "verified": "friendly-dark-760-home + basic-dark-760-home regenerated and inspected at 3x: every truncated tab ends in a real ellipsis, no mid-word clips, active Settings tab fully visible"
+      },
+      {
+        "findings": "F1/F2/F3 (minor): manager breadcrumb ellipsized every crumb at 1280 in basic and glass despite free width (fixed 24ch per-crumb cap + search field's 340px flex basis squeezed crumbs before yielding)",
+        "change": "concept CSS: .c06-topsearch now flex:4 1 140px with max-width:340px so it grows only out of genuinely free space; .c06-crumb cap relaxed to 40ch sanity bound; current-page crumb flex-shrink:.35 so it yields last — truncation is space-driven",
+        "verified": "glass-light-1280-manager-m.providers and basic-dark-1280-manager-m.providers regenerated: full 'Settings > AI Brains & Providers > AI Providers' trail renders untruncated"
+      },
+      {
+        "findings": "F8 (minor, retheme-violation): retro-dark barely restyled relative to basic-dark",
+        "change": "concept CSS retro register, token-driven only: --c06-display routed to the theme's --display-font (Orbitron) for headings; accent-inked kickers/group heads/folio numerals; accent H1 rule; dashed section headrules, row separators, rail edge and home-search underline; hard-offset shells (banner/sheet/copy via retro --elev tokens); inset-ring active rail link; no hardcoded colors",
+        "verified": "retro-dark-1280-home vs basic-dark-1280-home side-by-side: clearly distinct (lime kicker + title rule + folios, dashed rules, squared hard-offset chrome vs basic's grey solid-hairline rounded treatment)"
+      },
+      {
+        "findings": "F6 (minor): floating States pill occluded the UI Scale 'Recommended' badge at 760 on /all",
+        "change": "fixed centrally in the shared States control (icon-dot at <=920px); no concept-side change",
+        "verified": "friendly-dark-760-all regenerated and corner inspected at 4x: compact icon-dot, 'Recommended' badge text and outline fully visible"
+      },
+      {
+        "findings": "contract audit addition: primary Back affordance lacked the CONTRACT2-required data-pm2-back test hook",
+        "change": "concept JS: data-pm2-back added to every rendered Back affordance — the topbar reading-column Back (same element serves the narrow push stack) plus the three copy-dialog step Backs (categories->source, preview->categories, receipt-failure->preview); aria-labels added so each accessible name reads 'Back to <named location>'",
+        "verified": "CDP DOM probe: manager/m.providers at 1280 and 760 each show exactly one visible [data-pm2-back] ('Back to AI Brains & Providers'); copy route shows visible hooks on every step (source: 'Back to Settings Home'; categories: + 'Back to choosing a source project'; preview: + 'Back to choosing categories'); zero console errors/warnings; node --check PASS; boot-check re-PASS at 760/1280"
+      }
+    ],
+    "reverification": {
+      "node_check": "PASS",
+      "boot_check": "PASS at 760 / 1280 / 2500 (13-route walk, zero console errors/warnings, no overflow)",
+      "matrix_suite": "41/41 checks passed (concepts=06, themes friendly-dark/basic-dark/glass-light/retro-dark, widths 760/1280); temp shots deleted after inspection",
+      "back_hook_probe": "PASS (visible [data-pm2-back] on manager route at 1280 and 760, and on all copy steps)"
+    }
+  },
+  "visual_audit_fixes_round2": {
+    "date": "2026-08-21",
+    "source": "second-round re-audit of concept-06 (3 confirmed, pixel-verified findings)",
+    "method": "Two independent measurements per surface. (a) Analytic: every text-bearing element inside #pmStage plus the status bar probed over CDP for its computed color composited over its composited ancestor ground, WCAG relative-luminance ratio, across 10 theme/width/route scenes. (b) Pixel: settled PNGs (1400ms, past the staggered .c06-rise entrance) decoded with a pure-python PNG reader and sampled per text rect. Analytic is the reported figure; pixel sampling of 10-11px glyphs under the sandbox's blocked webfonts understates dark-on-light text by ~2 points of ratio through antialiasing and is used only as a direction check.",
+    "fixes": [
+      {
+        "finding": "R2-1 (minor, clipping): the first overflow fix replaced the 760px hard clip with per-item ellipsis that collapsed nav labels to one or two characters ('Da...', 'P...', 'W...')",
+        "owner": "shared — corrected in _shared2/pm2-tokens.css (whole tabs drop below 1000px, active tab always intact)",
+        "change": "concept CSS: the local .pm-page-tab ellipsis policy that produced the stubs was removed. Only min-width:0 / overflow:hidden / white-space:nowrap remain, so the strip still cannot force the titlebar wider but no truncation policy is expressed locally to fight the shared rule.",
+        "verified": "friendly-dark-760-home and basic-dark-760-home regenerated and inspected: the strip renders exactly one whole tab — the active 'Settings' pill — with no ellipsis, no stub, and no mid-word clip. Measured 10.46:1 (friendly-dark) and 11.76:1 (basic-dark) on the active tab label. States control is the quiet icon dot, clear of content."
+      },
+      {
+        "finding": "R2-2 (minor, contrast): light-theme --text-muted at 2.4-2.7:1 carrying real information (domain counts, search hint, index row subtitles, filter result count, value chips, status bar)",
+        "owner": "shared — token calibration in _shared2/pm2-tokens.css (friendly-light #5F5866, glass-light rgba(46,38,63,.86), basic-dark #9BA3AF)",
+        "change": "no concept-side colour work needed and none done: an audit of concept-06-directory-take-2.css confirms every muted/secondary surface reads var(--text-muted) / var(--text-secondary) directly. The stylesheet has no hardcoded greys, no opacity dimming of text, and no color-mix on any text colour (its two color-mix tokens, --c06-ink-soft / --c06-ink-faint, are hover and rule washes derived from --text-primary). The calibrated tokens therefore land unmodified on every concept-06 surface.",
+        "verified": "post-fix analytic ratios, friendly-light 1280: kicker/search-hint/heading tally/domain tally/rail count/index path/facet note/value chip all 5.99-6.41:1 (audit-measured 2.63-2.79 before). glass-light 1280: the same set 9.19:1 (audit-measured 2.37-2.74). basic-dark 760: 7.36:1 (2.85 before). friendly-dark 760: 4.54:1. Sweep of every text element on Home, All Settings, dest/ai and manager/m.providers in both light themes returns zero concept-owned failures."
+      },
+      {
+        "finding": "R2-3 (minor, contrast): glass-light body/description copy at 3.70-3.98:1 because the mesh gradient darkens the ground under the reading column",
+        "owner": "shared — glass-light --text-secondary calibrated to rgba(38,30,54,.94) in _shared2/pm2-tokens.css",
+        "change": "none required in the concept: .c06-lede, .c06-dest-desc, .c06-sub-desc, .c06-row-desc, .c06-attn-why, .c06-entry-note, .c06-kv-value and the rest of the editorial body copy all take var(--text-secondary) with no local modification.",
+        "verified": "glass-light 1280: lede, domain descriptions, attention explanations and roster notes measure 13.35:1 against the composited mesh ground (3.70-3.98 before); the same strings in friendly-light stay at 5.33:1. Confirmed on Home, dest/ai, All Settings and manager/m.providers; the deficit no longer worsens down the column because the token is opaque enough that the mesh drift cannot pull it under the bar."
+      },
+      {
+        "finding": "R2-hierarchy: the calibrated friendly-light --text-muted (6.41:1) is now DARKER than that theme's --text-secondary (5.33:1), which inverts this concept's meta-under-body reading order on its roomiest surfaces",
+        "owner": "concept",
+        "change": "restored by size and weight only, never by lightening a colour: (1) .c06-dest-count moves from --fs-xs to the concept's established --fs-2xs meta tier (+.02em tracking) so a row reads title 20/700 > description 12 > tally 10; (2) .c06-h2 .c06-count moves --fs-sm -> --fs-xs for the same reason beside section headings; (3) .c06-rail-link takes font-weight 500 so a domain name still leads its own count (the current item stays apart at 700); (4) .c06-util-link takes font-weight 500 so a link is the strongest thing in a sentence set in muted ink.",
+        "verified": "friendly-light-1280-home re-inspected at 3x on the domain rows and the rail: the description line now clearly leads its tally, and rail labels lead their counts. All Settings needed no change — its 14px/600 label already dominates the 10px path (checked at 3x). Dark themes are unaffected in ordering (muted stays quieter than secondary there) and the changes only widen the existing gap."
+      }
+    ],
+    "residual_shared_findings": [
+      "_shared/pm-shell.css --accent-error is not calibrated for the light faces: .pm-status-word[data-tone='attention'] (the 'Watch' / 'Restart' / 'Sign in' words on Home and on manager rosters) measures 3.08:1 in friendly-light (#E8654C on #FBF7F3) and 4.39:1 in glass-light (#C0566B), both below 4.5:1 for 11px/700 text. Same family as the amber/orange calibration already applied in _shared2/pm2-tokens.css; left for the shared owner rather than overridden in a concept stylesheet.",
+      "friendly-dark .pm-statusbar text (--text-muted #8A8494 on #262330) measures 4.25:1 — marginally under the bar and shell-owned; not part of any concept-06 finding."
+    ],
+    "reverification": {
+      "node_check": "PASS (node --check concept-06-directory-take-2.js)",
+      "boot_check": "PASS at 760 / 1280 / 2500 (13-route walk each, zero console errors/warnings, zero page exceptions, no body or stage horizontal overflow)",
+      "shots_regenerated_and_viewed": [
+        "friendly-light-1280-home",
+        "friendly-light-1280-all",
+        "glass-light-1280-home",
+        "glass-light-1280-manager-m.providers",
+        "friendly-dark-760-home",
+        "basic-dark-760-home"
+      ],
+      "temp_artifacts": "all screenshots, probe JSON and crops written to a /tmp scratchpad outside the repo and deleted after inspection"
+    }
+  }
+}

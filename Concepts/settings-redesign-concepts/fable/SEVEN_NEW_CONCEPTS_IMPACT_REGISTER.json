@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.settings_seven_concepts_impact_rollup.v1",
+  "model": "fable",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "generated": "2026-08-20",
+  "note": "Thin roll-up over the seven per-concept register folders. Candidate IDs are provisional; canon (Plans, inventory/schema, Command Catalog, Wiring Matrix, DRY owners) was never edited in this pass.",
+  "per_concept_registers": {
+    "concept-05-directory-take-1": "concept-05-directory-take-1/ (impact-register, manager-coverage, candidate command/wiring/dry deltas, plan-owner-delta.md, search-route-matrix, manager-route-matrix, test-evidence)",
+    "concept-06-directory-take-2": "concept-06-directory-take-2/ (same nine files)",
+    "concept-07-compendium-workspace": "concept-07-compendium-workspace/ (same nine files)",
+    "concept-08-directory-take-3": "concept-08-directory-take-3/ (same nine files)",
+    "concept-09-tome-tabs": "concept-09-tome-tabs/ (same nine files)",
+    "concept-10-command-suite": "concept-10-command-suite/ (same nine files)",
+    "concept-11-tabbed-organizer": "concept-11-tabbed-organizer/ (same nine files)"
+  },
+  "candidate_delta_totals": {
+    "candidate_command_entries": 52,
+    "candidate_wiring_traces": 61,
+    "candidate_dry_entries": 172,
+    "note": "Structural entry counts across the seven concepts' delta files; entries carry honest concept_local_state flags and reuse/alias/supersession/collision classification against the base-packet candidate register."
+  },
+  "cross_concept_candidate_impacts": [
+    {
+      "id": "IMP-INV-1",
+      "area": "settings inventory / schema",
+      "impact": "The inventory's legacy scope metadata (global/run/account/persona/provider lists) conflicts with the current-Project-only product decision. Concepts project every record onto the current Project and carry the raw value as candidate metadata (legacyScope) only. Future schema work needs a scope-model migration that removes user-facing scope while preserving genuinely managed/effective semantics.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-INV-2",
+      "area": "settings inventory",
+      "impact": "The rev-2 canonical deep-link probe id system.health.diagnostics-verbosity does not exist among the 828 canonical rows; the demo-era row lives only in the old concept dataset. Canonical probe re-anchored to system.health.platform-diagnostics; every concept renders an honest not-found surface for unknown ids. Future test fixtures should reference canonical ids only.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-INV-3",
+      "area": "settings inventory",
+      "impact": "Confirmed clean 12x3 category/subgroup grid: all 828 ids parse as <cat>.<sub>.<slug> against the declared subgroups. Safe foundation for registry-driven navigation.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-DATA-1",
+      "area": "shared demo data (frozen _shared/)",
+      "impact": "importPreview conflict fixtures in the frozen shared dataset reference two non-inventory ids (permissions.approvals.rule-count, general.sounds.master-volume). The additive _shared2 layer normalizes them onto real rows (safety.approvals.doom-loop-threshold, general.interaction.sound-effects) in the cloned working data. A future shared-data revision should correct the source records.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-GRAMMAR-1",
+      "area": "manager view-model grammar",
+      "impact": "Two step-section shapes ({label,detail} vs {title,note}) and two object-addressing forms (dest.objectId vs dest.sectionId) coexist across the shared manager registries; all seven concepts ship shape-tolerant renderers. A future normalization pass should unify both shapes.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-UI-1",
+      "area": "shared chip vocabulary",
+      "impact": "The shared .pm-chip-value[data-kind=unavailable] line-through strikes through numeric values when reused as a compact value badge; concept 05 scopes an override (leading tick instead). Future component work should separate 'unavailable' text treatment from value-badge composition.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-TEST-1",
+      "area": "test hooks",
+      "impact": "Two harness hooks were standardized during this pass and belong in any future concept contract: data-pm2-search-input on universal-search inputs and data-pm2-back on primary Back affordances (all seven concepts comply; CONTRACT2 documents both).",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-UI-2",
+      "area": "canonical theme tokens (Plans/FinalGUISpec theme system)",
+      "impact": "Light-theme --text-muted fails WCAG AA as normal text where the dark siblings pass: friendly-light 2.79:1 and glass-light 2.64:1 on the page surface versus friendly-dark 4.54:1 and glass-dark 4.90:1 (pixel-measured across the matrix). Retro-light (7.19:1) and basic-light (5.05:1) pass. glass-light --text-secondary also measures 3.70-3.98:1 on the mesh gradient. Concepts 05-11 correct these in _shared2/pm2-tokens.css; the canonical palette should be recalibrated by the theme owner.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-UI-3",
+      "area": "canonical theme tokens",
+      "impact": "retro-dark reuses retro-light's --accent-blue (#0047AB) unchanged, so blue status dots and their pill labels measure 1.82-2.06:1 on the dark surface while the green status sibling reads 11-12:1 in the same component; basic-dark correctly lightens the same token to #64B5F6. Same class of gap for light-theme --accent-warning/--accent-orange (2.2-3.8:1 on cream/white). Corrected for concepts 05-11 in the token layer only. Also uncalibrated for the light faces: --accent-error drives the attention status words at 3.08:1 (friendly-light) and 4.39:1 (glass-light), and friendly-dark status-bar text measures 4.25:1.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-UI-4",
+      "area": "shell chrome (page-tab strip)",
+      "impact": "The fake shell's page-tab strip has no overflow strategy: wider theme faces hard-clip labels mid-word at 760-900px. Ellipsis is not an adequate answer (labels collapse to one or two characters); dropping whole trailing tabs while preserving the active tab reads correctly. Recorded for the real shell's tab-strip owner.",
+      "canon_edited": false
+    },
+    {
+      "id": "IMP-UI-5",
+      "area": "concept test affordance",
+      "impact": "A fixed bottom-right test affordance (the States drawer) overlaps page content at every width unless surfaces reserve clearance. Any future in-product floating affordance needs the same treatment: quiet by default and matching scroll-region bottom padding.",
+      "canon_edited": false
+    }
+  ],
+  "dry_boundaries_respected": [
+    "Single admission/policy owner (ResourceGovernor) and single truthful progress projection (ObservableWork) \u2014 concepts render read-only projections (m.dry) and never invent a second owner.",
+    "Provider state strings resolve exclusively through the frozen PMProvider semantics module.",
+    "The additive _shared2 layer exports no HTML and no Settings-surface CSS; visible Home, navigation, manager, dropdown, and copy rendering is concept-native per the differentiation clause. Its single stylesheet, pm2-tokens.css, is scoped to theme-token contrast calibration and shared fake-shell chrome (page-tab overflow, the States test affordance) \u2014 no concept surface styling."
+  ]
+}

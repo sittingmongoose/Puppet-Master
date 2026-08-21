@@ -57,6 +57,29 @@
       .replace(/"/g, '&quot;');
   }
   function ico(name) { return '<i data-ico="' + name + '"></i>'; }
+
+  /* Vendor-prefixed model slugs are the one inventory value the shared
+     formatter leaves raw ("anthropic/claude-opus-4"), while Recent changes
+     and the compendium show the human name. Humanize every surface; the raw
+     string stays available in the row's Details drawer. */
+  var MODEL_NAMES = {
+    'anthropic/claude-sonnet-4': 'Claude Sonnet 4',
+    'anthropic/claude-opus-4': 'Claude Opus 4',
+    'openai/gpt-5': 'GPT-5',
+    'gemini/gemini-2.5-pro': 'Gemini 2.5 Pro'
+  };
+  var ACRONYMS = { gpt: 'GPT', ai: 'AI', api: 'API', gpu: 'GPU', cpu: 'CPU', llm: 'LLM' };
+  function humanValue(v) {
+    var s = String(v == null ? '' : v);
+    if (MODEL_NAMES[s]) return MODEL_NAMES[s];
+    if (s.indexOf('/') === -1 || /\s/.test(s)) return s;
+    var tail = s.slice(s.lastIndexOf('/') + 1);
+    if (!/^[a-z0-9][a-z0-9.\-_]*$/.test(tail)) return s;
+    return tail.split(/[-_]+/).map(function (w) {
+      if (ACRONYMS[w]) return ACRONYMS[w];
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    }).join(' ');
+  }
   function arr(x) { return Array.isArray(x) ? x : []; }
   function obj(x) { return (x && typeof x === 'object' && !Array.isArray(x)) ? x : {}; }
   function U() { return window.PM2.util || {}; }
@@ -344,7 +367,18 @@
   function render() {
     if (!root) return;
     ui.mode = computeMode();
-    root.className = 'c10 is-mode' + ui.mode;
+    /* is-tight: the top bar has to carry Back + crumbs + search + project +
+       Close in one row. Below ~1400px of stage the Back control drops to its
+       short label so the breadcrumb trail stays whole in every theme face. */
+    var stageW = stage ? stage.clientWidth : 1280;
+    /* is-wide / is-ultra: above ~1560 and ~2000 of stage the three-pane strip
+       stops being able to spend the extra width, and a fixed content column
+       centred in a 2000px pane is a desert with a rail pinned to its left. At
+       these two steps the panes widen, the content columns widen with them, and
+       Home / the domain overview recompose into two columns so the width
+       carries content instead of emptiness. */
+    var wide = stageW >= 2000 ? ' is-wide is-ultra' : (stageW >= 1560 ? ' is-wide' : '');
+    root.className = 'c10 is-mode' + ui.mode + (stageW < 1400 ? ' is-tight' : '') + wide;
     var focusFid = document.activeElement && document.activeElement.getAttribute
       ? document.activeElement.getAttribute('data-fid') : null;
 
@@ -423,14 +457,46 @@
     return '<span class="c10-crumb-sep" aria-hidden="true">\u203A</span>';
   }
 
+  /* One Settings level outward \u2014 the same ladder the Left/Backspace retreat uses.
+     Rendered in the top bar for the two- and three-pane widths, where no pane
+     head carries a Back; at one-pane width the pane head owns the single Back
+     (CSS hides this one) so the control never appears twice on one surface. */
+  function backTarget() {
+    var v = ui.view;
+    if (v.kind === 'home') return null;
+    if (v.kind === 'dest') {
+      if (v.settingId && v.sub) return { label: subTitle(v.cat, v.sub), dest: { route: 'dest', cat: v.cat, sub: v.sub } };
+      if (v.sub) return { label: catTitle(v.cat), dest: { route: 'dest', cat: v.cat } };
+      if (v.cat) return { label: 'Settings Home', dest: { route: 'home' } };
+      return { label: 'Settings Home', dest: { route: 'home' } };
+    }
+    if (v.kind === 'manager') {
+      var def = mgrDef(v.managerId);
+      if (def && v.objectId) return { label: def.title, dest: { route: 'manager', managerId: def.id } };
+      if (def) return { label: catTitle(def.cat), dest: { route: 'dest', cat: def.cat } };
+      return { label: 'Settings Home', dest: { route: 'home' } };
+    }
+    return { label: 'Settings Home', dest: { route: 'home' } };
+  }
+  function topBackHtml() {
+    var t = backTarget();
+    if (!t) return '';
+    return '<button type="button" class="c10-back c10-back-top" data-pm2-back' + goAttr(t.dest) +
+      ' aria-label="Back to ' + esc(t.label) + '">' + ico('undo') +
+      '<span class="c10-back-full">Back to ' + esc(t.label) + '</span>' +
+      '<span class="c10-back-short" aria-hidden="true">Back</span></button>';
+  }
+
   function renderTop() {
     var proj = obj(store.data.project);
     var showMini = ui.view.kind !== 'home';
     elTop.innerHTML =
+      topBackHtml() +
       '<nav class="c10-crumbs" aria-label="Settings path">' + crumbsHtml() + '</nav>' +
       (showMini
         ? '<div class="c10-minisearch c10-search-wrap">' + ico('search') +
-          '<input type="text" id="c10MiniSearch" data-fid="minisearch" placeholder="Search settings, managers, actions…" ' +
+          '<input type="text" id="c10MiniSearch" data-pm2-search-input data-fid="minisearch" placeholder="' +
+          (ui.mode === 1 ? 'Search settings…' : 'Search settings, managers, actions…') + '" ' +
           'autocomplete="off" spellcheck="false" aria-label="Search settings">' +
           '<div class="c10-drop-slot"></div></div>'
         : '') +
@@ -452,7 +518,7 @@
   function paneHead(eyebrow, title, count, sub, backLabel, backDest) {
     var h = '<header class="c10-pane-head">';
     if (backLabel) {
-      h += '<div class="c10-backrow"><button type="button" class="c10-back"' + goAttr(backDest) + '>' +
+      h += '<div class="c10-backrow"><button type="button" class="c10-back" data-pm2-back' + goAttr(backDest) + '>' +
         ico('undo') + 'Back to ' + esc(backLabel) + '</button></div>';
     }
     h += '<div class="c10-eyebrow">' + esc(eyebrow) + '</div>';
@@ -481,7 +547,7 @@
         panes.push(indexPane());
         if (ui.mode === 3) panes.push(catPane(v.cat, anim));
         if (v.sub) panes.push(rowsPane(v.cat, v.sub, anim, ui.mode === 2));
-        else if (ui.mode === 2) panes.push(catPane(v.cat, anim, true));
+        else if (ui.mode === 2) panes.push(catPane(v.cat, anim, true, true));
         else panes.push(catOverviewPane(v.cat, anim));
       } else if (v.kind === 'manager') {
         panes.push(indexPane());
@@ -491,10 +557,12 @@
         panes.push(managerPane(v, anim, ui.mode === 2));
       } else if (v.kind === 'all') {
         panes.push(indexPane());
-        panes.push(allPane(anim));
+        /* two-pane width has no top Back (see topBackHtml), so these two
+           utility panes carry their own, exactly like every other surface */
+        panes.push(allPane(anim, ui.mode === 2));
       } else if (v.kind === 'copy') {
         panes.push(indexPane());
-        panes.push(copyPane(anim));
+        panes.push(copyPane(anim, false, ui.mode === 2));
       }
     }
     elBody.innerHTML = panes.join('');
@@ -505,7 +573,7 @@
     var v = ui.view;
     if (v.kind === 'home') return homePane(anim, true);
     if (v.kind === 'dest' && v.sub) return rowsPane(v.cat, v.sub, anim, true);
-    if (v.kind === 'dest') return catPane(v.cat, anim, true);
+    if (v.kind === 'dest') return catPane(v.cat, anim, true, true);
     if (v.kind === 'manager') return managerPane(v, anim, true);
     if (v.kind === 'all') return allPane(anim, true);
     if (v.kind === 'copy') return copyPane(anim, true);
@@ -618,7 +686,7 @@
       ' · every change applies to this project only.</p></div>';
 
     h += '<div class="c10-bigsearch c10-search-wrap">' + ico('search') +
-      '<input type="text" id="c10BigSearch" data-fid="bigsearch" placeholder="Search all ' + fmtInt(counts.total) + ' settings, managers, and actions…" ' +
+      '<input type="text" id="c10BigSearch" data-pm2-search-input data-fid="bigsearch" placeholder="Search all ' + fmtInt(counts.total) + ' settings, managers, and actions…" ' +
       'autocomplete="off" spellcheck="false" aria-label="Search settings">' +
       '<span class="c10-kbd-hint"><kbd class="c10-kbd">Ctrl</kbd><kbd class="c10-kbd">K</kbd></span>' +
       '<div class="c10-drop-slot"></div></div>';
@@ -631,7 +699,7 @@
     }
 
     /* attention */
-    h += '<div class="c10-home-sec"><div class="c10-sec-label">Needs attention<span class="c10-rule"></span></div>';
+    h += '<div class="c10-home-sec is-attention"><div class="c10-sec-label">Needs attention<span class="c10-rule"></span></div>';
     var notices = noticeList();
     if (!notices.length) {
       if (sc === 'first-run') {
@@ -656,7 +724,7 @@
     if (embedIndex) {
       /* one-pane widths: the command index lives inline so the 12
          destinations stay the dominant content of Home */
-      h += '<div class="c10-home-sec"><div class="c10-sec-label">Command index<span class="c10-rule"></span></div>';
+      h += '<div class="c10-home-sec is-index"><div class="c10-sec-label">Command index<span class="c10-rule"></span></div>';
       var byCat = {};
       arr(counts.byCategory).forEach(function (c) { byCat[c.id] = c; });
       arr(INV.categories).forEach(function (c, i) {
@@ -671,7 +739,7 @@
     }
 
     /* recently accessed */
-    h += '<div class="c10-home-sec"><div class="c10-sec-label">Recent changes<span class="c10-rule"></span></div>';
+    h += '<div class="c10-home-sec is-recent"><div class="c10-sec-label">Recent changes<span class="c10-rule"></span></div>';
     var recents = sc === 'first-run' ? [] : arr(store.recents()).slice(0, 6);
     if (!recents.length) {
       h += '<div class="c10-empty">No changes in this project yet. Recent edits will list here with what changed and when.</div>';
@@ -689,7 +757,7 @@
     h += '</div>';
 
     /* secondary utilities */
-    h += '<div class="c10-home-sec"><div class="c10-sec-label">Utilities<span class="c10-rule"></span></div>' +
+    h += '<div class="c10-home-sec is-utils"><div class="c10-sec-label">Utilities<span class="c10-rule"></span></div>' +
       '<div class="c10-util-row">' +
       '<button type="button" class="c10-util"' + goAttr({ route: 'all' }) + '>' + ico('list') + 'All Settings · ' + fmtInt(counts.total) + '</button>' +
       '<button type="button" class="c10-util"' + goAttr({ route: 'copy' }) + '>' + ico('copy') + 'Copy Settings from another project</button>' +
@@ -702,7 +770,7 @@
 
   /* ============================ category pane ============================ */
 
-  function catPane(cat, anim, withBack) {
+  function catPane(cat, anim, withBack, inlineOverview) {
     var c = catById[cat];
     if (!c) return paneShell('cat', 'c10-pane-cat', '', '<div class="c10-empty">Unknown category.</div>', anim);
     var counts = store.counts();
@@ -710,12 +778,28 @@
     arr(counts.byCategory).forEach(function (x) { if (x.id === cat) cc = x; });
     var h = '';
 
-    h += '<div class="c10-sec-label">Overview<span class="c10-rule"></span></div>';
-    h += '<button type="button" class="c10-item' + (!ui.view.sub && ui.view.kind === 'dest' && ui.view.cat === cat ? ' is-active' : '') + '" data-fid="cat-ov"' +
-      goAttr({ route: 'dest', cat: cat }) + '>' +
-      '<span class="c10-item-main"><span class="c10-item-title">' + esc(c.title) + ' overview</span>' +
-      '<span class="c10-item-sub">Managers, sections, and key settings</span></span>' +
-      '<span class="c10-item-meta"></span><span class="c10-chev">' + ico('external') + '</span></button>';
+    if (inlineOverview) {
+      /* One-pane width has no second pane to hold the overview, so the domain
+         summary rides inline here instead of vanishing: same blurb, same
+         counts, same key-settings table the wide layout shows. */
+      h += '<div class="c10-ov is-inline">';
+      h += '<p class="c10-ov-blurb">' + esc(c.desc || '') + '</p>';
+      if (cc) {
+        h += '<div class="c10-ov-stats">' +
+          '<span><strong>' + fmtInt(cc.total) + '</strong> settings</span>' +
+          '<span><strong>' + fmtInt(cc.changed) + '</strong> changed from default</span>' +
+          '<span><strong>' + fmtInt(cc.simple) + '</strong> everyday · <strong>' + fmtInt(cc.advanced) + '</strong> advanced</span>' +
+          '</div>';
+      }
+      h += '</div>';
+    } else {
+      h += '<div class="c10-sec-label">Overview<span class="c10-rule"></span></div>';
+      h += '<button type="button" class="c10-item' + (!ui.view.sub && ui.view.kind === 'dest' && ui.view.cat === cat ? ' is-active' : '') + '" data-fid="cat-ov"' +
+        goAttr({ route: 'dest', cat: cat }) + '>' +
+        '<span class="c10-item-main"><span class="c10-item-title">' + esc(c.title) + ' overview</span>' +
+        '<span class="c10-item-sub">Managers, sections, and key settings</span></span>' +
+        '<span class="c10-item-meta"></span><span class="c10-chev">' + ico('external') + '</span></button>';
+    }
 
     h += '<div class="c10-sec-label">Sections<span class="c10-rule"></span></div>';
     arr(c.subgroups).forEach(function (g) {
@@ -756,6 +840,16 @@
       });
     }
 
+    if (inlineOverview) {
+      var curatedN = arr(INV.settings).filter(function (s) { return s.cat === cat && s.curated; }).slice(0, 8);
+      if (curatedN.length) {
+        h += '<div class="c10-sec-label">Key settings<span class="c10-rule"></span></div>';
+        h += '<div class="c10-rows">' + theadHtml();
+        curatedN.forEach(function (s) { h += rowHtml(store.resolveRow(s.id)); });
+        h += '</div>';
+      }
+    }
+
     var head = paneHead('Domain', c.title, cc ? fmtInt(cc.total) + ' settings' : null, null,
       withBack ? 'Settings Home' : null, { route: 'home' });
     return paneShell('cat:' + cat, ui.mode === 3 ? 'c10-pane-cat' : 'c10-pane-flex', head, h, anim);
@@ -781,35 +875,41 @@
     var defs = managers() && managers().byCat ? managers().byCat(cat) : [];
     if (defs.length) {
       h += '<div class="c10-sec-label">Managers<span class="c10-rule"></span></div>';
+      /* the wrapper is what lets the wide layout lay these cards out two-up
+         instead of stretching one card across 1400px of pane */
+      h += '<div class="c10-ovlist">';
       defs.forEach(function (d) {
         h += '<button type="button" class="c10-mgr-row" data-manager="' + esc(d.id) + '"' +
           goAttr({ route: 'manager', managerId: d.id }) + '>' +
           ico(d.icon || 'gear') +
-          '<span><span class="c10-mgr-title">' + esc(d.title) + '</span>' +
+          '<span class="c10-mgr-text"><span class="c10-mgr-title">' + esc(d.title) + '</span>' +
           '<div class="c10-mgr-sub">' + esc(d.blurb || '') + '</div></span>' +
           '<span class="c10-word ' + (d.status === 'deferred_named_owner' ? 't-muted' : 't-ok') + '">' +
           (d.status === 'deferred_named_owner' ? 'Reserved' : 'Ready') + '</span>' +
           '<span class="c10-chev">' + ico('external') + '</span></button>';
       });
+      h += '</div>';
     }
 
     h += '<div class="c10-sec-label">Sections<span class="c10-rule"></span></div>';
+    h += '<div class="c10-ovlist">';
     arr(c.subgroups).forEach(function (g) {
       var total = 0;
       if (cc) arr(cc.subgroups).forEach(function (s) { if (s.id === g.id) total = s.total; });
       h += '<button type="button" class="c10-mgr-row"' + goAttr({ route: 'dest', cat: cat, sub: g.id }) + '>' +
         ico('folder') +
-        '<span><span class="c10-mgr-title">' + esc(g.title) + '</span>' +
+        '<span class="c10-mgr-text"><span class="c10-mgr-title">' + esc(g.title) + '</span>' +
         '<div class="c10-mgr-sub">' + esc(g.desc || '') + '</div></span>' +
         '<span class="c10-item-meta">' + fmtInt(total) + '</span>' +
         '<span class="c10-chev">' + ico('external') + '</span></button>';
     });
+    h += '</div>';
 
     /* key settings: the curated rows of this domain */
     var curated = arr(INV.settings).filter(function (s) { return s.cat === cat && s.curated; }).slice(0, 8);
     if (curated.length) {
       h += '<div class="c10-sec-label">Key settings<span class="c10-rule"></span></div>';
-      h += '<div class="c10-rows" style="padding:0">' + theadHtml();
+      h += '<div class="c10-rows is-embedded">' + theadHtml();
       curated.forEach(function (s) { h += rowHtml(store.resolveRow(s.id)); });
       h += '</div>';
     }
@@ -843,7 +943,7 @@
     if (!row) return '';
     var chip = arr(row.chips)[0];
     var chipHtml = chip
-      ? '<span class="pm-chip-value" data-kind="' + esc(chip.kind) + '">' + esc(chip.label || '') + '</span>'
+      ? '<span class="pm-chip-value" data-kind="' + esc(chip.kind) + '">' + esc(humanValue(chip.label || '')) + '</span>'
       : '<span class="v-unset">Not set</span>';
     var isOpen = ui.editorOpen === row.id;
     var badges = '';
@@ -888,9 +988,17 @@
     if (curated.length) h += rowGroupHtml(curated, key + '/cur', 'Key settings');
     if (simple.length) h += rowGroupHtml(simple, key + '/simple', 'Everyday');
     if (advanced.length) {
+      /* A row in an attention-worthy state must never hide behind a closed
+         fold — auto-disclose and say why on the toggle. */
+      var attn = advanced.filter(function (r) {
+        return r.state === 'error' || r.state === 'restart-required' ||
+               r.state === 'reconnect-required' || r.state === 'changed-elsewhere';
+      });
+      if (attn.length && ui.advOpen[key] === undefined) ui.advOpen[key] = true;
       var open = !!ui.advOpen[key];
       h += '<button type="button" class="c10-advbar" data-act="adv:' + esc(key) + '" aria-expanded="' + open + '">' +
         ico(open ? 'minus' : 'plus') + 'Advanced · ' + fmtInt(advanced.length) + ' settings' +
+        (attn.length ? '<span class="c10-word t-error">' + fmtInt(attn.length) + (attn.length === 1 ? ' needs attention' : ' need attention') + '</span>' : '') +
         '<span class="c10-rule"></span></button>';
       if (open) h += rowGroupHtml(advanced, key + '/adv', 'Advanced');
     }
@@ -932,7 +1040,7 @@
       h += '<button type="button" class="c10-btn" data-act="ed-reset:' + esc(row.id) + '">' + ico('undo') + 'Reset to default</button>';
     }
     if (row.recommended !== undefined && !locked && row.control.type !== 'action') {
-      h += '<span class="c10-ctl-note">Recommended: ' + esc(String(row.recommended)) + '</span>';
+      h += '<span class="c10-ctl-note">Recommended: ' + esc(humanValue(row.recommended)) + '</span>';
     }
     h += '</div>';
 
@@ -943,6 +1051,9 @@
     if (dOpen) {
       h += '<div class="c10-detail-body"><dl class="c10-kv">';
       h += '<dt>Setting id</dt><dd><span class="c10-mono">' + esc(row.id) + '</span></dd>';
+      if (typeof row.value === 'string' && humanValue(row.value) !== row.value) {
+        h += '<dt>Stored value</dt><dd><span class="c10-mono">' + esc(row.value) + '</span></dd>';
+      }
       h += '<dt>Scope</dt><dd>' + esc(obj(row.detail).legacyScopeNote || '') + '</dd>';
       if (row.changedFromDefault) {
         var entry = obj(store.values[row.id]);
@@ -974,7 +1085,7 @@
       h += '<div class="c10-opts" role="radiogroup" aria-label="' + esc(row.label) + '">';
       arr(c.options).forEach(function (o, i) {
         var val = (o && typeof o === 'object') ? (o.value !== undefined ? o.value : o.id) : o;
-        var lab = (o && typeof o === 'object') ? (o.label || String(val)) : String(o);
+        var lab = humanValue((o && typeof o === 'object') ? (o.label || String(val)) : String(o));
         var on = String(row.value) === String(val);
         h += '<button type="button" role="radio" aria-checked="' + on + '"' + (locked ? ' aria-disabled="true"' : '') +
           ' class="c10-opt' + (on ? ' is-on' : '') + '" data-fid="ed-opt-' + i + '"' +
@@ -1282,6 +1393,46 @@
       h += logHtml(sec);
     } else if (kind === 'health') {
       h += healthHtml(sec);
+    } else if (kind === 'preview' && (sec.counts || arr(sec.conflicts).length)) {
+      /* Staged-import preview: {state, source, counts, conflicts[], invalid,
+         legacyMigrated, restorePointId} — not items/rows, so the generic
+         projection below cannot see it. */
+      var pv = obj(sec);
+      var src = obj(pv.source);
+      var counts = obj(pv.counts);
+      if (src.file) {
+        h += '<p class="c10-sec-note">Staged file ' + esc(src.file) +
+          (src.createdOn ? ' from ' + esc(src.createdOn) : '') +
+          (src.mode ? ' · ' + esc(src.mode) : '') +
+          (pv.state ? ' · ' + esc(String(pv.state)) : '') + '</p>';
+      }
+      h += qaRows([
+        counts.add != null ? { label: 'Will be added', valueLabel: String(counts.add) } : null,
+        counts.change != null ? { label: 'Will change', valueLabel: String(counts.change) } : null,
+        counts.conflict != null ? { label: 'Conflicts', valueLabel: String(counts.conflict), note: counts.conflict ? 'Held out of an apply until resolved' : null } : null,
+        counts.invalid != null ? { label: 'Invalid entries', valueLabel: String(counts.invalid) } : null,
+        counts.legacyMigrated != null ? { label: 'Migrated from legacy keys', valueLabel: String(counts.legacyMigrated) } : null
+      ]);
+      if (arr(pv.conflicts).length) {
+        h += tableHtml({
+          columns: [
+            { id: 'setting', label: 'Conflicting setting' },
+            { id: 'local', label: 'This project' },
+            { id: 'incoming', label: 'Incoming' },
+            { id: 'note', label: 'Why' }
+          ],
+          rows: arr(pv.conflicts).map(function (c) {
+            var rec = settingIx[c.settingId];
+            return { id: c.settingId, dest: c.dest, cells: {
+              setting: rec ? rec.label : c.settingId,
+              local: c.local != null ? c.local : '—',
+              incoming: c.incoming != null ? c.incoming : '—',
+              note: c.note || 'Both sides changed this value.'
+            } };
+          })
+        });
+        if (pv.restorePointId) h += '<p class="c10-sec-note">Restore point ' + esc(pv.restorePointId) + ' covers a full rollback.</p>';
+      }
     } else {
       /* preview + anything future: best-effort generic projection */
       if (arr(sec.items).length) h += qaRows(sec.items);
@@ -1449,7 +1600,12 @@
 
   /* ============================ All Settings (virtualized) ================ */
 
+  /* Virtual-list row height. One-pane width stacks the location under the
+     setting name so the VALUE column survives the narrow layout, which costs
+     one extra text line; the spacer maths has to follow the CSS. */
   var ROWH = 34;
+  var ROWH_NARROW = 46;
+  function rowH() { return ui.mode === 1 ? ROWH_NARROW : ROWH; }
 
   function buildAllIndex() {
     if (ui.allIndex) return ui.allIndex;
@@ -1554,11 +1710,12 @@
     if (!list || !rowsEl) return;
     var rows = ui.allFiltered || filterAll();
     var vh = list.clientHeight || 600;
-    var start = Math.max(0, Math.floor(list.scrollTop / ROWH) - 8);
-    var count = Math.ceil(vh / ROWH) + 16;
+    var rh = rowH();
+    var start = Math.max(0, Math.floor(list.scrollTop / rh) - 8);
+    var count = Math.ceil(vh / rh) + 16;
     var end = Math.min(rows.length, start + count);
-    top.style.height = (start * ROWH) + 'px';
-    bot.style.height = ((rows.length - end) * ROWH) + 'px';
+    top.style.height = (start * rh) + 'px';
+    bot.style.height = ((rows.length - end) * rh) + 'px';
     var h = '';
     for (var i = start; i < end; i++) {
       var r = rows[i];
@@ -1568,7 +1725,7 @@
         '<span class="c10-vpath">' + esc(catTitle(r.cat)) + (r.stress ? ' \u203A Stress overlay' : ' \u203A ' + esc(subTitle(r.cat, r.sub))) + '</span>' +
         '<span class="c10-vtype">' + esc(r.type) + '</span>' +
         '<span class="c10-vtype">' + esc(r.tier === 'simple' ? 'everyday' : 'advanced') + '</span>' +
-        '<span class="' + (r.changed ? 'c10-vname' : 'c10-vtype') + '">' + esc(r.valueLabel || '\u2014') + '</span>' +
+        '<span class="' + (r.changed ? 'c10-vname' : 'c10-vval') + '">' + esc(humanValue(r.valueLabel) || '\u2014') + '</span>' +
         '</button>';
     }
     rowsEl.innerHTML = h;
@@ -1577,7 +1734,7 @@
 
   /* ============================ copy transaction ========================= */
 
-  function copyPane(anim, narrowMode) {
+  function copyPane(anim, narrowMode, withBack) {
     var c = ui.copy;
     var narrow = !!narrowMode || ui.mode === 1;
     var layout = narrow ? 'is-narrow'
@@ -1602,19 +1759,23 @@
     h += copyStage4(narrow);
     h += '</div></div>';
     var head = paneHead('Transaction', 'Copy Settings', null,
-      null, narrow ? 'Settings Home' : null, { route: 'home' });
+      null, (narrow || withBack) ? 'Settings Home' : null, { route: 'home' });
     return paneShell('copy', 'c10-pane-flex', head, h, anim, true);
   }
 
-  function stageShell(n, title, state, inner, narrow) {
+  function stageShell(n, title, state, inner, narrow, hint) {
     var cls = 'c10-stagep' + (state.active ? ' is-active' : '') + (state.done ? ' is-done' : '') + (!state.reached && !state.active ? ' is-locked' : '');
     var head = '<div class="c10-stagep-head"><span class="c10-stagep-n">' + n + '</span>' +
       '<span class="c10-stagep-t">' + esc(title) + '</span></div>';
     if (narrow && !state.active) {
-      /* narrow: one stage at a time; headers of other stages stay as markers */
+      /* narrow: only the active stage carries its controls, but every stage
+         still says what it will do — a numbered header over an empty band
+         explains nothing. */
       var jump = state.done ? ' role="button" tabindex="0" data-act="copy-stage:' + (n - 1) + '"' : '';
       return '<div class="' + cls + '"><div' + jump + ' class="c10-stagep-head" style="cursor:' + (state.done ? 'pointer' : 'default') + '">' +
-        '<span class="c10-stagep-n">' + n + '</span><span class="c10-stagep-t">' + esc(title) + '</span></div></div>';
+        '<span class="c10-stagep-n">' + n + '</span><span class="c10-stagep-t">' + esc(title) + '</span></div>' +
+        (hint ? '<div class="c10-stagep-body is-collapsed"><div class="c10-locked-note">' + esc(hint) + '</div></div>' : '') +
+        '</div>';
     }
     return '<div class="' + cls + '">' + head + '<div class="c10-stagep-body c10-scroll" data-panekey="copy' + n + '">' + inner + '</div></div>';
   }
@@ -1630,7 +1791,9 @@
         arr(s.categorySummaries).length + ' categories</div></button>';
     });
     inner += '<div class="c10-locked-note" style="margin-top:8px">Only values the source changed from its defaults are offered.</div>';
-    return stageShell(1, 'Select source', { active: c.stage === 0, done: c.stage > 0, reached: true }, inner, narrow);
+    return stageShell(1, 'Select source', { active: c.stage === 0, done: c.stage > 0, reached: true }, inner, narrow,
+      c.stage > 0 ? 'Source chosen. Tap this step to pick a different project.'
+                  : 'Only values the source changed from its defaults are offered.');
   }
 
   function copyStage2(sources, narrow) {
@@ -1658,7 +1821,9 @@
         'Preview changes</button>' +
         '<span class="c10-ctl-note">' + chosen + ' of ' + cats.length + ' categories</span></div>';
     }
-    return stageShell(2, 'Choose categories', st, inner, narrow);
+    return stageShell(2, 'Choose categories', st, inner, narrow,
+      !st.reached ? 'Choose a source project first.'
+                  : 'Categories chosen. Tap this step to change the selection.');
   }
 
   var KINDS = ['add', 'replace', 'unchanged', 'unavailable', 'conflict'];
@@ -1708,7 +1873,10 @@
       inner += '<div class="c10-editor-actions" style="margin-top:10px">' +
         '<button type="button" class="c10-btn is-primary" data-act="copy-tostage:3">Continue to confirm</button></div>';
     }
-    return stageShell(3, 'Preview changes', st, inner, narrow);
+    return stageShell(3, 'Preview changes', st, inner, narrow,
+      (!st.reached || !c.preview)
+        ? 'The preview appears once categories are chosen. It lists every addition, replacement, unchanged value, unavailable value, and conflict before anything is applied.'
+        : 'Preview ready. Tap this step to re-read every change.');
   }
 
   function valStr(v) {
@@ -1765,7 +1933,9 @@
       }
       inner += '</div>';
     }
-    return stageShell(4, 'Confirm & receipt', st, inner, narrow);
+    return stageShell(4, 'Confirm & receipt', st, inner, narrow,
+      c.receipt ? 'Copy complete. Tap this step to re-read the receipt or roll it back.'
+                : 'Confirming creates a restore point, applies the copy atomically, verifies the result, and hands back a receipt with a working rollback.');
   }
 
   /* ============================ footer strip ============================ */

@@ -1,0 +1,85 @@
+{
+  "schema": "pm.settings_bakeoff.reference_review_snapshot.v1",
+  "pass": "seven_new_concepts_2026-08-18",
+  "model_folder": "fable",
+  "snapshot_date": "2026-08-20",
+  "immutable": true,
+  "packet": "Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "documents_opened": {
+    "packet_top_level": [
+      "00_START_HERE.md", "01_ASSIGNMENT_AND_PRECEDENCE.md", "02_SEVEN_CONCEPT_BLUEPRINTS.md",
+      "03_HOME_SEARCH_AND_NAVIGATION.md", "04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+      "05_COMPLETE_MANAGER_INTEGRATION.md", "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md",
+      "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md", "08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md",
+      "09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md", "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+      "11_REQUIRED_FILES_AND_REPORTS.md", "12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+      "GOAL_PROMPT.md", "PROMPT_USAGE.md", "PACKET_MANIFEST.json"
+    ],
+    "machine_readable": [
+      "concept_blueprints.json", "manager_coverage_required.json", "search_contract.json",
+      "test_matrix.json", "repo_baseline.json", "model_folder_map.json", "supersessions.json"
+    ],
+    "packet_tools": ["tools/validate_seven_new_concepts.py"],
+    "reference_images": [
+      "01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png", "02_A1_Directory_Take_2.png",
+      "03_A2_Compendium_Workspace_Take_1.png", "04_A1_Directory_Take_3.png",
+      "05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "reference/selected_concepts/README.md"
+    ],
+    "base_packet_2026_08_08": [
+      "00_START_HERE.md", "SHARED_PROCESS_RULES.md", "SOURCE_AND_PRECEDENCE_MAP.md",
+      "REFERENCE_SUPERSESSIONS.md", "02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md",
+      "03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md",
+      "04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md",
+      "05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md",
+      "06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+      "07_SERVER_HOST_AND_OWNER_BOUNDARIES.md", "08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+      "09_GUI_MOTION_THEME_SLINT_AND_TESTS.md", "DECISION_COVERAGE.json"
+    ],
+    "correction_packet_2026_08_13": [
+      "00_READ_ME_FIRST.md", "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md (all 1112 lines, digested to a precedence-annotated audit checklist used by every audit pass)"
+    ],
+    "repository_sources": [
+      "Concepts/CONCEPT_RULES.md",
+      "Plans/settings_inventory.json (read-only; 828 settings / 12 categories verified and generated into _shared2/pm2-inventory.js)",
+      "fable/README.md, fable/CONTRACT.md, fable/concept-hub.json, fable/index.html",
+      "fable/_shared/* (read-only style/API reference; never edited)",
+      "fable/c1-atlas.* (register-file shape reference only; never edited)"
+    ]
+  },
+  "image_interpretations": {
+    "concept-05-directory-take-1": "Kept: search-above-directory hierarchy, single attention banner, two-column destination cards, in-shell settings nav, roster+form provider workspace, in-context deep-link highlight, focused copy review flow. Dropped: the board's generic blue admin skin, 'Give Feedback' affordance, synthetic provider facts, persona footer. Re-expressed entirely in pm-shell theme tokens with a card-transfer motion metaphor.",
+    "concept-06-directory-take-2": "Kept: editorial single-column destination rows, narrow stable domain rail, compact anchored search dropdown, restrained provider detail sheet, quiet copy dialog, deliberate vertical rhythm. Dropped: cream/beige palette, macOS traffic lights, audit-log chrome, synthetic counts. Typography set from the token stack with a larger reading measure.",
+    "concept-07-compendium-workspace": "Kept: Home plus first-class All Settings compendium, faceted long-tail index, domain pages combining overview/key settings/related managers, integrated list/detail managers, contextual explanation at search landings, count-rich copy preview with detailed diff. Dropped: version footer, 'Orion Data Pipeline' naming, the board's exact facet taxonomy (facets derive from real inventory fields).",
+    "concept-08-directory-take-3": "Kept: bright spacious few-large-cards directory, strong icon/title/purpose hierarchy, provider summary status cards with explicit quick actions, credential highlight in place, full-width category-select copy flow. Dropped: blue-gradient marketing look, avatar block, decorative ratings. The 12 categories group into 7 large cards with the complete mapping rendered live and recorded in the impact register.",
+    "concept-09-tome-tabs": "LAYOUT ONLY. Kept: persistent edge chapter tabs, layered page depth with stable location, broad reading canvas, manager-local tab rows, stepwise copy flow. REMOVED ENTIRELY: parchment, leather, brass, gears, sepia, book ornament, fantasy vocabulary. The concept CSS/JS contain zero hardcoded colors — token variables only — and screenshots across all 8 themes were audited for residual tome styling.",
+    "concept-10-command-suite": "LAYOUT ONLY. Kept: command-index navigation, keyboard-first multi-pane left-to-right drill-down, compact legible tables, persistent path/status visibility, exact editor beneath context, transactional copy panels with typed confirm. REMOVED ENTIRELY: terminal green, CRT effects, fake shell prompt, code-only labels, monospace body copy (mono restricted to intentionally technical detail values).",
+    "concept-11-tabbed-organizer": "LAYOUT ONLY. Kept: top category tabs over grouped categories with a complete documented mapping, layered sheets preserving location, compact Home with categories and recent changes, related-manager strip, provider roster with detail tabs, adjacent-pane copy composition. REMOVED ENTIRELY: paper, binder rings, staples, folder die-cuts, manila palette, office-supply decoration."
+  },
+  "superseded_legacy_assumptions_applied": [
+    "Four-concept collective coverage and shared_grammar coverage status are retired: every concept 05-11 demonstrates all 42 required families itself plus 9 deferred_named_owner shells.",
+    "The old fable demo settings baseline (~120 rows, 11 domains) is superseded by the real Plans/settings_inventory.json (828 rows, 12 categories) generated read-only into _shared2/pm2-inventory.js.",
+    "Global/Project scope exposure is removed: all editing is current-Project-only; legacy inventory scope metadata is carried as candidate-impact data (legacyScope) and never rendered as a control.",
+    "Provider-CLI language follows the 2026-08-13 final adjudication: explicit user-triggered, official-source, exact host/environment, never bundled or pre-seeded; 'Included with this Server' never appears for a provider CLI.",
+    "Global previous/next-manager navigation is absent; managers are not slides. Back/Escape follow the packet 03 ladder.",
+    "The rev-2 canonical deep-link probe id system.health.diagnostics-verbosity does not exist in the real inventory; the canonical probe is system.health.platform-diagnostics, and the stale id renders an honest not-found surface in every concept (recorded in candidate impact files)."
+  ],
+  "no_cross_concept_routing_evidence": [
+    "CONTRACT2 differentiation clause: _shared2 exports no HTML/CSS for any Settings surface; concepts render exclusively from headless data/semantics with concept-prefixed CSS (c05-..c11-) that never crosses files.",
+    "Packet validator: zero iframes, zero concept-0[1-4] href/src references in any new page (status recorded in the test report).",
+    "Harness manager-isolation suite: all 47 manager routes per concept crawled in-browser; zero anchors to sibling concept pages, zero iframes, shell/breadcrumb/Back/Close retained (49/49 checks x 7 concepts, results in the test report).",
+    "Shared modules loaded by concepts 05-11 (_shared2/*) are additive; concepts 01-04 never load them, and _shared/* is byte-identical to the pre-pass baseline (git-verified with --ignore-cr-at-eol on this NFS mount)."
+  ],
+  "shared_layer_documents": {
+    "contract": "_shared2/CONTRACT2.md",
+    "modules": [
+      "pm2-inventory.js (generated by tools/gen-inventory.py)", "pm2-store.js", "pm2-managers.js",
+      "pm2-managers2.js", "pm2-search.js", "pm2-copy.js", "pm2-states.js", "pm2-route.js"
+    ],
+    "harness": "tools/boot-check.js, tools/smoke2.js, tools/harness/ (cdp driver + 6 suites)"
+  }
+}

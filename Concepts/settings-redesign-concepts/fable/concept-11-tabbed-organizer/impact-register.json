@@ -18,7 +18,7 @@
     {
       "owner": "Plans/settings_inventory.json",
       "kind": "conflicts",
-      "evidence": "system.health.diagnostics-verbosity exists in the legacy demo dataset but not in the 828-row v2 inventory; this concept grafts it into System > Health & Doctor as a concept-local row so the canonical deep-link probe lands. The inventory census should either mint the row or retire the probe id."
+      "evidence": "system.health.diagnostics-verbosity exists only in the legacy rev-2 demo dataset, not in the 828-row v2 inventory. This concept treats it honestly: the deep link renders a non-crashing 'not in this project's settings' surface with search/All-Settings escapes, while the real row system.health.platform-diagnostics lands exactly. The inventory census should retire or re-mint the stale probe id."
     },
     {
       "owner": "Plans/Permissions_System.md",

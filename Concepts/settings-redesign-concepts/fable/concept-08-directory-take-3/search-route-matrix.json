@@ -1,0 +1,598 @@
+{
+  "schema": "pm2.search_route_matrix.v1",
+  "conceptId": "c08",
+  "stem": "concept-08-directory-take-3",
+  "generated": "2026-08-20",
+  "note": "Every case below was actually walked over CDP against the live page (scratchpad harness): PM2.search.query in-page, result landed exactly as the UI lands it (search route pushed, then dest with focus rid), then browser Back. 'actualLanding' and 'backRestores' are recorded observations, not expectations. 24/24 passed with zero console errors.",
+  "cases": [
+    {
+      "caseId": "dup-key-claude",
+      "caseKind": "duplicate-label",
+      "query": "api key",
+      "rid": "o:m.providers/claude.key",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "API key"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "accounts",
+        "sectionId": "acct.claude-api",
+        "cat": "ai"
+      },
+      "expectedLanding": "route manager m.providers/claude/accounts section acct.claude-api",
+      "actualLanding": "route=manager/m.providers/claude/accounts located=div[data-object-id=acct.claude-api]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "dup-key-openrouter",
+      "caseKind": "duplicate-label",
+      "query": "api key",
+      "rid": "o:m.providers/openrouter.key",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "OpenRouter",
+        "API key"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "openrouter",
+        "tab": "accounts",
+        "cat": "ai"
+      },
+      "expectedLanding": "route manager m.providers/openrouter/accounts",
+      "actualLanding": "route=manager/m.providers/openrouter/accounts located=section[data-section=accounts]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "dup-limits-claude",
+      "caseKind": "duplicate-label",
+      "query": "rate limits",
+      "rid": "o:m.providers/claude.limits",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "Rate limits"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "limits",
+        "cat": "ai"
+      },
+      "expectedLanding": "route manager m.providers/claude/limits",
+      "actualLanding": "route=manager/m.providers/claude/limits located=section[data-section=limits]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "dup-limits-openrouter",
+      "caseKind": "duplicate-label",
+      "query": "rate limits",
+      "rid": "o:m.providers/openrouter.limits",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "OpenRouter",
+        "Rate limits"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "openrouter",
+        "tab": "limits",
+        "cat": "ai"
+      },
+      "expectedLanding": "route manager m.providers/openrouter/limits",
+      "actualLanding": "route=manager/m.providers/openrouter/limits located=section[data-section=limits]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "typo-notifications",
+      "caseKind": "typo",
+      "query": "notifcations",
+      "rid": "s:general.interaction.notifications-enabled",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Interaction & Defaults",
+        "Notifications"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "general",
+        "sub": "interaction",
+        "settingId": "general.interaction.notifications-enabled"
+      },
+      "expectedLanding": "route setting row general.interaction.notifications-enabled",
+      "actualLanding": "route=setting/general.interaction.notifications-enabled located=div[data-setting-id=general.interaction.notifications-enabled]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "typo-appearance",
+      "caseKind": "typo",
+      "query": "apperance",
+      "rid": "s:general.interaction.mode",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Interaction & Defaults",
+        "Explain Things To Me"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "general",
+        "sub": "interaction",
+        "settingId": "general.interaction.mode"
+      },
+      "expectedLanding": "route setting row general.interaction.mode",
+      "actualLanding": "route=setting/general.interaction.mode located=div[data-setting-id=general.interaction.mode]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "typo-permissions",
+      "caseKind": "typo",
+      "query": "permisions",
+      "rid": "s:safety.rules.permission-preset",
+      "path": [
+        "Settings",
+        "Permissions & Safety",
+        "Rules & Presets",
+        "Permission Preset"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "safety",
+        "sub": "rules",
+        "settingId": "safety.rules.permission-preset"
+      },
+      "expectedLanding": "route setting row safety.rules.permission-preset",
+      "actualLanding": "route=setting/safety.rules.permission-preset located=div[data-setting-id=safety.rules.permission-preset]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "no-results",
+      "caseKind": "no-results",
+      "query": "flux capacitor",
+      "rid": null,
+      "path": null,
+      "dest": null,
+      "expectedLanding": "no results — guidance links, no dead end",
+      "actualLanding": "0 results; dropdown shows guidance (Browse all settings / Settings Home)",
+      "focus": "n/a",
+      "highlight": "n/a",
+      "backRestores": "n/a",
+      "pass": true
+    },
+    {
+      "caseId": "setting-theme",
+      "caseKind": "grouped+setting",
+      "query": "theme",
+      "rid": "s:general.visual.theme",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Visual Style",
+        "Theme"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "general",
+        "sub": "visual",
+        "settingId": "general.visual.theme"
+      },
+      "expectedLanding": "route setting row general.visual.theme",
+      "actualLanding": "route=setting/general.visual.theme located=div[data-setting-id=general.visual.theme]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "deep-advanced-row",
+      "caseKind": "deep-row",
+      "query": "platform diagnostics",
+      "rid": "s:system.health.platform-diagnostics",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Health & Doctor",
+        "Run Deep Diagnostics"
+      ],
+      "dest": {
+        "route": "setting",
+        "cat": "system",
+        "sub": "health",
+        "settingId": "system.health.platform-diagnostics"
+      },
+      "expectedLanding": "route setting row system.health.platform-diagnostics",
+      "actualLanding": "route=setting/system.health.platform-diagnostics located=div[data-setting-id=system.health.platform-diagnostics]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "workflow-cursor",
+      "caseKind": "workflow",
+      "query": "set up cursor",
+      "rid": "w:setup.cursor-cli",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Cursor CLI",
+        "Set up Cursor CLI"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers",
+        "objectId": "cursor-cli",
+        "tab": "setup"
+      },
+      "expectedLanding": "route manager m.providers/cursor-cli/setup",
+      "actualLanding": "route=manager/m.providers/cursor-cli/setup located=section[data-section=setup]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "workflow-signin",
+      "caseKind": "workflow",
+      "query": "sign in claude",
+      "rid": "w:signin.claude",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "Sign in to Claude"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "accounts"
+      },
+      "expectedLanding": "route manager m.providers/claude/accounts",
+      "actualLanding": "route=manager/m.providers/claude/accounts located=section[data-section=accounts]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "workflow-repair",
+      "caseKind": "workflow",
+      "query": "repair",
+      "rid": "w:repair.inst.copilot.ghext",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "GitHub Copilot",
+        "Repair GitHub Copilot CLI (gh extension)"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers",
+        "objectId": "copilot",
+        "tab": "installs",
+        "sectionId": "inst.inst.copilot.ghext"
+      },
+      "availability": "The last update failed verification and was rolled back.",
+      "expectedLanding": "route manager m.providers/copilot/installs section inst.inst.copilot.ghext",
+      "actualLanding": "route=manager/m.providers/copilot/installs located=div[data-object-id=inst.inst.copilot.ghext]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "unavail-wsl",
+      "caseKind": "unavailable",
+      "query": "wsl",
+      "rid": "u:env.win.wsl",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Servers & Hosts",
+        "This computer (Windows)",
+        "Linux through WSL (Ubuntu)"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "system",
+        "managerId": "m.servers",
+        "objectId": "host.win-desktop",
+        "reason": "Off is healthy. Using Windows tools only. Setup appears only when a selected capability needs Linux."
+      },
+      "availability": "Off is healthy. Using Windows tools only. Setup appears only when a selected capability needs Linux.",
+      "expectedLanding": "route manager m.servers/host.win-desktop",
+      "actualLanding": "route=manager/m.servers/host.win-desktop located=div[data-object-id=host.win-desktop]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "unavail-video",
+      "caseKind": "unavailable",
+      "query": "video generation",
+      "rid": "u:m.media/m-video",
+      "path": [
+        "Settings",
+        "Media & Output",
+        "Media & Output",
+        "Video generation"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.media",
+        "objectId": "m-video",
+        "cat": "media",
+        "reason": "No connected provider offers video generation. Connect a media provider with video support to enable this."
+      },
+      "availability": "No connected provider offers video generation. Connect a media provider with video support to enable this.",
+      "expectedLanding": "route manager m.media/m-video",
+      "actualLanding": "route=manager/m.media/m-video located=div[data-object-id=m-video]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "obj-sound-pack",
+      "caseKind": "manager-object",
+      "query": "sound pack",
+      "rid": "o:m.sounds/pack.openpeon-vol2",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Sound Library",
+        "OpenPeon Vol. 2"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.sounds",
+        "sectionId": "pack.openpeon-vol2",
+        "cat": "general"
+      },
+      "expectedLanding": "route manager m.sounds section pack.openpeon-vol2",
+      "actualLanding": "route=manager/m.sounds located=div[data-object-id=pack.openpeon-vol2]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "obj-worktree",
+      "caseKind": "manager-object",
+      "query": "worktree",
+      "rid": "o:m.sourceControl/wt.fix-scrollspy",
+      "path": [
+        "Settings",
+        "Branching & Collaboration",
+        "Source Control & Worktrees",
+        "fix/scrollspy-deadband"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.sourceControl",
+        "objectId": "wt.fix-scrollspy",
+        "cat": "branching"
+      },
+      "expectedLanding": "route manager m.sourceControl/wt.fix-scrollspy",
+      "actualLanding": "route=manager/m.sourceControl/wt.fix-scrollspy located=div[data-object-id=wt.fix-scrollspy]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "obj-installation",
+      "caseKind": "manager-object",
+      "query": "claude installation",
+      "rid": "o:m.providers/claude.inst.inst.claude.brew",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "Claude CLI (Homebrew, MacBook Air) installation"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "installs",
+        "sectionId": "inst.inst.claude.brew",
+        "cat": "ai"
+      },
+      "expectedLanding": "route manager m.providers/claude/installs section inst.inst.claude.brew",
+      "actualLanding": "route=manager/m.providers/claude/installs located=div[data-object-id=inst.inst.claude.brew]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "manager-doctor",
+      "caseKind": "manager",
+      "query": "doctor",
+      "rid": "m:m.doctor",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Doctor"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "system",
+        "managerId": "m.doctor"
+      },
+      "expectedLanding": "route manager m.doctor",
+      "actualLanding": "route=manager/m.doctor located=header",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "manager-storage",
+      "caseKind": "manager",
+      "query": "storage",
+      "rid": "m:m.storage",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Storage & Retention"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "system",
+        "managerId": "m.storage"
+      },
+      "expectedLanding": "route manager m.storage",
+      "actualLanding": "route=manager/m.storage located=header",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "help-topic",
+      "caseKind": "help",
+      "query": "guide",
+      "rid": "h:teach.custom-theme",
+      "path": [
+        "Settings",
+        "General & Appearance",
+        "Teacher & Help",
+        "Create a custom theme from a base"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.teacher",
+        "sectionId": "teach.custom-theme",
+        "cat": "general"
+      },
+      "expectedLanding": "route manager m.teacher section teach.custom-theme",
+      "actualLanding": "route=manager/m.teacher located=div[data-object-id=teach.custom-theme]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "action-catalog",
+      "caseKind": "action",
+      "query": "refresh model catalogs",
+      "rid": "a:act.catalog-refresh",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Refresh model catalogs"
+      ],
+      "dest": {
+        "route": "manager",
+        "cat": "ai",
+        "managerId": "m.providers"
+      },
+      "expectedLanding": "route manager m.providers",
+      "actualLanding": "route=manager/m.providers located=header",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "obj-model-opus",
+      "caseKind": "deep-row",
+      "query": "opus",
+      "rid": "o:m.providers/claude.model.claude-opus-4-1",
+      "path": [
+        "Settings",
+        "AI Brains & Providers",
+        "AI Providers",
+        "Claude",
+        "Claude Opus 4.1"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.providers",
+        "objectId": "claude",
+        "tab": "models",
+        "sectionId": "model.claude-opus-4-1",
+        "cat": "ai"
+      },
+      "expectedLanding": "route manager m.providers/claude/models section model.claude-opus-4-1",
+      "actualLanding": "route=manager/m.providers/claude/models located=tr[data-object-id=model.claude-opus-4-1]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    },
+    {
+      "caseId": "diag-index",
+      "caseKind": "diagnostic",
+      "query": "index",
+      "rid": "d:m.doctor/doc.index",
+      "path": [
+        "Settings",
+        "System & Advanced",
+        "Doctor",
+        "Search index health"
+      ],
+      "dest": {
+        "route": "manager",
+        "managerId": "m.doctor",
+        "sectionId": "doc.index",
+        "cat": "system"
+      },
+      "expectedLanding": "route manager m.doctor section doc.index",
+      "actualLanding": "route=manager/m.doctor located=button[data-object-id=doc.index]",
+      "focus": "focus on landing element",
+      "highlight": "pm2-located applied, decays",
+      "backRestores": "query + result list restored",
+      "pass": true
+    }
+  ]
+}

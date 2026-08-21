@@ -56,8 +56,16 @@ async function run(ctx) {
         var surfaceEl = document.querySelector("[data-manager-surface]");
         var titleMention = a.title ? stageText.toLowerCase().indexOf(a.title.toLowerCase()) !== -1 : false;
 
-        var back = !!document.querySelector("[data-pm2-back]");
-        var backName = back ? "[data-pm2-back]" : null;
+        /* CONTRACT2 now requires [data-pm2-back] on the primary Back
+         * affordance — prefer it (visible first), keep the accessible-name
+         * scan as fallback for pages mid-migration. */
+        var back = false;
+        var backName = null;
+        var hooks = document.querySelectorAll("[data-pm2-back]");
+        for (var hi = 0; hi < hooks.length && !back; hi++) {
+          if (vis(hooks[hi])) { back = true; backName = "[data-pm2-back]"; }
+        }
+        if (!back && hooks.length) { back = true; backName = "[data-pm2-back] (hidden at capture)"; }
         if (!back) {
           var btns = document.querySelectorAll("button, a, [role='button']");
           for (var i = 0; i < btns.length && !back; i++) {
@@ -95,8 +103,14 @@ async function run(ctx) {
           var titleLower = String(a.title || "").toLowerCase().replace(/\s+/g, " ");
           for (var k = 0; k < bs.length; k++) {
             if (!vis(bs[k])) continue;
+            /* CONTRACT2 nav entries carry data-manager (or sit in a nav) —
+             * a navigation card is not an action, whatever its label */
+            if (bs[k].closest("[data-manager], nav")) continue;
             var t = (bs[k].innerText || "").replace(/^[^a-zA-Z]+/, "").replace(/\s+/g, " ").trim();
             if (!t) continue;
+            /* real backend-work buttons are short imperatives; long text is a
+             * nav card / description block */
+            if (t.length > 32) continue;
             var tLower = t.toLowerCase();
             /* navigation entries named after the manager are not actions */
             if (titleLower && (tLower === titleLower || titleLower.indexOf(tLower) !== -1 || tLower.indexOf(titleLower) !== -1)) continue;

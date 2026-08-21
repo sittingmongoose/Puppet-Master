@@ -1,0 +1,763 @@
+{
+  "schema": "pm2.manager_route_matrix.v1",
+  "conceptId": "c08",
+  "stem": "concept-08-directory-take-3",
+  "generated": "2026-08-20",
+  "note": "All 47 routes below were driven by tools/boot-check.js (data-pm2-route stamp, zero console errors/warnings, no horizontal overflow) at 1280px, and the full default battery also at 760/900/2500px. Provider object tabs (accounts/models/limits/routing/installs/setup/activity/advanced, plus free-community routes/catalog and opencode server) walked additionally. Location contract: every non-Home surface (managers, domains, domain subgroups, All, Copy, Search, missing-setting fallback) carries a persistent quiet 'Back to <named parent>' pill in the sticky beacon bar with the required data-pm2-back hook, at ALL widths (crumbs hide at <=900 but the named Back pill stays); the copy flow's step-back buttons carry the hook too. Search inputs carry data-pm2-search-input (orchestrator patch).",
+  "managers": [
+    {
+      "managerId": "m.providers",
+      "entryPoints": [
+        "#/dest/ai manager block",
+        "universal search m:m.providers"
+      ],
+      "route": "#/manager/m.providers (+ /<providerId>/<tab>)",
+      "shellRetained": true,
+      "backTarget": "#/dest/ai (AI Brains & Providers) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.reconnect-required",
+        "fx.rollback-complete",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.context",
+      "entryPoints": [
+        "#/dest/memory manager block",
+        "universal search m:m.context"
+      ],
+      "route": "#/manager/m.context",
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (Memory & Context) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.memory",
+      "entryPoints": [
+        "#/dest/memory manager block",
+        "universal search m:m.memory"
+      ],
+      "route": "#/manager/m.memory",
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (Memory & Context) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.long-text",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.personas",
+      "entryPoints": [
+        "#/dest/personas manager block",
+        "universal search m:m.personas"
+      ],
+      "route": "#/manager/m.personas",
+      "shellRetained": true,
+      "backTarget": "#/dest/personas (Personas) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.goal",
+      "entryPoints": [
+        "#/dest/planning manager block",
+        "universal search m:m.goal"
+      ],
+      "route": "#/manager/m.goal",
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (Planning & Verification) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.crew",
+      "entryPoints": [
+        "#/dest/branching manager block",
+        "universal search m:m.crew"
+      ],
+      "route": "#/manager/m.crew (+ /<crewId>)",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (Branching & Collaboration) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.permissions",
+      "entryPoints": [
+        "#/dest/safety manager block",
+        "universal search m:m.permissions"
+      ],
+      "route": "#/manager/m.permissions",
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (Permissions & Safety) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.doom-loop-tripped",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.bsd",
+      "entryPoints": [
+        "#/dest/safety manager block",
+        "universal search m:m.bsd"
+      ],
+      "route": "#/manager/m.bsd",
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (Permissions & Safety) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.notifications",
+      "entryPoints": [
+        "#/dest/general manager block",
+        "universal search m:m.notifications"
+      ],
+      "route": "#/manager/m.notifications",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.validation-error",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sounds",
+      "entryPoints": [
+        "#/dest/general manager block",
+        "universal search m:m.sounds"
+      ],
+      "route": "#/manager/m.sounds",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.appearance",
+      "entryPoints": [
+        "#/dest/general manager block",
+        "universal search m:m.appearance"
+      ],
+      "route": "#/manager/m.appearance",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.theme-fallback",
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.spellcheck",
+      "entryPoints": [
+        "#/dest/general manager block",
+        "universal search m:m.spellcheck"
+      ],
+      "route": "#/manager/m.spellcheck",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.desktop",
+      "entryPoints": [
+        "#/dest/general manager block",
+        "universal search m:m.desktop"
+      ],
+      "route": "#/manager/m.desktop",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.teacher",
+      "entryPoints": [
+        "#/dest/general manager block",
+        "universal search m:m.teacher"
+      ],
+      "route": "#/manager/m.teacher",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.doctor",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.doctor"
+      ],
+      "route": "#/manager/m.doctor",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.index-failed",
+        "fx.doom-loop-tripped",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.files",
+      "entryPoints": [
+        "#/dest/code manager block",
+        "universal search m:m.files"
+      ],
+      "route": "#/manager/m.files",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.terminal",
+      "entryPoints": [
+        "#/dest/code manager block",
+        "universal search m:m.terminal"
+      ],
+      "route": "#/manager/m.terminal",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lsp",
+      "entryPoints": [
+        "#/dest/code manager block",
+        "universal search m:m.lsp"
+      ],
+      "route": "#/manager/m.lsp",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.formatters",
+      "entryPoints": [
+        "#/dest/code manager block",
+        "universal search m:m.formatters"
+      ],
+      "route": "#/manager/m.formatters",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.commands",
+      "entryPoints": [
+        "#/dest/extensions manager block",
+        "universal search m:m.commands"
+      ],
+      "route": "#/manager/m.commands",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.mcp",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.mcp"
+      ],
+      "route": "#/manager/m.mcp",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.reconnect-required",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.skills",
+      "entryPoints": [
+        "#/dest/extensions manager block",
+        "universal search m:m.skills"
+      ],
+      "route": "#/manager/m.skills",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.plugins",
+      "entryPoints": [
+        "#/dest/extensions manager block",
+        "universal search m:m.plugins"
+      ],
+      "route": "#/manager/m.plugins",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.tools",
+      "entryPoints": [
+        "#/dest/extensions manager block",
+        "universal search m:m.tools"
+      ],
+      "route": "#/manager/m.tools",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.testing",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.testing"
+      ],
+      "route": "#/manager/m.testing",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.storage",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.storage"
+      ],
+      "route": "#/manager/m.storage",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.backup",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.backup"
+      ],
+      "route": "#/manager/m.backup",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lifecycle",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.lifecycle"
+      ],
+      "route": "#/manager/m.lifecycle",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.rollback-complete",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.history",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.history"
+      ],
+      "route": "#/manager/m.history",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.artifacts",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.artifacts"
+      ],
+      "route": "#/manager/m.artifacts",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.storage-pressure"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sourceControl",
+      "entryPoints": [
+        "#/dest/branching manager block",
+        "universal search m:m.sourceControl"
+      ],
+      "route": "#/manager/m.sourceControl",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (Branching & Collaboration) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.actions",
+      "entryPoints": [
+        "#/dest/branching manager block",
+        "universal search m:m.actions"
+      ],
+      "route": "#/manager/m.actions",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (Branching & Collaboration) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.containers",
+      "entryPoints": [
+        "#/dest/code manager block",
+        "universal search m:m.containers"
+      ],
+      "route": "#/manager/m.containers",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.web",
+      "entryPoints": [
+        "#/dest/web manager block",
+        "universal search m:m.web"
+      ],
+      "route": "#/manager/m.web",
+      "shellRetained": true,
+      "backTarget": "#/dest/web (Web & Search) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.credit-guard",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.searchIndex",
+      "entryPoints": [
+        "#/dest/web manager block",
+        "universal search m:m.searchIndex"
+      ],
+      "route": "#/manager/m.searchIndex",
+      "shellRetained": true,
+      "backTarget": "#/dest/web (Web & Search) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.index-failed",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.cleanup",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.cleanup"
+      ],
+      "route": "#/manager/m.cleanup",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.media",
+      "entryPoints": [
+        "#/dest/media manager block",
+        "universal search m:m.media"
+      ],
+      "route": "#/manager/m.media",
+      "shellRetained": true,
+      "backTarget": "#/dest/media (Media & Output) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.dry",
+      "entryPoints": [
+        "#/dest/planning manager block",
+        "universal search m:m.dry"
+      ],
+      "route": "#/manager/m.dry",
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (Planning & Verification) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [
+        "fx.doom-loop-tripped"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.onboarding",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.onboarding"
+      ],
+      "route": "#/manager/m.onboarding",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.deployment",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.deployment"
+      ],
+      "route": "#/manager/m.deployment",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverClaim",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.serverClaim"
+      ],
+      "route": "#/manager/m.serverClaim",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.servers",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.servers"
+      ],
+      "route": "#/manager/m.servers",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.hosting",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.hosting"
+      ],
+      "route": "#/manager/m.hosting",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.remote",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.remote"
+      ],
+      "route": "#/manager/m.remote",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.projectSync",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.projectSync"
+      ],
+      "route": "#/manager/m.projectSync",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.appUpdates",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.appUpdates"
+      ],
+      "route": "#/manager/m.appUpdates",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverBackup",
+      "entryPoints": [
+        "#/dest/system manager block",
+        "universal search m:m.serverBackup"
+      ],
+      "route": "#/manager/m.serverBackup",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced) \u2014 named on the persistent beacon-bar Back pill (data-pm2-back), all widths; object pages step back to the manager root first",
+      "closeTarget": "Close Settings in the beacon bar \u2192 honest simulated receipt 'Returns to the Dashboard'",
+      "narrowBehavior": "one-column stack at <=900px: card/stat/roster grids collapse to a single column, beacon bar wraps with full-width search, provider object pages read as pushed pages with a named Back to the roster; shell rail never overlays content",
+      "statesShown": [],
+      "pass": true
+    }
+  ]
+}

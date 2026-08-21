@@ -1,0 +1,26 @@
+{
+  "overall": "FAIL",
+  "startedAt": "2026-08-21T04:48:27.586Z",
+  "passed": 0,
+  "failed": 1,
+  "checks": [
+    {
+      "name": "runner:complete",
+      "status": "FAIL",
+      "detail": {
+        "error": "Error: Playwright unavailable\n    at loadPW (file:///mnt/data/work/pm56_pro_reaudit/tests/critical-browser-audit.mjs:10:209)\n    at async file:///mnt/data/work/pm56_pro_reaudit/tests/critical-browser-audit.mjs:22:11"
+      }
+    }
+  ],
+  "errors": [
+    {
+      "name": "runner:complete",
+      "detail": {
+        "error": "Error: Playwright unavailable\n    at loadPW (file:///mnt/data/work/pm56_pro_reaudit/tests/critical-browser-audit.mjs:10:209)\n    at async file:///mnt/data/work/pm56_pro_reaudit/tests/critical-browser-audit.mjs:22:11"
+      }
+    }
+  ],
+  "screenshots": 0,
+  "videos": 0,
+  "finishedAt": "2026-08-21T04:48:27.588Z"
+}

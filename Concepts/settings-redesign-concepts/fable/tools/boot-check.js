@@ -29,6 +29,7 @@ const DEFAULT_ROUTES = [
   "all",
   "copy",
   "search/rate limit",
+  "setting/system.health.platform-diagnostics",
   "setting/system.health.diagnostics-verbosity",
   "search/notifcations",
   "search/flux capacitor"
@@ -133,7 +134,10 @@ async function main() {
     await page.close();
   } finally {
     await browser.close();
-    fs.rmSync(profile, { recursive: true, force: true });
+    for (let i = 0; i < 5; i++) {
+      try { fs.rmSync(profile, { recursive: true, force: true }); break; }
+      catch (e) { await new Promise((r) => setTimeout(r, 300)); }
+    }
   }
 
   if (failures.length) {

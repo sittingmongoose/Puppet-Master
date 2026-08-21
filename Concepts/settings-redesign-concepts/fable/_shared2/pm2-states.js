@@ -74,6 +74,7 @@
   }
 
   function snapshot(store) {
+    try { normalizeSharedData(store.data); } catch (e) { /* defensive */ }
     try { pristineDataJson = JSON.stringify(store.data || {}); }
     catch (e) { pristineDataJson = '{}'; }
     try { pristineValuesJson = JSON.stringify(store.values || {}); }
@@ -89,6 +90,29 @@
     Object.keys(target).forEach(function (k) { delete target[k]; });
     Object.keys(fresh).forEach(function (k) { target[k] = fresh[k]; });
     return target;
+  }
+
+  /* The shared demo data (untouchable in _shared/) predates the v2
+     inventory and its staged import preview names two settings by ids
+     that are not inventory rows. Remap them onto real, routable rows so
+     every surface (fixture, trigger, dormant render) lands on settings
+     that resolve via search. Idempotent; counts and shape unchanged. */
+  function normalizeSharedData(data) {
+    var pv = data && data.settingsLifecycle && data.settingsLifecycle.importPreview;
+    if (!pv) return;
+    arr(pv.conflicts).forEach(function (c) {
+      if (!c) return;
+      if (c.settingId === 'permissions.approvals.rule-count') {
+        c.settingId = 'safety.approvals.doom-loop-threshold';
+        c.local = '3 attempts';
+        c.incoming = '5 attempts';
+        /* note kept: managed rows stay excluded from import */
+      } else if (c.settingId === 'general.sounds.master-volume') {
+        c.settingId = 'general.interaction.sound-effects';
+        c.local = 'On';
+        c.incoming = 'Off';
+      }
+    });
   }
 
   function attach(store) {
@@ -671,16 +695,21 @@
           }
         });
       }
-      /* Two representative web rows go honestly unavailable. */
-      var webIds = [];
+      /* Network-dependent rows go honestly unavailable — this set is
+         mirrored by pm2-store's standalone fallback, so both modes
+         agree: every web.providers.* and web.fetch.* row, plus provider
+         connections and app-update checks. */
       inventorySettings().forEach(function (s) {
-        if (s && s.cat === 'web' && s.sub === 'providers' && webIds.length < 2) {
-          webIds.push(s.id);
+        if (!s || !s.id) return;
+        if (s.id.indexOf('web.providers.') === 0 || s.id.indexOf('web.fetch.') === 0) {
+          setRowState(data, s.id, 'unavailable',
+            'Offline. This needs the network; it resumes with the connection.');
         }
       });
-      webIds.forEach(function (id) {
-        setRowState(data, id, 'unavailable', 'Offline. This route needs the network.');
-      });
+      setRowState(data, 'ai.accounts.provider-connections', 'unavailable',
+        'Offline. Provider sign-in needs the network; it resumes with the connection.');
+      setRowState(data, 'system.advanced.auto-update', 'unavailable',
+        'Offline. Update checks need the network; they resume with the connection.');
       pushNotice(data, {
         id: 'pm2-scn-offline', kind: 'attention', statusWord: 'Needs attention',
         headline: 'Working offline',
@@ -1872,6 +1901,14 @@
     '.pm2-drawer-btn:focus-visible{outline:2px solid var(--accent-primary,#7aa2f7);outline-offset:2px;}',
     '.pm2-drawer-btn i{display:inline-flex;width:16px;height:16px;}',
     '.pm2-drawer-btn i svg{width:100%;height:100%;}',
+    /* Audit fix: at narrow widths the pill occluded page content (audited on
+       three concepts). Shrink to a translucent icon dot that solidifies on
+       hover/focus; the label is still exposed to the accessibility tree. */
+    '@media (max-width:920px){',
+    '.pm2-drawer-btn{padding:7px;opacity:.55;}',
+    '.pm2-drawer-btn .pm2-drawer-btn-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}',
+    '.pm2-drawer-btn:hover,.pm2-drawer-btn:focus-visible,.pm2-drawer-btn[aria-expanded="true"]{opacity:1;}',
+    '}',
     '.pm2-drawer-panel{position:fixed;right:16px;bottom:78px;z-index:9001;width:292px;',
     'max-height:min(70vh,540px);overflow:auto;padding:14px;',
     'background:var(--surface-elevated,#26262b);color:var(--text-primary,#e8e8ec);',
@@ -1977,7 +2014,7 @@
     btn.className = 'pm2-drawer-btn';
     btn.setAttribute('aria-haspopup', 'dialog');
     btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = '<i aria-hidden="true">' + icon('layers') + '</i><span>States</span>';
+    btn.innerHTML = '<i aria-hidden="true">' + icon('layers') + '</i><span class="pm2-drawer-btn-label">States</span>';
 
     var panel = document.createElement('div');
     panel.className = 'pm2-drawer-panel';

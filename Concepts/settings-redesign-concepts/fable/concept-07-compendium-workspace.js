@@ -175,6 +175,7 @@
     ui.locate = null;
     ui.explain = null;
     ui.navOpen = false;
+    pruneFinishedOps();
 
     if (kind === 'setting') {
       var row = invRow(d.settingId);
@@ -289,15 +290,23 @@
       var kind = id.charAt(0);
       var rest = id.slice(2);
       if (kind === 's') return contentEl.querySelector('[data-setting-id="' + cssEsc(rest) + '"]');
-      if (kind === 'm') return contentEl.querySelector('[data-manager="' + cssEsc(rest) + '"]');
-      if (kind === 'o') {
+      if (kind === 'm') {
+        return contentEl.querySelector('[data-manager="' + cssEsc(rest) + '"]') ||
+               contentEl.querySelector('.c07-mgrhead');
+      }
+      if (kind === 'o' || kind === 'u' || kind === 'd') {
+        /* Managed-object-shaped focus ids ("<kind>:<managerId>/<objectId>"):
+           resolve via the objectId segment; u:/d: results locate exactly
+           like o: instead of silently shadowing the deep-link fallback. */
         var parts = rest.split('/');
-        var childId = parts.slice(1).join('/');
+        /* bare ids ("u:env.x") have no manager segment — use the whole id */
+        var childId = parts.length > 1 ? parts.slice(1).join('/') : rest;
         return contentEl.querySelector('[data-object-id="' + cssEsc(childId) + '"]') ||
                contentEl.querySelector('[data-object-id="' + cssEsc(rest) + '"]') ||
                contentEl.querySelector('[data-item-id="' + cssEsc(childId) + '"]') ||
                /* deepest the data allows: land on the open detail section */
-               contentEl.querySelector('.c07-mgr-detail [data-section]');
+               contentEl.querySelector('.c07-mgr-detail [data-section]') ||
+               contentEl.querySelector('.c07-mgrhead');
       }
       id = rest;
     }
@@ -376,7 +385,7 @@
     h += '<button type="button" class="c07-btn c07-btn-quiet c07-navbtn" data-act="toggle-nav" aria-expanded="' + (ui.navOpen ? 'true' : 'false') + '">' + ico('rail') + 'Browse</button>';
     var back = backLabel(v);
     if (back) {
-      h += '<button type="button" class="c07-btn c07-btn-quiet" data-act="back" title="Back one Settings level">' +
+      h += '<button type="button" class="c07-btn c07-btn-quiet" data-act="back" data-pm2-back title="Back one Settings level">' +
         ico('undo') + '<span class="c07-back-name">Back to ' + esc(back) + '</span></button>';
     }
     h += '<div class="c07-crumbs">' + crumbsHtml(v) + '</div>';
@@ -452,7 +461,7 @@
       ? 'Search all settings, managers, and actions'
       : 'Search settings';
     return '<div class="c07-search">' + ico('search') +
-      '<input type="text" data-search-anchor="' + esc(anchor) + '" placeholder="' + esc(placeholder) + '" ' +
+      '<input type="text" data-pm2-search-input data-search-anchor="' + esc(anchor) + '" placeholder="' + esc(placeholder) + '" ' +
       'value="' + esc(ui.search.anchor === anchor ? ui.search.q : (ui.view.kind === 'search' ? ui.search.q : '')) + '" ' +
       'aria-label="Search settings" autocomplete="off" spellcheck="false">' +
       '<kbd>Ctrl K</kbd></div>' +
@@ -595,7 +604,7 @@
     var params = {};
     if (d.route === 'setting') { /* landing sequence handled by open() */ }
     else if (d.sectionId) params.focus = d.sectionId;
-    else if (rid && rid.indexOf('o:') === 0) params.focus = rid;
+    else if (rid && /^[moawduh]:/.test(rid)) params.focus = rid; /* every non-setting kind lands + locates */
     nav(d, params);
   }
 
@@ -867,6 +876,21 @@
     return words[state] || state;
   }
 
+  /* States a collapsed disclosure must not silently swallow. Errors force
+     the tier open; the rest annotate the toggle so nothing urgent hides. */
+  var ATTENTION_STATES = { 'error': 1, 'restart-required': 1, 'reconnect-required': 1, 'changed-elsewhere': 1 };
+  function attentionIn(list) {
+    var n = 0, err = false;
+    list.forEach(function (r) {
+      if (ATTENTION_STATES[r.state]) { n += 1; if (r.state === 'error') err = true; }
+    });
+    return { n: n, err: err };
+  }
+  function attentionNote(a) {
+    if (!a.n) return '';
+    return '<span class="c07-adv-attn">' + a.n + ' need' + (a.n === 1 ? 's' : '') + ' attention</span>';
+  }
+
   function subgroupHtml(catId, g) {
     var key = catId + '/' + g.id;
     var rows = store.rowsFor(catId, g.id);
@@ -877,6 +901,8 @@
       if (rec && (rec.curated || rec.tier === 'simple')) visible.push(r);
       else advanced.push(r);
     });
+    /* a live validation error must never sit behind a closed disclosure */
+    if (!ui.advOpen[key] && attentionIn(advanced).err) ui.advOpen[key] = true;
     var h = '<div class="c07-section" data-section="' + esc(g.id) + '">';
     h += '<div class="c07-section-head"><h2 class="c07-h2">' + esc(g.title) + '</h2>' +
       '<span class="c07-section-count">' + rows.length + ' settings</span></div>';
@@ -902,7 +928,8 @@
           ico('minus') + 'Show fewer settings in ' + esc(g.title) + '</button>';
       } else {
         h += '<button type="button" class="c07-adv-toggle" data-act="more" data-key="' + esc(key) + '" aria-expanded="false">' +
-          ico('plus') + 'Show ' + overflow.length + ' more in ' + esc(g.title) + '</button>';
+          ico('plus') + 'Show ' + overflow.length + ' more in ' + esc(g.title) +
+          attentionNote(attentionIn(overflow)) + '</button>';
       }
     }
 
@@ -915,7 +942,8 @@
           ico('minus') + 'Hide advanced settings</button>';
       } else {
         h += '<button type="button" class="c07-adv-toggle" data-act="adv" data-key="' + esc(key) + '" aria-expanded="false">' +
-          ico('plus') + 'Show ' + advanced.length + ' advanced setting' + (advanced.length === 1 ? '' : 's') + '</button>';
+          ico('plus') + 'Show ' + advanced.length + ' advanced setting' + (advanced.length === 1 ? '' : 's') +
+          attentionNote(attentionIn(advanced)) + '</button>';
       }
     }
     h += '</div>';
@@ -1636,7 +1664,7 @@
 
     if (ui.notice) h += '<div class="c07-notice">' + ico('info') + '<div>' + esc(ui.notice) + '</div></div>';
 
-    h += '<div class="c07-mgrhead">';
+    h += '<div class="c07-mgrhead" data-manager="' + esc(def.id) + '">';
     h += '<p class="c07-kicker">' + esc(archetypeWord(def.archetype)) + (def.cat && catById(def.cat) ? ' · ' + esc(catCrumb(def.cat)) : '') + '</p>';
     h += '<h1 class="c07-h1">' + esc(def.title) + '</h1>';
     h += '<p class="c07-lede">' + esc(def.blurb || '') + '</p>';
@@ -1646,13 +1674,31 @@
       var actions = [];
       try { actions = arr(def.actions(store)); } catch (e) { actions = []; }
       if (actions.length) {
+        /* Buttons stay one contiguous wrapping group; unavailable-action
+           reasons render AFTER the group as indented footnotes prefixed with
+           the owning action's label (linked via aria-describedby), so a tall
+           caption can never split the toolbar or orphan trailing buttons. */
+        var reasons = [];
         h += '<div class="c07-actions">';
         actions.forEach(function (a) {
-          h += '<span class="c07-action-cell"><button type="button" class="c07-btn" data-act="mgr-action" data-action-id="' + esc(a.id) + '"' +
-            (a.available === false ? ' disabled' : '') + '>' + (a.ico ? ico(a.ico) : '') + esc(a.label) + '</button>' +
-            (a.available === false && a.reason ? '<span class="c07-action-reason">' + esc(a.reason) + '</span>' : '') + '</span>';
+          var reasonId = null;
+          if (a.available === false && a.reason) {
+            reasonId = 'c07ActReason-' + String(a.id).replace(/[^A-Za-z0-9_-]/g, '-');
+            reasons.push({ id: reasonId, label: a.label, reason: a.reason });
+          }
+          h += '<button type="button" class="c07-btn" data-act="mgr-action" data-action-id="' + esc(a.id) + '"' +
+            (a.available === false ? ' disabled' : '') +
+            (reasonId ? ' aria-describedby="' + esc(reasonId) + '"' : '') +
+            '>' + (a.ico ? ico(a.ico) : '') + esc(a.label) + '</button>';
         });
         h += '</div>';
+        if (reasons.length) {
+          h += '<div class="c07-action-reasons">';
+          reasons.forEach(function (r) {
+            h += '<p class="c07-action-reason" id="' + esc(r.id) + '"><strong>' + esc(r.label) + '</strong> — ' + esc(r.reason) + '</p>';
+          });
+          h += '</div>';
+        }
       }
     }
     h += opsHtml();
@@ -1748,6 +1794,10 @@
       var sec = page.sections[activeTab];
       if (sec) h += sectionHtml(def, sec, def.id + '/' + objectId);
     } else {
+      if (objectId) {
+        h += '<div class="c07-notice">' + ico('info') + '<div>No entry named "' + esc(objectId) +
+          '" exists in ' + esc(def.title) + ' right now. Showing the full overview instead — pick an entry from the list.</div></div>';
+      }
       h += sectionsHtml(def, vm.sections, def.id);
     }
     h += '</div></div>';
@@ -1778,11 +1828,28 @@
     return words[t] || t;
   }
 
+  /* A pending locate that targets an advanced (collapsed) section must open
+     it before render, or the landing element never exists in the DOM. */
+  function locateWantsSection(secId) {
+    var want = ui.locate;
+    if (!want) return false;
+    var f = want.sectionSub || want.focus;
+    if (!f) return false;
+    f = String(f);
+    if (/^[smoawduh]:/.test(f)) {
+      var rest = f.slice(2);
+      var parts = rest.split('/');
+      f = parts.length > 1 ? parts.slice(1).join('/') : rest;
+    }
+    return f === String(secId);
+  }
+
   function sectionsHtml(def, sections, scope) {
     var h = '';
     arr(sections).forEach(function (sec) {
       if (sec.advanced) {
         var key = scope + '/' + sec.id;
+        if (!ui.secOpen[key] && locateWantsSection(sec.id)) ui.secOpen[key] = true;
         if (!ui.secOpen[key]) {
           h += '<button type="button" class="c07-adv-toggle" data-act="sec-open" data-key="' + esc(key) + '" aria-expanded="false">' +
             ico('plus') + esc(sec.title || 'Advanced') + '</button><div style="height:10px"></div>';
@@ -1966,8 +2033,12 @@
     }
     h += '<ol class="c07-steps">';
     arr(sec.steps).forEach(function (s) {
-      h += '<li><span><strong>' + esc(s.label) + '</strong>' +
-        (s.detail ? '<span class="c07-note">' + esc(s.detail) + '</span>' : '') + '</span></li>';
+      /* shared step shapes: providers use {label, detail}; lifecycle and
+         cleanup use {title, note}. Render both honestly. */
+      var main = s.label || s.title || '';
+      var sub = s.detail || s.note || '';
+      h += '<li><span><strong>' + esc(main) + '</strong>' +
+        (sub ? '<span class="c07-note">' + esc(sub) + '</span>' : '') + '</span></li>';
     });
     h += '</ol>';
     return h;
@@ -2029,7 +2100,9 @@
       h += '</div>';
     }
     arr(sec.conflicts).forEach(function (c) {
-      h += '<div class="c07-item"><span class="c07-item-label">' + esc(c.settingId || '') + '</span>' +
+      /* human label first; the raw id only when the row is unknown */
+      var rec = c.settingId ? invRow(c.settingId) : null;
+      h += '<div class="c07-item"><span class="c07-item-label">' + esc(rec ? rec.label : (c.settingId || '')) + '</span>' +
         '<span class="c07-item-val">' + esc(valueText(c.local)) + ' here · ' + esc(valueText(c.incoming)) + ' incoming</span>' +
         (c.dest ? '<span class="c07-item-side"><button type="button" class="c07-item-open" data-act="nav" data-dest="' + attr(c.dest) + '">' + ico('external') + '</button></span>' : '') +
         (c.note ? '<span class="c07-item-note">' + esc(String(c.note)) + '</span>' : '') + '</div>';
@@ -2058,6 +2131,19 @@
   /* ============================ ops (truthful staged work) ============================ */
 
   function opKey(p) { return p.name + (p.ref ? ':' + p.ref : ''); }
+
+  /* On navigation, finished-clean ops stop following the user around.
+     Unresolved outcomes (failed / degraded / retryable / recovery-required)
+     stay visible wherever they land next. */
+  function pruneFinishedOps() {
+    if (!ui.opsOrder.length) return;
+    ui.opsOrder = ui.opsOrder.filter(function (k) {
+      var p = ui.ops[k];
+      var settled = p && (p.status === 'done' || p.status === 'canceled');
+      if (settled) delete ui.ops[k];
+      return !settled;
+    });
+  }
 
   function opsHtml() {
     if (!ui.opsOrder.length) return '<div class="c07-ops" id="c07Ops"></div>';
@@ -2131,6 +2217,11 @@
         (n < c.step ? ico('check') : '') + '</span>' + esc(label) + '</span>';
     });
     h += '</div>';
+
+    if (c.error) {
+      h += '<div class="c07-notice">' + ico('warning') + '<div><strong>That did not run.</strong> ' +
+        esc(c.error) + '</div></div>';
+    }
 
     if (c.step === 1) h += copyStep1Html();
     else if (c.step === 2) h += copyStep2Html();
@@ -2311,7 +2402,10 @@
     if (p && !p.error) {
       ui.copy.preview = p;
       ui.copy.openItems = {};
+      ui.copy.error = null;
       ui.copy.step = 3;
+    } else {
+      ui.copy.error = (p && p.error) ? String(p.error) : 'The preview could not be built.';
     }
     render();
   }
@@ -2325,9 +2419,12 @@
       if (res && res.ok) {
         ui.copy.receipt = res;
         ui.copy.rolledBack = false;
+        ui.copy.error = null;
         ui.copy.step = 4;
+      } else {
+        /* honest failure surface: say why, nothing was changed */
+        ui.copy.error = (res && res.error) ? String(res.error) : 'The copy could not be applied. Nothing was changed.';
       }
-      /* verification failure keeps step 3 with the honest receipt toast */
       if (ui.view.kind === 'copy') render();
     });
   }
@@ -2335,7 +2432,8 @@
   function copyRunRollback() {
     if (!ui.copy.receipt) return;
     window.PM2.copy.rollback(ui.copy.receipt.receiptId).then(function (res) {
-      if (res && res.ok) ui.copy.rolledBack = true;
+      if (res && res.ok) { ui.copy.rolledBack = true; ui.copy.error = null; }
+      else ui.copy.error = (res && res.error) ? String(res.error) : 'The rollback could not run.';
       if (ui.view.kind === 'copy') render();
     });
   }

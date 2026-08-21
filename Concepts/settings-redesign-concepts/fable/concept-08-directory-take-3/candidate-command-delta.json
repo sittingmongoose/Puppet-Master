@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "c08-beacon",
+  "stem": "concept-08-directory-take-3",
+  "model": "fable",
+  "note": "Everything here is provisional. Canon is never minted in a concept register; the implementation audit censuses the catalog and adjudicates exact ids.",
+  "census": {
+    "canon_source": "Plans/UI_Command_Catalog.md",
+    "flags": [
+      {
+        "id": "cmd.settings.navigate",
+        "disposition": "reuse",
+        "note": "Beacon routes every navigation (cards, sub-links, manager blocks, breadcrumbs, attention items, recents, search results) through PM2.route dest objects — one navigate family, no per-destination command ids needed."
+      },
+      {
+        "id": "cmd.settings.search.select_result",
+        "disposition": "extend",
+        "note": "Selection payload must be {rid} and the handler must re-resolve the rid for sectionId at landing time; the hash grammar drops sectionId, so any command that replays a landing from the URL alone under-specifies the target."
+      },
+      {
+        "id": "cmd.settings.setting.focus",
+        "disposition": "extend",
+        "note": "Needs a defined fallback for unknown setting ids: Beacon shows an honest 'not in this project's settings' surface (stale export / version skew) instead of a blank or crash. The command contract should name that terminal state."
+      },
+      {
+        "id": "cmd.settings.copy.*",
+        "disposition": "reuse-flag",
+        "note": "preview/apply/rollback exercised through PM2.copy verbatim (copy-preview, copy-apply, copy-rollback triggers). No new ids; flag that apply must stay token-addressed (stale tokens refuse honestly)."
+      },
+      {
+        "id": "cmd.provider.install.*",
+        "disposition": "reuse",
+        "note": "Install-family triggers exercised: install-scan, install-select, install-update (ask-first), install-repair; verify remains a receipt-only step here. Manual-only installations refuse with the ownership reason rather than no-op."
+      }
+    ],
+    "preserve": [
+      "cmd.project.open_settings",
+      "cmd.settings.open",
+      "cmd.settings.value.set",
+      "cmd.settings.category.select",
+      "cmd.settings.manager.open",
+      "cmd.provider.switch_route",
+      "cmd.usage.refresh"
+    ]
+  },
+  "families_exercised": [
+    "navigation",
+    "values",
+    "search",
+    "providers",
+    "copy_transaction",
+    "states_triggers"
+  ],
+  "families_exercised_note": "navigation (home/dest/manager/setting/search/all/copy via PM2.route.go exclusively); values (store.setValue for toggle/select/number/slider/text/multiselect with validation-error surfacing); search (query + rid landing + back-restore, 24 recorded cases); providers (refresh/reconnect/invoke-test/install family/setup.cursor-cli); copy (preview/apply/rollback walked end-to-end); states triggers via the shared drawer and quick actions.",
+  "concept_local_state": true
+}
