@@ -288,5 +288,26 @@
       "harness": "matrix 113/113, managers 49/49 (node tools/harness/run-suite.js <suite> --concepts=06)",
       "shots": "regenerated over file:// CDP into a /tmp scratchpad outside the repo, inspected, measured and deleted"
     }
+  },
+  "fix_notes_2026_08_21_scroll_integrity": {
+    "writer": "scroll-integrity fix pass (V0506), 2026-08-21",
+    "scope": "concept-06-directory-take-2.js only (one function, buildFrame). No CSS change was needed, no HTML, no _shared/_shared2 module, no other concept, no tooling, no hub/index.",
+    "finding_fixed_here": {
+      "finding": "[major] stale-virtualizer-window - the All Settings index kept the row window it had computed for a SHORTER scroller whenever the scroller grew without a width change, leaving a blank strip of empty sheet below the last painted row.",
+      "detected_by": "tools/harness/run-suite.js scroll, cases all-resize-stale-window and all-stress-resize-stale-window (negative-control proven). Repro: scroll to 20,000px at 1280x560, then resize to 1280x1200 - height only, so no narrow/wide flip re-renders the surface.",
+      "root_cause": "drawIndex() sizes the window from els.scroll.scrollTop AND els.scroll.clientHeight, but the only live trigger was the scroller's 'scroll' event (onIndexScroll). The one ResizeObserver the concept already had watched #pmStage and called syncNarrow(), which acts on WIDTH alone and re-renders nothing when only the height moves. So a pure height change (window resize, the chat dock closing) produced no repaint: the page received the resize events, the scroller grew, and the row window stayed sized for the old, shorter band. The width leg of the same trap MASKED this - crossing the 880px narrow breakpoint re-renders the surface and repaints the window as a side effect - which is why only the height-only leg failed.",
+      "fix": "buildFrame() now attaches a second ResizeObserver, to #c06Scroll itself, which calls drawIndex(true) whenever the scroller's own clientHeight actually changes and the current view is the index (ui.view.kind === 'all'), coalesced through one requestAnimationFrame. drawIndex() has no start-index/count short-circuit - it recomputes start and end from the CURRENT scrollTop and clientHeight on every call - so the repaint really does resize the window rather than reuse the old count. The existing stage observer is untouched; the width path still runs through syncNarrow().",
+      "no_feedback_loop": "The observed box is the scroller, not its content. #c06Scroll is flex-sized (flex: 1 1 auto, min-height: 0) inside .c06-main, so the spacer divs drawIndex writes inside it cannot feed back into its height. The clientHeight equality guard is a second, independent stop, and the ui.view.kind gate keeps the observer inert on every non-index route.",
+      "measured_before": "scroll suite, height-only leg (deep scroll at 1280x560 then grow to 1280x1200), after 4 real resize events seen by the page: #/all rowsPainted 20, rowBandCoverage 0.76, blank bottom strip 261px, point coverage 15/18; #/all?stress=1 rowsPainted 20, rowBandCoverage 0.79, blank bottom strip 232px, point coverage 15/18. Both cases FAIL.",
+      "measured_after": "Same leg, same probe: #/all rowsPainted 31, rowBandCoverage 1.00, blank bottom strip 0px, point coverage 18/18; #/all?stress=1 rowsPainted 30, rowBandCoverage 1.00, blank bottom strip 0px, point coverage 18/18. Both cases PASS. The companion all-resize-repaint case now also shows the row count tracking the viewport across the whole sweep: 26, 26, 26, 21, 31 painted rows at 1280x900 / 760x900 / 1280x900 / 1280x560 / 1280x1200 (was viewport-independent).",
+      "visual_confirmation": "Screenshot at 1280x1200 taken AFTER the deep-scroll-then-grow sequence and viewed: index rows run continuously from the topbar to the bottom edge of the scroller, with the last row clipped by the scroller rather than ending above it. CDP geometry on the same frame: scroller bottom 1176, deepest painted row bottom 1215, i.e. the window overshoots the band by 39px of buffer instead of falling 261px short. Temp shot deleted after inspection."
+    },
+    "verification": [
+      "node --check PASS on concept-06-directory-take-2.js",
+      "harness scroll 103/103 for concept-06 (was 101/103; the two failures were all-resize-stale-window and all-stress-resize-stale-window)",
+      "boot-check PASS at 760 / 900 / 1280 / 2500, 13 routes each, zero console noise, zero horizontal overflow",
+      "harness matrix 113/113, managers 49/49, search 21/21, state 17/17 for concept-06 - no regression",
+      "screenshot at 1280x1200 after the deep-scroll-then-grow sequence, viewed, strip gone; temp shot directory deleted after inspection"
+    ]
   }
 }

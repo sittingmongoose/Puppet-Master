@@ -1362,9 +1362,44 @@
 .c11-facet.is-set { color: var(--text-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
 .c11-facet i[data-ico] { width: 12px; height: 12px; }
 
+/* SHEET-FILL for the All Settings route.
+   The list is a bounded viewport, so it has to end where the sheet ends. It used
+   to be sized `height: min(60vh, 620px)` — a measure taken from the WINDOW, not
+   from the space actually left under the sheet's own head and filter row. Those
+   two grow as the width narrows (the head wraps, the facet buttons wrap), so the
+   list ran 71px past the bottom of the window at 760 and 33px at 900: at maximum
+   scroll the last row (`system.advanced.inspect-holds-quarantine`) painted
+   off-window, and only #pmStage's 226px of page scroll could recover it — a
+   scroll the list itself never offers. `is-fill` (stamped on the root by
+   renderSheet for this route only, so no other sheet's layout moves) turns
+   root -> sheaf -> sheet -> .c11-all into one bounded column; the list then takes
+   the height that is LEFT at any width and its last row lands on its own bottom
+   edge. */
+.c11-root.is-fill { height: 100%; }
+.c11-root.is-fill > *:not(.c11-sheaf) { flex: 0 0 auto; }
+.c11-root.is-fill .c11-sheaf {
+  display: flex;
+  min-height: 0;
+  /* 56px of trailing air is page-scroll furniture; nothing scrolls past the
+     sheet here, and .pm-stage already reserves 48px for the drawer dot. */
+  padding-bottom: 12px;
+}
+.c11-root.is-fill .c11-sheet {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.c11-all { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+.c11-all > .c11-dom-head, .c11-all > .c11-all-tools { flex: 0 0 auto; }
+
 .c11-all-list {
   position: relative;
-  height: min(60vh, 620px);
+  flex: 1 1 0%;
+  /* A floor, not a size, and deliberately below what a short window leaves, so
+     the floor itself can never push the list back through the sheet's bottom. */
+  min-height: 110px;
+  max-height: 620px;   /* the concept's reading cap, kept from the old min() */
   overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid var(--border-light);

@@ -1334,6 +1334,18 @@
   border-radius: var(--radius-lg);
   background: var(--surface-elevated);
   overflow: hidden;
+  /* This list is virtualized: every repaint rewrites the two spacer blocks
+     that stand in for the rows not in the DOM. Scroll anchoring exists to
+     hold your place when content above you changes size, which is exactly
+     what a virtualizer does on purpose — so the browser kept "correcting"
+     #pmStage's scrollTop for the spacer swap, the correction fired the next
+     scroll event, and the stage ran away down the list (measured on
+     #/all?stress=1: 20,000 -> 43,490 in +870px steps, leaving a ~420px blank
+     strip under the last painted row). The JS now measures the true row pitch
+     so the spacers agree with the rows, and this keeps any residual pixel
+     from restarting the loop: no node inside the list is an anchor candidate,
+     so nothing here can re-scroll the stage behind the virtualizer's back. */
+  overflow-anchor: none;
 }
 .c08-all-row {
   appearance: none;

@@ -47,12 +47,18 @@
  *                                 elementFromPoint at 12 points inside the
  *                                 band. Zero content elements, or zero content
  *                                 point-hits, is a blank viewport = FAIL, with
- *                                 the offset recorded. The States drawer is
- *                                 hidden for this sweep so a harness affordance
- *                                 can never stand in for page content. When a
- *                                 second deep scroller exists (nested panes) it
- *                                 gets its own shorter sweep, folded into the
- *                                 same verdict.
+ *                                 the offset recorded. On the index routes,
+ *                                 where the corpus is thousands of rows deep, a
+ *                                 band that is merely HALF empty also fails:
+ *                                 painted rows must not stop more than
+ *                                 max(120px, two rows) above the bottom of the
+ *                                 band anywhere except the very end of the
+ *                                 scroll. The States drawer is hidden for this
+ *                                 sweep so a harness affordance can never stand
+ *                                 in for page content. When a second deep
+ *                                 scroller exists (nested panes) it gets its
+ *                                 own shorter sweep, folded into the same
+ *                                 verdict.
  *   <w>-<route>-virtualization-advances
  *                                 the painted row-id set must change as the box
  *                                 scrolls, but only where the box really is
@@ -866,8 +872,27 @@ async function runCell(ctx, page, label, width, spec) {
   }
   await page.evaluate(P_drawer, false);
 
+  /* A band can be half empty without being blank: a row window sized for a
+   * smaller viewport, or one that stops short, leaves a strip along the bottom
+   * of the band. On the index routes the corpus is thousands of rows deep, so
+   * anywhere except the very end of the scroll that strip is a defect. */
+  const strips = spec.index ? frames.map((f) => {
+    const b = f.band;
+    if (!b || b.detached || !b.rows || !b.rows.painted || b.atEnd) return null;
+    const limit = Math.max(120, 2 * (b.rows.medianH || 56));
+    if (b.rows.bottomGapPx === null || b.rows.bottomGapPx <= limit) return null;
+    return {
+      offset: f.requested, scrollTop: b.scrollTop,
+      bottomGapPx: b.rows.bottomGapPx, limitPx: limit,
+      rowsPainted: b.rows.painted, rowsInBand: b.rows.inBand,
+      bandCoverage: b.rows.bandCoverage,
+      why: "painted rows stop " + b.rows.bottomGapPx + "px above the bottom of the band (limit " + limit + "px)"
+    };
+  }).filter(Boolean) : [];
+
   const secondaryBlank = !!(secondary && secondary.blankOffsets.length);
-  ctx.record(label, kase("no-blank-region"), blanks.length === 0 && !secondaryBlank, {
+  ctx.record(label, kase("no-blank-region"), blanks.length === 0 && !secondaryBlank && strips.length === 0, {
+    staleStrips: strips,
     scroller: disc.primary.path,
     scrollHeight: disc.primary.scrollHeight,
     clientHeight: disc.primary.clientHeight,

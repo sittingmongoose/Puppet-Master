@@ -1754,11 +1754,45 @@
 
   /* Windowed rendering: only ~2 viewports of rows exist in the DOM.
      Slint: ListView over a filtered model handles this natively. */
+  var allVpRo = null;
   function bindAllList() {
     var list = document.getElementById('c10VList');
     if (!list) return;
     var render = function () { renderAllWindow(); };
     list.addEventListener('scroll', function () { requestAnimationFrame(render); });
+
+    /* renderAllWindow sizes the row window from list.clientHeight, and SCROLL
+       was its only trigger — so any height change left the window holding the
+       count computed for the OLD viewport, and a blank strip opened below the
+       last row until the user scrolled again. The width watcher on #pmStage
+       cannot stand in for this: it only re-renders when the pane-count MODE
+       changes, so a height-only resize (window resize, the chat panel opening,
+       a toolbar wrapping) never reached the virtualizer at all. Measured
+       before the fix: 1280x560 scrolled to 23,400 then grown to 1280x1200 kept
+       23 rows painted for the 227px viewport and left a 365px blank strip
+       (band coverage 0.58) below the last row.
+
+       Repaint whenever the viewport's own height actually changes. Both
+       spacers and the row block live INSIDE this scroller, so nothing the
+       repaint writes can feed back into the scroller's own flex-sized box, and
+       the vh guard drops the same-height notifications a repaint might raise —
+       this cannot loop. renderAllWindow always recomputes `count` from the
+       live list.clientHeight (it keeps no last-paint memo to short-circuit
+       on), so the repaint really does resize the window rather than replay the
+       old one. */
+    if (allVpRo) { allVpRo.disconnect(); allVpRo = null; }
+    if (typeof window.ResizeObserver === 'function') {
+      var lastVh = list.clientHeight;
+      var vhPending = false;
+      allVpRo = new window.ResizeObserver(function () {
+        var vh = list.clientHeight;
+        if (vh === lastVh || vhPending) return;
+        lastVh = vh;
+        vhPending = true;
+        window.requestAnimationFrame(function () { vhPending = false; renderAllWindow(); });
+      });
+      allVpRo.observe(list);
+    }
     renderAllWindow();
   }
 

@@ -1885,6 +1885,27 @@
     els.allList.scrollTop = f.scroll || 0;
     els.allList.addEventListener('scroll', onAllScroll);
     paintAllWindow();
+
+    /* paintAllWindow() sizes the row window from the list's clientHeight, and
+       scroll was its only trigger. Now that the list is sized by the space the
+       sheet has left (rather than by a fixed 60vh), every height change — window
+       resize, the Assistant panel opening, the head wrapping at a new width —
+       moves that height, and a window computed for the OLD height would leave a
+       blank strip along the bottom of the list. The spacer lives inside the list
+       and cannot feed back into its flex-sized height, so this cannot loop. */
+    if (typeof window.ResizeObserver === 'function') {
+      var lastH = els.allList.clientHeight;
+      var pending = false;
+      var listRo = new window.ResizeObserver(function () {
+        if (!els.allList) return;
+        var h = els.allList.clientHeight;
+        if (h === lastH || pending) return;
+        lastH = h;
+        pending = true;
+        window.requestAnimationFrame(function () { pending = false; paintAllWindow(); });
+      });
+      listRo.observe(els.allList);
+    }
   }
 
   var allPaintQueued = false;
@@ -2393,6 +2414,12 @@
   function renderSheet(withMotion) {
     closeMenu(false);
     var d = ui.dest;
+    /* All Settings is the one route whose body is a bounded viewport rather than
+       a document: its row list must end where the sheet ends, or its last row
+       paints below the window. Fill mode bounds root -> sheaf -> sheet for that
+       route and is cleared for every other one, so nothing else stops scrolling
+       as a page. */
+    root.classList.toggle('is-fill', d.route === 'all');
     if (d.route === 'all') renderAll();
     else if (d.route === 'copy') renderCopy();
     else if (d.route === 'dest') renderDomain(d.cat, d.sub || (ui.domSub[d.cat] || ''));
