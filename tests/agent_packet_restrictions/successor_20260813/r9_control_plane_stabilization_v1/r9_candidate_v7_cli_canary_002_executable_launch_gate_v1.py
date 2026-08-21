@@ -2,7 +2,9 @@
 """Fail-closed, single-use executable launch gate for Candidate V7 CLI Canary002."""
 
 import argparse
+import ctypes
 import datetime as dt
+import errno
 import hashlib
 import importlib.util
 import json
@@ -49,6 +51,32 @@ OFFLINE_CHECK_KEYS = frozenset(("accounting", "causal_dependency_gates", "compon
 LOCAL_COUNTS = {"git_readonly_subprocesses": 0, "local_cli_introspection_processes": 0,
                 "cli_version_processes": 0, "cli_help_processes": 0,
                 "controller_popen_attempts": 0}
+ASYNC_SIGNAL_LATCH = []
+PR_SET_CHILD_SUBREAPER = 36
+PR_GET_CHILD_SUBREAPER = 37
+TERMINATION_SIGNALS = frozenset((signal.SIGINT, signal.SIGTERM, signal.SIGHUP, signal.SIGQUIT))
+CONTROLLER_TERMINAL_KEYS = frozenset(("schema_id", "controller_revision", "status", "run_id",
+    "run_kind", "evidence_root", "capture_root", "controller_error", "counts",
+    "observed_activity_totals", "activity_observation_complete_rows",
+    "activity_observation_incomplete_rows", "component_identity_before", "component_identity_after",
+    "cli", "config_identity_before", "config_identity_after", "environment_identity_before",
+    "environment_identity_after", "protected_run_state_before", "protected_run_state_after",
+    "protected_canary_state_before", "protected_canary_state_after", "runner_process",
+    "runner_result_is_sole_qualification_authority", "qualification_authority",
+    "compatibility_label_disclosure", "transport_revision", "transport_nonclaims",
+    "activity_subtype_policy", "capture_inventory_scope", "capture_inventory",
+    "evidence_inventory_scope", "evidence_inventory"))
+QUALIFICATION_KEYS = frozenset(("schema_id", "run_id", "run_sha256", "run_bytes", "status",
+                                "matrix_status", "offline_verifier"))
+OFFLINE_KEYS = frozenset(("schema_id", "valid", "run_id", "run_kind", "matrix_status", "error",
+    "checks", "counts", "credit", "component", "custody", "shared_authorities", "calls",
+    "authority", "residuals"))
+QCOUNT_KEYS = frozenset(("accounting_bytes", "attempts", "best_of_count", "captured_raw_results",
+    "captured_spawn_records", "completed_rows", "controller_aborted_rows", "evidence_runs_scanned",
+    "globally_unique_identity_and_nonce_values", "ineligible_rows", "invalid_rows",
+    "invalid_stage_artifacts", "missing_rows", "pass_rows", "planned_calls", "replacement_count",
+    "retry_count", "spawn_failure_prefix_count", "stage_artifacts", "stopped_rows",
+    "subject_fail_rows", "terminal_failure_prefix_count"))
 
 BOUND = {
     "controller": ("tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/candidate_v7_cli_transport_controller_v2.py", "bcea5082028dc20c2b1f9eb1d205b413c049905850046bac5830137cfb2127d8", 74599),
@@ -215,7 +243,7 @@ def review_projection(launcher_identity, interpreter):
     interpreter_binding = {key: interpreter[key] for key in
         ("invoked_path", "resolved_path", "bytes", "sha256", "fs_mode")}
     return {"schema_id": REVIEW_SCHEMA, "verdict": "PASS_ZERO_EXPERIMENT_VALIDITY_BLOCKERS",
-        "authority": {"canary_count": 1, "canary_launch": True, "matrix": False,
+        "authority": {"canary_count": 1, "canary_launch": False, "matrix": False,
             "qualification": False, "qualification_credit": 0, "readiness": False,
             "release": False, "retry": False, "relaunch": False, "replacement": False,
             "best_of": False, "run_id": RUN_ID, "run_kind": RUN_KIND},
@@ -229,7 +257,10 @@ def review_projection(launcher_identity, interpreter):
             "interpreter_resolved_path": interpreter["resolved_path"], "python_flags": ["-B"],
             "timeout_flags_omitted": True, "fd_backed_interpreter_and_controller": True,
             "controller_popen_limit": 1, "outer_timeout_seconds": OUTER_TIMEOUT_SECONDS,
-            "no_retry_relaunch_replacement_best_of": True},
+            "no_retry_relaunch_replacement_best_of": True,
+            "linux_child_subreaper_required": True,
+            "recursive_detached_descendant_cleanup_required": True,
+            "any_residual_or_adopted_descendant_detection_fails_success": True},
         "check_accounting": {"git_readonly_subprocesses": CHECK_EXPECTED_GIT_SUBPROCESSES,
             "local_cli_introspection_processes": 2, "cli_version_processes": 1,
             "cli_help_processes": 1, "controller_popen_attempts": 0,
@@ -239,8 +270,15 @@ def review_projection(launcher_identity, interpreter):
             "matrix_006_absent": True, "matrix_007_absent": True, "matrix_008_absent": True,
             "capture_parent_exact_mode_0700": True, "capture_parent_sole_pre_run_child_canary_001": True,
             "new_leaves_absent": True, "process_quiescence_proc_scan": True,
-            "head_equals_origin_main": True, "phase_continuity_required": True},
-        "canary_authority": "EXACTLY_ONE_ZERO_CREDIT_CANARY_002_CONTROLLER_INVOCATION_ONLY"}
+            "head_equals_origin_main": True, "phase_continuity_required": True,
+            "postflight_capture_parent_exact_child_inventory": True},
+        "containment_scope": {"linux_subreaper_pidfd_procfs_descendants": True,
+            "launcher_sigkill_or_crash_guarantee": False,
+            "uninterruptible_d_state_guarantee": False,
+            "outside_visible_pid_namespace_or_readable_procfs_guarantee": False,
+            "non_descendant_external_service_guarantee": False,
+            "cgroup_grade_containment": False},
+        "canary_authority": "STATIC_REVIEW_PASS_BINDS_ONE_CANARY_SCOPE_BUT_GRANTS_NO_STANDALONE_LAUNCH_AUTHORITY__THE_TRACKED_EXECUTABLE_GATE_AND_ALL_LIVE_CHECKS_CONTROL_ITS_SOLE_POPEN"}
 
 
 def review_gate(launcher_identity, interpreter):
@@ -582,56 +620,257 @@ def open_execution_fds(boundary):
             "argv_tail": list(ARGV_TAIL)}
 
 
-def clear_residual_group(pgid):
-    result = {"detected": False, "term_sent": False, "kill_sent": False, "clear": False}
-    try:
-        os.killpg(pgid, 0)
-        result["detected"] = True
-    except ProcessLookupError:
-        result["clear"] = True
-        return result
-    for signal_value, key in ((signal.SIGTERM, "term_sent"), (signal.SIGKILL, "kill_sent")):
+def enable_subreaper():
+    if sys.platform != "linux" or not pathlib.Path("/proc").is_dir():
+        raise Invalid("Linux /proc subreaper containment is required")
+    if not hasattr(os, "pidfd_open") or not hasattr(signal, "pidfd_send_signal"):
+        raise Invalid("Linux pidfd APIs are required for race-safe descendant containment")
+    libc = ctypes.CDLL(None, use_errno=True)
+    if libc.prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0) != 0:
+        error = ctypes.get_errno()
+        raise Invalid(f"PR_SET_CHILD_SUBREAPER failed: errno={error}")
+    value = ctypes.c_int(0)
+    if libc.prctl(PR_GET_CHILD_SUBREAPER, ctypes.byref(value), 0, 0, 0) != 0:
+        error = ctypes.get_errno()
+        raise Invalid(f"PR_GET_CHILD_SUBREAPER failed: errno={error}")
+    if value.value != 1:
+        raise Invalid(f"child subreaper verification failed: {value.value}")
+    sigchld_handler = signal.getsignal(signal.SIGCHLD)
+    current_mask = signal.pthread_sigmask(signal.SIG_BLOCK, set())
+    if sigchld_handler == signal.SIG_IGN or signal.SIGCHLD in current_mask:
+        raise Invalid("SIGCHLD semantics do not permit deterministic descendant reaping")
+    return {"platform": sys.platform, "proc_root": "/proc", "set": True,
+            "verified_value": value.value, "sigchld_handler": "SIG_DFL"
+                if sigchld_handler == signal.SIG_DFL else repr(sigchld_handler),
+            "sigchld_blocked": False}
+
+
+def proc_table():
+    table = {}
+    for entry in pathlib.Path("/proc").iterdir():
+        if not entry.name.isdigit():
+            continue
+        pid = int(entry.name)
         try:
-            os.killpg(pgid, signal_value)
-            result[key] = True
-        except ProcessLookupError:
-            result["clear"] = True
-            return result
-        deadline = time.monotonic() + 5
-        while time.monotonic() < deadline:
-            try:
-                os.killpg(pgid, 0)
-            except ProcessLookupError:
-                result["clear"] = True
-                return result
-            time.sleep(0.05)
+            raw_stat = (entry / "stat").read_text(encoding="utf-8")
+            tail = raw_stat[raw_stat.rfind(")") + 2:].split()
+            state = tail[0]
+            ppid, pgid, session, starttime = int(tail[1]), int(tail[2]), int(tail[3]), int(tail[19])
+            cmdline = [item.decode("utf-8", "replace") for item in
+                       (entry / "cmdline").read_bytes().split(b"\0") if item]
+        except (FileNotFoundError, ProcessLookupError):
+            continue
+        except OSError as exc:
+            if exc.errno in (errno.ENOENT, errno.ESRCH):
+                continue
+            raise Invalid(f"/proc visibility/read failure for pid {pid}: {exc}") from exc
+        except (ValueError, IndexError) as exc:
+            raise Invalid(f"/proc stat parse failure for pid {pid}: {exc}") from exc
+        try:
+            cwd = os.readlink(entry / "cwd")
+        except OSError:
+            cwd = None
+        try:
+            exe = os.readlink(entry / "exe")
+        except OSError:
+            exe = None
+        table[pid] = {"pid": pid, "ppid": ppid, "pgid": pgid, "session": session,
+                      "state": state,
+                      "starttime": starttime, "cmdline": cmdline, "cwd": cwd, "exe": exe}
+    return table
+
+
+def descendant_inventory(excluded_pid=None):
+    table = proc_table()
+    selected = set()
+    frontier = {os.getpid()}
+    while frontier:
+        parents = frontier
+        frontier = {pid for pid, record in table.items()
+                    if record["ppid"] in parents and pid not in selected}
+        selected.update(frontier)
+    if excluded_pid is not None:
+        selected.discard(excluded_pid)
+    for pid in selected:
+        record = table[pid]
+        if record["state"] != "Z" and (record["cwd"] is None or record["exe"] is None
+                                          or not record["cmdline"]):
+            raise Invalid(f"live descendant /proc visibility incomplete: {record}")
+    return [table[pid] for pid in sorted(selected)]
+
+
+def reap_known(records, excluded_pid=None):
+    reaped = []
+    for record in records:
+        pid = record["pid"]
+        if pid == excluded_pid:
+            continue
+        try:
+            got, status_value = os.waitpid(pid, os.WNOHANG)
+            if got == pid:
+                reaped.append({"pid": pid, "status": status_value, "starttime": record["starttime"]})
+        except (ChildProcessError, ProcessLookupError):
+            pass
+    return reaped
+
+
+def bound_pidfd(record):
+    if not hasattr(os, "pidfd_open") or not hasattr(signal, "pidfd_send_signal"):
+        raise Invalid("pidfd_open and pidfd_send_signal are required for race-safe containment")
     try:
-        os.killpg(pgid, 0)
+        fd = os.pidfd_open(record["pid"], 0)
     except ProcessLookupError:
-        result["clear"] = True
-    return result
+        return None
+    try:
+        current = proc_table().get(record["pid"])
+        if current is None:
+            os.close(fd)
+            return None
+        if current["starttime"] != record["starttime"]:
+            os.close(fd)
+            raise Invalid(f"PID starttime changed before pidfd binding: {record['pid']}")
+        return fd
+    except Exception:
+        try:
+            os.close(fd)
+        except OSError:
+            pass
+        raise
 
 
-def kill_and_drain_bounded(process):
+def pidfd_signal(records, signal_value, signal_name, evidence):
+    for record in records:
+        fd = bound_pidfd(record)
+        if fd is None:
+            continue
+        try:
+            signal.pidfd_send_signal(fd, signal_value, None, 0)
+            evidence["signals"].append({"pid": record["pid"], "starttime": record["starttime"],
+                                        "signal": signal_name, "pidfd_bound": True})
+        except ProcessLookupError:
+            pass
+        finally:
+            os.close(fd)
+
+
+def cleanup_all_descendants(controller_pid, phase):
+    evidence = {"phase": phase, "detected_ever": False, "inventories": [], "signals": [],
+                "reaped": [], "bounded_rounds": 0, "residual": []}
+    for signal_value, signal_name, rounds in ((signal.SIGSTOP, "SIGSTOP", 1),
+                                               (signal.SIGTERM, "SIGTERM", 50),
+                                               (signal.SIGCONT, "SIGCONT", 1),
+                                               (signal.SIGKILL, "SIGKILL", 50)):
+        for _ in range(rounds):
+            records = descendant_inventory(excluded_pid=controller_pid)
+            evidence["inventories"].append(records)
+            evidence["bounded_rounds"] += 1
+            if records:
+                evidence["detected_ever"] = True
+                pidfd_signal(records, signal_value, signal_name, evidence)
+            evidence["reaped"].extend(reap_known(records, excluded_pid=controller_pid))
+            if not records:
+                break
+            time.sleep(0.05)
+        if not descendant_inventory(excluded_pid=controller_pid):
+            break
+    deadline = time.monotonic() + 2
+    while time.monotonic() < deadline:
+        records = descendant_inventory(excluded_pid=controller_pid)
+        evidence["inventories"].append(records)
+        evidence["bounded_rounds"] += 1
+        evidence["reaped"].extend(reap_known(records, excluded_pid=controller_pid))
+        if not records:
+            break
+        evidence["detected_ever"] = True
+        time.sleep(0.05)
+    evidence["residual"] = descendant_inventory(excluded_pid=controller_pid)
+    evidence["clear"] = not evidence["residual"]
+    return evidence
+
+
+def block_termination_signals():
+    previous = signal.pthread_sigmask(signal.SIG_BLOCK, TERMINATION_SIGNALS)
+    current = signal.pthread_sigmask(signal.SIG_BLOCK, set())
+    if not TERMINATION_SIGNALS <= current:
+        raise Invalid("termination signal latch did not block the full required set")
+    return previous, {"previous_mask": sorted(item.name for item in previous),
+        "blocked": sorted(item.name for item in TERMINATION_SIGNALS), "verified": True}
+
+
+def install_termination_latch_handlers():
+    previous = {}
+    def latch(signum, _frame):
+        ASYNC_SIGNAL_LATCH.append({"signal": signal.Signals(signum).name,
+                                   "observed_monotonic_ns": time.monotonic_ns()})
+    for item in TERMINATION_SIGNALS:
+        previous[item] = signal.getsignal(item)
+        signal.signal(item, latch)
+    return previous
+
+
+def restore_signal_handlers(previous):
+    for item, handler in previous.items():
+        signal.signal(item, handler)
+
+
+def drain_latched_signals():
+    observed = []
+    while True:
+        info = signal.sigtimedwait(TERMINATION_SIGNALS, 0)
+        if info is None:
+            return observed
+        observed.append({"signal": signal.Signals(info.si_signo).name, "pid": info.si_pid,
+                         "uid": info.si_uid, "code": info.si_code})
+
+
+def waitpid_empty():
+    reaped = []
+    while True:
+        try:
+            pid, status_value = os.waitpid(-1, os.WNOHANG)
+        except ChildProcessError:
+            return {"echild": True, "reaped": reaped}
+        if pid == 0:
+            return {"echild": False, "live_or_unreaped_child": True, "reaped": reaped}
+        reaped.append({"pid": pid, "status": status_value})
+
+
+def clear_residual_group(pgid):
+    records = [record for record in proc_table().values() if record["pgid"] == pgid]
+    return {"detected": bool(records), "clear": not records, "records": records,
+            "signal_method": "NONE__PIDFD_DESCENDANT_CLEANUP_IS_SEPARATE"}
+
+
+def kill_and_drain_bounded(process, controller_record, controller_pidfd=None):
     record = {"attempted": False, "sigterm": False, "sigkill": False,
               "process_reaped": False, "pipes_forced_closed": False, "residual": None}
     if process is None:
         record["process_reaped"] = True
         return b"", b"", record
     record["attempted"] = True
-    try:
-        os.killpg(process.pid, signal.SIGTERM)
+    controller_signals = []
+    if controller_record is not None:
+        pidfd_signal([controller_record], signal.SIGSTOP, "SIGSTOP", {"signals": controller_signals})
+        pidfd_signal([controller_record], signal.SIGTERM, "SIGTERM", {"signals": controller_signals})
+        pidfd_signal([controller_record], signal.SIGCONT, "SIGCONT", {"signals": controller_signals})
         record["sigterm"] = True
-    except ProcessLookupError:
-        pass
-    try:
-        stdout, stderr = process.communicate(timeout=10)
-    except subprocess.TimeoutExpired as exc:
+    elif controller_pidfd is not None:
         try:
-            os.killpg(process.pid, signal.SIGKILL)
+            signal.pidfd_send_signal(controller_pidfd, signal.SIGKILL, None, 0)
+            controller_signals.append({"pid": process.pid, "signal": "SIGKILL",
+                                       "pidfd_bound": True, "starttime": None})
             record["sigkill"] = True
         except ProcessLookupError:
             pass
+    record["controller_pidfd_signals"] = controller_signals
+    record["detached_descendant_cleanup"] = cleanup_all_descendants(process.pid, "termination_immediate")
+    try:
+        stdout, stderr = process.communicate(timeout=10)
+    except subprocess.TimeoutExpired as exc:
+        if controller_record is not None:
+            pidfd_signal([controller_record], signal.SIGKILL, "SIGKILL",
+                         {"signals": controller_signals})
+            record["sigkill"] = True
         try:
             stdout, stderr = process.communicate(timeout=10)
         except subprocess.TimeoutExpired as second:
@@ -655,7 +894,7 @@ def kill_and_drain_bounded(process):
     return stdout or b"", stderr or b"", record
 
 
-def communicate_bounded(process):
+def communicate_bounded(process, controller_record, controller_pidfd):
     try:
         stdout, stderr = process.communicate(timeout=OUTER_TIMEOUT_SECONDS)
         residual = clear_residual_group(process.pid)
@@ -664,11 +903,11 @@ def communicate_bounded(process):
             "process_reaped": True, "pipes_forced_closed": False,
             "residual_group": residual, "residual": None if residual["clear"] else "PROCESS_GROUP_NOT_CLEAR"}
     except subprocess.TimeoutExpired:
-        stdout, stderr, record = kill_and_drain_bounded(process)
+        stdout, stderr, record = kill_and_drain_bounded(process, controller_record, controller_pidfd)
         record.update({"timed_out": True, "interrupted": False})
         return stdout, stderr, record
     except (KeyboardInterrupt, SystemExit):
-        stdout, stderr, record = kill_and_drain_bounded(process)
+        stdout, stderr, record = kill_and_drain_bounded(process, controller_record, controller_pidfd)
         record.update({"timed_out": False, "interrupted": True})
         return stdout, stderr, record
 
@@ -699,23 +938,32 @@ def exact_controller_success(value):
         "subject_fail_rows": 0, "stopped_rows": 0, "controller_aborted_rows": 0,
         "spawn_failure_prefix_count": 0, "terminal_failure_prefix_count": 0,
         "retry_count": 0, "replacement_count": 0, "best_of_count": 0,
-        "planned_calls": 3}
+        "planned_calls": 3, "invalid_stage_artifacts": 0, "stage_artifacts": 0}
     activity = value.get("observed_activity_totals")
-    activity_zero = (isinstance(activity, dict)
-        and all(activity.get(key) == 0 for key in ("tool_calls", "file_accesses", "browsing",
-            "network_accesses", "delegations", "memory_accesses", "followup_turns"))
-        and activity.get("nonterminal_messages") == [])
+    expected_activity = {"tool_calls": 0, "file_accesses": 0, "browsing": 0,
+        "network_accesses": 0, "delegations": 0, "memory_accesses": 0,
+        "followup_turns": 0, "nonterminal_messages": [],
+        "observation_basis": "ROOT_VISIBLE_COLLABORATION_DELIVERIES"}
     offline_checks = offline.get("checks") if isinstance(offline, dict) else None
     offline_credit = offline.get("credit") if isinstance(offline, dict) else None
+    offline_calls = offline.get("calls") if isinstance(offline, dict) else None
     offline_authority = offline.get("authority") if isinstance(offline, dict) else None
-    return (value.get("schema_id") == "pw-r9-candidate-v7-cli-controller-terminal-v2"
+    dynamic_qcounts_valid = (isinstance(qcounts, dict) and set(qcounts) == QCOUNT_KEYS
+        and all(isinstance(qcounts.get(key), int) and not isinstance(qcounts.get(key), bool)
+                and qcounts[key] > 0 for key in ("accounting_bytes", "evidence_runs_scanned",
+                                                  "globally_unique_identity_and_nonce_values")))
+    runner_process = value.get("runner_process")
+    return (set(value) == CONTROLLER_TERMINAL_KEYS
+            and value.get("schema_id") == "pw-r9-candidate-v7-cli-controller-terminal-v2"
+            and value.get("controller_revision") == "USER_AUTHORIZED_CANDIDATE_V7_CODEX_CLI_CONTROLLER_V2"
+            and value.get("transport_revision") == "USER_AUTHORIZED_CANDIDATE_V7_CODEX_CLI_EPHEMERAL_TRANSPORT_V2"
             and value.get("status") == "COMPLETE"
             and value.get("controller_error") is None
             and value.get("run_id") == RUN_ID and value.get("run_kind") == RUN_KIND
             and value.get("evidence_root") == str(EVIDENCE_PARENT)
             and value.get("capture_root") == str(CAPTURE_LEAF)
             and counts == expected_controller_counts
-            and activity_zero
+            and activity == expected_activity
             and value.get("activity_observation_complete_rows") == ["row-000", "row-001", "row-002"]
             and value.get("activity_observation_incomplete_rows") == []
             and value.get("component_identity_before") == value.get("component_identity_after")
@@ -724,26 +972,49 @@ def exact_controller_success(value):
             and value.get("protected_run_state_before") == value.get("protected_run_state_after")
             and value.get("protected_canary_state_before") == value.get("protected_canary_state_after")
             and value.get("runner_result_is_sole_qualification_authority") is True
-            and isinstance(value.get("runner_process"), dict)
-            and value["runner_process"].get("returncode") == 0
-            and isinstance(qualification, dict)
+            and isinstance(runner_process, dict)
+            and set(runner_process) == {"argv", "cwd", "ended_utc", "pid", "returncode",
+                "started_utc", "start_new_session", "process_group_id", "group_kill_sent",
+                "residual_group", "stdin_closed", "environment_binding"}
+            and runner_process.get("returncode") == 0
+            and runner_process.get("start_new_session") is True
+            and runner_process.get("stdin_closed") is True
+            and runner_process.get("group_kill_sent") is False
+            and runner_process.get("residual_group") == {"detected": False,
+                "kill_sent": False, "clear": True}
+            and runner_process.get("environment_binding") == {"PW_R9_EVIDENCE_ROOT": str(EVIDENCE_PARENT)}
+            and isinstance(qualification, dict) and set(qualification) == QUALIFICATION_KEYS
             and qualification.get("schema_id") == "pw-r9-reopen-result-v4"
             and qualification.get("status") == "PASS"
             and qualification.get("matrix_status") == "PASS"
-            and qualification.get("run_id") == RUN_ID and qualification.get("run_kind") == RUN_KIND
-            and isinstance(offline, dict)
+            and qualification.get("run_id") == RUN_ID
+            and isinstance(qualification.get("run_sha256"), str)
+            and len(qualification["run_sha256"]) == 64
+            and all(character in "0123456789abcdef" for character in qualification["run_sha256"])
+            and isinstance(qualification.get("run_bytes"), int)
+            and not isinstance(qualification.get("run_bytes"), bool) and qualification["run_bytes"] > 0
+            and isinstance(offline, dict) and set(offline) == OFFLINE_KEYS
             and offline.get("schema_id") == "pw-r9-offline-verifier-report-v4"
             and offline.get("run_id") == RUN_ID and offline.get("run_kind") == RUN_KIND
             and offline.get("matrix_status") == "PASS" and offline.get("valid") is True
             and isinstance(offline_checks, dict) and set(offline_checks) == OFFLINE_CHECK_KEYS
             and all(value is True for value in offline_checks.values())
-            and isinstance(qcounts, dict)
+            and dynamic_qcounts_valid
             and all(qcounts.get(key) == expected for key, expected in expected_qcounts.items())
-            and isinstance(offline_credit, dict) and all(value == 0 for value in offline_credit.values())
-            and isinstance(offline_authority, dict)
-            and offline_authority.get("launch") is False
-            and offline_authority.get("qualification_claim") is False
-            and offline_authority.get("recursive") is False)
+            and offline_credit == {"controller_invalid_credit": 0,
+                "qualification_clean_run_credit": 0, "synthetic_credit": 0}
+            and offline_calls == {"collaboration": 0, "model": 0, "network": 0,
+                                  "provider": 0, "subject": 0}
+            and offline_authority == {"launch": False, "qualification_claim": False,
+                                      "recursive": False}
+            and offline.get("error") is None
+            and isinstance(offline.get("component"), dict)
+            and isinstance(offline.get("custody"), dict) and offline["custody"].get("status") == "PASS"
+            and isinstance(offline.get("shared_authorities"), list)
+            and len(offline["shared_authorities"]) == 3
+            and offline.get("residuals") == ["No create-only/fsync history proof.",
+                "Unexposed provider activity remains trusted.",
+                "Paths locate blobs only; role/hash/bytes establish equivalence."])
 
 
 def postflight(running, boundary):
@@ -762,6 +1033,19 @@ def postflight(running, boundary):
         raise Invalid("Matrix007/008 absence changed during execution")
     exact_directory(EVIDENCE_LEAF)
     exact_directory(CAPTURE_LEAF, 0o700)
+    expected_parent_children = sorted(("candidate-v7-cli-canary-001", CAPTURE_LEAF.name,
+        START_RECEIPT.name, CONTROLLER_STDOUT.name, CONTROLLER_STDERR.name))
+    parent_children = sorted(item.name for item in CAPTURE_PARENT.iterdir())
+    if parent_children != expected_parent_children:
+        raise Invalid(f"postflight capture-parent child inventory mismatch: {parent_children}")
+    for directory_name in ("candidate-v7-cli-canary-001", CAPTURE_LEAF.name):
+        info = (CAPTURE_PARENT / directory_name).lstat()
+        if not stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode):
+            raise Invalid(f"postflight parent directory child type mismatch: {directory_name}")
+    for file_name in (START_RECEIPT.name, CONTROLLER_STDOUT.name, CONTROLLER_STDERR.name):
+        info = (CAPTURE_PARENT / file_name).lstat()
+        if not stat.S_ISREG(info.st_mode) or stat.S_ISLNK(info.st_mode):
+            raise Invalid(f"postflight parent file child type mismatch: {file_name}")
     local = count_delta(before)
     expected_local = {"git_readonly_subprocesses": CHECK_EXPECTED_GIT_SUBPROCESSES,
         "local_cli_introspection_processes": 2, "cli_version_processes": 1,
@@ -781,6 +1065,7 @@ def postflight(running, boundary):
     return {"status": "PASS", "git": git, "launcher": launcher, "interpreter": interpreter,
             "review": review, "bound": bound, "scoped_tracked_state": scoped,
             "controller_baselines": baselines, "process_quiescence": processes,
+            "capture_parent_children": parent_children,
             "local_call_accounting": observed_accounting(local),
             "evidence_tree": tree_identity(EVIDENCE_LEAF), "capture_tree": tree_identity(CAPTURE_LEAF)}
 
@@ -831,22 +1116,54 @@ def do_execute(running):
         "sigterm": False, "sigkill": False, "process_reaped": False,
         "pipes_forced_closed": False, "residual": None}
     boundary = None
+    subreaper = None
+    descendant_baseline = None
+    invocation_boundary_descendants = None
+    final_descendant_cleanup = None
+    controller_record = None
+    controller_pidfd = None
+    previous_signal_mask = None
+    signal_latch = None
+    previous_signal_handlers = None
+    latched_signals = []
+    final_waitpid = None
+    postflight_descendant_cleanup = None
+    postflight_waitpid = None
     env = os.environ.copy()
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     try:
+        previous_signal_handlers = install_termination_latch_handlers()
+        subreaper = enable_subreaper()
+        descendant_baseline = descendant_inventory()
+        if descendant_baseline:
+            raise Invalid(f"launcher had live children at subreaper baseline: {descendant_baseline}")
         boundary = preflight(running, "boundary")
+        previous_signal_mask, signal_latch = block_termination_signals()
+        restore_signal_handlers(previous_signal_handlers)
+        previous_signal_handlers = None
+        if ASYNC_SIGNAL_LATCH:
+            raise Invalid(f"termination signal latched before controller spawn: {ASYNC_SIGNAL_LATCH}")
         execution = open_execution_fds(boundary)
+        invocation_boundary_descendants = descendant_inventory()
+        if invocation_boundary_descendants:
+            raise Invalid(f"launcher had live children at invocation boundary: {invocation_boundary_descendants}")
         LOCAL_COUNTS["controller_popen_attempts"] += 1
         process = subprocess.Popen(execution["argv"], executable=execution["executable"],
                                    pass_fds=(execution["interpreter_fd"], execution["controller_fd"]),
+                                   preexec_fn=lambda: signal.pthread_sigmask(signal.SIG_SETMASK,
+                                                                             previous_signal_mask),
                                    cwd=WORKSPACE, env=env, stdin=subprocess.DEVNULL,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                    start_new_session=True)
+        controller_pidfd = os.pidfd_open(process.pid, 0)
+        controller_record = proc_table().get(process.pid)
+        if controller_record is None or controller_record["ppid"] != os.getpid():
+            raise Invalid("controller child identity unavailable immediately after Popen")
         os.close(execution["interpreter_fd"])
         os.close(execution["controller_fd"])
         execution["interpreter_fd_closed_in_parent"] = True
         execution["controller_fd_closed_in_parent"] = True
-        stdout, stderr, termination = communicate_bounded(process)
+        stdout, stderr, termination = communicate_bounded(process, controller_record, controller_pidfd)
         interrupted = termination["interrupted"]
         if termination["timed_out"]:
             launch_error = f"TimeoutExpired:outer controller timeout {OUTER_TIMEOUT_SECONDS}s"
@@ -856,13 +1173,15 @@ def do_execute(running):
     except (KeyboardInterrupt, SystemExit) as exc:
         interrupted = True
         launch_error = f"{type(exc).__name__}:{exc}"
-        stdout, stderr, termination = kill_and_drain_bounded(process)
+        stdout, stderr, termination = kill_and_drain_bounded(process, controller_record,
+                                                             controller_pidfd)
         termination.update({"timed_out": False, "interrupted": True})
         rc = process.returncode if process is not None else None
     except Exception as exc:
         launch_error = f"{type(exc).__name__}:{exc}"
         if process is not None:
-            stdout, stderr, termination = kill_and_drain_bounded(process)
+            stdout, stderr, termination = kill_and_drain_bounded(process, controller_record,
+                                                                 controller_pidfd)
             termination.update({"timed_out": False, "interrupted": False})
             rc = process.returncode
     finally:
@@ -872,6 +1191,23 @@ def do_execute(running):
                     os.close(execution[key])
                 except OSError:
                     pass
+        if controller_pidfd is not None:
+            try:
+                os.close(controller_pidfd)
+            except OSError:
+                pass
+    final_descendant_cleanup = cleanup_all_descendants(process.pid if process is not None else None,
+                                                       "terminal_final")
+    final_waitpid = waitpid_empty()
+    latched_signals = list(ASYNC_SIGNAL_LATCH)
+    if signal_latch is not None:
+        latched_signals.extend(drain_latched_signals())
+    if not final_descendant_cleanup["clear"]:
+        launch_error = launch_error or "DESCENDANT_CONTAINMENT_NOT_CLEAR"
+    if not final_waitpid["echild"]:
+        launch_error = launch_error or "DESCENDANT_WAITPID_NOT_ECHILD"
+    if latched_signals:
+        launch_error = launch_error or "TERMINATION_SIGNAL_LATCHED"
     stdout_write = safe_write_exclusive(CONTROLLER_STDOUT, stdout)
     stderr_write = safe_write_exclusive(CONTROLLER_STDERR, stderr)
     parsed, parse_error = parse_controller_result(stdout)
@@ -887,6 +1223,15 @@ def do_execute(running):
         post_error = f"{type(exc).__name__}:{exc}"
         post = {"evidence_tree": safe_tree_identity(EVIDENCE_LEAF),
                 "capture_tree": safe_tree_identity(CAPTURE_LEAF)}
+    postflight_descendant_cleanup = cleanup_all_descendants(
+        process.pid if process is not None else None, "postflight_terminal_final")
+    postflight_waitpid = waitpid_empty()
+    later_latched_signals = drain_latched_signals() if signal_latch is not None else []
+    latched_signals.extend(later_latched_signals)
+    if not postflight_descendant_cleanup["clear"]:
+        post_error = post_error or "DESCENDANT_CONTAINMENT_NOT_CLEAR_AFTER_POSTFLIGHT"
+    if not postflight_waitpid["echild"]:
+        post_error = post_error or "DESCENDANT_WAITPID_NOT_ECHILD_AFTER_POSTFLIGHT"
     controller_receipt = safe_identity(CAPTURE_LEAF / "terminal_controller_receipt.json")
     receipt_matches = False
     if parsed is not None and controller_receipt.get("present"):
@@ -899,7 +1244,15 @@ def do_execute(running):
                      and parse_error is None and exact_controller_success(parsed)
                      and receipt_matches and post_error is None
                      and stdout_write["status"] == "PASS" and stderr_write["status"] == "PASS"
-                     and termination["process_reaped"] and termination["residual"] is None)
+                     and termination["process_reaped"] and termination["residual"] is None
+                     and final_descendant_cleanup["clear"]
+                     and not final_descendant_cleanup["detected_ever"]
+                     and not termination.get("detached_descendant_cleanup", {}).get("detected_ever", False)
+                     and not termination.get("residual_group", {}).get("detected", False)
+                     and final_waitpid["echild"] and not latched_signals
+                     and postflight_descendant_cleanup["clear"]
+                     and not postflight_descendant_cleanup["detected_ever"]
+                     and postflight_waitpid["echild"])
     controller_counts = parsed.get("counts", {}) if isinstance(parsed, dict) else {}
     terminal_accounting = {**count_snapshot(), "launcher_processes": 1,
         "launcher_observed_controller_process_started": process is not None,
@@ -920,6 +1273,21 @@ def do_execute(running):
         "controller_process_started": process is not None, "controller_pid": process.pid if process else None,
         "controller_returncode": rc, "start_new_session": True, "interrupted": interrupted,
         "bounded_termination": termination, "launch_error": launch_error,
+        "descendant_containment": {"subreaper": subreaper, "baseline": descendant_baseline,
+            "invocation_boundary": invocation_boundary_descendants,
+            "terminal_cleanup": final_descendant_cleanup,
+            "signal_latch": signal_latch, "latched_signals": latched_signals,
+            "final_waitpid": final_waitpid,
+            "postflight_terminal_cleanup": postflight_descendant_cleanup,
+            "postflight_waitpid": postflight_waitpid,
+            "residual_or_adopted_detected_ever": final_descendant_cleanup["detected_ever"]
+                or termination.get("detached_descendant_cleanup", {}).get("detected_ever", False)
+                or postflight_descendant_cleanup["detected_ever"],
+            "scope_residuals": ["NO_GUARANTEE_UNDER_LAUNCHER_SIGKILL_OR_CRASH",
+                "NO_GUARANTEE_FOR_UNINTERRUPTIBLE_D_STATE_TASKS",
+                "NO_GUARANTEE_OUTSIDE_THE_VISIBLE_PID_NAMESPACE_OR_READABLE_PROCFS",
+                "NO_CONTAINMENT_OF_WORK_EXTERNALIZED_TO_NON_DESCENDANT_SERVICES",
+                "NOT_CGROUP_GRADE_CONTAINMENT"]},
         "controller_stdout_write": stdout_write, "controller_stderr_write": stderr_write,
         "controller_stdout": safe_identity(CONTROLLER_STDOUT),
         "controller_stderr": safe_identity(CONTROLLER_STDERR),
