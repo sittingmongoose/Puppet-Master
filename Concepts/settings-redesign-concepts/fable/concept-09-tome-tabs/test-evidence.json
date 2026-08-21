@@ -258,5 +258,46 @@
     "verified": "Bounding, all six probe routes at both narrow widths (760 and 900: home, dest/ai, manager/m.providers, all, copy, setting/system.health.platform-diagnostics): #pmStage now measures scrollHeight 788 == clientHeight 788 on every one - the shell stage no longer scrolls at all - with the canvas at 744 and the layer sheet the bounded scroller (clientHeight 744, scrollHeight 2024 / 5835 / 2209 / 836 / 999 / 4649). Before, 760 #/all measured stage clientHeight 788 / scrollHeight 46817 with .c09-all-viewport clientHeight 46460 and only 63 rows painted. Virtualization, measured by actually scrolling: the All Settings viewport is now clientHeight 431 / scrollHeight 46368 at 760 and 900 and clientHeight 603 / scrollHeight 46368 at 1280 (before at narrow: clientHeight 46460, scrollHeight 46460). Walking scrollTop to 0 / 25 / 50 / 75 / 90 / 100 percent at all three widths, the painted window advances every time (Theme -> Max Time Per Run -> Show Final Prompt Preview -> Allow Media Output -> Sort Skill List -> Graphics Engine .. Inspect Legal Holds) and painted rows cover 100 percent of the visible viewport band at every offset, including the last: 16 rows per window at narrow, 19 at 1280, 12-15 on the final partial window. No blank region is reachable. Resize repaint: 1280 -> 760 -> 1280 on a live page moves the window 19 -> 16 -> 19 rows at 100 percent coverage, including the stale-window trap of scrolling to 20,000px first and then narrowing. The States-dot clearance still holds on the new bounded narrow layout: dot-hidden screenshots at 4 scroll offsets x 5 cases (friendly-dark-900-home, glass-dark-760-manager/m.providers, basic-light-760-all, retro-light-900-dest/ai, friendly-dark-1280-all) decode to a single flat colour over the dot rect, ink 0, max channel delta 0 (1 in the glass gradient). The 760 All Settings mid-scroll capture that used to be an empty white sheet now shows a full window of Planning & Verification rows."
    }
   ]
+ },
+ "scrollIntegrityFix_2026_08_21": {
+  "date": "2026-08-21",
+  "trigger": "The new scroll-integrity suite (tools/harness/suite-scroll.js), which drives the real scrolling element instead of judging screenshots taken at scroll-top, failed concept-09 on two cases: 1280-all-end-content-reachable and 1280-all-stress-end-content-reachable. Concept-09 scored 101/103.",
+  "defect": "On #/all and #/all?stress=1 at 1280 the row viewport .c09-all-viewport was itself 52px TALLER than the space under it: its rect ran from y=344 to y=952 in a 900px window. At maximum scroll the last row (system.advanced.inspect-holds-quarantine, rect top 894 / bottom 950) painted BELOW the window edge, so the last setting could not be reached inside the list at any scroll position; only .c09-layer-page's 96px of outer scroll could recover it, and that is not a scroll the list itself offers. The suite's own verdict named the same cause: 'the scroll viewport is itself 52px taller than the space below it'.",
+  "rootCause": "'.c09-all { height: 100% }'. That percentage resolves against the WHOLE content box of the .c09-layer-page sheet the body lives in, and knows nothing about the .c09-head that sits above it in the same flow - sticky, but still occupying real flow space (96px at 1280, 92px narrow). The body's height therefore always equalled the entire sheet height, so head + body overhung the sheet by exactly the head's height, and the flex-sized viewport inside the body was carried out through the bottom of the window with it. 760 and 900 escaped the assertion only because '.c09-root.is-narrow .c09-body' spends 64px on bottom padding, which happened to keep the viewport's bottom edge (856) inside the window - the sheet still carried 92px of phantom scroll behind the list there. This is NOT a virtualization fault: paintWindow() and the viewport ResizeObserver added in the previous wave were both correct, and neither was changed.",
+  "fix": {
+   "css": "concept-09-tome-tabs.css - '.c09-all' loses 'height: 100%'. New fill mode: '.c09-layer-page.is-fill { display: flex; flex-direction: column; }', '.c09-layer-page.is-fill > .c09-head { flex: 0 0 auto; }' and '.c09-root .c09-layer-page.is-fill > .c09-body { flex: 1 1 auto; height: auto; min-height: 0; padding-bottom: 20px; }' (0,4,0 so it also outranks the 0,3,0 narrow body padding, which would otherwise spend 64px of the now-bounded sheet on trailing air). The head and the body become two tracks of the sheet, so the body is given the height that is actually LEFT at any width, and the sheet itself has nothing left to scroll.",
+   "css_floor": "'.c09-all-viewport' min-height lowered 200px -> 120px. In fill mode the floor is the one thing that could push the viewport back out through the bottom of the sheet: a 560px-tall window leaves about 172px here, so a 200px floor would have re-created the same overflow at short heights. 120px sits below that and still guarantees a usable list.",
+   "js": "concept-09-tome-tabs.js - renderAll() stamps page.classList.add('is-fill') right after it writes the page HTML. Scoped by construction: freshPage() builds a brand new .c09-layer-page element on every render, so the flag can never leak onto another route's sheet. No other route's layout is touched."
+  },
+  "measured_before_after": {
+   "method": "headless Chromium over file:// via tools/harness/cdp.js, window height 900, route #/all, geometry read from getBoundingClientRect / scrollHeight / clientHeight in the live page.",
+   "viewport_below_window_px": {
+    "760": "0 -> 0 (viewport bottom 856 -> 808)",
+    "900": "0 -> 0 (viewport bottom 856 -> 808)",
+    "1280": "52 -> 0 (viewport bottom 952 -> 856)"
+   },
+   "layer_page_phantom_scroll_px": {
+    "760": "92 -> 0",
+    "900": "92 -> 0",
+    "1280": "96 -> 0",
+    "note": "maxScroll of .c09-layer-page, the sheet behind the list. After the fix the suite reports nearestScrollableAncestor=null on every width: the list is the only scroller left on the route (scrollableBoxes 2 -> 1)."
+   },
+   "last_row_at_maximum_scroll_1280": "before: system.advanced.inspect-holds-quarantine at top 894 / bottom 950 against a band that ended at 900 (fullyVisible false, trailingGap -50). after: top 799 / bottom 855 against a band that ends at 856 (fullyVisible true, trailingGap 1px).",
+   "usable_list_height_px": {
+    "760": "435 -> 387",
+    "900": "449 -> 401",
+    "1280": "608 -> 512",
+    "note": "smaller because the old numbers included the part that hung off the sheet; every pixel counted now is inside the window."
+   }
+  },
+  "verification": {
+   "scroll_suite": "node tools/harness/run-suite.js scroll --concepts=09,11 -> concept-09 103/103 (was 101/103). All twelve *-all*-end-content-reachable cases report scrollerBelowWindowPx 0 and trailingGapPx 1-20.",
+   "syntax": "node --check concept-09-tome-tabs.js - clean.",
+   "boot_check": "node tools/boot-check.js concept-09-tome-tabs.html at --width=760 / 900 / 1280 / 2500 - PASS, 13 routes each, zero console errors or warnings, no horizontal overflow.",
+   "other_suites": "node tools/harness/run-suite.js matrix|managers|state --concepts=09,11 re-run after the edit: concept-09 matrix 113/113, managers 49/49, state 17/17 - no change from before the fix.",
+   "eyeballed": "1280 #/all scrolled to maximum, screenshotted and VIEWED: the last row 'Inspect Legal Holds & Quarantine' is fully painted inside the list's own rounded border, the list ends at y=856 inside the 900px window, and #pmStage reports 0 overflow. Probe at the same moment: lastRow.fullyInsideList true, lastRow.insideWindow true. Shots were written to a scratch dir outside the repo and deleted after inspection.",
+   "regression_guards": "The viewport ResizeObserver added in the previous wave is untouched and still repaints the row window on every height change - the suite's all-resize-repaint and all-resize-stale-window cases (1280x900 -> 760x900 -> 1280x900 and 1280x560 -> 1280x1200) both pass. Short-window behaviour re-measured: at 1280x560 the viewport settles at 172px (rect 344..516), above the 120px floor, and the body still ends exactly on the sheet's bottom edge (536), so nothing overflows there either."
+  },
+  "scope": "Only concept-09-tome-tabs.css and concept-09-tome-tabs.js were edited. _shared/, _shared2/, tools/, the hub index, every other concept and every .html were left untouched."
  }
 }

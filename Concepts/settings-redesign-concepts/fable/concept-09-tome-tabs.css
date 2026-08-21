@@ -1344,7 +1344,29 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
 
 /* ================= All Settings ================= */
 
-.c09-all { display: flex; flex-direction: column; min-height: 0; height: 100%; padding-bottom: 20px; }
+/* SHEET-FILL, not sheet-height. `.c09-all` used to claim `height: 100%`, which
+   resolves against the WHOLE content box of the .c09-layer-page it lives in —
+   and knows nothing about the sticky `.c09-head` that sits above it in that
+   same flow. The body therefore always overhung the sheet by exactly the head's
+   height (96px at 1280, 92px narrow), which dragged the list viewport's own
+   bottom edge 52px BELOW the window: at maximum scroll the last row painted
+   off-window and could only be recovered by scrolling the sheet BEHIND the
+   list, which is not a scroll the list itself offers. In fill mode (stamped by
+   renderAll, so no other route's layout changes) the head and the body become
+   two tracks of the sheet, and the body gets the height that is actually left
+   over. The sheet then has nothing to scroll, so the viewport is the only
+   scroller and its last row lands on its own bottom edge. */
+.c09-all { display: flex; flex-direction: column; min-height: 0; padding-bottom: 20px; }
+.c09-layer-page.is-fill { display: flex; flex-direction: column; }
+.c09-layer-page.is-fill > .c09-head { flex: 0 0 auto; }
+/* 0,4,0 so it also outranks the narrow `.c09-root.is-narrow .c09-body` padding
+   (0,3,0) that would otherwise spend 64px of the filled sheet on trailing air. */
+.c09-root .c09-layer-page.is-fill > .c09-body {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+  padding-bottom: 20px;
+}
 .c09-facets {
   display: flex;
   flex-wrap: wrap;
@@ -1410,7 +1432,11 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
 .c09-all-count { margin: 10px 0 6px; color: var(--text-muted); font-size: var(--fs-xs); }
 .c09-all-viewport {
   flex: 1;
-  min-height: 200px;
+  /* A floor, not a size. It has to stay BELOW the space a short window can
+     leave (a 560px-tall window leaves ~172px here), or the floor itself would
+     push the viewport back out through the bottom of the filled sheet — the
+     very overflow this route was just fixed for. */
+  min-height: 120px;
   overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid var(--border-light);

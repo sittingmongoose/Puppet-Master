@@ -1277,7 +1277,24 @@
   /* All Settings — faceted, virtualized                                 */
   /* ------------------------------------------------------------------ */
 
-  var ALL_ROW_H = 58;
+  /* Row pitch driving the spacer maths. It was hard-coded to 58 — the
+     stylesheet's min-height for .c08-all-row — but the row carries two lines
+     of text inside 10px padding and a 1px rule, so it really lays out at 62px
+     at every width, theme and stress state. Four pixels a row is not cosmetic
+     here: #pmStage is the scroller, and Chrome's scroll anchoring re-scrolls a
+     box whenever a layout change moves the content around its anchor. Every
+     repaint wrote spacer heights that disagreed with the rows it had just
+     painted, the browser corrected the stage's scrollTop to compensate, that
+     synthetic scroll fired the next repaint, and the stage ran away down the
+     list: measured on #/all?stress=1 at 1280x900, a scroll to 20,000 walked to
+     43,490 in +870px steps (exactly 15 stale rows a frame) and left the
+     painted window a frame behind the scroll — 6 rows in the band, a ~420px
+     blank strip under the last one, band coverage 0.46. So the pitch is
+     SEEDED at the true 62 and then re-measured from the rows this list
+     actually painted, which keeps it honest if a theme ever changes the row
+     metrics; .c08-all-list additionally carries overflow-anchor:none so the
+     anchoring loop can never restart from a residual mismatch. */
+  var ALL_ROW_H = 62;
   var allFiltered = null;
 
   function allCompute() {
@@ -1383,6 +1400,36 @@
         renderAllWindow();
       });
     }, { passive: true });
+
+    /* renderAllWindow sizes the row window from stage.clientHeight, and SCROLL
+       was its only trigger — so a viewport height change left the window
+       holding the count computed for the OLD viewport, and blank sheet under
+       the last row until the next scroll. Nothing else in this concept could
+       stand in for it: narrow mode here is pure CSS off .pm-shell.is-narrow,
+       so there is no width watcher that re-renders, and the only reason a
+       height-only resize ever looked survivable is that the browser nudges
+       scrollTop by a pixel or two on the way and that stray scroll event does
+       the repaint by luck.
+
+       Repaint whenever the scroller's own height actually changes. The list
+       and both spacers are content INSIDE #pmStage and cannot feed back into
+       its box height, and the vh guard drops same-height notifications, so
+       this cannot loop. renderAllWindow keeps no last-paint memo, so the
+       repaint recomputes `count` from the live viewport rather than replaying
+       the window it painted for the previous one. */
+    if (typeof window.ResizeObserver === 'function') {
+      var lastVh = stage.clientHeight;
+      var vhPending = false;
+      var vpRo = new window.ResizeObserver(function () {
+        var vh = stage.clientHeight;
+        if (vh === lastVh || vhPending) return;
+        lastVh = vh;
+        if (ui.view.kind !== 'all') return;
+        vhPending = true;
+        window.requestAnimationFrame(function () { vhPending = false; renderAllWindow(); });
+      });
+      vpRo.observe(stage);
+    }
   }
 
   function renderAllWindow() {
@@ -1392,6 +1439,17 @@
     var rowsEl = document.getElementById('c08AllRows');
     var bot = document.getElementById('c08AllBot');
     var total = allFiltered.length;
+    /* Keep the pitch honest against the rows already on screen (see ALL_ROW_H
+       above): the spacers stand in for rows that are not in the DOM, so if
+       they are sized from a number the real rows disagree with, the list's
+       height is a lie and every repaint shoves the scroller's content around.
+       The average over the painted block is used rather than one row's height
+       so a single wrapped label cannot make the pitch jitter. */
+    var painted = rowsEl.children.length;
+    if (painted > 1) {
+      var pitch = Math.round(rowsEl.getBoundingClientRect().height / painted);
+      if (pitch >= 24 && pitch <= 400 && pitch !== ALL_ROW_H) ALL_ROW_H = pitch;
+    }
     var stageRect = stage.getBoundingClientRect();
     var listRect = listEl.getBoundingClientRect();
     var offset = (stageRect.top - listRect.top);

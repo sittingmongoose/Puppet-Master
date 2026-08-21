@@ -147,6 +147,32 @@
     if (window.ResizeObserver) {
       try { new ResizeObserver(function () { syncNarrow(); }).observe(stage); }
       catch (e) { /* width sync falls back to PMShell onWidthChange */ }
+      /* drawIndex() sizes the row window from els.scroll.clientHeight, and
+         scroll was its only trigger - so a scroller that GREW without a width
+         change (window resize, the chat dock closing) kept the window computed
+         for the SHORTER viewport and left blank sheet below the last painted
+         row. A width flip re-renders the whole surface and repaints the window
+         as a side effect, which is exactly what masked the height-only case.
+         Repaint the index whenever the scroller's own height really changes.
+         The spacer divs live inside the scroller and it is flex-sized with
+         min-height:0, so they cannot feed back into its height - no loop. */
+      try {
+        var lastScrollH = els.scroll.clientHeight;
+        var indexRoPending = false;
+        new ResizeObserver(function () {
+          var h = els.scroll.clientHeight;
+          if (h === lastScrollH) return;
+          lastScrollH = h;
+          if (indexRoPending) return;
+          indexRoPending = true;
+          window.requestAnimationFrame(function () {
+            indexRoPending = false;
+            /* drawIndex re-reads scrollTop AND clientHeight every call, so the
+               row count is recomputed for the CURRENT band, never reused. */
+            if (ui.view.kind === 'all') drawIndex(true);
+          });
+        }).observe(els.scroll);
+      } catch (e2) { /* index repaints on scroll only where RO is unavailable */ }
     }
   }
 

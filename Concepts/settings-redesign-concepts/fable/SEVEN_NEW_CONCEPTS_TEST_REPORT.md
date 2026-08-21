@@ -20,9 +20,10 @@ and the pages implement the hub `?hub=1` postMessage bridge per the folder contr
 | 8 | Responsive / theme matrix | `harness/suite-matrix.js`: 7 concepts × 8 themes × 6 widths (760/900/1280/1700/2200/2500) on Home + 4 extra routes at 760/1280; console/overflow/element-clip/shell-visibility asserts + screenshot capture | **791/791** (113 × 7) |
 | 9 | Performance / hydration | `harness/suite-perf.js`: zero manager view-models computed at Home (instrumented `model()` counter), search hydrates no manager, All Settings DOM bounded (<300 rows incl. stress), navigation timings < 1.5s | **63/63** (9 × 7) |
 | 10 | Original-concept regression | `harness/suite-regression.js`: c1–c4 + index vs pre-pass baseline (ready stamp, innerText byte-identical, zero errors, screenshots) + git cleanliness of `_shared/` and c1–c4 (NFS CRLF-aware) | **7/7** — concepts 01–04 untouched and behaviorally identical |
+| 11 | Scroll integrity | `harness/suite-scroll.js` (added after an independent audit found a defect no stills-based pass could see): resolves the *visible* scroller, derives an honest scrollHeight ceiling from painted rows, sweeps 9 offsets to the exact end asserting no blank band, requires the row window to advance, requires the last row reachable inside its own list, and drives resize/stale-window traps including height-only growth | **721/721** (103 × 7) |
 
-**Final battery total: 1,470 / 1,470 automated checks passing** (families 5–10, all seven concepts,
-one uninterrupted run after the last fix), plus families 1–4 green.
+**Final battery total: 2,191 / 2,191 automated checks passing** — families 5–11, all seven
+concepts, one uninterrupted run after the last fix — plus families 1–4 green.
 
 ## Inventory and scale evidence
 
@@ -39,9 +40,14 @@ one uninterrupted run after the last fix), plus families 1–4 green.
 
 ## Visual audit (full-coverage, not spot checks)
 
-Three full-coverage sweeps were run. In every sweep **all 784 screenshots were actually viewed**
+Five full-coverage sweeps were run. In every sweep **all 784 screenshots were actually viewed**
 (7 concepts × 8 themes × 6 home widths + 8 extra-route cells, split across 14 independent viewers),
 and every raised finding went through an adversarial refute-first verifier before any fix.
+
+A blunt lesson from sweep 5 is worth stating up front: the automated suites were green at
+1,470/1,470 while 49 real defects were live in the code, and a further 13 functional scroll defects
+were invisible to all five screenshot sweeps because none of them scrolled. Green suites were never
+sufficient evidence on their own.
 
 - **Sweep 1** — 71 raised → **62 confirmed** (15 blockers, all concept-11's narrow-width
   attention-card collapse; 9 majors; 38 minors). Seven fixer agents resolved all 62; root causes
@@ -72,6 +78,28 @@ and every raised finding went through an adversarial refute-first verifier befor
   cause was a `.c10 button` reset out-specifying 26 of its 27 component classes. The remainder are
   recorded as residual observations in `SEVEN_NEW_CONCEPTS_FINDINGS.md` rather than silently
   dropped.
+- **Sweep 5 (independent audit of the committed code)** — reviewers who had built nothing, briefed
+  on exactly which changes had never been independently reviewed, read all 784 fresh screenshots:
+  88 raised → **49 confirmed** (39 refuted). This is the sweep that justified the exercise. It
+  caught: concept-10's `is-wide`/`is-ultra` modes being **inert** (a previous agent had reported
+  measured success; Home in fact rendered identically at 1700/2200/2500 because the width watcher
+  only re-rendered on `computeMode()` thresholds of 900/1150); the same `button { color: inherit }`
+  specificity trap still live in concepts 05 and 06, silently defeating 14 and 8 single-class
+  colour rules; raw internal subgroup ids and control-type enums in concept-11's prose; and three
+  theme-ramp inversions that **this pass had itself introduced**, where a lifted `--text-muted`
+  overtook `--text-secondary` (friendly-light, basic-dark) or `--text-primary` (glass-light).
+  All 49 were fixed, plus the inversions and the shared value-chip strikethrough.
+- **Scroll integrity (new suite, family 11)** — sweep 5 also surfaced a functional defect no
+  stills pass could see: concept-09 at narrow widths reached a 46,817px `scrollHeight` with 63
+  frozen rows, so scrolling showed a blank sheet. A dedicated suite was then built and
+  negative-control proven (reintroducing that bug in a throwaway copy drops it to 34/41 with 8 of 9
+  offsets blank). It found **13 further genuine defects across 5 concepts** in two families:
+  a row window that repaints only on scroll, so growing the viewport *height* leaves 261–365px
+  blank strips (05, 06, 10, and a variant in 08); and a list viewport taller than its own space, so
+  the final setting is unreachable inside the list (09, 11). The subtlest was concept-08's, where a
+  hard-coded 58px row height against an actual 62px made spacers disagree with painted rows,
+  triggering Chrome's scroll anchoring into a self-sustaining repaint loop that walked `scrollTop`
+  from 19,100 to 43,490 in 28 events. All 13 are fixed; the suite now passes 721/721.
 - **Differentiation gate** (re-run on the final designs, 28 cross-concept shots): **PASS on all
   eight axes**. Weakest pair named as concept-06/concept-07 (a shared left-index geometry and
   deep-nav model) — they diverge decisively on home composition, manager composition, All Settings

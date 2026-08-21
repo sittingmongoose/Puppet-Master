@@ -2274,6 +2274,12 @@
       '<div class="c09-all-spacer-top"></div><div class="c09-all-rows"></div><div class="c09-all-spacer-bot"></div></div>';
     h += '</div>';
     page.innerHTML = h;
+    /* This is the one route whose body must FILL the layer sheet rather than
+       size to its content: the row viewport has to end where the sheet ends, or
+       its last row paints below the window. freshPage() builds a new
+       .c09-layer-page for every render, so the flag can never leak to another
+       route. */
+    page.classList.add('is-fill');
     wireHead(layer, page);
 
     var viewport = page.querySelector('.c09-all-viewport');

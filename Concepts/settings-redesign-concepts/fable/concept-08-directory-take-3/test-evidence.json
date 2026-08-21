@@ -269,5 +269,27 @@
    "harness": "matrix 113/113, managers 49/49 (node tools/harness/run-suite.js <suite> --concepts=08)",
    "shots": "regenerated over file:// CDP into a /tmp scratchpad outside the repo, inspected, measured and deleted"
   }
+ },
+ "scroll_integrity_fix_2026-08-21": {
+  "date": "2026-08-21",
+  "source": "scroll-integrity suite (tools/harness/run-suite.js scroll) — 1 confirmed failure for concept-08: all-stress-resize-stale-window",
+  "finding": "Two DIFFERENT defects on the All Settings virtualizer, not one. (1) SCROLL PATH: with the stress overlay on, scrolling deep at 1280x900 made #pmStage run away down the list and left a ~420px blank strip under the last painted row BEFORE any resize. (2) RESIZE PATH: the window was computed from stage.clientHeight but repainted only on scroll, so a viewport height change left it sized for the old height.",
+  "root_cause_scroll_path": "ALL_ROW_H was hard-coded to 58 — the stylesheet's min-height for .c08-all-row — but the row carries two lines of text inside 10px padding plus a 1px rule and really lays out at 62px. Measured over CDP at 760, 900, 1280, 1700 and 2500, with and without the stress overlay: pitch 62 every time. Because #pmStage is the scroller, that 4px-per-row lie was not cosmetic: every repaint wrote spacer heights that disagreed with the rows it had just painted, Chrome's scroll anchoring corrected the stage's scrollTop to hold the anchor, that synthetic scroll fired the next repaint, and the loop sustained itself. Instrumented on #/all?stress=1 at 1280x900: a programmatic scroll to 20,000 produced the scroll trace 19100, 20000, 20870, 21740, 22610 ... 43490 — 28 events in one settle, every step exactly +870px = 15 stale rows x 58px — leaving the painted window a frame behind the scroll (6 rows in the band, band coverage 0.46, 422px blank strip). The harness's narrow leg then resized on top of that runaway and landed at scrollTop 64,022 with ZERO addressable rows painted (point coverage 0.50).",
+  "root_cause_resize_path": "renderAllWindow() sizes the window from stage.clientHeight and bindAllScroll() gave it exactly one trigger, the stage scroll listener. This concept has no width watcher that could stand in — narrow mode here is pure CSS off .pm-shell.is-narrow — so nothing repaints on a viewport change. The height-only leg survived the pre-fix run only by luck: the browser nudges scrollTop by a pixel or two across a viewport change and that stray scroll event did the repaint.",
+  "change": "concept-08-directory-take-3.js and .css only. (a) ALL_ROW_H seeded at the true 62 and RE-MEASURED on every repaint from the rows the list actually painted (average over the painted block, so one wrapped label cannot make the pitch jitter), so the spacers can never drift from the real rows again. (b) .c08-all-list carries overflow-anchor:none — a virtualizer resizes the content above you on purpose, which is exactly what scroll anchoring exists to fight, so no node inside the list is an anchor candidate any more and the loop cannot restart from a residual pixel. (c) bindAllScroll() now also attaches a ResizeObserver to #pmStage that repaints when the scroller's own clientHeight changes, rAF-throttled, guarded on lastVh and on ui.view.kind === 'all'; the list and its spacers are content inside the stage and cannot change its box, so this cannot loop.",
+  "measured_before_after": {
+   "row pitch": "assumed 58 -> measured 62 (identical at 760/900/1280/1700/2500, stress on and off); the spacer maths therefore under-declared the corpus by 4px a row, and the scroller's scrollHeight on #/all?stress=1 corrected from 164,429px to 175,633px",
+   "scroll path, #/all?stress=1 at 1280x900 scrolled to 20,000": "scrollTop ran away to 33,920-43,490 / 6 rows in band / band coverage 0.46 / 422px bottom gap / points 9/18 -> scrollTop holds at exactly 20,000 / 25 rows painted / coverage 1.00 / bottom gap 0 / points 18/18",
+   "resize path, narrow leg (deep at 1280x900 then 760x900)": "after the resize: scrollTop 64,022, 0 rows painted, coverage 0, points 9/18 -> scrollTop 20,000, 25 rows painted, coverage 1.00, gap 0, points 18/18",
+   "height-only leg (1280x560 -> 1280x1200)": "20 -> 30 rows painted, coverage 1.00, gap 0 (now driven by the ResizeObserver rather than by a stray scroll event)",
+   "all-resize-repaint painted-row sequence across 1280x900 / 760x900 / 1280x900 / 1280x560 / 1280x1200": "[26, 26, 26, 20, 31] -> [25, 25, 25, 20, 30]; one row fewer per window because ceil(788/62)+12 = 25, the honest count for a 62px row"
+  },
+  "verified": {
+   "scroll suite": "node tools/harness/run-suite.js scroll --concepts=08,10 — concept-08 102/103 -> 103/103 (206/206 for the pair). Case-by-case diff against the pre-fix run: exactly the 3 known failures flipped FAIL->PASS, no other case changed verdict.",
+   "syntax": "node --check concept-08-directory-take-3.js — clean",
+   "boot-check": "tools/boot-check.js concept-08-directory-take-3.html at 760 / 900 / 1280 / 2500 — PASS x4 (13 routes each, zero console errors/warnings, no overflow, no blank route)",
+   "other suites": "matrix 113/113, managers 49/49, search 21/21, state 17/17 — identical to the pre-fix totals",
+   "screenshot": "#/all?stress=1 at 1280x900 scrolled to 20,000 captured over file:// CDP and INSPECTED: rows now run continuously from the top of the band to its bottom edge, where the pre-fix shot showed five rows and ~440px of empty sheet. The 760x900 post-resize state was captured and inspected too. Temp shots deleted."
+  }
  }
 }

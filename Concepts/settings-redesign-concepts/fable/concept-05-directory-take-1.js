@@ -1778,12 +1778,49 @@
   }
 
   var allViewportBound = null;
+  var allViewportRo = null;
+  var allViewportRoH = -1;
+  var allViewportRoPending = false;
   function mountAllViewport() {
     var vp = byId('c05AllViewport');
     if (!vp) return;
     allViewportBound = vp;
     vp.addEventListener('scroll', renderAllWindow);
     renderAllWindow();
+
+    /* renderAllWindow() sizes the row window from vp.clientHeight, and scroll
+       was its only trigger - so a viewport that GREW without a width change
+       (window resize, the chat dock closing) kept the window computed for the
+       SHORTER viewport and left blank sheet below the last painted row. A
+       width flip re-renders the whole page and repaints the window as a side
+       effect, which is exactly what masked the height-only case. Repaint
+       whenever the viewport's own height really changes. The canvas lives
+       inside the viewport and is sized from the row count alone, so it cannot
+       feed back into the flex-sized viewport height - this cannot loop. */
+    if (allViewportRo) {
+      try { allViewportRo.disconnect(); } catch (e) { /* observer already gone */ }
+      allViewportRo = null;
+    }
+    if (typeof window.ResizeObserver === 'function') {
+      allViewportRoH = vp.clientHeight;
+      allViewportRoPending = false;
+      try {
+        allViewportRo = new window.ResizeObserver(function () {
+          var h = vp.clientHeight;
+          if (h === allViewportRoH) return;
+          allViewportRoH = h;
+          if (allViewportRoPending) return;
+          allViewportRoPending = true;
+          window.requestAnimationFrame(function () {
+            allViewportRoPending = false;
+            /* renderAllWindow re-reads scrollTop AND clientHeight, so the row
+               count is recomputed for the CURRENT band, never reused. */
+            if (byId('c05AllViewport') === vp) renderAllWindow();
+          });
+        });
+        allViewportRo.observe(vp);
+      } catch (e) { allViewportRo = null; }
+    }
   }
 
   function renderAllWindow() {

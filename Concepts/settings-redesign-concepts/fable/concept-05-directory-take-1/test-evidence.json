@@ -205,5 +205,26 @@
       "regenerated and read the matrix shots: friendly-dark-1280-manager-m.providers and glass-dark-1280-manager-m.providers (accented Open, muted parent crumbs, one pairing configuration, Details pill), retro-light-1280 and basic-dark-1280 manager (the same in the wide-font themes), friendly-dark-2200-home, friendly-dark-2500-home, glass-dark-2500-home and basic-light-2500-home (two-column composition, all twelve destinations above the fold), friendly-dark-1700-home (is-wide 3-up), basic-light-1280-dest-ai and friendly-dark-1280-all (full rail labels, no ellipsis), friendly-dark-1280-copy and friendly-dark-760-manager-m.providers (dialog and narrow paths unchanged)",
       "temp shot directories deleted after inspection"
     ]
+  },
+  "fix_notes_2026_08_21_scroll_integrity": {
+    "writer": "scroll-integrity fix pass (V0506), 2026-08-21",
+    "scope": "concept-05-directory-take-1.js only (one function, mountAllViewport). No CSS change was needed, no HTML, no _shared/_shared2 module, no other concept, no tooling, no hub/index.",
+    "finding_fixed_here": {
+      "finding": "[major] stale-virtualizer-window - the All Settings index kept the row window it had computed for a SHORTER viewport whenever the viewport grew without a width change, leaving a blank strip of empty sheet below the last painted row.",
+      "detected_by": "tools/harness/run-suite.js scroll, cases all-resize-stale-window and all-stress-resize-stale-window (negative-control proven). Repro: scroll to 20,000px at 1280x560, then resize to 1280x1200 - height only, so no narrow/wide flip re-renders the surface.",
+      "root_cause": "renderAllWindow() sizes the window from vp.scrollTop AND vp.clientHeight, but mountAllViewport() bound it to the viewport's 'scroll' event and nothing else. Every other repaint path in the concept is a full page re-render, so a pure height change (window resize, the chat dock closing) produced no repaint at all: the page received the resize events, the layout grew, and the row window stayed sized for the old, shorter band. The width leg of the same trap MASKED this - crossing the narrow breakpoint re-renders the whole page and repaints the window as a side effect - which is why only the height-only leg failed.",
+      "fix": "mountAllViewport() now also attaches a ResizeObserver to #c05AllViewport that calls renderAllWindow() whenever the viewport's own clientHeight actually changes, coalesced through one requestAnimationFrame. Any previously attached observer is disconnected first, and the rAF callback re-checks that the observed element is still the mounted viewport, so a stale observer can never repaint a detached page. renderAllWindow() has no first-index/count short-circuit - it recomputes first and last from the CURRENT scrollTop and clientHeight on every call - so the repaint really does resize the window rather than reuse the old count.",
+      "no_feedback_loop": "The observed box is the viewport, not the canvas. #c05AllCanvas lives inside the viewport and its height is a pure function of the filtered row count (rows.length * 52px), while .c05-all-viewport is flex-sized (flex: 1 1 auto, min-height: 240px) by its page column. Painting rows therefore cannot change the viewport's height. The clientHeight equality guard is a second, independent stop.",
+      "measured_before": "scroll suite, height-only leg (deep scroll at 1280x560 then grow to 1280x1200), after 4 real resize events seen by the page: #/all rowsPainted 17, rowBandCoverage 0.66, blank bottom strip 297px, point coverage 12/18; #/all?stress=1 identical at 17 rows / 0.66 / 297px. Both cases FAIL.",
+      "measured_after": "Same leg, same probe: #/all rowsPainted 29, rowBandCoverage 1.00, blank bottom strip 0px, point coverage 18/18; #/all?stress=1 identical at 29 rows / 1.00 / 0px. Both cases PASS. The companion all-resize-repaint case now also shows the row count tracking the viewport across the whole sweep: 24, 24, 24, 18, 30 painted rows at 1280x900 / 760x900 / 1280x900 / 1280x560 / 1280x1200 (was viewport-independent).",
+      "visual_confirmation": "Screenshot at 1280x1200 taken AFTER the deep-scroll-then-grow sequence and viewed: rows run continuously from the facet bar to the bottom edge of the viewport, with the last row clipped by the viewport rather than ending above it. CDP geometry on the same frame: viewport bottom 1104, deepest painted row bottom 1139, i.e. the window overshoots the band by 35px of buffer instead of falling 297px short. Temp shot deleted after inspection."
+    },
+    "verification": [
+      "node --check PASS on concept-05-directory-take-1.js",
+      "harness scroll 103/103 for concept-05 (was 101/103; the two failures were all-resize-stale-window and all-stress-resize-stale-window)",
+      "boot-check PASS at 760 / 900 / 1280 / 2500, 13 routes each, zero console noise, zero horizontal overflow",
+      "harness matrix 113/113, managers 49/49, search 21/21, state 17/17 for concept-05 - no regression",
+      "screenshot at 1280x1200 after the deep-scroll-then-grow sequence, viewed, strip gone; temp shot directory deleted after inspection"
+    ]
   }
 }

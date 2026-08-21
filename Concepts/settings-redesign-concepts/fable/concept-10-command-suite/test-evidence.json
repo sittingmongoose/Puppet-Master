@@ -185,5 +185,30 @@
    "measurement_method": "Two independent instruments, both required to agree before a finding was called fixed: (a) a live CDP probe over file:// that drives the page exactly the way suite-matrix does (boot once, then setViewport + a same-hash hashRoute) and reads getBoundingClientRect / getComputedStyle / scrollWidth-vs-clientWidth, and (b) a pure-Python PNG decoder run over the regenerated screenshots that finds exact token-RGB plateaus and computes WCAG ratios against the decoded surrounding surface. Dispatch counts were never used as evidence.",
    "screenshots_reviewed": "Regenerated over file:// (112 shots, 8 themes x 6 widths) and read back at 2x-3x: friendly-dark 1280/1700/2200/2500 home stacked side by side, basic-dark-2500-home, glass-light-2500-home, retro-light-2200-home, friendly-light-760-dest-ai + basic-dark-760-dest-ai, basic-dark-1280-manager-m.providers + glass-light-1280-manager-m.providers, basic-dark-760-manager-m.providers + retro-light-760-manager-m.providers, basic-dark-1280-copy + friendly-light-1280-copy, basic-dark-1280-all, basic-dark-1280-dest-ai + basic-light-1280-dest-ai, glass-light-1280-home and friendly-light-1280-copy (accent-fill check), friendly-light-760-home and basic-dark-900-home (narrow regression check). Temp shots deleted after review."
   }
+ },
+ "scroll_integrity_fix_2026-08-21": {
+  "date": "2026-08-21",
+  "source": "scroll-integrity suite (tools/harness/run-suite.js scroll) — 2 confirmed failures for concept-10: all-resize-stale-window and all-stress-resize-stale-window",
+  "finding": "The All Settings virtualizer computed its row window from the viewport height but repainted ONLY on scroll, so a viewport height change left the window sized for the old height and a blank strip below the last row.",
+  "root_cause": "renderAllWindow() derives `count` from list.clientHeight (#c10VList, the scroller), and bindAllList() wired exactly one trigger for it: list.addEventListener('scroll', ...). The only other watcher in the concept is boot()'s ResizeObserver on #pmStage, and its handler re-renders solely when computeMode() (a WIDTH machine, thresholds 900/1150) reports a different pane count — a height-only resize therefore never reached the virtualizer at all. A width change masked the defect because crossing 900/1150 re-renders the whole pane strip and repaints the window as a side effect; the height-only leg is what bites.",
+  "measured_before": {
+   "probe": "all-resize-stale-window / all-stress-resize-stale-window, leg 'deep at 1280x560 then grow height only to 1280x1200'",
+   "before_resize_1280x560": "scrollTop 23400, 23 rows painted (ceil(227/34)+16), band coverage 1.00, bottom gap 0",
+   "after_resize_1280x1200": "scrollTop 23400, STILL 23 rows painted for an 867px band — band coverage 0.58, blank strip 365px below the last row, elementFromPoint grid 12/18 content, after 4 real resize events seen by the page",
+   "all-resize-repaint painted-row sequence across 1280x900 / 760x900 / 1280x900 / 1280x560 / 1280x1200": "[33, 28, 33, 33, 33] — the two height-only steps did not move the count off the 33 computed at 1280x900"
+  },
+  "change": "concept-10-command-suite.js only. bindAllList() now also attaches a ResizeObserver to #c10VList itself (the scroll viewport) that repaints when the viewport's own clientHeight actually changes, rAF-throttled, with a lastVh guard; the observer is held in a module-level `allVpRo` and disconnected before each re-bind, because afterBodyRender() rebuilds the pane (and the element) on every render. No feedback loop is possible: the spacers and the row block are content INSIDE the scroller and cannot change its flex-sized box, and same-height notifications are dropped. renderAllWindow() keeps no last-paint memo, so the repaint recomputes `count` from the live list.clientHeight rather than replaying the stale window.",
+  "measured_after": {
+   "after_resize_1280x1200": "42 rows painted (ceil(867/34)+16), band coverage 1.00, bottom gap 0px, elementFromPoint grid 18/18",
+   "all-resize-repaint painted-row sequence": "[33, 28, 33, 23, 42] — the count now tracks the viewport on every step",
+   "other two legs (1280x900->760x900, 760x620->1280x900)": "coverage 1.00, gap 0 before and after, unchanged"
+  },
+  "verified": {
+   "scroll suite": "node tools/harness/run-suite.js scroll --concepts=08,10 — concept-10 101/103 -> 103/103 (206/206 for the pair). Case-by-case diff against the pre-fix run: exactly the 3 known failures flipped FAIL->PASS, no other case changed verdict.",
+   "syntax": "node --check concept-10-command-suite.js — clean",
+   "boot-check": "tools/boot-check.js concept-10-command-suite.html at 760 / 900 / 1280 / 1700 / 2200 / 2500 — PASS x6 (13 routes each, zero console errors/warnings, no overflow, no blank route)",
+   "other suites": "matrix 113/113, managers 49/49, search 21/21, state 17/17 — identical to the pre-fix totals",
+   "screenshot": "post-resize state (#/all, deep scroll at 1280x560, grown to 1280x1200) captured over file:// CDP and INSPECTED: rows run continuously to the bottom edge of the pane, the 365px strip is gone. Temp shot deleted."
+  }
  }
 }

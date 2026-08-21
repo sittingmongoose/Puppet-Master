@@ -502,5 +502,46 @@
    "tempArtifacts": "All screenshots, the CDP probe and the PNG decoder were written outside the repo (isolated scratch dir, not the shared one) and deleted after inspection. Nothing was added to the evidence directory but this note."
   },
   "scope": "Only concept-11-tabbed-organizer.js and .css were edited. _shared/, _shared2/, tools/, the hub index, every other concept and every .html were left untouched."
+ },
+ "scrollIntegrityFix_2026_08_21": {
+  "date": "2026-08-21",
+  "trigger": "The new scroll-integrity suite (tools/harness/suite-scroll.js), which drives the real scrolling element instead of judging screenshots taken at scroll-top, failed concept-11 on four cases: end-content-reachable at 760 and at 900, on both #/all and #/all?stress=1. Concept-11 scored 99/103.",
+  "defect": "#c11AllList was itself TALLER than the space under it: 71px past the bottom of the window at 760 (rect 431..971 in a 900px window) and 33px at 900 (393..933). At maximum scroll the last row (system.advanced.inspect-holds-quarantine; zz-stress.media.2000 with the stress overlay on) painted below the window edge, so the last setting was not reachable inside the list at all - only #pmStage's page scroll could recover it (226px of outer scroll at 760, 188px at 900), and that is not a scroll the list offers. 1280 passed by 1px of luck: the list bottom sat at 901 against a 900px window.",
+  "rootCause": "'.c11-all-list { height: min(60vh, 620px) }' - a size taken from the WINDOW, not from the space the sheet actually had left. The chrome above the list grows as the width narrows - the sheet's own .c11-dom-head description wraps and the .c11-all-tools facet row wraps to a second line, on top of whatever the frame rows above the sheet take. Measured list top: 361 at 1280, 393 at 900 (+32), 431 at 760 (+38 again). The 540px the list claimed from 60vh never moved, so the whole of that difference was pushed out through the bottom of the window. The 226px of #pmStage overflow at 760 was the same overhang seen from outside. Not a virtualization fault: paintAllWindow() was correct, and fitTabs() is not involved and was not changed.",
+  "fix": {
+   "css": "concept-11-tabbed-organizer.css - new fill mode, stamped on the root for the All route only: '.c11-root.is-fill { height: 100% }', '.c11-root.is-fill > *:not(.c11-sheaf) { flex: 0 0 auto }', '.c11-root.is-fill .c11-sheaf { display: flex; min-height: 0; padding-bottom: 12px }' and '.c11-root.is-fill .c11-sheet { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column }'. '.c11-all' becomes the column that carries it ('display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0'), with the head and the facet row pinned at 'flex: 0 0 auto'. root -> sheaf -> sheet -> .c11-all is then one bounded column and the list takes exactly the height that is left, at any width.",
+   "css_list": "'.c11-all-list' - 'height: min(60vh, 620px)' replaced by 'flex: 1 1 0%' with 'min-height: 110px' (a floor, deliberately below what a 560px-tall window leaves, so the floor itself can never push the list back out through the sheet) and 'max-height: 620px' (the concept's reading cap, kept from the old min()). The sheaf's 56px of bottom padding drops to 12px in fill mode: that was page-scroll trailing furniture, and .pm-stage already reserves a 48px transparent bottom border for the States dot.",
+   "js": "concept-11-tabbed-organizer.js - renderSheet() toggles root.classList 'is-fill' on for d.route === 'all' and off for every other route, so no other sheet stops scrolling as a page. renderAll() also gains a ResizeObserver on #c11AllList that repaints the row window whenever the list's own clientHeight changes: the list is now sized by the space the sheet has left, so a window resize, the Assistant panel opening, or the head wrapping at a new width all move that height, and a window computed for the OLD height would leave a blank strip along the bottom. The spacer lives inside the list and cannot feed back into its flex-sized height, so the observer cannot loop."
+  },
+  "measured_before_after": {
+   "method": "headless Chromium over file:// via tools/harness/cdp.js, window height 900, route #/all, geometry read from getBoundingClientRect / scrollHeight / clientHeight in the live page.",
+   "list_below_window_px": {
+    "760": "71 -> 0 (list bottom 971 -> 789)",
+    "900": "33 -> 0 (list bottom 933 -> 789)",
+    "1280": "1 -> 0 (list bottom 901 -> 779)"
+   },
+   "pmStage_overflow_px": {
+    "760": "226 -> 0",
+    "900": "188 -> 0",
+    "1280": "166 -> 0",
+    "note": "After the fix the suite reports nearestScrollableAncestor=null on every width: the list is the only scroller left on the route (scrollableBoxes 2 -> 1)."
+   },
+   "last_row_at_maximum_scroll_760": "before: system.advanced.inspect-holds-quarantine at top 912 / bottom 970 against a band that ended at 900 (inBand false, trailingGap -70). after: top 730 / bottom 788 against a band that ends at 789 (fullyVisible true, trailingGap 1px).",
+   "list_height_px": {
+    "760": "540 -> 358",
+    "900": "540 -> 396",
+    "1280": "540 -> 418",
+    "note": "smaller because the old 60vh number included the part that hung off the window; every pixel counted now is inside the sheet."
+   }
+  },
+  "verification": {
+   "scroll_suite": "node tools/harness/run-suite.js scroll --concepts=09,11 -> concept-11 103/103 (was 99/103). All twelve *-all*-end-content-reachable cases report scrollerBelowWindowPx 0 and trailingGapPx 1.",
+   "syntax": "node --check concept-11-tabbed-organizer.js - clean.",
+   "boot_check": "node tools/boot-check.js concept-11-tabbed-organizer.html at --width=760 / 900 / 1280 / 2500 - PASS, 13 routes each, zero console errors or warnings, no horizontal overflow.",
+   "other_suites": "node tools/harness/run-suite.js matrix|managers|state --concepts=09,11 re-run after the edit: concept-11 matrix 113/113, managers 49/49, state 17/17 - no change from before the fix.",
+   "eyeballed": "760 and 900 #/all scrolled to maximum, screenshotted and VIEWED: the last row 'Inspect Legal Holds & Quarantine' is fully painted, with its Inspect button, inside the list's own rounded border; the list ends at y=789 and the sheet at y=816, both inside the 900px window, and #pmStage reports 0 overflow. Probe at the same moment: lastRow.fullyInsideList true, lastRow.insideWindow true at both widths. Shots were written to a scratch dir outside the repo and deleted after inspection.",
+   "regression_guards": "fitTabs() is untouched and still measures against the tab ROW's free width, so bounding the root cannot feed into it; renderTabs/fitTabs run after renderSheet as before and the strip fits at every width in the boot-check. Every non-All route still scrolls as a page: the suite's home / dest-ai / manager-m.providers / copy scroller and no-blank-region cases pass unchanged at 760, 900 and 1280. Short-window behaviour re-measured: at 1280x560 the list settles at 110px (its floor) with its bottom edge at y=471, still inside both the sheet (476) and the window."
+  },
+  "scope": "Only concept-11-tabbed-organizer.css and concept-11-tabbed-organizer.js were edited. _shared/, _shared2/, tools/, the hub index, every other concept and every .html were left untouched."
  }
 }
