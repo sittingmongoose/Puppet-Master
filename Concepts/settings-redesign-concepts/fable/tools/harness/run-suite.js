@@ -29,6 +29,7 @@ const SUITES = {
   managers: () => require(path.join(__dirname, "suite-managers.js")),
   state: () => require(path.join(__dirname, "suite-state.js")),
   perf: () => require(path.join(__dirname, "suite-perf.js")),
+  scroll: () => require(path.join(__dirname, "suite-scroll.js")),
   regression: () => require(path.join(__dirname, "suite-regression.js"))
 };
 

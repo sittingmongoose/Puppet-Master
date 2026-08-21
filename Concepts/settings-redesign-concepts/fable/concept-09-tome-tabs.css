@@ -15,9 +15,19 @@
 }
 [data-theme^="glass"] .c09-root { background: transparent; }
 
+/* min-height:0 matters as much as min-width:0 here. Narrow mode turns
+   .c09-root into a column flex container, and a flex item's automatic minimum
+   size is its CONTENT size along the main axis - so without this the canvas
+   grew to the full height of whatever it held, the layer sheet stopped being a
+   bounded scroller, and the page scrolled in the shell stage instead. On the
+   All Settings route that meant the 828-row virtual list expanded to its whole
+   46,368px instead of scrolling inside a window, and everything past the
+   painted window was blank. Bounded here, every narrow route scrolls in its
+   own sheet exactly like the wide layout does. */
 .c09-canvas {
   flex: 1;
   min-width: 0;
+  min-height: 0;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -590,7 +600,13 @@
 }
 .c09-att-item:hover { border-color: var(--accent-primary); }
 .c09-att-item:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
-.c09-att-item .pm-status-word { flex: none; margin-top: 1px; }
+/* Audit fix: the action word was intrinsically sized per row, so 'Restart'
+   shoved its headline 6px right of 'Watch' and 'Sign in' and the three
+   headlines started at three different x. One shared column width lines the
+   headlines up at every width. 64px clears the widest status word the store
+   can produce ('Cleanup', 52.4px in the basic face, the widest of the eight),
+   so the column never has to grow and never clips. */
+.c09-att-item .pm-status-word { flex: none; min-width: 64px; margin-top: 1px; }
 .c09-att-main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .c09-att-head { font-weight: 600; font-size: var(--fs-md); }
 .c09-att-why { color: var(--text-secondary); font-size: var(--fs-sm); }
@@ -1052,6 +1068,48 @@
   color: var(--text-primary);
 }
 
+/* In-page section jump row for document-mode managers. This is NOT a tab
+   strip: every section is rendered on the same page, so a boxed aria-selected
+   tab named a pane state that does not exist — and it stuttered against the
+   identical section heading 54px below it. Now a quiet uppercase micro-type
+   nav with a 'Jump to' lead and aria-current, a different register from the
+   display-font section headings it points at. */
+.c09-jumpbar {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 16px 0 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+.c09-jumpbar-lead {
+  font-family: var(--display-font);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.c09-jump {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--text-secondary);
+  font-family: var(--body-font);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+}
+.c09-jump:hover { color: var(--text-primary); text-decoration-color: currentColor; }
+.c09-jump[aria-current="true"] { color: var(--accent-primary); text-decoration-color: currentColor; }
+.c09-jump:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; border-radius: var(--radius-xs); }
+
 .c09-mgr-split { display: flex; gap: 18px; align-items: flex-start; margin-top: 14px; }
 .c09-roster {
   flex: 0 0 240px;
@@ -1316,7 +1374,39 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
 }
 .c09-facet-q:focus-visible, .c09-facet:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
 .c09-facet-check { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-sm); color: var(--text-secondary); cursor: pointer; }
-.c09-facet-check input { accent-color: var(--accent-primary); }
+/* accent-color alone only paints the CHECKED fill; the unchecked box fell
+   through to the UA's grey square, which read as foreign against the themed
+   glass controls beside it. Drawn from concept tokens in both states. */
+.c09-facet-check input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+  cursor: pointer;
+}
+.c09-facet-check:hover input { border-color: var(--accent-primary); }
+.c09-facet-check input:checked {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.c09-facet-check input:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--background);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.c09-facet-check input:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
 .c09-all-count { margin: 10px 0 6px; color: var(--text-muted); font-size: var(--fs-xs); }
 .c09-all-viewport {
   flex: 1;
@@ -1349,17 +1439,29 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
 .c09-all-row:hover { background: var(--accent-soft); }
 .c09-all-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 .c09-all-row.is-stress { cursor: default; opacity: .75; }
+/* The changed-from-default dot used to sit inline, so every changed row jogged
+   its own name 13px right of its neighbours. The gutter is reserved on every
+   row and the dot is lifted out of flow into it, so the name column has one
+   left edge whether or not a row is changed. */
 .c09-all-label {
   flex: 1 1 40%;
   min-width: 0;
   display: flex;
   align-items: center;
   gap: 7px;
+  position: relative;
+  padding-left: 13px;
   font-weight: 600;
   font-size: var(--fs-sm);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.c09-all-label .c09-mod-dot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -3px;
 }
 .c09-all-path { flex: 1 1 34%; min-width: 0; color: var(--text-muted); font-size: var(--fs-xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .c09-all-type { flex: 0 0 76px; color: var(--text-muted); font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: .05em; }
@@ -1659,6 +1761,23 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
 .c09-root.is-narrow .c09-chap-subs { padding-left: 16px; }
 .c09-root.is-narrow .c09-ops { left: 10px; right: 10px; max-width: none; }
 .c09-root.is-narrow .c09-project { display: none; }
+/* At 760 the widest theme face (basic) could not fit
+   [Back to <chapter>] + a three-level breadcrumb + [Close Settings] on one
+   line, so Close wrapped to a second row flush left under Back and read as a
+   second back control. Narrow keeps only the word 'Back' on screen (the
+   breadcrumb already names the location, and the full label stays in the
+   accessibility tree), and if a longer route ever does wrap, Close lands at
+   the right edge where a page dismiss belongs. */
+.c09-root.is-narrow .c09-back-to {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.c09-root.is-narrow .c09-close { margin-left: auto; }
 
 /* very wide: the canvas column stays a bounded measure (c09-body caps),
    the sheet fills with balanced whitespace — no text deserts */
@@ -1666,6 +1785,28 @@ button.c09-card-main:focus-visible { outline: 2px solid var(--accent-primary); o
   .c09-body { max-width: 980px; }
   .c09-manager.c09-body, .c09-all.c09-body { max-width: 1240px; }
 }
+
+/* ================= States-drawer clearance =================
+   The shared States/layers affordance (_shared2/pm2-states.js) is fixed at
+   right:16px / bottom:34px with z-index 9000, so it floats over whatever the
+   page is scrolling. Making it fainter did not stop it painting on top of
+   body copy; the fix is to shorten the SCROLL VIEWPORT so the dot sits outside
+   the scroll box and content can never travel under it.
+
+   Measured with a 900px-tall viewport: the statusbar is 24px in all eight
+   themes and the dot's top edge is 66px above the viewport bottom, so it
+   intrudes 42px into the stage. A 48px bottom border on the scroller clips the
+   viewport 6px clear of it. Borders are painted from the element's own
+   background box, so the strip is invisible: the spine keeps its own surface
+   through a transparent border, and the narrow stage strip is painted with the
+   same var(--surface) the page sheet uses.
+
+   Wide: the layer sheet ends at the spine, and the dot lands on the spine's
+   empty tail, so only the spine scroller needs the clearance.
+   Narrow (<860px of stage): the spine is a top strip and the whole page
+   scrolls in .pm-stage — the concept stamps c09-stage-narrow on it. */
+.c09-root:not(.is-narrow) .c09-spine { border-bottom: 48px solid transparent; }
+.pm-stage.c09-stage-narrow { border-bottom: 48px solid var(--surface); }
 
 /* ================= shell page-tab overflow guard =================
    At narrow widths the friendly-font titlebar nav hard-clipped 'Usage' mid-word

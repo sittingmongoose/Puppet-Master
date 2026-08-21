@@ -374,5 +374,133 @@
    "tempArtifacts": "All screenshots and probe scripts were written outside the repo and deleted after inspection. Nothing was added to the evidence directory but this note."
   },
   "scope": "Only concept-11-tabbed-organizer.js and .css were edited. _shared/, _shared2/, tools/, the hub index, every other concept and every .html were left untouched."
+ },
+ "independentAuditFixes_2026_08_21": {
+  "date": "2026-08-21",
+  "trigger": "Independent-audit round 4 (reviewers who built nothing, verified adversarially on the committed code): 10 confirmed findings for concept-11 - 4 majors, 4 of them flagged as regressions from the previous unaudited pass. Every before/after number below was measured in the running page or decoded from a screenshot, never inferred from source.",
+  "centralFixesRelied_on": [
+   "_shared2/pm2-tokens.css (loaded AFTER this concept's CSS) gained basic-light --accent-error #B01E1E and --accent-warning #7A4E00. VERIFIED as reaching this concept's surfaces rather than re-derived locally: computed style on the Home attention words at basic-light/1280 is rgb(176,30,30) and on the roster card status words rgb(122,78,0); grep of concept-11-tabbed-organizer.css shows every use is var(--accent-error)/var(--accent-warning) with no literal colour anywhere. Decoded from the new shots: 'Watch'/'Restart'/'Sign in' now measure 5.45:1 on the attention band #E2E5E9 (was 4.45:1) and 'Not signed in'/'Not installed' 5.38:1 on the roster card fill #DCDFE3 (was 4.43:1). Nothing was fixed locally for these two."
+  ],
+  "findings": [
+   {
+    "id": "IA4-1 (audit findings 1 and 2)",
+    "severity": "major",
+    "category": "proximity-labeling / labelling - bare values with no labels",
+    "claim": "Provider connection cards in INSTALLED TOOLS AND SIGNED-IN APPS printed three bare values with no labels: the whole body of the 'Cursor CLI' card read 'None' / 'None until installed' / 'Not applicable'.",
+    "rootCause": "renderProvidersRoster() emitted answers.accountInUse, answers.modelsAvail and answers.onExhaust as plain <span class=\"c11-provcard-line\"> and dropped the questions the shared model carries for exactly those three values (_shared2/pm2-managers.js: 'Which account will be used?', 'Which models are available?', 'What happens when included usage ends?'). The CSS class had no ::before, so no label was arriving from anywhere.",
+    "fix": "JS: added provcardLine(label, value), which pairs every answer with a bold inline key and a colon, and routed all three values through it using the house short forms every sibling concept already uses ('Account in use', 'Models available', 'When usage runs out'). Empty values are dropped rather than printed as an empty pair. The status note keeps its own class (.c11-provcard-note) since it is self-describing prose, not an answer. CSS: .c11-provcard-key/.c11-provcard-val added; inline rather than a label column because the grid floor is a 270px card, where a two-column layout would wrap both halves.",
+    "proof": "DOM text at 1280 (friendly-light, basic-light, friendly-dark, glass-dark all identical): Cursor CLI now reads 'Account in use: None' / 'Models available: None until installed' / 'When usage runs out: Not applicable'; Antigravity CLI 'Account in use: None - sign-in required' / 'Models available: Gemini 3 Pro, Gemini 3 Flash (from the last good catalog)' / 'When usage runs out: Stop and wait'. Key contrast decoded from the new shots: friendly-light 4.76:1, friendly-dark 6.59:1, basic-light 8.38:1 (all at full ink, >=10 pixels on the exact token colour). Viewed: friendly-light-1280, basic-light-1280, friendly-dark-1280, glass-dark-1280 and friendly-light-760 manager/m.providers.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.js",
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "IA4-3",
+    "severity": "major",
+    "category": "hierarchy - attention block swallowed the first screen at 760/900",
+    "claim": "At 760 and 900 the three attention entries each became a ~118px stacked card, so NEEDS ATTENTION took ~405px (63%) of the first screen and the destination grid started at y=630 with ~190px left.",
+    "rootCause": ".c11-root.is-narrow .c11-attn-item was flex-direction: column, putting the status word, headline, consequence and Open button on four separate lines. The wide row could not simply be reused because its fixed 92px status column plus non-wrapping flex crushed the text at these widths.",
+    "fix": "CSS: the narrow entry is now a three-column grid - 92px status word (the same column the wide row uses, so headlines start at the same offset at every width), minmax(0,1fr) for headline+consequence, auto for the Open button. No part of the entry was dropped; only the stacking was removed.",
+    "proof": "Measured basic-dark/760 (the audit's own shot): NEEDS ATTENTION section 405px -> 219px, entries 118/119/120px -> 59/59/59px, CATEGORIES starts y=630 -> y=450. Against the audit's 640px content viewport that is 63% -> 34% for attention and 59% of the first screen for destinations. friendly-dark/760 and /900: section 393px -> 213px, entries 117 -> 57, CATEGORIES y=617 -> y=441; glass-light/900 207px. Headline left edge now identical across all entries (x=177 at 760, x=213 at 900) where the intrinsic column had left it ragged. Checked under the attention-heavy scenario too (6 entries, 57px each) and under calm/first-run (empty state unchanged). Shots viewed: basic-dark-760-home, friendly-dark-760-home, friendly-dark-900-home, glass-light-900-home.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "IA4-4",
+    "severity": "major",
+    "category": "contrast - Home per-category counts and tab chips in the friendly themes",
+    "claim": "'95 · 4 changed' and the '... tab' chips measured 2.60:1 (friendly-light) and 3.15:1 (friendly-dark) at the best pixel repeated 3+ times; the 10px --fs-2xs glyphs never reached their token colour.",
+    "rootCause": "The size, not the token: .c11-tile-meta was --fs-2xs (10px) at weight 400 in --text-muted. In the Quicksand faces a 10px stem never inks fully (the audit measured peak coverage alpha 0.81), so the rendered pixels stayed far above the token's own 5.9:1.",
+    "fix": "CSS: .c11-tile-meta is now --fs-sm (12px) at weight 600 in --text-secondary, and .c11-tile-tab inherits it. The counts are the card's key datum, so this is also the right hierarchy; the chip border moved from --border-light to --border for the same reason.",
+    "proof": "Decoded from the new shots with an isolated pure-Python decoder (bg = modal pixel of the glyph box, best pixel repeated >=3 times): friendly-light counts 2.60 -> 4.98:1 (n=24 pixels at the exact token colour #6B6473) and the 'Memory & Planning tab' chip 3.70 -> 4.98:1; friendly-dark counts 3.15 -> 7.13:1 (#B4AEBE, n=24) and chip 3.99 -> 7.13:1; basic-light 8.86:1; glass-light 11.82:1. Every measurement now inks to the full token value instead of decaying at the second pixel.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "IA4-5 (regression)",
+    "severity": "minor",
+    "category": "layout-regression - the 1280 cards ran the starved-title branch",
+    "claim": "At 1280 the tiles landed in the WIDE branch, where the nowrap counts column starved the title: 'Planning & Verification' broke across two lines with a stranded ampersand and the counts read before the description - the exact failure the container query was written to prevent, and it did not happen at the NARROWER cards of 1700+.",
+    "rootCause": "@container (max-width: 310px) on a 330px content box. Measured card content widths: 1280 = 329px, 1700/2200/2500 = 290px, so the query fired everywhere except the one width that needed it. The threshold was ~20px too low and the branch was doing the opposite of its stated intent.",
+    "fix": "CSS: deleted the container query and the .is-narrow duplicate of it, and made the stacked arrangement the single base layout - .c11-tile-desc order:2 and .c11-tile-meta order:3, both flex 1 0 100%, indented 45px to line up under the title. Reading order is now title -> description -> counts by construction rather than by threshold.",
+    "proof": "Measured at all six widths (friendly-dark): 'Planning & Verification' title box was 149x45 (two lines) at 1280 and is now 284x22 (one line); at 760/900/1280/1700/2200/2500 the meta top is always below the description top, which is always below the title top. No card at any preset width now has a nowrap column beside the title. Shots viewed: friendly-dark-1280-home, friendly-light-1280-home.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "IA4-8 (regression)",
+    "severity": "minor",
+    "category": "copy-mismatch - the CATEGORIES sentence named a control that had no label",
+    "claim": "The sentence '... and More lists every one' pointed at a control that rendered as a bare '...' pill at 900 and 760, where '.c11-root.is-tight .c11-more span { display: none }' suppressed the word; the button's title is 'All destinations', so hover did not supply it either.",
+    "rootCause": "A tight-width space saving that predated the reworded sentence. The sentence was rewritten in the previous pass precisely to be true at every width, and this rule silently falsified it below TIGHT_AT=840.",
+    "fix": "CSS: removed the rule; the More control keeps its word at every width. This is affordable because fitTabs() measures the button's real offsetWidth before deciding how many tabs fit, so the label costs at most one tab from the strip - and that tab is listed in the menu the label names.",
+    "proof": "Computed style of the button's span at 760 and 900 is display:block (was none) and the button measures 75-80px wide; the rendered 760/900 shots show '... More' next to the strip while the meta line still reads '828 settings across 12 categories · the tab strip groups them into 9, and More lists every one'. boot-check found no horizontal overflow at either width after the change. Shots viewed: friendly-dark-760-home, friendly-dark-900-home, basic-dark-760-home.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "IA4-9 and IA4-10 (regressions, central)",
+    "severity": "minor",
+    "category": "contrast - basic-light was skipped by the earlier accent recalibration",
+    "claim": "basic-light --accent-error #C62828 measured 4.45:1 on the Home attention band #E2E5E9, and --accent-warning #8A5A00 measured 4.43:1 on the roster card fill #DCDFE3 - both under 4.5:1 for small bold text.",
+    "rootCause": "Both tokens are owned centrally by _shared2/pm2-tokens.css, which had recalibrated the other faces and skipped basic-light. Nothing in this concept re-derives either colour.",
+    "fix": "None here. The central file now sets basic-light --accent-error #B01E1E and --accent-warning #7A4E00; this pass only verified that the change reaches these surfaces.",
+    "proof": "Computed styles on the live page at basic-light/1280: attention status words rgb(176,30,30), roster status words rgb(122,78,0). Decoded from basic-light-1280-home.png: 'Watch'/'Restart'/'Sign in' 5.45:1 on #E2E5E9 (62-84 pixels at the exact ink). Decoded from basic-light-1280-manager-m.providers.png: 'Not signed in' and 'Not installed' 5.38:1 on the card fill #DCDFE3 (83-91 pixels at the exact ink). The card fill is still color-mix(--text-primary 3%, --surface-alt) = #DCDFE3, i.e. the surface the audit measured against.",
+    "filesTouched": []
+   },
+   {
+    "id": "IA4-6",
+    "severity": "minor",
+    "category": "typography - the status-WORD treatment was applied to whole sentences",
+    "claim": "The manager 'Needs attention' list ran five full sentences through statusWord(), producing five stacked bold, tone-coloured, underlined sentences that read as hyperlinks but are inert spans.",
+    "rootCause": "_shared2/pm2-managers.js sets the row's value to card.answers.attention, which is prose; renderProvidersRoster() passed that value straight into statusWord(), whose .pm-status-word[data-tone] rule is weight 700 + tone colour + underline - a treatment scoped by the shared CSS's own comment to one- or two-word statuses.",
+    "fix": "JS: the row now renders a real status word taken from the item's own tone ('Setup' for tone=setup, 'Attention' otherwise - the same tone-only fallback concept-08 uses for notices) and prints the sentence as plain text in .c11-line-value. CSS: the word gets a 78px column inside [data-section=\"attention\"] so the sentences start on a common left edge. No status word is invented from data the model does not carry: the provider's own status label is not reused, because for the Claude row it is 'Ready', which would be false in a needs-attention list.",
+    "proof": "DOM at 1280: the five rows are now 'Attention | Included usage on Personal Max is used up until the 4:00 PM reset.', 'Setup | Sign in inside the CLI profile to restore Gemini routes.', 'Attention | The seat lapsed on Aug 1. ...', 'Attention | One route still needs setup.', 'Setup | Install the CLI, then sign in inside its profile.' - underline and tone colour live on the 78px word only; the sentence computes to the plain body colour. Verified at 760 as well, where the row wraps to label / word + sentence. Shots viewed: basic-light-1280, friendly-dark-1280, glass-dark-1280 and friendly-light-760 manager/m.providers.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.js",
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "IA4-7",
+    "severity": "minor",
+    "category": "proximity - counts detached from their own title at 900",
+    "claim": "In tiles sharing a grid row with a taller tile the counts were pushed to the card floor: glass-light/900 row 2 measured title-to-counts gaps of 44px, 29px and 15px across three neighbours.",
+    "rootCause": ".c11-tile is a wrapping flex container with no align-content, so the default stretch distributed the grid-equalised leftover row height BETWEEN the wrapped lines; the tile with the least content got the largest injected void.",
+    "fix": "CSS: align-content: flex-start on .c11-tile. The leftover height now collects at the card floor, where it is empty space, instead of between a title and its own counts.",
+    "proof": "Measured every tile at 900 in three themes. glass-light row 2: 44/29/15 -> 18/18/5. friendly-dark and friendly-light rows 1-4: gaps are 16-18px for a one-line title and 5px for a two-line title (the flex row-gap), across all twelve tiles - i.e. the only remaining variation is each tile's own title height, with no empty card between title and counts anywhere. Shot viewed: glass-light-900-home, friendly-dark-900-home.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.css"
+    ]
+   }
+  ],
+  "verification": {
+   "syntax": "node --check concept-11-tabbed-organizer.js - clean",
+   "bootCheck": "PASS at 760, 900, 1280, 1700, 2200 and 2500 (13 routes each): zero console errors/warnings, zero page exceptions, every route stamp verified, no horizontal overflow.",
+   "harness": "matrix 113/113 and managers 49/49 for concept-11 (the required baselines). Also re-ran search 21/21 and state 17/17, since Home rendering and the providers manager are in their reach.",
+   "shotsViewed": [
+    "friendly-dark-1280-home",
+    "friendly-light-1280-home",
+    "friendly-dark-900-home",
+    "friendly-dark-760-home",
+    "basic-dark-760-home",
+    "basic-light-1280-home",
+    "glass-light-900-home",
+    "friendly-dark-1280-manager-m.providers",
+    "basic-light-1280-manager-m.providers",
+    "friendly-light-1280-manager-m.providers",
+    "glass-dark-1280-manager-m.providers",
+    "friendly-light-760-manager-m.providers",
+    "friendly-dark-760-home under scenario=attention-heavy"
+   ],
+   "openItemNotFixed": "Adjacent, not in the audit list and deliberately left alone: the shared quiet status word .pm-status-word[data-tone=\"ok\"] ('Ready' on the roster cards) is --fs-xs/500, and in friendly-light it inks to only 3.73:1 at its single best pixel on the card fill #F0EAE5 (token value 4.76:1) - the same 'small text in Quicksand never reaches its token' mechanism as IA4-4, on a shared-shell class used by every concept. Fixing it here would diverge concept-11's status-word rendering from its siblings, so it is reported rather than patched locally. basic-light 8.38:1 and friendly-dark 5.94:1 at the same element.",
+   "tempArtifacts": "All screenshots, the CDP probe and the PNG decoder were written outside the repo (isolated scratch dir, not the shared one) and deleted after inspection. Nothing was added to the evidence directory but this note."
+  },
+  "scope": "Only concept-11-tabbed-organizer.js and .css were edited. _shared/, _shared2/, tools/, the hub index, every other concept and every .html were left untouched."
  }
 }

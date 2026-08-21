@@ -1703,14 +1703,36 @@
     }
   }
 
+  /* Every answer on a connection card is introduced by its own label. The
+     shared model carries these three values as questions ("Which account will
+     be used?", "Which models are available?", "What happens when included
+     usage ends?"); printing the answers alone left lines like "None" /
+     "None until installed" / "Not applicable" with nothing to attach them to.
+     The short forms are the house wording every sibling concept already uses. */
+  function provcardLine(label, value) {
+    if (value === null || value === undefined || value === '') return '';
+    return '<span class="c11-provcard-line"><b class="c11-provcard-key">' + esc(label) +
+      ':</b> <span class="c11-provcard-val">' + esc(String(value)) + '</span></span>';
+  }
+
   function renderProvidersRoster(def, vm) {
     var html = '<div class="c11-mgr" data-manager-sheet="m.providers">' + managerHeadHtml(def, vm);
     arr(vm.sections).forEach(function (sec) {
       if (sec.id === 'attention') {
         html += '<section class="c11-msec" data-section="attention"><h2>' + esc(sec.title) + '</h2><div class="c11-lines">';
         arr(sec.items).forEach(function (it) {
+          /* The status-word treatment (weight + tone colour + underline) belongs
+             to a one- or two-word status. The shared model puts a whole sentence
+             in `value` here, so passing it through statusWord() produced five
+             stacked bold underlined sentences that read as links but are inert.
+             The word now comes from the item's own tone — the same tone-only
+             fallback concept-08 uses for notices — and the sentence stays plain
+             prose in the value slot. */
+          var vRaw = it.value === true ? 'Needs attention'
+            : (it.value === null || it.value === undefined ? '' : String(it.value));
           html += '<div class="c11-line"><span class="c11-line-label">' + esc(it.label) + '</span>' +
-            '<span class="c11-line-value">' + statusWord(it.tone, String(it.value === true ? 'Needs attention' : it.value)) + '</span>' +
+            statusWord(it.tone, it.tone === 'setup' ? 'Setup' : 'Attention') +
+            '<span class="c11-line-value">' + esc(vRaw) + '</span>' +
             (it.note ? '<span class="c11-line-note">' + esc(it.note) + '</span>' : '') +
             destBtn(it.dest, 'Open ' + it.label) + '</div>';
         });
@@ -1727,10 +1749,10 @@
           html += '<button type="button" class="c11-provcard" data-act="prov-open" data-object-id="' + attr(it.id) + '">' +
             '<span class="c11-provcard-top"><b>' + esc(it.label) + '</b>' +
             statusWord(obj(it.status).tone, obj(it.status).label) + '</span>' +
-            '<span class="c11-provcard-line">' + esc(a.accountInUse || 'No account applies') + '</span>' +
-            (a.modelsAvail ? '<span class="c11-provcard-line">' + esc(a.modelsAvail) + '</span>' : '') +
-            (a.onExhaust ? '<span class="c11-provcard-line c11-provcard-quiet">' + esc(a.onExhaust) + '</span>' : '') +
-            (obj(it.status).note ? '<span class="c11-provcard-line c11-provcard-quiet">' + esc(it.status.note) + '</span>' : '') +
+            provcardLine('Account in use', a.accountInUse || 'No account applies') +
+            provcardLine('Models available', a.modelsAvail) +
+            provcardLine('When usage runs out', a.onExhaust) +
+            (obj(it.status).note ? '<span class="c11-provcard-note">' + esc(it.status.note) + '</span>' : '') +
             '</button>';
         });
         html += '</div>';

@@ -356,7 +356,12 @@
     h += railItem('all', 'All Settings', 'list', v.kind === 'all',
       '<span class="c07-rail-count">' + fmtInt(counts.total) + '</span>');
     h += railItem('copy', 'Copy Settings', 'copy', v.kind === 'copy', null);
-    h += '<div class="c07-rail-label">Areas</div>';
+    /* "Settings by area", not bare "Areas": these counts are store.counts(),
+       i.e. settings + actions, and they sum to the 828 on the All Settings row
+       above. The AREA facet on the compendium counts RECORDS (managers and
+       diagnostics too) against the same twelve labels, so both columns now say
+       which scope they are counting instead of quietly disagreeing. */
+    h += '<div class="c07-rail-label">Settings by area</div>';
     counts.byCategory.forEach(function (c) {
       var active = (v.kind === 'dest' && v.cat === c.id) ||
         (v.kind === 'manager' && (mgrs().get(v.managerId) || {}).cat === c.id);
@@ -706,7 +711,7 @@
     counts.byCategory.forEach(function (c) {
       h += '<button type="button" class="c07-cat-card" data-act="nav" data-dest="' + attr({ route: 'dest', cat: c.id }) + '">' +
         ico(c.icon || 'gear') +
-        '<span style="min-width:0"><span class="c07-cat-name">' + esc(c.title) + '</span>' +
+        '<span class="c07-cat-body"><span class="c07-cat-name">' + esc(c.title) + '</span>' +
         '<span class="c07-cat-desc">' + esc(c.desc || '') + '</span>' +
         '<span class="c07-cat-meta">' + fmtInt(c.total) + ' settings' +
         (c.changed ? ' · ' + c.changed + ' changed' : '') + '</span></span></button>';
@@ -1515,7 +1520,7 @@
     }), f.kind);
     h += facetGroup('Area', 'cat', cats().map(function (c) {
       return { id: c.id, label: c.title, n: fc.byCat[c.id] || 0 };
-    }), f.cat);
+    }), f.cat, 'Records in this index, managers included — the rail counts settings only.');
     h += facetGroup('Setting type', 'type', TYPE_FILTERS.map(function (t) {
       return { id: t.id, label: t.label, n: null };
     }), f.type);
@@ -1573,8 +1578,9 @@
     return s === 'az' ? 'A to Z' : (s === 'changed' ? 'Changed first' : 'Inventory order');
   }
 
-  function facetGroup(title, group, items, active) {
+  function facetGroup(title, group, items, active, note) {
     var h = '<div class="c07-facet-group"><h4>' + esc(title) + '</h4>';
+    if (note) h += '<p class="c07-facet-note">' + esc(note) + '</p>';
     items.forEach(function (it) {
       if (it.n === 0 && group === 'state') return;
       h += '<button type="button" class="c07-facet" data-act="facet" data-group="' + esc(group) + '" data-val="' + esc(it.id) + '" ' +
@@ -1913,10 +1919,16 @@
     var hasDetail = it.detail && Object.keys(obj(it.detail)).length;
     var h = '<div class="c07-item" data-item-id="' + esc(it.id) + '"' +
       (it.settingId ? ' data-setting-id="' + esc(it.settingId) + '"' : '') + '>';
+    /* name · lede · status travel together as one head group, so an over-long
+       lede wraps INSIDE the group (tight row-gap, still obviously the name's
+       sentence) instead of being pushed onto its own flex line and stranding
+       the name — and the side keeps its baseline on the name's line. */
+    h += '<span class="c07-item-head">';
     h += '<span class="c07-item-label">' + esc(it.label) + '</span>';
     if (it.sub) h += '<span class="c07-item-sub">' + esc(it.sub) + '</span>';
     if (val != null) h += '<span class="c07-item-val">' + esc(String(val)) + '</span>';
     if (it.status) h += statusWordHtml(it.status);
+    h += '</span>';
     h += '<span class="c07-item-side">';
     if (it.flags) h += flagsHtml(it.flags);
     if (hasDetail) {
@@ -2102,8 +2114,8 @@
     arr(sec.conflicts).forEach(function (c) {
       /* human label first; the raw id only when the row is unknown */
       var rec = c.settingId ? invRow(c.settingId) : null;
-      h += '<div class="c07-item"><span class="c07-item-label">' + esc(rec ? rec.label : (c.settingId || '')) + '</span>' +
-        '<span class="c07-item-val">' + esc(valueText(c.local)) + ' here · ' + esc(valueText(c.incoming)) + ' incoming</span>' +
+      h += '<div class="c07-item"><span class="c07-item-head"><span class="c07-item-label">' + esc(rec ? rec.label : (c.settingId || '')) + '</span>' +
+        '<span class="c07-item-val">' + esc(valueText(c.local)) + ' here · ' + esc(valueText(c.incoming)) + ' incoming</span></span>' +
         (c.dest ? '<span class="c07-item-side"><button type="button" class="c07-item-open" data-act="nav" data-dest="' + attr(c.dest) + '">' + ico('external') + '</button></span>' : '') +
         (c.note ? '<span class="c07-item-note">' + esc(String(c.note)) + '</span>' : '') + '</div>';
     });

@@ -586,7 +586,13 @@
 .c11-tile {
   display: flex;
   align-items: flex-start;
-  flex-wrap: wrap;      /* lets the meta drop to its own line when cramped */
+  flex-wrap: wrap;      /* the meta always takes a line of its own */
+  /* Pack the wrapped lines at the top of the card. The grid equalises row
+     heights, and with the default `align-content: stretch` the leftover height
+     was injected BETWEEN the title line and the counts line, so a short tile
+     sharing a row with a taller one pushed its own counts 44px away from its
+     title while its neighbour's sat 15px under it. */
+  align-content: flex-start;
   gap: 5px 11px;
   padding: 12px 14px;
   border: var(--border-width) solid var(--border-light);
@@ -614,9 +620,9 @@
   background: var(--surface-elevated);
 }
 .c11-tile-ico i[data-ico] { width: 18px; height: 18px; }
-/* a small flex-basis (not auto) keeps the wrapping tile on one line at the wide
-   widths: the hypothetical main size stays well inside the card, so only the
-   deliberate 100% meta basis can force a second line */
+/* a small flex-basis (not auto) keeps the title row itself on one flex line:
+   the hypothetical main size stays well inside the card, so the only things
+   that take lines of their own are the two deliberate 100% bases below */
 .c11-tile-main { flex: 1 1 120px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 /* the title is the only run that can out-measure its column; break-word is the
    last-resort guard that keeps a long word inside the box instead of letting it
@@ -628,7 +634,10 @@
    mid-word and lost the point of the sentence. Across the whole card the
    measure is ~285px at the 1280 three-column grid, so every one of the twelve
    inventory descriptions (longest 69 characters) finishes inside two lines. */
+/* Reading order is title -> description -> counts at every card width; both
+   rows take the full card measure (see .c11-tile-meta). */
 .c11-tile-desc {
+  order: 2;
   flex: 1 0 100%;
   min-width: 0;
   padding-left: 45px;   /* 34px icon + 11px flex gap */
@@ -639,50 +648,45 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* The counts sit on their own full-width row under the description, never in a
+   nowrap column beside the title. Side by side, a 330px card (the 1280 grid)
+   left "Planning & Verification" a 149px measure and broke it across two lines
+   with a stranded ampersand, and the counts read before the sentence that
+   explains them. On their own row the title keeps the whole card measure at
+   every width the concept can produce. */
 .c11-tile-meta {
-  flex: 0 0 auto;
+  order: 3;
+  flex: 1 0 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-  font-size: var(--fs-2xs);
-  color: var(--text-muted);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px 8px;
+  padding-left: 45px;   /* 34px icon + 11px flex gap: aligns under the title */
+  /* Size and weight, not just colour: at --fs-2xs (10px) the Quicksand faces
+     never inked a full stem (measured peak coverage alpha 0.81), so "95 · 4
+     changed" rendered at 2.6-3.8:1 while its token computes 5.9:1. 12px/600 on
+     --text-secondary puts the stems on the token colour in every theme. */
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 .c11-tile-tab {
-  border: 1px dashed var(--border-light);
+  border: 1px dashed var(--border);
   border-radius: var(--radius-pill);
   padding: 0 7px;
-  line-height: 1.7;
+  line-height: 1.6;
+  white-space: nowrap;
 }
 
-/* Stack the meta under the title as soon as the CARD is cramped, not merely
-   when the whole stage is narrow: the grid is auto-fill minmax(280px,1fr), so
-   columns land anywhere between ~280px and ~360px, and below ~340px the
-   nowrap meta column starves the title into three and four line breaks with a
-   stranded ampersand. A container query tracks the real card width, so the
-   layout switches continuously instead of at one stage breakpoint. The
-   .is-narrow rules below repeat these declarations at higher specificity so
-   the fix survives even where container queries are unsupported. */
-.c11-tile { container-type: inline-size; }
-@container (max-width: 310px) {   /* 310px of CONTENT box = a ~338px card */
-  .c11-tile-main { flex: 1 1 120px; }
-  /* Once the meta drops to a row of its own it would otherwise sit between the
-     title and the sentence that explains it. Order keeps the reading order
-     title -> description -> counts at every card width. */
-  .c11-tile-desc { order: 2; }
-  .c11-tile-meta {
-    order: 3;
-    flex: 1 0 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 4px 8px;
-    padding-left: 45px;   /* 34px icon + 11px flex gap: aligns under the title */
-  }
-  .c11-tile-tab { white-space: nowrap; }
-}
+/* One card layout at every width. The earlier container query kept a
+   side-by-side branch for cards wider than 310px of content, which meant the
+   1280 grid (330px content) still ran the starved-title branch it was written
+   to prevent while the NARROWER cards of 1700+ stacked correctly. The stacked
+   arrangement is now unconditional, so nothing depends on where the grid
+   happens to land. */
 
 .c11-home-cols {
   display: grid;
@@ -1098,6 +1102,11 @@
 .c11-line-value { flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; }
 .c11-line-note { flex: 1 1 100%; font-size: var(--fs-xs); color: var(--text-muted); }
 .c11-line .c11-jump { position: absolute; right: 5px; top: 4px; }
+/* "Needs attention" rows carry a real status WORD beside the sentence, so the
+   word gets its own narrow column and the prose starts on a common left edge.
+   (The underline/weight/colour treatment is the word's alone — the sentence in
+   .c11-line-value stays plain text.) */
+.c11-msec[data-section="attention"] .c11-line > .pm-status-word { flex: 0 0 78px; }
 
 .c11-whatnext {
   margin-top: 10px;
@@ -1236,7 +1245,13 @@
 .c11-provcard-top { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
 .c11-provcard-top b { font-weight: 700; font-size: var(--fs-md); }
 .c11-provcard-line { font-size: var(--fs-xs); color: var(--text-secondary); }
-.c11-provcard-quiet { color: var(--text-muted); }
+/* Each answer is introduced by its own key. Inline (rather than a label
+   column) because the grid floor is a 270px card: a two-column key/value
+   layout would wrap both halves, while the bold key + colon pairs the value
+   with its question in one flowing line at every card width. */
+.c11-provcard-key { font-weight: 700; }
+.c11-provcard-val { font-weight: 400; }
+.c11-provcard-note { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 2px; }
 
 .c11-providers { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 20px; }
 .c11-prov-roster {
@@ -1590,17 +1605,29 @@
 .c11-root.is-narrow .c11-searchwrap { order: 3; flex: 1 1 100%; max-width: none; }
 .c11-root.is-narrow .c11-role { display: none; }
 .c11-root.is-narrow .c11-home-cols { grid-template-columns: minmax(0, 1fr); }
-/* narrow: attention entries become simple stacked full-width cards — the wide
-   row (fixed status column + no-wrap flex) crushed the text at these widths */
+/* narrow: the attention list stays a COMPACT list. The previous rule stacked
+   the status word, headline, consequence and Open button on four separate
+   lines, which grew every entry to ~118px; three of them then took ~63% of the
+   first screen at 760/900 and pushed the destination grid — the dominant
+   surface by contract — below the fold. A three-column grid keeps the word,
+   the headline and the action on one line with the consequence under the
+   headline, at roughly half the height, without dropping any of the four
+   parts. (The wide row's fixed 92px status column is what could not survive
+   these widths, so the word column is intrinsic here.) */
 .c11-root.is-narrow .c11-attn-item {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  padding: 10px 12px;
+  display: grid;
+  /* the same 92px word column the wide row uses, so a headline starts at the
+     same offset at every width and long words ("Needs attention") wrap the
+     same way they already do wide */
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 9px;
+  row-gap: 1px;
+  padding: 7px 10px;
 }
-.c11-root.is-narrow .c11-attn-item > .pm-status-word { flex: 0 0 auto; }
-.c11-root.is-narrow .c11-attn-main { width: 100%; flex: 0 0 auto; }
-.c11-root.is-narrow .c11-attn-item > .c11-btn { align-self: flex-start; }
+.c11-root.is-narrow .c11-attn-item > .pm-status-word { grid-column: 1; grid-row: 1; flex: 0 0 auto; }
+.c11-root.is-narrow .c11-attn-main { grid-column: 2; grid-row: 1; width: auto; }
+.c11-root.is-narrow .c11-attn-item > .c11-btn { grid-column: 3; grid-row: 1; align-self: center; }
 .c11-root.is-narrow .c11-copy-panes { grid-template-columns: minmax(0, 1fr); }
 .c11-root.is-narrow .c11-providers { grid-template-columns: minmax(0, 1fr); }
 .c11-root.is-narrow .c11-prov-roster {
@@ -1611,25 +1638,8 @@
 .c11-root.is-narrow .c11-dom-counts { display: none; }
 .c11-root.is-narrow .c11-tile-desc { display: none; }
 .c11-root.is-narrow .c11-tilegrid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
-/* narrow tiles: the count/tab meta drops to its own line under the title.
-   Side by side it took ~40% of a 250px column and left the title a ~65px
-   measure — enough to strand the ampersand on its own line and, for the
-   longest words, to overrun the meta outright. Stacked, the title keeps the
-   full card measure and the meta stays right where the eye expects it. */
-.c11-root.is-narrow .c11-tile { flex-wrap: wrap; row-gap: 5px; }
-.c11-root.is-narrow .c11-tile-main { flex: 1 1 120px; }
-.c11-root.is-narrow .c11-tile-desc { order: 2; }
-.c11-root.is-narrow .c11-tile-meta {
-  order: 3;
-  flex: 1 0 100%;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px 8px;
-  padding-left: 45px;   /* 34px icon + 11px flex gap: aligns under the title */
-}
-.c11-root.is-narrow .c11-tile-tab { white-space: nowrap; }
+/* narrow tiles: the stacked title/description/counts arrangement is the base
+   layout now, so narrow only drops the description and tightens the grid. */
 
 .c11-root.is-tight .c11-baracts .c11-btn span { display: none; }
 .c11-root.is-tight .c11-bar, .c11-root.is-tight .c11-tabrow,
@@ -1637,7 +1647,10 @@
 .c11-root.is-tight .c11-refresh, .c11-root.is-tight .c11-ops { padding-left: 12px; padding-right: 12px; }
 .c11-root.is-tight .c11-sheaf { padding-left: 12px; padding-right: 12px; }
 .c11-root.is-tight .c11-tab { padding: 7px 11px 8px; font-size: var(--fs-xs); }
-.c11-root.is-tight .c11-more span { display: none; }
+/* The More control keeps its word at every width: the Categories sentence
+   ("...and More lists every one") names it, and fitTabs() already measures the
+   button's real width before deciding how many tabs fit, so the label costs a
+   tab from the strip — which the menu lists — rather than any overflow. */
 .c11-root.is-tight .c11-tabrow.has-fade-r::after { right: 54px; }
 .c11-root.is-tight .c11-row-side { margin-left: 0; flex-wrap: wrap; }
 .c11-root.is-tight .c11-diff { grid-template-columns: minmax(0, 1fr); }

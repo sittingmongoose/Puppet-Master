@@ -1148,8 +1148,13 @@
       h += '<div class="c06-actions' + rise() + '">';
       actions.forEach(function (a) {
         if (a.available === false) {
-          h += '<span><button type="button" class="c06-action-link" disabled>' + esc(a.label) + '</button>' +
-               (a.reason ? ' <span class="c06-action-reason">' + esc(a.reason) + '</span>' : '') + '</span>';
+          /* The disabled action and its reason are one block (see
+             .c06-action-unavail): the wrapper used to be a bare <span>, so the
+             reason wrapped flush with the action-link column and read as
+             another link. */
+          h += '<span class="c06-action-unavail"><button type="button" class="c06-action-link" disabled>' +
+               esc(a.label) + '</button>' +
+               (a.reason ? '<span class="c06-action-reason">' + esc(a.reason) + '</span>' : '') + '</span>';
         } else {
           h += '<button type="button" class="c06-action-link" data-act="mgr-action" data-mgr="' + esc(def.id) +
                '" data-action-id="' + esc(a.id) + '" data-item-id="' + esc(a.id) + '">' + esc(a.label) + '</button>';

@@ -574,8 +574,13 @@
     var h = '<header class="c09-head">';
     h += '<div class="c09-head-row">';
     if (back) {
+      /* One label span (so the button's flex gap never lands mid-phrase) with
+         the qualifier nested inside it, so the narrow head can drop
+         ' to <chapter>' visually while the full label stays in the
+         accessibility tree (see the is-narrow block in the stylesheet). */
       h += '<button class="c09-back" data-act="back" data-pm2-back>' + ico('undo') +
-        '<span>Back to ' + esc(back.label) + '</span></button>';
+        '<span class="c09-back-label">Back' +
+        '<span class="c09-back-to"> to ' + esc(back.label) + '</span></span></button>';
     }
     h += breadcrumbHtml(layer);
     h += '<span class="c09-head-flex"></span>';
@@ -1659,13 +1664,17 @@
     var secs = arr(vm.sections);
     var h = '';
     if (secs.length > 1) {
-      h += '<div class="c09-mtabs" role="tablist" aria-label="' + esc(def.title) + ' sections">';
+      /* Every section below is on this same page, so this row jumps, it does
+         not switch panes. It is a nav with aria-current, not a tablist with a
+         selected tab that echoed the heading right beneath it. */
+      h += '<nav class="c09-jumpbar" aria-label="Jump to a section of ' + esc(def.title) + '">' +
+        '<span class="c09-jumpbar-lead">Jump to</span>';
       secs.forEach(function (sec, i) {
-        h += '<button class="c09-mtab" role="tab" data-jump-section="' + esc(sec.id) + '"' +
-          (i === 0 ? ' aria-selected="true"' : ' aria-selected="false"') + '>' +
+        h += '<button class="c09-jump" data-jump-section="' + esc(sec.id) + '"' +
+          (i === 0 ? ' aria-current="true"' : '') + '>' +
           esc(tabLabel(sec.id, sec)) + '</button>';
       });
-      h += '</div>';
+      h += '</nav>';
     }
     secs.forEach(function (sec) {
       var advanced = sec.advanced === true;
@@ -2068,13 +2077,14 @@
         } catch (e) { /* router optional */ }
         return;
       }
-      t = ev.target.closest('.c09-mtab[data-jump-section]');
+      t = ev.target.closest('.c09-jump[data-jump-section]');
       if (t) {
         var sel = t.getAttribute('data-jump-section');
         var sec = page.querySelector('[data-section="' + sel + '"]');
-        var tabs = page.querySelectorAll('.c09-mtab[data-jump-section]');
-        for (var i = 0; i < tabs.length; i++) {
-          tabs[i].setAttribute('aria-selected', tabs[i] === t ? 'true' : 'false');
+        var jumps = page.querySelectorAll('.c09-jump[data-jump-section]');
+        for (var i = 0; i < jumps.length; i++) {
+          if (jumps[i] === t) { jumps[i].setAttribute('aria-current', 'true'); }
+          else { jumps[i].removeAttribute('aria-current'); }
         }
         if (sec) { sec.scrollIntoView({ block: 'start', behavior: motionOK() ? 'smooth' : 'auto' }); }
         return;
@@ -2324,6 +2334,26 @@
       scrollPending = true;
       window.requestAnimationFrame(function () { scrollPending = false; paintWindow(false); });
     }, { passive: true });
+
+    /* paintWindow sizes the row window from viewport.clientHeight, and scroll
+       was its only trigger - so any height change (narrow/wide flip, window
+       resize, the chat panel opening) left a window sized for the OLD height
+       until the next scroll, showing blank sheet below the painted rows. Repaint
+       whenever the viewport's own height actually changes. The spacers live
+       inside the viewport and cannot feed back into its flex-sized height, so
+       this cannot loop. */
+    if (typeof window.ResizeObserver === 'function') {
+      var lastVh = viewport.clientHeight;
+      var vhPending = false;
+      var vpRo = new window.ResizeObserver(function () {
+        var vh = viewport.clientHeight;
+        if (vh === lastVh || vhPending) { return; }
+        lastVh = vh;
+        vhPending = true;
+        window.requestAnimationFrame(function () { vhPending = false; paintWindow(true); });
+      });
+      vpRo.observe(viewport);
+    }
 
     var qDeb = null;
     page.querySelector('.c09-facet-q').addEventListener('input', function (ev) {
@@ -2947,6 +2977,10 @@
       if (narrow !== ui.narrow) {
         ui.narrow = narrow;
         rootEl.classList.toggle('is-narrow', narrow);
+        /* Narrow is the only mode where the shell stage is the scroller, and
+           the fixed States dot floats over its bottom-right corner. The
+           stylesheet shortens that viewport off this class. */
+        if (stage && stage.classList) { stage.classList.toggle('c09-stage-narrow', narrow); }
         applyStackClasses();
       }
       updateSpineFade();
