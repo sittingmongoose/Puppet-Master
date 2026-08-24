@@ -335,7 +335,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderWorkingAnimation(){
     const v=state.variants[2], step=workStep(), pct=Math.round((state.work.step/(D.workSteps.length-1))*100);
     const co=CHROME_OPTS[v]||{}, ctx=makeWorkCtx(step,pct), shut=state.work.completed&&state.work.openPhase==null;
-    return `<article class="working-card working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-k="workcard"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${state.work.completed?'Completed work':'Working'}</strong><span class="sub"> · ${esc(step.label)} · ${formatElapsed(state.work.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${state.work.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset to Preparing">${icon('reset',13)}</button><button class="icon-button ${state.work.expanded?'active':''}" data-action="toggle-work-history" title="${state.work.expanded?'Hide':'Show'} organized work history and evidence">${icon(state.work.expanded?'collapse':'expand',13)}</button></div></div><div class="working-body" data-flip data-k="wv:${v}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct)}${renderLiveAgentInline(step)}${state.work.expanded?renderWorkHistory():''}</div></article>`;
+    return `<article class="working-card ${state.work.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-k="workcard"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${state.work.completed?'Completed work':'Working'}</strong><span class="sub"> · ${formatElapsed(state.work.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${state.work.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset to Preparing">${icon('reset',13)}</button><button class="icon-button ${state.work.expanded?'active':''}" data-action="toggle-work-history" title="${state.work.expanded?'Hide':'Show'} organized work history and evidence">${icon(state.work.expanded?'collapse':'expand',13)}</button></div></div><div class="working-body" data-flip data-k="wv:${v}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct)}${renderLiveAgentInline(step)}${state.work.expanded?renderWorkHistory():''}</div></article>`;
   }
 
   /* Everything a working-animation take needs, so takes can live outside
@@ -397,12 +397,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const act=completed?` data-action="toggle-work-phase" data-value="${g.phase}"`:'';
       return `<button type="button" class="${cls}" data-k="wa:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,11)}</button>`;
     }).join('');
-    const rowsFor=(s)=>{
+    /* `off` continues the entrance cascade across the steps of one opened
+       phase, so rows always land top-to-bottom in document order. */
+    const rowsFor=(s,off=0)=>{
       const rows=(D.phaseRows[s.kind]&&D.phaseRows[s.kind][s.id])||s.evidence.slice(0,3).map(t=>({text:t}));
+      let w=off;
       return rows.map((r,j)=>{
-        const body=r.stream?`<span class="wa-prose pm-stream">${M.words(r.text)}</span>`:`<span class="wa-rowtext">${esc(r.text)}</span>`;
+        const body=r.stream?`<span class="wa-prose pm-stream">${M.words(r.text,w)}</span>`:`<span class="wa-rowtext">${esc(r.text)}</span>`;
+        if(r.stream)w+=M.wordCount(r.text);
         const metaBit=r.add!=null?`<span class="wa-meta"><b class="wa-add">+${r.add}</b>${r.del!=null?` <b class="wa-del">−${r.del}</b>`:''}</span>`:r.tag?`<span class="wa-meta"><b class="wa-tag">${esc(r.tag)}</b></span>`:'';
-        return `<span class="wa-row pm-materialize" data-k="war:${s.id}:${j}" style="--pm-stagger:${j}">${body}${metaBit}</span>`;
+        return `<span class="wa-row pm-materialize" data-k="war:${s.id}:${j}" style="--pm-stagger:${off+j}">${body}${metaBit}</span>`;
       }).join('');
     };
     let label;
@@ -420,8 +424,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(shut){ under=`<div class="wa-under wa-shut" data-k="wau">${ctx.workReceipt()}</div>`; }
     else if(!opts.noRows){
       const g=open?phases.find(x=>x.phase===open):null;
-      const rows=(g?g.steps:[step]).map(rowsFor).join('');
-      under=`<div class="wa-under pm-rows" data-k="wau:${open||'live'}">${rows}</div>`;
+      let off=0;const rows=(g?g.steps:[step]).map(st=>{const h=rowsFor(st,off);off+=((D.phaseRows[st.kind]&&D.phaseRows[st.kind][st.id])||st.evidence.slice(0,3)).length;return h;}).join('');
+      under=`<div class="wa-under pm-rows pm-materialize" data-k="wau:${open||cur.phase}">${rows}</div>`;
     }
     return `<div class="wa-chrome" data-k="wac"><div class="wa-head" data-k="wah"><span class="pm-rail wa-track" data-k="wat">${trail}</span><span class="wa-label" data-k="wal">${label}</span><span class="wa-spacer"></span>${chev}</div>${under}</div>`;
   }
@@ -464,7 +468,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          does not interpolate, so it jumped. */
       const tools=Math.min(14,Math.max(0,state.work.step)); const files=Math.min(3,Math.floor(state.work.step/3)); const agents=state.work.step>=7?Math.min(2,state.work.step-6):0; const tests=state.work.step>=10?(state.work.step-9)*7:0;
       const cells=[['Elapsed',formatElapsed(state.work.elapsed)],['Tools',tools],['Files',files],['Agents',agents],['Tests',Math.min(42,tests)],['Evidence',Math.min(18,state.work.step+1)],['p95',`${Math.max(71,482-state.work.step*32)} ms`],['State',state.work.completed?'Ready':step.label]];
-      return `<div class="receipt-stage" data-k="receipt">${cells.map(([k,val],i)=>`<div class="receipt-metric pm-materialize" style="--pm-stagger:${i}" data-k="metric:${k}"><label>${esc(k)}</label><strong>${M.roll(val)}</strong></div>`).join('')}<div class="receipt-building" data-k="building"><span class="work-phase-icon" data-k="ricon:${step.id}">${icon(step.icon,13)}</span><div class="receipt-copy"><div class="work-verb${state.work.running?' pm-shimmer':''}">${esc(step.verb)}</div><div class="work-detail">The completion receipt is assembling as evidence arrives.</div></div><span class="receipt-bar" data-k="rbar"><i style="width:${pct}%"></i></span></div></div>`;
+      return `<div class="receipt-stage" data-k="receipt">${cells.map(([k,val],i)=>`<div class="receipt-metric ${k==='State'?'rc-state':''} pm-materialize" style="--pm-stagger:${i}" data-k="metric:${k}"><label>${esc(k)}</label><strong>${M.roll(val)}</strong></div>`).join('')}<div class="receipt-building" data-k="building"><span class="work-phase-icon" data-k="ricon:${step.id}">${icon(step.icon,13)}</span><div class="receipt-copy"><div class="work-verb${state.work.running?' pm-shimmer':''}">${esc(step.verb)}</div><div class="work-detail">The completion receipt is assembling as evidence arrives.</div></div><span class="receipt-bar" data-k="rbar"><i style="width:${pct}%"></i></span></div></div>`;
     }
     if(v===5){
       /* The panels hand off: what was the current operation becomes Next,

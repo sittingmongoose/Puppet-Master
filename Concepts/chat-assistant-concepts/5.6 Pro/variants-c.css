@@ -36,7 +36,7 @@
 .working-variant-19 .c19-star.current{fill:var(--pm-step,var(--accent))}
 .working-variant-19 .c19-seg{stroke:color-mix(in srgb,var(--pm-step,var(--accent)) 40%,var(--border));stroke-width:1;stroke-dasharray:1;animation:c19-ink var(--pm-t-panel) var(--pm-ease-out) both}
 .working-variant-19 .c19-halo{fill:none;stroke:var(--pm-step,var(--accent));stroke-width:1;animation:c19-halo 1.6s var(--pm-ease-out) infinite}
-@keyframes c19-pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes c19-pop{from{transform:scale(.3)}to{transform:scale(1)}}
 @keyframes c19-ink{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 @keyframes c19-halo{0%{r:4;opacity:.9}100%{r:11;opacity:0}}
 
@@ -61,10 +61,10 @@
 .working-variant-21 .c21-strip::after{bottom:2px}
 .working-variant-21 .c21-reel{display:flex;gap:4px;height:100%;padding:12px 0;margin-left:50%;transition:transform var(--pm-t-panel) var(--pm-ease-out);will-change:transform}
 .working-variant-21 .c21-frame{flex:0 0 54px;height:54px;border-radius:5px;border:1px solid #23272f;background:#15181e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#3c424d}
-.working-variant-21 .c21-frame u{text-decoration:none;font-size:8.5px;letter-spacing:.04em}
+.working-variant-21 .c21-frame u{text-decoration:none;font-size:10px;letter-spacing:.04em}
 .working-variant-21 .c21-frame.done{color:#8a93a3;background:#1b1f27}
 .working-variant-21 .c21-frame.current{color:var(--pm-step,var(--accent));border-color:color-mix(in srgb,var(--pm-step,var(--accent)) 60%,#23272f);animation:c21-develop 600ms var(--pm-ease-out) both}
-@keyframes c21-develop{from{filter:blur(3px) saturate(.4);opacity:.6}to{filter:blur(0) saturate(1);opacity:1}}
+@keyframes c21-develop{from{filter:blur(3px) saturate(.4)}to{filter:blur(0) saturate(1)}}
 
 /* 22 — Sonar ------------------------------------------------------------------------ */
 .working-variant-22 .c22-body{display:flex;align-items:center;gap:14px}
@@ -81,7 +81,7 @@
 @keyframes c22-ring{0%{transform:scale(.2);opacity:.9}100%{transform:scale(1);opacity:0}}
 @keyframes c22-sweep{to{transform:rotate(360deg)}}
 @keyframes c22-blip{0%,100%{opacity:1}50%{opacity:.35}}
-
+.working-variant-22 .c22-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:10.5px;color:var(--text);display:block;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
 /* 23 — Circuit --------------------------------------------------------------------------- */
 .working-variant-23 .c23-body{display:flex;flex-direction:column;gap:2px}
 .working-variant-23 .c23-base{stroke:var(--surface-4);stroke-width:2}
