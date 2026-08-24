@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.r10.app_probe_push_custody.v1",
+  "run_id": "r10-codex-app-canary-004",
+  "recorded_at_utc": "2026-08-24T23:59:12Z",
+  "branch": "main",
+  "candidate_commit": "cb3d549850e99a872a0b684861c110324c018098",
+  "candidate_commit_message": "test(r10): freeze simple native-goal app probe",
+  "push_destinations": [
+    "https://github.com/sittingmongoose/Puppet-Master.git",
+    "ssh://192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git"
+  ],
+  "remote_heads_after_candidate_push": {
+    "origin_main": "cb3d549850e99a872a0b684861c110324c018098",
+    "truenas_backup_main": "cb3d549850e99a872a0b684861c110324c018098"
+  },
+  "predecessor_status": "quiescent",
+  "r10_reviewers_status": "quiescent",
+  "designated_evidence_absent": true,
+  "subject_calls": 0,
+  "omp_calls": 0,
+  "qualification_credit": 0,
+  "nonclaim": "This records durable candidate custody only; it is not empirical, readiness, safety, or qualification evidence."
+}

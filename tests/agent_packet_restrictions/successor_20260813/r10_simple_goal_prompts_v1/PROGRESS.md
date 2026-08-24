@@ -329,3 +329,15 @@ The reminder above is reread and quoted at least every 30 minutes of active work
 - Files or surface removed: no additional surface at this check. The combined adapter/selftest remains 42.07% smaller than the pre-reset pair, and the removed controller proof machinery remains absent.
 - Next disconfirming test: after exact scoped commit and dual push, fresh medium and xhigh reviewers must compare every launch input to the pushed blobs and rerun zero-subject gates. Only pushed-byte PASS may authorize one permanent reservation and one exact `create_thread`; any runtime mismatch consumes Canary 004 at zero credit.
 - Classification: PROGRESS. Stable local bytes have passed independent mechanical and architecture review after concrete falsification repairs. This authorizes only a scoped durability checkpoint and pushed-byte audit, not an empirical launch or qualification claim.
+
+## Check 027 — 2026-08-24T23:59:12Z — candidate commit and dual-push custody
+
+- Reminder reread: Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography.
+- Current hypothesis: unchanged and not yet launched. Exact pushed-byte custody is now available for independent prelaunch review of the simple top-level app diagnostic.
+- Smallest changed invariant: no launch/scorer input changed after local freeze. Commit `cb3d549850e99a872a0b684861c110324c018098` contains the frozen candidate; both configured push destinations report that exact `main` head. This checkpoint adds custody records only.
+- New evidence: `git push origin main` advanced GitHub and the TrueNAS push URL from `3501652742070d5e853f6c9ec423b75cc738f47d` to `cb3d549850e99a872a0b684861c110324c018098`; independent `ls-remote` reads returned the candidate hash for both `origin/main` and `truenas-backup/main`. All reviewers and Git mutation processes were quiescent before staging. Only 11 R10-owned files under the exclusive root were staged and committed. Canary 004 evidence, subject, and OMP calls remain zero.
+- Deepest valid product-relevant point: durable custody makes the candidate independently reopenable; it still does not show that the weak worker uses native Goal. Runtime evidence remains the next disconfirming gate.
+- Files or surface added: `canary_004/PUSH_CUSTODY.json` and this custody checkpoint under the exclusive root. No frozen launch/scorer byte, subject, evidence, Plan, ledger, production, predecessor, or OMP surface changed.
+- Files or surface removed: none.
+- Next disconfirming test: fresh pushed-byte mechanical and xhigh auditors must compare the final `HEAD`, both remote heads, every frozen blob, manifest/commitment, prompt/request, scorer, evidence absence, and zero-subject tests. Only unanimous PASS may authorize the permanent reservation and exact app create call.
+- Classification: PROGRESS. Candidate custody is exact and durable, but remains zero-subject prelaunch evidence with zero qualification credit.
