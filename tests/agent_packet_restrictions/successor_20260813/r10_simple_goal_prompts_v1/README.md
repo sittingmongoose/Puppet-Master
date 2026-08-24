@@ -16,27 +16,14 @@ Disposable empirical qualification lane for the bounded-context architecture tha
 - A fresh OMP test taker receives exactly one prompt beginning `/goal ...`.
 - The same prompt carries only the bounded objective, admitted context, constraints, and typed output contract.
 - Goal activation, in-Goal work, and terminal state are observed afterward; lifecycle choreography is not sent to the subject.
-- Canary 001 attempted the preserved three Codex routes but was rejected by provider schema admission before inference and remains permanently 0/3. Canary 002 reached inference on alpha and returned the exact semantic result but never activated Goal; it remains permanently failed, and fail-stop left its suffix unlaunched. Canary 003 is a fresh one-row, zero-credit diagnostic that removes only provider-side output-schema attachment while retaining the inline/external schema and exact host validation. A Windows-native OMP conformance canary remains a hard gate after the Codex vertical slice, and OMP must be present in the frozen full-matrix route set.
+- Canary 001 attempted the preserved three Codex routes but was rejected by provider schema admission before inference and remains permanently 0/3. Canary 002 reached inference on alpha and returned the exact semantic result but never activated Goal; it remains permanently failed, and fail-stop left its suffix unlaunched. Canary 003 removed provider-side output-schema attachment and repeated the same zero-Goal direct answer, permanently falsifying that interaction hypothesis. Canary 004 is the next zero-credit vertical slice: one fresh top-level Codex Desktop app task, one ordinary bounded prompt, and no follow-up. A Windows-native OMP TUI conformance canary remains a hard gate after the Codex vertical slice, and OMP must be present in the frozen full-matrix route set.
 
 See `PROGRESS.md` for alignment/churn checkpoints and `CUSTODY.json` for the initial repository boundary.
 
-## Canary execution boundary
+## Active app-task execution boundary
 
-The successor runner performs a zero-subject atomic preflight and refuses launch unless every input is an exact blob in pushed `main` with `HEAD == origin/main`. Canary 003 has one row; its frozen verifier must still emit an immutable prefix-PASS gate before final acceptance:
+Canary 004 replaces the consumed headless runner with a small app-surface adapter. Before launch it verifies the detached commitment, prompt compilation, oracle/schema join, exact pushed blobs, exact saved-project binding, unique title/nonce, and absence of the single designated evidence leaf. It atomically reserves that leaf, snapshots all launch/scorer inputs, preserves the current parent-rollout prefix, and writes the exact structured `create_thread` request. The reservation is the permanent one-shot consumption fence and is never removed or reused after a creation or capture error. The relative higher-quality controller makes the exact create call once, may use up to eight child-bound `wait_threads` calls only for scheduling, makes one exact terminal `read_thread` call, and sends no follow-up message. Wait results are ignored as evidence: they do not prove progress, cursor continuity, Goal lifecycle, or completion.
 
-```text
-/usr/bin/python3 -B r10_runner.py \
-  --manifest canary_003/manifest.json \
-  --manifest-commitment canary_003/manifest.commitment.json \
-  --evidence-root canary_003/r10-codex-canary-003-evidence
-```
+The preserved parent suffix must contain exactly one successful structured create event with the frozen request, zero or more waits for the returned child/host, and one final successful structured read event with the exact terminal request; every other app event fails. Wait status and result content are ignored, so a failed scheduling wait does not become lifecycle evidence or invalidate an otherwise valid terminal capture. The adapter preserves the full parent capture and exact create/read results before parsing, then preserves two independent child-rollout reads before comparing them. It joins the app's idle, complete, no-omission newest-first turns to raw task intervals. Frozen-snapshot verification checks ordinary-user provenance, one exact external prompt, effective model/effort, a closed child record/event denominator, a positive capsule-bound Goal objective, one Goal identity with monotone active-to-complete state, one turn-ending final per native task interval, the sole canonical JSON in the latest interval, source uniqueness, and exact hidden-oracle equality. Its first terminal PASS or FAIL receipt is sticky; a later verifier invocation cannot relabel it. Parent records are faithful-but-unsigned host evidence, and the relative higher-quality controller is trusted for honest use of the reserved request. The parent projection does not independently prove absence of controller-local non-app actions; hostile, accidental, or fabricated deviation is a named residual outside this disposable diagnostic. Static preflight earns no empirical credit.
 
-After capture, verification must execute from the snapshotted verifier, not the live checkout:
-
-```text
-/usr/bin/python3 -B canary_003/r10-codex-canary-003-evidence/frozen_snapshot/r10_verify.py \
-  --evidence-root canary_003/r10-codex-canary-003-evidence \
-  --write-receipts
-```
-
-Neither command may be rerun against an existing evidence root. A failed or controller-invalid first attempt remains consumed and earns zero credit. Canary 001 and Canary 002 evidence are historical inputs to diagnosis only and are never launch inputs for Canary 003.
+Canaries 001–003 and their evidence remain historical diagnostic inputs only. Their identities and launch paths are never reused by Canary 004.

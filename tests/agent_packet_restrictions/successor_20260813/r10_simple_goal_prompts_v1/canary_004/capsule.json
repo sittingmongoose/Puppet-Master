@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.r10.prompt_capsule.v1",
+  "profile_id": "r10-simple-4k-v1",
+  "unit_id": "canary_evidence_04",
+  "workflow_family": "assurance",
+  "objective": "Decide whether the admitted evidence proves that an operation executed. Select the authoritative evidence rule and preserve the exact supporting source set in the typed result.",
+  "admitted_context": [
+    {
+      "source_id": "S5",
+      "authority": "fixture_fact",
+      "text": "Execution is established only by an observed runtime receipt that identifies the attempted operation and records its terminal outcome. A planning assertion is not runtime evidence.",
+      "utf8_bytes": 180,
+      "text_sha256": "4a378e978433ce459ef5ddfff13183d153f8a3ed534f649a7103b4fc4466abc9"
+    },
+    {
+      "source_id": "S6",
+      "authority": "source_lineage_only",
+      "text": "The planning note marks the operation finished.",
+      "utf8_bytes": 47,
+      "text_sha256": "ab588f8cb3448e0fec0b73e453b17be7296ab5659063657882ce44d701b68c1e"
+    }
+  ],
+  "constraints": [
+    {
+      "constraint_id": "C1",
+      "kind": "positive",
+      "text": "Use only admitted sources and cite only the source that supports the decision.",
+      "source_ids": ["S5", "S6"]
+    },
+    {
+      "constraint_id": "C2",
+      "kind": "negative",
+      "text": "Do not treat a planning assertion or lineage record as execution evidence.",
+      "source_ids": ["S5", "S6"]
+    }
+  ],
+  "output_contract": {
+    "schema_id": "pm.r10.canary_evidence_response.v1",
+    "schema_sha256": "816e0cc97569b65fdb83c1e83e381e8718d98591ca8b5ba5ceaa1c25cb71a488",
+    "inline_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_id", "selected_source_id", "execution_proven", "source_ids"],
+      "properties": {
+        "unit_id": {"type": "string", "enum": ["canary_evidence_04"]},
+        "selected_source_id": {"type": "string", "enum": ["S5", "S6"]},
+        "execution_proven": {"type": "boolean"},
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {"type": "string", "enum": ["S5", "S6"]}
+        }
+      }
+    }
+  },
+  "lineage": {"allowed_source_ids": ["S5", "S6"]}
+}
