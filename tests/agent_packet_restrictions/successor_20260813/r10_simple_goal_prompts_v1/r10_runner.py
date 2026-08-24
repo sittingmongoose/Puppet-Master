@@ -21,6 +21,7 @@ import jsonschema
 import r10_contract as contract
 
 ROOT = Path(__file__).resolve().parent
+CANARY_EVIDENCE_ROOT = (ROOT / "canary_003" / "r10-codex-canary-003-evidence").resolve()
 
 CANARY_ROSTER = {
     "alpha": ("gpt-5.4-mini", "xhigh"),
@@ -99,6 +100,12 @@ class PostPopenRunnerError(RunnerError):
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise RunnerError(message)
+
+
+def require_designated_evidence_root(path: Path) -> Path:
+    resolved = path.resolve()
+    require(resolved == CANARY_EVIDENCE_ROOT, "evidence root identity")
+    return resolved
 
 
 def identity_bytes(relative: str, raw: bytes) -> dict[str, Any]:
@@ -897,8 +904,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--evidence-root", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
-        evidence_root = args.evidence_root.resolve()
-        require(evidence_root == ROOT or ROOT in evidence_root.parents, "evidence outside R10")
+        evidence_root = require_designated_evidence_root(args.evidence_root)
         require(not evidence_root.exists(), "evidence root already exists")
 
         # Compile every route, scorer, byte binding, and runtime invariant before Popen.

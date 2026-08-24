@@ -432,6 +432,18 @@ def main() -> int:
 
     manifest = contract.load_json(ROOT / "canary_003" / "manifest.json")
     assert runner.validate_static_manifest(manifest) is None
+    designated_evidence = ROOT / "canary_003" / "r10-codex-canary-003-evidence"
+    assert runner.require_designated_evidence_root(designated_evidence) == designated_evidence.resolve()
+    assert verify.require_designated_evidence_root(designated_evidence) == designated_evidence.resolve()
+    alternate_evidence = ROOT / "canary_003" / "alternate-replay-evidence"
+    failures.append(expect_fail(
+        "runner-alternate-evidence-root",
+        lambda: runner.require_designated_evidence_root(alternate_evidence),
+    ))
+    failures.append(expect_fail(
+        "verifier-alternate-evidence-root",
+        lambda: verify.require_designated_evidence_root(alternate_evidence),
+    ))
     failures.append(expect_fail(
         "alternate-manifest-launch-path",
         lambda: runner.preflight_manifest(ROOT / "r10_selftest.py", ROOT / "canary_003" / "manifest.commitment.json"),
@@ -465,6 +477,13 @@ def main() -> int:
         "qualification_streak": 0,
     }
     assert verify.validate_capture_summary(partial_summary, manifest, summary_manifest_sha) is None
+
+    open_world_summary = copy.deepcopy(partial_summary)
+    open_world_summary["unexpected_unmodeled_field"] = True
+    failures.append(expect_fail(
+        "capture-summary-unknown-key",
+        lambda: verify.validate_capture_summary(open_world_summary, manifest, summary_manifest_sha),
+    ))
 
     bad_summary = copy.deepcopy(partial_summary)
     bad_summary["manifest_sha256"] = "d" * 64
@@ -776,7 +795,7 @@ def main() -> int:
 
     result = {
         "schema_id": "pm.r10.selftest.v1",
-        "checks": 99,
+        "checks": 104,
         "expected_failures": failures,
         "status": "PASS",
         "subject_calls": 0,

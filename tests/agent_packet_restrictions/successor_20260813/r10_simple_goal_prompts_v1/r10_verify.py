@@ -94,6 +94,31 @@ EXPECTED_PERMISSION_PROFILE = {
     },
     "network": "restricted",
 }
+CAPTURE_SUMMARY_KEYS = {
+    "schema_id",
+    "run_id",
+    "manifest_sha256",
+    "row_count",
+    "attempt_count",
+    "subject_launch_count",
+    "subject_launch_count_exact",
+    "subject_launch_lower_bound",
+    "capture_count",
+    "prefix_pass_count",
+    "attempted_row_ids",
+    "launched_row_ids",
+    "launch_lower_bound_row_ids",
+    "post_popen_failure_row_ids",
+    "captured_row_ids",
+    "prefix_passed_row_ids",
+    "unconsumed_row_ids",
+    "unconsumed_dispositions",
+    "prefix_gate_sha256_by_row",
+    "stop_reason",
+    "status",
+    "qualification_credit",
+    "qualification_streak",
+}
 
 JSON_STRING = r'"(?:\\.|[^"\\])*"'
 ASSIGNED_WRAPPER_PATTERNS = {
@@ -169,6 +194,14 @@ def prefix_failure_disposition(
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise VerifyError(message)
+
+
+def require_designated_evidence_root(path: Path) -> Path:
+    r10_root = (Path(EXPECTED_RUNTIME["repository"]) / R10_REPO_RELATIVE).resolve()
+    expected = (r10_root / "canary_003" / "r10-codex-canary-003-evidence").resolve()
+    resolved = path.resolve()
+    require(resolved == expected, "evidence root identity")
+    return resolved
 
 
 def require_blob_identity(
@@ -618,6 +651,7 @@ def validate_capture_summary(
     *,
     evidence: Path | None = None,
 ) -> None:
+    require(set(summary) == CAPTURE_SUMMARY_KEYS, "capture summary keys")
     require(summary.get("schema_id") == "pm.r10.run_capture_summary.v2", "capture summary schema")
     require(summary.get("run_id") == manifest["run_id"], "capture summary run identity")
     require(summary.get("manifest_sha256") == manifest_sha, "capture summary manifest identity")
@@ -1205,8 +1239,7 @@ def main(argv: list[str] | None = None) -> int:
         evidence = args.evidence_root.resolve()
         require(ROOT.name == "frozen_snapshot", "verifier must execute from the captured frozen snapshot")
         require(evidence == ROOT.parent and (evidence / "frozen_snapshot").resolve() == ROOT, "snapshot/evidence execution join")
-        r10_root = (Path(EXPECTED_RUNTIME["repository"]) / R10_REPO_RELATIVE).resolve()
-        require(evidence == r10_root or r10_root in evidence.parents, "evidence outside exclusive R10 root")
+        require_designated_evidence_root(evidence)
         require(Path(contract.__file__).resolve().parent == ROOT, "contract module not loaded from frozen snapshot")
         manifest, capture_summary, manifest_sha = load_snapshot_contract(
             evidence,
