@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.r10.run_manifest.v1",
+  "run_id": "r10-codex-canary-003",
+  "kind": "single_route_output_schema_diagnostic",
+  "status": "FROZEN_ZERO_CREDIT",
+  "created_at_utc": "2026-08-24T19:49:37Z",
+  "platform": "codex",
+  "profile_id": "r10-simple-4k-v1",
+  "attempts_per_row": 1,
+  "retry": false,
+  "replacement": false,
+  "best_of": 0,
+  "max_parallel": 1,
+  "qualification_credit": 0,
+  "qualification_streak": 0,
+  "codex_cli_version": "0.148.0",
+  "codex_binary": {
+    "path": "/home/sittingmongoose/.codex/packages/standalone/releases/0.148.0-x86_64-unknown-linux-musl/bin/codex",
+    "bytes": 251271488,
+    "sha256": "ac2cfed85fb647d61e0150b8548102b330e4799d9d81ad5d354de701edf6b074"
+  },
+  "runtime": {
+    "repository": "/mnt/Cursor/PuppetMaster",
+    "codex_home": "/home/sittingmongoose/.codex",
+    "timeout_seconds": 900,
+    "sandbox": "read-only",
+    "working_directory": "fresh_temporary_directory",
+    "temporary_root": "/tmp",
+    "stdin_submission_count": 1,
+    "strict_config": true,
+    "ignore_user_config": true,
+    "ignore_rules": true,
+    "environment": {
+      "CODEX_HOME": "/home/sittingmongoose/.codex",
+      "HOME": "/home/sittingmongoose",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "LOGNAME": "sittingmongoose",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "SHELL": "/bin/bash",
+      "USER": "sittingmongoose"
+    }
+  },
+  "controller_runtime": {
+    "python_executable": "/usr/bin/python3.13",
+    "python_version": "3.13.7",
+    "jsonschema_version": "4.19.2"
+  },
+  "oracle_path": "canary_003/oracle.json",
+  "frozen_files": [
+    {"path": "ARCHITECTURE.md", "utf8_bytes": 17403, "sha256": "29fd2b91e12724273a4c4786c52ac3b1c773584b32063bbc31fb9e5659126432"},
+    {"path": "prompt_capsule.schema.json", "utf8_bytes": 3703, "sha256": "dad312cf088d92770df68151ba85f2ef1321db703d66cdc974837a78d05987d4"},
+    {"path": "r10_contract.py", "utf8_bytes": 13275, "sha256": "c11439505c925eeddd12a6f12fcc1bf3789bfb92114c815785f5bd722d918306"},
+    {"path": "r10_runner.py", "utf8_bytes": 48837, "sha256": "d496444a6a269f7781c27ba67e93ea11b746d6ac6b187dda74a4de89897a123a"},
+    {"path": "r10_verify.py", "utf8_bytes": 73209, "sha256": "5094e5da098363a65518468c9bcfc778a9062e09cd5d72c09b6a751474653ac9"},
+    {"path": "r10_selftest.py", "utf8_bytes": 38076, "sha256": "7c71dd4698305f94ba7c3a1483804702c6bc3f9d31ba3bea64be523b39f8911d"},
+    {"path": "workflow_coverage.json", "utf8_bytes": 2590, "sha256": "08ab112b542ba2e258f9bbdb70d06eeb5e86f5fa8e9dde094748814b80618023"},
+    {"path": "canary_003/response.schema.json", "utf8_bytes": 550, "sha256": "874d3592a57b0dd9cdc44e92b0c10c0ebf49085980d33aa0413450a8a5e22564"},
+    {"path": "canary_003/capsule.json", "utf8_bytes": 2474, "sha256": "b1514656728fa7811294d4d0cee3bae784354c23620d30749b9321efa4d2e042"},
+    {"path": "canary_003/oracle.json", "utf8_bytes": 159, "sha256": "519c7da8a6465084bf2d5af0864e1e27c02f5f5dfba7473451bc63801a016deb"}
+  ],
+  "rows": [
+    {
+      "row_id": "row-alpha-003",
+      "route_id": "alpha",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "xhigh",
+      "nonce": "c6afbf62d2ffd14ae61648461b201b88",
+      "capsule_path": "canary_003/capsule.json",
+      "capsule_sha256": "14f445debbb6d96dd1438f37386744c773d81390885d855ebceac6de4159a8e5",
+      "response_schema_path": "canary_003/response.schema.json",
+      "submitted_user_prompt_utf8_bytes": 2179,
+      "submitted_user_prompt_sha256": "b572fe895f4263ba884ea80a772dcc47e4675de1f5f1eba1fc036788e1ad8a99"
+    }
+  ],
+  "acceptance": {
+    "external_user_submission_count_per_row": 1,
+    "goal_create_count_per_row": 1,
+    "goal_get_max_per_row": 4,
+    "goal_terminal_count_per_row": 1,
+    "goal_tool_call_max_per_row": 6,
+    "same_goal_thread_identity": true,
+    "activation_before_semantic_result": true,
+    "actual_tool_calls_subset": ["create_goal", "get_goal", "update_goal"],
+    "filesystem_writes_by_subject": 0,
+    "network_calls_by_subject": 0,
+    "schema_validation": "strict",
+    "semantic_score": "exact_json_value",
+    "deterministic_result_checks": ["source_ids_unique"],
+    "provider_output_schema_enforcement": "host_only",
+    "required_pass": 1,
+    "allowed_fail": 0
+  },
+  "nonclaims": [
+    "This single-row diagnostic has zero qualification credit.",
+    "Canary 001 remains a permanent provider-admission failure.",
+    "Canary 002 remains a permanent Goal-nonactivation failure.",
+    "The external schema remains a frozen host validator and is not attached through --output-schema.",
+    "A pass supports only the provider-output-interaction hypothesis, not route or matrix qualification.",
+    "OMP Windows conformance remains an unexecuted hard gate."
+  ]
+}

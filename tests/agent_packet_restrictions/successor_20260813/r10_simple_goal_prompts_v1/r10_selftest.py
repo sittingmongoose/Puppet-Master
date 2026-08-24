@@ -16,8 +16,8 @@ import r10_runner as runner
 import r10_verify as verify
 
 ROOT = Path(__file__).resolve().parent
-CAPSULE = ROOT / "canary_002" / "capsule.json"
-RESPONSE_SCHEMA = ROOT / "canary_002" / "response.schema.json"
+CAPSULE = ROOT / "canary_003" / "capsule.json"
+RESPONSE_SCHEMA = ROOT / "canary_003" / "response.schema.json"
 
 
 def expect_fail(label: str, action) -> str:
@@ -38,6 +38,41 @@ def main() -> int:
     assert omp_metrics["prompt_utf8_bytes"] <= contract.MAX_PROMPT_BYTES
     contract.validate_provider_response_schema(contract.load_json(RESPONSE_SCHEMA))
 
+    assert {
+        "unit_id": base["unit_id"],
+        "workflow_family": base["workflow_family"],
+        "objective": base["objective"],
+        "sources": [
+            (item["source_id"], item["authority"], item["text"])
+            for item in base["admitted_context"]
+        ],
+        "constraints": [
+            (item["constraint_id"], item["kind"], item["text"])
+            for item in base["constraints"]
+        ],
+    } == {
+        "unit_id": "canary_evidence_03",
+        "workflow_family": "assurance",
+        "objective": "Decide whether the admitted evidence proves that an action executed. Select the authoritative evidence rule and preserve the exact supporting source set in the typed result.",
+        "sources": [
+            ("S3", "fixture_fact", "Only a runtime receipt bound to the attempted action can prove that the action executed. A design declaration or lineage record alone is not execution evidence."),
+            ("S4", "source_lineage_only", "The design declaration says the action is complete."),
+        ],
+        "constraints": [
+            ("C1", "positive", "Use only admitted sources and cite only the source that supports the decision."),
+            ("C2", "negative", "Do not treat a design declaration or lineage record as execution evidence."),
+            ("C3", "negative", "Do not use repository, shell, web, external tools, or unadmitted context, and do not modify files."),
+        ],
+    }
+    expected_metric_sizes = {
+        "admitted_context_utf8_bytes": 211,
+        "capsule_utf8_bytes": 2015,
+        "output_schema_utf8_bytes": 449,
+        "prompt_utf8_bytes": 2179,
+    }
+    for metric, expected in expected_metric_sizes.items():
+        assert codex_metrics[metric] == expected
+
     failures: list[str] = []
 
     value = copy.deepcopy(base)
@@ -49,7 +84,7 @@ def main() -> int:
     failures.append(expect_fail("source-hash-mismatch", lambda: contract.validate_capsule(value)))
 
     value = copy.deepcopy(base)
-    value["lineage"]["allowed_source_ids"] = ["S2", "S1"]
+    value["lineage"]["allowed_source_ids"] = ["S4", "S3"]
     failures.append(expect_fail("lineage-order-mismatch", lambda: contract.validate_capsule(value)))
 
     value = copy.deepcopy(base)
@@ -279,17 +314,17 @@ def main() -> int:
     selected_final = verify.select_semantic_final(
         [
             (3, "Goal active; continuing automatically.", "turn-1"),
-            (8, '{"unit_id":"canary_evidence_02"}', "turn-2"),
+            (8, '{"unit_id":"canary_evidence_03"}', "turn-2"),
         ],
         {"turn-1": (1, 4), "turn-2": (5, 9)},
     )
-    assert selected_final[0] == 8 and selected_final[3] == {"unit_id": "canary_evidence_02"}
+    assert selected_final[0] == 8 and selected_final[3] == {"unit_id": "canary_evidence_03"}
     failures.append(expect_fail(
         "multiple-semantic-json-finals",
         lambda: verify.select_semantic_final(
             [
                 (3, '{"progress":true}', "turn-1"),
-                (8, '{"unit_id":"canary_evidence_02"}', "turn-2"),
+                (8, '{"unit_id":"canary_evidence_03"}', "turn-2"),
             ],
             {"turn-1": (1, 4), "turn-2": (5, 9)},
         ),
@@ -395,11 +430,11 @@ def main() -> int:
     bad.append(copy.deepcopy(trace[1]))
     failures.append(expect_fail("duplicate-tool-output", lambda: verify.tool_projection(bad)))
 
-    manifest = contract.load_json(ROOT / "canary_002" / "manifest.json")
+    manifest = contract.load_json(ROOT / "canary_003" / "manifest.json")
     assert runner.validate_static_manifest(manifest) is None
     failures.append(expect_fail(
         "alternate-manifest-launch-path",
-        lambda: runner.preflight_manifest(ROOT / "r10_selftest.py", ROOT / "canary_002" / "manifest.commitment.json"),
+        lambda: runner.preflight_manifest(ROOT / "r10_selftest.py", ROOT / "canary_003" / "manifest.commitment.json"),
     ))
 
     summary_manifest_sha = "c" * 64
@@ -408,7 +443,7 @@ def main() -> int:
         "schema_id": "pm.r10.run_capture_summary.v2",
         "run_id": manifest["run_id"],
         "manifest_sha256": summary_manifest_sha,
-        "row_count": 3,
+        "row_count": 1,
         "attempt_count": 1,
         "subject_launch_count": 1,
         "subject_launch_count_exact": True,
@@ -436,20 +471,20 @@ def main() -> int:
     failures.append(expect_fail("summary-manifest-join", lambda: verify.validate_capture_summary(bad_summary, manifest, summary_manifest_sha)))
 
     bad_summary = copy.deepcopy(partial_summary)
-    bad_summary["launched_row_ids"] = [row_ids[1]]
+    bad_summary["launched_row_ids"] = ["not-a-roster-row"]
     failures.append(expect_fail("summary-row-prefix", lambda: verify.validate_capture_summary(bad_summary, manifest, summary_manifest_sha)))
 
     missing_launch_attribution = copy.deepcopy(partial_summary)
     missing_launch_attribution.update({
-        "attempt_count": 3,
+        "attempt_count": 1,
         "subject_launch_count": 0,
         "subject_launch_count_exact": False,
-        "subject_launch_lower_bound": 3,
+        "subject_launch_lower_bound": 1,
         "capture_count": 0,
         "attempted_row_ids": row_ids,
         "launched_row_ids": [],
         "launch_lower_bound_row_ids": row_ids,
-        "post_popen_failure_row_ids": [row_ids[2]],
+        "post_popen_failure_row_ids": [],
         "captured_row_ids": [],
         "unconsumed_row_ids": [],
         "unconsumed_dispositions": [],
@@ -586,17 +621,17 @@ def main() -> int:
         row_runner=fake_row,
         prefix_runner=semantic_failure,
     )
-    assert launched == ["row-alpha-001"]
+    assert launched == ["row-alpha-003"]
     assert sequence["prefix_gate_sha256_by_row"] == {}
-    assert sequence["stop_reason"] == "prefix gate failed for row-alpha-001: semantic mismatch: row-alpha-001"
+    assert sequence["stop_reason"] == "prefix gate failed for row-alpha-003: semantic mismatch: row-alpha-003"
 
-    alpha_failure = verify.PrefixRowFailure("row-alpha-001", [], verify.VerifyError("semantic mismatch"))
-    disposition = verify.prefix_failure_disposition(manifest["rows"], "row-charlie-001", alpha_failure)
+    alpha_failure = verify.PrefixRowFailure("row-alpha-003", [], verify.VerifyError("semantic mismatch"))
+    disposition = verify.prefix_failure_disposition(manifest["rows"], "row-alpha-003", alpha_failure)
     assert disposition == {
-        "prefix_index": 2,
-        "failed_row_id": "row-alpha-001",
+        "prefix_index": 0,
+        "failed_row_id": "row-alpha-003",
         "verified_row_ids": [],
-        "not_evaluated_row_ids": ["row-bravo-001", "row-charlie-001"],
+        "not_evaluated_row_ids": [],
         "failed_stage": "row_verification",
     }
 
@@ -613,7 +648,7 @@ def main() -> int:
             "post-popen-cleanup-preserves-launch-lower-bound",
             lambda: runner.raise_post_popen_failure(
                 CleanupFailureProcess(),
-                "row-alpha-001",
+                "row-alpha-003",
                 RuntimeError("launch receipt write failed"),
             ),
         ))
@@ -647,8 +682,8 @@ def main() -> int:
             row_runner=fake_post_popen_row,
             prefix_runner=semantic_failure,
         )
-        assert post_popen_sequence["post_popen_failure_row_ids"] == ["row-alpha-001"]
-        post_popen_failure = contract.load_json(evidence_root / "rows" / "row-alpha-001" / "runner_failure.json")
+        assert post_popen_sequence["post_popen_failure_row_ids"] == ["row-alpha-003"]
+        post_popen_failure = contract.load_json(evidence_root / "rows" / "row-alpha-003" / "runner_failure.json")
         assert post_popen_failure["popen_observed"] is True and post_popen_failure["pid"] == 515151
 
     python_identity = runner.require_live_binary_identity(
@@ -671,108 +706,42 @@ def main() -> int:
     failures.append(expect_fail("failed-prefix-blocks-next-launch", lambda: runner.next_launch_authorization(bad_gate, predecessor)))
 
     bad_gate = copy.deepcopy(good_gate)
-    bad_gate["gate"]["through_row_id"] = "row-bravo-001"
+    bad_gate["gate"]["through_row_id"] = "not-the-predecessor"
     failures.append(expect_fail("wrong-row-prefix-blocks-next-launch", lambda: runner.next_launch_authorization(bad_gate, predecessor)))
 
     bad_gate = copy.deepcopy(good_gate)
     bad_gate["authorization"]["sha256"] = "b" * 64
     failures.append(expect_fail("wrong-hash-prefix-blocks-next-launch", lambda: runner.next_launch_authorization(bad_gate, predecessor)))
 
-    with tempfile.TemporaryDirectory(prefix="r10-prefix-auth-selftest-") as temp_name:
-        run_root = Path(temp_name)
-        row_root = run_root / "rows" / predecessor["row_id"]
-        row_root.mkdir(parents=True)
-        (run_root / "gates").mkdir()
-        for name in (
-            "attempt.json",
-            "launch_receipt.json",
-            "process_capture.json",
-            "submitted_user_prompt.txt",
-            "stdout.jsonl",
-            "stderr.bin",
-            "rollout.jsonl.gz",
-            "last_message.txt",
-        ):
-            (row_root / name).write_bytes(f"fixture:{name}".encode("utf-8"))
-        disk_bundle = {"manifest": manifest, "manifest_sha256": "e" * 64}
-        frozen = {item["path"]: item for item in manifest["frozen_files"]}
-        disk_gate = {
-            "schema_id": "pm.r10.prefix_gate.v1",
-            "run_id": manifest["run_id"],
-            "manifest_sha256": disk_bundle["manifest_sha256"],
-            "through_row_id": predecessor["row_id"],
-            "through_route_id": predecessor["route_id"],
-            "prefix_index": 0,
-            "predecessor_gate_sha256": None,
-            "verified_row_ids": [predecessor["row_id"]],
-            "pass_count": 1,
-            "row_receipts": [{"row_id": predecessor["row_id"], "status": "PASS", "qualification_credit": 0}],
-            "row_evidence": runner.runner_row_evidence_identities(run_root, [predecessor["row_id"]]),
-            "executing_verifier_sha256": frozen["r10_verify.py"]["sha256"],
-            "executing_contract_sha256": frozen["r10_contract.py"]["sha256"],
-            "status": "PASS_PREFIX_FOR_NEXT_LAUNCH_ZERO_CREDIT",
-            "qualification_credit": 0,
-            "qualification_streak": 0,
-        }
-        disk_gate_raw = contract.canonical_bytes(disk_gate) + b"\n"
-        disk_gate_path = run_root / "gates" / f"prefix-{predecessor['row_id']}.json"
-        disk_gate_path.write_bytes(disk_gate_raw)
-        disk_stdout_path = run_root / "gates" / f"prefix-{predecessor['row_id']}.stdout.jsonl"
-        disk_stdout_path.write_bytes(disk_gate_raw)
-        disk_stderr_path = run_root / "gates" / f"prefix-{predecessor['row_id']}.stderr.bin"
-        disk_stderr_path.write_bytes(b"")
-        disk_argv = [
-            manifest["controller_runtime"]["python_executable"],
-            "-B",
-            str(run_root / "frozen_snapshot" / "r10_verify.py"),
-            "--evidence-root",
-            str(run_root),
-            "--prefix-row",
-            predecessor["row_id"],
-            "--write-prefix-receipt",
-        ]
-        disk_process = {
-            "schema_id": "pm.r10.prefix_gate_process.v1",
-            "run_id": manifest["run_id"],
-            "manifest_sha256": disk_bundle["manifest_sha256"],
-            "row_id": predecessor["row_id"],
-            "route_id": predecessor["route_id"],
-            "argv": disk_argv,
-            "returncode": 0,
-            "stdout_sha256": contract.sha256(disk_gate_raw),
-            "stdout_bytes": len(disk_gate_raw),
-            "stderr_sha256": contract.sha256(b""),
-            "stderr_bytes": 0,
-            "gate_sha256": contract.sha256(disk_gate_raw),
-            "validation_error": None,
-            "status": "PASS",
-            "qualification_credit": 0,
-        }
-        (run_root / "gates" / f"prefix-{predecessor['row_id']}.process.json").write_bytes(
-            contract.canonical_bytes(disk_process) + b"\n"
-        )
-        disk_authorization = {
-            "kind": "prefix_gate",
-            "path": f"gates/prefix-{predecessor['row_id']}.json",
-            "sha256": contract.sha256(disk_gate_raw),
-            "predecessor_row_id": predecessor["row_id"],
-        }
-        assert runner.validate_launch_authorization(
-            disk_bundle,
-            run_root,
-            manifest["rows"][1],
-            disk_authorization,
-        ) is None
-        (row_root / "stdout.jsonl").write_bytes(b"tampered-after-gate")
-        failures.append(expect_fail(
-            "disk-prefix-evidence-tamper-blocks-next-launch",
-            lambda: runner.validate_launch_authorization(
-                disk_bundle,
-                run_root,
-                manifest["rows"][1],
-                disk_authorization,
-            ),
-        ))
+    command_temp = "/tmp/r10-command-selftest"
+    command_last = Path("/tmp/r10-command-selftest-last-message.txt")
+    runner_argv = runner.subject_command(
+        Path(manifest["codex_binary"]["path"]),
+        manifest["runtime"],
+        manifest["rows"][0],
+        command_temp,
+        command_last,
+    )
+    verifier_argv = verify.expected_subject_argv(
+        manifest,
+        manifest["rows"][0],
+        Path(command_temp),
+        command_last,
+    )
+    assert runner_argv == verifier_argv
+    assert "--output-schema" not in runner_argv
+    assert str(RESPONSE_SCHEMA) not in runner_argv
+    restored_provider_schema = runner_argv[:-3] + ["--output-schema", str(RESPONSE_SCHEMA)] + runner_argv[-3:]
+    failures.append(expect_fail(
+        "provider-output-schema-restoration-rejected",
+        lambda: verify.require(restored_provider_schema == verifier_argv, "argv/configuration drift"),
+    ))
+    changed_other_token = list(runner_argv)
+    changed_other_token[changed_other_token.index("read-only")] = "workspace-write"
+    failures.append(expect_fail(
+        "non-schema-argv-drift-rejected",
+        lambda: verify.require(changed_other_token == verifier_argv, "argv/configuration drift"),
+    ))
 
     weakened = copy.deepcopy(manifest)
     weakened["rows"] = []
@@ -783,8 +752,10 @@ def main() -> int:
     failures.append(expect_fail("weakened-acceptance", lambda: runner.validate_static_manifest(weakened)))
 
     weakened = copy.deepcopy(manifest)
-    weakened["rows"] = weakened["rows"][:1]
-    failures.append(expect_fail("single-route-manifest", lambda: runner.validate_static_manifest(weakened)))
+    weakened["rows"].append(copy.deepcopy(weakened["rows"][0]))
+    weakened["rows"][1]["row_id"] = "row-extra-003"
+    weakened["rows"][1]["nonce"] = "f" * 32
+    failures.append(expect_fail("extra-route-manifest", lambda: runner.validate_static_manifest(weakened)))
 
     lifecycle = [
         {"ordinal": 1, "type": "event_msg", "payload": {"type": "task_started", "turn_id": "t1"}},
@@ -805,7 +776,7 @@ def main() -> int:
 
     result = {
         "schema_id": "pm.r10.selftest.v1",
-        "checks": 91,
+        "checks": 99,
         "expected_failures": failures,
         "status": "PASS",
         "subject_calls": 0,

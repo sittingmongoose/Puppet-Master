@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Once-only R10 Codex canary runner. Captures bytes; grants no semantic credit."""
+"""Once-only R10 Codex diagnostic runner. Captures bytes; grants no qualification credit."""
 
 from __future__ import annotations
 
@@ -24,9 +24,8 @@ ROOT = Path(__file__).resolve().parent
 
 CANARY_ROSTER = {
     "alpha": ("gpt-5.4-mini", "xhigh"),
-    "bravo": ("gpt-5.4-mini", "medium"),
-    "charlie": ("gpt-5.6-luna", "medium"),
 }
+CANARY_ROW_IDS = {"alpha": "row-alpha-003"}
 CANARY_FROZEN_PATHS = {
     "ARCHITECTURE.md",
     "prompt_capsule.schema.json",
@@ -35,9 +34,9 @@ CANARY_FROZEN_PATHS = {
     "r10_verify.py",
     "r10_selftest.py",
     "workflow_coverage.json",
-    "canary_002/response.schema.json",
-    "canary_002/capsule.json",
-    "canary_002/oracle.json",
+    "canary_003/response.schema.json",
+    "canary_003/capsule.json",
+    "canary_003/oracle.json",
 }
 CANARY_ACCEPTANCE = {
     "external_user_submission_count_per_row": 1,
@@ -53,7 +52,8 @@ CANARY_ACCEPTANCE = {
     "schema_validation": "strict",
     "semantic_score": "exact_json_value",
     "deterministic_result_checks": ["source_ids_unique"],
-    "required_pass": 3,
+    "provider_output_schema_enforcement": "host_only",
+    "required_pass": 1,
     "allowed_fail": 0,
 }
 CANARY_RUNTIME = {
@@ -163,8 +163,8 @@ def load_commitment(path: Path, manifest_relative: str, manifest_raw: bytes) -> 
 
 def validate_static_manifest(manifest: dict[str, Any]) -> None:
     require(manifest.get("schema_id") == "pm.r10.run_manifest.v1", "manifest schema")
-    require(manifest.get("run_id") == "r10-codex-canary-002", "run identity")
-    require(manifest.get("kind") == "three_route_codex_canary", "canary kind")
+    require(manifest.get("run_id") == "r10-codex-canary-003", "run identity")
+    require(manifest.get("kind") == "single_route_output_schema_diagnostic", "canary kind")
     require(manifest.get("status") == "FROZEN_ZERO_CREDIT", "manifest not frozen")
     require(manifest.get("platform") == "codex", "runner platform")
     require(manifest.get("profile_id") == contract.PROFILE, "profile")
@@ -179,15 +179,15 @@ def validate_static_manifest(manifest: dict[str, Any]) -> None:
     require(".".join(map(str, sys.version_info[:3])) == CANARY_CONTROLLER_RUNTIME["python_version"], "controller Python version drift")
     require(package_version("jsonschema") == CANARY_CONTROLLER_RUNTIME["jsonschema_version"], "jsonschema version drift")
     rows = manifest.get("rows")
-    require(isinstance(rows, list) and len(rows) == 3, "canary must contain exactly three rows")
+    require(isinstance(rows, list) and len(rows) == len(CANARY_ROSTER), "diagnostic row denominator")
     require([row.get("route_id") for row in rows] == list(CANARY_ROSTER), "route order/set drift")
-    require(len({row.get("row_id") for row in rows}) == 3, "row IDs not unique")
-    require(len({row.get("nonce") for row in rows}) == 3, "nonces not unique")
+    require(len({row.get("row_id") for row in rows}) == len(CANARY_ROSTER), "row IDs not unique")
+    require(len({row.get("nonce") for row in rows}) == len(CANARY_ROSTER), "nonces not unique")
     require(all(isinstance(row.get("nonce"), str) and re.fullmatch(r"[0-9a-f]{32}", row["nonce"]) for row in rows), "nonce format")
     for row in rows:
         route = row["route_id"]
         model, effort = CANARY_ROSTER[route]
-        require(row.get("row_id") == f"row-{route}-001", f"row identity drift: {route}")
+        require(row.get("row_id") == CANARY_ROW_IDS[route], f"row identity drift: {route}")
         require(row.get("model") == model and row.get("reasoning_effort") == effort, f"route binding drift: {route}")
 
 
@@ -198,16 +198,16 @@ def preflight_manifest(manifest_path: Path, commitment_path: Path) -> dict[str, 
     require(commitment_path == ROOT or ROOT in commitment_path.parents, "commitment outside R10")
     manifest_relative = manifest_path.relative_to(ROOT).as_posix()
     commitment_relative = commitment_path.relative_to(ROOT).as_posix()
-    require(manifest_relative == "canary_002/manifest.json", "manifest launch path")
-    require(commitment_relative == "canary_002/manifest.commitment.json", "manifest commitment launch path")
+    require(manifest_relative == "canary_003/manifest.json", "manifest launch path")
+    require(commitment_relative == "canary_003/manifest.commitment.json", "manifest commitment launch path")
     manifest_raw = manifest_path.read_bytes()
     manifest = contract.load_json_bytes(manifest_raw, "manifest")
     commitment, commitment_raw = load_commitment(commitment_path, manifest_relative, manifest_raw)
     validate_static_manifest(manifest)
 
     require(manifest.get("schema_id") == "pm.r10.run_manifest.v1", "manifest schema")
-    require(manifest.get("run_id") == "r10-codex-canary-002", "run identity")
-    require(manifest.get("kind") == "three_route_codex_canary", "canary kind")
+    require(manifest.get("run_id") == "r10-codex-canary-003", "run identity")
+    require(manifest.get("kind") == "single_route_output_schema_diagnostic", "canary kind")
     require(manifest.get("status") == "FROZEN_ZERO_CREDIT", "manifest not frozen")
     require(manifest.get("platform") == "codex", "runner platform")
     require(manifest.get("profile_id") == contract.PROFILE, "profile")
@@ -247,14 +247,14 @@ def preflight_manifest(manifest_path: Path, commitment_path: Path) -> dict[str, 
     require(version.stdout.decode("utf-8").strip() == f"codex-cli {manifest.get('codex_cli_version')}", "Codex version drift")
 
     rows = manifest.get("rows")
-    require(isinstance(rows, list) and len(rows) == 3, "canary must contain exactly three rows")
+    require(isinstance(rows, list) and len(rows) == len(CANARY_ROSTER), "diagnostic row denominator")
     require([row.get("route_id") for row in rows] == list(CANARY_ROSTER), "route order/set drift")
-    require(len({row.get("row_id") for row in rows}) == 3, "row IDs not unique")
-    require(len({row.get("nonce") for row in rows}) == 3, "nonces not unique")
+    require(len({row.get("row_id") for row in rows}) == len(CANARY_ROSTER), "row IDs not unique")
+    require(len({row.get("nonce") for row in rows}) == len(CANARY_ROSTER), "nonces not unique")
     require(all(isinstance(row.get("nonce"), str) and re.fullmatch(r"[0-9a-f]{32}", row["nonce"]) for row in rows), "nonce format")
 
     oracle_path = manifest.get("oracle_path")
-    require(oracle_path == "canary_002/oracle.json" and oracle_path in frozen_bytes, "oracle binding")
+    require(oracle_path == "canary_003/oracle.json" and oracle_path in frozen_bytes, "oracle binding")
     oracle = contract.load_json_bytes(frozen_bytes[oracle_path], "oracle")
     capsule_schema = contract.load_json_bytes(frozen_bytes["prompt_capsule.schema.json"], "capsule schema")
     jsonschema.Draft202012Validator.check_schema(capsule_schema)
@@ -263,10 +263,10 @@ def preflight_manifest(manifest_path: Path, commitment_path: Path) -> dict[str, 
     for row in rows:
         route = row["route_id"]
         model, effort = CANARY_ROSTER[route]
-        require(row.get("row_id") == f"row-{route}-001", f"row identity drift: {route}")
+        require(row.get("row_id") == CANARY_ROW_IDS[route], f"row identity drift: {route}")
         require(row.get("model") == model and row.get("reasoning_effort") == effort, f"route binding drift: {route}")
-        require(row.get("capsule_path") == "canary_002/capsule.json", f"capsule binding drift: {route}")
-        require(row.get("response_schema_path") == "canary_002/response.schema.json", f"response schema binding drift: {route}")
+        require(row.get("capsule_path") == "canary_003/capsule.json", f"capsule binding drift: {route}")
+        require(row.get("response_schema_path") == "canary_003/response.schema.json", f"response schema binding drift: {route}")
         capsule = contract.load_json_bytes(frozen_bytes[row["capsule_path"]], f"capsule {route}")
         prompt, metrics = contract.render_prompt(capsule, "codex", capsule_schema)
         require(row.get("capsule_sha256") == metrics["capsule_sha256"], f"capsule hash drift: {route}")
@@ -553,6 +553,25 @@ def validate_launch_authorization(
         require(validated_raw == raw, "prefix authorization/full validation join")
 
 
+def subject_command(
+    codex_path: Path,
+    runtime: dict[str, Any],
+    row: dict[str, Any],
+    temp_dir: str,
+    last_message_path: Path,
+) -> list[str]:
+    """Build the exact host-validated argv; Canary 003 deliberately omits provider output-schema attachment."""
+
+    return [
+        str(codex_path), "exec", "--strict-config", "-C", temp_dir,
+        "--skip-git-repo-check", "--ignore-user-config", "--ignore-rules",
+        "--sandbox", runtime["sandbox"], "--color", "never", "--json",
+        "-m", row["model"], "-c", f'model_reasoning_effort="{row["reasoning_effort"]}"',
+        "-c", "suppress_unstable_features_warning=true",
+        "-o", str(last_message_path), "-",
+    ]
+
+
 def run_row(
     bundle: dict[str, Any],
     row: dict[str, Any],
@@ -572,7 +591,6 @@ def run_row(
     prompt_raw = prepared["prompt"].encode("utf-8")
     exclusive_bytes(row_root / "submitted_user_prompt.txt", prompt_raw, mode=0o444)
     last = row_root / "last_message.txt"
-    response_schema = snapshot_root / row["response_schema_path"]
     runtime = manifest["runtime"]
     codex_home = Path(runtime["codex_home"])
 
@@ -584,14 +602,7 @@ def run_row(
         prefix=f"r10-{manifest['run_id']}-{row['row_id']}-",
         dir=runtime["temporary_root"],
     ) as temp_dir:
-        command = [
-            str(bundle["codex_path"]), "exec", "--strict-config", "-C", temp_dir,
-            "--skip-git-repo-check", "--ignore-user-config", "--ignore-rules",
-            "--sandbox", runtime["sandbox"], "--color", "never", "--json",
-            "-m", row["model"], "-c", f'model_reasoning_effort="{row["reasoning_effort"]}"',
-            "-c", "suppress_unstable_features_warning=true",
-            "--output-schema", str(response_schema), "-o", str(last), "-",
-        ]
+        command = subject_command(bundle["codex_path"], runtime, row, temp_dir, last)
         attempt = {
             "schema_id": "pm.r10.attempt.v1",
             "run_id": manifest["run_id"],
@@ -929,7 +940,7 @@ def main(argv: list[str] | None = None) -> int:
         launch_lower_bound_row_ids = [row["row_id"] for row in rows if row["row_id"] in set(launched_row_ids) | set(post_popen_failure_row_ids)]
         launch_count_exact = all(row_id in launched_row_ids for row_id in post_popen_failure_row_ids)
         unconsumed_row_ids = [row["row_id"] for row in rows if row["row_id"] not in launch_lower_bound_row_ids]
-        complete = len(prefix_passed_row_ids) == len(rows) == 3 and not stop_reason and launch_count_exact
+        complete = len(prefix_passed_row_ids) == len(rows) == len(CANARY_ROSTER) and not stop_reason and launch_count_exact
         if complete:
             status = "CAPTURE_COMPLETE_PENDING_FINAL_VERIFICATION_ZERO_CREDIT"
         elif post_popen_failure_row_ids:

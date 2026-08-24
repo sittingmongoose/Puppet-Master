@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independent snapshot-only verifier for captured R10 Codex canary runs."""
+"""Independent snapshot-only verifier for the captured R10 Codex diagnostic."""
 
 from __future__ import annotations
 
@@ -22,9 +22,8 @@ R10_REPO_RELATIVE = "tests/agent_packet_restrictions/successor_20260813/r10_simp
 GOAL_TOOLS = {"create_goal", "get_goal", "update_goal"}
 EXPECTED_ROSTER = {
     "alpha": ("gpt-5.4-mini", "xhigh"),
-    "bravo": ("gpt-5.4-mini", "medium"),
-    "charlie": ("gpt-5.6-luna", "medium"),
 }
+EXPECTED_ROW_IDS = {"alpha": "row-alpha-003"}
 EXPECTED_ACCEPTANCE = {
     "external_user_submission_count_per_row": 1,
     "goal_create_count_per_row": 1,
@@ -39,7 +38,8 @@ EXPECTED_ACCEPTANCE = {
     "schema_validation": "strict",
     "semantic_score": "exact_json_value",
     "deterministic_result_checks": ["source_ids_unique"],
-    "required_pass": 3,
+    "provider_output_schema_enforcement": "host_only",
+    "required_pass": 1,
     "allowed_fail": 0,
 }
 EXPECTED_FROZEN_PATHS = {
@@ -50,9 +50,9 @@ EXPECTED_FROZEN_PATHS = {
     "r10_verify.py",
     "r10_selftest.py",
     "workflow_coverage.json",
-    "canary_002/response.schema.json",
-    "canary_002/capsule.json",
-    "canary_002/oracle.json",
+    "canary_003/response.schema.json",
+    "canary_003/capsule.json",
+    "canary_003/oracle.json",
 }
 EXPECTED_RUNTIME = {
     "repository": "/mnt/Cursor/PuppetMaster",
@@ -519,14 +519,14 @@ def load_snapshot_contract(
     require(
         commitment == {
             "schema_id": "pm.r10.manifest_commitment.v1",
-            "manifest_path": "canary_002/manifest.json",
+            "manifest_path": "canary_003/manifest.json",
             "manifest_sha256": manifest_sha,
         },
         "evidence manifest commitment mismatch",
     )
     require(manifest.get("schema_id") == "pm.r10.run_manifest.v1", "manifest schema")
-    require(manifest.get("run_id") == "r10-codex-canary-002", "run identity")
-    require(manifest.get("kind") == "three_route_codex_canary", "canary kind")
+    require(manifest.get("run_id") == "r10-codex-canary-003", "run identity")
+    require(manifest.get("kind") == "single_route_output_schema_diagnostic", "canary kind")
     require(manifest.get("status") == "FROZEN_ZERO_CREDIT", "manifest freeze")
     require(manifest.get("platform") == "codex" and manifest.get("profile_id") == contract.PROFILE, "platform/profile")
     require(manifest.get("attempts_per_row") == 1 and manifest.get("retry") is False and manifest.get("replacement") is False and manifest.get("best_of") == 0, "attempt policy")
@@ -538,12 +538,12 @@ def load_snapshot_contract(
     require(".".join(map(str, sys.version_info[:3])) == EXPECTED_CONTROLLER_RUNTIME["python_version"], "verifier Python version drift")
     require(package_version("jsonschema") == EXPECTED_CONTROLLER_RUNTIME["jsonschema_version"], "verifier jsonschema version drift")
     rows = manifest.get("rows")
-    require(isinstance(rows, list) and len(rows) == EXPECTED_ACCEPTANCE["required_pass"] == 3, "exact row denominator")
+    require(isinstance(rows, list) and len(rows) == EXPECTED_ACCEPTANCE["required_pass"] == len(EXPECTED_ROSTER), "exact row denominator")
     require([row.get("route_id") for row in rows] == list(EXPECTED_ROSTER), "route roster drift")
-    require(len({row.get("row_id") for row in rows}) == 3 and len({row.get("nonce") for row in rows}) == 3, "row/nonce uniqueness")
+    require(len({row.get("row_id") for row in rows}) == len(EXPECTED_ROSTER) and len({row.get("nonce") for row in rows}) == len(EXPECTED_ROSTER), "row/nonce uniqueness")
     for row in rows:
         require((row.get("model"), row.get("reasoning_effort")) == EXPECTED_ROSTER[row["route_id"]], f"route binding drift: {row['route_id']}")
-        require(row.get("row_id") == f"row-{row['route_id']}-001", f"row identity drift: {row['route_id']}")
+        require(row.get("row_id") == EXPECTED_ROW_IDS[row["route_id"]], f"row identity drift: {row['route_id']}")
     frozen = manifest.get("frozen_files")
     require(isinstance(frozen, list) and len(frozen) == len({item.get("path") for item in frozen}), "frozen path cardinality")
     require({item.get("path") for item in frozen} == EXPECTED_FROZEN_PATHS, "frozen path set drift")
@@ -584,14 +584,14 @@ def load_snapshot_contract(
     repository = Path(EXPECTED_RUNTIME["repository"])
     r10_relative = R10_REPO_RELATIVE
     expected_tracked = {
-        f"{r10_relative}/canary_002/manifest.json",
-        f"{r10_relative}/canary_002/manifest.commitment.json",
+        f"{r10_relative}/canary_003/manifest.json",
+        f"{r10_relative}/canary_003/manifest.commitment.json",
         *(f"{r10_relative}/{item['path']}" for item in frozen),
     }
     require(set(git_custody.get("tracked_launch_inputs", [])) == expected_tracked, "tracked launch-input set drift")
     committed_inputs = {
-        f"{r10_relative}/canary_002/manifest.json": manifest_raw,
-        f"{r10_relative}/canary_002/manifest.commitment.json": commitment_raw,
+        f"{r10_relative}/canary_003/manifest.json": manifest_raw,
+        f"{r10_relative}/canary_003/manifest.commitment.json": commitment_raw,
         **{f"{r10_relative}/{item['path']}": snapshot_owned(evidence, item["path"]).read_bytes() for item in frozen},
     }
     for relative, expected_raw in committed_inputs.items():
@@ -621,9 +621,10 @@ def validate_capture_summary(
     require(summary.get("schema_id") == "pm.r10.run_capture_summary.v2", "capture summary schema")
     require(summary.get("run_id") == manifest["run_id"], "capture summary run identity")
     require(summary.get("manifest_sha256") == manifest_sha, "capture summary manifest identity")
-    require(summary.get("row_count") == 3, "capture summary row count")
+    denominator = len(manifest["rows"])
+    require(summary.get("row_count") == denominator, "capture summary row count")
     for key in ("attempt_count", "subject_launch_count", "subject_launch_lower_bound", "capture_count", "prefix_pass_count"):
-        require(isinstance(summary.get(key), int) and not isinstance(summary[key], bool) and 0 <= summary[key] <= 3, f"capture summary {key}")
+        require(isinstance(summary.get(key), int) and not isinstance(summary[key], bool) and 0 <= summary[key] <= denominator, f"capture summary {key}")
     require(isinstance(summary.get("subject_launch_count_exact"), bool), "capture summary launch-count exactness")
     row_ids = [row["row_id"] for row in manifest["rows"]]
     list_fields = (
@@ -663,11 +664,11 @@ def validate_capture_summary(
     gate_hashes = summary.get("prefix_gate_sha256_by_row")
     require(isinstance(gate_hashes, dict) and list(gate_hashes) == row_ids[: summary["prefix_pass_count"]], "capture summary gate roster")
     require(all(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None for value in gate_hashes.values()), "capture summary gate hashes")
-    complete = summary["prefix_pass_count"] == 3
+    complete = summary["prefix_pass_count"] == denominator
     if complete:
         require(summary.get("status") == "CAPTURE_COMPLETE_PENDING_FINAL_VERIFICATION_ZERO_CREDIT", "complete capture summary status")
         require(summary["subject_launch_count_exact"] is True, "complete capture launch count exactness")
-        require(summary["attempt_count"] == summary["subject_launch_count"] == summary["subject_launch_lower_bound"] == summary["capture_count"] == 3, "complete capture summary counts")
+        require(summary["attempt_count"] == summary["subject_launch_count"] == summary["subject_launch_lower_bound"] == summary["capture_count"] == denominator, "complete capture summary counts")
         require(post_popen == [], "complete capture post-Popen failures")
         require(summary.get("stop_reason") is None and expected_unconsumed == [], "complete capture terminal fields")
     else:
@@ -917,6 +918,24 @@ def expected_launch_authorization(
     }
 
 
+def expected_subject_argv(
+    manifest: dict[str, Any],
+    row: dict[str, Any],
+    temp_dir: Path,
+    last_message_path: Path,
+) -> list[str]:
+    """Return the frozen host-only-schema subject argv expected for Canary 003."""
+
+    return [
+        manifest["codex_binary"]["path"], "exec", "--strict-config", "-C", str(temp_dir),
+        "--skip-git-repo-check", "--ignore-user-config", "--ignore-rules",
+        "--sandbox", manifest["runtime"]["sandbox"], "--color", "never", "--json",
+        "-m", row["model"], "-c", f'model_reasoning_effort="{row["reasoning_effort"]}"',
+        "-c", "suppress_unstable_features_warning=true",
+        "-o", str(last_message_path), "-",
+    ]
+
+
 def validate_recorded_launch(
     manifest: dict[str, Any],
     manifest_sha: str,
@@ -959,15 +978,7 @@ def validate_recorded_launch(
     temp_dir = Path(argv[4]) if len(argv) > 4 else Path("")
     require(temp_dir.is_absolute() and temp_dir.parent == Path(manifest["runtime"]["temporary_root"]), "temporary directory root")
     require(temp_dir.name.startswith(f"r10-{manifest['run_id']}-{row['row_id']}-"), "temporary directory identity")
-    expected_argv = [
-        manifest["codex_binary"]["path"], "exec", "--strict-config", "-C", str(temp_dir),
-        "--skip-git-repo-check", "--ignore-user-config", "--ignore-rules",
-        "--sandbox", manifest["runtime"]["sandbox"], "--color", "never", "--json",
-        "-m", row["model"], "-c", f'model_reasoning_effort="{row["reasoning_effort"]}"',
-        "-c", "suppress_unstable_features_warning=true",
-        "--output-schema", str(snapshot_owned(evidence, row["response_schema_path"])),
-        "-o", str(row_root / "last_message.txt"), "-",
-    ]
+    expected_argv = expected_subject_argv(manifest, row, temp_dir, row_root / "last_message.txt")
     require(argv == expected_argv, "argv/configuration drift")
 
     require(capture.get("status") == "CAPTURED_UNVERIFIED", "capture status")
@@ -1190,7 +1201,7 @@ def main(argv: list[str] | None = None) -> int:
         require(not (args.write_receipts and (args.prefix_row or args.write_prefix_receipt)), "final/prefix verifier mode conflict")
         require(bool(args.prefix_row) == bool(args.write_prefix_receipt), "prefix receipt mode must be explicit")
         if args.prefix_row:
-            require(re.fullmatch(r"row-(?:alpha|bravo|charlie)-001", args.prefix_row) is not None, "prefix row argument")
+            require(args.prefix_row == "row-alpha-003", "prefix row argument")
         evidence = args.evidence_root.resolve()
         require(ROOT.name == "frozen_snapshot", "verifier must execute from the captured frozen snapshot")
         require(evidence == ROOT.parent and (evidence / "frozen_snapshot").resolve() == ROOT, "snapshot/evidence execution join")
@@ -1249,10 +1260,10 @@ def main(argv: list[str] | None = None) -> int:
         require(isinstance(capture_summary, dict), "capture summary absent")
         complete_capture = (
             capture_summary.get("status") == "CAPTURE_COMPLETE_PENDING_FINAL_VERIFICATION_ZERO_CREDIT"
-            and capture_summary.get("attempt_count") == 3
-            and capture_summary.get("subject_launch_count") == 3
-            and capture_summary.get("capture_count") == 3
-            and capture_summary.get("prefix_pass_count") == 3
+            and capture_summary.get("attempt_count") == EXPECTED_ACCEPTANCE["required_pass"]
+            and capture_summary.get("subject_launch_count") == EXPECTED_ACCEPTANCE["required_pass"]
+            and capture_summary.get("capture_count") == EXPECTED_ACCEPTANCE["required_pass"]
+            and capture_summary.get("prefix_pass_count") == EXPECTED_ACCEPTANCE["required_pass"]
         )
         if not complete_capture:
             terminal = {
@@ -1300,7 +1311,7 @@ def main(argv: list[str] | None = None) -> int:
                 failures.append({"row_id": row["row_id"], "error": f"{type(exc).__name__}: {exc}"})
                 break
         passed = not failures and len(receipts) == EXPECTED_ACCEPTANCE["required_pass"] == len(manifest["rows"])
-        status = "PASS_CANARY_ZERO_CREDIT" if passed else "FAIL_CONSUMED_ZERO_CREDIT_NO_RETRY"
+        status = "PASS_DIAGNOSTIC_ZERO_CREDIT" if passed else "FAIL_CONSUMED_ZERO_CREDIT_NO_RETRY"
         failed_row_id = failures[0]["row_id"] if failures else None
         failed_index = next(
             (index for index, row in enumerate(manifest["rows"]) if row["row_id"] == failed_row_id),
