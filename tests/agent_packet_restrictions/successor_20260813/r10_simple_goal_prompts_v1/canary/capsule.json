@@ -1,0 +1,66 @@
+{
+  "schema_id": "pm.r10.prompt_capsule.v1",
+  "profile_id": "r10-simple-4k-v1",
+  "unit_id": "canary_authority_01",
+  "workflow_family": "prompt_admission",
+  "objective": "Decide whether a PromptCapsule alone grants provider-dispatch authority. Select the authoritative admitted source and preserve its boundary in the typed result.",
+  "admitted_context": [
+    {
+      "source_id": "S1",
+      "authority": "canonical_excerpt",
+      "text": "A ContextReceipt explains admitted context but grants no execution authority. Provider dispatch requires separate admission bound to exact final provider-visible bytes and current dependencies.",
+      "utf8_bytes": 193,
+      "text_sha256": "7867bb772859fd8ca3a9f1e839f82338d803084ac322e0d3b378ae470b98249c"
+    },
+    {
+      "source_id": "S2",
+      "authority": "source_lineage_only",
+      "text": "A PromptCapsule hash alone authorizes provider dispatch.",
+      "utf8_bytes": 56,
+      "text_sha256": "ddbdae4994ef63a05f268ff5d7095b583302d1a76239885c50d3e97f48986ebc"
+    }
+  ],
+  "constraints": [
+    {
+      "constraint_id": "C1",
+      "kind": "positive",
+      "text": "Use only admitted sources and cite only the source that supports the decision.",
+      "source_ids": ["S1", "S2"]
+    },
+    {
+      "constraint_id": "C2",
+      "kind": "negative",
+      "text": "Do not treat source-lineage-only text as product authority.",
+      "source_ids": ["S2"]
+    },
+    {
+      "constraint_id": "C3",
+      "kind": "negative",
+      "text": "Do not use repository, shell, web, external tools, or unadmitted context, and do not modify files.",
+      "source_ids": []
+    }
+  ],
+  "output_contract": {
+    "schema_id": "pm.r10.canary_authority_response.v1",
+    "schema_sha256": "35c2269fa2660a196701c3e38c6a1b05f957c878fc8540496c0bda1a469d6b1c",
+    "inline_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_id", "selected_source_id", "capsule_grants_dispatch", "source_ids"],
+      "properties": {
+        "unit_id": {"type": "string"},
+        "selected_source_id": {"type": "string", "enum": ["S1", "S2"]},
+        "capsule_grants_dispatch": {"type": "boolean"},
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"type": "string", "enum": ["S1", "S2"]}
+        }
+      }
+    }
+  },
+  "lineage": {"allowed_source_ids": ["S1", "S2"]}
+}

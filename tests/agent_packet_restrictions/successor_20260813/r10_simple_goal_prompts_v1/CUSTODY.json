@@ -1,0 +1,28 @@
+{
+  "schema": "pm.prompt_complexity.r10.custody.v1",
+  "recorded_at_utc": "2026-08-24T17:04:00Z",
+  "goal_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+  "source_parent_thread_id": "019fbb7d-29ac-7e82-93b3-fff057d7a561",
+  "predecessor_thread_id": "01a00b52-4879-7c41-a826-7b4609ad3c3b",
+  "predecessor_status": "idle_terminal_handoff_received",
+  "repository": "/mnt/Cursor/PuppetMaster",
+  "branch": "main",
+  "head": "d32d32ee8ffbdbfde86e04a206a41cedb5f78776",
+  "origin_main": "d32d32ee8ffbdbfde86e04a206a41cedb5f78776",
+  "porcelain_entry_count_before_r10": 841,
+  "exclusive_write_root": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1",
+  "exclusive_root_was_clean": true,
+  "predecessor_owned_live_processes": 0,
+  "preserved_dead_session": {
+    "name": "r9g48-matrix011",
+    "pane_dead": true,
+    "pane_dead_status": 1
+  },
+  "qualification_streak": 0,
+  "qualification_required": 2,
+  "notes": [
+    "Unrelated dirty Concepts, Plans, ledger, predecessor, and other test artifacts are not owned by R10.",
+    "No canonical Plan or planning-ledger edits are authorized.",
+    "No predecessor r9g or iteration artifact may be modified."
+  ]
+}
