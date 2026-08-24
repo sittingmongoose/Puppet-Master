@@ -1,0 +1,17 @@
+{
+  "schema_id": "pm.r10.pushed_candidate_checkpoint.v1",
+  "recorded_at_utc": "2026-08-24T17:59:31Z",
+  "candidate_commit": "c4bd53939f368baf5335be25c3ca3e2529ca5d4c",
+  "branch": "main",
+  "head_after_push": "c4bd53939f368baf5335be25c3ca3e2529ca5d4c",
+  "origin_main_after_push": "c4bd53939f368baf5335be25c3ca3e2529ca5d4c",
+  "push_destinations": [
+    "https://github.com/sittingmongoose/Puppet-Master.git",
+    "ssh://sittingmongoose@192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git"
+  ],
+  "manifest_sha256": "6149219f0339a7dbf4f7948837857401c4d76445c31275cb148bde08be232924",
+  "submitted_user_prompt_sha256": "42a8db42dcad9ce0d19e27e3656653f3a8733975b1baa72d45968f8723d7cd57",
+  "subject_calls_before_checkpoint": 0,
+  "qualification_credit": 0,
+  "status": "PUSHED_CANDIDATE_PENDING_FINAL_CUSTODY_REOPEN"
+}
