@@ -1,0 +1,641 @@
+/* Working-animation takes — group b. Scope every rule under
+   .working-variant-N so takes cannot collide with each other.
+
+   12 Signal Meter · 13 Blueprint · 14 Timeline Scrub · 15 Terminal Cast
+
+   Durations reuse the tokens motion.css measured from the reference
+   recording: --pm-t-label 90ms, --pm-t-icon 150ms, --pm-t-row 110ms,
+   --pm-t-cascade 45ms, --pm-t-handoff 220ms, --pm-shimmer-cycle 1370ms.
+   Nothing below invents a timing; the two longer values (640ms gauge
+   sweep / playhead glide) are --pm-t-panel-class travel, deliberately
+   slower than a handoff because they cross the whole instrument.       */
+
+/* =====================================================================
+   12 — SIGNAL METER
+   ===================================================================== */
+.working-variant-12 .pm12{ display:grid; gap:10px; }
+.working-variant-12 .pm12-cluster{ display:grid; grid-template-columns:118px minmax(0,1fr); gap:13px; align-items:stretch; }
+
+/* ---- concentric gauges ---- */
+.working-variant-12 .pm12-gauge{ position:relative; width:118px; height:118px; animation:pm12-cluster-in 260ms var(--pm-ease-out) both; }
+.working-variant-12 .pm12-gauge svg{ display:block; }
+.working-variant-12 .pm12-trk{ fill:none; stroke:var(--surface-4); stroke-width:5; stroke-linecap:round; }
+.working-variant-12 .pm12-val{
+  fill:none; stroke-width:5; stroke-linecap:round;
+  /* the value IS the offset, because pathLength is normalised to 100.
+     The 200-unit gap parks the next dash past the end of the path, so a
+     zeroed gauge shows nothing at all rather than a stray round cap. */
+  stroke-dasharray:100 200;
+  transition: stroke-dashoffset 640ms var(--pm-ease-out), stroke var(--pm-t-icon) linear;
+}
+.working-variant-12 .pm12-val.a{ stroke:var(--pm-step,var(--accent)); }
+/* The middle ring is deliberately lighter-weight as well as a different
+   hue, because two themes (friendly, retro) put --accent-2 and
+   --positive close together and hue alone would not separate them. */
+.working-variant-12 .pm12-val.b{ stroke:var(--accent-2); stroke-width:3.4; }
+.working-variant-12 .pm12-val.c{ stroke:var(--positive); }
+.working-variant-12 .pm12-trk.b{ stroke-width:3.4; }
+.working-variant-12 .pm12-core{
+  position:absolute; inset:0; display:grid; place-content:center; text-align:center; line-height:1;
+}
+.working-variant-12 .pm12-core b{ font:700 21px/1 var(--font-mono); letter-spacing:-.03em; display:flex; align-items:baseline; justify-content:center; gap:1px; }
+.working-variant-12 .pm12-core b u{ text-decoration:none; font-size:10px; color:var(--muted); }
+.working-variant-12 .pm12-core span{ display:block; margin-top:4px; font:600 7px/1 var(--font-mono); letter-spacing:.16em; color:var(--subtle); }
+
+/* ---- channel header ---- */
+.working-variant-12 .pm12-right{ display:grid; grid-template-rows:auto auto 1fr; gap:8px; min-width:0; }
+.working-variant-12 .pm12-chan{ display:flex; align-items:center; gap:7px; font:600 9px/1 var(--font-mono); letter-spacing:.1em; }
+.working-variant-12 .pm12-ch{ color:var(--subtle); }
+.working-variant-12 .pm12-chan strong{ font:800 12px/1 var(--font-mono); letter-spacing:.08em; }
+.working-variant-12 .pm12-sp{ flex:1; }
+.working-variant-12 .pm12-st{ padding:2px 5px; border:1px solid var(--border); color:var(--muted); }
+.working-variant-12 .pm12-st.live{ color:var(--pm-step,var(--accent)); border-color:color-mix(in srgb,var(--pm-step,var(--accent)) 45%,var(--border)); }
+.working-variant-12 .pm12-st.hold{ color:var(--positive); border-color:color-mix(in srgb,var(--positive) 45%,var(--border)); }
+.working-variant-12 .pm12-clock{ color:var(--muted); }
+
+/* ---- scope ---- */
+.working-variant-12 .pm12-scope{
+  position:relative; height:50px; overflow:hidden;
+  border:1px solid var(--border); background:var(--code); border-radius:3px;
+}
+.working-variant-12 .pm12-grid{ position:absolute; inset:0; width:100%; height:100%; }
+.working-variant-12 .pm12-grid path{ fill:none; stroke:var(--border); stroke-width:1; vector-effect:non-scaling-stroke; opacity:.8; }
+.working-variant-12 .pm12-amp{
+  position:absolute; inset:0;
+  transform:scaleY(var(--amp,1));
+  transition:transform 640ms var(--pm-ease-out);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 92%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 92%,transparent 100%);
+}
+.working-variant-12 .pm12-trace{ position:absolute; inset:0; width:100%; height:100%; }
+.working-variant-12 .pm12-trace path{ fill:none; stroke:var(--pm-step,var(--accent)); stroke-width:1.4; stroke-linejoin:round; transition:stroke var(--pm-t-icon) linear; }
+/* one tile is 240 user units wide and the trace is exactly periodic over
+   it, so translating by a tile loops with no seam */
+@keyframes pm12-wave{ from{ transform:translateX(0); } to{ transform:translateX(-240px); } }
+.working-variant-12 .pm12-scroll{ animation:pm12-wave 3400ms linear infinite; }
+.working-variant-12 .pm12-scroll.held{ animation-play-state:paused; }
+.working-variant-12 .pm12-head{
+  position:absolute; top:0; bottom:0; right:8%; width:1px;
+  background:color-mix(in srgb,var(--pm-step,var(--accent)) 70%,transparent);
+}
+
+/* ---- numeric readouts ---- */
+.working-variant-12 .pm12-meters{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; align-content:end; }
+.working-variant-12 .pm12-m{ min-width:0; border-top:1px solid var(--border); padding-top:5px; }
+.working-variant-12 .pm12-m label{ display:flex; align-items:center; gap:4px; font:600 7px/1 var(--font-mono); letter-spacing:.14em; color:var(--subtle); }
+.working-variant-12 .pm12-m label i{ width:5px; height:5px; flex:0 0 auto; border-radius:1px; }
+.working-variant-12 .pm12-m label i.b{ background:var(--accent-2); }
+.working-variant-12 .pm12-m label i.c{ background:var(--positive); }
+.working-variant-12 .pm12-m label i.d{ background:var(--warning); }
+.working-variant-12 .pm12-m label i.e{ background:var(--subtle); }
+.working-variant-12 .pm12-m b{ display:block; margin-top:3px; font:700 14px/1 var(--font-mono); letter-spacing:-.02em; white-space:nowrap; }
+.working-variant-12 .pm12-m b u{ text-decoration:none; font-size:8px; color:var(--muted); margin-left:2px; }
+
+/* ---- phase register ---- */
+.working-variant-12 .pm12-reg{
+  display:flex; align-items:flex-end; gap:4px; height:12px;
+  border-bottom:1px solid var(--border); padding-bottom:1px;
+}
+.working-variant-12 .pm12-reg i{
+  flex:1; height:2px; background:var(--surface-4);
+  transition:height var(--pm-t-handoff) var(--pm-ease-pop), background-color var(--pm-t-handoff) var(--pm-ease-out);
+}
+.working-variant-12 .pm12-reg i.done{ height:4px; background:color-mix(in srgb,var(--pm-step,var(--accent)) 50%,var(--surface-4)); }
+.working-variant-12 .pm12-reg i.now{ height:12px; background:var(--pm-step,var(--accent)); }
+
+/* ---- child agents as extra channels on the same instrument ---- */
+.working-variant-12 .pm12-subs{ display:grid; gap:5px; }
+.working-variant-12 .pm12-sub{
+  display:grid; grid-template-columns:56px minmax(0,1fr) 34px 26px; gap:8px; align-items:center;
+  width:100%; padding:0; border:0; background:transparent; cursor:pointer; text-align:left;
+  font:600 8px/1 var(--font-mono); letter-spacing:.1em; color:var(--subtle);
+  animation:pm12-chan-in var(--pm-t-row) var(--pm-ease-out) both;
+}
+.working-variant-12 .pm12-sub:nth-child(2){ animation-delay:var(--pm-t-cascade); }
+.working-variant-12 .pm12-sub:hover .pm12-sub-ch{ color:var(--text); }
+.working-variant-12 .pm12-sub-bar{ height:4px; background:var(--surface-4); overflow:hidden; }
+.working-variant-12 .pm12-sub-bar i{
+  display:block; height:100%; background:var(--pm-step,var(--accent));
+  transition:width 640ms var(--pm-ease-out);
+}
+.working-variant-12 .pm12-sub-v{ font:700 10px/1 var(--font-mono); color:var(--text); text-align:right; }
+.working-variant-12 .pm12-sub-v u{ text-decoration:none; font-size:7px; color:var(--muted); }
+.working-variant-12 .pm12-sub-st{ text-align:right; color:var(--muted); }
+.working-variant-12 .pm12-sub-st.blocked{ color:var(--danger); }
+.working-variant-12 .pm12-sub.blocked .pm12-sub-bar i{ background:var(--danger); }
+.working-variant-12 .pm12-sub-st.working{ color:var(--pm-step,var(--accent)); }
+@keyframes pm12-chan-in{ from{ opacity:0; filter:blur(var(--pm-blur)); } to{ opacity:1; filter:blur(0); } }
+
+@keyframes pm12-cluster-in{ from{ opacity:0; filter:blur(var(--pm-blur)); } to{ opacity:1; filter:blur(0); } }
+
+/* =====================================================================
+   13 — BLUEPRINT
+   ---------------------------------------------------------------------
+   The handoff is staged as a drafting gesture. Every beat is named here
+   so the sequence can be read in one place rather than inferred from
+   scattered delays:
+
+     --pm13-draw    0 -> 300ms   the pen crosses the new edge at a
+                                 constant speed (linear, like the chase)
+                                 and the ink behind it is wet: heavy and
+                                 step-coloured, drying to board grey over
+                                 the 320ms after it lands
+     --pm13-glide   0 -> 360ms   the drafting crosshair travels to the
+                                 new station on the measured pop easing
+     --pm13-demote  0 -> 260ms   the station just left fades to grey
+     --pm13-cap    70 -> 335ms   the callout writes itself: the chip
+                                 lands first and a mask edge then crosses
+                                 the verb left to right, so the line is
+                                 back inside the measured 220ms handoff
+                                 and finishes writing after it
+     --pm13-ink   300 -> 470ms   the node inks only once the pen arrives
+     --pm13-code  430 -> 540ms   the station code fades up beneath it
+
+   Nothing here pulses. Everything either travels, strokes on, or settles
+   once -- which is what separates a drawing from a blinking diagram.
+   ===================================================================== */
+.working-variant-13 .pm13{
+  display:grid; gap:8px;
+  --pm13-draw:300ms;
+  --pm13-glide:360ms;
+  --pm13-demote:260ms;
+  --pm13-cap:70ms;
+  --pm13-ink:300ms;
+  --pm13-code:430ms;
+}
+.working-variant-13 .pm13-tb{ display:flex; align-items:center; gap:6px; font:600 8px/1 var(--font-mono); letter-spacing:.12em; }
+.working-variant-13 .pm13-tb .k{ color:var(--subtle); }
+.working-variant-13 .pm13-tb .v{ color:var(--muted); }
+.working-variant-13 .pm13-tb .sp{ flex:1; border-bottom:1px dashed var(--border); align-self:center; height:1px; }
+
+.working-variant-13 .pm13-sheet{
+  border:1px solid var(--border); border-radius:3px; background:var(--surface);
+  overflow:hidden; color:var(--text);
+}
+.working-variant-13 .pm13-sheet svg{ display:block; }
+.working-variant-13 .pm13-paper{ opacity:1; }
+
+/* ---- un-inked future: dashed ghosts on the sheet ----
+   The one edge the pen is about to draw marches, and the station it is
+   heading for warms to that step's colour: anticipation, exactly one
+   step deep, so the sheet is never a field of moving dashes. */
+.working-variant-13 .pm13-ghost{
+  fill:none; stroke:var(--subtle); stroke-width:1; stroke-dasharray:1.6 2.4; opacity:.5;
+  transition:stroke var(--pm13-demote) var(--pm-ease-out), opacity var(--pm13-demote) var(--pm-ease-out);
+}
+.working-variant-13 .pm13-gedge{
+  fill:none; stroke:var(--subtle); stroke-width:1; stroke-dasharray:2 3.5; opacity:.32;
+  transition:stroke var(--pm13-demote) var(--pm-ease-out), opacity var(--pm13-demote) var(--pm-ease-out);
+}
+.working-variant-13 .pm13-ghost.soon{ stroke:var(--pm-step,var(--accent)); opacity:.8; }
+.working-variant-13 .pm13-gedge.soon{
+  stroke:var(--pm-step,var(--accent)); opacity:.5;
+  animation:pm13-march var(--pm-shimmer-cycle) linear infinite;
+}
+@keyframes pm13-march{ from{ stroke-dashoffset:0; } to{ stroke-dashoffset:-11; } }
+
+/* ---- inked traces ----
+   Each edge strokes itself on once, when its step lands, then dries:
+   the second animation is delayed by the whole draw and fills backwards,
+   so the stroke is heavy and step-coloured while it is wet and settles
+   to board grey afterwards. */
+.working-variant-13 .pm13-edge{
+  fill:none; stroke:var(--border-strong); stroke-width:1.4; stroke-linecap:round;
+  stroke-dasharray:1;
+  animation:pm13-draw var(--pm13-draw) linear both,
+            pm13-dry 320ms var(--pm-ease-out) var(--pm13-draw) both;
+}
+@keyframes pm13-draw{ from{ stroke-dashoffset:1; } to{ stroke-dashoffset:0; } }
+@keyframes pm13-dry{
+  from{ stroke-width:2.6; stroke:var(--pm-step,var(--accent)); }
+  to  { stroke-width:1.4; stroke:var(--border-strong); }
+}
+
+/* ---- the pen: a bright head with a halo, riding the wet tip ----
+   Same path, same duration, same linear easing as the draw, so the head
+   is on the tip of the ink for the whole crossing rather than racing it.
+   pathLength is 1, so .018 of the path is the head whatever its length. */
+.working-variant-13 .pm13-pen path{
+  fill:none; stroke-linecap:round;
+  animation:pm13-pen var(--pm13-draw) linear both,
+            pm13-pen-lift 90ms linear calc(var(--pm13-draw) - 30ms) forwards;
+}
+/* The halo is the step colour; the tip is ink, so it reads as a nib
+   against the wet stroke in both the light and the dark themes rather
+   than disappearing into the line it is drawing. */
+.working-variant-13 .pm13-pen-t{ stroke:var(--pm-step,var(--accent)); stroke-width:9; stroke-dasharray:.02 .98; opacity:.3; }
+.working-variant-13 .pm13-pen-h{ stroke:color-mix(in srgb,var(--text) 72%,var(--pm-step,var(--accent))); stroke-width:2.6; stroke-dasharray:.016 .984; }
+@keyframes pm13-pen{ from{ stroke-dashoffset:1; } to{ stroke-dashoffset:.004; } }
+/* The pen lifts off the board rather than parking on the node. forwards,
+   not both: a backwards fill would drag the halo's own opacity up to the
+   head's for the whole crossing. */
+@keyframes pm13-pen-lift{ to{ opacity:0; } }
+
+/* current flowing along the live trace — travels, never pulses */
+.working-variant-13 .pm13-chase{
+  fill:none; stroke:var(--pm-step,var(--accent)); stroke-width:2; stroke-linecap:round;
+  stroke-dasharray:.16 .84;
+  animation:pm13-chase var(--pm-shimmer-cycle) linear infinite;
+}
+@keyframes pm13-chase{ from{ stroke-dashoffset:1; } to{ stroke-dashoffset:0; } }
+
+/* ---- inked nodes ---- */
+.working-variant-13 .pm13-pop{
+  transform-box:fill-box; transform-origin:50% 50%;
+  animation:pm13-pop-in 170ms var(--pm-ease-pop) both;
+  animation-delay:var(--pm13-ink);
+}
+/* The disc is on the board as the pen arrives and spends the rest of the
+   170ms settling into size -- fading it linearly across the whole window
+   made the node look late by a tenth of a second. */
+@keyframes pm13-pop-in{
+  from{ opacity:0; transform:scale(.34); }
+  40% { opacity:1; }
+  to  { opacity:1; transform:none; }
+}
+/* The station the run has just left demotes rather than switching: fill,
+   ring and glyph all glide to grey over the same 260ms. */
+.working-variant-13 .pm13-disc{
+  fill:var(--surface); stroke:var(--border-strong); stroke-width:1.2;
+  transition:fill var(--pm13-demote) var(--pm-ease-out),
+             stroke var(--pm13-demote) var(--pm-ease-out),
+             stroke-width var(--pm13-demote) var(--pm-ease-out);
+}
+.working-variant-13 .pm13-gl{ color:var(--subtle); transition:color var(--pm13-demote) var(--pm-ease-out); }
+.working-variant-13 .pm13-node.now .pm13-disc{ fill:color-mix(in srgb,var(--pm-step,var(--accent)) 16%,var(--surface)); stroke:var(--pm-step,var(--accent)); stroke-width:1.6; }
+.working-variant-13 .pm13-node.now .pm13-gl{ color:var(--pm-step,var(--accent)); }
+.working-variant-13 .pm13-node.done .pm13-gl{ color:color-mix(in srgb,var(--pm-step,var(--accent)) 70%,var(--muted)); }
+.working-variant-13 .pm13-node.end .pm13-disc{ fill:color-mix(in srgb,var(--positive) 18%,var(--surface)); stroke:var(--positive); }
+.working-variant-13 .pm13-node.end .pm13-gl{ color:var(--positive); }
+.working-variant-13 .pm13-lb{
+  fill:var(--subtle); font:600 6.5px var(--font-mono); letter-spacing:.09em; text-anchor:middle;
+  animation:pm13-lb-in var(--pm-t-row) var(--pm-ease-out) both; animation-delay:var(--pm13-code);
+  transition:fill var(--pm13-demote) var(--pm-ease-out);
+}
+.working-variant-13 .pm13-node.now .pm13-lb{ fill:var(--pm-step,var(--accent)); }
+@keyframes pm13-lb-in{ from{ opacity:0; } to{ opacity:1; } }
+
+/* ---- drafting crosshair that glides to the live station ----
+   Two datum rules and two rings. The rules span the sheet, so the travel
+   between stations is something you can watch from anywhere on the
+   drawing; the svg viewBox clips them, nothing leaves the card. The
+   group sits under the ink layer, so nodes and codes stay legible. */
+.working-variant-13 .pm13-cur{
+  transition:transform var(--pm13-glide) var(--pm-ease-pop);
+  pointer-events:none;
+}
+.working-variant-13 .pm13-rule{
+  stroke:var(--pm-step,var(--accent)); stroke-width:1; stroke-dasharray:3 4; opacity:.24;
+  transition:stroke var(--pm13-demote) linear;
+}
+.working-variant-13 .pm13-cur1,
+.working-variant-13 .pm13-cur2{ fill:none; stroke:var(--pm-step,var(--accent)); stroke-width:1; opacity:.5;
+  transition:stroke var(--pm13-demote) linear; }
+.working-variant-13 .pm13-cur2{ stroke-dasharray:2 3; opacity:.9; }
+
+/* ---- caption: the callout the pen writes ---- */
+.working-variant-13 .pm13-cap{ display:flex; align-items:baseline; gap:8px; min-width:0; }
+.working-variant-13 .pm13-cap-k{
+  font:700 8px/1 var(--font-mono); letter-spacing:.14em; color:var(--pm-step,var(--accent));
+  border:1px solid color-mix(in srgb,var(--pm-step,var(--accent)) 40%,var(--border)); padding:3px 5px;
+  flex:0 0 auto;
+  animation:pm13-cap-in var(--pm-t-row) var(--pm-ease-out) both;
+  animation-delay:var(--pm13-cap);
+}
+/* The verb is not faded in, it is written: a soft mask edge crosses the
+   line left to right, which is the one entrance that survives alongside
+   .pm-shimmer -- the shimmer owns colour and background-clip on the
+   <strong>, so the wrapper has to carry the reveal. */
+.working-variant-13 .pm13-cap-v{
+  min-width:0;
+  -webkit-mask-image:linear-gradient(90deg,#000 0 42%,transparent 62%);
+          mask-image:linear-gradient(90deg,#000 0 42%,transparent 62%);
+  -webkit-mask-size:260% 100%;          mask-size:260% 100%;
+  -webkit-mask-repeat:no-repeat;        mask-repeat:no-repeat;
+  animation:pm13-write 220ms linear both;
+  animation-delay:calc(var(--pm13-cap) + var(--pm-t-cascade));
+}
+@keyframes pm13-write{
+  from{ -webkit-mask-position:100% 0; mask-position:100% 0; }
+  to  { -webkit-mask-position:0 0;    mask-position:0 0; }
+}
+@keyframes pm13-cap-in{
+  from{ opacity:0; transform:translateX(-7px); filter:blur(var(--pm-blur)); }
+  60% { opacity:1; }
+  to  { opacity:1; transform:none; filter:blur(0); }
+}
+.working-variant-13 .pm13-cap strong{ font-size:12px; font-weight:750; letter-spacing:-.01em; min-width:0; }
+
+/* =====================================================================
+   14 — TIMELINE SCRUB
+   ---------------------------------------------------------------------
+   A scrub is travel along an axis, so the handoff is played as travel:
+
+     --pm14-travel  0 -> 520ms   the playhead glides to its new offset
+                                 and every fill width moves with it
+     --pm14-seal    0 -> 420ms   the segment the head just cleared is
+                                 sealed by a band that wipes left to
+                                 right, so the live hatching resolves
+                                 into laid ink instead of switching
+     rows          40 -> 195ms   the detail rows cascade on the measured
+                                 45ms beat
+     sentence     150 -> 520ms   the detail resolves a word at a time
+     evidence     340 -> 540ms   the evidence run arrives last
+
+   The deck is still a single-slot swap -- the outgoing card is gone in
+   the same frame -- so the cascade only ever happens inside one card and
+   two sentences are never painted over each other.
+   ===================================================================== */
+.working-variant-14 .pm14{
+  display:grid; gap:7px;
+  --pm14-travel:520ms;
+  --pm14-seal:420ms;
+}
+.working-variant-14 .pm14-head-row{ display:flex; align-items:baseline; gap:6px; font:600 8px/1 var(--font-mono); letter-spacing:.12em; }
+.working-variant-14 .pm14-k{ color:var(--subtle); }
+.working-variant-14 .pm14-v{ color:var(--muted); }
+.working-variant-14 .pm14-sp{ flex:1; }
+.working-variant-14 .pm14-now{ font-size:12px; font-weight:800; letter-spacing:0; color:var(--text); }
+.working-variant-14 .pm14-tot{ color:var(--subtle); }
+
+/* ---- ruler ---- */
+.working-variant-14 .pm14-ruler{ position:relative; height:10px; }
+.working-variant-14 .pm14-ruler i{ position:absolute; bottom:0; width:1px; height:4px; background:color-mix(in srgb,var(--subtle) 70%,transparent); }
+.working-variant-14 .pm14-ruler i u{
+  position:absolute; left:0; bottom:5px; text-decoration:none;
+  font:600 7px/1 var(--font-mono); color:var(--subtle); letter-spacing:.08em;
+}
+
+/* ---- the axis ---- */
+.working-variant-14 .pm14-track{
+  position:relative; display:flex; align-items:stretch; height:30px;
+  border:1px solid var(--border); border-radius:3px; overflow:visible; background:var(--surface-3);
+}
+.working-variant-14 .pm14-seg{
+  position:relative; min-width:0; padding:0; border:0; border-right:1px solid var(--surface);
+  background:transparent; cursor:pointer; overflow:hidden; display:grid; place-items:center;
+  transition:background-color var(--pm-t-handoff) var(--pm-ease-out);
+}
+.working-variant-14 .pm14-seg:first-child{ border-radius:2px 0 0 2px; }
+.working-variant-14 .pm14-seg:last-child{ border-right:0; border-radius:0 2px 2px 0; }
+.working-variant-14 .pm14-fill{
+  position:absolute; left:0; top:0; bottom:0; width:0;
+  background:color-mix(in srgb,var(--pm-step,var(--accent)) 34%,var(--surface-3));
+  transition:width var(--pm14-travel) var(--pm-ease-out);
+}
+.working-variant-14 .pm14-seg.now .pm14-fill{
+  background:
+    repeating-linear-gradient(115deg,
+      transparent 0 6px,
+      color-mix(in srgb,var(--pm-step,var(--accent)) 22%,transparent) 6px 12px),
+    color-mix(in srgb,var(--pm-step,var(--accent)) 42%,var(--surface-3));
+  background-size:34px 100%,100% 100%;
+  animation:pm14-scan var(--pm-shimmer-cycle) linear infinite;
+}
+@keyframes pm14-scan{ from{ background-position:0 0,0 0; } to{ background-position:34px 0,0 0; } }
+.working-variant-14 .pm14-seg.now{ box-shadow:inset 0 0 0 1px var(--pm-step,var(--accent)); z-index:2; }
+/* The seal: the wipe that lays the segment down as the head leaves it.
+   It is a keyed node that exists for exactly one step, so it plays once
+   and is never restarted by the 1050ms tick. Clipped by the segment's
+   own overflow, so it cannot reach the edge of the card. */
+.working-variant-14 .pm14-seal{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background-image:linear-gradient(100deg,
+      transparent 0 40%,
+      color-mix(in srgb,var(--pm-step,var(--accent)) 62%,transparent) 46%,
+      color-mix(in srgb,var(--text) 26%,transparent) 50%,
+      color-mix(in srgb,var(--pm-step,var(--accent)) 42%,transparent) 54%,
+      transparent 60% 100%);
+  background-size:300% 100%; background-repeat:no-repeat; background-position:100% 0;
+  animation:pm14-seal var(--pm14-seal) var(--pm-ease-out) both;
+}
+/* The band is moved by background-position rather than by a transform:
+   a translated overlay makes the segment report scrollWidth past its own
+   box for the length of the wipe, which is a defect a probe will find
+   even though overflow:hidden means nothing is ever painted outside. */
+@keyframes pm14-seal{
+  from{ background-position:100% 0; opacity:1; }
+  70% { opacity:1; }
+  to  { background-position:0 0; opacity:0; }
+}
+.working-variant-14 .pm14-glyph{ position:relative; z-index:2; display:grid; place-items:center; color:var(--subtle); transition:color var(--pm-t-icon) var(--pm-ease-out); }
+.working-variant-14 .pm14-seg.done .pm14-glyph{ color:color-mix(in srgb,var(--pm-step,var(--accent)) 62%,var(--text)); }
+.working-variant-14 .pm14-seg.now .pm14-glyph{ color:var(--text); }
+.working-variant-14 .pm14-seg:hover{
+  background:color-mix(in srgb,var(--text) 8%,transparent);
+  outline:1px solid color-mix(in srgb,var(--text) 55%,transparent); outline-offset:-1px; z-index:3;
+}
+.working-variant-14 .pm14-seg:hover::after{
+  content:""; position:absolute; left:0; top:-4px; bottom:-4px; width:1px; background:var(--text); opacity:.6;
+}
+.working-variant-14 .pm14-seg:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+
+/* The head carries a soft band with it, so the travel is readable as
+   travel rather than as a hairline teleporting. */
+.working-variant-14 .pm14-playhead{
+  position:absolute; top:-5px; bottom:-5px; width:1px; background:var(--text); z-index:4;
+  transition:left var(--pm14-travel) var(--pm-ease-out);
+  animation:pm14-head-in var(--pm-t-handoff) var(--pm-ease-out) both;
+}
+.working-variant-14 .pm14-playhead::before{
+  content:""; position:absolute; left:-3px; top:-3px; width:7px; height:7px;
+  background:var(--text); transform:rotate(45deg);
+}
+.working-variant-14 .pm14-playhead::after{
+  content:""; position:absolute; left:-9px; right:-9px; top:5px; bottom:5px; pointer-events:none;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--text) 20%,transparent),transparent);
+}
+@keyframes pm14-head-in{ from{ opacity:0; } to{ opacity:1; } }
+
+/* ---- detail deck: one card per segment, only the addressed one shows ----
+   Every card is the same fixed height and clipped, so swapping between
+   them on hover never reflows anything below the deck. */
+.working-variant-14 .pm14-cards{ position:relative; height:80px; }
+/* The deck is a single-slot swap, not a crossfade: the card that loses
+   .live drops to zero in the same frame, and the arriving card is opaque
+   immediately -- its rows, not the card, carry the entrance. Two stacked
+   cards at part opacity would smear two sentences over each other. */
+.working-variant-14 .pm14-card{
+  position:absolute; inset:0; opacity:0; pointer-events:none; overflow:hidden;
+  border-left:2px solid var(--pm-step,var(--accent)); padding:3px 0 0 8px;
+  --pm-row-base:40ms;
+}
+.working-variant-14 .pm14-card.live{ opacity:1; }
+.working-variant-14 .pm14-card-top{ display:flex; align-items:baseline; gap:6px; min-width:0; }
+.working-variant-14 .pm14-badge{
+  display:inline-flex; align-items:center; gap:4px; flex:0 0 auto;
+  font:700 8px/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase;
+  color:var(--pm-step,var(--accent));
+}
+.working-variant-14 .pm14-card-top strong{
+  font-size:12px; font-weight:750; letter-spacing:-.01em;
+  min-width:0; flex:0 1 auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.working-variant-14 .pm14-meta{ display:flex; align-items:baseline; gap:7px; margin-top:3px; }
+.working-variant-14 .pm14-span{ font:600 8px/1 var(--font-mono); color:var(--subtle); flex:0 0 auto; }
+.working-variant-14 .pm14-dur{ font:700 9px/1 var(--font-mono); color:var(--muted); flex:0 0 auto; }
+.working-variant-14 .pm14-card p{
+  margin:3px 0 0; font-size:10px; line-height:1.4; color:var(--muted);
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden;
+}
+/* The sentence resolves a word at a time behind the rows above it. The
+   beat is half the 45ms row cascade, because this is one row filling in,
+   not a list arriving -- a full 45ms per word would still be writing
+   itself when the next step lands. */
+.working-variant-14 .pm14-card p.pm-stream{ --pm-t-cascade:26ms; }
+.working-variant-14 .pm14-card p.pm-stream .pm-word{
+  animation-delay:calc(150ms + var(--pm-stagger,0) * var(--pm-t-cascade));
+}
+/* The evidence run is deliberately one clipped line; it fades out rather
+   than cutting a word in half when the card is at its narrow width. */
+.working-variant-14 .pm14-ev{
+  display:flex; gap:10px; margin-top:3px; white-space:nowrap; overflow:hidden;
+  --pm-row-base:340ms;
+  -webkit-mask-image:linear-gradient(90deg,#000 86%,transparent 100%);
+          mask-image:linear-gradient(90deg,#000 86%,transparent 100%);
+}
+.working-variant-14 .pm14-ev span{ font:600 8px/1 var(--font-mono); color:var(--subtle); }
+.working-variant-14 .pm14-ev span::before{ content:"· "; }
+.working-variant-14 .pm14-hint{ font:600 8px/1 var(--font-mono); letter-spacing:.06em; color:var(--subtle); }
+
+/* Scrub addressing. :has() lets the hovered segment drive the deck with
+   no JS at all, which means it survives the keyed patch untouched. */
+.working-variant-14 .pm14:has(.pm14-seg:hover) .pm14-card.live{ opacity:0; }
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(1):hover) .pm14-card:nth-child(1),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(2):hover) .pm14-card:nth-child(2),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(3):hover) .pm14-card:nth-child(3),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(4):hover) .pm14-card:nth-child(4),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(5):hover) .pm14-card:nth-child(5),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(6):hover) .pm14-card:nth-child(6),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(7):hover) .pm14-card:nth-child(7),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(8):hover) .pm14-card:nth-child(8),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(9):hover) .pm14-card:nth-child(9),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(10):hover) .pm14-card:nth-child(10),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(11):hover) .pm14-card:nth-child(11),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(12):hover) .pm14-card:nth-child(12),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(13):hover) .pm14-card:nth-child(13),
+.working-variant-14 .pm14:has(.pm14-seg:nth-child(14):hover) .pm14-card:nth-child(14){ opacity:1; }
+
+/* ---- reduced motion, takes 13 and 14 ---------------------------------
+   The global rule caps loops at one pass; these two takes also stage
+   their handoffs over ~500ms, and a staged sequence is still motion. Flatten
+   the delays so every beat lands at once, keep the state changes legible,
+   and never leave a `both`-filled entrance holding an element at zero. */
+@media (prefers-reduced-motion: reduce){
+  .working-variant-13 .pm13-edge,
+  .working-variant-13 .pm13-pen path,
+  .working-variant-13 .pm13-pop,
+  .working-variant-13 .pm13-lb,
+  .working-variant-13 .pm13-cap-k,
+  .working-variant-13 .pm13-cap-v{ animation-delay:0ms; animation-duration:120ms; }
+  .working-variant-13 .pm13-cap-v{ filter:none; }
+  .working-variant-13 .pm13-cur{ transition-duration:120ms; }
+  .working-variant-14 .pm14-card p.pm-stream .pm-word{ animation-delay:0ms; animation-duration:1ms; filter:none; }
+  .working-variant-14 .pm14-seal{ animation-duration:120ms; }
+  .working-variant-14 .pm14-fill,
+  .working-variant-14 .pm14-playhead{ transition-duration:120ms; }
+}
+
+/* =====================================================================
+   15 — TERMINAL CAST
+   ===================================================================== */
+.working-variant-15 .pm15{ border:1px solid var(--border); background:var(--code); border-radius:2px; overflow:hidden; }
+.working-variant-15 .pm15-bar{
+  display:flex; align-items:center; gap:7px; padding:5px 8px;
+  border-bottom:1px solid var(--border); background:var(--surface-2);
+  font:600 8px/1 var(--font-mono); letter-spacing:.08em; color:var(--muted);
+}
+.working-variant-15 .pm15-title{ color:var(--subtle); }
+.working-variant-15 .pm15-sp{ flex:1; }
+.working-variant-15 .pm15-div{ color:color-mix(in srgb,var(--subtle) 55%,transparent); }
+.working-variant-15 .pm15-rec{ color:var(--subtle); }
+.working-variant-15 .pm15-rec.on{ color:var(--danger); }
+
+.working-variant-15 .pm15-scroll{
+  display:flex; flex-direction:column; justify-content:flex-end;
+  /* min-height keeps the window a terminal-shaped box while it fills;
+     max-height is the budget the take's JS renders against, so the
+     transcript never overflows and never overlaps the card header. */
+  min-height:150px; max-height:302px; overflow:hidden; padding:8px 9px;
+  font:10px/1.5 var(--font-mono);
+}
+.working-variant-15 .pm15-scroll.scrolled{
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 20px);
+          mask-image:linear-gradient(180deg,transparent 0,#000 20px);
+}
+.working-variant-15 .pm15-blk{ flex:0 0 auto; padding-bottom:7px; }
+.working-variant-15 .pm15-blk.done{ opacity:.66; }
+.working-variant-15 .pm15-blk.live,
+.working-variant-15 .pm15-blk.tail{ opacity:1; }
+
+.working-variant-15 .pm15-ps{ display:flex; gap:8px; white-space:pre; }
+.working-variant-15 .pm15-ps1{ color:var(--positive); }
+.working-variant-15 .pm15-ps2{ color:var(--accent-2); }
+.working-variant-15 .pm15-git{ color:var(--warning); }
+.working-variant-15 .pm15-git::before{ content:"("; }
+.working-variant-15 .pm15-git::after{ content:")"; }
+.working-variant-15 .pm15-cmd{ display:flex; align-items:baseline; white-space:pre; }
+.working-variant-15 .pm15-dollar{ color:var(--muted); flex:0 0 auto; }
+.working-variant-15 .pm15-dollar::after{ content:" "; }
+.working-variant-15 .pm15-txt{ color:var(--text); white-space:pre-wrap; word-break:break-word; min-width:0; }
+
+/* the type-on: a steps() width reveal, which is what a cast actually is */
+.working-variant-15 .pm15-type{
+  display:inline-block; overflow:hidden; white-space:pre; vertical-align:bottom;
+  color:var(--text); width:0;
+  animation-name:pm15-type;
+  animation-duration:calc(var(--n,20) * 17ms);
+  animation-timing-function:steps(var(--n,20),end);
+  animation-fill-mode:both;
+}
+@keyframes pm15-type{ from{ width:0; } to{ width:calc(var(--n,20) * 1ch); } }
+
+.working-variant-15 .pm15-caret{
+  display:inline-block; width:.62em; height:1.05em; margin-left:1px;
+  background:var(--text); vertical-align:-.18em;
+  animation:pm15-blink 1060ms step-end infinite;
+}
+.working-variant-15 .pm15-caret.idle{ background:var(--muted); }
+@keyframes pm15-blink{ 0%,50%{ opacity:1; } 50.01%,100%{ opacity:0; } }
+
+/* pre-wrap so the spawn step can column-align its job table with real
+   padding, while long lines still wrap at the narrow card width. */
+.working-variant-15 .pm15-out{ color:var(--muted); padding-left:2px; white-space:pre-wrap; word-break:break-word; }
+.working-variant-15 .pm15-out .pm15-pfx{ color:color-mix(in srgb,var(--subtle) 75%,transparent); padding-right:6px; }
+.working-variant-15 .pm15-out.in{
+  animation:pm15-out-in var(--pm-t-row) var(--pm-ease-out) both;
+  animation-delay:calc(var(--d0,0ms) + var(--i,0) * var(--pm-t-cascade));
+}
+@keyframes pm15-out-in{
+  from{ opacity:0; filter:blur(var(--pm-blur)); transform:translateY(var(--pm-rise)); }
+  60% { opacity:1; }
+  to  { opacity:1; filter:blur(0); transform:none; }
+}
+
+.working-variant-15 .pm15-exit{ display:flex; align-items:baseline; gap:8px; padding-left:2px; font-size:9px; }
+.working-variant-15 .pm15-ok{ color:var(--positive); }
+.working-variant-15 .pm15-el{ color:var(--subtle); }
+.working-variant-15 .pm15-at{ color:color-mix(in srgb,var(--subtle) 85%,transparent); }
+.working-variant-15 .pm15-exit .pm15-sp{ flex:1; }
+.working-variant-15 .pm15-exit.in{
+  animation:pm15-exit-in var(--pm-t-label) var(--pm-ease-out) both;
+  animation-delay:calc(var(--d0,0ms) + var(--i,0) * var(--pm-t-cascade) + 120ms);
+}
+@keyframes pm15-exit-in{ from{ opacity:0; transform:translateY(2px); } to{ opacity:1; transform:none; } }
+
+/* =====================================================================
+   Reduced motion — stop the loops, keep the state changes legible.
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce){
+  .working-variant-12 .pm12-scroll,
+  .working-variant-13 .pm13-chase,
+  .working-variant-14 .pm14-seg.now .pm14-fill,
+  .working-variant-15 .pm15-caret{ animation:none; }
+  .working-variant-15 .pm15-caret{ opacity:1; }
+  .working-variant-15 .pm15-type{ animation-duration:1ms; }
+  .working-variant-13 .pm13-edge{ animation-duration:1ms; }
+  .working-variant-13 .pm13-pop,
+  .working-variant-13 .pm13-lb{ animation-duration:1ms; animation-delay:0ms; }
+  .working-variant-15 .pm15-out.in,
+  .working-variant-15 .pm15-exit.in{ animation-duration:1ms; animation-delay:0ms; filter:none; }
+}

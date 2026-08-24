@@ -1,0 +1,3707 @@
+# Source Review Inventory
+
+Generated from the attached source packets and repository archive.
+
+## Located archives
+
+- **original_packet:** `/mnt/data/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10(2).zip`
+- **correction_packet:** `/mnt/data/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13(3).zip`
+- **repo:** `/mnt/data/Puppet-Master-main (2).zip`
+- **t3:** `/mnt/data/t3code-0.0.34-nightly.20260820.1142(1).zip`
+- **visualizer:** `/mnt/data/open-webui-plugins-main(1).zip`
+
+## Packet text files reviewed (78)
+
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/04_FOUR_VIDEO_INSPIRATION_GUIDE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/AUDIT_PROMPT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/00_START_HERE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/IMPLEMENTATION_PROMPT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/05_DEMO_DATA_AND_INTERACTION_STORY.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/11_THREAD_COVERAGE_AND_SUPERSESSION_AUDIT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/06_MOTION_VISUAL_AND_SLINT_QUALITY.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/07_SYSTEM_INTEGRATION_BOUNDARIES.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/02_FIXED_PRODUCT_BEHAVIOR.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/01_CREATIVE_DIRECTOR_BRIEF.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/PACKET_MANIFEST.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/VALIDATION_REPORT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/03_CUMULATIVE_THREAD_DECISIONS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/original_requirements.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/selected_concept_audit_context.template.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/original_videoTimeline.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/final_chat_decision_coverage.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/extended_demo_scenario.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/original_source_inventory.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/original_relevant_plan_units.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/original_demoData.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/candidate_command_id_register.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/impact_register_template.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/concept_manifest_template.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/original_testMatrix.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/machine/impact_register_template_v2.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/CONCEPT_RULES.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/revision_2/05_VIDEO_REFERENCE_QUESTIONS_AND_ACTIVITY.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/revision_2/README_SOURCE_NOTE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/revision_2/04_PINNED_HISTORY_ARTIFACT_WORKSPACE_AND_COMPACT_WORK.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/revision_2/08_DETAILED_DEMO_CONTENT_AND_INTERACTION_PROBES.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/revision_2/CHAT_UPDATE_V2_DELTA_ONLY.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/videos/VIDEO_SOURCE_MAP.json`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/SERVER_BACKBONE_ASSISTANT_CHAT_RETURN.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/01_SELECTOR_ACCESS_BSD_AND_WARNINGS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/SHARED_PROCESS_RULES.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/BROWSER_TERMINOLOGY_FINAL_CORRECTION.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/04_PINNED_HISTORY_ARTIFACTS_QUESTIONS_ACTIVITY.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/SOURCE_AND_PRECEDENCE_MAP.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/README_SOURCE_NOTE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/02_CONTEXT_HISTORY_THREADS_AND_BRANCHING.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/07_DEMO_FIXTURES_MOTION_AND_TEST_GATE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/REFERENCE_SUPERSESSIONS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/03_GOAL_TODO_SUBAGENTS_CREW_AND_OPERATIONAL_AWARENESS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/08_PLAN_COMMAND_WIRING_DRY_IMPACT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/05_ATTACHMENTS_PROVIDER_SETUP_SYNC_AND_NOTIFICATIONS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/EGOLITE_USAGE_CHAT_RETURN.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/cumulative_sources/06_COMPOSER_SPELLCHECK_AND_THREAD_LOCAL_STATE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/12_REFERENCE_SCREENSHOTS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/08_TESTING_AND_VISUAL_AUDIT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/00_START_HERE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/05_EXTERNAL_CHAT_RESEARCH.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/README_SOURCE_NOTE.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/03_ACTIVITY_VIDEO_ANALYSIS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/04_QUESTIONNAIRE_VIDEO_ANALYSIS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/07_DEMO_DATA_CONTRACT.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/09_LATER_CANON_UPDATE_REGISTER.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/02_PLANS_CANON_AND_SUPERSESSIONS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/01_FIXED_REQUIREMENTS.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/06_EXTERNAL_MOTION_RESEARCH.md`
+- `original_packet/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/reference/original_handoff/VALIDATION_REPORT.md`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/CORRECTION_GOAL_PROMPT.md`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/REFERENCE_PATH_FIXES.md`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/DEMO_TRIGGER_CONTRACT.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/DEMO_SCENARIO_MANIFEST.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/CORRECTION_PACKET_MANIFEST.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/machine/testMatrix.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/machine/relevantPlanUnits.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/machine/demoData.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/machine/videoTimeline.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/machine/sourceInventory.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/machine/requirements.json`
+- `correction_packet/PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13/reference/videos/VIDEO_SOURCE_MAP.json`
+
+## Assistant-related Plan files extracted (3220)
+
+- `Puppet-Master-main (2)/Puppet-Master-main/.zcode/plans/plan-sess_626c1a26-9d05-4fc3-859c-28daf7bdb010.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/.zcode/plans/plan-sess_acb67491-e51f-47eb-a96e-62fea1663d7b.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-001-part-3-fable-cleanup/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-001-part-3-fable-cleanup/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-001-part-3-fable-cleanup/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-001-part-3-fable-cleanup/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-001-part-3-fable-cleanup/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-001-part-3-fable-cleanup/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-002-part-4-fable-cleanup/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-002-part-4-fable-cleanup/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-002-part-4-fable-cleanup/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260615-002-part-4-fable-cleanup/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-001-part-4-fable-cleanup/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-001-part-4-fable-cleanup/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-001-part-4-fable-cleanup/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-001-part-4-fable-cleanup/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-001-part-4-fable-cleanup/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-002-goal-runtime-system/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-002-goal-runtime-system/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-002-goal-runtime-system/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-002-goal-runtime-system/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-002-goal-runtime-system/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-002-goal-runtime-system/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-003-goal-runtime-system/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-003-goal-runtime-system/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-003-goal-runtime-system/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-003-goal-runtime-system/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-003-goal-runtime-system/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-004-goal-runtime-system/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-004-goal-runtime-system/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-004-goal-runtime-system/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-005-goal-runtime-system/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-005-goal-runtime-system/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-005-goal-runtime-system/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-005-goal-runtime-system/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-005-goal-runtime-system/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-005-goal-runtime-system/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-006-goal-runtime-system/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-006-goal-runtime-system/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-006-goal-runtime-system/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-006-goal-runtime-system/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-006-goal-runtime-system/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/validator_results_repair.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-011-plans-to-code-handoff-post-compile/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/forbidden_artifacts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity/audit_generation_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity/forbidden_artifacts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/audit_generation_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/forbidden_artifacts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/audit_generation_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/forbidden_artifacts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/closure_registry_audit.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/forbidden_artifacts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/audit_generation_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/closure_registry_audit.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/forbidden_artifacts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/subagent_assignments.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/REPAIR_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/terminal_state.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/REPAIR_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-003-fff-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-003-fff-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-003-fff-closed-world-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260623-003-fff-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260625-001-provider-adjacent-plans/agent_summaries.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260625-001-provider-adjacent-plans/audit_scope.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260625-001-provider-adjacent-plans/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260625-001-provider-adjacent-plans/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260629-001-free-models-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-002-containerized-hosts-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/REPAIR_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/repair_validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/ledger_consistency.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/changed_files.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/shard_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/validator_results.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260705-implementation-readiness-gate-repair/input/AUDIT_REPORT.md.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260705-implementation-readiness-gate-repair/input/ClaudeAudit.md.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/INSTALL.md.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/PACKAGE_MANIFEST.json.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/PROMPT_COMPATIBILITY.md.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/VALIDATION_REPORT.json.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/VALIDATION_REPORT.md.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive/FINAL_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/august-checkpoint-drafts/SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/CENSUS_ADMISSION_RULE_V2.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/CENSUS_ADMISSION_RULE_V2.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/FOCUS_PASS_SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/FULL_180_SOURCE_SCAN_V3_SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN_DETAIL.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/MD_ONLY_BINDING_ADJUDICATION_SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/MD_ONLY_BINDING_ADJUDICATION_SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/STAGE2_SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/STAGE3_SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/CENSUS_STATUS.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.FRESH_20260812T0900.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/DELTA_NOTES.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/extract/drift_sources/Plans__FinalGUISpec.md.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/extract/drift_sources/Plans__UI_Command_Catalog.md.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/extract/drift_sources/Plans__Wiring_Matrix.production.json.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/extract/EA27_MISSING_FROM_FREEZE.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/extract/EXTRACT_SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/FREEZE_CURRENTNESS.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/FREEZE_DIGEST.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/rejected-lexical/NEW_RESIDUAL_CLASSIFICATION.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/rejected-lexical/NEW_RESIDUAL_CLASSIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/rejected-lexical/REJECTED_LEXICAL_CANDIDATES.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/clean_batch_00.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/clean_batch_01.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/clean_batch_02.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/CLEAN_RESIDUALS_SUPERSEDED.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/EVENTISH_AUTH_RESIDUALS.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_00.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_01.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_02.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_03.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_04.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_05.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_06.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/focus_resid_batch_07.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_00.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_01.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_02.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_03.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_04.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_05.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_06.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_07.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_08.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_09.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_10.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_101.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_102.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_109.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_110.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_112.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_13.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_136.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_137.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_138.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_14.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_15.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_16.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_17.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_18.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_19.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_20.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_21.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_22.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_23.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_24.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_25.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_26.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_29.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_30.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_31.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_32.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_33.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_34.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_37.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_45.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_46.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_50.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_51.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_56.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_58.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_62.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_63.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_64.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_65.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_66.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_67.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_69.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_70.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_79.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_80.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_83.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_84.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_85.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_90.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/new_auth_batch_91.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/NEW_AUTH_CUE_CANDIDATES.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/NEW_FOCUS_PERSIST_RESIDUALS.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/NEW_PERSISTED_CANDIDATE_REVIEW.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/persist_cand_batch_00.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/closed-world-census/SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/cohort-pins/IMMUTABLE_COHORT_PINS.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/cohort-pins/LIVE_VS_PIN_RECONCILIATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/DECERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/exclusion-revalidation/EXCLUSION_REVALIDATION_SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/FIXED_POINT_CLOSURE_RUNBOOK.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/GIT_MAIN_HYGIENE.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/governance/GOVERNANCE_GATES_INVENTORY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/governance/PNC019_HARNESS_PRECONDITIONS.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/independent-validator/FAIL_OPEN_AUDIT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/independent-validator/INDEPENDENT_EA_VALIDATOR_SPEC.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/independent-validator/SUMMARY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid00/REJECTED_BY_ADVISOR2.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid00/REJECTED_LEXICAL_CANDIDATES.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid00/rows/ROW_branching.assistant_auto_worktree.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid00/rows/ROW_branching.assistant_worktree_pre_merge_cmd.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid00/rows/ROW_branching.assistant_worktree_pre_merge_test_target.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid00/rows/ROW_branching.worktree_pre_merge_test_timeout_s.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid00/rows/ROW_file_manager.worktree_follow_thread.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid01/REJECTED_BY_ADVISOR2.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid01/rows/ROW_tier.plan_mode.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid01/rows/ROW_tier_node.tier_type.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid01/rows/ROW_tier_overrides.get.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid01/rows/ROW_type_payload.restore_point_id.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid02/REJECTED_BY_ADVISOR2.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid02/rows/rows/ROW_coordination.debug_mirror_exported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid02/rows/rows/ROW_runtime_artifact.restore_point.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/CensusResid02/rows/ROW_ui.chat.in_memory_cap_messages.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/DeepenEmit24/SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/FixAugustIndivRows/rows/ROW_terminal.workgroup_moved.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/FixAugustIndivRows/rows/ROW_workspace.layout_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR00/rows/ROW_chat.subagent_spawned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR00/rows/ROW_chat.thread_title_generated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_lsp.server_crashed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_lsp.server_started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_media.artifact_cleanup_required.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_node.prerequisite_resolved.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_provider.request_cancelled.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_provider.request_queued.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_run.node_blocked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_run.node_unblocked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_run.remediation_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR02/rows/ROW_run.remediation_started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivR03/rows/ROW_subagent.parallel_group_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU00/rows/ROW_chat.thread_archived.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU00/SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU02/rows/ROW_attempt.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU04/rows/ROW_concern.assigned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU04/rows/ROW_concern.created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU04/rows/ROW_concern.promoted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU04/rows/ROW_concern.reopened.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU05/rows/ROW_config.validation.failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_dev.session.restarting.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_dev.session.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_dev.session.stopped.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_dev.session.stopping.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_doctor.custom_headless.checked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_file.copied.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_file.created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_file.deleted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_file.exported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU06/rows/ROW_folder.created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU07/rows/ROW_live.artifact.created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU07/rows/ROW_live.session.completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU10/rows/ROW_chat.thread_worktree_renamed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU11/rows/ROW_debug.investigation.context_item_added.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU11/rows/ROW_debug.investigation.exported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU11/rows/ROW_debug.investigation.imported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU12/rows/ROW_live.session.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU12/rows/ROW_memory.dedup_sweep.completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU12/rows/ROW_memory.dedup_sweep.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU12/rows/ROW_memory.gist.discarded.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU12/rows/ROW_memory.gist.pinned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU12/rows/ROW_memory.gist.unpinned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU12/rows/ROW_memory.gist.updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU13/rows/ROW_parser.error.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU13/rows/ROW_phase.force_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.budget_warning.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.cancelled.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.context_rehydrated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.context_shrunk.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.context_warning.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.escalated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/rows/ROW_subagent.message_received.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU14/SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.message_sent.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.model_switched.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.output_truncated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.paused.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.progress.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.resumed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.retried.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.spawn_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU15/rows/ROW_subagent.spawn_requested.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.plan_todo_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_bound.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_create_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_merged.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_merge_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_pre_merge_test_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_pre_merge_test_passed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_pr_created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_chat.thread_worktree_pr_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU16/rows/ROW_wizard.unblocked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU17/rows/ROW_chat.thread_worktree_pre_merge_test_started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU17/rows/ROW_debug.investigation.context_item_state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU17/rows/ROW_debug.investigation.instrumentation_state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU17/rows/ROW_debug.investigation.state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU17/rows/ROW_debug.investigation.target_bound.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU18/rows/ROW_plugin.permission.override.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU18/rows/ROW_runtime_artifact.before_after_snapshot.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU18/rows/ROW_runtime_artifact.browser_recording.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU18/rows/ROW_runtime_artifact.code_diff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU18/rows/ROW_runtime_artifact.context_snapshot.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU18/SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_runtime_artifact.cost_usage.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_runtime_artifact.document.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_runtime_artifact.evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_runtime_artifact.failed_attempts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_runtime_artifact.hitl_approval.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_runtime_artifact.implementation_plan.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_subagent.spawned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_subagent.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_subagent.timeout.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/rows/ROW_subagent.tool_called.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU19/SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU20/rows/ROW_approval.denied.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU20/rows/ROW_approval.granted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU20/rows/ROW_approval.requested.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU20/rows/ROW_approval.timeout.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU20/rows/ROW_subagent.tool_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU20/rows/ROW_task.failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU21/rows/ROW_chat.thread_worktree_unbound.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU21/rows/ROW_runtime_artifact.reasoning_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU21/rows/ROW_runtime_artifact.screenshot.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU21/rows/ROW_runtime_artifact.subagent_lineage.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU21/rows/ROW_runtime_artifact.suggested_next_steps.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU21/rows/ROW_runtime_artifact.validation_test.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_bundle.selection_sent_to_chat.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_crew.board_messages_archived.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_crew.board_message_posted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_crew.board_message_read.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_debug.investigation.verification_recorded.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_memory.gist_state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_runtime_artifact.api_web_call.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU23/rows/ROW_runtime_artifact.artifact_version.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_coordination.agent_aborted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_coordination.agent_crashed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_coordination.agent_file_ownership_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_coordination.agent_operation_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_coordination.agent_registered.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_coordination.agent_status_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_coordination.agent_unregistered.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU24/rows/ROW_runtime_artifact.tool_llm_trace.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU25/rows/ROW_coordination.debug_mirror_exported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU25/rows/ROW_runtime_artifact.restore_point.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PlanIndivU25/SUMMARY.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/EVIDENCE_GAP_PACK.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/J248_J40_OWNER_PACK.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_approval.denied.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_approval.granted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_approval.requested.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_approval.timeout.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_bundle.selection_sent_to_chat.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.plan_todo_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.subagent_spawned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_archived.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_title_generated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_bound.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_create_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_merged.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_merge_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_pre_merge_test_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_pre_merge_test_passed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_pre_merge_test_started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_pr_created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_pr_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_renamed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.thread_worktree_unbound.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_config.validation.failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_aborted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_crashed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_file_ownership_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_operation_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_status_updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_unregistered.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.debug_mirror_exported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_messages_archived.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_posted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_read.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.context_item_added.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.context_item_state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.exported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.imported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.instrumentation_state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.target_bound.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_debug.investigation.verification_recorded.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dev.session.restarting.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dev.session.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dev.session.stopped.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dev.session.stopping.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_doctor.custom_headless.checked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_file.copied.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_file.created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_file.deleted.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_file.exported.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_folder.created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_live.artifact.created.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_live.session.completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_live.session.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_lsp.server_crashed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_lsp.server_started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_media.artifact_cleanup_required.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.dedup_sweep.completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.dedup_sweep.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.discarded.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.pinned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.unpinned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.updated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist_state_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_node.prerequisite_resolved.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_parser.error.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_phase.force_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_plugin.permission.override.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_provider.request_cancelled.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_provider.request_queued.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_run.node_blocked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_run.node_unblocked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_run.remediation_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_run.remediation_started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.api_web_call.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.artifact_version.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.before_after_snapshot.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.browser_recording.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.code_diff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.context_snapshot.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.cost_usage.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.document.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.failed_attempts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.hitl_approval.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.implementation_plan.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.reasoning_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.restore_point.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.screenshot.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.subagent_lineage.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.suggested_next_steps.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.tool_llm_trace.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.validation_test.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.budget_warning.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.cancelled.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.context_rehydrated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.context_shrunk.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.context_warning.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.escalated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_received.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_sent.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.model_switched.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.output_truncated.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.parallel_group_failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.paused.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.progress.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.resumed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.retried.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawned.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_requested.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.started.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.timeout.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_called.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_completed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_task.failed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_terminal.workgroup_moved.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_wizard.unblocked.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_workspace.layout_changed.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_august.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_00.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_01.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_04.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_05.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_07.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_10.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_11.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_12.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_13.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_14.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_15.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_16.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_17.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_18.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_19.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_20.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_21.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_22.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_23.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_24.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unreg_25.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unres_00.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unres_02.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/individual-disposition/shards/indiv_unres_03.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/INDIVIDUAL_DISPOSITION_SCHEMA.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/IRB_APPEND_PLAN.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/known37/KNOWN37_NO_REGRESSION_DEPTH.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/KNOWN37_PRESERVATION_REPORT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_blocked/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_blocked/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_cancelled/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_cancelled/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_child_status_changed/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_child_status_changed/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_completed/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_completed/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_created/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_created/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_degraded/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_degraded/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_evidence_captured/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_evidence_captured/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_progressed/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_progressed/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_receipt_recorded/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_receipt_recorded/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_replanned/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_replanned/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_blocked/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_blocked/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_cancelled/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_cancelled/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_certified/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_certified/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_replanned/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_replanned/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_started/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_started/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_stopped/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_run_stopped/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_scheduled/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_scheduled/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_stopped/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_stopped/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_tool_check_recorded/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_tool_check_recorded/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_updated/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_updated/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_verification_decided/negative.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_verification_decided/positive.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_BRIEF.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/PHASE1_APPLY_PLAYBOOK.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-12/STATUS.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-13-currentness/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/CONTRACT_RUNTIME_CORE_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/contract_runtime_core_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/currentness_check_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/DEFERRED_FABLE_ACTION_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/deferred_fable_action_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/effective_status.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/FABLE_REMAINING_REGISTRY_TRIAGE.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/fable_remaining_registry_triage_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/FINAL_DEFERRED_FABLE_TAIL_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/final_deferred_fable_tail_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/FINAL_DEFERRED_LANE_AND_REGISTRY_SYNC.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/final_deferred_lane_and_registry_sync_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/FINAL_FABLE_CONVERGENCE_AND_PNC019_CERTIFICATION.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/final_fable_convergence_and_pnc019_certification_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/gui_command_wiring_gate_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/GUI_PLATFORM_CURRENTNESS_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/gui_platform_currentness_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/gui_platform_hardening_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/OWNER_NOTE_CLOSURE_FIDELITY_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/owner_note_closure_fidelity_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/PLATFORM_SPECS_AUTHORITY_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/platform_specs_authority_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/PLATFORM_SPECS_CLOSURE_HARDENING.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/platform_specs_closure_hardening_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/pnc019_runtime_certification_currentness_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/POST_FABLE_BUILDABILITY_SEAL_AUDIT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/post_fable_buildability_seal_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/post_repair_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/REMAINING_ACTION_PLAN_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/remaining_action_plan_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/RESIDUAL_FEATURE_CONTRACT_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/residual_feature_contract_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/STORAGE_COORDINATION_CANON_REPAIR.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/fable-20260706/storage_coordination_canon_repair_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/plan-assurance-handoff-2026-07-17/HANDOFF.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/ASSURANCE_RESULT.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/LAUNCH_AUTHORITY.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/LAUNCH_REQUEST.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/PILOT_FAMILY_BRIEFS.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/ROLLING_TRIAL_CONTRACT.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/STRUCTURAL_COVERAGE_MAP.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/SURFACE_INSTANCE_LEDGER.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/TRIAL_SUMMARY.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/ARTIFACT_BUDGET_MANIFEST.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/EXTERNAL_TRANSMISSION_MANIFEST.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/LAUNCH_AUTHORITY.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/LAUNCH_REQUEST.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/PROTECTED_STATE.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/ROLLING_TRIAL_CONTRACT.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/SEMANTIC_ARTIFACT_ENVELOPE.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/SOURCE_SNAPSHOT.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/SOURCE_SNAPSHOT_BUCKET_SHARD.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/TRIAL_SUMMARY.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_2/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_2/ROLLING_TRIAL_CONTRACT.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/plan-sharding-2026-06-09/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/plan-sharding-2026-06-09/shard_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm6-concept-promotion-planunits-2026-07-11/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm7-tweak-wave-2-2026-08-13/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm7-tweak-wave-3-2026-08-13/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm7-tweak-wave-4-2026-08-13/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm7-tweak-wave-6-2026-08-14/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm7-tweak-wave-7-2026-08-14/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm7-tweak-wave-8-2026-08-15/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pm7-workspace-repair-2026-08-13/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pmconcept7-home-direct-manipulation-repair-2026-08-12/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/pmconcept7-home-workspace-post-audit-repair-2026-08-05/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.evidence/tier-0c-2-storage-value-registry/evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.implementation_readiness/buildability_gate_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.implementation_readiness/non_executable_closure_evidence.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.implementation_readiness/non_executable_closure_evidence.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.implementation_readiness/pnc019_certification_receipt.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.implementation_readiness/pnc019_certification_receipt.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.implementation_readiness/readiness_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_index/coverage_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_index/dependencies.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_index/doc_cards.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_index/node_readiness_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/baseline-run-gates-before-migration.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/batch-001-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/batch-001-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/batch-002-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/batch-002-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/batch-003-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/batch-003-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/inventory.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/pilot-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/pilot-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-001-standardize-plans/validation_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/COMPLETE.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2a-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2a_inventory.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-001-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-001-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-001-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-001-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-002-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-002-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-002-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-002-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-002-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-003-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-003-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-003-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-003-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-003-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-004-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-004-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-004-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-004-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-004-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-005-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-005-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-005-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-005-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-005-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-006-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-006-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-006-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-006-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-006-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-007-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-007-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-007-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-007-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-007-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-008-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-008-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-008-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-008-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-008-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-009-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-009-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-009-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-009-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-009-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-010-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-010-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-010-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-010-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-010-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-011-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-011-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-011-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-011-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-011-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-012-migration-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-012-plan-index-generate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-012-plan-index-validate.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-012-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-012-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-013-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-013-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-014-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-014-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-015-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-015-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-016-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-016-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-017-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-017-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-018-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-018-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-019-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-019-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-020-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-020-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-021-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-021-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-022-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-022-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-023-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-023-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-024-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-024-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-025-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-025-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-026-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-026-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-027-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-027-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-028-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-028-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-029-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-029-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-030-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-030-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-031-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-031-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-032-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-032-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-033-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-033-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-034-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-034-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-035-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-035-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-036-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-036-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-037-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-037-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-038-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-038-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-039-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-039-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-040-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-040-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-041-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-041-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-042-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-042-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-043-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-043-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-044-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-044-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-045-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-045-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-046-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-046-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-047-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-047-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-048-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-048-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-049-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-049-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-050-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-050-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-051-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-051-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-052-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-052-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-053-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-053-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-054-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-054-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-055-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-055-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-056-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-056-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-057-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-057-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-058-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-058-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-059-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-059-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-060-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-060-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-061-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-061-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-062-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-062-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-063-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-063-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-064-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-064-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-065-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-065-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-066-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-066-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-067-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-067-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-068-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-068-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-069-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-069-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-070-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-070-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-071-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-071-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-072-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-072-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-073-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-073-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-074-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-074-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-075-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-075-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-076-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-076-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-077-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-077-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-078-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-078-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-079-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-079-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-080-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-080-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-081-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-081-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-082-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-082-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-083-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-083-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-084-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-084-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-085-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-085-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-086-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-086-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-087-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-087-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-088-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-088-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-089-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-089-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-090-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-090-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-091-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-091-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-092-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-092-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-093-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-093-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-094-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-094-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-095-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-095-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-096-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-096-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-097-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-097-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-098-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-098-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-099-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-099-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-100-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-100-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-101-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-101-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-102-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-102-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-103-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-103-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-104-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-104-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-105-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-105-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-106-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-106-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-107-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-107-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-108-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-108-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-109-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-109-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-110-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-110-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-111-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-111-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-112-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-112-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-113-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-113-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-114-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-114-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-115-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-115-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-116-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-116-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-117-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-117-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-118-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-118-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-119-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-119-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-120-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-120-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-121-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-121-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-122-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-122-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-123-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-123-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-124-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-124-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-125-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-125-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-126-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-126-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-127-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-127-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-128-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-128-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-129-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-129-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-130-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-130-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-131-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-131-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-132-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-132-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-133-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-133-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-134-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-134-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-135-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-135-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-136-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-136-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-137-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-137-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-138-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-138-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-139-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-139-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-140-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-140-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-141-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-141-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-142-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-142-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-143-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-143-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-144-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-144-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-145-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-145-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-146-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-146-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-147-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-147-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-148-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-148-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-149-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-149-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-150-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-150-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-151-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-151-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-152-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-152-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-153-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-153-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-154-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-154-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-155-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-155-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-156-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-156-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-157-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-157-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-158-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-158-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-159-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-159-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-160-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-160-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-161-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-161-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-162-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-162-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-163-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-163-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-164-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-164-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-165-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-165-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-166-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-166-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-167-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-167-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-168-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-168-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-169-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-169-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-170-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-170-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-171-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-171-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-172-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-172-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-173-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-173-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-174-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-174-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-175-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-175-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-176-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-176-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-177-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-177-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-178-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-178-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-179-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-179-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-180-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-180-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-181-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-181-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-182-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-182-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-183-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-183-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-184-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-184-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-185-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-185-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-187-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-187-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-188-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-188-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-189-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-189-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-190-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-190-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-191-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-191-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-192-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-192-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-193-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-193-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-194-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-194-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-195-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-195-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-196-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-196-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-197-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-197-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-198-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-198-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-199-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-199-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-200-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-200-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-201-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-201-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-202-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-202-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-203-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-203-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-204-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-204-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-205-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-205-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-206-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-206-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-207-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-207-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-208-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-208-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-209-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-209-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-210-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-210-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-211-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-211-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-212-run-gates.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2b-batch-212-shard-check.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/pilot_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/subagent_findings_summary.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/subagent_findings_summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/00-plans-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/acceptance_manifest.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/agent-rules-context.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Architecture_Invariants.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/assistant-chat-design.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/assistant-memory-subsystem.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Automated_Testing_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/BinaryLocator_Spec.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/bootstrap/Bootstrap_Design_Brief.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/bootstrap/Bootstrap_Planning_Workflow.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/bootstrap/Codex_Prompts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Bootstrap_Planning_Migration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/chain-wizard-flexibility.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/chain-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/CLI_Bridged_Providers.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Commands_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Containers_Registry_and_Unraid.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Contracts_V0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Crosswalk.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Decision_Log.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Decision_Policy.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Document_Packaging_Policy.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/DRY_Rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_family_registry.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_blocked.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_completed.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_created.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_degraded.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_progressed.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_replanned.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_run_certified.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_run_started.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_scheduled.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_stopped.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_updated.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/evidence.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/evidence_requirements_traceability_upgrade_2026-02-25.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/execution_unit_context.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Executor_Protocol.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/feature-list.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/FileManager.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/FileSafe.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/FinalGUISpec.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Formatters_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/GitHub_API_Auth_and_Flows.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/GitHub_Integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Glossary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/goal_runtime_events.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Goal_Runtime_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/gui_automation_manifest.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/GUI_Rebuild_Requirements_Checklist.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/human-in-the-loop.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/interview-subagent-integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/p6/w-20260318-153036/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/p6/w-20260328-192905/current_state.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/p6/w-20260328-192905/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/ledger_registry.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/source_shards/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/registry_entry.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/conversation_reconstruction.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/deferred_item_resolution_acceptance_20260616.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/deferred_item_resolution_workshop_20260616.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/final_readiness_review_20260616.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/live_orchestrator_backlink_audit_20260616.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/orchestrator_backlink_audit_preliminary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/capability_lane_binding_policy.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/deferred_item_resolution_acceptance_20260616.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_builder_goal_conversion_contract.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/gui_impact_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_item_resolution_workshop_20260616.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/verification_repair_loop_contract.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/final_readiness_review_20260616.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/implementation_readiness_audit.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/prompts/codex_after_plans_updated.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/registry_entry.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/source_shards/conversation_reconstruction.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/source_shards/reference_impact_audit.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/doc_impact_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/implementation_readiness_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/indexes/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/compile_ledger_to_plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/deep_audit.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/governance_seal.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/repair_from_audit.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/09-bootstrap-prompts-and-transfer.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/doc_impact_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/gui_impact_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff_contract_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/compile_disposition_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/consumer_conformance_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/deep_audit_report.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/doc_impact_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/implementation_gap_defaults.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/precision_contract.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/state/subagent_compile_proposals.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260622-001-fff/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_agy_media_capability_rows_20260626.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_cli_initial_research.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_cli_local_verification.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_image_generation_probe_20260626.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_nanobanana_probe_20260626.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/claude_code_live_verification.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/coding_plan_and_claude_rate_limits_research_20260625.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/cursor_local_approach_testing.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/cursor_route_reassessment_acp_composer_api.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/github_copilot_cursor_sdk_research.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/gui_settings_image_generation_model_rows_20260626.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/local_cli_provider_probe_matrix.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/opencode_coding_plan_config_refresh_20260626.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/provider_live_verification_followup_20260625.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/provider_media_support_research.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260624-001-provider-updates/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260626-001-feature-name/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260626-001-feature-name/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260626-001-feature-name/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260626-001-feature-name/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260626-001-feature-name/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260626-001-feature-name/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260626-001-feature-name/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/source_shards/compaction_status_check_20260627.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/source_shards/dry_method_outside_plan_docs_20260627.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/source_shards/open_webui_inline_visualizer_v2_comparison_20260627.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/source_shards/peon_ping_notifications_comparison_20260627.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_readiness_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_fifth_recheck_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_fourth_recheck_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_recheck_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_repair_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_review_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_second_recheck_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_third_recheck_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/source_compile_readiness_integration_matrix_20260628.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260627-001-feature-intake/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260629-001-feature-name/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260629-001-feature-name/state/compile_disposition_matrix.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260629-001-feature-name/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260629-001-feature-name/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260629-001-feature-name/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260629-001-feature-name/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/coasts_upstream_and_plans_inspection_20260630.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/final_compile_validation_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/fourth_subjective_objective_recheck_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/governance_seal_validation_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/ledger_implementation_readiness_audit_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/policy_matrix_evidence_map_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/post_compile_subjective_objective_recheck_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/post_hardening_readiness_audit_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/second_subjective_objective_recheck_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/third_subjective_objective_recheck_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/canonical_plan_compile_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/governance_seal_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/implementation_readiness_review_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/00_CODEX_LEDGER_IMPORT_PROMPT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/00_START_HERE_SHORT_PROMPT.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/05_IMPORT_COMPLETENESS_CHECKLIST.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/06_SOURCE_MANIFEST.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_completion_reaudit_20260703.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_completion_recheck_20260703.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_completion_reverification_20260703T202445Z.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_disposition_20260703.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_domain_summary_20260703.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/parallel_agent_synthesis_20260703.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/Audit of Puppet Master Docs.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/Handoff Review and Pipeline Update.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_gap_analysis_2026-07-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/Planning Wizard Redesign.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_repo_pass_2026-07-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_deep_evaluation_2026-07-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_evidence_matrix_2026-07-03.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_pass_2026-07-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_evidence_matrix_2026-07-03.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_repo_pass_2026-07-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_pass_2026-07-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_repo_gap_review_2026-07-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/Puppet Master Ledger Design.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/Workflow Planning and Constraints.txt`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/README.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/compile_summary_20260703.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/compile_completion_recheck_20260703T203400Z.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/compile_queue.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/pldg-20260801-001-feature-intake/validation/ledger_health.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/v2/write_cards/planning_turn.write_card.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260312-160857/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260312-203855/legacy_quarantine/current_state.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260312-203855/meta.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260312-203855/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260313-152345/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260313-183219/meta.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260313-183219/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260316-160450/meta.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260316-160450/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260317-164124/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260317-181906/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260318-153036/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260318-160350/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260319-030558/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260320-164907/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260320-170511/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260323-192127/meta.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260323-192127/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260326-015830/meta.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260326-015830/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260328-192850/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260328-192905/current_state.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260328-192905/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260328-192938/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260329-235630/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/ledgers/work_items/w-20260330-191149/working_ledger.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/LSPSupport.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/MCP_Integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Media_Generation_and_Capabilities.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/MiscPlan.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Models_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Multi-Account.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/newfeatures.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/newtools.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/OpenCode_Coverage_Matrix.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/OpenCode_Deep_Extraction.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/orchestrator-subagent-integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Orchestrator_Page.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/path_reference_registry.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/path_reference_registry.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Permissions_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Personas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Planning_Ledger_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Planning_Wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/plans_to_code_handoff.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Plan_Document_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/plan_graph.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Plan_To_Node_Compilation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/platform_capability_catalog.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/platform_capability_catalog.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Plugins_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/PMConcept_Control_Reconciliation.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/PRD_Builder.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/prd_planning_runtime_contracts.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/prd_planning_runtime_contracts.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Progression_Gates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Project_Output_Artifacts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Project_Sync_and_Backbone.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Prompt_Pipeline.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/protected_auth_browser_contracts.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/protected_auth_browser_contract_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Provider_OpenCode.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Provider_Stream_Mapping_External_Reference_A2A.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Release_Supply_Chain.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/requirements_quality_report.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/rewrite-tie-in-memo.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Runtime_Artifacts_Panel.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_api_web_call.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_artifact_version.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_before_after_snapshot.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_browser_recording.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_code_diff.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_context_snapshot.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_cost_usage.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_document.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_envelope.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_evidence.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_failed_attempts.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_hitl_approval.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_implementation_plan.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_reasoning_summary.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_restore_point.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_screenshot.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_subagent_lineage.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_suggested_next_steps.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_tool_llm_trace.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_artifact_validation_test.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/runtime_integration_disposition.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Run_Graph_View.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Run_Modes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Section15_MVP_Promoted_Features_Spec.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/settings_inventory.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/sharding_config.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Shared_Integration_Runtime.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/shared_runtime_command_contracts.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/shared_runtime_command_contract_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/shared_runtime_contracts.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Skills_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Spec_Lock.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/storage-plan.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/storage_recovery_contracts.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/storage_value_registry.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Tools.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/UI_Command_Catalog.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/UI_Wiring_Rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/usage-feature.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_agent_policy_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_capability_findings_coverage.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_capability_source_packet_receipt.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_capability_source_packet_receipt.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_intent_routing_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_operation_card_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_operation_contracts.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_operation_job_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_policy_negative_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_policy_negative_fixtures.schema.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/web_research_run_fixtures.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Widget_System.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Wiring_Matrix.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Wiring_Matrix.production.exclusions.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/Wiring_Matrix.production.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/WorktreeGitImprovement.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/zero_incomplete_disposition.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/002-change-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/005-plan-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/007-shard-indexes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/014-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/015-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/018-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/019-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/021-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/00-plans-index/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/002-plan-document-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/004-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/005-relationship-to-other-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/006-rule-scope-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/007-feeding-rules-into-every-agent.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/008-configuration-and-gui-planning-only.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/009-summary-table.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/010-implementation-hooks-planning-only.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/011-instruction-bundle-integration-application-project-scoped-agents.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/012-feature-spec-verbatim.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/014-workspace-storage-user-project-facing-product-behavior.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/020-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/021-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/agent-rules-context/023-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/003-inv-001-tool-correlation-integrity-normalized-streams-persisted-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/004-inv-002-no-secrets-in-persistent-storage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/013-inv-011-ui-command-dispatch-only-rule-1.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/015-inv-013-pre-dispatch-tool-validation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/016-inv-014-shared-mutable-state-requires-rwmutex.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/023-debug-investigation-invariants-addendum-2026-03-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/024-inv-019-runtime-identity-and-blocked-policy-continuity.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/026-inv-021-dependency-driven-seam-reconciliation-order.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/027-inv-022-service-bound-native-workbench-architecture.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/029-inv-024-debug-mode-evidence-planes-stay-explicit.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/030-inv-025-provider-profile-isolation-is-not-shared-mutable-state.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/031-inv-026-web-provider-recovery-consumers-defer-to-owner-contracts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/032-inv-027-durable-state-authority-scope-replay-and-recovery-remain.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/034-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/035-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/architecture_invariants/036-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/003-change-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/005-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/006-table-of-contents.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/007-1.-modes-overview.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/012-6.-teach.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/023-17.-context-truncation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/026-20.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/032-26.-auditor-audit-to-repair-loop-model-provider-settings-invaria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/038-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/039-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/040-shared-actor-boundary-route-payload-and-blocked_notice-packet.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/041-shared-conversational-actor-runtime-identity.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/042-chat-route-permission-and-history-behaviors.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/043-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/044-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/045-shared-runtime-projection-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/046-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/047-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/048-ledger-compile-addendum-pldg-20260615-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/049-ledger-compile-addendum-pldg-20260616-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/050-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/051-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/052-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/053-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/054-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/055-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/056-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/057-fable-residual-chat-mechanics-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/058-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/059-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/060-pmconcept6-chat-polish-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/061-immutable-conversation-restore-point-lifecycle-known-37-completi.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/062-pmconcept7-concept-promotion-addendum-2026-07-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-chat-design/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/002-change-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/003-0.-scope-and-boundary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/004-1.-capability-boundary-assistant-only.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/005-2.-physical-storage-layout-per-project.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/006-3.-data-model-evidence-backed-gists-gui-first.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/007-4.-retrieval-indexing-contracts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/008-5.-verification-triggers-evidence-backed-gists.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/009-6.-prompt-injection-contract-token-protection.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/010-7.-gui-maintenance-operations.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/011-8.-integration-points.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/012-9.-deterministic-defaults.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/013-10.-acceptance-criteria-testable.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/014-11.-non-goals.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/015-12.-runtime-owner-reference-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/016-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/017-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/018-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/assistant-memory-subsystem/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/003-1.-ownership-and-consumers.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/004-2.-canonical-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/005-gui-visible-testing-repair-addendum-2026-07-02.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/007-3.-contracts-schemas-events-or-data-shapes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/008-4.-integration-surfaces.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/010-6.-plan-to-node-readiness.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/011-7.-deferred-retired-compatibility-and-non-goals.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/014-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/022-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/023-known-37-owner-oracle-materialization-and-execution-status-ledge.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/automated_testing_system/026-runtime-integration-acceptance-matrices-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/003-non-goals.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/004-canonical-references-and-constraints-ssot-dry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/009-validation-contract-commands-version-parsing-permission-checks.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/011-error-taxonomy-stable-codes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/017-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/020-remaining-runtime-integration-addendum-provider-installation-dis.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/binarylocator_spec/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/bootstrap_planning_migration/003-1.-migration-principles.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/bootstrap_planning_migration/004-2.-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/bootstrap_planning_migration/006-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/bootstrap_planning_migration/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/bootstrap_planning_migration/008-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/002-change-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/004-rewrite-alignment-2026-02-21.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/005-ssot-references-dry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/006-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/007-table-of-contents.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/009-2.-how-intent-affects-the-flow.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/010-3.-gui-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/011-4.-requirements-multiple-uploads-and-storage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/012-5.-legacy-requirements-doc-builder-compatibility-lineage-prd-bui.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/013-6.-adaptive-interview-phases.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/014-7.-project-setup-and-github-create-repo-fork-pr.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/015-8.-relationship-to-other-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/016-9.-gaps-and-potential-problems.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/017-10.-implementation-readiness-checklist.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/018-11.-user-project-output-artifacts-sharded-only.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/019-12.-auditor-invariant-loop-mandatory-invariant-sweep.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/021-14.-requirements-completion-contract.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/022-15.-requirements-quality-escalation-semantics.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/023-requirements-builder-persona-strategy-addendum-2026-03-06.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/024-17.-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/026-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/028-wizard-escalation-degradation-and-blocked-state-consolidation-ad.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/029-canonical-wizard-blocked-lifecycle.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/030-wizard-status-enum-correction-addendum.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/031-runtime-identity-route-and-audit-refinement-rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/033-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/034-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/035-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/036-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/037-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/038-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/039-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/040-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/chain-wizard-flexibility/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/003-purpose.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/004-canonical-data-shape-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/008-remaining-runtime-canon-closure-addendum-2026-08-14.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/009-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/011-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/012-remaining-runtime-integration-addendum-provider-cli-lifecycle-co.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/013-usage-and-quota-evidence-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/cli_bridged_providers/014-fable-residual-cli-bridge-contract-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/002-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/003-1.-definitions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/004-2.-storage-and-discovery.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/005-3.-command-schema.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/006-4.-execution-semantics.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/007-5.-permissions-integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/008-6.-gui-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/009-7.-reserved-built-in-slash-commands.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/010-8.-uicommand-catalog-entry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/011-9.-opencode-baseline-and-puppet-master-deltas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/012-10.-acceptance-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/014-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/015-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/016-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/017-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/018-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/019-case-l-command-consumer-propagation-addendum-2026-07-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/020-shared-runtime-command-reconciliation-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/022-known-37-recovery-unavailable-command-registration-2026-07-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/023-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/024-run-debug-revival-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/025-u11-prism-ii-usage-command-family-addendum-2026-08-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/commands_system/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/005-user-visible-surfaces.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/009-build-run-preview-and-publish-flow.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/010-unraid-xml-generation-and-distribution-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/011-unraid-template-repository-setup-layout-and-publishing.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/013-data-state-model-to-preserve-in-implementation-docs.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/017-remote-side-effect-blocked-payload-normalization-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/019-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/020-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/021-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/022-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/023-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/containers_registry_and_unraid/025-server-first-platform-capability-consumer-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/004-known-37-case-l-owner-materialization-requested-effective-runtim.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/006-cross-surface-runtime-concern-and-route-open-contracts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/007-1.-events-persisted.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/011-3.-tool-events-persisted.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/013-6.-hitlrequest.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/014-7.-uicommand.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/016-usage-and-billing-contracts-addendum.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/017-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/018-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/019-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/020-canonical-runtime-event-outcome-and-action-contract-canonical-al.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/022-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/024-known-37-goal-runtime-v2-schema-registration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/025-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/027-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/028-ledger-compile-addendum-pldg-20260615-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/029-ledger-compile-addendum-pldg-20260616-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/030-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/033-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/035-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/036-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/037-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/038-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/039-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/040-fable-residual-feature-contract-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/041-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/042-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/043-case-l-durable-state-contract-addendum-2026-07-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/contracts_v0/044-shared-integration-runtime-typed-envelope-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/005-2.-primitive-index-definitions-are-dry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/006-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/008-runtime-scheduler-recovery-ownership-and-precedence.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/011-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/012-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/013-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/crosswalk/015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_log/003-entries.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_log/005-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_log/006-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/004-2.-deterministic-defaults-must-be-autonomous.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/005-3.-tie-break-rules-ordering.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/008-6.-ambiguity-vs.-missing-user-intent.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/009-runtime-decision-rules-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/012-source-control-github-actions-and-docker-manager-blocked-state-a.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/014-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/015-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/decision_policy/017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/002-0.-scope-and-alignment.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/003-1.-document-set-contract.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/004-2.-deterministic-split-rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/006-4.-losslessness-proof-hard-requirement.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/008-6.-enforcement-coverage-and-run-failure-rule.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/009-7.-on-disk-path-convention-and-pointer-stub-contract.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/010-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/012-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/013-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/document_packaging_policy/014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/004-2.-don-t-duplicate-canonical-contracts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/005-3.-index-only-guidance.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/016-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/017-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/021-shared-integration-runtime-dry-service-registry-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/dry_rules/022-u11-prism-ii-usage-candidate-role-dispositions-2026-08-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/003-0.-purpose-and-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/004-1.-role-definitions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/005-2.-deterministic-readiness.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/007-4.-auto-marking-rule.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/008-6.-overseer-dispatch-algorithm-deterministic.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/009-runtime-scheduler-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/014-execution-context-worktree-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/016-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/017-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/019-ledger-compile-addendum-pldg-20260615-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/020-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/023-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/024-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/025-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/027-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/executor_protocol/028-known-37-run-start-and-recovery-unavailable-admission.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/003-reference-anchors-used-in-this-document.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/004-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/005-source-control-github-actions-and-docker-manager-mvp-consolidati.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/006-runtime-scheduler-recovery-summary-consolidation-addendum-2026-0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/007-web-tools-skills-planning-and-approval-owner-alignment-2026-04-0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/009-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/010-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/feature-list/012-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/002-change-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/003-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/005-1.-file-manager-panel.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/006-2.-in-app-ide-style-editor-mvp.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/007-3.-mention-in-chat.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/008-4.-integration-file-manager-editor-and-chat.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/010-6.-preview-subjects-and-rendered-document-modes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/011-7.-browser-and-terminal-handoff-boundaries.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/012-8.-image-viewer-and-html-preview.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/014-10.-editor-navigation-and-semantic-affordances.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/015-11.-file-tree-actions-local-filter-and-chat-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/016-12.-source-control-handoff-compare-and-review.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/019-runtime-artifact-open-by-identity-consolidation-addendum-2026-03.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/021-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/022-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/023-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/024-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/026-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/027-pmconcept6-shell-sweep-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/028-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/029-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filemanager/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/003-rewrite-alignment-2026-02-21.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/004-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/005-table-of-contents.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/007-2.-implementation-details.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/008-3.-integration-with-platform-runner.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/011-6.-event-logging.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/015-10.-relationship-to-other-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/016-10a.-filesafe-and-assistant-yolo-mode.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/017-11.-additional-filesafe-features.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/018-12.-gaps-and-potential-issues.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/019-13.-enhancements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/021-15.-system-integration-analysis.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/022-16.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/023-17.-implementation-order-and-dependencies.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/024-runtime-blocked-state-integration-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/028-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/029-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/030-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/033-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/035-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/036-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/038-case-l-exact-restore-repair-addendum-2026-07-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/039-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/040-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/041-known-37-corruption-evidence-and-recovery-unavailable-owner-comp.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/042-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/043-shared-runtime-immutable-dispatch-binding-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/filesafe/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/004-1.-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/007-known-37-recovery-unavailable-gui-projection-2026-07-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/011-3.-master-layout.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/012-4.-navigation-architecture.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/013-5.-panel-system.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/015-7.-views-specification.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/018-10.-ux-patterns.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/023-15.-persistence.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/024-16.-migration-mapping.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/025-17.-risks-and-mitigations.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/026-18.-promoted-features-formerly-future-considerations.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/027-appendix-a-cross-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/028-appendix-b-locked-decisions-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/029-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/030-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/031-rendering-surface-addendum-2026-03-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/032-assistant-planning-ux-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/033-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/037-canonical-blocked-recovery-behavior.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/038-compatibility-source-lineage-blocked-state-visual-distinction-an.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/039-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/042-remaining-runtime-canon-closure-addendum-2026-08-14.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/043-shared-runtime-projection-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/044-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/046-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/047-ledger-compile-addendum-pldg-20260615-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/048-ledger-compile-addendum-pldg-20260616-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/049-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/051-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/052-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/053-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/054-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/055-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/056-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/057-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/058-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/059-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/060-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/061-pmconcept6-concept-promotion-addendum-2026-07-11.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/062-pmconcept6-chat-polish-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/063-theme-system-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/064-settings-system-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/065-pmconcept6-shell-sweep-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/066-pmconcept7-concept-promotion-addendum-2026-07-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/067-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/068-run-debug-revival-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/069-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/finalguispec/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/formatters_system/007-5.-gui-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/formatters_system/012-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/formatters_system/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/003-purpose.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/005-browser-debug-auth-handoff-and-session-shaping.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/006-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/007-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/008-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_api_auth_and_flows/010-fable-residual-github-auth-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/007-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/008-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/011-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/014-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/github_integration/015-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/glossary/005-2.-core-terms.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/glossary/006-4.-evidence.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/glossary/008-6.-primitives.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/glossary/011-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/glossary/012-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/glossary/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/002-0.-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/005-remaining-runtime-integration-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/006-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/007-3.-contracts-schemas-events-or-data-shapes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/008-4.-integration-surfaces.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/009-5.-validation-and-acceptance.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/011-7.-deferred-retired-compatibility-and-non-goals.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/012-8.-source-lineage-and-governance.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/013-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/014-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/015-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/016-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/goal_runtime_system/017-case-l-durable-goal-recovery-consumer-addendum-2026-07-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/004-concern-lifecycle-verification-checklist.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/006-command-catalog-coverage-check.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/007-completion-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/008-2026-03-07-addendum-dockerhub-unraid-gui-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/009-derived-evidence-regeneration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/010-2026-03-09-addendum-artifacts-panel-and-usage-ledger-linkage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/011-concern-lifecycle-verification-checklist.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/013-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/014-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/015-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/018-shared-runtime-gui-projection-verification-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/gui_rebuild_requirements_checklist/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/004-rewrite-alignment-2026-02-21.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/006-relationship-to-other-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/009-settings-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/010-dry-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/011-implementation-hooks-planning-only.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/014-shared-approval-ladder-alignment-2026-04-04.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/016-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/017-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/018-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/human-in-the-loop/021-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/003-change-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/004-interview-runtime-boundary-and-handoff-lineage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/005-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/006-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/007-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/008-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/009-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/interview-subagent-integration/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/002-1.-purpose.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/004-3.-how-opencode-does-it-reference-for-rewrite.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/006-5.-integration-with-our-editor-filemanager-rewrite.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/007-6.-scope-and-phasing.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/013-12.-implementation-checklist-when-phased-in.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/014-13.-gui-requirements-and-cross-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/015-14.-technical-implementation-implementation-guide-source.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/016-15.-implementation-phases-and-acceptance-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/018-appendix-implementation-plan-checklist-single-ordered-list-for-i.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/019-17.-lsp-verification-gate-evidence-subagent-selection-implementa.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/021-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/022-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/023-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/024-remaining-runtime-integration-addendum-lsp-write-transaction-202.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/lspsupport/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/002-1.-canonical-naming.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/003-2.-requested-versus-effective-availability.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/005-4.-cross-surface-responsibilities.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/006-5.-server-config-schema.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/007-6.-supported-flows.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/010-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/012-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/013-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/014-fable-residual-mcp-contract-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/mcp_integration/015-remaining-runtime-integration-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/media_generation_and_capabilities/002-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/media_generation_and_capabilities/004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/media_generation_and_capabilities/005-2.-media-generation-contract.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/media_generation_and_capabilities/006-3.-natural-language-slot-extraction-grammar.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/002-plan-document-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/003-rewrite-alignment-2026-02-21.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/004-table-of-contents.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/005-1.-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/006-2.-problem-statement.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/007-3.-cleanup-policy.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/008-4.-runner-contract-implementation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/011-7.-cleanup-ux-config.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/012-8.-implementation-checklist.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/014-9.1-gaps-and-potential-issues.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/015-10.-cross-plan-dependencies-and-impacts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/016-10.5-crews-and-subagent-communication-enhancements-for-cleanup-o.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/017-10.6-lifecycle-and-quality-enhancements-for-cleanup-operations.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/018-11.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/020-11.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/022-runner-preparation-cleanup-and-safe-point-canonical-alignment-20.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/024-debug-investigation-instrumentation-cleanup-addendum-2026-03-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/026-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/027-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/029-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/031-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/032-remaining-runtime-cleanup-ownership-addendum-2026-08-14.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/miscplan/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/004-provider-model-precedence-and-settings-resolution.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/009-4.-model-availability-and-error-handling.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/011-6.-variants-system.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/012-7.-gui-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/013-8.-opencode-baseline-and-puppet-master-deltas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/014-9.-acceptance-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/015-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/019-model-selection-versus-runtime-retry-ownership-consolidation-add.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/020-requested-effective-model-snapshot-alignment.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/021-provider-model-selection-policy-and-audit-addendum.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/023-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/024-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/025-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/027-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/030-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/032-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/034-fable-residual-models-contract-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/models_system/035-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/003-1.-purpose-and-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/005-canonical-data-shape-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/006-3.-assessment-what-we-have-and-gaps-filled.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/008-6.-provider-specific-behavior.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/009-7.-runner-orchestration-contract.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/011-9.-gui-requirements-ux-only.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/014-operational-identity-addendum-for-github-actions-and-docker-mana.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/018-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/021-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/023-fable-residual-multi-account-contract-cleanup-addendum-2026-07-0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/multi-account/025-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/002-plan-document-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/003-rewrite-alignment-2026-03-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/005-high-level-feature-themes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/006-24.-browser-preview-and-code-context-integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/007-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/009-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/010-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/011-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newfeatures/012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/003-rewrite-alignment-2026-02-21.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/004-dry-method-compliance.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/006-1.-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/007-2.-relationship-to-other-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/009-4.-goals.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/010-5.-design-overview.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/011-6.-framework-tool-discovery-dry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/014-9.-custom-headless-gui-tool.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/015-10.-integration-with-test-strategy-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/017-12.-gaps-risks-and-dry-notes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/018-12.7-crews-and-subagent-communication-enhancements-for-tool-disc.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/019-12.8-lifecycle-and-quality-enhancements-for-tool-discovery.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/020-13.-evidence-in-chat-contract-and-flow-research-evidence-media-c.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/021-14.-live-visualization-execution-architecture-research-live-visu.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/022-14.5-mobile-testing-stacks-research-mobile-testing-stacks.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/023-14.6-preview-build-docker-and-actions-contracts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/024-15.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/026-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/027-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/028-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/030-remaining-runtime-doctor-ownership-addendum-2026-08-14.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/newtools/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/non_executable_closure_evidence/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/non_executable_closure_evidence/002-lines-201-400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/non_executable_closure_evidence/003-lines-401-600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/non_executable_closure_evidence/004-lines-601-719.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/non_executable_closure_evidence.schema/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/non_executable_closure_evidence.schema/002-lines-201-400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/002-1.-scope-and-method.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/003-2.-coverage-matrix.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/004-3.-dry-authority-audit.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/005-4.-gui-config-wiring-audit.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/006-5.-mandatory-fix-list.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/007-6.-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/009-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/010-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_coverage_matrix/011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/003-1.-goal.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/004-2.-hard-constraints.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/005-2a.-transfer-fidelity-notes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/007-4.-deterministic-extraction-procedure.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/008-5.-output-format-for-downstream-agents.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/010-7.-expanded-extraction-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/011-8.-contract-mapping-to-puppet-master-ssot-dry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/012-9.-baseline-puppet-master-delta-hooks.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/013-10.-upstream-notes-worth-capturing-dry-file-pointers-deltas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/015-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/016-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/opencode_deep_extraction/017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/003-plan-document-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/004-executive-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/005-runtime-scheduler-identity-and-worktree-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/006-rewrite-alignment-2026-02-21.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/007-relationship-between-the-two-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/008-compatibility-tier-level-subagent-strategy.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/009-debug-capable-investigation-orchestration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/010-dynamic-subagent-selection-architecture.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/012-integration-with-orchestrator.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator-subagent-integration/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/003-1.-scope-and-canonical-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/006-known-37-recovery-unavailable-orchestrator-actions-2026-07-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/007-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/008-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/009-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/010-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/011-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/012-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/015-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/016-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/017-pmconcept6-shell-sweep-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/018-pmconcept7-concept-promotion-addendum-2026-07-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/orchestrator_page/019-run-debug-revival-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/003-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/004-canonical-data-shape-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/005-1.-definitions-and-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/006-2.-permission-actions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/007-3.-granular-rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/009-4.-special-guards.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/010-5.-tool-permission-keys.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/011-6.-ask-flow-semantics.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/012-7.-deterministic-defaults.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/013-8.-resolution-algorithm.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/014-9.-persistence-and-storage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/015-10.-gui-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/016-10a.-security-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/017-11.-opencode-baseline-and-puppet-master-deltas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/018-12.-acceptance-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/019-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/020-runtime-blocked-outcome-integration-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/021-source-control-github-actions-and-docker-manager-permission-adde.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/022-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/023-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/024-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/025-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/026-ledger-compile-addendum-pldg-20260616-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/027-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/030-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/031-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/032-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/033-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/034-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/035-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/036-fable-residual-permission-consent-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/037-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/038-case-l-permission-snapshot-and-recovery-consumer-addendum-2026-0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/039-shared-runtime-dispatch-admission-boundary-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/permissions_system/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/002-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/003-1.-definitions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/005-3.-persona-format-schema.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/006-4.-gui-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/007-5.-integration-persona-application-to-a-run.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/008-6.-reserved-personas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/010-8.-opencode-baseline-and-puppet-master-deltas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/012-10.-persona-runtime-contract-expansion-2026-03-06.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/013-11.-core-persona-catalog.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/014-12.-specialty-persona-catalog-and-curation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/016-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/017-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/018-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/020-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/022-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/023-run.started-persona-owner-join.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/personas/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_ledger_system/004-2.-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_ledger_system/009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_ledger_system/010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_ledger_system/011-fable-residual-planning-ledger-service-cleanup-addendum-2026-07-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/002-0.-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/003-1.-ownership-and-consumers.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/004-2.-canonical-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/005-gui-approval-and-plan-compile-launch-repair-addendum-2026-07-02.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/007-4.-integration-surfaces.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/015-implementation-readiness-gate-addendum-2026-07-05.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/016-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/018-pmconcept6-concept-promotion-addendum-2026-07-11.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/019-pmconcept6-shell-sweep-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/planning_wizard/020-pmconcept7-concept-promotion-addendum-2026-07-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_document_system/004-2.-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_document_system/006-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_document_system/007-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_document_system/008-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_document_system/009-implementation-readiness-gate-addendum-2026-07-05.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_document_system/010-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/002-0.-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/003-1.-boundary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/004-2.-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/006-implementation-readiness-gate-addendum-2026-07-05.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/007-4.-runtime-compiler-algorithm-and-enablement.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plan_to_node_compilation/011-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/002-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/005-3.-load-order-and-execution-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/006-4.-hook-events.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/007-5.-hook-return-semantics.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/008-6.-custom-tool-registration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/009-7.-plugin-configuration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/010-8.-structured-plugin-logging.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/012-10.-opencode-baseline-and-puppet-master-deltas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/013-11.-acceptance-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/019-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/020-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/021-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/plugins_system/022-fable-residual-plugin-contract-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_builder/003-1.-ownership-and-consumers.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_builder/004-2.-canonical-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_builder/006-4.-integration-surfaces.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_builder/008-6.-plan-to-node-readiness.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_builder/011-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_builder/012-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_builder/013-fable-residual-prd-builder-contract-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_planning_runtime_contracts/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prd_planning_runtime_contracts.schema/002-lines-201-400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/003-0.-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/004-route-aware-progression-and-packet-verification-gates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/005-1.-verifier-role-ai-only-deterministic.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/007-gate-001-schema-validation-anti-drift-core.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/016-gate-010-wiring-matrix-validation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/017-gate-011-requirements-traceability-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/018-gate-012-requirements-quality.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/019-gate-013-ambiguity-marker-resolution.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/021-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/023-post-edit-verification-sweep-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/025-runtime-scheduler-packet-verification-canonical-alignment-2026-0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/026-runtime-packet-contradiction-fail-verification-consolidation-add.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/030-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/031-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/033-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/034-implementation-readiness-gate-addendum-2026-07-05.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/progression_gates/035-fable-gate-registry-repair-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/002-0.-scope-normative.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/003-1.-canonical-persistence-vs-filesystem-staging.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/004-2.-required-artifact-set-ssot-project-plan-package.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/005-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/006-3.-schema-alignment-critical-do-not-rename-fields.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/007-4.-contract-layers-two-layer-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/008-5.-dry-enforcement-contract-referenced-graph.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/009-6.-autonomy-decision-logging-no-human-required-decisions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/010-7.-plan-graph-requirements-sharded-only-canonical-optional-deriv.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/011-8.-seglog-canonical-persistence-contract-artifact-events.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/012-9.-acceptance-criteria-validator-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/013-11.-traceability-outputs.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/014-12.-optional-derived-quickstart.md-contract-human-convenience-on.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/015-change-summary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/016-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/017-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/018-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/019-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/020-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/023-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/project_output_artifacts/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/003-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/004-1.-prompt-assembly-pipeline.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/005-2.-compaction-and-pruning.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/012-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/013-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/017-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/019-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/prompt_pipeline/021-shared-runtime-context-and-provider-dispatch-integration-addendu.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/006-canonical-data-shape-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/009-6.-provider-facade-mapping.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/010-7.-model-discovery.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/011-8.-capability-flags.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/016-13.-invocation-shape-normative.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/018-15.-acceptance-criteria-testable.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/020-opencode-runtime-retry-blocked-state-packet-canonical-alignment-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/022-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/023-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_opencode/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/003-1.-purpose.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/004-2.-non-goals.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/005-3.-references-dry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/006-4.-v0-safe-primitives-used.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/007-5.-canonical-diagnostic-instrumentation-reserved-categories.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/009-7.-mapping-table-2-upstream-a2a-bridge-concepts-v0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/010-8.-deterministic-rules-normative.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/011-9.-overseer-subjective-audit-protocol-instrumentation-normative.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/012-10.-portable-patterns-a-e.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/013-retry-remediation-event-continuity-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/016-canonical-data-shape-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/018-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/019-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/provider_stream_mapping_external_reference_a2a/020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/002-0.-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/012-case-l-release-migration-and-recovery-gate-propagation-2026-07-1.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/014-fable-remaining-action-plan-repair-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/release_supply_chain/015-provider-cli-acquisition-supply-chain-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/rewrite-tie-in-memo/002-provided-memo-verbatim.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/rewrite-tie-in-memo/003-impacts-on-existing-plans-deltas-to-keep-consistency.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/rewrite-tie-in-memo/004-suggested-single-source-of-truth-rule-for-the-rewrite.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/rewrite-tie-in-memo/005-unified-document-media-rendering-contract-2026-03-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/rewrite-tie-in-memo/008-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/rewrite-tie-in-memo/009-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/rewrite-tie-in-memo/010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/003-1.-purpose-and-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/004-3.-mechanism-one-event-type-per-artifact-type.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/005-4.-redb-key-and-projector.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/006-5a.-debug-investigation-grouping-manifests-and-exports.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/007-6.-reasoning_tokens-and-cost_usage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/008-7.-json-schemas-all-required.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/009-8.-browser-recordings.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/010-9.-all-differentiators-mvp.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/011-10.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/012-cross-surface-operation-receipt-linkage-addendum-2026-03-12.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/013-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/014-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/015-known-37-recovery-artifact-projection-2026-07-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/017-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/018-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/019-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/020-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/023-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/024-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/025-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/027-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/028-usage-artifact-schema-strictness-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/029-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/030-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/031-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/032-case-l-durable-state-consumer-addendum-2026-07-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/033-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/034-run-debug-revival-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_artifacts_panel/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/002-lines-201-400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/003-lines-401-600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/004-lines-601-800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/005-lines-801-1000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/006-lines-1001-1200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/007-lines-1201-1400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/008-lines-1401-1600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/009-lines-1601-1800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/010-lines-1801-2000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/011-lines-2001-2200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/012-lines-2201-2400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/013-lines-2401-2600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/014-lines-2601-2800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/015-lines-2801-3000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/016-lines-3001-3200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/017-lines-3201-3400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/018-lines-3401-3600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/019-lines-3601-3800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/020-lines-3801-4000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/021-lines-4001-4200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/022-lines-4201-4400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/023-lines-4401-4600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/024-lines-4601-4800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/025-lines-4801-5000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/026-lines-5001-5200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/027-lines-5201-5400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/028-lines-5401-5600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/029-lines-5601-5800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/030-lines-5801-6000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/031-lines-6001-6200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/032-lines-6201-6400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/033-lines-6401-6600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/034-lines-6601-6800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/035-lines-6801-7000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/036-lines-7001-7200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/037-lines-7201-7400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/038-lines-7401-7600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/039-lines-7601-7800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/040-lines-7801-8000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/041-lines-8001-8200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/042-lines-8201-8400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/043-lines-8401-8600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/044-lines-8601-8800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/045-lines-8801-9000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/046-lines-9001-9200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/047-lines-9201-9400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/048-lines-9401-9600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/049-lines-9601-9800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/050-lines-9801-10000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/051-lines-10001-10200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/052-lines-10201-10400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/053-lines-10401-10600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/054-lines-10601-10800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/055-lines-10801-11000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/056-lines-11001-11200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/057-lines-11201-11400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/058-lines-11401-11600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/runtime_integration_disposition/059-lines-11601-11686.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/003-1.-scope-and-canonical-role.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/005-3.-node-detail-inspector.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/010-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/011-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/012-ledger-compile-addendum-pldg-20260614-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/013-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/014-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/015-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/017-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/018-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_graph_view/019-pmconcept6-shell-sweep-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/003-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/004-1.-canonical-mode-definitions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/005-2.-cli-bridged-execution-strategies.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/006-3.-deterministic-strategy-selection.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/007-4.-budget-defaults.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/008-5.-kill-conditions-and-enforcement.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/009-6.-run-outcome-taxonomy.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/010-7.-mode-effects-on-context-management.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/011-8.-opencode-baseline.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/012-9.-puppet-master-deltas.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/013-10.-acceptance-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/015-runtime-mode-blocked-recovery-addendum-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/017-runtime-mode-interaction-with-blocked-recovery-consolidation-add.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/018-headless-blocked-discovery-and-mutation-classifier-alignment-add.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/021-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/022-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/023-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/025-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/run_modes/027-bsd-and-sustainable-capacity-policy-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/002-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/003-1.-canonical-shell-and-surface-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/004-2.-cross-feature-runtime-contracts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/005-3.-feature-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/006-4.-command-families-required-by-the-promoted-features.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/007-5.-persistence-and-restore-rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/008-6.-non-goals-and-anti-drift-rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/010-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/011-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/014-runtime-integration-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/section15_mvp_promoted_features_spec/016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/002-lines-201-400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/003-lines-401-600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/005-lines-801-1000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/006-lines-1001-1200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/007-lines-1201-1400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/008-lines-1401-1600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/010-lines-1801-2000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/011-lines-2001-2200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/015-lines-2801-3000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/018-lines-3401-3600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/019-lines-3601-3800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/020-lines-3801-4000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/021-lines-4001-4200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/023-lines-4401-4600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/024-lines-4601-4800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/025-lines-4801-5000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/026-lines-5001-5200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/027-lines-5201-5400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/028-lines-5401-5600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/029-lines-5601-5800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/030-lines-5801-6000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/031-lines-6001-6200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/032-lines-6201-6400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/038-lines-7401-7600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/046-lines-9001-9200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/047-lines-9201-9400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/048-lines-9401-9600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/049-lines-9601-9800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/050-lines-9801-10000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/051-lines-10001-10200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/054-lines-10601-10800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/055-lines-10801-11000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/056-lines-11001-11200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/059-lines-11601-11800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/061-lines-12001-12200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/062-lines-12201-12400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/063-lines-12401-12600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/066-lines-13001-13200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/067-lines-13201-13400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/068-lines-13401-13600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/069-lines-13601-13800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/070-lines-13801-14000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/071-lines-14001-14200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/072-lines-14201-14400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/080-lines-15801-16000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/081-lines-16001-16200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/084-lines-16601-16800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/085-lines-16801-17000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/086-lines-17001-17200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/089-lines-17601-17800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/090-lines-17801-18000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/092-lines-18201-18400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/093-lines-18401-18600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/settings_inventory/095-lines-18801-19000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/002-1.-authority-and-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/003-2.-platform-invariants.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/005-4.-installation-and-capability-lifecycle.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/006-5.-durable-environment-connection-and-domain-synchronization.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/007-6.-durable-command-outbox.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/008-7.-cursor-replay-snapshot-live-buffering-and-coalescing.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/009-8.-runtimeresourcegovernor-and-observablework.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/010-9.-leases-and-operational-awareness.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/011-10.-debugsession-and-evalsession-shared-lifecycle.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/012-11.-provider-dispatch-admission.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/013-12.-time-traveling-conditional-rules.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/014-13.-back-seat-driver.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/015-14.-persistence-recovery-and-migration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/016-15.-commands-wiring-dry-gui-and-usage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/017-16.-verification-contract.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/018-17.-conflict-dispositions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/019-18.-owner-consumer-map.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/020-19.-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/shared_integration_runtime/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/002-0.-scope-and-ssot-status.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/006-4.-runtime-surface.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/007-5.-permissions-integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/008-6.-gui-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/010-8.-acceptance-criteria.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/012-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/013-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/014-fable-residual-skills-invocation-cleanup-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/016-remaining-runtime-integration-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/skills_system/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/004-table-of-contents.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/007-3.-implementation-checklist.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/013-version-history.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/022-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/023-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/041-shared-integration-runtime-persistence-and-migration-addendum-20.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage-plan/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_recovery_contracts.schema/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/005-lines-801-1000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/006-lines-1001-1200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/011-lines-2001-2200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/016-lines-3001-3200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/017-lines-3201-3400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/018-lines-3401-3600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/019-lines-3601-3800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/020-lines-3801-4000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/021-lines-4001-4200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/022-lines-4201-4400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/023-lines-4401-4600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/024-lines-4601-4800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/025-lines-4801-5000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/026-lines-5001-5200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/028-lines-5401-5600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/032-lines-6201-6400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/037-lines-7201-7400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/038-lines-7401-7600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/039-lines-7601-7800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/050-lines-9801-10000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/051-lines-10001-10200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/054-lines-10601-10800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/056-lines-11001-11200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/057-lines-11201-11400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/059-lines-11601-11800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/060-lines-11801-12000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/061-lines-12001-12200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/062-lines-12201-12400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/063-lines-12401-12600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/065-lines-12801-13000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/066-lines-13001-13200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/071-lines-14001-14200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/072-lines-14201-14400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/073-lines-14401-14600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/074-lines-14601-14800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/078-lines-15401-15600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/079-lines-15601-15800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/080-lines-15801-16000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/081-lines-16001-16200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/083-lines-16401-16600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/084-lines-16601-16800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/085-lines-16801-17000.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/092-lines-18201-18400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/093-lines-18401-18600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/storage_value_registry/094-lines-18601-18800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/001-preamble.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/002-ssot-references-dry.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/003-1.-purpose-and-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/004-2.-permission-model.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/005-3.-built-in-tools-target-set.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/006-4.-custom-tools.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/007-5.-mcp-integration-in-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/008-6.-ways-to-add-tools-implementation-angles.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/009-7.-per-platform-mcp-and-tool-config-reference.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/010-8.-implementation-details-and-technical-notes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/011-10.-implementation-plan-permissions-spec-for-implementers.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/012-11.-relationship-to-other-plans.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/013-12.-implementation-checklist-ordered-for-implementation-plan.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/014-13.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/015-tool-policy-outcome-taxonomy-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/016-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/018-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/020-10.-firecrawl-provider-integration.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/021-11.-provider-capability-matrix.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/022-12.-web-tool-routing-algorithm.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/023-13.-batch-operations.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/024-14.-web-content-caching-layer.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/025-canonical-owner-and-consumer-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/027-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/028-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/029-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/030-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/031-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/032-ledger-compile-addendum-pldg-20260615-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/033-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/034-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/035-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/036-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/037-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/038-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/039-remaining-runtime-integration-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/tools/manifest.json`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/006-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/008-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/009-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/011-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/012-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/015-ledger-compile-addendum-pldg-20260630-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/016-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/017-fable-gui-command-contract-closure-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/019-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/020-pmconcept6-control-census-command-addendum-2026-07-16.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/021-case-l-command-registration-and-storage-gate-propagation-2026-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/022-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/023-run-debug-revival-addendum-2026-07-27.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/024-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/025-pmconcept7-deferred-token-hygiene-addendum-2026-07-29.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/027-shared-runtime-command-catalog-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_command_catalog/028-u11-prism-ii-usage-command-registration-addendum-2026-08-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/002-0.-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/004-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/007-3.-ui-command-dispatcher-boundary.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/008-4.-wiring-matrix-concept.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/011-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/ui_wiring_rules/014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/002-canonical-owner-section-requirements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/005-storage-dependency-implementation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/007-relationship-to-existing-docs.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/009-scope-of-the-usage-feature.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/010-data-and-backend-conceptual.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/011-gui-placement-options.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/012-gaps-current-state-vs.-desired.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/014-out-of-scope-for-this-plan.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/016-version-history.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/019-source-control-github-actions-and-docker-manager-cost-attributio.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/020-cross-surface-usage-routing-clarifications.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/022-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/023-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/028-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/029-usage-implementation-ready-evidence-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/031-pmconcept7-concept-promotion-addendum-2026-07-23.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/032-shared-runtime-attribution-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/usage-feature/033-u11-prism-ii-usage-concept-promotion-addendum-2026-08-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_agent_policy_fixtures/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_agent_policy_fixtures/002-lines-201-290.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_capability_findings_coverage/001-lines-1-156.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_capability_source_packet_receipt/001-lines-1-84.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_capability_source_packet_receipt.schema/001-lines-1-67.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_intent_routing_fixtures/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_intent_routing_fixtures/002-lines-201-223.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_operation_card_fixtures/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_operation_contracts.schema/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_operation_contracts.schema/002-lines-201-400.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_operation_contracts.schema/003-lines-401-600.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_operation_contracts.schema/004-lines-601-800.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_operation_contracts.schema/005-lines-801-948.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_operation_job_fixtures/001-lines-1-91.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_policy_negative_fixtures/001-lines-1-62.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_policy_negative_fixtures.schema/001-lines-1-173.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/web_research_run_fixtures/001-lines-1-200.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/widget_system/006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/widget_system/008-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/widget_system/009-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/widget_system/010-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/widget_system/012-pmconcept7-home-workspace-boundary-clarification-2026-08-04.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/widget_system/013-u11-prism-ii-usage-widget-disclosure-addendum-2026-08-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/003-0.-scope.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/004-1.-template.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/005-2.-example-entries.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/007-gui-pmconcept-production-wiring-repair-addendum-2026-07-02.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/008-4.-verification.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/010-scheduler-remediation-event-wiring-addendum-2026-03-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/012-canonical-runtime-event-wiring-canonical-alignment-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/013-canonical-runtime-producer-consumer-and-action-wiring-canonical-.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/014-runtime-recovery-producer-consumer-wiring.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/015-source-control-github-actions-and-docker-manager-wiring-addendum.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/018-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/019-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/020-ledger-compile-addendum-pldg-20260615-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/021-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/023-usage-gui-propagation-addendum-2026-07-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/024-fable-production-wiring-repair-addendum-2026-07-07.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/025-ledger-compile-addendum-pldg-20260701-001-feature-intake.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/wiring_matrix/027-u11-prism-ii-usage-wiring-addendum-2026-08-18.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/00-index.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/008-2.-worktree-improvements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/009-3.-git-improvements.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/010-4.-gui-for-git-worktrees.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/011-5.-config-wiring-prerequisite.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/013-7.-gaps-risks-and-implementation-notes.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/014-dry-method-compliance.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/015-7.12-crews-and-subagent-communication-enhancements-for-git-workt.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/016-7.13-lifecycle-and-quality-enhancements-for-git-worktree-operati.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/017-8.-references.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/020-runtime-worktree-conflict-canonical-alignment-2026-03-09.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/021-worktree-lane-allocation-and-source-control-reconciliation.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/022-child-worktree-runtime-lifecycle-and-typed-lease-protocol.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/024-planunits.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/025-migration-coverage.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/026-ledger-compile-addendum-pldg-20260614-001.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/027-ledger-compile-addendum-pldg-20260616-002.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/030-ledger-compile-addendum-pldg-20260622-001-fff.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/031-fable-deferred-action-concrete-repair-addendum-2026-07-08.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/033-corrected-runtime-integration-child-worktree-addendum-2026-08-13.md`
+- `Puppet-Master-main (2)/Puppet-Master-main/Plans/_shards/worktreegitimprovement/manifest.json`
+
+## Representative source hits
+
+### thread
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:18` — - The surrounding thread yields/repositions to make room.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:23` — > Preserve spatial lineage between composing/sending and the canonical message's final place in the thread.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:123` — - thread-history placement;
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:129` — - provider selectors, BSD, context, artifacts, or cross-thread operations;
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/00_START_HERE.md:14` — - eight Chat-thread concepts;
+- `original_packet/00_START_HERE.md:15` — - one interactive comparison workspace in which any of the eight thread concepts can mount inside any of the eight window concepts;
+
+### history
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:118` — Test all eight themes; 520/750/975/1200 plus continuous resize; rail/side-panel pressure; dock/pop-out; reduced motion; history states; artifact states; empty/ordinary/dense/very-long; Goal states; question states; offli
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:27` — - How does a sent message leave the composer and become durable history?
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:72` — 7. The full execution condenses into a compact `tools used` history index.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:79` — > One live execution locus can evolve through phases and later collapse into a durable, selectively reopenable history, keeping conversation and artifact distinct.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:123` — - thread-history placement;
+- `original_packet/AUDIT_PROMPT.md:26` — Interactively test all eight themes; 520/750/975/1200 px plus continuous resize; left rail open/closed; docked/pop-out; reduced motion; history closed/peek/pinned compact/pinned full; artifacts closed/loading/open/error;
+- `original_packet/00_START_HERE.md:49` — 6. Original packet material as source history.
+- `original_packet/00_START_HERE.md:86` — - history treatment;
+
+### search
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:28` — 4. external product/open-source research;
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:29` — 5. motion and interaction research;
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:38` — Search current names, old names, aliases, controls, states, objects, events, commands, schemas, owner and consumer surfaces, Settings, Usage, security, browser, editor, File Manager, Goal, agents, artifacts, and orchestr
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:94` — ## Research
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:106` — Research does not become canon and does not prescribe art direction.
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:136` — 9. External research synthesis.
+- `original_packet/AUDIT_PROMPT.md:14` — 4. current comparable-product/open-source research;
+
+### pin
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:120` — Check clipping, hierarchy, nested containers, moving targets, scroll anchors, z-index, popup collision, contrast/token drift, motion layout shifts, geometry inconsistency, native scrollbar leakage, raw terminology, emoji
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:79` — > One live execution locus can evolve through phases and later collapse into a durable, selectively reopenable history, keeping conversation and artifact distinct.
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/AUDIT_PROMPT.md:26` — Interactively test all eight themes; 520/750/975/1200 px plus continuous resize; left rail open/closed; docked/pop-out; reduced motion; history closed/peek/pinned compact/pinned full; artifacts closed/loading/open/error;
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/IMPLEMENTATION_PROMPT.md:14` — Use the supplied deep dataset plus new deterministic triggers. Make every showcased control work or truthfully disable it. Test all eight themes, four widths, continuous resize, rail states, pinned-history/artifact combi
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:49` — cmd.chat.history.pin / unpin
+
+### archive
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:17` — Show at least 18 credible thread rows so pinning, search, archive, status, offline, and long-title behavior can be judged.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:42` — Include active, waiting for user, Goal running, Goal paused, blocked by approval, child agents working, completed with artifact, failed/retry, archived, branched, and remote/server-continuing states.
+- `original_packet/02_FIXED_PRODUCT_BEHAVIOR.md:86` — Each thread has a durable independent draft with text, attachments, composer state, and a bounded deduplicated revision history. Demonstrate thread switching, crash/restart restoration, restore an earlier revision, expli
+- `original_packet/02_FIXED_PRODUCT_BEHAVIOR.md:181` — Support thread create/select/search/pin/rename/archive/delete/export/branch/restore where current canon permits.
+- `original_packet/final_chat_decision_coverage.json:1199` — "requirement": "Project/all-project scope, approved-only, archived, compare, export, rebuild, auto-archive, deletion retention, and queue behavior.",
+- `original_packet/original_relevant_plan_units.json:3` — "source": "Plans/.plan_index/plan_units.jsonl from the supplied Plans archive",
+- `original_packet/original_relevant_plan_units.json:2277` — "canonical_text": "Thread lifecycle state is separate from operational status markers and follows creating -> active -> suspended -> archived -> deleted with explicit, auditable transitions. Deleted is terminal: logical 
+- `original_packet/original_relevant_plan_units.json:2304` — "creating -> active -> suspended -> archived -> deleted",
+
+### fork
+- `original_packet/original_relevant_plan_units.json:8340` — "Active and child work is cancelled, re-scoped, forked, or allowed to finish only after impact analysis."
+- `original_packet/original_relevant_plan_units.json:8342` — "canonical_text": "Material mid-goal user changes create an explicit Goal Replan Event. The runtime pauses scheduling, classifies the interruption as pause/resume, stop/cancel, constraint update, scope expansion, scope r
+- `correction_packet/relevantPlanUnits.json:8340` — "Active and child work is cancelled, re-scoped, forked, or allowed to finish only after impact analysis."
+- `correction_packet/relevantPlanUnits.json:8342` — "canonical_text": "Material mid-goal user changes create an explicit Goal Replan Event. The runtime pauses scheduling, classifies the interruption as pause/resume, stop/cancel, constraint update, scope expansion, scope r
+- `plan/audit_report-2.json:137` — "CWF-065 changed behavior to explicit organization-fork preflight and typed unsupported-host outcomes while retaining old source_lineage and stale preserved tokens.",
+- `plan/FINAL_REPORT-3.md:44` — - `CWF-065`: refined GitHub/fork behavior to include explicit organization-fork preflight and typed unsupported-host outcomes.
+- `plan/REPAIR_REPORT-6.md:18` — - Restored exact-token/source-lineage fidelity for `CRAU-041`, Docker payload PlanUnits, FileManager/FileSafe lifecycle fields, permissions/runtime identity fields, media capability fields, runtime artifact key identity,
+- `plan/repair_report-45.json:214` — "Plans/_shards/chain-wizard-flexibility/014-7.-project-setup-and-github-create-repo-fork-pr.md",
+
+### draft
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:62` — cmd.chat.draft.history.open / restore / clear
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:145` — - questionnaire queue, per-question skip, draft, cancel/submit receipt;
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:146` — - per-thread draft revision history;
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:11` — - Goals, Todos, questions, subagents, diffs, artifacts, browser state, and draft recovery.
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:66` — Preserve an ordinary draft, trigger prepare/open, answer, navigate back/forward, skip, revisit, exercise a second input type, required-answer error, cancel, retrigger, submit, show receipt/history, recover focus/draft. R
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:74` — Generate and open artifact left of Chat, preserve scroll/draft, switch artifacts, load/update/error/retry, pin history simultaneously, close/reopen and restore selection.
+
+### message
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:7` — ## Video 1 — Message arrival and transcript continuity
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:9` — **Source:** `01_message_arrival_spatial_continuity.mov`
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:19` — - A second user message repeats the relationship.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:23` — > Preserve spatial lineage between composing/sending and the canonical message's final place in the thread.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:27` — - How does a sent message leave the composer and become durable history?
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:110` — Message movement -> spatial authorship
+- `original_packet/00_START_HERE.md:85` — - message treatment;
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+
+### collapse
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:110` — Inspect continuity, causality, timing/easing, enter/exit/replacement/reordering, expansion/collapse, loading/interruption/completion, menu origin, scroll/anchor, concurrent activity, reduced motion, performance, layout s
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:79` — > One live execution locus can evolve through phases and later collapse into a durable, selectively reopenable history, keeping conversation and artifact distinct.
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:82` — Select provider/account/model, effort and Normal/Fast without menu collapse, show requested/effective difference, switch access modes, effective Review limit, BSD scopes/states, compact approval, material route warning a
+- `original_packet/06_MOTION_VISUAL_AND_SLINT_QUALITY.md:11` — Long-message collapse/expand with anchor preservation
+- `original_packet/02_FIXED_PRODUCT_BEHAVIOR.md:62` — Completed long user or assistant prose can collapse visually.
+- `original_packet/02_FIXED_PRODUCT_BEHAVIOR.md:66` — - Streaming output does not repeatedly collapse.
+
+### question
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:118` — Test all eight themes; 520/750/975/1200 plus continuous resize; rail/side-panel pressure; dock/pop-out; reduced motion; history states; artifact states; empty/ordinary/dense/very-long; Goal states; question states; offli
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:25` — Possible questions for the designer:
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:33` — ## Video 2 — Stable paged questionnaire and answer review
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:35` — **Source:** `02_stable_paged_questionnaire.mov`
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:41` — - A stable questionnaire surface shows a title, progress, navigation, choices, freeform option, Skip, and forward action.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:43` — - Question content replaces inside a stable outer footprint.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:83` — ## Video 4 — Preparation pill, morphing questionnaire, and submission
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:85` — **Source:** `04_questionnaire_morph_prepare_submit.mov`
+
+### approval
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/IMPLEMENTATION_PROMPT.md:4` — Use the attached `PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10` packet and the current repository. Begin by reading `00_START_HERE.md`, `01_CREATIVE_DIRECTOR_BRIEF.md`, `02_FIXED_PRODUCT_BEHAVIOR.md`, `03_CUMULA
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:65` — Preserve and reuse canonical Goal, account/profile, provider route, worktree, browser, test, artifact, Settings, approval, and notification commands.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:94` — - Cross-project, alternate-provider, Full Access, and persistent grants retain approval receipts.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:121` — ApprovalCard
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:155` — - notification and approval receipt refs.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:25` — MCP setup and tool approval
+
+### goal
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:38` — Search current names, old names, aliases, controls, states, objects, events, commands, schemas, owner and consumer surfaces, Settings, Usage, security, browser, editor, File Manager, Goal, agents, artifacts, and orchestr
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:88` — Name exact shared owner and consumers. Identify duplicated selector, popup, scrollbar, state calculation, route, persistence, progress, provider, notification, artifact, Goal, or context system. Do not make generic reuse
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:118` — Test all eight themes; 520/750/975/1200 plus continuous resize; rail/side-panel pressure; dock/pop-out; reduced motion; history states; artifact states; empty/ordinary/dense/very-long; Goal states; question states; offli
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:124` — - Goal/Todo/subagent/Crew composition;
+- `original_packet/AUDIT_PROMPT.md:1` — /goal
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/00_START_HERE.md:52` — Old Plan/Build prompts are not authority. This packet's `IMPLEMENTATION_PROMPT.md` is the one implementation Goal. `AUDIT_PROMPT.md` is the one later read-only audit Goal.
+
+### todo
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:124` — - Goal/Todo/subagent/Crew composition;
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:115` — TodoGroup
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:11` — - Goals, Todos, questions, subagents, diffs, artifacts, browser state, and draft recovery.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:56` — 7. Goal creates at least eight Todos.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:86` — Todo add/run/verify/complete/block/fail/skip/cancel/stale/replan
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:44` — - static Todo/subagent/diff/activity controls;
+
+### subagent
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:23` — Begin with a bounded audit worklist. Use read-only subagents heavily and in parallel for:
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:32` — Divide large owner documents by bounded sections or requirement families. Subagents return structured evidence, not the final report. Main agent reconciles conflicts and writes the report.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:124` — - Goal/Todo/subagent/Crew composition;
+- `original_packet/AUDIT_PROMPT.md:10` — Start with a bounded worklist and use read-only subagents heavily. Separate at minimum:
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/00_START_HERE.md:61` — 2. A bounded read-only subagent inventories original fixed behavior from `02_FIXED_PRODUCT_BEHAVIOR.md` and `machine/original_requirements.json`.
+- `original_packet/00_START_HERE.md:62` — 3. A second subagent inventories cumulative decisions from `03_CUMULATIVE_THREAD_DECISIONS.md` and `machine/final_chat_decision_coverage.json`.
+- `original_packet/00_START_HERE.md:67` — Subagents provide evidence and inventories. The 5.6 Sol parent remains the only creative director and writer.
+
+### artifact
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:36` — Use current repository state. Live canonical Plans are product canon. Generated shards, evidence bundles, pipeline artifacts, old packets, and historical concepts may provide provenance but are not automatically current 
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:38` — Search current names, old names, aliases, controls, states, objects, events, commands, schemas, owner and consumer surfaces, Settings, Usage, security, browser, editor, File Manager, Goal, agents, artifacts, and orchestr
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:88` — Name exact shared owner and consumers. Identify duplicated selector, popup, scrollbar, state calculation, route, persistence, progress, provider, notification, artifact, Goal, or context system. Do not make generic reuse
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:118` — Test all eight themes; 520/750/975/1200 plus continuous resize; rail/side-panel pressure; dock/pop-out; reduced motion; history states; artifact states; empty/ordinary/dense/very-long; Goal states; question states; offli
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:74` — 9. A generated artifact appears as its own handoff surface.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:79` — > One live execution locus can evolve through phases and later collapse into a durable, selectively reopenable history, keeping conversation and artifact distinct.
+
+### mermaid
+- `original_packet/original_relevant_plan_units.json:1063` — "Source markdown and Mermaid text remain canonical even when richly rendered."
+- `original_packet/original_relevant_plan_units.json:1092` — "source markdown / Mermaid text",
+- `original_packet/original_relevant_plan_units.json:1093` — "Mermaid Diagrams"
+- `original_packet/original_relevant_plan_units.json:1154` — "Mermaid Diagrams",
+- `correction_packet/relevantPlanUnits.json:1063` — "Source markdown and Mermaid text remain canonical even when richly rendered."
+- `correction_packet/relevantPlanUnits.json:1092` — "source markdown / Mermaid text",
+- `correction_packet/relevantPlanUnits.json:1093` — "Mermaid Diagrams"
+- `correction_packet/relevantPlanUnits.json:1154` — "Mermaid Diagrams",
+
+### visual
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:11` — Do not edit source files, concepts, PMConcept7, Plans, commands, schemas, wiring, indexes, governance, Usage, Settings, or DRY owners. Do not create replacement concepts. Do not prescribe a preferred layout, metaphor, pl
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:30` — 6. interactive, visual, responsive, theme, state, persistence, and failure testing.
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:114` — ## Interactive and visual test matrix
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:116` — Use actual interactive concept plus automated checks and direct visual inspection.
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:138` — 11. Interactive/visual results and untested configurations.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:5` — They are **motion and interaction references**, not visual templates.
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:122` — - Puppet Master visual style;
+- `original_packet/AUDIT_PROMPT.md:8` — Read `10_SELECTED_CONCEPT_AUDIT_CONTRACT.md`, the complete creative packet, current repository canon, the selected concept and its reports/tests. Do not inspect other agents’ concepts except when the user explicitly supp
+
+### model
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:92` — Audit custom scrollbars; Model/Mode popup family; human labels; SVG-only icons; no emoji; no colored left-edge accents; eight themes; reduced motion; reachable text/controls; collision-safe popups; no clipped layers; and
+- `original_packet/00_START_HERE.md:23` — The 64 same-model combinations must work. They do not need to be 64 manually designed pages.
+- `original_packet/00_START_HERE.md:27` — The agent must **not open, inspect, render, copy, compare against, or derive ideas from any other model's Assistant Chat concept folder**.
+- `original_packet/00_START_HERE.md:56` — Do not load the entire packet into every model context.
+- `original_packet/00_START_HERE.md:96` — ## Folder and model identity
+- `original_packet/00_START_HERE.md:110` — Use `data-concept-model="5.6 Sol"` on every concept page.
+- `original_packet/00_START_HERE.md:123` — another model's folder
+
+### provider
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:88` — Name exact shared owner and consumers. Identify duplicated selector, popup, scrollbar, state calculation, route, persistence, progress, provider, notification, artifact, Goal, or context system. Do not make generic reuse
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:129` — - provider selectors, BSD, context, artifacts, or cross-thread operations;
+- `original_packet/00_START_HERE.md:137` — - `07_SYSTEM_INTEGRATION_BOUNDARIES.md` — provider, context, Goal, server, browser, Usage, and owner boundaries.
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:14` — CLI_Bridged_Providers / Provider OpenCode
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:34` — Record newer contracts that supersede old Resend, Yolo/Regular, passive questionnaire expiry, right-panel shell, colored left selection bars, provider-CLI bundling, local-first sync, or Playwright-facade language.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:65` — Preserve and reuse canonical Goal, account/profile, provider route, worktree, browser, test, artifact, Settings, approval, and notification commands.
+
+### persona
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:144` — Do not implement, choose another concept, or fill specification gaps with personal design preference.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:17` — Personas
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:28` — Persona audit
+- `original_packet/11_THREAD_COVERAGE_AND_SUPERSESSION_AUDIT.md:60` — - `personas`: 3
+- `original_packet/06_MOTION_VISUAL_AND_SLINT_QUALITY.md:56` — Do not let one theme become the only polished version. Motion does not need a separate personality for each theme.
+- `original_packet/07_SYSTEM_INTEGRATION_BOUNDARIES.md:31` — ## Context, memory, Persona, and instructions
+- `original_packet/07_SYSTEM_INTEGRATION_BOUNDARIES.md:37` — Persona registry owns Persona definitions and bounded capsules. Persona does not own permissions or routes.
+
+### mode
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:92` — Audit custom scrollbars; Model/Mode popup family; human labels; SVG-only icons; no emoji; no colored left-edge accents; eight themes; reduced motion; reachable text/controls; collision-safe popups; no clipped layers; and
+- `original_packet/00_START_HERE.md:20` — - film-level authored motion and a complete reduced-motion mode;
+- `original_packet/00_START_HERE.md:23` — The 64 same-model combinations must work. They do not need to be 64 manually designed pages.
+- `original_packet/00_START_HERE.md:27` — The agent must **not open, inspect, render, copy, compare against, or derive ideas from any other model's Assistant Chat concept folder**.
+- `original_packet/00_START_HERE.md:56` — Do not load the entire packet into every model context.
+- `original_packet/00_START_HERE.md:96` — ## Folder and model identity
+- `original_packet/00_START_HERE.md:110` — Use `data-concept-model="5.6 Sol"` on every concept page.
+
+### permission
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:27` — 3. Commands, wiring, state, schemas, persistence, Permissions/FileSafe, and DRY;
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:77` — → permission/resource gate
+- `original_packet/AUDIT_PROMPT.md:13` — 3. Commands, wiring, events, schemas, persistence, Permissions/FileSafe, and DRY ownership;
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:22` — Permissions_System / FileSafe
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:78` — → Permissions/FileSafe/route/resource validation
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:129` — Runtime owners remain Thread Service, Goal Runtime, Orchestrator, Provider Routing, Context Admission, Outbox, ResourceGovernor, ObservableWork, FileSafe, Permissions, Usage, Artifact Service, Browser/Test managers, and 
+
+### slash
+- `original_packet/original_relevant_plan_units.json:5647` — "Goal UI alignment preserves PMConcept cues for chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtim
+- `original_packet/original_relevant_plan_units.json:5649` — "canonical_text": "Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activat
+- `original_packet/original_relevant_plan_units.json:5720` — "slash command menu",
+- `correction_packet/relevantPlanUnits.json:5647` — "Goal UI alignment preserves PMConcept cues for chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtim
+- `correction_packet/relevantPlanUnits.json:5649` — "canonical_text": "Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activat
+- `correction_packet/relevantPlanUnits.json:5720` — "slash command menu",
+- `plan/repair_report-20.json:265` — "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md",
+- `plan/audit_report-23.json:261` — "path": "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md"
+
+### context
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:88` — Name exact shared owner and consumers. Identify duplicated selector, popup, scrollbar, state calculation, route, persistence, progress, provider, notification, artifact, Goal, or context system. Do not make generic reuse
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:129` — - provider selectors, BSD, context, artifacts, or cross-thread operations;
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/00_START_HERE.md:56` — Do not load the entire packet into every model context.
+- `original_packet/00_START_HERE.md:137` — - `07_SYSTEM_INTEGRATION_BOUNDARIES.md` — provider, context, Goal, server, browser, Usage, and owner boundaries.
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:18` — agent-rules-context
+
+### bsd
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:129` — - provider selectors, BSD, context, artifacts, or cross-thread operations;
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:57` — cmd.chat.bsd.set
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:110` — BSDPicker
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:151` — - BSD trigger/override/advice/suppression/timeout;
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:52` — 3. BSD Auto briefly evaluates and remains silent or supplies one bounded note.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:99` — BSD Off/Auto idle/Auto active/On/silent/advice/timeout/unavailable
+
+### crew
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:124` — - Goal/Todo/subagent/Crew composition;
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:60` — cmd.chat.crew.start
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:117` — CrewSummary
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:148` — - Crew member/wave/reducer state;
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:38` — Crew review
+
+### eli5
+- `original_packet/final_chat_decision_coverage.json:1137` — "requirement": "Global wildcard, per-tool overrides, ordered granular rules, last-match explanation, reordering, presets, scope, external-directory allowlist, doom-loop policy, Persona profiles, requested/effective origi
+- `original_packet/original_relevant_plan_units.json:7742` — "Composer left rail renders attach plus ELI5, YOLO, and CREW toggles; the right side renders the rewind FAB with an extra gap before icon-only inline-SVG send and stop controls.",
+- `original_packet/original_relevant_plan_units.json:7747` — "canonical_text": "The chat composer lays out with attach plus the ELI5, YOLO, and CREW toggles on the left rail, and the rewind FAB followed by icon-only send and stop controls (inline SVG glyphs) on the right with an e
+- `original_packet/original_relevant_plan_units.json:7784` — "ELI5",
+- `correction_packet/relevantPlanUnits.json:7742` — "Composer left rail renders attach plus ELI5, YOLO, and CREW toggles; the right side renders the rewind FAB with an extra gap before icon-only inline-SVG send and stop controls.",
+- `correction_packet/relevantPlanUnits.json:7747` — "canonical_text": "The chat composer lays out with attach plus the ELI5, YOLO, and CREW toggles on the left rail, and the rewind FAB followed by icon-only send and stop controls (inline SVG glyphs) on the right with an e
+- `correction_packet/relevantPlanUnits.json:7784` — "ELI5",
+- `plan/repair_report-20.json:262` — "Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md",
+
+### worktree
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:27` — Worktree/Git/GitHub
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:65` — Preserve and reuse canonical Goal, account/profile, provider route, worktree, browser, test, artifact, Settings, approval, and notification commands.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:154` — - worktree/port/test/debug/resource conflict refs;
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:31` — Worktree collision
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:58` — 9. A port or worktree collision is detected; safe alternative is selected.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:98` — Worktree/port/test/debug/resource collision
+
+### offline
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:58` — Inventory normal, selected, active, inactive, disabled, loading, empty, success, failure, blocked, paused, stopped, cancelled, interrupted, resumed, stale, restored, queued, offline, replay, snapshot, and terminal states
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:118` — Test all eight themes; 520/750/975/1200 plus continuous resize; rail/side-panel pressure; dock/pop-out; reduced motion; history states; artifact states; empty/ordinary/dense/very-long; Goal states; question states; offli
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:28` — - How does active-turn redirect or queued-offline sending change that path?
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:125` — - blocked/paused/offline behavior;
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/AUDIT_PROMPT.md:26` — Interactively test all eight themes; 520/750/975/1200 px plus continuous resize; left rail open/closed; docked/pop-out; reduced motion; history closed/peek/pinned compact/pinned full; artifacts closed/loading/open/error;
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/IMPLEMENTATION_PROMPT.md:14` — Use the supplied deep dataset plus new deterministic triggers. Make every showcased control work or truthfully disable it. Test all eight themes, four widths, continuous resize, rail states, pinned-history/artifact combi
+
+### attachment
+- `original_packet/AUDIT_PROMPT.md:22` — Audit the full feature, including ordinary/dense/long/offline/interrupted/restored states; all optional surface combinations; pinning, artifacts, dock/pop-out, resize, search, Context Lens, branching, questions, Goal/Tod
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:59` — cmd.chat.attachment.resolve / route
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:92` — - Route/model changes re-evaluate context, cache, tools, and attachments.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:123` — AttachmentResolutionCard
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:152` — - attachment source/derived/alternate-route lineage;
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:35` — Video attachment route decision
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:64` — 15. A video or ZIP attachment is Native, PM transformed, alternate-routed, or rejected.
+
+### animation
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:11` — Do not edit source files, concepts, PMConcept7, Plans, commands, schemas, wiring, indexes, governance, Usage, Settings, or DRY owners. Do not create replacement concepts. Do not prescribe a preferred layout, metaphor, pl
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:112` — Describe behavioral defect, not your preferred animation.
+- `original_packet/06_MOTION_VISUAL_AND_SLINT_QUALITY.md:31` — Reduced motion is a complete product state, not `animation-duration: 0` applied after the fact.
+- `original_packet/02_FIXED_PRODUCT_BEHAVIOR.md:23` — All scrollable surfaces use the Puppet Master custom scrollbar. Popup menus use the established Model/Mode selector family: click activation, shared chrome, corner-origin animation, nested submenus, in-place resize, coll
+- `original_packet/original_requirements.json:93` — "popups": "Use the Model and Mode selector popup family, including click activation, animation, submenus, shared chrome and single-overlay behavior.",
+- `original_packet/original_source_inventory.json:355` — "name": "SAP Fiori: Animation",
+- `original_packet/original_source_inventory.json:357` — "observedFocus": "Animation behavior for enterprise interfaces",
+- `original_packet/original_source_inventory.json:358` — "url": "https://experience.sap.com/fiori-design-web/animation/"
+
+### motion
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:29` — 5. motion and interaction research;
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:92` — Audit custom scrollbars; Model/Mode popup family; human labels; SVG-only icons; no emoji; no colored left-edge accents; eight themes; reduced motion; reachable text/controls; collision-safe popups; no clipped layers; and
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:96` — For a major selected-concept audit, inspect at least 25 current relevant products/projects and 25 motion/interaction sources, counting packet sources only after verifying relevance/currentness. Record source, date/versio
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:108` — ## Motion audit
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:110` — Inspect continuity, causality, timing/easing, enter/exit/replacement/reordering, expansion/collapse, loading/interruption/completion, menu origin, scroll/anchor, concurrent activity, reduced motion, performance, layout s
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:118` — Test all eight themes; 520/750/975/1200 plus continuous resize; rail/side-panel pressure; dock/pop-out; reduced motion; history states; artifact states; empty/ordinary/dense/very-long; Goal states; question states; offli
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:120` — Check clipping, hierarchy, nested containers, moving targets, scroll anchors, z-index, popup collision, contrast/token drift, motion layout shifts, geometry inconsistency, native scrollbar leakage, raw terminology, emoji
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:137` — 10. Motion/interaction synthesis.
+
+### scroll
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:88` — Name exact shared owner and consumers. Identify duplicated selector, popup, scrollbar, state calculation, route, persistence, progress, provider, notification, artifact, Goal, or context system. Do not make generic reuse
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:92` — Audit custom scrollbars; Model/Mode popup family; human labels; SVG-only icons; no emoji; no colored left-edge accents; eight themes; reduced motion; reachable text/controls; collision-safe popups; no clipped layers; and
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:110` — Inspect continuity, causality, timing/easing, enter/exit/replacement/reordering, expansion/collapse, loading/interruption/completion, menu origin, scroll/anchor, concurrent activity, reduced motion, performance, layout s
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:120` — Check clipping, hierarchy, nested containers, moving targets, scroll anchors, z-index, popup collision, contrast/token drift, motion layout shifts, geometry inconsistency, native scrollbar leakage, raw terminology, emoji
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:29` — - Can the interface show movement without disorienting the user's scroll anchor?
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:31` — Settings inventory and shared popup/scrollbar owners
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:46` — The main thread should contain at least 18 meaningful message/event groups and enough length to stress real scrolling.
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:62` — Open, peek, pin full, resize to force compact fallback, scroll, switch threads, dock/pop out, open artifact, restore width, unpin. Assert no transcript/composer overlap and a readable Chat floor.
+
+### editor
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:38` — Search current names, old names, aliases, controls, states, objects, events, commands, schemas, owner and consumer surfaces, Settings, Usage, security, browser, editor, File Manager, Goal, agents, artifacts, and orchestr
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:149` — - artifact path/version/editor target;
+- `original_packet/07_SYSTEM_INTEGRATION_BOUNDARIES.md:9` — Use current PMConcept7 for the latest surrounding shell. A representative fresh shell is Basic Dark with Chat open and current Editor Panel 1 content, but the Chat bakeoff does not redesign Home, editor panels, source co
+- `original_packet/02_FIXED_PRODUCT_BEHAVIOR.md:175` — Artifacts are Project-backed and can be opened/revealed in the editor/file system. Related artifacts may group. Browser previews route to the PM editor/browser workspace rather than becoming a second browser inside Chat.
+- `original_packet/original_requirements.json:255` — "fullDetailsMayOpenInDedicatedEditorTab": true,
+- `original_packet/original_requirements.json:260` — "opensInEditorTab": true,
+- `original_packet/original_requirements.json:267` — "browserPreviews": "Open in editor tabs.",
+- `original_packet/original_requirements.json:311` — "Full subagent detail inline versus editor-tab treatment",
+
+### plan
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:7` — Determine whether the selected concept is behaviorally complete, coherent, correctly represented, aligned with newest canon, and ready for integration planning.
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:11` — Do not edit source files, concepts, PMConcept7, Plans, commands, schemas, wiring, indexes, governance, Usage, Settings, or DRY owners. Do not create replacement concepts. Do not prescribe a preferred layout, metaphor, pl
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:25` — 1. live Plans and PlanUnit canon;
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:36` — Use current repository state. Live canonical Plans are product canon. Generated shards, evidence bundles, pipeline artifacts, old packets, and historical concepts may provide provenance but are not automatically current 
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:40` — For every contract preserve exact PlanUnit ID, command ID, field/enum, ContractRef, heading, path, and evidence location.
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:45` — Plans require behavior the concept lacks
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:47` — Plans and concept conflict
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:142` — 15. Compact integration handoff for PMConcept7, Plans, Commands, Wiring, DRY, runtime, Usage, fixtures, tests, and Slint.
+
+### debug
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:154` — - worktree/port/test/debug/resource conflict refs;
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:98` — Worktree/port/test/debug/resource collision
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:86` — Resolve native/transformed/alternate/unsupported; show cross-project grant, port/worktree conflict, test/debug/log/snapshot detail, provider capacity forecast, and no silent destructive action.
+- `original_packet/07_SYSTEM_INTEGRATION_BOUNDARIES.md:61` — ## Worktrees, ports, tests, and debug
+- `original_packet/03_CUMULATIVE_THREAD_DECISIONS.md:150` — Agents can query task-relevant state for active work, worktrees, file/path leases, ports, processes, services, containers, VMs, WSL, browser/test/debug/device sessions, CPU/memory/disk/GPU, provider allowance/reset/coold
+- `original_packet/03_CUMULATIVE_THREAD_DECISIONS.md:205` — ## 17. Tools, LSP, debug, eval, MCP, and recovery
+
+### browser
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:38` — Search current names, old names, aliases, controls, states, objects, events, commands, schemas, owner and consumer surfaces, Settings, Usage, security, browser, editor, File Manager, Goal, agents, artifacts, and orchestr
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:64` — Verify authoritative state ownership and relationships with providers, Usage, Settings, Goal Runtime, Orchestrator, Crew, Context/Memory/Persona, FileSafe/Permissions, browser/testing/debug, worktrees, resources, artifac
+- `original_packet/00_START_HERE.md:137` — - `07_SYSTEM_INTEGRATION_BOUNDARIES.md` — provider, context, Goal, server, browser, Usage, and owner boundaries.
+- `original_packet/IMPLEMENTATION_PROMPT.md:12` — The concepts must make long human conversation excellent at 520–1200 px while supporting the packet’s complete system: modular docked/pop-out mounts; real pinned history; left-side artifact workspace; message metadata/ho
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:28` — Testing / Browser / LSP / DAP / Eval / Artifacts
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:65` — Preserve and reuse canonical Goal, account/profile, provider route, worktree, browser, test, artifact, Settings, approval, and notification commands.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:129` — Runtime owners remain Thread Service, Goal Runtime, Orchestrator, Provider Routing, Context Admission, Outbox, ResourceGovernor, ObservableWork, FileSafe, Permissions, Usage, Artifact Service, Browser/Test managers, and 
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:11` — - Goals, Todos, questions, subagents, diffs, artifacts, browser state, and draft recovery.
+
+### tool
+- `original_packet/04_FOUR_VIDEO_INSPIRATION_GUIDE.md:72` — 7. The full execution condenses into a compact `tools used` history index.
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:24` — MCP / Skills / Plugins / Tools
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:92` — - Route/model changes re-evaluate context, cache, tools, and attachments.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:25` — MCP setup and tool approval
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:62` — 13. Activity transitions through files, tools, browser/test, edits, and verification.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:107` — The controller is not a production toolbar.
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:70` — Start Goal, create Todos, request children, queue capacity, advance search/read/tool/browser/test/edit/diff/verify, expand domains independently, block/recover, complete, condense, reopen evidence.
+- `original_packet/11_THREAD_COVERAGE_AND_SUPERSESSION_AUDIT.md:67` — - `tools`: 1
+
+### retry
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:62` — Test open/close/collapse/expand/resize/dock/pop-out/switch/restore/search/edit/stop/cancel/retry/resume/branch/rewind/redirect/pin/artifact operations and persistence across thread/project/app restart/crash/model change/
+- `original_packet/10_SELECTED_CONCEPT_AUDIT_CONTRACT.md:81` — → error/cancel/retry/restore
+- `original_packet/08_PLAN_COMMAND_WIRING_DRY_REGISTER.md:83` — → cancellation/retry/restore/recovery
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:42` — Include active, waiting for user, Goal running, Goal paused, blocked by approval, child agents working, completed with artifact, failed/retry, archived, branched, and remote/server-continuing states.
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:83` — Artifact generate/open/loading/update/error/retry/switch/close
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:87` — Subagent request/admit/queue/run/wait/block/retry/fallback/stop/complete
+- `original_packet/05_DEMO_DATA_AND_INTERACTION_STORY.md:122` — - A loading state eventually resolves or exposes Retry/Cancel.
+- `original_packet/09_TEST_DELIVERABLE_AND_COMPLETION_GATE.md:74` — Generate and open artifact left of Chat, preserve scroll/draft, switch artifacts, load/update/error/retry, pin history simultaneously, close/reopen and restore selection.

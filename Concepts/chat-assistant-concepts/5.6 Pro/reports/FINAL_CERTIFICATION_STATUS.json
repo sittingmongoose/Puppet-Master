@@ -1,0 +1,29 @@
+{
+  "status": "FAIL",
+  "generatedAt": "2026-08-21T20:23:16.680850+00:00",
+  "static": {
+    "overall": "FAIL",
+    "passed": 121,
+    "total": 122,
+    "failedCount": 1
+  },
+  "browser": {
+    "overall": "MISSING",
+    "passed": null,
+    "total": null,
+    "failedCount": null,
+    "coreFailedCount": null
+  },
+  "motion": {
+    "overall": "MISSING",
+    "frames": null,
+    "contactSheets": null,
+    "videos": null,
+    "failures": null
+  },
+  "commands": {
+    "static": 1,
+    "browser": 1,
+    "motion": 1
+  }
+}

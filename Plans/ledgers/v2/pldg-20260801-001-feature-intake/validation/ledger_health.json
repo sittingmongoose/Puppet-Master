@@ -1,15 +1,15 @@
 {
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "ledger_id": "pldg-20260801-001-feature-intake",
-  "updated_at_utc": "2026-08-15T01:41:47Z",
-  "last_event_id": "evt-0034",
+  "updated_at_utc": "2026-08-22T16:18:22Z",
+  "last_event_id": "evt-0039",
   "status": "pass",
   "summary": {
-    "events": 34,
-    "design_atoms": 84,
-    "decisions": 68,
-    "questions": 48,
-    "corrections": 18,
+    "events": 39,
+    "design_atoms": 88,
+    "decisions": 72,
+    "questions": 51,
+    "corrections": 21,
     "blockers": 0,
     "candidate_atoms": 0,
     "ready_for_plan_compile_atoms": 0,
@@ -19,7 +19,7 @@
     "superseded_atoms": 3,
     "open_questions": 0,
     "deferred_questions": 0,
-    "in_progress_questions": 2,
+    "in_progress_questions": 1,
     "open_blockers": 0,
     "compile_queue_items": 0,
     "compiled_plan_units": 0,
@@ -30,19 +30,21 @@
     "tool": "scripts/pm-bootstrap-ledger-validate.py",
     "last_result": "pass",
     "last_errors": [],
-    "last_warnings": [],
-    "last_validated_at_utc": "2026-08-15T01:41:47Z",
+    "last_warnings": [
+      "review gui_related=false on GUI-looking atom: atom-0087"
+    ],
+    "last_validated_at_utc": "2026-08-22T16:18:22Z",
     "summary": {
-      "atoms": 84,
+      "atoms": 88,
       "compile_queue_items": 0,
-      "corrections": 18,
-      "decisions": 68,
-      "events": 34,
+      "corrections": 21,
+      "decisions": 72,
+      "events": 39,
       "plan_units_checked": 0,
-      "questions": 48
+      "questions": 51
     }
   },
-  "notes": "The active ledger records 80 accepted atoms, one deferred atom, three superseded atoms, 68 accepted decisions, 46 answered questions plus q-0047 and q-0048 in progress, 18 accepted corrections, and zero compile items. R7 closeout remains active; post-R7 R8 iterative repair and two-clean-run qualification are authorized and canonical compile remains held.",
+  "notes": "The active ledger records 84 accepted atoms, one deferred atom, three superseded atoms, 72 accepted decisions, 50 answered questions plus q-0048 in progress, 21 accepted corrections, and zero compile items. The external OMP controller has verified native Goal activation and resumed bounded reset work; subject calls remain 0, qualification remains 0/2, empirical launch is frozen, and canonical compile remains held.",
   "checks": [
     {
       "check_id": "ledger-init-0001",
@@ -203,6 +205,31 @@
       "check_id": "ledger-turn-0032",
       "status": "pass",
       "summary": "Post-R7 iterative generic repair authorization, new non-budgeted R8 Goal, two consecutive clean unchanged full-matrix acceptance, fresh test-taker task per invocation, failure and protocol-change streak resets, no between-pass tuning, q-0048 projection, persistent no-polling execution, and compile hold validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0033",
+      "status": "pass",
+      "summary": "Goal Mode required at both prompt-building controller and autonomous subject layers; prior non-Goal evidence demoted to zero qualification credit; bounded Goal Runtime and cross-owner Plan reviews; q-0047 closure, q-0048 redesign, q-0049 answer, empirical freeze, and compile hold validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0034",
+      "status": "pass",
+      "summary": "Every fresh test taker must itself activate Codex or Oh My Pi Goal Mode before subject work; parent Goal and child labels are insufficient; per-test-taker activation and terminal receipts, single-use isolation, fail-closed launch, q-0048 narrowing, q-0050 answer, dual-lane correction, and compile hold validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0035",
+      "status": "pass",
+      "summary": "Existing OMP lane ownership, exact Windows `omp --cwd P:\\` launch boundary, NAS sandbox mapping, non-authoritative Linux process visibility, duplicate-launch prohibition, continuing per-test-taker OMP Goal Mode requirement, q-0051 answer, and compile hold validated successfully with zero errors and one reviewed GUI-keyword warning. atom-0087 remains gui_related=false because Windows denotes the operating-system host rather than a GUI surface."
+    },
+    {
+      "check_id": "ledger-turn-0036",
+      "status": "pass",
+      "summary": "Read-only OMP status reopen, nominal active Goal versus stale durable progress distinction, churn-audit-12 reset_required verdict after four stalled cycles, Win32 directory-sync and orphaned-receipt failure classification, zero subject calls, 0/2 qualification, frozen empirical launch, q-0048 update, and compile hold validated successfully. The existing reviewed atom-0087 GUI-keyword warning remains non-GUI host terminology."
+    },
+    {
+      "check_id": "ledger-turn-0037",
+      "status": "pass",
+      "summary": "Visible Windows OMP restart through native interactive `/goal`, saved session and Goal identity, mode_change and goal-context proof, hidden goal-tool observation, advisor-disabled exact-model launch receipt, bounded reset resumption, zero subject calls, 0/2 qualification, q-0048 update, and compile hold validated successfully. atom-0087's existing GUI-keyword warning remains reviewed host terminology."
     }
   ]
 }

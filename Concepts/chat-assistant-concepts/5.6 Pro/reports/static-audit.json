@@ -1,0 +1,618 @@
+{
+  "overall": "FAIL",
+  "passed": 121,
+  "failedCount": 1,
+  "total": 122,
+  "checks": [
+    {
+      "label": "file exists: shell.html",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/shell.html"
+    },
+    {
+      "label": "file nontrivial: shell.html",
+      "pass": false,
+      "detail": "480 bytes"
+    },
+    {
+      "label": "file exists: styles.css",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/styles.css"
+    },
+    {
+      "label": "file nontrivial: styles.css",
+      "pass": true,
+      "detail": "80686 bytes"
+    },
+    {
+      "label": "file exists: data.js",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/data.js"
+    },
+    {
+      "label": "file nontrivial: data.js",
+      "pass": true,
+      "detail": "28207 bytes"
+    },
+    {
+      "label": "file exists: app.js",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/app.js"
+    },
+    {
+      "label": "file nontrivial: app.js",
+      "pass": true,
+      "detail": "139527 bytes"
+    },
+    {
+      "label": "file exists: build.py",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/build.py"
+    },
+    {
+      "label": "file nontrivial: build.py",
+      "pass": true,
+      "detail": "1373 bytes"
+    },
+    {
+      "label": "file exists: index.html",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/index.html"
+    },
+    {
+      "label": "file nontrivial: index.html",
+      "pass": true,
+      "detail": "249582 bytes"
+    },
+    {
+      "label": "file exists: PM_Chat_Assistant_5.6_Pro_Standalone.html",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/PM_Chat_Assistant_5.6_Pro_Standalone.html"
+    },
+    {
+      "label": "file nontrivial: PM_Chat_Assistant_5.6_Pro_Standalone.html",
+      "pass": true,
+      "detail": "249582 bytes"
+    },
+    {
+      "label": "file exists: README.md",
+      "pass": true,
+      "detail": "/mnt/data/work/pm56_final_v3/README.md"
+    },
+    {
+      "label": "file nontrivial: README.md",
+      "pass": true,
+      "detail": "1773 bytes"
+    },
+    {
+      "label": "JavaScript syntax: app.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "JavaScript syntax: data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "self-contained index has inline CSS",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "self-contained index has fixture data",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "self-contained index has application JS",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "index does not depend on local app.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "index does not depend on local data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "index does not depend on local stylesheet",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "standalone is byte-identical to index",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "direct-open boot watchdog present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "runtime diagnostics present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "hidden attribute hardened",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "Inter font requested",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "Poppins font requested",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "reduced motion equivalence",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "custom popup animation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "custom sidecar animation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "feature token: Context compact menu",
+      "pass": true,
+      "detail": "compact now"
+    },
+    {
+      "label": "feature token: Context More Details",
+      "pass": true,
+      "detail": "more details"
+    },
+    {
+      "label": "feature token: context current-window metric",
+      "pass": true,
+      "detail": "current window"
+    },
+    {
+      "label": "feature token: context tokens-loaded metric",
+      "pass": true,
+      "detail": "tokens loaded"
+    },
+    {
+      "label": "feature token: context cache hit",
+      "pass": true,
+      "detail": "cache hit"
+    },
+    {
+      "label": "feature token: context source composition",
+      "pass": true,
+      "detail": "source composition"
+    },
+    {
+      "label": "feature token: Activity Goal",
+      "pass": true,
+      "detail": "goal"
+    },
+    {
+      "label": "feature token: Activity Todo",
+      "pass": true,
+      "detail": "todo"
+    },
+    {
+      "label": "feature token: Activity Subagents",
+      "pass": true,
+      "detail": "subagents"
+    },
+    {
+      "label": "feature token: Activity Changes",
+      "pass": true,
+      "detail": "changes"
+    },
+    {
+      "label": "feature token: Activity Artifacts",
+      "pass": true,
+      "detail": "artifacts"
+    },
+    {
+      "label": "feature token: Working start",
+      "pass": true,
+      "detail": "start"
+    },
+    {
+      "label": "feature token: Working pause",
+      "pass": true,
+      "detail": "pause"
+    },
+    {
+      "label": "feature token: Working complete",
+      "pass": true,
+      "detail": "complete"
+    },
+    {
+      "label": "feature token: Working history",
+      "pass": true,
+      "detail": "history"
+    },
+    {
+      "label": "feature token: Working evidence",
+      "pass": true,
+      "detail": "evidence"
+    },
+    {
+      "label": "feature token: Web search state",
+      "pass": true,
+      "detail": "web search"
+    },
+    {
+      "label": "feature token: Web fetch state",
+      "pass": true,
+      "detail": "web fetch"
+    },
+    {
+      "label": "feature token: Browser control state",
+      "pass": true,
+      "detail": "browser control"
+    },
+    {
+      "label": "feature token: Bash state",
+      "pass": true,
+      "detail": "bash"
+    },
+    {
+      "label": "feature token: Browser testing state",
+      "pass": true,
+      "detail": "browser test"
+    },
+    {
+      "label": "feature token: Application control state",
+      "pass": true,
+      "detail": "app control"
+    },
+    {
+      "label": "feature token: Subagent state",
+      "pass": true,
+      "detail": "subagent"
+    },
+    {
+      "label": "feature token: Validation state",
+      "pass": true,
+      "detail": "validate"
+    },
+    {
+      "label": "feature token: Artifact render state",
+      "pass": true,
+      "detail": "artifact render"
+    },
+    {
+      "label": "feature token: Reference Morph",
+      "pass": true,
+      "detail": "reference morph"
+    },
+    {
+      "label": "feature token: Orbit take",
+      "pass": true,
+      "detail": "orbit"
+    },
+    {
+      "label": "feature token: Step Stack take",
+      "pass": true,
+      "detail": "step stack"
+    },
+    {
+      "label": "feature token: Tool Ribbon take",
+      "pass": true,
+      "detail": "tool ribbon"
+    },
+    {
+      "label": "feature token: Progressive Receipt take",
+      "pass": true,
+      "detail": "progressive receipt"
+    },
+    {
+      "label": "feature token: Workbench take",
+      "pass": true,
+      "detail": "workbench"
+    },
+    {
+      "label": "feature token: Agent Stage take",
+      "pass": true,
+      "detail": "agent stage"
+    },
+    {
+      "label": "feature token: Calm Stage take",
+      "pass": true,
+      "detail": "calm stage"
+    },
+    {
+      "label": "feature token: Plan revise",
+      "pass": true,
+      "detail": "revise"
+    },
+    {
+      "label": "feature token: Plan build",
+      "pass": true,
+      "detail": "build"
+    },
+    {
+      "label": "feature token: Plan approval",
+      "pass": true,
+      "detail": "approve"
+    },
+    {
+      "label": "feature token: Questionnaire",
+      "pass": true,
+      "detail": "questionnaire"
+    },
+    {
+      "label": "feature token: Permission decision",
+      "pass": true,
+      "detail": "permission"
+    },
+    {
+      "label": "feature token: Conflict decision",
+      "pass": true,
+      "detail": "conflict"
+    },
+    {
+      "label": "feature token: Message More Details",
+      "pass": true,
+      "detail": "message details"
+    },
+    {
+      "label": "feature token: Archived threads",
+      "pass": true,
+      "detail": "archived"
+    },
+    {
+      "label": "feature token: Thread restore",
+      "pass": true,
+      "detail": "restore"
+    },
+    {
+      "label": "feature token: Thread fork",
+      "pass": true,
+      "detail": "fork"
+    },
+    {
+      "label": "feature token: Thread rename",
+      "pass": true,
+      "detail": "rename"
+    },
+    {
+      "label": "feature token: Ordinary conversation fixture",
+      "pass": true,
+      "detail": "ordinary"
+    },
+    {
+      "label": "feature token: BSD fixture",
+      "pass": true,
+      "detail": "bsd"
+    },
+    {
+      "label": "feature token: Context Lens fixture",
+      "pass": true,
+      "detail": "context lens"
+    },
+    {
+      "label": "feature token: Global Reset",
+      "pass": true,
+      "detail": "reset"
+    },
+    {
+      "label": "feature token: Mermaid artifact",
+      "pass": true,
+      "detail": "mermaid"
+    },
+    {
+      "label": "feature token: Interactive dashboard",
+      "pass": true,
+      "detail": "dashboard"
+    },
+    {
+      "label": "feature token: Data explorer",
+      "pass": true,
+      "detail": "data explorer"
+    },
+    {
+      "label": "feature token: Architecture map",
+      "pass": true,
+      "detail": "architecture map"
+    },
+    {
+      "label": "feature token: Interactive quiz",
+      "pass": true,
+      "detail": "quiz"
+    },
+    {
+      "label": "feature token: Periodic table",
+      "pass": true,
+      "detail": "periodic table"
+    },
+    {
+      "label": "feature token: Flowchart",
+      "pass": true,
+      "detail": "flowchart"
+    },
+    {
+      "label": "feature token: Generated image",
+      "pass": true,
+      "detail": "generated image"
+    },
+    {
+      "label": "feature token: Read-only child thread",
+      "pass": true,
+      "detail": "read-only"
+    },
+    {
+      "label": "feature token: Worktree selector",
+      "pass": true,
+      "detail": "worktree"
+    },
+    {
+      "label": "feature token: Goal mode",
+      "pass": true,
+      "detail": "goal mode"
+    },
+    {
+      "label": "feature token: Crew",
+      "pass": true,
+      "detail": "crew"
+    },
+    {
+      "label": "feature token: ELI5",
+      "pass": true,
+      "detail": "eli5"
+    },
+    {
+      "label": "feature token: Thought Stream",
+      "pass": true,
+      "detail": "thought stream"
+    },
+    {
+      "label": "feature token: Fast mode",
+      "pass": true,
+      "detail": "fast"
+    },
+    {
+      "label": "feature token: configured-only provider concept",
+      "pass": true,
+      "detail": "configured"
+    },
+    {
+      "label": "feature token: favorites model view",
+      "pass": true,
+      "detail": "favorites"
+    },
+    {
+      "label": "feature token: provider account identity",
+      "pass": true,
+      "detail": "account"
+    },
+    {
+      "label": "feature token: no passive expiry language",
+      "pass": true,
+      "detail": "no passive"
+    },
+    {
+      "label": "feature token: offline outbox fixture",
+      "pass": true,
+      "detail": "offline"
+    },
+    {
+      "label": "feature token: checkpoint recovery fixture",
+      "pass": true,
+      "detail": "checkpoint"
+    },
+    {
+      "label": "feature token: attachment fixture",
+      "pass": true,
+      "detail": "attachment"
+    },
+    {
+      "label": "feature token: provider quota fixture",
+      "pass": true,
+      "detail": "quota"
+    },
+    {
+      "label": "feature token: artifact stale state",
+      "pass": true,
+      "detail": "stale"
+    },
+    {
+      "label": "feature token: artifact retry",
+      "pass": true,
+      "detail": "retry"
+    },
+    {
+      "label": "feature token: new message anchor",
+      "pass": true,
+      "detail": "new-message"
+    },
+    {
+      "label": "eight-option family represented: body",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "eight-option family represented: history",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "eight-option family represented: working",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "eight-option family represented: activity",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "eight-option family represented: detail",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "eight-option family represented: transcript",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "eight-option family represented: question",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "no emoji control glyph \u2b50",
+      "pass": true,
+      "detail": "\u2b50"
+    },
+    {
+      "label": "no emoji control glyph \u26a1\ufe0f",
+      "pass": true,
+      "detail": "\u26a1\ufe0f"
+    },
+    {
+      "label": "no emoji control glyph \u2728\ufe0f",
+      "pass": true,
+      "detail": "\u2728\ufe0f"
+    },
+    {
+      "label": "no emoji control glyph \u22ef",
+      "pass": true,
+      "detail": "\u22ef"
+    },
+    {
+      "label": "no emoji control glyph \u25bc",
+      "pass": true,
+      "detail": "\u25bc"
+    },
+    {
+      "label": "no emoji control glyph \u25b6\ufe0f",
+      "pass": true,
+      "detail": "\u25b6\ufe0f"
+    },
+    {
+      "label": "no emoji control glyph \u274c",
+      "pass": true,
+      "detail": "\u274c"
+    },
+    {
+      "label": "no emoji control glyph \u2705",
+      "pass": true,
+      "detail": "\u2705"
+    }
+  ]
+}

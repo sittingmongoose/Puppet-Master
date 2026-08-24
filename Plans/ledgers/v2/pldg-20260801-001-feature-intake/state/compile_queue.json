@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.bootstrap_compile_queue.v1",
   "ledger_id": "pldg-20260801-001-feature-intake",
-  "status": "r7_closeout_then_iterative_two_clean_run_qualification_authorized_plans_compile_held",
+  "status": "goal_mode_redesign_active_external_omp_native_goal_reset_working_plans_compile_held",
   "governance_status": "not_started",
-  "updated_at_utc": "2026-08-15T01:34:12Z",
-  "last_event_id": "evt-0034",
+  "updated_at_utc": "2026-08-22T16:13:36Z",
+  "last_event_id": "evt-0039",
   "terminal_ledger_event_id": "",
   "items": [],
   "canonical_plan_targets": [],
@@ -31,17 +31,20 @@
     "q-0046"
   ],
   "unresolved_contradictions": [],
-  "notes": "The queue remains intentionally empty. R7 must close honestly, then R8 must iterate generic fixes and qualify one unchanged final candidate with two consecutive clean full matrices using fresh test-taker tasks. Both terminals and ledger reconciliation precede any later explicit compile decision. No empirical result automatically grants compile, production, release, safety, or governance authority.",
+  "notes": "The queue remains intentionally empty. The external OMP controller is now verifiably inside native Goal Mode in visible saved session 01a02a3e-0a95-7000-b17e-adb2ea911fde, but its reset action remains open: it must close the Win32 directory-sync failure with sealed deterministic and verifier receipts before canary. Every fresh test taker must itself activate Codex or Oh My Pi Goal Mode. Qualification remains 0/2. Ledger reconciliation and a later explicit Jared compile instruction remain required.",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "last_validated_at_utc": "2026-08-15T01:41:47Z",
+    "last_validated_at_utc": "2026-08-22T16:18:22Z",
     "governance_status": "not_started",
     "no_worknodes_created": true,
     "no_nodeseeds_created": true,
     "no_executable_queues_created": true,
     "no_feature_or_model_tests_run": false,
     "frozen_snapshot_matrix_completed": true,
-    "repeatability_replication_active": true,
+    "repeatability_replication_active": false,
+    "goal_mode_qualification_active": false,
+    "external_controller_native_goal_active": true,
+    "per_test_taker_goal_activation_required": true,
     "canonical_compile_explicitly_authorized": false
   }
 }

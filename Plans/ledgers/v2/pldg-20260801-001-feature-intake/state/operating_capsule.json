@@ -3,14 +3,14 @@
   "ledger_id": "pldg-20260801-001-feature-intake",
   "capsule_id": "cap-feature-intake-current",
   "ledger_profile": "bootstrap_planning",
-  "agent_task": "reconcile_r7_then_preserve_iterative_r8_until_two_consecutive_clean_runs",
-  "phase": "r7_closeout_then_iterative_two_clean_run_qualification_authorized_plans_compile_held",
-  "current_phase": "r7_closeout_then_iterative_two_clean_run_qualification_authorized_plans_compile_held",
+  "agent_task": "redesign_qualification_for_per_test_taker_goal_mode_then_reach_two_consecutive_clean_runs",
+  "phase": "goal_mode_redesign_active_external_omp_native_goal_reset_working_plans_compile_held",
+  "current_phase": "goal_mode_redesign_active_external_omp_native_goal_reset_working_plans_compile_held",
   "governance_status": "not_started",
-  "last_event_id": "evt-0034",
-  "updated_at_utc": "2026-08-15T01:34:12Z",
-  "next_action": "Await successor-initiated terminals without polling: reconcile R7/q-0047 first, then preserve every R8 candidate and close q-0048 only after two consecutive clean unchanged full matrices or a genuine Goal-rule blocker.",
-  "next_safe_action": "Do not auto-compile, poll, retry valid failures within a frozen run, reuse test-taker tasks, count incomplete or invalid runs, tune between qualifying passes, seal governance, or begin implementation.",
+  "last_event_id": "evt-0039",
+  "updated_at_utc": "2026-08-22T16:13:36Z",
+  "next_action": "Keep launches frozen and let the visible external OMP native Goal continue its binding churn reset: repair the Win32 durable directory-sync primitive, seal the named clean simulation, obtain offline-verifier PASS, update CURRENT/PROGRESS, rerun retained regressions, and pass adversarial review before canary.",
+  "next_safe_action": "Do not auto-compile, poll routinely, launch empirical work, treat controller Goal activation as test-taker qualification, count orphaned/unreceipted work, accept parent Goal or child ID as local Goal proof, reuse test takers or Goals, tune between passes, seal governance, or begin implementation.",
   "allowed_reads_default": [
     "state/handoff.json",
     "state/current.json",
@@ -45,27 +45,27 @@
     "product database or runtime migrations"
   ],
   "successor_controller_policy": {
-    "thread_id": "019ffbff-994a-76f0-9c06-57bab28b7ee3",
+    "thread_id": "01a00b52-4879-7c41-a826-7b4609ad3c3b",
     "controller": "gpt-5.6-sol max",
     "easy_preparation_subagents": "gpt-5.6-sol medium",
     "hard_preparation_subagents": "gpt-5.6-sol xhigh",
     "ultra_allowed": false,
     "subagent_packet_rule": "one bounded objective, bounded sources, typed output, no whole-source-universe prompt",
     "integration_owner": "max controller",
-    "subject_model_status": "r7_closeout_active_then_r8_iterative_repair_and_two_consecutive_clean_run_qualification_authorized"
+    "subject_model_status": "usage_limit_stalled_stricter_per_test_taker_goal_mode_correction_delivered_empirical_launch_frozen"
   },
   "testing_phase_boundary": {
-    "status": "r7_closeout_then_r8_iterative_two_clean_run_qualification_authorized",
+    "status": "per_test_taker_goal_mode_redesign_required_before_empirical_launch",
     "exclusive_write_root": "tests/agent_packet_restrictions/successor_20260813/",
     "preparation_agent_calls_allowed": true,
-    "subject_test_calls_allowed": true,
-    "subject_plan_owner": "dec-0067 and in-progress q-0047; executed by successor under a new non-budgeted Goal",
+    "subject_test_calls_allowed": false,
+    "subject_plan_owner": "dec-0070 and in-progress q-0048; every fresh test taker must itself activate Codex or Oh My Pi Goal Mode",
     "canonical_compile_allowed": false,
     "testing_terminal": "VALID_COMPLETED_FROZEN_SNAPSHOT_MATRIX",
     "testing_accounting": {"subject_calls":104,"pass":83,"fail":15,"invalid_no_empirical_credit":6,"retries":0,"best_of":0,"replacements":0},
-    "active_replication": {"replicate_id":"PW-R7-REPLICATION-20260814.1","status":"exact_continuation_dispatched_after_interruption","frozen_snapshot_descriptor":"28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392","deterministic_preflight":"pass","reopen_validation":"pass","launch_wave":"W10A","predeclared_fresh_first_attempt_semantic_calls":156,"valid_scored_cells_preserved":67,"pass_cells_preserved":66,"fail_cells_preserved":1,"controller_invalid_unstarted_cells":3,"xhigh_path_status":"FIRST_ATTEMPT_FAIL_at_S10A_no_rerun","medium_paths_status":"33_PASS_each_through_S30_B02_incomplete","fresh_subject_contexts":true,"prior_subject_result_reuse":false,"valid_result_retries":false,"success_condition":"all_three_complete_paths_pass_unchanged"},
-    "next_qualification": {"goal_id_family":"PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815","goal_status":"queued_after_honest_r7_closeout","goal_budget":"none","required_consecutive_clean_full_matrices":2,"fresh_test_taker_thread_per_invocation":true,"test_taker_thread_reuse_allowed":false,"between_pass_tuning_allowed":false,"streak_reset":"any failure invalid or incomplete run unproven identity or architecture/protocol change"},
-    "compile_unlock": "R7 and R8 terminals must be reconciled, R8 must meet the two-clean-run criterion or name a genuine blocker, and a later explicit Jared compile instruction remains required"
+    "active_replication": {"replicate_id":"PW-R7-REPLICATION-20260814.1","status":"historical_non_goal_replication_incomplete_zero_final_qualification_credit","per_test_taker_goal_mode_used":false,"frozen_snapshot_descriptor":"28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392","deterministic_preflight":"pass","reopen_validation":"pass","predeclared_fresh_first_attempt_semantic_calls":156,"valid_scored_cells_preserved":67,"pass_cells_preserved":66,"fail_cells_preserved":1,"controller_invalid_unstarted_cells":3,"xhigh_path_status":"FIRST_ATTEMPT_FAIL_at_S10A_no_rerun","medium_paths_status":"33_PASS_each_through_S30_B02_incomplete","fresh_subject_contexts":true,"prior_subject_result_reuse":false,"valid_result_retries":false},
+    "next_qualification": {"goal_id_family":"PW-GOAL-MODE-TWO-CLEAN-RUNS","goal_status":"redesign_required_before_launch","goal_budget":"none","required_consecutive_clean_full_matrices":2,"fresh_test_taker_thread_per_invocation":true,"test_taker_local_goal_activation_required":true,"acceptable_test_goal_modes":["codex","oh_my_pi"],"goal_activation_and_terminal_receipts_required":true,"test_taker_thread_and_goal_reuse_allowed":false,"between_pass_tuning_allowed":false,"streak_reset":"any failure invalid or incomplete run missing Goal activation or terminal receipt unproven identity or architecture/protocol change"},
+    "compile_unlock": "The per-test-taker Goal-Mode harness must complete two clean unchanged matrices or name a genuine external blocker, findings must be reconciled into this ledger, and a later explicit Jared compile instruction remains required"
   },
   "notification_policy": {
     "mode": "successor_initiated_only",
@@ -92,6 +92,31 @@
     "original_zip_status": "unchanged_and_did_not_contain_provider_adjudication",
     "provider_rule": "Explicit initial official-source setup for exact Host/Environment; no bundling/preseed/silent first install; auth separate; post-consent management allowed."
   },
+  "external_omp_transport": {
+    "launcher_owner": "this controlling task arranged the existing lane",
+    "host": "Windows",
+    "launch_command": "omp --cwd P:\\",
+    "windows_cwd": "P:\\",
+    "nas_sandbox_root": "/mnt/Cursor/OMP-Sandboxes/pm-prompt-controller-ox-alpha-20260821",
+    "goal_mode_rule": "Every fresh OMP test taker activates OMP native Goal Mode before its scored subject prompt.",
+    "native_activation_transport": "saved interactive TUI `/goal <objective>` before first model task turn; positional CLI prompt is non-Goal",
+    "runtime": "oh_my_pi_17.4.2",
+    "model": "opencode-go/ox-alpha-free",
+    "visible_session_id": "01a02a3e-0a95-7000-b17e-adb2ea911fde",
+    "controller_goal_id": "1561dce16d461ac5",
+    "controller_goal_status": "active_native_goal_verified_working",
+    "activation_evidence": ["mode_change:goal", "goal-mode-context", "goal_tool_get", "saved_session", "visible_windows_terminal"],
+    "launch_receipt": "/mnt/Cursor/OMP-Sandboxes/pm-prompt-controller-ox-alpha-20260821/CONTROL/OMP_NATIVE_GOAL_LAUNCH_20260822T161207229Z.json",
+    "linux_process_listing_authoritative": false,
+    "duplicate_linux_launch_allowed": false,
+    "durable_status_observed_at_utc": "2026-08-22T16:13:36Z",
+    "durable_worker_updated_utc": "2026-08-21T22:54:25Z",
+    "latest_churn_audit_id": "churn-20260822T041832Z-12",
+    "churn_action": "reset_required",
+    "no_progress_cycles": 4,
+    "subject_calls": 0,
+    "qualification_streak": "0_of_2"
+  },
   "historical_testing": {
     "thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
     "status": "retired_STOPPED_BEFORE_SUBJECT_LAUNCH",
@@ -102,9 +127,11 @@
     "empirical_claims_supported": false
   },
   "completion_blockers_visible_to_agent": [
-    "There are no open product-design questions, but q-0047 tracks R7 closeout and q-0048 tracks iterative R8 repair plus two consecutive clean runs.",
-    "Canonical Plans compile remains held by R7/R8 empirical closure and later explicit Jared instruction.",
-    "The frozen-snapshot matrix cannot support current-Plans, full-Wizard, production-enforcement, release, safety, certification, or general weak-model claims."
+    "q-0048 tracks redesign and two consecutive clean matrices in which every fresh test taker itself activates Codex or Oh My Pi Goal Mode.",
+    "The external OMP controller now has verified native Goal activation and resumed bounded work, but churn audit 12's Win32 directory-sync reset gates remain unclosed.",
+    "The Codex successor is currently usage-limit stalled. The OMP lane is working under the corrected binding, but no canary or empirical subject launch is authorized.",
+    "Canonical Plans compile remains held by corrected Goal-Mode empirical closure and later explicit Jared instruction.",
+    "Historical non-Goal matrices cannot support Goal-Mode qualification, current-Plans, full-Wizard, production-enforcement, release, safety, certification, or general weak-model claims."
   ],
   "required_end_of_turn_actions": [
     "append one event for each substantive ledger turn",
@@ -116,8 +143,8 @@
   ],
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "last_validated_at_utc": "2026-08-15T01:41:47Z",
-    "latest_projection_updated_at_utc": "2026-08-15T01:34:12Z",
+    "last_validated_at_utc": "2026-08-22T16:18:22Z",
+    "latest_projection_updated_at_utc": "2026-08-22T16:13:36Z",
     "ledger_health": "pass",
     "governance_status": "not_started",
     "node_readiness_status": "not_started",
@@ -128,9 +155,11 @@
     "no_subject_model_tests_run": false,
     "no_subject_test_provider_calls": false,
     "subject_testing_completed": false,
-    "repeatability_replication_active": true,
+    "repeatability_replication_active": false,
     "frozen_snapshot_matrix_supported": true,
     "production_enforcement_claim_supported": false,
+    "goal_mode_qualification_supported": false,
+    "last_validation_warnings": ["review gui_related=false on GUI-looking atom: atom-0087"],
     "preparation_agent_calls_distinguished_from_subject_testing": true,
     "historical_invalidated_preflight_preserved": true
   }
