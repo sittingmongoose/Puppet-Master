@@ -82,6 +82,40 @@ async function main() {
     await page.send("Network.setBlockedURLs", { urls: ["*fonts.googleapis.com*", "*fonts.gstatic.com*"] });
     await page.setViewport(args.width, args.height);
 
+    /* Cold open first: no hash at all, the way the hub entries and a
+       double-clicked file arrive. The route walk below always supplies a
+       hash, so this step is the only thing standing between a hash-less
+       boot and a blank stage. */
+    await page.goto("file://" + pageFile);
+    const coldReady = await page.evaluate(function () {
+      return new Promise(function (resolve) {
+        var t0 = Date.now();
+        (function poll() {
+          if (document.documentElement.getAttribute("data-pm-state") === "ready") return resolve(true);
+          if (Date.now() - t0 > 15000) return resolve(false);
+          setTimeout(poll, 100);
+        })();
+      });
+    });
+    await settle(page);
+    const cold = await page.evaluate(function () {
+      var stage = document.getElementById("pmStage");
+      return {
+        stageText: stage ? (stage.innerText || "").trim().length : -1,
+        route: document.documentElement.getAttribute("data-pm2-route") || ""
+      };
+    });
+    if (!coldReady) failures.push({ route: "(no hash)", kind: "boot", detail: "data-pm-state=ready never appeared" });
+    if (cold.stageText < 40) {
+      failures.push({ route: "(no hash)", kind: "blank", detail: "stage renders almost no text on a hash-less open" });
+    }
+    if (cold.route !== "home") {
+      failures.push({ route: "(no hash)", kind: "route", detail: "data-pm2-route=" + JSON.stringify(cold.route) + ", expected home" });
+    }
+    for (const c of page.console) failures.push({ route: "(no hash)", kind: "console-" + c.type, detail: c.text.slice(0, 400) });
+    for (const e of page.pageErrors) failures.push({ route: "(no hash)", kind: "exception", detail: String(e).slice(0, 400) });
+    page.clearDiagnostics();
+
     await page.goto("file://" + pageFile + routeHash(args.routes[0], args));
     const ready = await page.evaluate(function () {
       return new Promise(function (resolve) {

@@ -1,0 +1,126 @@
+# Static audit
+
+**FAIL — 121/122 passed**
+
+- [x] file exists: shell.html
+- [ ] file nontrivial: shell.html — `480 bytes`
+- [x] file exists: styles.css
+- [x] file nontrivial: styles.css
+- [x] file exists: data.js
+- [x] file nontrivial: data.js
+- [x] file exists: app.js
+- [x] file nontrivial: app.js
+- [x] file exists: build.py
+- [x] file nontrivial: build.py
+- [x] file exists: index.html
+- [x] file nontrivial: index.html
+- [x] file exists: PM_Chat_Assistant_5.6_Pro_Standalone.html
+- [x] file nontrivial: PM_Chat_Assistant_5.6_Pro_Standalone.html
+- [x] file exists: README.md
+- [x] file nontrivial: README.md
+- [x] JavaScript syntax: app.js
+- [x] JavaScript syntax: data.js
+- [x] self-contained index has inline CSS
+- [x] self-contained index has fixture data
+- [x] self-contained index has application JS
+- [x] index does not depend on local app.js
+- [x] index does not depend on local data.js
+- [x] index does not depend on local stylesheet
+- [x] standalone is byte-identical to index
+- [x] direct-open boot watchdog present
+- [x] runtime diagnostics present
+- [x] hidden attribute hardened
+- [x] Inter font requested
+- [x] Poppins font requested
+- [x] reduced motion equivalence
+- [x] custom popup animation
+- [x] custom sidecar animation
+- [x] feature token: Context compact menu
+- [x] feature token: Context More Details
+- [x] feature token: context current-window metric
+- [x] feature token: context tokens-loaded metric
+- [x] feature token: context cache hit
+- [x] feature token: context source composition
+- [x] feature token: Activity Goal
+- [x] feature token: Activity Todo
+- [x] feature token: Activity Subagents
+- [x] feature token: Activity Changes
+- [x] feature token: Activity Artifacts
+- [x] feature token: Working start
+- [x] feature token: Working pause
+- [x] feature token: Working complete
+- [x] feature token: Working history
+- [x] feature token: Working evidence
+- [x] feature token: Web search state
+- [x] feature token: Web fetch state
+- [x] feature token: Browser control state
+- [x] feature token: Bash state
+- [x] feature token: Browser testing state
+- [x] feature token: Application control state
+- [x] feature token: Subagent state
+- [x] feature token: Validation state
+- [x] feature token: Artifact render state
+- [x] feature token: Reference Morph
+- [x] feature token: Orbit take
+- [x] feature token: Step Stack take
+- [x] feature token: Tool Ribbon take
+- [x] feature token: Progressive Receipt take
+- [x] feature token: Workbench take
+- [x] feature token: Agent Stage take
+- [x] feature token: Calm Stage take
+- [x] feature token: Plan revise
+- [x] feature token: Plan build
+- [x] feature token: Plan approval
+- [x] feature token: Questionnaire
+- [x] feature token: Permission decision
+- [x] feature token: Conflict decision
+- [x] feature token: Message More Details
+- [x] feature token: Archived threads
+- [x] feature token: Thread restore
+- [x] feature token: Thread fork
+- [x] feature token: Thread rename
+- [x] feature token: Ordinary conversation fixture
+- [x] feature token: BSD fixture
+- [x] feature token: Context Lens fixture
+- [x] feature token: Global Reset
+- [x] feature token: Mermaid artifact
+- [x] feature token: Interactive dashboard
+- [x] feature token: Data explorer
+- [x] feature token: Architecture map
+- [x] feature token: Interactive quiz
+- [x] feature token: Periodic table
+- [x] feature token: Flowchart
+- [x] feature token: Generated image
+- [x] feature token: Read-only child thread
+- [x] feature token: Worktree selector
+- [x] feature token: Goal mode
+- [x] feature token: Crew
+- [x] feature token: ELI5
+- [x] feature token: Thought Stream
+- [x] feature token: Fast mode
+- [x] feature token: configured-only provider concept
+- [x] feature token: favorites model view
+- [x] feature token: provider account identity
+- [x] feature token: no passive expiry language
+- [x] feature token: offline outbox fixture
+- [x] feature token: checkpoint recovery fixture
+- [x] feature token: attachment fixture
+- [x] feature token: provider quota fixture
+- [x] feature token: artifact stale state
+- [x] feature token: artifact retry
+- [x] feature token: new message anchor
+- [x] eight-option family represented: body
+- [x] eight-option family represented: history
+- [x] eight-option family represented: working
+- [x] eight-option family represented: activity
+- [x] eight-option family represented: detail
+- [x] eight-option family represented: transcript
+- [x] eight-option family represented: question
+- [x] no emoji control glyph ⭐
+- [x] no emoji control glyph ⚡️
+- [x] no emoji control glyph ✨️
+- [x] no emoji control glyph ⋯
+- [x] no emoji control glyph ▼
+- [x] no emoji control glyph ▶️
+- [x] no emoji control glyph ❌
+- [x] no emoji control glyph ✅

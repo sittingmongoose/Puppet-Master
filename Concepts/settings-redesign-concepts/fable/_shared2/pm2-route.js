@@ -87,6 +87,20 @@
     };
   }
 
+  /* A page opened with no hash at all still has to land somewhere: the hub
+     entries and a double-clicked file both arrive as plain <page>.html, and
+     parse() answers null for those. Every caller funnels through this Home
+     link instead, so the concept's open() always runs at least once. */
+  function defaultLink() {
+    return {
+      route: { kind: 'home' },
+      scenario: null, fixtures: [], triggers: [],
+      focus: null,
+      instant: str(window.location.search).indexOf('instant=1') >= 0,
+      pin: false, stress: false, theme: null, motion: null
+    };
+  }
+
   /* ---------------- build ---------------- */
 
   function routeSegs(route) {
@@ -195,11 +209,10 @@
   /* Applies one parsed link: scenario -> fixtures -> stress -> route/focus
      -> triggers, then stamps ready and posts to the hub. */
   function applyLink(dl) {
-    if (!dl) {
-      stampRoute({ kind: 'home' });
-      markReady(null);
-      return Promise.resolve(null);
-    }
+    /* No hash yet (first open), or Back stepping off the last route and out
+       of the hash entirely: fall back to Home so the stage is never left
+       empty. */
+    if (!dl) dl = defaultLink();
 
     var S = statesApi();
     var store = currentStore();
@@ -324,14 +337,7 @@
   /* ---------------- current / bind ---------------- */
 
   function current() {
-    var dl = parse(window.location);
-    if (dl) return dl;
-    return {
-      route: { kind: 'home' },
-      scenario: null, fixtures: [], triggers: [],
-      focus: null, instant: false, pin: false, stress: false,
-      theme: null, motion: null
-    };
+    return parse(window.location) || defaultLink();
   }
 
   function bind(opts) {

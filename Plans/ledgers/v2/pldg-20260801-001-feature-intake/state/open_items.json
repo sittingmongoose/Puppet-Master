@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_open_items.v1",
   "ledger_id": "pldg-20260801-001-feature-intake",
-  "updated_at_utc": "2026-08-15T01:34:12Z",
-  "last_event_id": "evt-0034",
+  "updated_at_utc": "2026-08-22T16:13:36Z",
+  "last_event_id": "evt-0039",
   "governance_status": "not_started",
   "open_questions": [],
   "deferred_questions": [],
@@ -10,28 +10,15 @@
     {
       "schema_id": "pm.bootstrap_question.v1",
       "ledger_id": "pldg-20260801-001-feature-intake",
-      "question_id": "q-0047",
-      "status": "in_progress",
-      "question": "Does one fresh start-to-finish replicate under the unchanged frozen R6-v7 architecture pass all three configured model paths without retries, best-of, replacement, or prior subject-result reuse?",
-      "recommendation": "Preserve the valid GPT-5.4 mini xhigh S10A failure and all 66 passing results, recover only provably unstarted controller-invalid cells under identical frozen bytes, finish the two unaffected medium paths, and then compare the complete honest R7 terminal against R6. Do not rerun the failed xhigh result or start a second replicate.",
-      "disposition": "R7 was interrupted before terminal after 67 valid scored cells: 66 PASS and one permanent xhigh S10A FAIL. Each medium path passed 33 cells through S30_B02; three later creations were controller-invalid and unstarted during file-descriptor exhaustion. Exact continuation of only the unfinished medium cells has been dispatched under the existing Goal. Await its durable validated terminal without polling.",
-      "linked_atom_ids": ["atom-0080", "atom-0081", "atom-0082", "atom-0083"],
-      "source_refs": ["evt-0031", "evt-0032", "evt-0033", "dec-0067", "thread:019ffbff-994a-76f0-9c06-57bab28b7ee3", "tests/agent_packet_restrictions/successor_20260813/model_retest_r7_replication_20260814_v1/execution/slot-alpha/scores/S10A.json", "tests/agent_packet_restrictions/successor_20260813/model_retest_r7_replication_20260814_v1/execution/controller_invalid/create_batch6_initial.json"],
-      "created_at_utc": "2026-08-14T22:12:24Z",
-      "updated_at_utc": "2026-08-15T00:14:18Z"
-    },
-    {
-      "schema_id": "pm.bootstrap_question.v1",
-      "ledger_id": "pldg-20260801-001-feature-intake",
       "question_id": "q-0048",
       "status": "in_progress",
-      "question": "Can one generically repaired and frozen final architecture complete two consecutive full matrices across all three configured model paths with a new test-taker thread for every invocation and no failures?",
-      "recommendation": "Separate development from qualification. Preserve and close each failed frozen run, make only evidence-driven generic revisions protected by structurally distinct holdouts, and reset the streak after every failure or change. Count success only when the same byte-identical final candidate completes two consecutive independent full matrices with fresh test-taker tasks, zero failed, invalid, or missing cells, and no retries, replacements, best-of, or between-pass tuning.",
-      "disposition": "Authorized by Jared through corr-0018 and dec-0068. It is queued behind the honest R7 closeout in successor task 019ffbff-994a-76f0-9c06-57bab28b7ee3 and will run under a new non-budgeted PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815 Goal. Await a validated two-consecutive-pass terminal or genuine Goal-rule blocker without polling.",
-      "linked_atom_ids": ["atom-0078", "atom-0079", "atom-0080", "atom-0081", "atom-0082", "atom-0083", "atom-0084"],
-      "source_refs": ["corr-0018", "evt-0034", "dec-0068", "q-0047", "thread:019ffbff-994a-76f0-9c06-57bab28b7ee3"],
+      "question": "Can one generically repaired and frozen final Goal-Mode architecture complete two consecutive full matrices across all three configured model paths when every independently scored invocation uses a fresh test taker that itself activates Codex or Oh My Pi Goal Mode and no invocation fails?",
+      "recommendation": "Preserve component evidence but rebuild qualification at the actual per-test-taker Goal boundary. For every cell, create a fresh task/agent, activate Codex or OMP Goal Mode before the subject prompt, bind activation and terminal receipts, and never reuse task, Goal, conversation, or continuation state. For OMP, activation must be the native interactive `/goal` transition rather than a positional prompt. The external OMP lane must complete its current Win32 directory-sync reset, sealed deterministic simulation and verifier receipt, CURRENT/PROGRESS update, retained regressions, and adversarial review before canary. Count success only after two unchanged clean matrices satisfy all Goal-local, semantic, deterministic, identity, no-retry, and reopen bars.",
+      "disposition": "Narrowed by corr-0019, corr-0020, dec-0069, dec-0070, and dec-0072. Controller Goal membership or a child Goal identifier is insufficient without actual Goal activation inside every fresh test taker. At evt-0039 the external OMP controller was correctly restarted in a saved visible interactive session: session `01a02a3e-0a95-7000-b17e-adb2ea911fde` durably emitted native `mode_change:goal`, `goal-mode-context`, active Goal ID `1561dce16d461ac5`, and successful hidden `goal` tool evidence before bounded task work. This repairs controller activation only. The Win32 `_sync_dir` reset remains incomplete, subject calls remain 0, and qualification remains 0/2. This stays in progress until every scored fresh test taker uses the same local Goal bar and the corrected harness completes two consecutive clean matrices or a genuine external Goal-Mode capability blocker is reconciled.",
+      "linked_atom_ids": ["atom-0078", "atom-0079", "atom-0080", "atom-0081", "atom-0082", "atom-0083", "atom-0084", "atom-0085", "atom-0086", "atom-0087", "atom-0088"],
+      "source_refs": ["corr-0018", "corr-0019", "corr-0020", "evt-0035", "evt-0036", "evt-0038", "evt-0039", "dec-0068", "dec-0069", "dec-0070", "dec-0072", "q-0049", "q-0050", "thread:01a00b52-4879-7c41-a826-7b4609ad3c3b", "external-omp:/mnt/Cursor/OMP-Sandboxes/pm-prompt-controller-ox-alpha-20260821/CONTROL/CURRENT.json", "external-omp:/mnt/Cursor/OMP-Sandboxes/pm-prompt-controller-ox-alpha-20260821/CONTROL/churn_checks/churn_audit_20260822T041832Z.json", "external-omp:/mnt/Cursor/OMP-Sandboxes/pm-prompt-controller-ox-alpha-20260821/CONTROL/OMP_NATIVE_GOAL_LAUNCH_20260822T161207229Z.json", "windows-omp-session:01a02a3e-0a95-7000-b17e-adb2ea911fde"],
       "created_at_utc": "2026-08-15T01:34:12Z",
-      "updated_at_utc": "2026-08-15T01:34:12Z"
+      "updated_at_utc": "2026-08-22T16:13:36Z"
     }
   ],
   "open_blockers": [],
@@ -282,11 +269,11 @@
   "compile_open_items": [
     {
       "item_id": "precompile-testing-prerequisite",
-      "status": "held_by_r7_closeout_r8_two_clean_run_qualification_and_explicit_user_compile_authority",
-      "summary": "R7 must close honestly, then the authorized R8 repair lane must reach two consecutive clean unchanged full matrices or a genuine Goal-rule blocker and return its findings to this ledger before any later explicit Jared compile request can be considered."
+      "status": "held_by_per_test_taker_goal_mode_redesign_two_clean_run_qualification_and_explicit_user_compile_authority",
+      "summary": "Every fresh test taker must first be proven to activate Codex or Oh My Pi Goal Mode locally. The corrected frozen architecture must then reach two consecutive clean unchanged full matrices or a genuine external Goal-Mode blocker and return its findings to this ledger before any later explicit Jared compile request can be considered."
     }
   ],
   "post_compile_pending_items": [],
   "unsealed_governance": [],
-  "notes": "Successor task `019ffbff-994a-76f0-9c06-57bab28b7ee3` must close R7 first, then begin the queued non-budgeted R8 iterative repair and two-clean-run qualification Goal. This task will not use wait_threads, poll it, request routine status, or emit progress updates; it will respond to terminal notification, a genuine input request, or Jared's direction. q-0047, q-0048, and the compile hold remain active."
+  "notes": "q-0048 alone remains in progress. The Codex successor has the binding correction but is usage-limit stalled. The existing Windows OMP lane is also stalled at its durable evidence boundary: churn audit 12 says reset_required after four no-progress cycles; subject calls are 0 and qualification is 0/2. Empirical launch and canonical compile remain held."
 }

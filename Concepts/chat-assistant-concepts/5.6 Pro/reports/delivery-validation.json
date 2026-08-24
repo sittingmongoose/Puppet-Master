@@ -1,0 +1,78 @@
+{
+  "overall": "FAIL",
+  "passed": 13,
+  "total": 14,
+  "failedCount": 1,
+  "checks": [
+    {
+      "label": "drop-in archive exists",
+      "pass": true,
+      "detail": "/mnt/data/PM_Chat_Assistant_5.6_Pro_COMPLETED_Drop_In.zip"
+    },
+    {
+      "label": "zip CRC integrity",
+      "pass": true,
+      "detail": "None"
+    },
+    {
+      "label": "exact repository-relative path",
+      "pass": true,
+      "detail": "/tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6 Pro"
+    },
+    {
+      "label": "extracted index.html",
+      "pass": true,
+      "detail": "/tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6 Pro/index.html"
+    },
+    {
+      "label": "extracted app.js",
+      "pass": true,
+      "detail": "/tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6 Pro/app.js"
+    },
+    {
+      "label": "extracted data.js",
+      "pass": true,
+      "detail": "/tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6 Pro/data.js"
+    },
+    {
+      "label": "extracted styles.css",
+      "pass": true,
+      "detail": "/tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6 Pro/styles.css"
+    },
+    {
+      "label": "extracted README.md",
+      "pass": true,
+      "detail": "/tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6 Pro/README.md"
+    },
+    {
+      "label": "extracted JavaScript syntax: app.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "extracted JavaScript syntax: data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "extracted index is self-contained",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "extracted index has no local script dependency",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "label": "extracted index substantial",
+      "pass": true,
+      "detail": "249582"
+    },
+    {
+      "label": "extracted browser validation available",
+      "pass": false,
+      "detail": "Error('Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at file:///tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6%20Pro/index.html\\nCall log:\\n  - navigating to \"file:///tmp/pm56-delivery-wdn3rwzc/Concepts/settings-redesign-concepts/5.6%20Pro/index.html\", waiting until \"load\"\\n')"
+    }
+  ]
+}
