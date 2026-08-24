@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.r10.workflow_coverage.v1",
+  "status": "PRE_CANARY_STATIC_INVENTORY_NO_RUNTIME_PROOF",
+  "direct_assistant_chat": "excluded",
+  "families": [
+    {"id": "prompt_admission", "owner": "Plans/Prompt_Pipeline.md", "risk_atoms": ["bounded_selection", "exact_byte_binding"]},
+    {"id": "cache_compaction", "owner": "Plans/Prompt_Pipeline.md", "risk_atoms": ["stable_prefix", "explicit_break_reason"]},
+    {"id": "subagent_handoff", "owner": "Plans/orchestrator-subagent-integration.md", "risk_atoms": ["authority_ceiling", "bounded_child_input"]},
+    {"id": "orchestrator_goal", "owner": "Plans/Goal_Runtime_System.md", "risk_atoms": ["native_lifecycle", "terminal_truth"]},
+    {"id": "persona_resolution", "owner": "Plans/Personas.md", "risk_atoms": ["requested_effective_precedence", "no_parent_prompt_clone"]},
+    {"id": "provider_model_resolution", "owner": "Plans/Models_System.md", "risk_atoms": ["requested_effective_identity", "unknown_limit_fail_closed"]},
+    {"id": "tool_materialization", "owner": "Plans/Tools.md", "risk_atoms": ["selected_only", "schema_revalidation"]},
+    {"id": "mcp_projection", "owner": "Plans/MCP_Integration.md", "risk_atoms": ["epoch_fence", "deterministic_collision"]},
+    {"id": "executor_context", "owner": "Plans/Executor_Protocol.md", "risk_atoms": ["schema_closed_replay", "no_secret_context"]},
+    {"id": "planunit_shards", "owner": "Plans/Plan_Document_System.md", "risk_atoms": ["lossless_lineage", "no_runtime_objects"]},
+    {"id": "plan_compile", "owner": "Plans/Plan_To_Node_Compilation.md", "risk_atoms": ["missing_metadata_blocks", "certified_graph_required"]},
+    {"id": "planning_wizard", "owner": "Plans/Planning_Wizard.md", "risk_atoms": ["bounded_topic_context", "separate_audit_repair"]},
+    {"id": "prd_builder", "owner": "Plans/PRD_Builder.md", "risk_atoms": ["source_preservation", "bounded_parallel_extraction"]},
+    {"id": "automated_testing", "owner": "Plans/Automated_Testing_System.md", "risk_atoms": ["receipt_over_claim", "exception_not_pass"]},
+    {"id": "filesafe", "owner": "Plans/FileSafe.md", "risk_atoms": ["structured_action_over_text", "fail_closed_scope"]},
+    {"id": "assurance", "owner": null, "external_custody": "PuppetMaster-AssuranceLab", "risk_atoms": ["evidence_not_authority", "named_residual_risk"], "owner_status": "unresolved_in_repo_general_owner"}
+  ],
+  "nonclaims": [
+    "This inventory is not exhaustive proof of implementation pathways.",
+    "Owner text and schemas are not runtime enforcement evidence.",
+    "External assurance completion is not claimed."
+  ]
+}

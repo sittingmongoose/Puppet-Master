@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.r10.prompt_capsule.v1",
+  "profile_id": "r10-simple-4k-v1",
+  "unit_id": "canary_evidence_02",
+  "workflow_family": "assurance",
+  "objective": "Decide whether the admitted evidence proves that an action executed. Select the authoritative evidence rule and preserve the exact supporting source set in the typed result.",
+  "admitted_context": [
+    {
+      "source_id": "S1",
+      "authority": "fixture_fact",
+      "text": "Only a runtime receipt bound to the attempted action can prove that the action executed. A design declaration or lineage record alone is not execution evidence.",
+      "utf8_bytes": 160,
+      "text_sha256": "06e351eb2b63c89be7ee94ee2e8fc100fbf231c0d300300e417d02a08c7c11c8"
+    },
+    {
+      "source_id": "S2",
+      "authority": "source_lineage_only",
+      "text": "The design declaration says the action is complete.",
+      "utf8_bytes": 51,
+      "text_sha256": "74c78225d5cf8090a436a169d607de9cf80deb8711ed29b8a26c7fd6ade493f8"
+    }
+  ],
+  "constraints": [
+    {
+      "constraint_id": "C1",
+      "kind": "positive",
+      "text": "Use only admitted sources and cite only the source that supports the decision.",
+      "source_ids": ["S1", "S2"]
+    },
+    {
+      "constraint_id": "C2",
+      "kind": "negative",
+      "text": "Do not treat a design declaration or lineage record as execution evidence.",
+      "source_ids": ["S1", "S2"]
+    },
+    {
+      "constraint_id": "C3",
+      "kind": "negative",
+      "text": "Do not use repository, shell, web, external tools, or unadmitted context, and do not modify files.",
+      "source_ids": []
+    }
+  ],
+  "output_contract": {
+    "schema_id": "pm.r10.canary_evidence_response.v1",
+    "schema_sha256": "3a614ab83995fa3e34476cb0fd04d02eca2fc26383346c2a64e081f6e966c666",
+    "inline_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_id", "selected_source_id", "execution_proven", "source_ids"],
+      "properties": {
+        "unit_id": {"type": "string", "enum": ["canary_evidence_02"]},
+        "selected_source_id": {"type": "string", "enum": ["S1", "S2"]},
+        "execution_proven": {"type": "boolean"},
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {"type": "string", "enum": ["S1", "S2"]}
+        }
+      }
+    }
+  },
+  "lineage": {"allowed_source_ids": ["S1", "S2"]}
+}
