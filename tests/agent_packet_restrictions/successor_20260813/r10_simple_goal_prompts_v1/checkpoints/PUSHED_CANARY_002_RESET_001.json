@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.r10.pushed_reset_candidate_checkpoint.v1",
+  "recorded_at_utc": "2026-08-24T19:11:18Z",
+  "candidate_input_commit": "8f53e803c144a9b44b05b805a3a65c098c934779",
+  "branch": "main",
+  "head_after_input_push": "8f53e803c144a9b44b05b805a3a65c098c934779",
+  "github_main_after_input_push": "8f53e803c144a9b44b05b805a3a65c098c934779",
+  "truenas_main_after_input_push": "8f53e803c144a9b44b05b805a3a65c098c934779",
+  "push_destinations": [
+    "https://github.com/sittingmongoose/Puppet-Master.git",
+    "ssh://sittingmongoose@192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git"
+  ],
+  "manifest_sha256": "cf6e5eaada753b1408e5f3ac0a94031eee87028a899635bae4264c74e45b3fe4",
+  "manifest_commitment_sha256": "165771801cad53d0ec551ba7dbfdc3fe0b5aab8bc57a52314e30d4bcc61b8192",
+  "submitted_user_prompt_sha256": "cd251bf8ee2408d97e11a031aea0982d237a615e8a5bd65a45130fa88c013681",
+  "canary_002_subject_calls_before_checkpoint": 0,
+  "preserved_canary_001_process_launches": 3,
+  "qualification_credit": 0,
+  "status": "PUSHED_RESET_CANDIDATE_PENDING_FRESH_AUDIT"
+}
