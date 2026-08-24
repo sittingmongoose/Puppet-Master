@@ -444,6 +444,38 @@ def main() -> int:
         "verifier-alternate-evidence-root",
         lambda: verify.require_designated_evidence_root(alternate_evidence),
     ))
+    with tempfile.TemporaryDirectory(prefix="r10-evidence-symlink-selftest-") as temp_name:
+        temp_root = Path(temp_name)
+        designated_link = temp_root / "designated-evidence"
+        sibling_a = temp_root / "sibling-a"
+        sibling_b = temp_root / "sibling-b"
+        original_runner_root = runner.CANARY_EVIDENCE_ROOT
+        original_verifier_root = verify.EXPECTED_EVIDENCE_ROOT
+        runner.CANARY_EVIDENCE_ROOT = designated_link
+        verify.EXPECTED_EVIDENCE_ROOT = designated_link
+        try:
+            designated_link.symlink_to(sibling_a, target_is_directory=True)
+            failures.append(expect_fail(
+                "runner-dangling-evidence-symlink-a",
+                lambda: runner.require_designated_evidence_root(designated_link),
+            ))
+            failures.append(expect_fail(
+                "verifier-dangling-evidence-symlink-a",
+                lambda: verify.require_designated_evidence_root(designated_link),
+            ))
+            designated_link.unlink()
+            designated_link.symlink_to(sibling_b, target_is_directory=True)
+            failures.append(expect_fail(
+                "runner-repointed-evidence-symlink-b",
+                lambda: runner.require_designated_evidence_root(designated_link),
+            ))
+            failures.append(expect_fail(
+                "verifier-repointed-evidence-symlink-b",
+                lambda: verify.require_designated_evidence_root(designated_link),
+            ))
+        finally:
+            runner.CANARY_EVIDENCE_ROOT = original_runner_root
+            verify.EXPECTED_EVIDENCE_ROOT = original_verifier_root
     failures.append(expect_fail(
         "alternate-manifest-launch-path",
         lambda: runner.preflight_manifest(ROOT / "r10_selftest.py", ROOT / "canary_003" / "manifest.commitment.json"),
@@ -795,7 +827,7 @@ def main() -> int:
 
     result = {
         "schema_id": "pm.r10.selftest.v1",
-        "checks": 104,
+        "checks": 108,
         "expected_failures": failures,
         "status": "PASS",
         "subject_calls": 0,

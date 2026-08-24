@@ -21,7 +21,7 @@ import jsonschema
 import r10_contract as contract
 
 ROOT = Path(__file__).resolve().parent
-CANARY_EVIDENCE_ROOT = (ROOT / "canary_003" / "r10-codex-canary-003-evidence").resolve()
+CANARY_EVIDENCE_ROOT = ROOT / "canary_003" / "r10-codex-canary-003-evidence"
 
 CANARY_ROSTER = {
     "alpha": ("gpt-5.4-mini", "xhigh"),
@@ -103,9 +103,10 @@ def require(condition: bool, message: str) -> None:
 
 
 def require_designated_evidence_root(path: Path) -> Path:
-    resolved = path.resolve()
-    require(resolved == CANARY_EVIDENCE_ROOT, "evidence root identity")
-    return resolved
+    lexical = Path(os.path.abspath(os.fspath(path)))
+    require(lexical == CANARY_EVIDENCE_ROOT, "evidence root identity")
+    require(not lexical.is_symlink(), "evidence root symlink")
+    return lexical
 
 
 def identity_bytes(relative: str, raw: bytes) -> dict[str, Any]:
@@ -905,12 +906,12 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         evidence_root = require_designated_evidence_root(args.evidence_root)
-        require(not evidence_root.exists(), "evidence root already exists")
+        require(not os.path.lexists(evidence_root), "evidence root already exists")
 
         # Compile every route, scorer, byte binding, and runtime invariant before Popen.
         bundle = preflight_manifest(args.manifest, args.manifest_commitment)
         bundle["git_custody"] = verify_pushed_git_custody(bundle, args.manifest, args.manifest_commitment)
-        evidence_root.mkdir(mode=0o755, parents=True)
+        evidence_root.mkdir(mode=0o755, parents=False, exist_ok=False)
         fsync_directory(evidence_root.parent)
         snapshot_root = snapshot_bundle(bundle, evidence_root)
 

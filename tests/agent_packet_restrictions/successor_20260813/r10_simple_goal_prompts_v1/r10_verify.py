@@ -94,6 +94,12 @@ EXPECTED_PERMISSION_PROFILE = {
     },
     "network": "restricted",
 }
+EXPECTED_EVIDENCE_ROOT = (
+    Path(EXPECTED_RUNTIME["repository"])
+    / R10_REPO_RELATIVE
+    / "canary_003"
+    / "r10-codex-canary-003-evidence"
+)
 CAPTURE_SUMMARY_KEYS = {
     "schema_id",
     "run_id",
@@ -197,11 +203,10 @@ def require(condition: bool, message: str) -> None:
 
 
 def require_designated_evidence_root(path: Path) -> Path:
-    r10_root = (Path(EXPECTED_RUNTIME["repository"]) / R10_REPO_RELATIVE).resolve()
-    expected = (r10_root / "canary_003" / "r10-codex-canary-003-evidence").resolve()
-    resolved = path.resolve()
-    require(resolved == expected, "evidence root identity")
-    return resolved
+    lexical = Path(os.path.abspath(os.fspath(path)))
+    require(lexical == EXPECTED_EVIDENCE_ROOT, "evidence root identity")
+    require(not lexical.is_symlink(), "evidence root symlink")
+    return lexical
 
 
 def require_blob_identity(
@@ -1236,7 +1241,7 @@ def main(argv: list[str] | None = None) -> int:
         require(bool(args.prefix_row) == bool(args.write_prefix_receipt), "prefix receipt mode must be explicit")
         if args.prefix_row:
             require(args.prefix_row == "row-alpha-003", "prefix row argument")
-        evidence = args.evidence_root.resolve()
+        evidence = Path(os.path.abspath(os.fspath(args.evidence_root)))
         require(ROOT.name == "frozen_snapshot", "verifier must execute from the captured frozen snapshot")
         require(evidence == ROOT.parent and (evidence / "frozen_snapshot").resolve() == ROOT, "snapshot/evidence execution join")
         require_designated_evidence_root(evidence)
