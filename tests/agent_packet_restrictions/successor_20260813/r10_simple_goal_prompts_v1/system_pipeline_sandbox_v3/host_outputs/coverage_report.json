@@ -1,0 +1,27 @@
+{
+  "canonical_comparison_status": "pass",
+  "dependency_registry_status": "resolved",
+  "issue_counts": {
+    "docs_without_plan_units": 0,
+    "duplicate_plan_unit_ids": 0,
+    "missing_gui_related_boolean": 0,
+    "missing_required_metadata": 0,
+    "owner_doc_mismatches": 0,
+    "parse_errors": 0
+  },
+  "migration_span_count": 130,
+  "migration_validation_status": "pass",
+  "notes": [
+    "All source bytes were processed by the canonical PlanUnit parser.",
+    "External plans were not reprocessed; dependency targets were resolved against the frozen existing PlanUnit registry.",
+    "No WorkNodes, NodeSeeds, executable queues, or final node manifests were created."
+  ],
+  "schema_id": "pm.r10.storage_pipeline.coverage_report.v1",
+  "source_scope": {
+    "line_count": 18204,
+    "path": "Plans/storage-plan.md",
+    "sha256": "d18a405bd34411252183166a84ff12b48b6d9c9953cb37319a0503d39f60d506",
+    "utf8_bytes": 974842
+  },
+  "status": "pass"
+}
