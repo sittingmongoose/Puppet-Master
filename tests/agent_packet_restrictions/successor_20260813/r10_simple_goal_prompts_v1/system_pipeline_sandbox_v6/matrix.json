@@ -1,0 +1,44 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.matrix.v2",
+  "passes": 2,
+  "max_prompt_utf8_bytes": 4000,
+  "max_admitted_context_utf8_bytes": 2600,
+  "max_final_assistant_utf8_bytes": 4096,
+  "ordered_routes": [
+    {"id": "omp_ox_alpha_free_max", "surface": "omp_tui", "model": "opencode-go/ox-alpha-free", "thinking": "max"},
+    {"id": "omp_cursor_default_auto", "surface": "omp_tui", "model": "cursor/default", "thinking": "auto"},
+    {"id": "omp_muse_spark_xhigh", "surface": "omp_tui", "model": "opencode-go/muse-spark-1.2-contributor", "thinking": "xhigh"},
+    {"id": "omp_deepseek_v4_flash_max", "surface": "omp_tui", "model": "opencode-go/deepseek-v4-flash", "thinking": "max"},
+    {"id": "omp_gemini_3_7_flash_high", "surface": "omp_tui", "model": "google-antigravity/gemini-3.7-flash", "thinking": "high"},
+    {"id": "codex_luna_max", "surface": "codex_app", "model": "gpt-5.6-luna", "thinking": "max"},
+    {"id": "codex_luna_medium", "surface": "codex_app", "model": "gpt-5.6-luna", "thinking": "medium"},
+    {"id": "codex_5_4_xhigh", "surface": "codex_app", "model": "gpt-5.4", "thinking": "xhigh"},
+    {"id": "codex_5_4_medium", "surface": "codex_app", "model": "gpt-5.4", "thinking": "medium"},
+    {"id": "codex_5_4_mini_xhigh", "surface": "codex_app", "model": "gpt-5.4-mini", "thinking": "xhigh"},
+    {"id": "codex_5_4_mini_medium", "surface": "codex_app", "model": "gpt-5.4-mini", "thinking": "medium"},
+    {"id": "omp_qwen3_8_max_xhigh", "surface": "omp_tui", "model": "alibaba-token-plan/qwen3.8-max", "thinking": "xhigh"}
+  ],
+  "omp_runtime": {
+    "binary": "/home/sittingmongoose/.local/bin/omp",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "advisor_enabled": false,
+    "task_agent_advisor": {"task": "off"},
+    "memory_backend": "off",
+    "autolearn_enabled": false,
+    "mcp_project_config_enabled": false,
+    "approval_mode": "yolo",
+    "tools_enabled": false,
+    "skills_enabled": false,
+    "rules_enabled": false,
+    "persistent_session_required": true,
+    "tui_is_authoritative": false,
+    "submission_transport": {
+      "kind": "prompt_then_composer_ack_then_enter",
+      "external_submission_count": 1,
+      "low_level_input_write_count": 2,
+      "prompt_terminator_included": false,
+      "composer_ack_required": true,
+      "persisted_session_prefix_required": true
+    }
+  }
+}

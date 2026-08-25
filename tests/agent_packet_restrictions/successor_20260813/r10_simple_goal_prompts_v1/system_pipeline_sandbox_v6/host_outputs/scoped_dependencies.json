@@ -1,0 +1,6313 @@
+{
+  "class_counts": {
+    "depends_on_external_known": 938,
+    "depends_on_internal": 85,
+    "unblocks_external_known": 23,
+    "unblocks_internal": 1
+  },
+  "edges": [
+    {
+      "edge_type": "depends_on",
+      "from": "SP-001",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-001",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-001",
+      "target_scope": "external_known",
+      "to": "PDS-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-002",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-002",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-002",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-002",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-003",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-003",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-003",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-003",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-003",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-003",
+      "target_scope": "external_known",
+      "to": "UCC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-004",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-004",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-004",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-004",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-004",
+      "target_scope": "external_known",
+      "to": "UCC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-005",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-005",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-005",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-005",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-005",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-006",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-006",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-006",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-006",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-006",
+      "target_scope": "external_known",
+      "to": "UCC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-007",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-007",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-007",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-007",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-007",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-008",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-008",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-008",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-008",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-008",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-008",
+      "target_scope": "external_known",
+      "to": "PS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-009",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-009",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-009",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-009",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-009",
+      "target_scope": "external_known",
+      "to": "W-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-010",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-010",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-010",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-010",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-010",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-011",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-011",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-011",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-011",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-011",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-012",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-012",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-012",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-012",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-012",
+      "target_scope": "external_known",
+      "to": "UCC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-013",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-013",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-013",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-013",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-014",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-014",
+      "target_scope": "external_known",
+      "to": "F3-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-014",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-014",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-014",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-014",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-015",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-015",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-015",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-015",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-016",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-016",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-016",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-016",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-016",
+      "target_scope": "external_known",
+      "to": "T-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-017",
+      "target_scope": "external_known",
+      "to": "GI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-017",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-017",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-017",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-017",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-017",
+      "target_scope": "external_known",
+      "to": "T-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-018",
+      "target_scope": "external_known",
+      "to": "AI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-018",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-018",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-018",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-018",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-019",
+      "target_scope": "external_known",
+      "to": "BS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-019",
+      "target_scope": "external_known",
+      "to": "GI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-019",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-019",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-019",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-019",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-019",
+      "target_scope": "external_known",
+      "to": "T-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-020",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-020",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-020",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-020",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-020",
+      "target_scope": "external_known",
+      "to": "PS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-021",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-021",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-021",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-021",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-022",
+      "target_scope": "external_known",
+      "to": "AI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-022",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-022",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-022",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-022",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-022",
+      "target_scope": "external_known",
+      "to": "T-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-023",
+      "target_scope": "external_known",
+      "to": "AI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-023",
+      "target_scope": "external_known",
+      "to": "GI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-023",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-023",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-023",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-023",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-023",
+      "target_scope": "external_known",
+      "to": "T-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-024",
+      "target_scope": "external_known",
+      "to": "GI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-024",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-024",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-024",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-024",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-024",
+      "target_scope": "external_known",
+      "to": "T-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-025",
+      "target_scope": "external_known",
+      "to": "AI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-025",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-025",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-025",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-025",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-025",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-026",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-026",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-026",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-026",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-026",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-027",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-027",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-027",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-027",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-028",
+      "target_scope": "external_known",
+      "to": "AI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-028",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-028",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-028",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-028",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-028",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-029",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-029",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-029",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-029",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-030",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-030",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-030",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-030",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-031",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-031",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-031",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-031",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-032",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-032",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-032",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-032",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-033",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-033",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-033",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-033",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-034",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-034",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-034",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-034",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-035",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-035",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-035",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-035",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-036",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-036",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-036",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-036",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-037",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-037",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-037",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-037",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-038",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-038",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-038",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-038",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-038",
+      "target_scope": "external_known",
+      "to": "W-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-039",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-039",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-039",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-039",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-040",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-040",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-040",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-040",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-041",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-041",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-041",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-041",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-041",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-042",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-042",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-042",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-042",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-043",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-043",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-043",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-043",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-044",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-044",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-044",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-044",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-044",
+      "target_scope": "external_known",
+      "to": "UCC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-045",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-045",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-045",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-045",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-045",
+      "target_scope": "external_known",
+      "to": "W-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-046",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-046",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-046",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-046",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-047",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-047",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-047",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-047",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-047",
+      "target_scope": "external_known",
+      "to": "PS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-048",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-048",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-048",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-048",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-049",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-049",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-049",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-049",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-050",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-050",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-050",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-050",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-050",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-051",
+      "target_scope": "external_known",
+      "to": "CV-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-051",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-051",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-051",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-051",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-052",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-052",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-052",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-052",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-052",
+      "target_scope": "external_known",
+      "to": "W-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-053",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-053",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-053",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-053",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-054",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-054",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-054",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-054",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-055",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-055",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-055",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-055",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-056",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-056",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-056",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-056",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-057",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-057",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-057",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-057",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-058",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-058",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-058",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-058",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-059",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-059",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-059",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-059",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-060",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-060",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-060",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-060",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-061",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-061",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-061",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-061",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-062",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-062",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-062",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-062",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-063",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-063",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-063",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-063",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-064",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-064",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-064",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-064",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-065",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-065",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-065",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-065",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-066",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-066",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-066",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-066",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-067",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-067",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-067",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-067",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-068",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-068",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-068",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-068",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-069",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-069",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-069",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-069",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-070",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-070",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-070",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-070",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-071",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-071",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-071",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-071",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-072",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-072",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-072",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-072",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-073",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-073",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-073",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-073",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-074",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-074",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-074",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-074",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-075",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-075",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-075",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-075",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-076",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-076",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-076",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-076",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-077",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-077",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-077",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-077",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-078",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-078",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-078",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-078",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-079",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-079",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-079",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-079",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-080",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-080",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-080",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-080",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-081",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-081",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-081",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-081",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-082",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-082",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-082",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-082",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-083",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-083",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-083",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-083",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-084",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-084",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-084",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-084",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-085",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-085",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-085",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-085",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-086",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-086",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-086",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-086",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-087",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-087",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-087",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-087",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-088",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-088",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-088",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-088",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-089",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-089",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-089",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-089",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-090",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-090",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-090",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-090",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-091",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-091",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-091",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-091",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-092",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-092",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-092",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-092",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-093",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-093",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-093",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-093",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-094",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-094",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-094",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-094",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-095",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-095",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-095",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-095",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-096",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-096",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-096",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-096",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-097",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-097",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-097",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-097",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-098",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-098",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-098",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-098",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-099",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-099",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-099",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-099",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-100",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-100",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-100",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-100",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-101",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-101",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-101",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-101",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-102",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-102",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-102",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-102",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-103",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-103",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-103",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-103",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-104",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-104",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-104",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-104",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-105",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-105",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-105",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-105",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-106",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-106",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-106",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-106",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-107",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-107",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-107",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-107",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-108",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-108",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-108",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-108",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-109",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-109",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-109",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-109",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-110",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-110",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-110",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-110",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-111",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-111",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-111",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-111",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-112",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-112",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-112",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-112",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-113",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-113",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-113",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-113",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-114",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-114",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-114",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-114",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-115",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-115",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-115",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-115",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-116",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-116",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-116",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-116",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-117",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-117",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-117",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-117",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-118",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-118",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-118",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-118",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-119",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-119",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-119",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-119",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-120",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-120",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-120",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-120",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-121",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-121",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-121",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-121",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-122",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-122",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-122",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-122",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-123",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-123",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-123",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-123",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-124",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-124",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-124",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-124",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-125",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-125",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-125",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-125",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-126",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-126",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-126",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-126",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-127",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-127",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-127",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-127",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-128",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-128",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-128",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-128",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-129",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-129",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-129",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-129",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-130",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-130",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-130",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-130",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-131",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-131",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-131",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-131",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-132",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-132",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-132",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-132",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-133",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-133",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-133",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-133",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-134",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-134",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-134",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-134",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-135",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-135",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-135",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-135",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-136",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-136",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-136",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-136",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-137",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-137",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-137",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-137",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-138",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-138",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-138",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-138",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-139",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-139",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-139",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-139",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-140",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-140",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-140",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-140",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-141",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-141",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-141",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-141",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-142",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-142",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-142",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-142",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-143",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-143",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-143",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-143",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-144",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-144",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-144",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-144",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-145",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-145",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-145",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-145",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-146",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-146",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-146",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-146",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-147",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-147",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-147",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-147",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-148",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-148",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-148",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-148",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-149",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-149",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-149",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-149",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-150",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-150",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-150",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-150",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-151",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-151",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-151",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-151",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-152",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-152",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-152",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-152",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-153",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-153",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-153",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-153",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-154",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-154",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-154",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-154",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-155",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-155",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-155",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-155",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-156",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-156",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-156",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-156",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-157",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-157",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-157",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-157",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-158",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-158",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-158",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-158",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-159",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-159",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-159",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-159",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-160",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-160",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-160",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-160",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-161",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-161",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-161",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-161",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-162",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-162",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-162",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-162",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-163",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-163",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-163",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-163",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-164",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-164",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-164",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-164",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-165",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-165",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-165",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-165",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-166",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-166",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-166",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-166",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-167",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-167",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-167",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-167",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-168",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-168",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-168",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-168",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-169",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-169",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-169",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-169",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-170",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-170",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-170",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-170",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-171",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-171",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-171",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-171",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-172",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-172",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-172",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-172",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-173",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-173",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-173",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-173",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-174",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-174",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-174",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-174",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-175",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-175",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-175",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-175",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-176",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-176",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-176",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-176",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-177",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-177",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-177",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-177",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-178",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-178",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-178",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-178",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-179",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-179",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-179",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-179",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-180",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-180",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-180",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-180",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-181",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-181",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-181",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-181",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-182",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-182",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-182",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-182",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-183",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-183",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-183",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-183",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-184",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-184",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-184",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-184",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-185",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-185",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-185",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-185",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-186",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-186",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-186",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-186",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-187",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-187",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-187",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-187",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-188",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-188",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-188",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-188",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-189",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-189",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-189",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-189",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-190",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-190",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-190",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-190",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-191",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-191",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-191",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-191",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-192",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-192",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-192",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-192",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-193",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-193",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-193",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-193",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-194",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-194",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-194",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-194",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-195",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-195",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-195",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-195",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-196",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-196",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-196",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-196",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-197",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-197",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-197",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-197",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-198",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-198",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-198",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-198",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-199",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-199",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-199",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-199",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-200",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-200",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-200",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-200",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-201",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-201",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-201",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-201",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-202",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-202",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-202",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-202",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-203",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-203",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-203",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-203",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-204",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-204",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-204",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-204",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-205",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-205",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-205",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-205",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-206",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-206",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-206",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-206",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-207",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-207",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-207",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-207",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-208",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-208",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-208",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-208",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-209",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-209",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-209",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-209",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-210",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-210",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-210",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-210",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-211",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-211",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-211",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-211",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-212",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-212",
+      "target_scope": "external_known",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-212",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-212",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-213",
+      "target_scope": "internal",
+      "to": "SP-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-213",
+      "target_scope": "internal",
+      "to": "SP-037"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-213",
+      "target_scope": "internal",
+      "to": "SP-038"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-214",
+      "target_scope": "external_known",
+      "to": "CV-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-214",
+      "target_scope": "internal",
+      "to": "SP-041"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-214",
+      "target_scope": "internal",
+      "to": "SP-057"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-214",
+      "target_scope": "internal",
+      "to": "SP-090"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-215",
+      "target_scope": "external_known",
+      "to": "CV-288"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-215",
+      "target_scope": "internal",
+      "to": "SP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "external_known",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "internal",
+      "to": "SP-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "internal",
+      "to": "SP-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "internal",
+      "to": "SP-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "internal",
+      "to": "SP-188"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "internal",
+      "to": "SP-206"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-217",
+      "target_scope": "external_known",
+      "to": "T-160"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-218",
+      "target_scope": "external_known",
+      "to": "F2-191"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-218",
+      "target_scope": "external_known",
+      "to": "PS-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-218",
+      "target_scope": "internal",
+      "to": "SP-217"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-218",
+      "target_scope": "external_known",
+      "to": "W-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-219",
+      "target_scope": "external_known",
+      "to": "CV-295"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-220",
+      "target_scope": "external_known",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-221",
+      "target_scope": "external_known",
+      "to": "ACD-427"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-221",
+      "target_scope": "external_known",
+      "to": "CV-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-222",
+      "target_scope": "external_known",
+      "to": "CV-298"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-222",
+      "target_scope": "external_known",
+      "to": "PS-124"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-223",
+      "target_scope": "external_known",
+      "to": "ARC-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-223",
+      "target_scope": "external_known",
+      "to": "CV-299"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "CRAU-091"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "CV-303"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "F2-194"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "PS-126"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-227",
+      "target_scope": "external_known",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-227",
+      "target_scope": "external_known",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-228",
+      "target_scope": "external_known",
+      "to": "SIR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-229",
+      "target_scope": "external_known",
+      "to": "SIR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-230",
+      "target_scope": "external_known",
+      "to": "CV-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-230",
+      "target_scope": "internal",
+      "to": "SP-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "CV-287"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "CV-288"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "CV-290"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "CV-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "EP-099"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "EP-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "PNC-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "PNC-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "PNC-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "external_known",
+      "to": "PWIZ-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "internal",
+      "to": "SP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "internal",
+      "to": "SP-215"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "internal",
+      "to": "SP-216"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-231",
+      "target_scope": "internal",
+      "to": "SP-230"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-232",
+      "target_scope": "external_known",
+      "to": "CV-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-232",
+      "target_scope": "external_known",
+      "to": "OSI-432"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-232",
+      "target_scope": "internal",
+      "to": "SP-230"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-232",
+      "target_scope": "internal",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-233",
+      "target_scope": "external_known",
+      "to": "CV-315"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "target_scope": "external_known",
+      "to": "CV-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "target_scope": "external_known",
+      "to": "RAP-044"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "target_scope": "internal",
+      "to": "SP-230"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "target_scope": "internal",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "target_scope": "external_known",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-133"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-180"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-182"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-187"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-191"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-235",
+      "target_scope": "internal",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-028"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-139"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-179"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-180"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-200"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-236",
+      "target_scope": "internal",
+      "to": "SP-230"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-028"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-135"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-139"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-180"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-182"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-200"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "target_scope": "internal",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-238",
+      "target_scope": "internal",
+      "to": "SP-131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-238",
+      "target_scope": "internal",
+      "to": "SP-180"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-238",
+      "target_scope": "internal",
+      "to": "SP-181"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-238",
+      "target_scope": "internal",
+      "to": "SP-187"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-239",
+      "target_scope": "internal",
+      "to": "SP-129"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-239",
+      "target_scope": "internal",
+      "to": "SP-134"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-239",
+      "target_scope": "internal",
+      "to": "SP-180"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-239",
+      "target_scope": "internal",
+      "to": "SP-187"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-239",
+      "target_scope": "internal",
+      "to": "SP-238"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-240",
+      "target_scope": "internal",
+      "to": "SP-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-240",
+      "target_scope": "internal",
+      "to": "SP-129"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-240",
+      "target_scope": "internal",
+      "to": "SP-132"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-240",
+      "target_scope": "internal",
+      "to": "SP-133"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-240",
+      "target_scope": "internal",
+      "to": "SP-187"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-240",
+      "target_scope": "internal",
+      "to": "SP-191"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-240",
+      "target_scope": "internal",
+      "to": "SP-239"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-241",
+      "target_scope": "external_known",
+      "to": "CV-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-241",
+      "target_scope": "internal",
+      "to": "SP-230"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-241",
+      "target_scope": "internal",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-242",
+      "target_scope": "external_known",
+      "to": "F2-189"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-242",
+      "target_scope": "internal",
+      "to": "SP-144"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-242",
+      "target_scope": "internal",
+      "to": "SP-170"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-242",
+      "target_scope": "internal",
+      "to": "SP-200"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-242",
+      "target_scope": "internal",
+      "to": "SP-207"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-242",
+      "target_scope": "internal",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-243",
+      "target_scope": "internal",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-243",
+      "target_scope": "internal",
+      "to": "SP-235"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-243",
+      "target_scope": "internal",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-243",
+      "target_scope": "internal",
+      "to": "SP-241"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-243",
+      "target_scope": "internal",
+      "to": "SP-242"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-244",
+      "target_scope": "internal",
+      "to": "SP-243"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-245",
+      "target_scope": "external_known",
+      "to": "F3-501"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-245",
+      "target_scope": "internal",
+      "to": "SP-244"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-246",
+      "target_scope": "external_known",
+      "to": "CV-324"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-246",
+      "target_scope": "external_known",
+      "to": "SIR-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-246",
+      "target_scope": "internal",
+      "to": "SP-235"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-246",
+      "target_scope": "internal",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-246",
+      "target_scope": "internal",
+      "to": "SP-243"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-247",
+      "target_scope": "external_known",
+      "to": "CV-321"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-247",
+      "target_scope": "internal",
+      "to": "SP-235"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-247",
+      "target_scope": "internal",
+      "to": "SP-246"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-248",
+      "target_scope": "internal",
+      "to": "SP-222"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-248",
+      "target_scope": "external_known",
+      "to": "UF-092"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-248",
+      "target_scope": "external_known",
+      "to": "WS-016"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-217",
+      "target_scope": "external_known",
+      "to": "ATS-011"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-217",
+      "target_scope": "external_known",
+      "to": "F3-399"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-217",
+      "target_scope": "external_known",
+      "to": "RAP-031"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-217",
+      "target_scope": "internal",
+      "to": "SP-218"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-218",
+      "target_scope": "external_known",
+      "to": "ATS-011"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-218",
+      "target_scope": "external_known",
+      "to": "GI-033"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-219",
+      "target_scope": "external_known",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-219",
+      "target_scope": "external_known",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-219",
+      "target_scope": "external_known",
+      "to": "RAP-034"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-220",
+      "target_scope": "external_known",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-220",
+      "target_scope": "external_known",
+      "to": "G-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-221",
+      "target_scope": "external_known",
+      "to": "ATS-015"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-221",
+      "target_scope": "external_known",
+      "to": "RAP-037"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-222",
+      "target_scope": "external_known",
+      "to": "ATS-016"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-222",
+      "target_scope": "external_known",
+      "to": "F3-405"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-222",
+      "target_scope": "external_known",
+      "to": "RAP-039"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-223",
+      "target_scope": "external_known",
+      "to": "ATS-018"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-223",
+      "target_scope": "external_known",
+      "to": "F3-406"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "ATS-019"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "EP-109"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "F3-410"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-226",
+      "target_scope": "external_known",
+      "to": "RAP-042"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-233",
+      "target_scope": "external_known",
+      "to": "N-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-233",
+      "target_scope": "external_known",
+      "to": "RGV-008"
+    }
+  ],
+  "missing_targets": [],
+  "schema_id": "pm.r10.storage_pipeline.scoped_dependencies.v1",
+  "status": "resolved",
+  "summary": {
+    "acceptance_unit_count": 811,
+    "dependency_edge_count": 1047,
+    "depends_on_edge_count": 1023,
+    "external_known_target_count": 961,
+    "global_build_order_available": true,
+    "global_true_cycle_component_count": 0,
+    "gui_related_false_count": 151,
+    "gui_related_true_count": 97,
+    "internal_target_count": 86,
+    "internal_true_cycle_component_count": 0,
+    "migration_span_count": 130,
+    "missing_target_count": 0,
+    "plan_unit_count": 248,
+    "reasoning_tier_high_count": 30,
+    "reasoning_tier_standard_count": 218,
+    "unblocks_edge_count": 24
+  }
+}

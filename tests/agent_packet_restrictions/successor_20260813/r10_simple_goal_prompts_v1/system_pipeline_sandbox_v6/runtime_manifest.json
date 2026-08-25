@@ -1,0 +1,34 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.runtime_manifest.v2",
+  "omp": {
+    "binary": "/home/sittingmongoose/.local/bin/omp",
+    "binary_bytes": 179881160,
+    "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+    "version": "omp/18.0.4",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "effective_config": {
+      "advisor.enabled": false,
+      "task.agentAdvisor": {"task": "off"},
+      "memory.backend": "off",
+      "autolearn.enabled": false,
+      "mcp.enableProjectConfig": false,
+      "tools.approvalMode": "yolo",
+      "goal.enabled": true,
+      "goal.continuationModes": ["interactive"],
+      "plan.defaultOnStartup": false
+    },
+    "launch_flags": ["--session-dir", "<fresh-row-session-dir>", "--no-title", "--no-tools", "--no-skills", "--no-rules"],
+    "session_evidence": {
+      "format_version": 3,
+      "title_slot_bytes": 256,
+      "authority": "persistent append-only session JSONL",
+      "tui_role": "visual corroboration only"
+    }
+  },
+  "codex": {
+    "surface": "Codex app fresh projectless task",
+    "prompt_prefix": "Create a goal that ",
+    "lifecycle_evidence": "raw rollout response_item custom Goal calls and receipts",
+    "summary_surface_not_sufficient": "read_thread summaries may omit custom exec Goal calls"
+  }
+}
