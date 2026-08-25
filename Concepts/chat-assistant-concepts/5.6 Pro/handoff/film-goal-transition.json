@@ -1,0 +1,283 @@
+{
+ "before": {
+  "title": "Implement",
+  "band": {
+   "x": 78,
+   "y": 468,
+   "w": 79,
+   "h": 6
+  },
+  "strikeCss": {
+   "name": "none",
+   "dur": "0s",
+   "ease": "ease",
+   "fill": "none",
+   "tf": "matrix(0, 0, 0, 1, 0, 0)"
+  },
+  "rowKey": "ph:ph-implement:in_progress:1"
+ },
+ "during": {
+  "wipeAttr": "1",
+  "cls": "goal-phase completed",
+  "strike": {
+   "name": "goal-strike-wipe",
+   "dur": "0.233s",
+   "ease": "cubic-bezier(0.34, 0.86, 0.4, 1)",
+   "fill": "both"
+  },
+  "row": {
+   "name": "goal-phase-complete",
+   "dur": "0.52s"
+  }
+ },
+ "after": {
+  "cls": "goal-phase completed",
+  "wipe": null,
+  "key": "ph:ph-implement:completed:0",
+  "strikeCss": {
+   "name": "none",
+   "dur": "0s",
+   "ease": "ease",
+   "fill": "none",
+   "tf": "matrix(1, 0, 0, 1, 0, 0)"
+  }
+ },
+ "rel": [
+  {
+   "ms": 0,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 24,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 44,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 68,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 79,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 128,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 135,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 154,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 211,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 226,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 260,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 279,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 291,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 345,
+   "strikeRunPx": 17,
+   "ofPx": 77
+  },
+  {
+   "ms": 349,
+   "strikeRunPx": 29,
+   "ofPx": 77
+  },
+  {
+   "ms": 368,
+   "strikeRunPx": 41,
+   "ofPx": 77
+  },
+  {
+   "ms": 425,
+   "strikeRunPx": 67,
+   "ofPx": 77
+  },
+  {
+   "ms": 434,
+   "strikeRunPx": 71,
+   "ofPx": 77
+  },
+  {
+   "ms": 455,
+   "strikeRunPx": 71,
+   "ofPx": 77
+  },
+  {
+   "ms": 505,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 516,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 536,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 575,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 595,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 619,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 645,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 671,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 696,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 726,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 749,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 757,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 813,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 818,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 836,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 901,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 915,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 937,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 990,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 1005,
+   "strikeRunPx": 73,
+   "ofPx": 77
+  },
+  {
+   "ms": 1039,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 1061,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 1086,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 1109,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 1132,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 1154,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 1175,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  },
+  {
+   "ms": 1196,
+   "strikeRunPx": 0,
+   "ofPx": 77
+  }
+ ],
+ "errs": []
+}

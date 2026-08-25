@@ -1,0 +1,25 @@
+import { chromium } from 'playwright-core';
+const EXE='/home/sittingmongoose/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome';
+const URL='file:///mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6%20Pro/index.html';
+const b=await chromium.launch({executablePath:EXE});
+const p=await b.newPage({viewport:{width:1440,height:900}});
+const errs=[]; p.on('console',m=>{if(m.type()==='error')errs.push(m.text())}); p.on('pageerror',e=>errs.push(String(e)));
+await p.goto(URL,{waitUntil:'load'}); await p.waitForTimeout(600);
+const out = await p.evaluate(async ()=>{
+  const r={};
+  r.historyMode = window.PM56_DEMO.getState().historyMode;
+  r.overlayKids=[...document.getElementById('pmOverlayRoot').children].map(c=>({cls:c.className, z:getComputedStyle(c).zIndex, rect:c.getBoundingClientRect().toJSON()}));
+  document.querySelector('.selector-button[data-kind="model"]').click();
+  await new Promise(res=>setTimeout(res,700));
+  const m=document.querySelector('.overlay-menu.model-menu');
+  const mr=m.getBoundingClientRect();
+  r.menu={rect:mr.toJSON(), z:getComputedStyle(m).zIndex};
+  const pb=m.querySelector('.provider-button[data-value="all"]');
+  const pr=pb.getBoundingClientRect();
+  const hit=document.elementFromPoint(pr.left+pr.width/2, pr.top+pr.height/2);
+  r.providerHit={rect:pr.toJSON(), hit:hit? hit.tagName+'.'+hit.className : null, ownedByMenu: !!hit && m.contains(hit)};
+  r.rows=m.querySelectorAll('.model-row').length;
+  return r;
+});
+console.log(JSON.stringify(out,null,1)); console.log('errors',errs);
+await b.close();

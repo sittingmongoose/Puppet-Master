@@ -1,0 +1,494 @@
+{
+ "file": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/w4orbit/negctl/index.html",
+ "negative": true,
+ "passed": 6,
+ "failed": 25,
+ "consoleNoise": 1,
+ "noise": [
+  "pageerror: Cannot read properties of null (reading 'getBoundingClientRect')"
+ ],
+ "results": [
+  {
+   "label": "trail stroke >= 1.2px everywhere (worst 0.709px at take8/rest)",
+   "pass": false,
+   "detail": {
+    "take0": {
+     "current": {
+      "box": 22,
+      "svg": 11,
+      "strokeUser": 1.8,
+      "paintedPx": 0.825,
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+     },
+     "rest": {
+      "box": 12.9,
+      "svg": 9.46,
+      "strokeUser": 1.8,
+      "paintedPx": 0.71,
+      "transform": "matrix(0.86, 0, 0, 0.86, 0, 0)"
+     }
+    },
+    "take1": {
+     "current": null,
+     "rest": null
+    },
+    "take3": {
+     "current": {
+      "box": 22,
+      "svg": 11,
+      "strokeUser": 1.8,
+      "paintedPx": 0.825,
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+     },
+     "rest": {
+      "box": 12.9,
+      "svg": 9.46,
+      "strokeUser": 1.8,
+      "paintedPx": 0.71,
+      "transform": "matrix(0.86, 0, 0, 0.86, 0, 0)"
+     }
+    },
+    "take8": {
+     "current": {
+      "box": 20,
+      "svg": 13.2,
+      "strokeUser": 1.8,
+      "paintedPx": 0.99,
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+     },
+     "rest": {
+      "box": 11.18,
+      "svg": 9.46,
+      "strokeUser": 1.8,
+      "paintedPx": 0.709,
+      "transform": "matrix(0.86, 0, 0, 0.86, 0, 0)"
+     }
+    }
+   },
+   "group": "Shared trail: painted stroke is over 1px in every take that uses it"
+  },
+  {
+   "label": "no disc rests at scale(.86)",
+   "pass": false,
+   "detail": [
+    "take0",
+    "take3",
+    "take8"
+   ],
+   "group": "Shared trail: painted stroke is over 1px in every take that uses it"
+  },
+  {
+   "label": "current disc: the icon stroke has a fully-covered core (>=6 px at its own colour; control scores 0)",
+   "pass": false,
+   "detail": {
+    "core": 0,
+    "near": 21,
+    "px": 484,
+    "fg": [
+     125,
+     135,
+     148
+    ]
+   },
+   "group": "Shared trail: the stroke reaches full colour in painted pixels"
+  },
+  {
+   "label": "current disc: crop paints real ink, not a flat block",
+   "pass": true,
+   "detail": {
+    "w": 22,
+    "h": 22,
+    "distinct": 121,
+    "dominant": "#262a3c",
+    "dominantShare": 0.198,
+    "inkShare": 0.802,
+    "centre": "#404657"
+   },
+   "group": "Shared trail: the stroke reaches full colour in painted pixels"
+  },
+  {
+   "label": "resting disc: the icon stroke has a fully-covered core (>=6 px at its own colour; control scores 0)",
+   "pass": false,
+   "detail": {
+    "core": 0,
+    "near": 15,
+    "px": 169,
+    "fg": [
+     98,
+     107,
+     125
+    ]
+   },
+   "group": "Shared trail: the stroke reaches full colour in painted pixels"
+  },
+  {
+   "label": "resting disc: crop paints real ink, not a flat block",
+   "pass": true,
+   "detail": {
+    "w": 13,
+    "h": 13,
+    "distinct": 59,
+    "dominant": "#181b2e",
+    "dominantShare": 0.284,
+    "inkShare": 0.716,
+    "centre": "#191b2f"
+   },
+   "group": "Shared trail: the stroke reaches full colour in painted pixels"
+  },
+  {
+   "label": ".wa-track overflow-x is auto (was hidden)",
+   "pass": false,
+   "detail": {
+    "overflowX": "hidden",
+    "scrollW": 143,
+    "clientW": 141,
+    "gap": "2px"
+   },
+   "group": "Shared trail: the track scrolls instead of clipping"
+  },
+  {
+   "label": "a clipped trail is user-scrollable and its last disc hit-tests to itself",
+   "pass": false,
+   "detail": {
+    "overflowing": true,
+    "scrolled": true,
+    "scrollLeft": 53,
+    "lastReachable": true,
+    "overflowX": "hidden"
+   },
+   "group": "Shared trail: the track scrolls instead of clipping"
+  },
+  {
+   "label": "no phase-chrome icon row is rendered or painted above Orbit",
+   "pass": true,
+   "detail": {
+    "present": false
+   },
+   "group": "Orbit: the shared phase chrome is not shown above it"
+  },
+  {
+   "label": "a node exists for every work step",
+   "pass": true,
+   "detail": {
+    "count": 14,
+    "steps": 14,
+    "ringPE": "none",
+    "hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "actions": [
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step",
+     "inspect-work-step"
+    ],
+    "labelled": false,
+    "tags": [
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN",
+     "SPAN"
+    ]
+   },
+   "group": "Orbit: every node hit-tests to itself and paints"
+  },
+  {
+   "label": "all nodes hit-test to themselves",
+   "pass": true,
+   "detail": {
+    "hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ]
+   },
+   "group": "Orbit: every node hit-tests to itself and paints"
+  },
+  {
+   "label": "every node carries orbit-open-phase",
+   "pass": false,
+   "detail": [
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step",
+    "inspect-work-step"
+   ],
+   "group": "Orbit: every node hit-tests to itself and paints"
+  },
+  {
+   "label": "nodes are real buttons with accessible names",
+   "pass": false,
+   "detail": {
+    "tags": "SPAN",
+    "labelled": false
+   },
+   "group": "Orbit: every node hit-tests to itself and paints"
+  },
+  {
+   "label": "Orbit: every node hit-tests to itself and paints [threw]",
+   "pass": false,
+   "detail": "TimeoutError: locator.boundingBox: Timeout 30000ms exceeded.",
+   "group": "Orbit: every node hit-tests to itself and paints"
+  },
+  {
+   "label": "no transition on a node carries a delay (--spring bundles 520ms; --spring-ease does not)",
+   "pass": true,
+   "detail": {
+    "prop": "transform, background, color, border-color",
+    "delay": "0s, 0s, 0s, 0s",
+    "dur": "0.62s, 0.32s, 0.32s, 0.32s"
+   },
+   "group": "Orbit: transform carries no accidental delay"
+  },
+  {
+   "label": "Orbit: collapsed state is the centred circle with no panel [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+   "group": "Orbit: collapsed state is the centred circle with no panel"
+  },
+  {
+   "label": "Orbit: clicking a node reveals that phase, and the content is the fixture [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+   "group": "Orbit: clicking a node reveals that phase, and the content is the fixture"
+  },
+  {
+   "label": "Orbit: clicking the same node again collapses it [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+   "group": "Orbit: clicking the same node again collapses it"
+  },
+  {
+   "label": "Orbit: the expand and the collapse both actually animate [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: Resulting promise was garbage collected.",
+   "group": "Orbit: the expand and the collapse both actually animate"
+  },
+  {
+   "label": "the panel lists exactly this thread's child agents",
+   "pass": false,
+   "detail": {
+    "sats": 0,
+    "rows": 0,
+    "expect": 5,
+    "expectNames": [
+     "Query Analyzer",
+     "Schema Reviewer",
+     "Benchmark Runner",
+     "Migration Auditor",
+     "Rollback Rehearser"
+    ],
+    "gotNames": [],
+    "satHits": [],
+    "satActions": [],
+    "states": [],
+    "expectStates": [
+     "Working",
+     "Stalled",
+     "Queued",
+     "Complete",
+     "Retrying"
+    ],
+    "inlineDuplicate": true
+   },
+   "group": "Orbit: subagent nodes and rows open the agent"
+  },
+  {
+   "label": "agent statuses use D.labels.subagentStatus (blocked prints \"Stalled\")",
+   "pass": false,
+   "detail": {
+    "got": [],
+    "want": [
+     "Working",
+     "Stalled",
+     "Queued",
+     "Complete",
+     "Retrying"
+    ]
+   },
+   "group": "Orbit: subagent nodes and rows open the agent"
+  },
+  {
+   "label": "satellite nodes hit-test to themselves and carry open-agent",
+   "pass": false,
+   "detail": {
+    "sats": 0,
+    "rows": 0,
+    "expect": 5,
+    "expectNames": [
+     "Query Analyzer",
+     "Schema Reviewer",
+     "Benchmark Runner",
+     "Migration Auditor",
+     "Rollback Rehearser"
+    ],
+    "gotNames": [],
+    "satHits": [],
+    "satActions": [],
+    "states": [],
+    "expectStates": [
+     "Working",
+     "Stalled",
+     "Queued",
+     "Complete",
+     "Retrying"
+    ],
+    "inlineDuplicate": true
+   },
+   "group": "Orbit: subagent nodes and rows open the agent"
+  },
+  {
+   "label": "the shared hardcoded \"Live child agents · 2\" list is suppressed under Orbit",
+   "pass": false,
+   "detail": {
+    "sats": 0,
+    "rows": 0,
+    "expect": 5,
+    "expectNames": [
+     "Query Analyzer",
+     "Schema Reviewer",
+     "Benchmark Runner",
+     "Migration Auditor",
+     "Rollback Rehearser"
+    ],
+    "gotNames": [],
+    "satHits": [],
+    "satActions": [],
+    "states": [],
+    "expectStates": [
+     "Working",
+     "Stalled",
+     "Queued",
+     "Complete",
+     "Retrying"
+    ],
+    "inlineDuplicate": true
+   },
+   "group": "Orbit: subagent nodes and rows open the agent"
+  },
+  {
+   "label": "Orbit: subagent nodes and rows open the agent [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+   "group": "Orbit: subagent nodes and rows open the agent"
+  },
+  {
+   "label": "no child agents: an honest empty row is rendered and painted",
+   "pass": false,
+   "detail": {
+    "present": false,
+    "text": null,
+    "rows": 0,
+    "sats": 0,
+    "hits": false
+   },
+   "group": "Orbit: the states the fixture does not reach are still correct"
+  },
+  {
+   "label": "no child agents: the count says 0, and no rows are borrowed from another thread",
+   "pass": false,
+   "detail": {
+    "present": false,
+    "text": null,
+    "rows": 0,
+    "sats": 0,
+    "hits": false
+   },
+   "group": "Orbit: the states the fixture does not reach are still correct"
+  },
+  {
+   "label": "a live, running phase reports \"In progress\" on a .run chip",
+   "pass": false,
+   "detail": {
+    "chip": null,
+    "cls": null,
+    "running": true,
+    "pipAnimating": null
+   },
+   "group": "Orbit: the states the fixture does not reach are still correct"
+  },
+  {
+   "label": "the live node carries its pulse while the run is live",
+   "pass": false,
+   "detail": {
+    "chip": null,
+    "cls": null,
+    "running": true,
+    "pipAnimating": null
+   },
+   "group": "Orbit: the states the fixture does not reach are still correct"
+  },
+  {
+   "label": "Orbit: geometry is derived from the container, not hardcoded [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+   "group": "Orbit: geometry is derived from the container, not hardcoded"
+  },
+  {
+   "label": "Orbit: renders in all 8 themes with no overflow and no console noise [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+   "group": "Orbit: renders in all 8 themes with no overflow and no console noise"
+  },
+  {
+   "label": "Orbit: reduced motion reaches the same end state with no perpetual loops [threw]",
+   "pass": false,
+   "detail": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+   "group": "Orbit: reduced motion reaches the same end state with no perpetual loops"
+  }
+ ]
+}

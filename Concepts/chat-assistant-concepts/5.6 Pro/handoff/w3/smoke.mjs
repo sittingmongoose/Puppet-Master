@@ -1,0 +1,33 @@
+import { chromium } from 'playwright-core';
+const ROOT='/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro';
+const EXE=process.env.HOME+'/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome';
+const b=await chromium.launch({executablePath:EXE, args:['--allow-file-access-from-files','--force-color-profile=srgb']});
+const p=await b.newPage({viewport:{width:1440,height:900}});
+const errs=[];
+p.on('console',m=>{ if(m.type()==='error'||m.type()==='warning') errs.push(m.type()+': '+m.text()); });
+p.on('pageerror',e=>errs.push('pageerror: '+e.message));
+await p.goto('file://'+ROOT+'/index.html');
+await p.waitForSelector('.transcript .message',{timeout:15000});
+const r = await p.evaluate(()=>{
+  const out={};
+  out.boot = !!window.__PM56_BOOT_OK;
+  out.lens = !!window.PM56_LENS;
+  out.tr = !!window.PM56_TRANSCRIPT;
+  out.overflowReg = window.PM56_MSG_OVERFLOW ? window.PM56_MSG_OVERFLOW.count() : -1;
+  out.metaNodes = document.querySelectorAll('.message .message-meta, .message [data-model]').length;
+  const metas=[...document.querySelectorAll('.message .message-meta')];
+  out.first = metas[0] ? metas[0].innerText.replace(/\n/g,' | ') : null;
+  out.second = metas[1] ? metas[1].innerText.replace(/\n/g,' | ') : null;
+  out.third = metas[2] ? metas[2].innerText.replace(/\n/g,' | ') : null;
+  out.lensTrigger = !!document.querySelector('.pm-lens-trigger');
+  out.hOverflow = document.body.scrollWidth - document.body.clientWidth;
+  const m0=document.querySelector('.message');
+  const meta=m0.querySelector('.message-meta'), acts=m0.querySelector('.message-actions');
+  if(meta&&acts){ const a=meta.getBoundingClientRect(), c=acts.getBoundingClientRect();
+    out.sameLine = Math.abs(a.top-c.top)<6; out.metaRect=[a.x|0,a.y|0,a.width|0,a.height|0]; out.actRect=[c.x|0,c.y|0,c.width|0,c.height|0]; }
+  return out;
+});
+console.log(JSON.stringify(r,null,1));
+console.log('console issues:', errs.length, errs.slice(0,10));
+await p.screenshot({path:'/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/w3/smoke.png'});
+await b.close();

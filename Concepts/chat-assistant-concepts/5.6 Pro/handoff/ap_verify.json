@@ -1,0 +1,105 @@
+{
+ "passed": 54,
+ "failed": 0,
+ "fail": [],
+ "info": {
+  "conceptDom": [
+   {
+    "v": 0,
+    "root": "pmap pmap-accordion",
+    "nodes": 727
+   },
+   {
+    "v": 1,
+    "root": "pmap pmap-statusboard",
+    "nodes": 296
+   },
+   {
+    "v": 2,
+    "root": "pmap pmap-treewrap",
+    "nodes": 116
+   },
+   {
+    "v": 3,
+    "root": "pmap pmap-mdwrap",
+    "nodes": 729
+   },
+   {
+    "v": 4,
+    "root": "pmap pmap-boardlanes",
+    "nodes": 721
+   },
+   {
+    "v": 5,
+    "root": "pmap pmap-ledgerwrap",
+    "nodes": 512
+   },
+   {
+    "v": 6,
+    "root": "pmap pmap-feedwrap",
+    "nodes": 343
+   },
+   {
+    "v": 7,
+    "root": "pmap pmap-dash",
+    "nodes": 277
+   }
+  ]
+ },
+ "pass": [
+  "All 8 concepts differ in DOM class-set AND in painted 8x8 fingerprint",
+  "Every concept paints real content (>200 distinct colours in the crop)",
+  "Concept 0: focus-activity(changes) narrows the panel and repaints",
+  "Concept 0: re-clicking the focused domain widens back to all",
+  "Concept 1: focus-activity(changes) narrows the panel and repaints",
+  "Concept 1: re-clicking the focused domain widens back to all",
+  "Concept 2: focus-activity(changes) narrows the panel and repaints",
+  "Concept 2: re-clicking the focused domain widens back to all",
+  "Concept 3: focus-activity(changes) narrows the panel and repaints",
+  "Concept 3: re-clicking the focused domain widens back to all",
+  "Concept 4: focus-activity(changes) narrows the panel and repaints",
+  "Concept 4: re-clicking the focused domain widens back to all",
+  "Concept 5: focus-activity(changes) narrows the panel and repaints",
+  "Concept 5: re-clicking the focused domain widens back to all",
+  "Concept 6: focus-activity(changes) narrows the panel and repaints",
+  "Concept 6: re-clicking the focused domain widens back to all",
+  "Concept 7: focus-activity(changes) narrows the panel and repaints",
+  "Concept 7: re-clicking the focused domain widens back to all",
+  "Concept 0: subagent row is painted and opens that agent",
+  "Concept 0: changed-file row opens that path at that line",
+  "Concept 0: Todo row is clickable, painted, and details that todo",
+  "Concept 1: subagent row is painted and opens that agent",
+  "Concept 1: changed-file row opens that path at that line",
+  "Concept 1: Todo row is clickable, painted, and details that todo",
+  "Concept 2: subagent row is painted and opens that agent",
+  "Concept 2: changed-file row opens that path at that line",
+  "Concept 2: Todo row is clickable, painted, and details that todo",
+  "Concept 3: subagent row is painted and opens that agent",
+  "Concept 3: changed-file row opens that path at that line",
+  "Concept 3: Todo row is clickable, painted, and details that todo",
+  "Concept 4: subagent row is painted and opens that agent",
+  "Concept 4: changed-file row opens that path at that line",
+  "Concept 4: Todo row is clickable, painted, and details that todo",
+  "Concept 5: subagent row is painted and opens that agent",
+  "Concept 5: changed-file row opens that path at that line",
+  "Concept 5: Todo row is clickable, painted, and details that todo",
+  "Concept 6: subagent row is painted and opens that agent",
+  "Concept 6: changed-file row opens that path at that line",
+  "Concept 6: Todo row is clickable, painted, and details that todo",
+  "Concept 7: subagent row is painted and opens that agent",
+  "Concept 7: changed-file row opens that path at that line",
+  "Concept 7: Todo row is clickable, painted, and details that todo",
+  "Concept 5: changed-file row expands to the fixture's real diff hunk",
+  "8 themes x 8 concepts x 3 widths: no overflow BEYOND app.js's stock body",
+  "prefers-reduced-motion: zero infinite animations inside the panel in all 8 concepts",
+  "prefers-reduced-motion: state still advances",
+  "Concept 0: survives two work ticks without remounting (stable data-k)",
+  "Concept 1: survives two work ticks without remounting (stable data-k)",
+  "Concept 2: survives two work ticks without remounting (stable data-k)",
+  "Concept 3: survives two work ticks without remounting (stable data-k)",
+  "Concept 4: survives two work ticks without remounting (stable data-k)",
+  "Concept 5: survives two work ticks without remounting (stable data-k)",
+  "Concept 6: survives two work ticks without remounting (stable data-k)",
+  "Concept 7: survives two work ticks without remounting (stable data-k)"
+ ]
+}

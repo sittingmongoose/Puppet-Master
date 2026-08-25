@@ -1,0 +1,136 @@
+[
+ {
+  "n": "A/A NOISE FLOOR: two baseline paint maps of the same state agree per message",
+  "pass": false,
+  "d": {
+   "messages": 21,
+   "maxAbsDelta": 13.4171,
+   "maxRelDelta": 0.3676
+  }
+ },
+ {
+  "n": "the paint map actually sees every message of the 26-message thread",
+  "pass": false,
+  "d": {
+   "measured": 21
+  }
+ },
+ {
+  "n": "NEGATIVE CONTROL: nothing is dimmed relative to baseline at rest",
+  "pass": false,
+  "d": {
+   "d": [
+    "plain-05",
+    "plain-07",
+    "plain-09",
+    "plain-11",
+    "plain-14",
+    "plain-17",
+    "plain-24"
+   ],
+   "b": [
+    "plain-06",
+    "plain-10",
+    "plain-12",
+    "plain-13",
+    "plain-18",
+    "plain-23"
+   ]
+  }
+ },
+ {
+  "n": "gutter controls appear for the whole thread when Mute is entered",
+  "pass": true,
+  "d": {
+   "controls": 26
+  }
+ },
+ {
+  "n": "POSITIVE CONTROL: after sealing 25, exactly 25 messages are painted DIMMER than their own baseline",
+  "pass": false,
+  "d": {
+   "dimmed": 17,
+   "ids": [
+    "plain-04",
+    "plain-05",
+    "plain-06"
+   ]
+  }
+ },
+ {
+  "n": "the dimming is a real paint change, not noise (every dimmed turn is well past the A/A floor)",
+  "pass": true,
+  "d": {
+   "maxRatio": 0.79,
+   "minRatio": 0.56,
+   "aaRel": 0.3676
+  }
+ },
+ {
+  "n": "THE CAP ACCUMULATES (pixel proof): a 26th turn shapes in a SECOND operation — 26 painted dim, not 25",
+  "pass": false,
+  "d": {
+   "before": 17,
+   "after": 18,
+   "keptAll25": true,
+   "newOne": "plain-01"
+  }
+ },
+ {
+  "n": "the 25 already-sealed turns did NOT brighten back when the 26th was added",
+  "pass": true,
+  "d": {
+   "lost": []
+  }
+ },
+ {
+  "n": "a \"Turn Off\" control exists and was clicked",
+  "pass": true,
+  "d": {
+   "offBtn": "lens-mode|off|Turn OffLeave selection mode, clear the "
+  }
+ },
+ {
+  "n": "TURN OFF restores EVERY message to within the noise floor of its OWN baseline luminance",
+  "pass": false,
+  "d": {
+   "stillDim": 8,
+   "worstMessage": "plain-07",
+   "worstRatio": 0.6682,
+   "compared": 19
+  }
+ },
+ {
+  "n": "\"nothing is selected\" and \"selection is broken\" are distinguished: the gutter controls are GONE, not empty",
+  "pass": true,
+  "d": {
+   "controls": 0
+  }
+ },
+ {
+  "n": "Turn Off did not delete anything: every measured message is still painted",
+  "pass": true,
+  "d": {
+   "before": 21,
+   "after": 21
+  }
+ },
+ {
+  "n": "SELFTEST: forcing every surface to opacity .42 makes the detector report EVERY message dim",
+  "pass": false,
+  "d": {
+   "reported": 18,
+   "of": 21
+  }
+ },
+ {
+  "n": "zero console errors",
+  "pass": true,
+  "d": []
+ },
+ {
+  "n": "zero page errors",
+  "pass": true,
+  "d": []
+ }
+]

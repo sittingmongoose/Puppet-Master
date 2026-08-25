@@ -1,0 +1,16 @@
+import path from 'path'; import {pathToFileURL} from 'url';
+const {chromium}=await import('playwright');
+const root='/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro';
+const b=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
+const p=await b.newPage({viewport:{width:1440,height:900}});
+p.on('pageerror',e=>console.log('PAGEERR',String(e)));
+await p.goto(pathToFileURL(path.join(root,'index.html')).href,{waitUntil:'load'});
+await p.waitForFunction(()=>window.__PM56_BOOT_OK===true);
+const count=async(tag)=>console.log(tag, await p.evaluate(()=>({menus:document.querySelectorAll('.overlay-menu').length,pops:document.querySelectorAll('.ctx-pop').length,overlayKids:[...document.getElementById('pmOverlayRoot').children].map(e=>e.className)})));
+await p.locator('.context-ring').click(); await p.waitForTimeout(200); await count('opened');
+await p.locator('[data-action="ctx-more-limits"]').click(); await p.waitForTimeout(200); await count('expand');
+await p.locator('[data-action="ctx-more-limits"]').click(); await p.waitForTimeout(200); await count('collapse');
+await p.evaluate(()=>{const s=window.PM56_DEMO.getState(); console.log('menu?',JSON.stringify(s.menu)); if(s.menu)document.body.click();});
+await p.waitForTimeout(200); await count('after body click');
+await p.locator('.context-ring').click(); await p.waitForTimeout(300); await count('reopen');
+await b.close();

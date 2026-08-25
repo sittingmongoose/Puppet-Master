@@ -1,0 +1,379 @@
+/* history.css — feature module styles.  OWNER: Wave 3 — History agent (items 3 + 4: take-6 status indicators, W1 open/pin choreography)
+ *
+ * Concatenated LAST, after styles.css / motion.css / variants-{a,b,c}.css /
+ * transcripts.css, so rules here win over the base sheet and over the variant
+ * sheets AT EQUAL SPECIFICITY.  Later-in-source only beats an equally specific
+ * rule, so every override below deliberately mirrors the specificity of the
+ * styles.css rule it replaces (e.g. styles.css:365-371 use
+ * `.history-panel[data-history-variant="N"] .thread-row` = 0,3,1 — a bare
+ * `[data-history-variant="N"] .thread-row` = 0,2,1 would silently LOSE).
+ */
+
+/* =====================================================================
+   ITEM 3a — the nine take-6 status indicators.
+   ---------------------------------------------------------------------
+   Take 6 "Preview Rows" (state.variants[1] === 5) used `.status-orbit` for
+   every thread, so eight of the nine statuses in statusLabel() rendered the
+   same working spinner.  The orbit is the one the requester likes — it is
+   reproduced here byte-for-byte in geometry (15px ring, 4px satellite at
+   left:5/top:-2, transform-origin 2px 9px, spin 1.7s linear) — and the other
+   eight are built in the same family: one 15px ring, one mark, one motion
+   signature each.
+
+   Every loop below is stopped in the reduced-motion block at the bottom of
+   this section, and every stopped state is still legible: the declared
+   (non-animated) value of each element IS its end state, so `animation:none`
+   leaves a drawn check, a drawn cross, a parked satellite — never a blank box.
+   ===================================================================== */
+.ph-status{ position:relative; display:block; width:15px; height:15px; color:var(--subtle); }
+.ph-status .ph-ring{ position:absolute; inset:0; border-radius:50%; border:1px solid var(--border-strong); box-sizing:border-box; }
+.ph-status .ph-mark{ position:absolute; left:50%; top:50%; width:5px; height:5px; margin:-2.5px 0 0 -2.5px; border-radius:50%; background:currentColor; }
+
+/* working — unchanged from .status-orbit (styles.css:133).  The requester's
+   current top pick; it matches the Orbit working animation. */
+.ph-s-working{ color:var(--accent); }
+.ph-s-working .ph-mark{ left:5px; top:-2px; margin:0; width:4px; height:4px; transform-origin:2px 9px; animation:spin 1.7s linear infinite; }
+
+/* reviewing — the same satellite, but sweeping BACK AND FORTH over the top
+   arc instead of running the full circle: going back over ground already
+   covered.  `alternate` + a symmetric ease is the whole signature. */
+.ph-s-reviewing{ color:var(--accent-2); }
+.ph-s-reviewing .ph-ring{ border-color:color-mix(in srgb,var(--accent-2) 55%,var(--border-strong)); }
+.ph-s-reviewing .ph-mark{ left:5px; top:-2px; margin:0; width:4px; height:4px; transform-origin:2px 9px; animation:ph-sweep 1.9s cubic-bezier(.42,0,.58,1) infinite alternate; }
+@keyframes ph-sweep{ from{ transform:rotate(-125deg) } to{ transform:rotate(125deg) } }
+
+/* waiting — a dashed ring turning slowly (six seconds for one revolution)
+   around a dot that breathes.  Patient, not busy. */
+.ph-s-waiting{ color:var(--accent-2); }
+.ph-s-waiting .ph-ring{ border-style:dashed; border-color:color-mix(in srgb,var(--accent-2) 50%,var(--border-strong)); animation:spin 6s linear infinite; }
+.ph-s-waiting .ph-mark{ animation:ph-pulse 2.4s ease-in-out infinite; }
+@keyframes ph-pulse{ 0%,100%{ opacity:.4; transform:scale(.78) } 50%{ opacity:1; transform:scale(1) } }
+
+/* idle ("Ready") — quietest of the nine: nothing travels, the whole glyph
+   just breathes once every 3.2s. */
+.ph-s-idle{ color:var(--positive); }
+.ph-s-idle .ph-ring{ border-color:color-mix(in srgb,var(--positive) 40%,var(--border)); animation:ph-breathe 3.2s ease-in-out infinite; }
+@keyframes ph-breathe{ 0%,100%{ transform:scale(.86); opacity:.55 } 50%{ transform:scale(1); opacity:1 } }
+
+/* complete — terminal, so it does NOT loop: the check draws itself once when
+   the status arrives (pmPatch swaps the class on the same keyed node, which
+   restarts the animation).  Two strokes, one 320ms timeline each, the second
+   held at scaleX(0) for its first third — a keyframe offset, NOT an
+   animation-delay, so nothing here can be mistaken for the `--spring`
+   delay defect the orchestrator swept for. */
+.ph-s-complete{ color:var(--positive); }
+.ph-s-complete .ph-ring{ border-color:color-mix(in srgb,var(--positive) 62%,var(--border)); background:color-mix(in srgb,var(--positive) 16%,transparent); }
+.ph-s-complete .ph-mark{ left:0; top:0; width:100%; height:100%; margin:0; background:none; border-radius:0; }
+.ph-s-complete .ph-mark::before,.ph-s-complete .ph-mark::after{ content:""; position:absolute; background:var(--positive); border-radius:1px; transform-origin:left center; }
+.ph-s-complete .ph-mark::before{ left:3.4px; top:7.2px; width:4.2px; height:1.7px; transform:rotate(45deg); animation:ph-draw-a 320ms var(--pm-ease-out) both; }
+.ph-s-complete .ph-mark::after{ left:6.2px; top:9.4px; width:6.8px; height:1.7px; transform:rotate(-54deg); animation:ph-draw-b 320ms var(--pm-ease-out) both; }
+@keyframes ph-draw-a{ 0%{ transform:rotate(45deg) scaleX(0) } 34%,100%{ transform:rotate(45deg) scaleX(1) } }
+@keyframes ph-draw-b{ 0%,34%{ transform:rotate(-54deg) scaleX(0) } 100%{ transform:rotate(-54deg) scaleX(1) } }
+
+/* blocked — a ring with a gap in it and a bar straight across: refused, not
+   broken.  Mostly still, with one short nudge at the end of a 2.8s cycle. */
+.ph-s-blocked{ color:var(--danger); }
+.ph-s-blocked .ph-ring{ border-color:color-mix(in srgb,var(--danger) 62%,var(--border)); border-top-color:transparent; animation:ph-nudge 2.8s var(--pm-ease-out) infinite; }
+.ph-s-blocked .ph-mark{ left:2.4px; top:50%; width:10.2px; height:1.8px; margin:-.9px 0 0 0; border-radius:2px; background:var(--danger); }
+@keyframes ph-nudge{ 0%,74%,100%{ transform:none } 80%{ transform:translateX(-1.6px) } 86%{ transform:translateX(1.6px) } 92%{ transform:translateX(-1px) } }
+
+/* failed — a filled danger disc with a cross, hard-blinking on steps() so it
+   reads as an alarm rather than a fade.  Nothing moves: that is what keeps it
+   apart from `blocked`, which moves but does not blink. */
+.ph-s-failed{ color:var(--danger); }
+.ph-s-failed .ph-ring{ border-color:var(--danger); background:color-mix(in srgb,var(--danger) 16%,transparent); }
+.ph-s-failed .ph-mark{ left:0; top:0; width:100%; height:100%; margin:0; background:none; border-radius:0; animation:ph-blink 1.6s steps(1,end) infinite; }
+.ph-s-failed .ph-mark::before,.ph-s-failed .ph-mark::after{ content:""; position:absolute; left:3.2px; top:6.6px; width:8.4px; height:1.7px; background:var(--danger); border-radius:2px; }
+.ph-s-failed .ph-mark::before{ transform:rotate(45deg); }
+.ph-s-failed .ph-mark::after{ transform:rotate(-45deg); }
+@keyframes ph-blink{ 0%{ opacity:1 } 50%{ opacity:.3 } }
+
+/* paused — the pause glyph, dimming and returning on a slow 2.6s cycle.
+   Suspended but still alive; opacity only, nothing moves. */
+.ph-s-paused{ color:var(--muted); }
+.ph-s-paused .ph-ring{ border-color:var(--border-strong); }
+.ph-s-paused .ph-mark{ left:0; top:0; width:100%; height:100%; margin:0; background:none; border-radius:0; animation:ph-dim 2.6s ease-in-out infinite; }
+.ph-s-paused .ph-mark::before,.ph-s-paused .ph-mark::after{ content:""; position:absolute; top:4px; width:2px; height:7px; border-radius:1px; background:var(--accent-2); }
+.ph-s-paused .ph-mark::before{ left:4.4px; }
+.ph-s-paused .ph-mark::after{ left:8.6px; }
+@keyframes ph-dim{ 0%,100%{ opacity:1 } 50%{ opacity:.36 } }
+
+/* recovering — an arc sweeping COUNTER-CLOCKWISE with a stuttering ease: the
+   retry.  Direction alone separates it from `working` at a glance. */
+.ph-s-recovering{ color:var(--warning); }
+.ph-s-recovering .ph-ring{ border-color:color-mix(in srgb,var(--border-strong) 88%,transparent); }
+/* The base ring is deliberately NEUTRAL so the amber half-arc reads as a shape,
+   not as a tint: standing still under reduced motion, `recovering` and `idle`
+   would otherwise be the same ring-plus-dot separated only by hue, which is no
+   distinction at all for a colour-blind reader.  Half the ring, and a hollow
+   centre, are the differences that survive with the motion switched off. */
+.ph-s-recovering .ph-ring::after{ content:""; position:absolute; inset:-1.5px; border-radius:50%; border:1.5px solid transparent; border-top-color:var(--warning); border-right-color:var(--warning); animation:ph-recover 2.2s cubic-bezier(.62,0,.3,1) infinite; }
+.ph-s-recovering .ph-mark{ width:5px; height:5px; margin:-2.5px 0 0 -2.5px; background:none; border:1.5px solid var(--warning); box-sizing:border-box; }
+@keyframes ph-recover{ from{ transform:rotate(0deg) } to{ transform:rotate(-360deg) } }
+
+/* prefers-reduced-motion is SELECTIVE in this project (motion.css:238-...):
+   its blanket rule only caps loops at one iteration, so every loop above would
+   still play a full pass.  Stop them here, scoped to this module.  Each glyph's
+   declared value is its end state, so the nine stay distinguishable. */
+@media (prefers-reduced-motion: reduce){
+  .ph-status .ph-ring, .ph-status .ph-ring::after, .ph-status .ph-mark,
+  .ph-status .ph-mark::before, .ph-status .ph-mark::after{ animation:none !important; }
+}
+
+/* =====================================================================
+   ITEM 3b(a) — the spinner vanished under the cursor.
+   styles.css:113 (now :123) fades .thread-status-slot to opacity:0 on row
+   hover to "swap it for" the ... menu.  It never needed to: .thread-row is a
+   three-column grid (18px | 1fr | 28px) and .thread-more has its own column,
+   so the two never collided.  The only thing the fade achieved was hiding the
+   live status of the row you are pointing at.
+   ===================================================================== */
+.thread-row:hover .thread-status-slot,
+.thread-row:focus-within .thread-status-slot{ opacity:1; transform:none; }
+
+/* =====================================================================
+   FLAGGED BY WAVE 1B — `.thread-row.active::before` is a coloured left-edge
+   accent bar used for selection, which this project's design rules forbid.
+   Replacement, in three coordinated cues and no edge bar anywhere:
+     1. a deeper accent tint across the WHOLE row,
+     2. a full 1px inset ring (all four sides — a ring is not an edge bar),
+     3. the title steps up in weight and to full-contrast text.
+   It fades in and out on a transition rather than a keyframe, so there is no
+   animation-fill-mode to fight and deselect reverses for free.
+
+   The styles.css rule was DELETED by the orchestrator once this replacement was
+   verified, so there is deliberately no `content:none` neutraliser here: a
+   neutraliser would keep working if the bar were ever re-added, and would hide
+   that from history-verify.mjs, whose four-edge check is what proves the
+   selection affordance is a ring rather than an edge.
+   ===================================================================== */
+.thread-row{ transition:background 160ms,color 160ms,transform 160ms,box-shadow 200ms var(--ease); }
+.thread-row.active{
+  background:color-mix(in srgb,var(--accent) 16%,var(--surface-3));
+  color:var(--text);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent);
+}
+.thread-row.active .thread-title{ font-weight:650; color:var(--text); }
+.thread-row.active:hover{ background:color-mix(in srgb,var(--accent) 21%,var(--surface-3)); }
+
+/* =====================================================================
+   ITEM 3b(b) — the floating flyout still rendered take 0.
+   Wave 1A added data-history-variant to the flyout, but every take rule in
+   styles.css:365-371 is scoped `.history-panel[data-history-variant="N"]`,
+   so the attribute had no rules to match.  Mirrored here for the flyout.
+   (Verified by grep and in pixels: see WAVE3_HISTORY_LOG.md, finding F1.)
+   ===================================================================== */
+.history-flyout[data-history-variant="1"] .thread-row{ min-height:44px; grid-template-columns:22px minmax(0,1fr) 28px; }
+.history-flyout[data-history-variant="1"] .thread-sub .summary{ display:none; }
+.history-flyout[data-history-variant="1"] .thread-status-slot{ border-right:1px solid var(--border); height:100%; width:22px; }
+.history-flyout[data-history-variant="2"] .thread-row{ margin-left:8px; }
+.history-flyout[data-history-variant="2"] .thread-row::after{ content:""; position:absolute; left:7px; top:-7px; width:10px; height:24px; border-left:1px solid var(--border-strong); border-bottom:1px solid var(--border-strong); border-radius:0 0 0 6px; pointer-events:none; }
+.history-flyout[data-history-variant="2"] .thread-status-slot{ z-index:1; background:var(--surface-2); }
+.history-flyout[data-history-variant="3"] .thread-row{ min-height:38px; border-radius:5px; }
+.history-flyout[data-history-variant="3"] .thread-sub{ display:none; }
+.history-flyout[data-history-variant="3"] .history-scroll{ padding:3px; }
+.history-flyout[data-history-variant="4"] .thread-row{ margin:4px 2px; border:1px solid var(--border); background:var(--surface); min-height:58px; }
+.history-flyout[data-history-variant="4"] .thread-row.active{ box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent),0 8px 20px rgb(0 0 0/.12); }
+.history-flyout[data-history-variant="5"] .thread-sub{ white-space:normal; }
+.history-flyout[data-history-variant="5"] .thread-sub .summary{ white-space:normal; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+.history-flyout[data-history-variant="6"] .thread-row{ grid-template-columns:8px minmax(0,1fr) 28px; min-height:43px; }
+.history-flyout[data-history-variant="6"] .thread-status-slot{ width:5px; }
+.history-flyout[data-history-variant="6"] .thread-sub .summary{ display:none; }
+.history-flyout[data-history-variant="6"] .thread-unread{ display:none; }
+.history-flyout[data-history-variant="7"]{ font-family:var(--font-mono); }
+.history-flyout[data-history-variant="7"] .thread-row{ border-radius:3px; min-height:46px; }
+.history-flyout[data-history-variant="7"] .thread-title{ font-size:10px; }
+.history-flyout[data-history-variant="7"] .thread-sub{ font-size:8px; }
+
+/* =====================================================================
+   ITEM 3b(c) — take 6 row padding.
+   Base `.thread-row` is min-height:52px / padding:6px 5px 6px 8px with no
+   margin; take 6 RAISED that to 72px / padding-top:9px.  The requester wants
+   less, "especially above and below".  Vertical padding 6px -> 3px, min-height
+   72px -> 44px, and the row is then sized by its own content (title + a
+   two-line clamped summary) rather than by a floor that was 28px taller than
+   the copy inside it.  The status glyph gains 2px of top offset because the
+   take aligns its grid to `start`.
+   ===================================================================== */
+.history-panel[data-history-variant="5"] .thread-row,
+.history-flyout[data-history-variant="5"] .thread-row{ min-height:44px; align-items:start; padding:3px 5px 3px 8px; }
+.history-panel[data-history-variant="5"] .thread-status-slot,
+.history-flyout[data-history-variant="5"] .thread-status-slot{ margin-top:3px; }
+.history-panel[data-history-variant="5"] .thread-more,
+.history-flyout[data-history-variant="5"] .thread-more{ margin-top:1px; }
+
+/* =====================================================================
+   ITEM 4 — the kimi-k3 W1 open/pin choreography.
+   ---------------------------------------------------------------------
+   Reference: kimi-k3/windows/w1-solo-column.css:131-197.  No FLIP, no View
+   Transitions — plain CSS transitions on transform / width / padding-left,
+   all on the reference's 240ms cubic-bezier(.4,0,.2,1).
+
+   `.history-flyout` is the single drawer for BOTH the open and the pinned
+   state (history.js keeps state.historyMode out of 'pinned', which is the
+   value that spawns the separate `.history-panel` grid column).  Everything
+   below keys off `<body data-ph-drawer>`, which pmPatch cannot touch:
+       closed  — not rendered
+       shut    — rendered, still at translateX(-102%); the frame the open
+                 transition starts FROM
+       open    — overlay drawer, scrim up, heavy float shadow
+       pinned  — same node, narrowed in place, no scrim, quiet right border,
+                 gutter reserved on .assistant-grid
+       closing — the exit; see the Wave 1B contract note further down
+   ===================================================================== */
+:root{
+  --ph-t: 240ms;
+  --ph-ease: cubic-bezier(.4,0,.2,1);
+  --ph-open-w: 300px;   /* reference: min(300px, 85%) */
+  --ph-pin-w: 200px;    /* reference: min(220px, 42%) — 200 keeps the        */
+                        /* narrowing visible at 5.6 Pro's denser type scale  */
+}
+/* Width and gutter are the same expression twice, exactly as the reference
+   insists ("the same value drives both the drawer width and the reserved
+   gutter so they track each other"). --ph-pane is the ASSISTANT PANE's width,
+   published by history.js — the drawer belongs to that pane, not to the
+   viewport, so the reference's percentages are taken against it. */
+body[data-ph-drawer] .history-flyout{ width:min(var(--ph-open-w), calc(var(--ph-pane, 100vw) * .85)); }
+body[data-ph-drawer="pinned"] .history-flyout{ width:min(var(--ph-pin-w), calc(var(--ph-pane, 100vw) * .42)); }
+body[data-ph-drawer="pinned"] .assistant-grid{ padding-left:min(var(--ph-pin-w), calc(var(--ph-pane, 100vw) * .42)); }
+
+body[data-ph-drawer] .history-flyout{
+  /* OPEN LEFT.  styles.css:298 pins the flyout to `right:6px` and animates it
+     in from the right with `history-in`; both are replaced here. */
+  left:var(--ph-x, 0px);
+  right:auto;
+  top:var(--ph-y, calc(var(--header-h) + 6px));
+  bottom:auto;
+  height:var(--ph-h, auto);
+  max-width:100%;
+  border:0;
+  border-right:1px solid var(--border-strong);
+  border-radius:0;
+  background:var(--surface-2);
+  backdrop-filter:none;
+  box-shadow:var(--shadow-float);
+  transform:translateX(-102%);
+  /* CLIPPED TO THE PANE.  In the reference the drawer is position:absolute
+     inside an overflow:hidden root, so it is never visible outside the column
+     it belongs to.  Here it is position:fixed inside #pmOverlayRoot, so without
+     this it slides in ACROSS THE EDITOR PANE and reads as a panel flying in
+     rather than a drawer emerging — caught by looking at the contact sheet, not
+     by any metric.  clip-path cannot be expressed against a fixed screen x, but
+     it does not need to be: at progress p the element sits at
+     translateX(-102%*(1-p)), so the part hanging left of the pane edge is
+     exactly 102%*(1-p) OF ITS OWN WIDTH.  Driving the left inset on the same
+     duration and easing keeps the two in exact lockstep — including while the
+     width itself is animating on close, because both are relative to the same
+     current width.
+
+     Only the LEFT inset does any clipping: the other three are -90px so the
+     float shadow (0 18px 65px) still paints on the three sides that are inside
+     the pane.  A plain inset(0) would have clipped the shadow away on all four,
+     which no metric here would have noticed — it is measured by an A/B pixel
+     read in history-verify.mjs instead. */
+  clip-path:inset(-90px -90px -90px 102%);
+  animation:none;
+  transition:transform var(--ph-t) var(--ph-ease),
+             clip-path var(--ph-t) var(--ph-ease),
+             width var(--ph-t) var(--ph-ease),
+             box-shadow var(--ph-t) var(--ph-ease),
+             border-color var(--ph-t) var(--ph-ease);
+}
+body[data-ph-drawer="open"] .history-flyout,
+body[data-ph-drawer="pinned"] .history-flyout{ transform:translateX(0); clip-path:inset(-90px -90px -90px 0); }
+/* PINNED: it does not move — the heavy overlay shadow becomes a quiet border. */
+body[data-ph-drawer="pinned"] .history-flyout{ box-shadow:none; border-right-color:var(--border); }
+
+.assistant-grid{ transition:padding-left var(--ph-t) var(--ph-ease); }
+
+/* ---- scrim -------------------------------------------------------------
+   `.assistant-pane::after` rather than a node, because a node would have to be
+   emitted from app.js.  It is declarative, so the reference's sibling defect —
+   paintPin() hides the scrim on pin and never restores display on unpin — is
+   structurally impossible here: unpinning restores it with no JS. */
+.assistant-pane{ position:relative; }
+.assistant-pane::after{
+  content:"";
+  position:absolute; inset:0; z-index:60;
+  background:rgb(0 0 0 / .34);
+  opacity:0; pointer-events:none;
+  transition:opacity var(--ph-t) var(--ph-ease);
+}
+body[data-ph-drawer="open"] .assistant-pane::after{ opacity:1; pointer-events:auto; }
+
+/* ---- exit --------------------------------------------------------------
+   Wave 1B published `.pm-leaving` + a duration read back from the computed
+   style.  Its `pm-overlay-out` collapses toward the trigger, which is right
+   for a menu and wrong for a drawer, so the keyframes are drawer-specific
+   while the CONTRACT is kept exactly: the class is applied, the wait is read
+   back with getComputedStyle().animationDuration, and reduced motion collapses
+   it to 1ms so a caller never stalls.  The selector is doubled onto the body
+   attribute because pmPatch strips the class from the node on the next work
+   tick; the body attribute is what actually survives the exit. */
+@keyframes ph-drawer-out{
+  from{ transform:translateX(0); clip-path:inset(-90px -90px -90px 0) }
+  to{ transform:translateX(-102%); clip-path:inset(-90px -90px -90px 102%) }
+}
+body[data-ph-drawer="closing"] .history-flyout,
+.history-flyout.pm-leaving{
+  animation:ph-drawer-out var(--ph-t) var(--ph-ease) both;
+  pointer-events:none;
+}
+
+/* ---- the drawer's pin strip -------------------------------------------- */
+body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ display:none; }
+.ph-chrome{
+  display:flex; align-items:center; gap:6px;
+  padding:3px 7px 3px 9px;
+  border-bottom:1px solid var(--border);
+  background:color-mix(in srgb,var(--surface-3) 55%,transparent);
+}
+.ph-chrome-state{ flex:1; min-width:0; font-size:9px; letter-spacing:.05em; text-transform:uppercase; color:var(--subtle); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ph-pin{
+  flex:0 0 auto; display:inline-flex; align-items:center; gap:4px;
+  height:21px; padding:0 7px; border-radius:var(--radius-sm);
+  background:var(--surface-3); color:var(--muted);
+  font-size:9px; font-weight:600; cursor:pointer;
+  transition:background 160ms,color 160ms,box-shadow 160ms;
+}
+.ph-pin:hover{ background:var(--surface-4); color:var(--text); }
+/* pressed = accent tint, never a coloured edge bar */
+.ph-pin.is-pinned{ background:color-mix(in srgb,var(--accent) 20%,var(--surface-3)); color:var(--text); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent); }
+.ph-pin svg{ flex:0 0 auto; }
+
+@media (prefers-reduced-motion: reduce){
+  /* Must be re-declared here: motion.css's 1ms rule for `.history-flyout
+     .pm-leaving` is earlier in the cascade and would lose to the override
+     above at equal specificity.  Reduced motion still reaches the same end
+     state — the drawer is gone, the gutter is collapsed — just not decorated. */
+  body[data-ph-drawer="closing"] .history-flyout,
+  .history-flyout.pm-leaving{ animation-duration:1ms; }
+  body[data-ph-drawer] .history-flyout,
+  .assistant-grid,
+  .assistant-pane::after{ transition-duration:1ms; }
+}
+
+/* =====================================================================
+   TWO LAYOUT DEFECTS FOUND BY LOOKING AT A SCREENSHOT, NOT AT A METRIC.
+   ---------------------------------------------------------------------
+   1. `historyChrome` is a SHARED append slot — the Wave 2 Goals module puts a
+      goal card into it as well as this module's pin strip — but styles.css:100
+      and :298 give both history hosts a FIXED three-row grid template
+      (`auto auto minmax(0,1fr)`).  With a fourth child the search row collapses
+      to 0px and `.history-scroll` lands on top of it; with a fifth it is worse.
+      Measured before this module existed: search row 0px tall, overlapping the
+      scroll surface by 17px.  So this is PRE-EXISTING, not caused here — but it
+      lives in the surface this wave owns, and a row count can never be right
+      for a slot any module may add to.  A flex column with exactly one growing
+      child does not care how many siblings appear.
+   ===================================================================== */
+.history-flyout, .history-panel{ display:flex; flex-direction:column; }
+.history-flyout > *, .history-panel > *{ flex:0 0 auto; }
+.history-flyout > .history-scroll, .history-panel > .history-scroll{ flex:1 1 auto; min-height:0; }
+
+/* 2. Take 6 relaxes `.thread-sub` to `white-space:normal` so the summary can
+      clamp to two lines — but `.thread-sub` is a flex row, so the relaxation
+      also let the timestamp shrink to one character and wrap "2m" onto two
+      lines next to a hyphen-less separator.  Only the summary should wrap. */
+.history-panel[data-history-variant="5"] .thread-sub > span:not(.summary),
+.history-flyout[data-history-variant="5"] .thread-sub > span:not(.summary){ flex:0 0 auto; white-space:nowrap; }

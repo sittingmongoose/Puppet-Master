@@ -1,0 +1,527 @@
+{
+ "reduced": true,
+ "menu": {
+  "220": {
+   "persona": {
+    "h": 204,
+    "top": 8,
+    "bottom": 212,
+    "vh": 220,
+    "inViewport": true,
+    "needsScroll": true,
+    "canScroll": true,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "204px"
+   },
+   "model": {
+    "h": 195.8,
+    "top": 16.5,
+    "bottom": 212.2,
+    "vh": 220,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "hidden",
+    "overscroll": "contain",
+    "maxH": "196px"
+   },
+   "mode": {
+    "h": 203.8,
+    "top": 9,
+    "bottom": 212.7,
+    "vh": 220,
+    "inViewport": true,
+    "needsScroll": true,
+    "canScroll": true,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "204px"
+   },
+   "permissions": {
+    "h": 203.8,
+    "top": 13.2,
+    "bottom": 217,
+    "vh": 220,
+    "inViewport": true,
+    "needsScroll": true,
+    "canScroll": true,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "204px"
+   },
+   "worktree": {
+    "h": 199.5,
+    "top": 12.8,
+    "bottom": 212.3,
+    "vh": 220,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "204px"
+   },
+   "wand": {
+    "h": 204,
+    "top": 8,
+    "bottom": 212,
+    "vh": 220,
+    "inViewport": true,
+    "needsScroll": true,
+    "canScroll": true,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "204px"
+   }
+  },
+  "300": {
+   "persona": {
+    "h": 238,
+    "top": 8.2,
+    "bottom": 246.2,
+    "vh": 300,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "284px"
+   },
+   "model": {
+    "h": 275.8,
+    "top": 8.2,
+    "bottom": 284.1,
+    "vh": 300,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "hidden",
+    "overscroll": "contain",
+    "maxH": "276px"
+   },
+   "mode": {
+    "h": 238.1,
+    "top": 8,
+    "bottom": 246.1,
+    "vh": 300,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "284px"
+   },
+   "permissions": {
+    "h": 211.4,
+    "top": 22.3,
+    "bottom": 233.7,
+    "vh": 300,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "284px"
+   },
+   "worktree": {
+    "h": 199.3,
+    "top": 22.3,
+    "bottom": 221.6,
+    "vh": 300,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "284px"
+   },
+   "wand": {
+    "h": 283.7,
+    "top": 8.5,
+    "bottom": 292.1,
+    "vh": 300,
+    "inViewport": true,
+    "needsScroll": true,
+    "canScroll": true,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "284px"
+   }
+  },
+  "900": {
+   "persona": {
+    "h": 237.8,
+    "top": 586,
+    "bottom": 823.9,
+    "vh": 900,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "884px"
+   },
+   "model": {
+    "h": 438,
+    "top": 398.1,
+    "bottom": 836.1,
+    "vh": 900,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "hidden",
+    "overscroll": "contain",
+    "maxH": "560px"
+   },
+   "mode": {
+    "h": 250,
+    "top": 586,
+    "bottom": 836,
+    "vh": 900,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "884px"
+   },
+   "permissions": {
+    "h": 211.5,
+    "top": 622.1,
+    "bottom": 833.6,
+    "vh": 900,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "884px"
+   },
+   "worktree": {
+    "h": 199.4,
+    "top": 619.5,
+    "bottom": 818.8,
+    "vh": 900,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "884px"
+   },
+   "wand": {
+    "h": 324.9,
+    "top": 549.8,
+    "bottom": 874.8,
+    "vh": 900,
+    "inViewport": true,
+    "needsScroll": false,
+    "canScroll": false,
+    "overflowY": "auto",
+    "overscroll": "contain",
+    "maxH": "884px"
+   }
+  }
+ },
+ "menu_lastrow": {
+  "scrolled": false,
+  "lastHit": false,
+  "lastInViewport": false,
+  "menuBottom": 212.1,
+  "vh": 220
+ },
+ "resizers": {
+  ".resizer": {
+   "touchAction": "none",
+   "userSelect": "none"
+  },
+  ".panel-resize": {
+   "touchAction": "none",
+   "userSelect": "none"
+  },
+  "bodyDuringDrag": "none",
+  "transcriptDuringDrag": "none",
+  "cursorDuringDrag": "col-resize",
+  "bodyAfterDrag": "auto"
+ },
+ "dragSelect": {
+  "targetUserSelectDuringDrag": "none"
+ },
+ "activity": {
+  "rest": {
+   "colours": 180,
+   "mean": [
+    23.97,
+    28.27,
+    42.41
+   ]
+  },
+  "hov": {
+   "colours": 304,
+   "mean": [
+    28.2,
+    32.99,
+    46.37
+   ]
+  },
+  "press": {
+   "colours": 324,
+   "mean": [
+    25.19,
+    29.49,
+    41.59
+   ]
+  },
+  "pressCss": "matrix(0.97, 0, 0, 0.97, 0, 0)",
+  "hoverChanged": true,
+  "pressChanged": true
+ },
+ "decision": {
+  "390": {
+   "0": "none|zero",
+   "1": "none|zero",
+   "2": "none|zero",
+   "3": "none|zero",
+   "4": "none|zero",
+   "5": "none|zero",
+   "6": "none|zero",
+   "7": "block|painted",
+   "surface": {
+    "maxW": "960px",
+    "w": 378
+   }
+  },
+  "560": {
+   "0": "none|zero",
+   "1": "none|zero",
+   "2": "none|zero",
+   "3": "none|zero",
+   "4": "none|zero",
+   "5": "none|zero",
+   "6": "none|zero",
+   "7": "block|painted",
+   "surface": {
+    "maxW": "960px",
+    "w": 548
+   }
+  },
+  "700": {
+   "0": "none|zero",
+   "1": "none|zero",
+   "2": "none|zero",
+   "3": "none|zero",
+   "4": "none|zero",
+   "5": "none|zero",
+   "6": "none|zero",
+   "7": "block|painted",
+   "surface": {
+    "maxW": "960px",
+    "w": 672
+   }
+  },
+  "1440": {
+   "0": "none|zero",
+   "1": "none|zero",
+   "2": "none|zero",
+   "3": "none|zero",
+   "4": "none|zero",
+   "5": "none|zero",
+   "6": "none|zero",
+   "7": "block|painted",
+   "surface": {
+    "maxW": "960px",
+    "w": 393.4
+   }
+  },
+  "2200_surface": {
+   "maxW": "960px",
+   "w": 960
+  }
+ },
+ "toast": {
+  "found": true,
+  "anim": "",
+  "dur": "",
+  "delay": "",
+  "fill": "",
+  "sameNode": false,
+  "animAtEnd": null,
+  "minOpAfter2s": 0,
+  "fadingSamples": 6,
+  "lastPresent": 2640,
+  "firstOp": 1,
+  "tail": [
+   {
+    "t": 2320,
+    "op": 0.867,
+    "present": true
+   },
+   {
+    "t": 2400,
+    "op": 0.657,
+    "present": true
+   },
+   {
+    "t": 2480,
+    "op": 0.13,
+    "present": true
+   },
+   {
+    "t": 2560,
+    "op": 0,
+    "present": true
+   },
+   {
+    "t": 2640,
+    "op": 0,
+    "present": true
+   },
+   {
+    "t": 2724,
+    "op": null,
+    "present": false
+   },
+   {
+    "t": 2800,
+    "op": null,
+    "present": false
+   },
+   {
+    "t": 2880,
+    "op": null,
+    "present": false
+   }
+  ]
+ },
+ "willchange": {
+  "total": 3,
+  "leaked": 0,
+  "sample": "auto",
+  "shimmerHinted": 2,
+  "settledCleared": true
+ },
+ "header": {
+  "700": [
+   {
+    "t": "Start a new thread",
+    "w": 30
+   },
+   {
+    "t": "Search this thread or ev",
+    "w": 30
+   }
+  ],
+  "900": [
+   {
+    "t": "Start a new thread",
+    "w": 30
+   },
+   {
+    "t": "Search this thread or ev",
+    "w": 30
+   }
+  ],
+  "1100": [
+   {
+    "t": "Start a new thread",
+    "w": 30
+   },
+   {
+    "t": "Search this thread or ev",
+    "w": 30
+   }
+  ],
+  "1440": [
+   {
+    "t": "Start a new thread",
+    "w": 30
+   },
+   {
+    "t": "Search this thread or ev",
+    "w": 30
+   }
+  ]
+ },
+ "panel": {
+  "0": {
+   "composerH": 132.9,
+   "panelBottom": 679.1,
+   "panelTop": 98,
+   "panelH": 581.1,
+   "barTop": 690.1,
+   "gapToNext": 11,
+   "overlapsComposer": false,
+   "insideTranscriptRow": true,
+   "bottomCss": "10px",
+   "hitTop": true
+  },
+  "2": {
+   "composerH": 132.9,
+   "panelBottom": 679.1,
+   "panelTop": 98,
+   "panelH": 581.1,
+   "barTop": 690.1,
+   "gapToNext": 11,
+   "overlapsComposer": false,
+   "insideTranscriptRow": true,
+   "bottomCss": "10px",
+   "hitTop": true
+  },
+  "162": {
+   "composerH": 132.9,
+   "panelBottom": 679.1,
+   "panelTop": 98,
+   "panelH": 581.1,
+   "barTop": 690.1,
+   "gapToNext": 11,
+   "overlapsComposer": false,
+   "insideTranscriptRow": true,
+   "bottomCss": "10px",
+   "hitTop": true
+  }
+ },
+ "themes": {
+  "basic-dark": {
+   "ovX": 0,
+   "ovY": 0
+  },
+  "basic-light": {
+   "ovX": 0,
+   "ovY": 0
+  },
+  "friendly-dark": {
+   "ovX": 0,
+   "ovY": 0
+  },
+  "friendly-light": {
+   "ovX": 0,
+   "ovY": 0
+  },
+  "retro-dark": {
+   "ovX": 0,
+   "ovY": 0
+  },
+  "retro-light": {
+   "ovX": 0,
+   "ovY": 0
+  },
+  "glass-dark": {
+   "ovX": 0,
+   "ovY": 0
+  },
+  "glass-light": {
+   "ovX": 0,
+   "ovY": 0
+  }
+ },
+ "loops": {
+  "infinite": 0,
+  "list": []
+ },
+ "stateAdvances": 0,
+ "stateAdvances2": 3,
+ "errs": [],
+ "warns": [],
+ "warnCount": 0
+}

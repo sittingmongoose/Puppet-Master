@@ -1,0 +1,30 @@
+import {chromium} from 'playwright';import {pathToFileURL} from 'url';import fs from 'fs';
+const T="/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html";
+const OUT="/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/shots1b";
+fs.mkdirSync(OUT,{recursive:true});
+const b=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
+const p=await b.newPage({viewport:{width:1440,height:900}});
+const errs=[];p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});p.on('pageerror',e=>errs.push(''+e));
+await p.goto(pathToFileURL(T).href,{waitUntil:'load'});
+await p.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
+await p.waitForTimeout(600);
+for(const t of ['basic-dark','basic-light','friendly-dark','friendly-light','retro-dark','retro-light','glass-dark','glass-light']){
+  await p.evaluate(t=>window.PM56_DEMO.setTheme(t),t); await p.waitForTimeout(400);
+  await p.screenshot({path:`${OUT}/theme-${t}.png`});
+}
+await p.evaluate(()=>{window.PM56_DEMO.setTheme('basic-dark');window.PM56_DEMO.openActivity('todo');});
+await p.waitForTimeout(600); await p.screenshot({path:`${OUT}/transient-panel.png`});
+await p.evaluate(()=>window.PM56_DEMO.reset()); await p.waitForTimeout(400);
+await p.evaluate(()=>document.querySelector('[data-action="open-menu"][data-menu="model"]').click());
+await p.waitForTimeout(500); await p.screenshot({path:`${OUT}/model-menu.png`});
+await p.evaluate(()=>document.body.click());
+await p.setViewportSize({width:1440,height:220}); await p.waitForTimeout(400);
+await p.evaluate(()=>document.querySelector('[data-action="open-menu"][data-menu="persona"]').click());
+await p.waitForTimeout(400); await p.screenshot({path:`${OUT}/menu-clamped-220.png`});
+await p.setViewportSize({width:560,height:900}); await p.waitForTimeout(400);
+await p.evaluate(()=>{window.PM56_DEMO.setVariant(6,3);window.PM56_DEMO.openQuestionnaire();});
+await p.waitForTimeout(400); await p.screenshot({path:`${OUT}/decision-narrow-v3.png`});
+await p.evaluate(()=>{window.PM56_DEMO.setVariant(6,7);window.PM56_DEMO.openQuestionnaire();});
+await p.waitForTimeout(400); await p.screenshot({path:`${OUT}/decision-narrow-v7.png`});
+console.log('errs',errs.length, errs.slice(0,5));
+await b.close();

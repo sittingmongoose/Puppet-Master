@@ -1,0 +1,18 @@
+import {chromium} from 'playwright';
+import {pathToFileURL} from 'url';
+const target=process.argv[2];
+const b=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
+const p=await b.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+const errs=[];p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});p.on('pageerror',e=>errs.push('PAGEERROR '+e));
+await p.goto(pathToFileURL(target).href,{waitUntil:'load',timeout:20000});
+await p.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO,{timeout:10000});
+console.log('booted, url=',p.url());
+console.log('ring count', await p.locator('.context-ring').count());
+await p.locator('.context-ring').click();
+await p.waitForTimeout(500);
+console.log('root-menu count', await p.locator('[data-overlay="root-menu"]').count());
+console.log('overlayRoot html len', await p.evaluate(()=>document.getElementById('pmOverlayRoot').innerHTML.length));
+console.log('overlayRoot snippet', (await p.evaluate(()=>document.getElementById('pmOverlayRoot').innerHTML)).slice(0,300));
+console.log('state.menu', JSON.stringify(await p.evaluate(()=>PM56_DEMO.getState().menu)));
+console.log('errors', errs.slice(0,10));
+await b.close();

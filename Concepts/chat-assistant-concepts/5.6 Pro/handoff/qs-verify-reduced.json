@@ -1,0 +1,583 @@
+{
+ "file": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/qs-live/index.html",
+ "reducedMotion": true,
+ "passed": 95,
+ "failed": 0,
+ "consoleErrors": [],
+ "pageErrors": [],
+ "results": [
+  {
+   "name": "A0. take 0 emits its own root (.qs-card) and data-qs=\"0\"",
+   "ok": true,
+   "info": {
+    "nodes": 42
+   }
+  },
+  {
+   "name": "A1. take 1 emits its own root (.qs-morph) and data-qs=\"1\"",
+   "ok": true,
+   "info": {
+    "nodes": 41
+   }
+  },
+  {
+   "name": "A2. take 2 emits its own root (.qs-sheet) and data-qs=\"2\"",
+   "ok": true,
+   "info": {
+    "nodes": 69
+   }
+  },
+  {
+   "name": "A3. take 3 emits its own root (.qs-inspector) and data-qs=\"3\"",
+   "ok": true,
+   "info": {
+    "nodes": 70
+   }
+  },
+  {
+   "name": "A4. take 4 emits its own root (.qs-seq) and data-qs=\"4\"",
+   "ok": true,
+   "info": {
+    "nodes": 86
+   }
+  },
+  {
+   "name": "A5. take 5 emits its own root (.qs-tech) and data-qs=\"5\"",
+   "ok": true,
+   "info": {
+    "nodes": 81
+   }
+  },
+  {
+   "name": "A6. take 6 emits its own root (.qs-stack) and data-qs=\"6\"",
+   "ok": true,
+   "info": {
+    "nodes": 55
+   }
+  },
+  {
+   "name": "A7. take 7 emits its own root (.qs-split) and data-qs=\"7\"",
+   "ok": true,
+   "info": {
+    "nodes": 65
+   }
+  },
+  {
+   "name": "A8. all 8 class-sets are pairwise distinct",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "A9. all 8 tag-count vectors are pairwise distinct (structure, not skins)",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "A10. all 8 painted luminance fingerprints are pairwise distinct",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "A11. every take paints real content (>100 distinct colours in its crop)",
+   "ok": true,
+   "info": [
+    2920,
+    2605,
+    2156,
+    2638,
+    4742,
+    3100,
+    3533,
+    4541
+   ]
+  },
+  {
+   "name": "B. host 457px take 0: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 1: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 2: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 3: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 4: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 5: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 6: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 7: evidence pane painted (expected)",
+   "ok": true,
+   "info": 3
+  },
+  {
+   "name": "B. host 357px take 0: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 1: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 2: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 3: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 4: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 5: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 6: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 7: evidence pane painted (expected)",
+   "ok": true,
+   "info": 3
+  },
+  {
+   "name": "B. host 249px take 0: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 1: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 2: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 3: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 4: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 5: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 6: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 7: evidence pane painted (expected)",
+   "ok": true,
+   "info": 3
+  },
+  {
+   "name": "B10. take 7 pane content is the fixture rationale at every width",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "B9. no stylesheet rule turns .decision-evidence/.qs-evidence on outside [data-variant=\"7\"]",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C0a. take 0: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C0b. take 0: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C0c. take 0: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C0d. take 0: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C0e. take 0: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "C1a. take 1: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C1b. take 1: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C1c. take 1: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C1d. take 1: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C1e. take 1: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "C2a. take 2: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C2b. take 2: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C2c. take 2: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C2d. take 2: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C2e. take 2: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "C3a. take 3: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C3b. take 3: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C3c. take 3: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C3d. take 3: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C3e. take 3: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "C4a. take 4: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C4b. take 4: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C4c. take 4: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C4d. take 4: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C4e. take 4: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "C5a. take 5: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C5b. take 5: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C5c. take 5: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C5d. take 5: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C5e. take 5: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "C6a. take 6: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C6b. take 6: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C6c. take 6: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C6d. take 6: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C6e. take 6: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "C7a. take 7: an unselected option hit-tests to itself and answers the question",
+   "ok": true,
+   "info": {
+    "before": "TrueNAS Docker",
+    "after": "Windows native"
+   }
+  },
+  {
+   "name": "C7b. take 7: Next advances the question index",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C7c. take 7: exactly one painted close control, and clicking it closes",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C7d. take 7: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C7e. take 7: the decision pushes the transcript, it never covers the activity bar",
+   "ok": true,
+   "info": {
+    "bottom": 690,
+    "top": 690,
+    "ok": true
+   }
+  },
+  {
+   "name": "D1. every question paints ITS OWN rationale, not one hardcoded sentence",
+   "ok": true,
+   "info": 5
+  },
+  {
+   "name": "D2. the stock hardcoded rationale is gone from every question",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "D3. the summary page derives from the answers, not from indices 0-2",
+   "ok": true,
+   "info": 3
+  },
+  {
+   "name": "D4. the queue is the fixture: take 6 paints the other three flows",
+   "ok": true,
+   "info": [
+    "flow-migration",
+    "flow-hosts",
+    "flow-retention"
+   ]
+  },
+  {
+   "name": "D5. the \"N queued\" pill equals the number of queued rows actually rendered",
+   "ok": true,
+   "info": {
+    "pill": 2,
+    "rows": 2
+   }
+  },
+  {
+   "name": "D6. qs-open-flow really opens a queued flow (title, count and active flow all change)",
+   "ok": true,
+   "info": {
+    "id": "flow-migration",
+    "n": 4
+   }
+  },
+  {
+   "name": "D7. leaving a flow keeps its draft (the fixture claims this; now it is true)",
+   "ok": true,
+   "info": {
+    "want": "Backfill existing rows",
+    "got": "Backfill existing rows"
+   }
+  },
+  {
+   "name": "D8. plan evidence comes from the artifact payload, not the hardcoded string",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "D9. the plan stepper is the fixture revision history, in plan vocabulary",
+   "ok": true,
+   "info": 4
+  },
+  {
+   "name": "D10. permission evidence names the real operational hosts",
+   "ok": true,
+   "info": 4
+  },
+  {
+   "name": "D11. every painted flow state EQUALS labels.questionFlowState[value]",
+   "ok": true,
+   "info": [
+    "flow-migration=Queued",
+    "flow-hosts=Queued",
+    "flow-retention=Completed"
+   ]
+  },
+  {
+   "name": "E1. the surface survives two full work ticks without remounting (stable data-k)",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "E2. no infinite animation inside the decision host once a decision is idle",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "E3. no take is worse than the stock surface for horizontal overflow, in all 8 themes",
+   "ok": true,
+   "info": 64
+  },
+  {
+   "name": "E4. nothing escapes the decision host horizontally in any take",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "E5. zero console errors",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "E6. zero page errors",
+   "ok": true,
+   "info": null
+  }
+ ]
+}

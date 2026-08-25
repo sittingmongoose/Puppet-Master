@@ -1,0 +1,301 @@
+{
+ "label": "before",
+ "reduced": false,
+ "menu_natural": {
+  "cls": "overlay-menu  ",
+  "h": 237.5911865234375,
+  "top": 586.412353515625,
+  "bottom": 824.0035400390625,
+  "overflowY": "auto",
+  "maxH": "884px",
+  "overscroll": "auto",
+  "scrollH": 236,
+  "clientH": 236
+ },
+ "menu_long": {
+  "h": 884.0177001953125,
+  "top": 585.57373046875,
+  "bottom": 1469.5914306640625,
+  "vh": 900,
+  "insideViewport": false,
+  "overflowY": "auto",
+  "scrollH": 1596,
+  "clientH": 882,
+  "didScroll": true,
+  "scrollTop": 714,
+  "lastVisible": false
+ },
+ "resizers": {
+  ".resizer": {
+   "touchAction": "auto",
+   "userSelect": "auto"
+  },
+  ".panel-resize": {
+   "touchAction": "auto",
+   "userSelect": "auto"
+  },
+  "bodyDuringDrag": "auto"
+ },
+ "activity_hover": {
+  "rect": {
+   "x": 1021.59375,
+   "y": 702.109375,
+   "w": 69.734375,
+   "h": 30
+  },
+  "rest": {
+   "colours": 164,
+   "mean": [
+    25,
+    29,
+    43
+   ],
+   "w": 74,
+   "h": 34
+  },
+  "hov": {
+   "colours": 306,
+   "mean": [
+    27,
+    31,
+    44
+   ],
+   "w": 74,
+   "h": 34
+  },
+  "changed": true,
+  "hoverCard": {
+   "w": 309.92718505859375,
+   "h": 83.46478271484375,
+   "top": 613.1739501953125
+  },
+  "yShift": -1
+ },
+ "decision_narrow": {
+  "0": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 651.840087890625
+  },
+  "1": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 651.840087890625
+  },
+  "2": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 652.2822265625
+  },
+  "3": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 670.7578125
+  },
+  "4": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 672.29248046875
+  },
+  "5": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 672
+  },
+  "6": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 672
+  },
+  "7": {
+   "variant": "0",
+   "hasEvidence": true,
+   "display": "none",
+   "surfMaxW": "680px",
+   "surfW": 672
+  }
+ },
+ "decision_wide": {
+  "maxW": "680px",
+  "w": 618.90625
+ },
+ "toast": {
+  "found": true,
+  "anim": "",
+  "dur": "",
+  "samples": [
+   {
+    "t": 151,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 300,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 450,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 600,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 750,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 900,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 1050,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 1200,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 1350,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 1500,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 1650,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 1800,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 1950,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 2100,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 2250,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 2400,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 2550,
+    "op": "1.000",
+    "present": true
+   },
+   {
+    "t": 2701,
+    "op": null,
+    "present": false
+   },
+   {
+    "t": 2850,
+    "op": null,
+    "present": false
+   },
+   {
+    "t": 3000,
+    "op": null,
+    "present": false
+   },
+   {
+    "t": 3150,
+    "op": null,
+    "present": false
+   }
+  ]
+ },
+ "willchange": {
+  "total": 3,
+  "leaked": 3,
+  "sample": "opacity, filter, transform",
+  "doneClass": 0
+ },
+ "header": {
+  "900": [
+   {
+    "t": "Start a new thread",
+    "w": 14,
+    "h": 30
+   },
+   {
+    "t": "Search this thread or every thread",
+    "w": 14,
+    "h": 30
+   }
+  ],
+  "1100": [
+   {
+    "t": "Start a new thread",
+    "w": 14.5,
+    "h": 30
+   },
+   {
+    "t": "Search this thread or every thread",
+    "w": 14.5,
+    "h": 30
+   }
+  ],
+  "1440": [
+   {
+    "t": "Start a new thread",
+    "w": 22.4,
+    "h": 30
+   },
+   {
+    "t": "Search this thread or every thread",
+    "w": 22.4,
+    "h": 30
+   }
+  ]
+ },
+ "composer": {
+  "varRoot": null,
+  "varBody": null,
+  "composerH": 132.9,
+  "panelBottomCss": "164px",
+  "panelPresent": true,
+  "gapToComposer": 31.1
+ },
+ "errs": []
+}

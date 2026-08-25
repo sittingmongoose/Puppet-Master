@@ -1,0 +1,276 @@
+/* threadops.css — feature module styles.  OWNER: Wave 4 — Thread Ops (item 13).
+ *
+ * Concatenated LAST, after styles.css / motion.css / variants-*.css /
+ * transcripts.css, so these rules win at equal specificity without reopening
+ * styles.css.
+ *
+ * Everything here is expressed in the theme tokens (--surface-*, --border*,
+ * --text/--muted/--subtle, --accent, --danger, --warning, --positive), so all
+ * eight themes are covered by construction. No literal colour appears below.
+ * No emoji: every glyph in this feature is inline SVG in threadops.js.
+ * No coloured left-edge accent bars — the packet forbids them; the destructive
+ * surfaces are marked by border colour, icon tint and label, not by a stripe.
+ */
+
+/* ---------------------------------------------------------------------------
+   1. The two thread-menu rows this module replaces.
+
+   `threadMenu` is an APPEND slot, so a module cannot delete a row app.js
+   renders. Three of app.js's four rows are wrong in a way a new row cannot fix:
+   `fork-thread` is a duplicate wearing a branch's label, `restore-thread` is
+   Unarchive wearing restore-point vocabulary, and `archive-thread` renders
+   unconditionally enabled even while a run owns the thread — so the
+   `!active_run_in_thread` guard could only ever be discovered by clicking it.
+   All three are withdrawn here and re-emitted by threadops.js with correct
+   labels, correct behaviour, and a disabled-with-a-reason state for Archive.
+
+   The rule is gated on `.pm-tops-rows` being present, so a build with this
+   module blanked shows app.js's original rows again rather than a menu with
+   two holes in it — which is exactly what the negative-control build must see.
+   --------------------------------------------------------------------------- */
+.overlay-menu:has(.pm-tops-rows) > .menu-item[data-action="fork-thread"],
+.overlay-menu:has(.pm-tops-rows) > .menu-item[data-action="restore-thread"],
+.overlay-menu:has(.pm-tops-rows) > .menu-item[data-action="archive-thread"] { display:none; }
+
+/* ---------------------------------------------------------------------------
+   2. Thread-menu rows
+   --------------------------------------------------------------------------- */
+.pm-tops-rows { display:block; }
+.pm-tops-rows .menu-divider:first-child { margin-top:2px; }
+.pm-tops-row { position:relative; }
+.pm-tops-row .pm-tops-count {
+  flex:none; min-width:17px; height:15px; padding:0 5px; border-radius:8px;
+  display:grid; place-items:center;
+  background:var(--surface-4); color:var(--muted);
+  font-size:8px; font-weight:800; letter-spacing:.02em;
+}
+.pm-tops-row.is-danger .menu-icon { color:var(--danger); background:color-mix(in srgb,var(--danger) 13%,var(--surface-3)); }
+.pm-tops-row.is-danger:hover { background:color-mix(in srgb,var(--danger) 11%,var(--surface-3)); }
+.pm-tops-row.is-danger .menu-copy strong { color:var(--danger); }
+
+/* The honest-gap row: visibly inert, still readable, and it keeps its reason
+   on screen rather than only in a title attribute. `cursor:default` and
+   `pointer-events:none` together mean elementFromPoint() never returns it as a
+   clickable target, so "disabled" is a pixel fact and not a class name. */
+.pm-tops-row.is-disabled,
+.pm-tops-row[disabled] {
+  opacity:.62; cursor:default; pointer-events:none; background:transparent;
+}
+.pm-tops-row.is-disabled .menu-icon { color:var(--subtle); background:var(--surface-2); }
+.pm-tops-row.is-disabled .menu-copy strong { color:var(--muted); font-weight:600; }
+.pm-tops-row.is-disabled .menu-copy span { color:var(--subtle); }
+
+/* ---------------------------------------------------------------------------
+   3. The modal layer
+
+   The concept had no scrim of any kind, so every "dialog" was a floating card
+   over a live, clickable app. A destructive confirm cannot be that.
+   --------------------------------------------------------------------------- */
+/* The z-index pair is load-bearing and was found by hit-testing, not by
+   reading the sheet. Every overlay lives in #pmOverlayRoot as a sibling, and
+   `.history-flyout` carries `z-index:var(--z-drawer)` = 900 while a `.dialog`
+   carries none — so with the history drawer up, the DRAWER PAINTS OVER THE
+   DIALOG even though the dialog is later in the DOM, and the scrim blocked
+   nothing on that side of the screen. 1150/1151 clears the drawer (900) and
+   the hover card (--z-tip 1100) while staying under the toast stack (1200),
+   so a toast raised BY the confirmed action is still readable.
+   NOTE for a later wave: app.js's own four dialog types (rename, compact, bsd,
+   demo) still have no z-index and are still painted over by the drawer. That
+   is a pre-existing defect this module does not own. */
+.pm-tops-scrim {
+  position:fixed; inset:0; pointer-events:auto; z-index:1150;
+  background:color-mix(in srgb,var(--canvas) 62%,transparent);
+  backdrop-filter:blur(2px);
+  animation:pm-tops-scrim-in 180ms ease both;
+}
+@keyframes pm-tops-scrim-in { from { opacity:0; } to { opacity:1; } }
+
+.pm-tops-dialog { z-index:1151; }
+.pm-tops-dialog.is-danger { border-color:color-mix(in srgb,var(--danger) 46%,var(--border-strong)); }
+.pm-tops-dialog .pm-tops-danger-icon { color:var(--danger); background:color-mix(in srgb,var(--danger) 14%,var(--surface-3)); }
+.pm-tops-dialog .dialog-body { display:grid; gap:9px; align-content:start; }
+.pm-tops-lead { margin:0; font-size:10px; color:var(--muted); line-height:1.45; }
+.pm-tops-note { margin:0; font-size:9px; color:var(--warning); line-height:1.45; }
+
+.pm-tops-facts { margin:0; display:grid; gap:3px; }
+.pm-tops-facts > div { display:grid; grid-template-columns:104px minmax(0,1fr); gap:8px; align-items:baseline; }
+.pm-tops-facts dt { color:var(--subtle); font-size:9px; text-transform:uppercase; letter-spacing:.07em; font-weight:800; }
+.pm-tops-facts dd { margin:0; color:var(--text); font-size:10px; overflow-wrap:anywhere; }
+
+.pm-tops-wt {
+  border:1px solid var(--border); border-radius:11px; padding:9px;
+  background:var(--surface-2); display:grid; gap:7px;
+}
+.pm-tops-wt.is-dirty { border-color:color-mix(in srgb,var(--warning) 40%,var(--border)); }
+.pm-tops-wt.is-none { color:var(--muted); }
+.pm-tops-wt.is-none p { margin:0; font-size:10px; color:var(--muted); line-height:1.45; }
+.pm-tops-wt-head { display:flex; align-items:center; gap:7px; color:var(--muted); }
+.pm-tops-wt-head strong { font-size:11px; color:var(--text); }
+.pm-tops-wt-head .meta-pill { margin-left:auto; }
+
+.pm-tops-del-actions { gap:6px; }
+.pm-tops-danger-btn {
+  border-color:color-mix(in srgb,var(--danger) 42%,var(--border-strong));
+  color:var(--danger);
+}
+.pm-tops-danger-btn:hover { background:color-mix(in srgb,var(--danger) 14%,var(--surface-3)); border-color:var(--danger); }
+.pm-tops-danger-btn.is-disabled, .pm-tops-danger-btn[disabled] {
+  opacity:.5; cursor:default; pointer-events:none;
+  color:var(--muted); border-color:var(--border);
+}
+/* The default-focus target has to LOOK focused, not just be focused. */
+.pm-tops-dialog [data-pm-autofocus]:focus,
+.pm-tops-dialog [data-pm-autofocus]:focus-visible {
+  outline:2px solid var(--accent); outline-offset:2px;
+}
+
+/* ---------------------------------------------------------------------------
+   4. Lists inside dialogs (restore points, request targets, outbox, routes)
+   --------------------------------------------------------------------------- */
+.pm-tops-list { display:grid; gap:5px; }
+.pm-tops-item {
+  width:100%; display:flex; align-items:center; gap:9px; text-align:left;
+  padding:8px 9px; border:1px solid var(--border); border-radius:10px;
+  background:var(--surface-2); color:var(--muted);
+}
+.pm-tops-item.is-button { cursor:pointer; transition:background 130ms, border-color 130ms, color 130ms; }
+.pm-tops-item.is-button:hover { background:var(--surface-3); border-color:var(--border-strong); color:var(--text); }
+.pm-tops-item.is-disabled { opacity:.6; pointer-events:none; }
+.pm-tops-item-copy { min-width:0; flex:1; display:grid; gap:2px; }
+.pm-tops-item-copy strong { font-size:10px; color:var(--text); }
+.pm-tops-item-copy span { font-size:9px; color:var(--subtle); line-height:1.4; overflow-wrap:anywhere; }
+.pm-tops-item-actions { flex:none; display:flex; align-items:center; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
+.pm-tops-item-actions .soft-button,
+.pm-tops-item-actions .text-button { height:26px; font-size:9px; }
+
+.pm-tops-empty {
+  display:grid; gap:3px; padding:14px 11px; border:1px dashed var(--border-strong);
+  border-radius:11px; background:var(--surface-2); text-align:center;
+}
+.pm-tops-empty strong { font-size:11px; color:var(--text); }
+.pm-tops-empty span { font-size:9px; color:var(--subtle); }
+
+/* ---------------------------------------------------------------------------
+   5. Thread search: scope selector and result rows
+   --------------------------------------------------------------------------- */
+/* `.overlay-menu` is min-width:190px and the thread-search menu also carries
+   `.compact`. Two scope buttons plus the count pill do not fit that, and the
+   first one truncated to "Current Thre…" — a scope selector whose scope you
+   cannot read. Widened only when this row is present. */
+.overlay-menu:has(.pm-tops-scope) { min-width:min(304px, calc(100vw - 16px)); }
+.pm-tops-scope {
+  display:flex; gap:3px; padding:6px 7px 0;
+}
+.pm-tops-scope-btn {
+  flex:1 1 0; min-width:0; height:25px; padding:0 8px; border-radius:8px;
+  border:1px solid var(--border); background:var(--surface-2); color:var(--muted);
+  font-size:9px; font-weight:700; cursor:pointer;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition:background 130ms, color 130ms, border-color 130ms;
+}
+.pm-tops-scope-btn:hover { color:var(--text); background:var(--surface-3); }
+.pm-tops-scope-btn.active {
+  color:var(--text); border-color:color-mix(in srgb,var(--accent) 48%,var(--border-strong));
+  background:color-mix(in srgb,var(--accent) 14%,var(--surface-2));
+}
+.pm-tops-results { max-height:min(46vh,330px); overflow:auto; }
+.pm-tops-hint { padding:11px 9px; font-size:9px; color:var(--subtle); line-height:1.45; }
+.pm-tops-result { display:flex; align-items:center; gap:2px; }
+.pm-tops-result > .menu-item { flex:1 1 auto; min-width:0; }
+.pm-tops-result-op { flex:0 0 auto; width:26px; height:26px; color:var(--subtle); }
+.pm-tops-result-op:hover { color:var(--accent); background:var(--surface-3); }
+
+/* ---------------------------------------------------------------------------
+   6. Actions this module adds to its own system cards
+
+   `renderEventMessage` puts slot output inside `.plan-actions`, which is a
+   flex row. A fold listing is a block, so the row is promoted when one of
+   these cards is present rather than fighting the flex layout.
+   --------------------------------------------------------------------------- */
+/* `.event-card` is `display:flex` with icon | copy | actions as three columns,
+   so a fold listing dropped into the actions column is squeezed to about a
+   third of the card and every snippet truncates to two words. Caught by
+   LOOKING at the screenshot — every assertion about the fold was green. The
+   card wraps and the actions row takes the full width instead. */
+.event-card:has(> .plan-actions > .pm-tops-card) { flex-wrap:wrap; }
+/* min-width:0 on the copy column too, or it cannot shrink below its
+   min-content width and wraps to line two, leaving the icon alone on line one. */
+.event-card:has(> .plan-actions > .pm-tops-card) > .event-copy { flex:1 1 0; min-width:0; }
+.event-card:has(> .plan-actions > .pm-tops-card) > .plan-actions { flex:1 0 100%; min-width:0; }
+.plan-actions:has(> .pm-tops-card) { display:block; }
+.pm-tops-card { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
+.pm-tops-card-note {
+  display:inline-block; padding:3px 7px; border-radius:8px;
+  background:var(--surface-3); color:var(--subtle); font-size:9px;
+}
+.pm-tops-fold {
+  list-style:none; margin:0 0 7px; padding:7px 8px; width:100%;
+  border:1px dashed var(--border-strong); border-radius:10px;
+  background:var(--surface-2); display:grid; gap:4px;
+}
+.pm-tops-fold li { display:flex; gap:7px; align-items:baseline; min-width:0; }
+.pm-tops-fold-role {
+  flex:none; width:56px; color:var(--subtle); font-size:8px; font-weight:800;
+  text-transform:uppercase; letter-spacing:.06em;
+}
+.pm-tops-fold-text {
+  min-width:0; flex:1; color:var(--muted); font-size:9px; line-height:1.4;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.pm-tops-fold-more { color:var(--subtle); font-size:9px; font-style:italic; }
+
+/* Tint this module's own receipt cards so a thread-operation record reads as
+   a different kind of thing from a provider event. Reached through :has(),
+   because app.js owns the card element and a module cannot add a class to it. */
+.event-card:has(.pm-tops-card),
+.event-card:has(.pm-tops-card-note) { border-color:color-mix(in srgb,var(--accent) 26%,var(--border)); }
+.event-card:has(.pm-tops-card) > .event-icon,
+.event-card:has(.pm-tops-card-note) > .event-icon { color:var(--accent); }
+
+/* ---------------------------------------------------------------------------
+   7. Transcript marks
+   --------------------------------------------------------------------------- */
+.pm-tops-anchor { display:none; }
+.message:has(> .pm-tops-anchor) .message-surface {
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 44%,transparent);
+  border-radius:12px;
+}
+.message:has(> .pm-tops-anchor)::after {
+  content:"Rewind anchor";
+  position:absolute; right:8px; bottom:-7px; z-index:2;
+  padding:1px 6px; border-radius:7px;
+  background:color-mix(in srgb,var(--accent) 20%,var(--surface-3));
+  color:var(--accent); font-size:8px; font-weight:800;
+  letter-spacing:.05em; text-transform:uppercase; pointer-events:none;
+}
+.message.pm-tops-jumped .message-surface {
+  animation:pm-tops-jump 1200ms ease both;
+}
+@keyframes pm-tops-jump {
+  0%,55% { box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 55%,transparent); }
+  100%   { box-shadow:0 0 0 0 transparent; }
+}
+
+/* ---------------------------------------------------------------------------
+   8. Narrow widths. The chat column can be ~250px wide with the editor at 54%,
+   and every dialog above is `min(Xpx, 100vw - 20px)` already; these are the
+   rows that would otherwise wrap into an unreadable stack.
+   --------------------------------------------------------------------------- */
+@media (max-width:760px) {
+  .pm-tops-facts > div { grid-template-columns:1fr; gap:0; }
+  .pm-tops-item { flex-wrap:wrap; }
+  .pm-tops-item-actions { width:100%; justify-content:flex-start; }
+  .pm-tops-del-actions { justify-content:stretch; }
+  .pm-tops-del-actions > button { flex:1 1 100%; }
+}
+
+/* ---------------------------------------------------------------------------
+   9. Reduced motion. Neither animation here loops, so neither belongs in
+   motion.css's named-loop stop list; they are still switched off, because a
+   1.2s highlight after a search jump is exactly the kind of motion a reader
+   who asked for less does not want.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion:reduce) {
+  .pm-tops-scrim { animation:none; }
+  .message.pm-tops-jumped .message-surface { animation:none; box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 55%,transparent); }
+}

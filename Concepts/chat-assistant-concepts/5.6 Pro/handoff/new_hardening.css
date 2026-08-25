@@ -1,0 +1,122 @@
+/* === PM56 FINAL HARDENING LAYER === */
+/* These overrides intentionally live last. They harden the concept lab against
+   direct-file rendering, narrow panels, popup clipping, and hover-only content.
+
+   Wave 1B rewrote this block. It had been written defensively against class
+   names that were guessed rather than read off the renderer: 46 distinct dead
+   class names across 101 selector parts, plus every [role="menu"|"listbox"|
+   "dialog"] selector (the renderer emits only role="img" and role="button").
+   Every selector below was checked against the union of a static extraction of
+   app.js/data.js/motion.js/variants-*.js/shell.html and a runtime harvest of
+   the live DOM across 8 themes, 24 recipes, every variant family, all 88 demo
+   triggers and 4 viewports. Rules whose live equivalent already existed, or
+   whose repointed form would have overridden a designed value, were DELETED
+   rather than repointed: a dead rule that looks like protection is worse than
+   no rule at all. See WAVE1B_LOG.md for the per-rule disposition. */
+
+*, *::before, *::after { box-sizing: border-box; }
+body,
+button,
+input,
+textarea,
+select {
+  /* Form controls do not inherit font-family, so they are named here on
+     purpose. It must resolve through --font-ui or the per-theme typography
+     (retro's mono, friendly's Poppins) is silently overridden -- both themes
+     redefine --font-ui itself, so this is the theme-aware form. */
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button, [role="button"], [data-action] { touch-action: manipulation; }
+button:disabled { pointer-events: none; }
+
+/* Never let a grid/flex child force the application wider than its panel.
+   (.overlay-menu is deliberately absent: it carries a designed min-width:190px.) */
+.pm-shell, .workspace, .editor-pane, .assistant-pane, .assistant-grid,
+.chat-stage, .transcript, .composer, .history-panel, .activity-panel,
+.message, .message-body, .working-card, .decision-host,
+.activity-section, .artifact-card, .plan-card,
+.composer-tools, .thread-row, .thread-copy, .lane-copy {
+  min-width: 0;
+}
+.message-body, .thread-title, .thread-sub, .menu-copy,
+.activity-line, .artifact-card, .plan-card,
+.lane-copy { overflow-wrap: anywhere; word-break: break-word; }
+pre, code, .code-block { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* One high, collision-safe popup layer.
+   #pmOverlayRoot already sets position/inset/pointer-events/z-index in the
+   base sheet, and each overlay opts back into pointer-events itself, so the
+   only thing left to add here is scroll containment: without it, flicking
+   past the end of a menu, a drawer or the hover card chains the scroll into
+   whatever is behind it. */
+.overlay-menu, .hover-card, .drawer, .dialog, .history-flyout {
+  overscroll-behavior: contain;
+}
+
+/* Activity domains are real controls. The lift on :hover is already designed
+   (.activity-item:hover, -1px). What was missing is the press: the hardening
+   layer's version named .activity-domain / .activity-chip / [data-activity-domain],
+   none of which the renderer emits, so a click had no tactile answer. */
+.activity-item[data-hover-domain]:active { transform: translateY(0) scale(.97); }
+
+/* Questions, approvals, and plan decisions occupy document flow above the
+   Activity Bar rather than covering transcript content. position/inset are
+   already correct in the base sheet; the stacking order is not.
+   .decision-surface used to be clamped here to 680px alongside the popups,
+   which silently overrode its designed max-width:960px on wide displays. It
+   is not a popup and is no longer in that list. */
+.decision-host { z-index: 8; }
+
+/* Dynamic pickers shrink to their contents, but never exceed the designed cap. */
+.overlay-menu.model-menu {
+  /* No height:auto!important here: app.js sets an inline height from
+     modelMenuHeight() precisely so the picker can transition between
+     sizes. An !important shorthand silently killed that. The inner scroll
+     chain is .model-layout's grid-template-rows:minmax(0,1fr) (Wave 1A) --
+     do not add a max-height to .model-scroll, it fights that fix. */
+  min-height: 0;
+  max-height: min(560px, calc(100vh - 24px));
+  transition: width 360ms cubic-bezier(.16,1.16,.3,1),
+              height 380ms cubic-bezier(.16,1.16,.3,1),
+              max-height 380ms cubic-bezier(.16,1.16,.3,1);
+}
+
+/* Stable scroll surfaces. Six of them exist; the old list named four that do
+   not (.thread-list, .editor-content, .activity-detail-scroll, .drawer-content,
+   .question-body), so most of the app chained its scroll to the page.
+   scrollbar-gutter is kept only where it was already reserving space, so this
+   repair moves no pixels. */
+.transcript, .history-scroll, .editor-body, .editor-tabs, .activity-scroll,
+.drawer-scroll, .dialog-body, .model-scroll, .code-block, .activity-bar {
+  overscroll-behavior: contain;
+}
+.transcript, .history-scroll, .drawer-scroll { scrollbar-gutter: stable; }
+
+/* Resizers remain discoverable without obscuring content. The old rule named
+   .resize-handle / [data-resize-handle]; the renderer emits .resizer and
+   .panel-resize, both carrying data-resize -- so touch-action and user-select
+   had never reached a divider. Dragging one on touch scrolled the page, and
+   dragging one with a mouse selected the text either side of it.
+   z-index is deliberately not re-declared: .resizer (14) and .panel-resize (20)
+   already sit correctly in their own stacking contexts. */
+.resizer, .panel-resize {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* The drag handler adds .dragging to the handle for its whole lifetime, so the
+   suppression can be document-wide for exactly as long as the drag lasts --
+   no JS change needed. */
+body:has(.resizer.dragging), body:has(.panel-resize.dragging) {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: col-resize;
+}
+
+/* Header controls hold their size. The icon buttons in .chat-header are flex
+   children of a row that also holds an elastic title, so they were shrinking to
+   22.4px at 1440px and 14.0px at 900px -- a 14px glyph with no padding left.
+   Wave 3 adds a worktree control to the same row. */
+.chat-header .icon-button, .chat-header .header-chip { flex: 0 0 auto; }

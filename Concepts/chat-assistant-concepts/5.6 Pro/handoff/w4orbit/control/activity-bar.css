@@ -1,0 +1,300 @@
+/* activity-bar.css — feature module styles.  OWNER: Wave 2 — Activity Bar agent (item 7: per-domain hover content, icon-lit indicators)
+ *
+ * Concatenated LAST, after styles.css / motion.css / variants-*.css /
+ * transcripts.css, so rules here win over the base sheet and over the variant
+ * sheets at equal specificity.  Prefer adding rules here to reopening styles.css:
+ * after Wave 1 nobody edits styles.css again.
+ *
+ * Everything that changes the BAR is gated on html[data-ab-ready], an attribute
+ * only activity-bar.js sets.  If the module ever fails to load the stock
+ * `.state-mark` dots come back, rather than the bar losing its indicator
+ * entirely.  See the header of activity-bar.js for why the bar is driven from
+ * root-element state instead of markup.
+ *
+ * HAZARD, learned the hard way in this file: a CSS comment cannot contain the
+ * two characters that end one.  Writing a custom-property family as
+ * "--ab-ink-<star>/--ab-anim-<star>" closed the comment early, and the parser
+ * then swallowed the NEXT rule while recovering — silently, with no console
+ * error and no build failure.  Never write a slash straight after a star here.
+ */
+
+/* =====================================================================
+   1. The status dots are gone; the domain icon is the indicator.
+   ---------------------------------------------------------------------
+   `.state-mark` (styles.css:235) was a 5px dot whose value came from five
+   object literals, so all five pulsed identically whether work was running,
+   stalled or finished.  activity-bar.js publishes a derived six-value tone
+   per domain onto <body> as the --ab-ink, --ab-anim and --ab-shadow property
+   families; the five mapping rules below hand the right one to the right
+   button, and one paint rule lights the icon from it.
+   ===================================================================== */
+html[data-ab-ready] .activity-item .state-mark { display: none; }
+
+html[data-ab-ready] .activity-item[data-hover-domain="goal"]      { --ab-ink: var(--ab-ink-goal);      --ab-anim: var(--ab-anim-goal);      --ab-shadow: var(--ab-shadow-goal); --ab-stroke: var(--ab-stroke-goal); }
+html[data-ab-ready] .activity-item[data-hover-domain="todo"]      { --ab-ink: var(--ab-ink-todo);      --ab-anim: var(--ab-anim-todo);      --ab-shadow: var(--ab-shadow-todo); --ab-stroke: var(--ab-stroke-todo); }
+html[data-ab-ready] .activity-item[data-hover-domain="subagents"] { --ab-ink: var(--ab-ink-subagents); --ab-anim: var(--ab-anim-subagents); --ab-shadow: var(--ab-shadow-subagents); --ab-stroke: var(--ab-stroke-subagents); }
+html[data-ab-ready] .activity-item[data-hover-domain="changes"]   { --ab-ink: var(--ab-ink-changes);   --ab-anim: var(--ab-anim-changes);   --ab-shadow: var(--ab-shadow-changes); --ab-stroke: var(--ab-stroke-changes); }
+html[data-ab-ready] .activity-item[data-hover-domain="artifacts"] { --ab-ink: var(--ab-ink-artifacts); --ab-anim: var(--ab-anim-artifacts); --ab-shadow: var(--ab-shadow-artifacts); --ab-stroke: var(--ab-stroke-artifacts); }
+
+html[data-ab-ready] .activity-item > svg {
+  /* 14px, not the emitted 12px: dropping the dot and its 6px gap returns 11px
+     of width, and a 24-unit viewBox at 1.8 stroke gives ~1.05px strokes at 14
+     instead of ~0.90px at 12 — the same sub-pixel problem item 12 documents
+     for the phase trail. */
+  width: 14px; height: 14px;
+  /* PRE-EXISTING DEFECT, measured not assumed: the label and count spans are
+     white-space:nowrap, so their automatic minimum size is their full text and
+     they cannot shrink — which means ALL of an over-capacity bar's shrinkage
+     lands on the one flex item that CAN shrink, the icon. At 1440x900 with the
+     editor pane open (the boot state) the icons were 0px wide and had never
+     painted at all, dots included. An indicator that collapses is not an
+     indicator, so it is pinned; the container queries at the end of this file
+     take the space back out of the labels instead. */
+  flex: 0 0 auto;
+  color: var(--ab-ink, var(--subtle));
+  /* Static glow carries the tone with motion off; the keyframes only touch
+     opacity, so this declared filter is never fill-mode-clobbered. */
+  filter: var(--ab-shadow, none);
+  stroke-width: var(--ab-stroke, 1.8);
+  animation: var(--ab-anim, none);
+  transition: color 200ms var(--ease), filter 200ms var(--ease);
+}
+/* Hover and press must still read as hover and press, so the lit icon steps
+   aside for the button's own foreground colour on interaction. */
+html[data-ab-ready] .activity-item:hover > svg,
+html[data-ab-ready] .activity-item.active > svg { filter: var(--ab-shadow, none) saturate(1.15); }
+
+@keyframes ab-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
+/* Deliberately NOT the same shape as ab-breathe: a hard double blink, so a
+   stalled domain is distinguishable from a running one at a glance and
+   without reading a label. */
+@keyframes ab-alert {
+  0%, 43% { opacity: 1; }
+  47%     { opacity: .25; }
+  53%     { opacity: 1; }
+  59%     { opacity: .25; }
+  65%, 100% { opacity: 1; }
+}
+
+/* =====================================================================
+   2. The Changes button carries the running diff total.
+   ---------------------------------------------------------------------
+   `.count` still holds the file count the renderer emits; the two pseudo
+   elements add +ΣADD and −ΣDEL, summed over the whole collection by
+   activity-bar.js.  `.count` is made an inline-flex box purely so `order`
+   can put the generated content AFTER the text node, which is the only way
+   to append two independently coloured values to markup this file cannot
+   change.
+   ===================================================================== */
+html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::before {
+  content: var(--ab-add, ""); order: 2; color: var(--positive);
+}
+html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
+  content: var(--ab-del, ""); order: 3; color: var(--danger);
+}
+/* Below 560px the bar is already a horizontal scroller; the totals are the
+   first thing to drop, because the hover card still states them exactly. */
+@media (max-width: 560px) {
+  html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::before,
+  html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after { content: ""; }
+}
+
+/* =====================================================================
+   3. The per-domain hover card.
+   ===================================================================== */
+.hover-card.ab-card {
+  width: min(354px, calc(100vw - 16px));
+  padding: 0;
+  overflow: hidden;
+  /* Column flex + a viewport cap so the card fits a short window; .ab-body is
+     the part that gives. Without this the card simply grew past the bottom. */
+  display: flex; flex-direction: column;
+  max-height: calc(100vh - 16px);
+  /* positionOverlays() (app.js:1300) reads getBoundingClientRect() one frame
+     after mount to decide whether to flip above or below the anchor — while
+     the stock `hover-in` keyframes are still at scale(.97). It therefore
+     clamped against a card ~3% shorter than the final one and let the real
+     card hang 1.1px past a 420px viewport. Measured, then fixed at the source:
+     this entrance translates but never scales, so the measured box IS the
+     final box.
+
+     The whole shorthand is restated rather than just animation-name, because
+     the base rule is `animation: hover-in 240ms var(--spring-soft) both` and
+     `--spring-soft` is `440ms linear(...)` — a duration AND an easing. Two
+     time values in one shorthand means the second is the DELAY, so the stock
+     hover card spent its first 440ms at the 0% keyframe and only finished
+     appearing at 680ms. Measured: opacity 0.044 at 420ms. `--ease` is a bare
+     cubic-bezier and carries no time, so this is 180ms end to end. */
+  animation: ab-card-in 180ms var(--ease) both;
+}
+@keyframes ab-card-in {
+  0%   { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: none; }
+}
+.ab-card .ab-head, .ab-card .ab-foot { flex: 0 0 auto; }
+.ab-card .ab-head {
+  display: flex; align-items: center; gap: 7px;
+  padding: 8px 10px 7px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-3) 55%, transparent);
+}
+.ab-card .ab-head strong { display: block; font-size: 11px; font-weight: 700; color: var(--text); }
+.ab-card .ab-head-meta {
+  margin-left: auto; flex: 0 0 auto;
+  font-size: 9px; color: var(--muted); font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ab-card .ab-head-icon {
+  width: 21px; height: 21px; flex: 0 0 auto;
+  display: grid; place-items: center; border-radius: 7px;
+  color: var(--ab-t, var(--accent));
+  background: color-mix(in srgb, var(--ab-t, var(--accent)) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ab-t, var(--accent)) 34%, transparent);
+}
+
+/* One tone vocabulary for every glyph, avatar and right-hand value in the
+   card, so the card and the bar icon can never disagree about a domain. */
+.ab-card [data-tone="blocked"]   { --ab-t: var(--danger); }
+.ab-card [data-tone="attention"] { --ab-t: var(--warning); }
+.ab-card [data-tone="working"]   { --ab-t: var(--accent); }
+.ab-card [data-tone="changed"]   { --ab-t: var(--accent-2); }
+.ab-card [data-tone="done"]      { --ab-t: var(--positive); }
+.ab-card [data-tone="idle"]      { --ab-t: var(--subtle); }
+.ab-card [data-tone="muted"]     { --ab-t: var(--subtle); }
+
+.ab-card .ab-body {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 5px;
+  flex: 0 1 auto; min-height: 0;
+  max-height: 262px; overflow: auto; overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.ab-card .ab-row {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; min-width: 0;
+  padding: 5px 6px; border-radius: 8px;
+  background: transparent; border: 0; text-align: left;
+  color: inherit;
+}
+.ab-card button.ab-row { cursor: pointer; transition: background 140ms var(--ease); }
+.ab-card button.ab-row:hover,
+.ab-card button.ab-row:focus-visible { background: var(--surface-3); outline: none; }
+.ab-card button.ab-row:focus-visible { box-shadow: 0 0 0 1px var(--border-strong) inset; }
+.ab-card button.ab-row:active { background: var(--surface-4); }
+
+.ab-card .ab-row-copy { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.ab-card .ab-row-copy b {
+  font-size: 10px; font-weight: 650; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ab-card .ab-row-copy i {
+  font-style: normal; font-size: 9px; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ab-card .ab-row-right {
+  flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
+  font-size: 9px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ab-card .ab-row-right b { font-weight: 650; color: var(--ab-t, var(--muted)); }
+.ab-card .ab-row-right i { font-style: normal; color: var(--ab-t, var(--subtle)); }
+.ab-card .ab-diff { flex-direction: row; align-items: baseline; gap: 5px; }
+.ab-card .ab-diff b { color: var(--positive); }
+.ab-card .ab-diff i { color: var(--danger); }
+
+.ab-card .ab-glyph {
+  width: 19px; height: 19px; flex: 0 0 auto;
+  display: grid; place-items: center; border-radius: 6px;
+  color: var(--ab-t, var(--subtle));
+  background: color-mix(in srgb, var(--ab-t, var(--subtle)) 13%, transparent);
+}
+.ab-card .ab-avatar {
+  width: 21px; height: 21px; flex: 0 0 auto;
+  display: grid; place-items: center; border-radius: 7px;
+  font-size: 8px; font-weight: 700; letter-spacing: .02em;
+  color: var(--ab-t, var(--subtle));
+  background: color-mix(in srgb, var(--ab-t, var(--subtle)) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ab-t, var(--subtle)) 30%, transparent);
+}
+
+.ab-card .ab-more { padding: 5px 8px 3px; font-size: 9px; color: var(--muted); }
+.ab-card .ab-empty { padding: 12px 8px; font-size: 10px; color: var(--muted); }
+.ab-card .ab-foot {
+  padding: 6px 10px 8px;
+  border-top: 1px solid var(--border);
+  font-size: 9px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+
+/* Goal card: the objective, then whatever the Goals module publishes. */
+.ab-card .ab-objective {
+  font-size: 10.5px; line-height: 1.35; color: var(--text);
+  margin: 2px 2px 7px;
+}
+.ab-card .ab-pips { display: flex; gap: 4px; margin: 0 2px 7px; }
+.ab-card .ab-pips i { flex: 1 1 0; height: 4px; border-radius: 3px; background: var(--surface-4); }
+.ab-card .ab-pips i[data-state="completed"]  { background: var(--positive); }
+.ab-card .ab-pips i[data-state="in_progress"] { background: var(--accent); }
+.ab-card .ab-goal-lines {
+  display: flex; flex-direction: column; gap: 2px;
+  margin: 0 2px 2px; font-size: 9px; color: var(--muted);
+}
+
+/* =====================================================================
+   4. The bar degrades on ITS OWN width, not the window's.
+   ---------------------------------------------------------------------
+   styles.css drops `.label` at a 1180px and a 700px VIEWPORT width, but the
+   activity bar lives inside the assistant pane, whose width is set by the
+   editor split — at 1440px with the editor open the pane is 433px while the
+   viewport query still thinks there is room for everything. That mismatch is
+   what starved the icons. A container query asks the right question.
+   ===================================================================== */
+.activity-wrap { container: pmActivityBar / inline-size; }
+
+/* Tier 1 — tighten before deleting. Measured: the five labelled items need
+   427px of content, and the pane gives 413px at the default 1440px layout, so
+   14px of trim buys the labels back rather than removing them. */
+@container pmActivityBar (max-width: 700px) {
+  html[data-ab-ready] .activity-item { padding: 0 6px; gap: 4px; }
+  html[data-ab-ready] .activity-item .label { font-size: 9.5px; }
+  html[data-ab-ready] .activity-item .count { font-size: 8.5px; }
+  /* Items keep their size and the bar scrolls, instead of every item being
+     squeezed until its nowrap text clips. `.activity-bar` already carries
+     overscroll-behavior:contain from Wave 1B; the 4px bar padding leaves room
+     for the -1px hover lift, so nothing visible is clipped vertically. */
+  html[data-ab-ready] .activity-bar { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  html[data-ab-ready] .activity-bar::-webkit-scrollbar { display: none; }
+  html[data-ab-ready] .activity-item { flex: 0 0 auto; }
+}
+/* Tier 2 — now the labels go; the hover card names every domain in full.
+   Measured at 1440x900 with the editor pane open (container = 413px): five
+   labelled items need 503px and cannot be tightened into that, while the same
+   five icon-and-count items need 272px. 520px is where the labelled row stops
+   fitting, so that is where it stops being drawn. */
+@container pmActivityBar (max-width: 520px) {
+  html[data-ab-ready] .activity-item .label { display: none; }
+  html[data-ab-ready] .activity-item { padding: 0 8px; gap: 6px; }
+}
+@container pmActivityBar (max-width: 330px) {
+  html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::before,
+  html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after { content: ""; }
+}
+@container pmActivityBar (max-width: 250px) {
+  html[data-ab-ready] .activity-item .count { display: none; }
+}
+@container pmActivityBar (max-width: 220px) {
+  html[data-ab-ready] .activity-bar { justify-content: flex-start; }
+}
+
+/* =====================================================================
+   5. Reduced motion — scoped to this file's own loops.
+   motion.css:179 already caps every loop at one iteration; naming the two
+   keyframes here stops them outright, so a stalled domain stays red and
+   glowing rather than freezing on whichever frame iteration 1 ended at.
+   Colour and glow carry the whole signal with motion off.
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html[data-ab-ready] .activity-item > svg { animation: none !important; }
+}
