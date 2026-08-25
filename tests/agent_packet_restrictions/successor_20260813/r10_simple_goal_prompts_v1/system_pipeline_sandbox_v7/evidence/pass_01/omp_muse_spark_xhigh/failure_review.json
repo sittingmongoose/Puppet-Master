@@ -1,0 +1,101 @@
+{
+  "attempt_id": "storage-v7-pass_01-03-be183434cb",
+  "classification": "PERMANENT_PRESCRIBED_ROUTE_NATIVE_GOAL_TERMINALIZATION_FAILURE_AFTER_EXACT_SEMANTIC_RESULT",
+  "claims_excluded": [
+    "V7 Muse row pass",
+    "pass 1 completion",
+    "matrix qualification",
+    "normal process exit",
+    "production readiness",
+    "safety certification",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ],
+  "failure": {
+    "frozen_parser_error": "OmpSessionError: OMP exactly one complete Goal state",
+    "no_retry": true,
+    "process_exit": {
+      "kind": "signal",
+      "reason": "sigterm",
+      "terminal_process_exit_code": null
+    },
+    "qualification_credit": 0,
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 510668: RunnerError: row time budget expired before exact Goal terminal result",
+    "terminal_status": "FAIL"
+  },
+  "frozen_identity": {
+    "goal_id": "1565f1efde835bdc",
+    "model": "opencode-go/muse-spark-1.2-contributor",
+    "nonce": "be183434cb448dcd5ffdb04c66f9d0b6",
+    "ordinal": 3,
+    "pass_id": "pass_01",
+    "pid": 510668,
+    "route_id": "omp_muse_spark_xhigh",
+    "session_id": "01a03a92-68ef-7567-af00-d53650573ca3",
+    "thinking": "xhigh"
+  },
+  "key_evidence": {
+    "launch_journal": {
+      "bytes": 1405,
+      "sha256": "33e1c63b2bc46705196024efb41b84d5af06c88b25d71584611e9f89e52659a3"
+    },
+    "postfailure_session": {
+      "bytes": 57037,
+      "sha256": "a8e1252614bf5dd4bd829958233f0b9d30eedeead0ee40ef01451db5423c9892"
+    },
+    "runner_failure": {
+      "bytes": 523,
+      "sha256": "79f0b48c228b9ef33cc16a52e0b376ecd8832f82c3741939ae5fbd2bbf5edecb"
+    },
+    "session_prefix": {
+      "bytes": 29780,
+      "sha256": "874b9e7eb0df193ce074edee88c90bd690f4d34549ac8ad017106ac14b4d92a1"
+    },
+    "terminal": {
+      "bytes": 2872,
+      "sha256": "4768c9b2d998ca9e5b0bb1ac3771f2973898a2b904fcb8bd2c261e3ebc798509"
+    },
+    "transcript": {
+      "bytes": 420652,
+      "sha256": "8c4f4c004156a28103709341bcf0660fe9417ab00f68a10048f7365302c0634e"
+    }
+  },
+  "observed_postfailure_facts": {
+    "assistant_count": 2,
+    "exact_external_submission_count": 1,
+    "exact_typed_pm_result_assistant_count": 2,
+    "first_exact_result_at_utc": "2026-08-25T20:17:56.820Z",
+    "goal_complete_state_count": 0,
+    "goal_context_count": 2,
+    "goal_status_at_last_model_activity": "active",
+    "goal_time_used_seconds": 12,
+    "goal_tool_call_count": 0,
+    "goal_tool_result_count": 0,
+    "goal_tokens_used": 11479,
+    "seconds_from_last_persisted_goal_assistant_to_signal": 3584.726,
+    "native_continuation_count": 1,
+    "ordinary_tool_call_count": 0,
+    "second_exact_result_at_utc": "2026-08-25T20:18:02.867Z",
+    "subject_semantic_result_exact": true
+  },
+  "reviewed_at_utc": "2026-08-25T21:24:58Z",
+  "schema_id": "pm.r10.storage_pipeline.failure_review.v7",
+  "suffix_custody": {
+    "journal_ordinals": [
+      1,
+      2,
+      3
+    ],
+    "rows_4_through_24_launched": false,
+    "suffix_evidence_absent": true,
+    "suffix_runtime_paths_absent": true
+  },
+  "terminal_disposition": {
+    "advance_to_ordinal_4_authorized": false,
+    "longer_wait_would_test_new_goal_task_activity": false,
+    "model_vs_provider_adapter_subcause_resolved": false,
+    "prompt_or_scorer_weakening_authorized": false,
+    "retry_or_replacement_authorized": false,
+    "scope_correction_required": "The prescribed Muse/OpenCode-Go route cannot satisfy the frozen native-Goal terminal requirement on this evidence. Removing or replacing the route, or relaxing native-Goal acceptance, would change the original user goal and requires explicit user authority. The unchanged alternative is an upstream route-capability repair followed by a fresh frozen denominator."
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "attempt_id": "storage-v7-pass_01-03-be183434cb",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 707,
+      "path": "composer_ack.json",
+      "sha256": "6920728f6881e54f5c8860630353249b0f2727b1051d8e44711da1cf3e192c41"
+    },
+    {
+      "bytes": 97770,
+      "path": "composer_ack.raw",
+      "sha256": "dc5c0c3b2e6afc691d12e0e92854e9ac1cdb7961eba2a55389a34678828fd63d"
+    },
+    {
+      "bytes": 730,
+      "path": "enter_write.json",
+      "sha256": "a727f4eeb1035e465a25355b9ee56830b7e42d600f8cb34ebada0c92be38933d"
+    },
+    {
+      "bytes": 1471,
+      "path": "launch.json",
+      "sha256": "c1e79a460d0a119786f5c73c963612a1e4abc38e84241344b8c85b395fb430aa"
+    },
+    {
+      "bytes": 3315,
+      "path": "omp_preflight.json",
+      "sha256": "8c40a6928589b383e6c8a066bd00f5f48c4d9a1cbcf6ca8c335bec515b00d203"
+    },
+    {
+      "bytes": 88710,
+      "path": "pre_prompt.raw",
+      "sha256": "1f61d9bc7419b5c121290ffcf75b151d6849d28ae24813c3eabb105ef267e25e"
+    },
+    {
+      "bytes": 678,
+      "path": "prompt_write.json",
+      "sha256": "cd202c2f4dee195e949b42dcebc7cc6523a5375bdcf02a5e641e335f0f1a0d6c"
+    },
+    {
+      "bytes": 335,
+      "path": "reservation.json",
+      "sha256": "1fa796a543e0da852b35f02a92cb67487a22e6c0ab4f4813d942dd889fdc76c2"
+    },
+    {
+      "bytes": 523,
+      "path": "runner_failure.json",
+      "sha256": "79f0b48c228b9ef33cc16a52e0b376ecd8832f82c3741939ae5fbd2bbf5edecb"
+    },
+    {
+      "bytes": 29780,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "874b9e7eb0df193ce074edee88c90bd690f4d34549ac8ad017106ac14b4d92a1"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 1334,
+      "path": "submission_acceptance.json",
+      "sha256": "f623a3b8f6cbd4516031b9c1d78c50c3b1743138c95d5d34a65d67897e522c34"
+    },
+    {
+      "bytes": 420652,
+      "path": "transcript.raw",
+      "sha256": "8c4f4c004156a28103709341bcf0660fe9417ab00f68a10048f7365302c0634e"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-25T21:17:47.760Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/muse-spark-1.2-contributor",
+  "no_retry": true,
+  "nonce": "be183434cb448dcd5ffdb04c66f9d0b6",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 3,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_muse_spark_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "xhigh"
+}

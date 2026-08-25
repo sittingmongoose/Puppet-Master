@@ -1,0 +1,37 @@
+{
+  "accepted_at_utc": "2026-08-25T20:17:56.873Z",
+  "attempt_id": "storage-v7-pass_01-03-be183434cb",
+  "enter_write_sha256": "a727f4eeb1035e465a25355b9ee56830b7e42d600f8cb34ebada0c92be38933d",
+  "external_submission_count": 1,
+  "low_level_input_write_count": 2,
+  "nonce": "be183434cb448dcd5ffdb04c66f9d0b6",
+  "ordinal": 3,
+  "pass_id": "pass_01",
+  "pid": 510668,
+  "route_id": "omp_muse_spark_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.submission_acceptance.v7",
+  "session_prefix": {
+    "bytes": 29780,
+    "path": "session_prefix.raw.jsonl",
+    "sha256": "874b9e7eb0df193ce074edee88c90bd690f4d34549ac8ad017106ac14b4d92a1"
+  },
+  "session_projection": {
+    "external_user_message_count": 1,
+    "goal_active_entry_id": "c6362e61",
+    "goal_context_count": 1,
+    "goal_context_entry_ids": [
+      "4f37d34e"
+    ],
+    "goal_id": "1565f1efde835bdc",
+    "logical_entry_count": 8,
+    "native_continuation_count": 0,
+    "selector": "opencode-go/muse-spark-1.2-contributor",
+    "session_id": "01a03a92-68ef-7567-af00-d53650573ca3",
+    "session_prefix_bytes": 29780,
+    "session_prefix_sha256": "874b9e7eb0df193ce074edee88c90bd690f4d34549ac8ad017106ac14b4d92a1",
+    "session_started_at_utc": "2026-08-25T20:17:48.783Z",
+    "thinking": "xhigh",
+    "thinking_receipt_count": 1,
+    "user_entry_id": "27c154d9"
+  }
+}
