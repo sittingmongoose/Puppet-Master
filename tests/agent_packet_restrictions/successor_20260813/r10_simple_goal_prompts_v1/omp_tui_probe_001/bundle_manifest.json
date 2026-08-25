@@ -1,0 +1,32 @@
+{
+  "schema": "puppetmaster.r10.omp_tui_zero_model_bundle.v1",
+  "probe_id": "r10-omp-tui-zero-model-001",
+  "nonce": "64b55fe75fe02651",
+  "files": [
+    {
+      "name": "probe_contract.json",
+      "bytes": 1945,
+      "sha256": "a96b48285872f07d0d0711d470ff2c0ab8d997ca16f9c4c308fe251bb69260b9"
+    },
+    {
+      "name": "R10_PROBE_COMMON.ps1",
+      "bytes": 9571,
+      "sha256": "7fda024de2bef7775ff0967872ec16020b96ebcb7d33146ebeabd6a3cd6f0262"
+    },
+    {
+      "name": "R10_ZERO_MODEL_DRIVER.ps1",
+      "bytes": 24509,
+      "sha256": "37f2933595ef81000e6971ea396163eec917c1f22c1e3e584e1318e5cb313ca8"
+    },
+    {
+      "name": "R10_ZERO_MODEL_RECEIVER.ps1",
+      "bytes": 3635,
+      "sha256": "367018c82548f4540826e93a85c0490f1aa3c64d05b3b342b80ed5fc09837493"
+    },
+    {
+      "name": "R10_ZERO_MODEL_WRAPPER.ps1",
+      "bytes": 2497,
+      "sha256": "562ca79ac3aee4086d445bed68fa331e02d3f46547d9d4312737acd60bcdb416"
+    }
+  ]
+}
