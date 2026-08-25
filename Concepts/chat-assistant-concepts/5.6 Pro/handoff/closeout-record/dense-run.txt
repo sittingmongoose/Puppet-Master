@@ -1,0 +1,65 @@
+Capture cadence: 49 frames/1s, median gap 21.6ms (~46.3 fps)
+
+=== D1 decision exit ===
+  [PASS] D1/fix:collapse-ramps: {"distinct":14,"mid":16}
+  [PASS] D1/check:no-instant-wipe: {"distinct":14}
+  [PASS] D1/check:kids-during-empty: {"samples":16}
+  [PASS] D1/check:no-overshoot-negative: {}
+D1-exit: 36 raw frames, sheet 36 tiles, 995KB
+
+=== D2/D3 take7 narrow ===
+  [PASS] D2D3/fix:main-not-starved: {"hostH":397,"mainH":182.125,"asideH":72,"scrollH":100,"scrollSH":354,"answers":4,"ansReach":1,"nextReach":false,"nextInHost":true,"promptOk":true,"overflowX":f
+  [PASS] D2D3/fix:answers-reachable: {"hostH":397,"mainH":182.125,"asideH":72,"scrollH":100,"scrollSH":354,"answers":4,"ansReach":1,"nextReach":false,"nextInHost":true,"promptOk":true,"overflowX":f
+  [PASS] D2D3/fix:next-in-host: {"hostH":397,"mainH":182.125,"asideH":72,"scrollH":100,"scrollSH":354,"answers":4,"ansReach":1,"nextReach":false,"nextInHost":true,"promptOk":true,"overflowX":f
+  [PASS] D2D3/check:prompt-visible: {"hostH":397,"mainH":182.125,"asideH":72,"scrollH":100,"scrollSH":354,"answers":4,"ansReach":1,"nextReach":false,"nextInHost":true,"promptOk":true,"overflowX":f
+  [PASS] D2D3/check:no-page-h-overflow: {"hostH":397,"mainH":182.125,"asideH":72,"scrollH":100,"scrollSH":354,"answers":4,"ansReach":1,"nextReach":false,"nextInHost":true,"promptOk":true,"overflowX":f
+  [PASS] D2D3/check:aside-peek-not-dominating: {"hostH":397,"mainH":182.125,"asideH":72,"scrollH":100,"scrollSH":354,"answers":4,"ansReach":1,"nextReach":false,"nextInHost":true,"promptOk":true,"overflowX":f
+D2D3-vw360: 26 raw frames, sheet 26 tiles, 693KB
+
+=== RM decision-enter under reduce ===
+  [PASS] RM/fix:decision-enter-1ms: {"name":"decision-enter","duration":"0.001s","ms":1}
+  [PASS] RM/check:media-reduce-active: {}
+RM-take7: 16 raw frames, sheet 16 tiles, 510KB
+
+=== L1 Focus layout ===
+  [PASS] L1/fix:neighbour-gaps-stable: {"worstGap":0,"worstH":0,"worstT":42,"dG":[0,0,0,0,0,0,0,0,0],"dH":[0,0,0,0,0,0,0,0,0,0],"dT":[-42,-42,-42,-42,-42,-42,-42,-42,-42,-42],"scrollDelta":42,"toggle
+  [PASS] L1/check:heights-stable: {"worstGap":0,"worstH":0,"worstT":42,"dG":[0,0,0,0,0,0,0,0,0],"dH":[0,0,0,0,0,0,0,0,0,0],"dT":[-42,-42,-42,-42,-42,-42,-42,-42,-42,-42],"scrollDelta":42,"toggle
+  [PASS] L1/check:no-cascade-gap: {"worstGap":0,"worstH":0,"worstT":42,"dG":[0,0,0,0,0,0,0,0,0],"dH":[0,0,0,0,0,0,0,0,0,0],"dT":[-42,-42,-42,-42,-42,-42,-42,-42,-42,-42],"scrollDelta":42,"toggle
+  [PASS] L1/check:entered-focus-mode: {"worstGap":0,"worstH":0,"worstT":42,"dG":[0,0,0,0,0,0,0,0,0],"dH":[0,0,0,0,0,0,0,0,0,0],"dT":[-42,-42,-42,-42,-42,-42,-42,-42,-42,-42],"scrollDelta":42,"toggle
+L1-focus: 13 raw frames, sheet 13 tiles, 257KB
+
+=== G1 completion no vanish ===
+  [PASS] G1/fix:no-opacity-drop-after-settle: {"badOp":0,"late":137}
+  [PASS] G1/fix:no-arrive-replay: {"badArrive":0}
+  [PASS] G1/check:no-clip-inset-after-settle: {"blankFrames":0}
+  [PASS] G1/check:row-count-stable: {}
+G1-complete: 112 raw frames, sheet 112 tiles, 1552KB
+
+=== G10 reorder FLIP ===
+  [PASS] G10/fix:animated-not-teleport: {"ok":true,"trip":204.41,"maxJump":29.25,"jumps":21,"n":66,"pct":14.3}
+  [PASS] G10/check:multi-frame-motion: {"ok":true,"trip":204.41,"maxJump":29.25,"jumps":21,"n":66,"pct":14.3}
+  [PASS] G10/check:no-negative-duration: {}
+G10-reorder: 49 raw frames, sheet 49 tiles, 2065KB
+
+=== T1 send scroll ===
+  [PASS] T1/fix:message-in-view: {"scrollTop":3162,"scrollHeight":3763,"overlap":100.3,"ready":true}
+  [PASS] T1/check:no-large-backward-scroll: {"backs":[]}
+  [PASS] T1/check:scrolltop-increased: {}
+T1-send: 59 raw frames, sheet 59 tiles, 1836KB
+
+=== T6 work-card height + hover stability ===
+  [PASS] T6/fix:anchor-policy: {"oaTr":"auto","oaCard":"none","okAnchor":true,"shift":0.21,"maxShift":0.48,"dh":237.2,"scrollDelta":237,"inView":true}
+  [PASS] T6/fix:hover-target-shift-small: {"oaTr":"auto","oaCard":"none","okAnchor":true,"shift":0.21,"maxShift":0.48,"dh":237.2,"scrollDelta":237,"inView":true}
+  [PASS] T6/check:max-shift-during-flip: {"oaTr":"auto","oaCard":"none","okAnchor":true,"shift":0.21,"maxShift":0.48,"dh":237.2,"scrollDelta":237,"inView":true}
+  [PASS] T6/check:height-actually-changed: {"oaTr":"auto","oaCard":"none","okAnchor":true,"shift":0.21,"maxShift":0.48,"dh":237.2,"scrollDelta":237,"inView":true}
+  [PASS] T6/check:target-was-in-view: {"oaTr":"auto","oaCard":"none","okAnchor":true,"shift":0.21,"maxShift":0.48,"dh":237.2,"scrollDelta":237,"inView":true}
+
+=== G2 scoped cost ===
+  [PASS] G2/fix:cheaper-than-full-render: {"bare":80.3,"stepSync":16.2,"chip":"4/6 phases · 63.0K / 100K","badge":"In progress","ok":true}
+  [PASS] G2/check:surfaces-coherent: {"bare":80.3,"stepSync":16.2,"chip":"4/6 phases · 63.0K / 100K","badge":"In progress","ok":true}
+  [PASS] X/check:no-console-errors: {"errs":[]}
+  [PASS] X/check:no-stuck-overlays: {"stuck":[]}
+
+OVERALL GREEN
+New bugs: 0
+Wrote DENSE_VERDICT.json + reviews/CHECKLIST.md

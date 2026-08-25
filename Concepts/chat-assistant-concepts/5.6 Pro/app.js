@@ -1166,6 +1166,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function renderApp(preserve=true){
     const positions=preserve?captureScroll():{};
+    /* T6: a working-card height change moves every message below it under a
+       stationary cursor unless scrollTop absorbs the delta. Browser scroll
+       anchoring is unreliable here (card is overflow:hidden; restores fight
+       the anchor), so measure the card before the patch and compensate after. */
+    const workBefore=document.querySelector('.working-card');
+    const workH=workBefore?workBefore.getBoundingClientRect().height:null;
     const flipTargets=[...document.querySelectorAll('[data-flip]')];
     const flipBefore=new Map(flipTargets.map(el=>[el, el.getBoundingClientRect().height]));
     const rollBefore=new Map([...document.querySelectorAll('.pm-roll')].map(el=>[el, el.textContent]));
@@ -1183,7 +1189,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     flipHeights(flipTargets, flipBefore);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions);
+    restoreScroll(positions,{workH});
     renderOverlays();
   }
 
@@ -1491,25 +1497,68 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     });
     return out;
   }
-  function restoreScroll(pos){
-    requestAnimationFrame(()=>document.querySelectorAll('[data-scroll-key]').forEach(el=>{
-      const v=pos?pos[el.dataset.scrollKey]:null;
-      if(v==null) return;
-      if(v==='end'){
-        /* A commanded scroll owns this scroller. Re-aim it at the bottom --
-           the patch may have grown the content out from under the animation --
-           and leave scroll-behavior alone so it keeps travelling smoothly
-           instead of being snapped there. */
-        el.scrollTop=el.scrollHeight; return;
+  function restoreScroll(pos,opts){
+    requestAnimationFrame(()=>{
+      document.querySelectorAll('[data-scroll-key]').forEach(el=>{
+        const v=pos?pos[el.dataset.scrollKey]:null;
+        if(v==null) return;
+        if(v==='end'){
+          /* A commanded scroll owns this scroller. Re-aim it at the bottom --
+             the patch may have grown the content out from under the animation --
+             and leave scroll-behavior alone so it keeps travelling smoothly
+             instead of being snapped there. */
+          el.scrollTop=el.scrollHeight; return;
+        }
+        /* A restore re-applies a position; it is never a journey to one. Left
+           smooth, the restore is itself an in-flight scroll for the NEXT render
+           to misread, which is how one stale capture became permanent. */
+        const prev=el.style.scrollBehavior;
+        el.style.scrollBehavior='auto';
+        el.scrollTop=v;
+        el.style.scrollBehavior=prev;
+      });
+      /* T6: .working-body[data-flip] animates height over ~320ms, so a one-shot
+         delta (measured while the FLIP is paused at h0) under-absorbs. Follow
+         the live card height for one FLIP window and fold each frame's growth
+         into scrollTop so a hovered message stays under the cursor. */
+      followWorkCardHeight(opts&&opts.workH);
+    });
+  }
+  function followWorkCardHeight(startH){
+    if(startH==null||scrollIntents.has('transcript')) return;
+    const tr=document.querySelector('[data-scroll-key="transcript"]');
+    if(!tr) return;
+    /* Absolute target from the restored scroll baseline — relative += compounds
+       with Chromium scroll anchoring while .working-body FLIPs and overshoots. */
+    const baseScroll=tr.scrollTop;
+    const prevAnchor=tr.style.overflowAnchor;
+    tr.style.overflowAnchor='none';
+    let cancelled=false;
+    const cancel=()=>{cancelled=true; tr.style.overflowAnchor=prevAnchor;};
+    document.addEventListener('wheel',cancel,{once:true,passive:true,capture:true});
+    document.addEventListener('touchstart',cancel,{once:true,passive:true,capture:true});
+    const t0=performance.now();
+    const tick=()=>{
+      if(cancelled||scrollIntents.has('transcript')||!tr.isConnected){
+        tr.style.overflowAnchor=prevAnchor; return;
       }
-      /* A restore re-applies a position; it is never a journey to one. Left
-         smooth, the restore is itself an in-flight scroll for the NEXT render
-         to misread, which is how one stale capture became permanent. */
-      const prev=el.style.scrollBehavior;
-      el.style.scrollBehavior='auto';
-      el.scrollTop=v;
-      el.style.scrollBehavior=prev;
-    }));
+      const card=document.querySelector('.working-card');
+      if(!card){ tr.style.overflowAnchor=prevAnchor; return; }
+      const h=card.getBoundingClientRect().height;
+      const cr=card.getBoundingClientRect(), vr=tr.getBoundingClientRect();
+      if(cr.top<vr.bottom){
+        const target=baseScroll+(h-startH);
+        if(Math.abs(tr.scrollTop-target)>0.5){
+          const prev=tr.style.scrollBehavior;
+          tr.style.scrollBehavior='auto';
+          tr.scrollTop=target;
+          tr.style.scrollBehavior=prev;
+        }
+      }
+      if(performance.now()-t0<420) requestAnimationFrame(tick);
+      else tr.style.overflowAnchor=prevAnchor;
+    };
+    requestAnimationFrame(tick);
   }
   function renderOverlays(){
     const root=document.getElementById('pmOverlayRoot');
