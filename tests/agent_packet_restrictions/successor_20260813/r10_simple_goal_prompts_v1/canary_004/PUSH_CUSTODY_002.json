@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.r10.app_probe_push_custody.v2",
+  "run_id": "r10-codex-app-canary-004",
+  "recorded_at_utc": "2026-08-25T00:24:30Z",
+  "branch": "main",
+  "candidate_commit": "7c789b7ad3a02b57c7d7365b9a68a08b0e029c23",
+  "candidate_commit_message": "test(r10): terminalize malformed app evidence",
+  "supersedes_candidate_commit": "cb3d549850e99a872a0b684861c110324c018098",
+  "push_destinations": [
+    "https://github.com/sittingmongoose/Puppet-Master.git",
+    "ssh://192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git"
+  ],
+  "remote_heads_after_candidate_push": {
+    "origin_main": "7c789b7ad3a02b57c7d7365b9a68a08b0e029c23",
+    "truenas_backup_main": "7c789b7ad3a02b57c7d7365b9a68a08b0e029c23"
+  },
+  "frozen_manifest_sha256": "f8aab5d42014eb4889b74655d9d9ab29182d422147f05678b2c29b4bbaa4a714",
+  "detached_commitment_sha256": "6f88784cc64b4512d33fac6255e9dfc94997c29e7affbd24afb42c7875493e87",
+  "pushed_audits": [
+    "PASS_PUSHED",
+    "PASS_PUSHED_BOUNDARY",
+    "PASS_TO_RESERVE"
+  ],
+  "predecessor_status": "quiescent",
+  "r10_reviewers_status": "quiescent",
+  "designated_evidence_absent": true,
+  "subject_task_create_calls": 0,
+  "omp_subject_calls": 0,
+  "qualification_credit": 0,
+  "nonclaim": "This records repaired candidate custody only; it is not empirical, readiness, safety, or qualification evidence."
+}
