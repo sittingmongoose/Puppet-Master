@@ -6,25 +6,59 @@ folder — nothing lives in `/tmp` any more.
 
 ---
 
-## 0. READ THIS FIRST — the one thing that can destroy the work
+## 0. COMMITTED AND PUSHED — the work is safe
 
-**22 of the module source files are UNTRACKED in git.** They are the entire output of this wave.
+Commit **`b72727f2b5`** — 1018 files, scoped to `Concepts/chat-assistant-concepts/5.6 Pro/` only
+(nothing from other sessions' in-flight work). Pushed to **both** remotes:
+`origin` (github.com/sittingmongoose/Puppet-Master) and the TrueNAS mirror at
+`ssh://192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git`. Clone or pull from either.
 
+---
+
+## 0b. *** REQUIRED CLEANUP — the user has asked for this explicitly ***
+
+**This wave added ~96MB of evidence, film, screenshots and per-agent harnesses. Delete them.**
+Do it in the order below; some of it is still needed to finish Wave 5.
+
+### DELETE NOW — superseded, nothing depends on it (~80MB)
+```bash
+cd "Concepts/chat-assistant-concepts/5.6 Pro"
+git rm -r --quiet handoff/w4orbit handoff/w3 handoff/hfilm handoff/hshots handoff/ab \
+  handoff/shots-goals handoff/shots1b handoff/qsshots handoff/shots handoff/qs-live \
+  handoff/qs-control handoff/wave3-debug handoff/apshots handoff/real_shots handoff/real_cards
+git rm -r --quiet reports/context-verify
+git rm --quiet handoff/BASELINE_standalone.html handoff/FRESH_standalone.html \
+  handoff/FRESH2.html handoff/CURRENT_lf.html handoff/INDEX_lf.html handoff/DELTA.diff
 ```
-activity-bar.{js,css}   activity-panel.{js,css}   context.{js,css}   goals.{js,css}
-history.{js,css}        lens.{js,css}             menus.{js,css}     orbit.{js,css}
-questions.{js,css}      threadops.{js,css}        transcript.{js,css}
-+ history-verify.mjs, orbit-verify.mjs, questions-verify.mjs, threadops-verify.mjs,
-  tests/transcript-verify.mjs, tests/context-verify.mjs, tests/lens-independent.mjs,
-  tests/orphan-gate.mjs
+The `02-collapse.png` eye-check those sheets existed for is **settled** (CDP frame-ordering) —
+they are dead weight.
+
+### DELETE AFTER Wave 5 is finished — needed to resume (~5MB)
+```bash
+git rm -r --quiet handoff/w5 handoff/w5v2          # the motion rig + verifier scripts
 ```
 
-A `git clean -fd` anywhere in this repo deletes all of it. **Nothing has been committed** — the
-outgoing session was never authorised to commit.
+### DELETE LAST — when the concept is signed off (~1MB)
+```bash
+git rm --quiet history-verify.mjs orbit-verify.mjs questions-verify.mjs
+git rm --quiet tests/{context-verify,lens-independent,threadops-verify,transcript-verify}.mjs
+git rm -r --quiet handoff                          # logs, plan, notes
+```
 
-**Recommended first action: ask the user whether to commit, then do it.** Until then, treat the
-working tree as the only copy. A backup of the built deliverable is at
-`handoff/BASELINE_standalone.html` (pre-wave) — the current one is the live file.
+### KEEP PERMANENTLY
+- `tests/audit.mjs` — the gate (446 assertions) — and `tests/orphan-gate.mjs`, which is what
+  catches the defect class this whole wave existed to fix.
+- `build.py`, all `*.js` / `*.css` sources, both generated deliverables.
+- `reports/audit.json`, and the pre-existing `evidence/screenshots/` (8 theme shots, tracked
+  before this wave).
+
+### Be honest with the user about what deleting achieves
+**Removing these files in a later commit does NOT shrink the repository.** The blobs stay in git
+history forever; `.git` is already **3.6GB**. A later commit only stops them occupying the
+*working tree* (~96MB). If the user actually wants the repo smaller, that needs
+`git filter-repo` / BFG and a force-push — a separate, deliberate operation they must authorise,
+not something to fold into a cleanup commit. **Say this plainly rather than implying the delete
+reclaimed space.**
 
 ---
 
@@ -36,6 +70,11 @@ working tree as the only copy. A backup of the built deliverable is at
 | `node tests/audit.mjs reports/audit.json ./tests` | **446 pass / 0 fail / 0 console errors / 0 page errors** |
 | Items 1–15 of the approved plan | **all implemented** |
 | Wave 5 (final verification) | **INCOMPLETE — this is your job** |
+| Cleanup of ~96MB of evidence/media | **REQUIRED — see §0b, the user asked for it explicitly** |
+
+**Your job, in order:** (1) delete what §0b marks DELETE NOW; (2) finish Wave 5 — the two
+confirmed defects below and the two-thirds of the video inspection never filmed; (3) delete the
+rest per §0b as each stage stops being needed.
 
 The approved plan is `handoff/APPROVED_PLAN.md`. The running decision log — read it before
 touching anything — is **`handoff/ORCHESTRATOR_NOTES.md`**.
