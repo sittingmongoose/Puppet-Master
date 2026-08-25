@@ -1,0 +1,86 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.source_manifest.v1",
+  "source": {
+    "path": "Plans/storage-plan.md",
+    "utf8_bytes": 974842,
+    "line_count": 18204,
+    "sha256": "d18a405bd34411252183166a84ff12b48b6d9c9953cb37319a0503d39f60d506"
+  },
+  "frozen_inputs": [
+    {
+      "path": "scripts/pm-plan-index.py",
+      "bytes": 71322,
+      "sha256": "f3c2bd1e881f538e730258a854943e16c729150d2f7485cfac98dd58d034f293"
+    },
+    {
+      "path": "scripts/pm_pnc019_currentness.py",
+      "bytes": 15325,
+      "sha256": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "bytes": 16527422,
+      "sha256": "d6f14651267a1f48ce8a505d931d0320d0f5ab3ae255943a7050a837c66d1f88"
+    },
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "bytes": 19656174,
+      "sha256": "4fba58bd13a94c8d54f0400e8523d17929e07c193a73142931d92edbd39ea890"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "bytes": 4729960,
+      "sha256": "ae35a3d61e49a6d014ba47931b3e0a69ed849b4ece451f6bdecc9bd176832bce"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "bytes": 47705,
+      "sha256": "230cbdbf4316ae735f805b852652509e60dcddda946b64ee4917af64dc1b0782"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "bytes": 1083337,
+      "sha256": "e011db5e3c45107b3358868683b04b606ba4642992c20f72c6d9b1937025a683"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+      "bytes": 22124,
+      "sha256": "99b72a4051665230e991d591b34eabf86a0b3b0461cc203cd72ae2e030aec536"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl",
+      "bytes": 5272579,
+      "sha256": "5fb0df3056b4ced0c1da42a0c39ac77f660316579a91c2f91c64cb7fa7753fa3"
+    }
+  ],
+  "comparison_denominator": {
+    "plan_unit_count": 248,
+    "first_plan_unit_id": "SP-001",
+    "last_plan_unit_id": "SP-248",
+    "ordered_plan_unit_ids_sha256": "ad9b7577f0e47fe409f6f0aa84cef9d768b5b3341e6d750412e383dc851a7aea",
+    "acceptance_unit_count": 811,
+    "gui_related_true_count": 97,
+    "gui_related_false_count": 151,
+    "reasoning_tier_high_count": 30,
+    "reasoning_tier_standard_count": 218,
+    "migration_span_count": 130,
+    "dependency_edge_count": 1047,
+    "depends_on_edge_count": 1023,
+    "unblocks_edge_count": 24,
+    "internal_target_count": 86,
+    "external_known_target_count": 961,
+    "missing_target_count": 0
+  },
+  "preexisting_global_baseline": {
+    "validation_status": "fail",
+    "failure_count": 1,
+    "failure_code": "stale_generated_index_artifact",
+    "failure_path": "Plans/.plan_index/node_readiness_report.json",
+    "actual_stable_sha256": "c32a34b0b868bc7537e6a2c696559dcda077bb378e77b000275a551fd97fc041",
+    "expected_stable_sha256": "c1125b678416203bf756cc2aa16637db047c922edbe62123ef78bfe54784f94a",
+    "node_readiness_status": "blocked_runtime_certification_incomplete",
+    "runtime_blocker_ref": "PNC-019",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false
+  }
+}

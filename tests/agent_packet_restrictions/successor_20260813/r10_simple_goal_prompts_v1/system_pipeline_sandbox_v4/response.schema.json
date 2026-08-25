@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.r10.storage_pipeline.subject_result.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "source_match",
+    "plan_unit_count",
+    "acceptance_unit_count",
+    "dependency_registry_status",
+    "migration_coverage_status",
+    "canonical_comparison_status",
+    "pre_worknode_disposition",
+    "blocker_codes",
+    "no_worknodes_created"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.r10.storage_pipeline.subject_result.v1"},
+    "source_match": {"type": "boolean"},
+    "plan_unit_count": {"type": "integer", "minimum": 0},
+    "acceptance_unit_count": {"type": "integer", "minimum": 0},
+    "dependency_registry_status": {"enum": ["resolved", "missing"]},
+    "migration_coverage_status": {"enum": ["pass", "fail"]},
+    "canonical_comparison_status": {"enum": ["pass", "fail"]},
+    "pre_worknode_disposition": {"enum": ["blocked", "ready"]},
+    "blocker_codes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "no_worknodes_created": {"type": "boolean"}
+  }
+}
+
