@@ -1,0 +1,19 @@
+{
+  "blocker_codes": [
+    "canonical_node_readiness_artifact_stale",
+    "pnc019_runtime_certification_incomplete"
+  ],
+  "canonical_currentness_function_executed": true,
+  "canonical_global_validation_status": "fail",
+  "next_action": "Stop before WorkNode creation; repair and independently validate canonical node-readiness currentness and PNC-019 executable runtime certification in their owner-governed lanes.",
+  "no_executable_build_tasks_created": true,
+  "no_final_node_queues_created": true,
+  "no_worknodes_created": true,
+  "nodeseed_candidates_created": false,
+  "recomputed_node_readiness_stable_sha256": "c1125b678416203bf756cc2aa16637db047c922edbe62123ef78bfe54784f94a",
+  "runtime_blocker_ref": "PNC-019",
+  "schema_id": "pm.r10.storage_pipeline.node_readiness_report.v1",
+  "status": "blocked",
+  "stored_node_readiness_stable_sha256": "c32a34b0b868bc7537e6a2c696559dcda077bb378e77b000275a551fd97fc041",
+  "structural_pipeline_status": "pass"
+}
