@@ -1,0 +1,196 @@
+{
+  "attempt_id": "xml-probe-v1-02-a07db988f8",
+  "baseline_config_commands": [
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "advisor.enabled"
+      ],
+      "exit_code": 0,
+      "key": "advisor.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "task.agentAdvisor"
+      ],
+      "exit_code": 0,
+      "key": "task.agentAdvisor",
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "memory.backend"
+      ],
+      "exit_code": 0,
+      "key": "memory.backend",
+      "stdout": "off"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "autolearn.enabled"
+      ],
+      "exit_code": 0,
+      "key": "autolearn.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "mcp.enableProjectConfig"
+      ],
+      "exit_code": 0,
+      "key": "mcp.enableProjectConfig",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "tools.approvalMode"
+      ],
+      "exit_code": 0,
+      "key": "tools.approvalMode",
+      "stdout": "yolo"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.enabled"
+      ],
+      "exit_code": 0,
+      "key": "goal.enabled",
+      "stdout": "true"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.continuationModes"
+      ],
+      "exit_code": 0,
+      "key": "goal.continuationModes",
+      "stdout": "[\"interactive\"]"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "plan.defaultOnStartup"
+      ],
+      "exit_code": 0,
+      "key": "plan.defaultOnStartup",
+      "stdout": "false"
+    }
+  ],
+  "baseline_effective_config": {
+    "advisor.enabled": false,
+    "autolearn.enabled": false,
+    "goal.continuationModes": [
+      "interactive"
+    ],
+    "goal.enabled": true,
+    "mcp.enableProjectConfig": false,
+    "memory.backend": "off",
+    "plan.defaultOnStartup": false,
+    "task.agentAdvisor": {
+      "task": "off"
+    },
+    "tools.approvalMode": "yolo"
+  },
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 179881160,
+  "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+  "expected_argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--config",
+    "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/tools_xml.config.yml",
+    "--session-dir",
+    "/tmp/pm-r10-storage-v7-session-xml-probe-02-a07db988f8",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--cwd",
+    "/tmp/pm-r10-storage-v7-xml-probe-02-a07db988f8",
+    "--model",
+    "opencode-go/muse-spark-1.2-contributor",
+    "--thinking",
+    "xhigh"
+  ],
+  "git_custody": {
+    "head": "e04a616920a84f6fc8f8c27e2f4e71428604c1da",
+    "origin_main": "e04a616920a84f6fc8f8c27e2f4e71428604c1da",
+    "sources": [
+      {
+        "bytes": 1650,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/README.md",
+        "sha256": "eef69f537a1602e7f53a949b4afccaf7e23129586ec12487f94421c2b34b3362"
+      },
+      {
+        "bytes": 4334,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/probe_contract.json",
+        "sha256": "0bd5b10a526cdea3d79615603af18f5c0aca95793a2a9103810a02ebee55f886"
+      },
+      {
+        "bytes": 22157,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/probe_runner.py",
+        "sha256": "8c82f5542cef5882caec7df1fc55f93c80831d275fb73a819a2f6e9907539df1"
+      },
+      {
+        "bytes": 21,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/tools_xml.config.yml",
+        "sha256": "5bd19e07fcc96021ac72f58924117bbbc73f4fd87ecba45b3b335a89cdcb0301"
+      }
+    ],
+    "truenas_backup_main": "e04a616920a84f6fc8f8c27e2f4e71428604c1da"
+  },
+  "model": "opencode-go/muse-spark-1.2-contributor",
+  "nonce": "a07db988f850754d1ea28dcbc6bc59c4",
+  "observed_at_utc": "2026-08-25T22:23:43.011Z",
+  "ordinal": 2,
+  "overlay": {
+    "bytes": 21,
+    "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/tools_xml.config.yml",
+    "sha256": "5bd19e07fcc96021ac72f58924117bbbc73f4fd87ecba45b3b335a89cdcb0301"
+  },
+  "pass_id": "probe_01",
+  "probe_contract": {
+    "bytes": 4334,
+    "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/probe_contract.json",
+    "sha256": "0bd5b10a526cdea3d79615603af18f5c0aca95793a2a9103810a02ebee55f886"
+  },
+  "profile_config": {
+    "bytes": 472,
+    "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/config.yml",
+    "sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc"
+  },
+  "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+  "qualification_credit": 0,
+  "route_id": "omp_muse_spark_xhigh",
+  "row_time_budget_seconds": 3600,
+  "schema_id": "pm.r10.storage_pipeline.xml_probe_preflight.v1",
+  "subject_calls": 0,
+  "surface": "omp_tui",
+  "thinking": "xhigh",
+  "tools_format_requested": "xml",
+  "version": "omp/18.0.4"
+}

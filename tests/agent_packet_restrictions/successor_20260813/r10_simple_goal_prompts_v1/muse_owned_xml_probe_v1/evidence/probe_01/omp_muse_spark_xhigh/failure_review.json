@@ -1,0 +1,139 @@
+{
+  "classification": "HARD_CAPABILITY_BLOCKER_AFTER_NATIVE_AND_OWNED_XML_TOOL_SELECTION_FAILURE",
+  "claims_excluded": [
+    "inherent Muse model incapability on every surface or provider",
+    "success for the consumed native V7 Muse row",
+    "success for the consumed owned-XML Muse row",
+    "matrix qualification",
+    "normal process exit",
+    "production readiness",
+    "safety certification",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ],
+  "comparison_evidence": {
+    "native_v7_muse_failure": {
+      "interpretation": "The unchanged bounded prompt produced the exact semantic result twice, but the native Responses wire produced no Goal call and the Goal remained active.",
+      "postfailure_session_bytes": 57037,
+      "postfailure_session_sha256": "a8e1252614bf5dd4bd829958233f0b9d30eedeead0ee40ef01451db5423c9892"
+    },
+    "owned_xml_muse_failure": {
+      "interpretation": "The same prompt under the sole preregistered generic XML wire again produced the exact semantic result twice, but emitted no invoke syntax or Goal call and left the Goal active.",
+      "postfailure_session_bytes": 57568,
+      "postfailure_session_sha256": "a2d3d822837407337b25e7030b7de35e95b1d067bd969fcc7d9f9432e1561fb5"
+    },
+    "owned_xml_ox_control": {
+      "interpretation": "The same frozen XML overlay produced a canonical Goal call carrying an XML rawBlock, a joined successful Goal result, the exact oracle, and normal exit on the free control route.",
+      "raw_session_bytes": 43899,
+      "raw_session_sha256": "890303649b244f07c2e2278cb0c18f5afd41b8cdfdc0f2a60cd69f8848b5620e",
+      "xml_raw_block_bytes": 70,
+      "xml_raw_block_sha256": "d01dc933d82d8f217696ab17731828c8ec5bf55343620f0a67168e0cefdb9b49"
+    }
+  },
+  "failure": {
+    "frozen_parser_error": "OmpSessionError: OMP exactly one complete Goal state",
+    "no_retry": true,
+    "process_exit": {
+      "kind": "signal",
+      "reason": "sigterm",
+      "terminal_process_exit_code": null
+    },
+    "qualification_credit": 0,
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 581453: RunnerError: row time budget expired before exact Goal terminal result",
+    "terminal_status": "FAIL"
+  },
+  "frozen_identity": {
+    "attempt_id": "xml-probe-v1-02-a07db988f8",
+    "goal_id": "15660ec24d3f9f88",
+    "model": "opencode-go/muse-spark-1.2-contributor",
+    "nonce": "a07db988f850754d1ea28dcbc6bc59c4",
+    "ordinal": 2,
+    "pass_id": "probe_01",
+    "pid": 581453,
+    "route_id": "omp_muse_spark_xhigh",
+    "session_id": "01a03b05-b2ad-77e9-b66c-755a84ddaa06",
+    "thinking": "xhigh"
+  },
+  "key_evidence": {
+    "launch_journal": {
+      "bytes": 925,
+      "sha256": "c5a76667032c2603d4739692b9fa612d294ad824a0ae4f236076da96e122bbe3"
+    },
+    "postfailure_session": {
+      "bytes": 57568,
+      "sha256": "a2d3d822837407337b25e7030b7de35e95b1d067bd969fcc7d9f9432e1561fb5"
+    },
+    "runner_failure": {
+      "bytes": 518,
+      "sha256": "1bb28c700f77b32f411ec02153b168665da4869f8926201fc824c484e359ebff"
+    },
+    "session_prefix": {
+      "bytes": 29707,
+      "sha256": "04d255c2f26e2bd9df869bb9f05fb3148ec33b7c19a9b52b11e8e080956641d9"
+    },
+    "terminal": {
+      "bytes": 3189,
+      "sha256": "eef3a840aee2b7c2703edf8186377180afe193c80c5eba5893c625dd096b8cd6"
+    },
+    "transcript": {
+      "bytes": 405415,
+      "sha256": "6ba6285593197b87a0f5c1c3b8a2411b9daa24881157284eab23864afaa780bc"
+    }
+  },
+  "observed_postfailure_facts": {
+    "assistant_count": 2,
+    "exact_external_submission_count": 1,
+    "exact_typed_pm_result_assistant_count": 2,
+    "first_exact_result_at_utc": "2026-08-25T22:23:51.836Z",
+    "goal_active_snapshot_count": 3,
+    "goal_complete_state_count": 0,
+    "goal_context_count": 2,
+    "goal_status_at_last_model_activity": "active",
+    "goal_time_used_seconds": 12,
+    "goal_tool_call_count": 0,
+    "goal_tool_result_count": 0,
+    "goal_tokens_used": 13321,
+    "native_continuation_count": 1,
+    "ordinary_tool_call_count": 0,
+    "owned_xml_invoke_count": 0,
+    "owned_xml_raw_block_count": 0,
+    "result_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "row_budget_seconds": 3600,
+    "seconds_from_launch_to_failure_terminal": 3600.298,
+    "seconds_from_last_persisted_goal_assistant_to_signal": 3584.459,
+    "second_exact_result_at_utc": "2026-08-25T22:23:58.688Z",
+    "subject_semantic_result_exact": true
+  },
+  "reviewed_at_utc": "2026-08-25T23:32:49Z",
+  "route_capability_boundary": {
+    "conclusion": "The exact OMP 18.0.4 OpenCode-Go Muse xhigh route cannot satisfy the frozen native-Goal lifecycle under either admitted deterministic tool wire on this evidence.",
+    "forced_tool_choice_local_repair_admissible": false,
+    "model_vs_gateway_presentation_subcause_resolved": false,
+    "no_safe_local_repair_remaining_under_current_authority": true,
+    "upstream_basis": {
+      "forced_or_named_choice_behavior": "OMP's OpenCode Responses compatibility declares forced choice unsupported and downgrades forced or named choices to auto because the gateway rejects forced tool_choice.",
+      "forced_tool_choice_reference": "https://github.com/can1357/oh-my-pi/pull/9060",
+      "responses_route_reference": "https://github.com/can1357/oh-my-pi/pull/8980"
+    }
+  },
+  "schema_id": "pm.r10.storage_pipeline.xml_probe_failure_review.v1",
+  "sequencing_custody": {
+    "journal_ordinals": [
+      1,
+      2
+    ],
+    "journal_routes": [
+      "omp_ox_alpha_free_max",
+      "omp_muse_spark_xhigh"
+    ],
+    "probe_rows_beyond_ordinal_2_exist": false,
+    "suffix_launch_authorized": false
+  },
+  "terminal_disposition": {
+    "additional_dialect_or_request_shape_authorized": false,
+    "longer_wait_would_test_new_goal_task_activity": false,
+    "prompt_or_scorer_weakening_authorized": false,
+    "retry_or_replacement_authorized": false,
+    "scope_correction_required": "The unchanged goal now requires an external OpenCode-Go, Meta, or OMP route-capability change followed by a fresh frozen denominator. Removing or replacing Muse, or relaxing native-Goal terminal acceptance, materially changes the user-prescribed denominator or product contract and requires explicit user authority."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "attempt_id": "xml-probe-v1-02-a07db988f8",
+  "captured_at_utc": "2026-08-25T23:23:43.321Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 581453: RunnerError: row time budget expired before exact Goal terminal result",
+  "no_retry": true,
+  "nonce": "a07db988f850754d1ea28dcbc6bc59c4",
+  "ordinal": 2,
+  "pass_id": "probe_01",
+  "pid": 581453,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_muse_spark_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}
