@@ -1,0 +1,98 @@
+{
+  "attempt_id": "storage-v6-pass_01-01-78ff39aa8d",
+  "classification": "CHURN_RESET_AFTER_SUBJECT_SEMANTIC_AND_NATIVE_GOAL_SUCCESS_AND_FROZEN_VERIFIER_FAILURE",
+  "claims_excluded": [
+    "V6 row pass",
+    "matrix qualification",
+    "normal process exit",
+    "production readiness",
+    "safety certification",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ],
+  "failure": {
+    "frozen_parser_error": "OmpSessionError: OMP Goal-call assistant has no prose or ordinary content",
+    "no_retry": true,
+    "process_exit": {
+      "kind": "signal",
+      "reason": "sigterm",
+      "terminal_process_exit_code": null
+    },
+    "qualification_credit": 0,
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 449975: RunnerError: OMP exited before verified terminal result",
+    "terminal_status": "FAIL"
+  },
+  "frozen_identity": {
+    "goal_id": "1565e41e0e6abb26",
+    "model": "opencode-go/ox-alpha-free",
+    "nonce": "78ff39aa8d3b1c701f8cd3d0babb4aa8",
+    "ordinal": 1,
+    "pass_id": "pass_01",
+    "pid": 449975,
+    "route_id": "omp_ox_alpha_free_max",
+    "session_id": "01a03a5b-2159-7723-88f2-cfb2c6cfba9b",
+    "thinking": "max"
+  },
+  "key_evidence": {
+    "launch_journal": {
+      "bytes": 468,
+      "sha256": "36b8381a32bc8697c07b89f9d1d79fa5b4ae7a6bc6a143222c322781aef1afa3"
+    },
+    "postfailure_session": {
+      "bytes": 38353,
+      "sha256": "3ad5ef680a936313aba58dedd2391bbc3a00063d6787525c7a4879a5a5c77ab1"
+    },
+    "runner_failure": {
+      "bytes": 509,
+      "sha256": "203078058b23daaf08dedf5cd9ca1b65660db7871e96c0936f9b68575954c3a7"
+    },
+    "session_prefix": {
+      "bytes": 32600,
+      "sha256": "6892e0305a0a53fba9bf2615de46dffe321c825769f74114181289efc304ed0d"
+    },
+    "terminal": {
+      "bytes": 2860,
+      "sha256": "45dcdf9afeba2783c77df58b36e0ad21f3e6de929b794feb41a93accf797689b"
+    },
+    "transcript": {
+      "bytes": 2256183,
+      "sha256": "3b8aa754296be3894db01c619a187543282501fbd91566b1e8ebffeef7e1eed7"
+    }
+  },
+  "observed_postfailure_facts": {
+    "assistant_count": 2,
+    "exact_external_submission_count": 1,
+    "exact_typed_pm_result_in_distinct_final_assistant": true,
+    "goal_complete": true,
+    "goal_time_used_seconds": 35,
+    "goal_tool_call_count": 1,
+    "goal_tool_result_success": true,
+    "goal_tokens_used": 7577,
+    "goal_tool_use_assistant_content_types": [
+      "thinking",
+      "text",
+      "toolCall"
+    ],
+    "ordinary_tool_call_count": 0,
+    "provisional_exact_pm_result_in_tool_use_text": true,
+    "subject_semantic_result_exact": true
+  },
+  "reviewed_at_utc": "2026-08-25T19:33:24Z",
+  "schema_id": "pm.r10.storage_pipeline.failure_review.v6",
+  "suffix_custody": {
+    "journal_ordinals": [
+      1
+    ],
+    "rows_2_through_24_launched": false,
+    "suffix_evidence_absent": true,
+    "suffix_runtime_paths_absent": true
+  },
+  "successor_hypothesis": {
+    "falsifier": "A fresh Ox row fails if its final assistant is missing, wrong, nonterminal, or not after the joined successful Goal result; earlier prose never supplies or repairs that final.",
+    "fresh_identity_required": true,
+    "prompt_or_scorer_change": false,
+    "standard_goal_call_rule": "Permit only thinking, redactedThinking, and bounded text before one last goal complete toolCall block; preserve but never score the earlier text.",
+    "standard_result_rule": "Score only the distinct final assistant after the joined successful Goal tool result with the unchanged exact terminal scorer.",
+    "v6_retro_credit": false
+  }
+}
