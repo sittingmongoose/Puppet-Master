@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.r10.simple_bounded_context_qualification.v1",
+  "status": "PASS_TWO_CLEAN_REQUIRED_MATRICES",
+  "completed_at_utc": "2026-08-25T06:02:59Z",
+  "scope": "Disposable empirical qualification of one bounded one-source authority-decision work unit across the eight user-required remaining native Goal route/effort pairs, complementing the earlier two clean controller-worker-reviewer representative runs.",
+  "acceptance": {
+    "required_clean_passes": 2,
+    "observed_clean_passes": 2,
+    "rows_per_pass": 8,
+    "total_clean_rows": 16,
+    "unchanged_prompt_scorer_and_runtime_controls": true,
+    "fresh_identity_per_row": true,
+    "retry_or_best_of_used": false
+  },
+  "frozen_inputs": {
+    "codex_prompt": {
+      "path": "cases/worker_codex.prompt.txt",
+      "utf8_bytes": 1010,
+      "sha256": "be152d9bed74c0e67c36ed987e8b475eb4b5c51f7869a058e757f06193832982",
+      "native_prefix": "Create a goal that "
+    },
+    "omp_prompt": {
+      "path": "cases/worker_omp.prompt.txt",
+      "utf8_bytes": 995,
+      "sha256": "6d78f098e66f97c89d3761b5667283673c018f20205f540cc3ed2e2258395aa4",
+      "native_prefix": "/goal "
+    },
+    "admitted_context_utf8_bytes": 185,
+    "matrix": {
+      "path": "completion_matrix.json",
+      "sha256": "481711d9f98c0b1cf98825635d6a5ed3f395972403d75fcb80cf64b37535bf1c"
+    },
+    "verifier": {
+      "path": "verify_completion.py",
+      "sha256": "2784df06fdee8ce782c8bea2ff14629ec4271f88f664595eb7b87c4ac11c02b3"
+    }
+  },
+  "passes": [
+    {
+      "run_id": "required_pass_01",
+      "status": "PASS",
+      "results": "evidence/required_pass_01/results.json"
+    },
+    {
+      "run_id": "required_pass_02",
+      "status": "PASS",
+      "results": "evidence/required_pass_02/results.json"
+    }
+  ],
+  "verified_route_pairs": [
+    {"surface": "codex_app", "model": "gpt-5.4-mini", "thinking": "medium", "clean_rows": 2},
+    {"surface": "codex_app", "model": "gpt-5.4-mini", "thinking": "xhigh", "clean_rows": 2},
+    {"surface": "codex_app", "model": "gpt-5.4", "thinking": "medium", "clean_rows": 2},
+    {"surface": "codex_app", "model": "gpt-5.4", "thinking": "xhigh", "clean_rows": 2},
+    {"surface": "codex_app", "model": "gpt-5.6-luna", "thinking": "medium", "clean_rows": 2},
+    {"surface": "codex_app", "model": "gpt-5.6-luna", "thinking": "max", "clean_rows": 2},
+    {"surface": "omp_tui", "model": "cursor/default", "thinking": "auto", "clean_rows": 2},
+    {"surface": "omp_tui", "model": "alibaba-token-plan/qwen3.8-max", "thinking": "xhigh", "clean_rows": 2}
+  ],
+  "runtime_evidence": {
+    "codex_raw_rollouts_rehashed": 12,
+    "unique_codex_thread_ids": 12,
+    "omp_debug_logs_rehashed": 4,
+    "unique_omp_session_ids": 4,
+    "unique_omp_fresh_cwds": 4,
+    "omp_advisor_enabled": false,
+    "omp_task_agent_advisor": {"task": "off"},
+    "observed_non_goal_model_calls": 0,
+    "observed_filesystem_changes": 0
+  },
+  "verification_command": "python3 -B verify_completion.py required_pass_01 required_pass_02",
+  "verification_output": "{\"status\":\"PASS\",\"passes\":[\"required_pass_01\",\"required_pass_02\"]}",
+  "named_residuals": [
+    "OMP final assistant text is reconstructed from the faithful 80-column TUI rendering because the renderer wrapped the PM_RESULT marker and its unbroken JSON across adjacent display rows.",
+    "OMP initialized configured global context7/context7-local MCP endpoints and reported a wirekitty HTTP 404 despite --no-tools; no non-Goal model call was displayed and every fresh cwd stayed empty.",
+    "This disposable canary does not establish production readiness, universal model admission, canonical Plan completion, or direct Assistant Chat behavior."
+  ],
+  "plans_or_planning_ledger_modified": false
+}

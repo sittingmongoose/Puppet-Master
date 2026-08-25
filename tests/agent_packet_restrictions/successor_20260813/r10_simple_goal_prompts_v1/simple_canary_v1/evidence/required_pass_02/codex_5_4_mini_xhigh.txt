@@ -1,0 +1,31 @@
+status: PASS
+surface: codex_app
+case_id: codex_5_4_mini_xhigh
+thread_id: 01a03777-196e-7be3-91db-f5e978dd07c6
+host_id: remote-ssh-discovered:pm-dev
+turn_id: 01a03777-1e79-7252-8d40-e4e6dc7aeebf
+raw_rollout: /home/sittingmongoose/.codex/sessions/2026/08/25/rollout-2026-08-25T05-49-07-01a03777-196e-7be3-91db-f5e978dd07c6.jsonl
+raw_rollout_utf8_bytes: 143710
+raw_rollout_sha256: 250d40e647c90fc039f7592608af31f8f402e1a1fb9d74acb5c50d6989be7937
+prompt_utf8_bytes: 1010
+prompt_sha256: be152d9bed74c0e67c36ed987e8b475eb4b5c51f7869a058e757f06193832982
+effective_model: gpt-5.4-mini
+effective_thinking: xhigh
+external_prompt_count: 1
+goal_status: complete
+goal_tokens: 0
+goal_elapsed_seconds: 2
+observed_goal_helper_calls: 1
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+task_duration_ms: 44009
+
+ordinal 7 completed the sole external UserMessage containing the exact submitted prompt inside the platform delegation envelope
+ordinal 14 get_goal call; receipt reported goal=null
+ordinal 21 create_goal call
+ordinal 22 Goal receipt: status=active, threadId=01a03777-196e-7be3-91db-f5e978dd07c6
+ordinal 28 update_goal request: status=complete
+ordinal 29 Goal receipt: status=complete, tokensUsed=0, timeUsedSeconds=2
+ordinal 34 assistant final: PM_RESULT {"decision":"reject","reason_code":"AUTHORITY_WIDENING","source_ids":["S2"]}
+
+The authoritative raw trace has one completed external task UserMessage, one pre-activation native get_goal probe, exactly one create_goal, and one terminal update_goal call with active/complete receipts. get_goal is a Goal-lifecycle helper, not a non-Goal tool; there were zero non-Goal calls. The final answer equals the oracle. The native complete receipt's tokensUsed=0 is preserved without reinterpretation. No subject file action was possible or observed.

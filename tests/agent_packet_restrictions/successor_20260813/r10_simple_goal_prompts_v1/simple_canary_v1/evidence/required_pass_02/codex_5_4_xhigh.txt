@@ -1,0 +1,29 @@
+status: PASS
+surface: codex_app
+case_id: codex_5_4_xhigh
+thread_id: 01a03779-311f-76a2-9c51-44633b62ff7e
+host_id: remote-ssh-discovered:pm-dev
+turn_id: 01a03779-3582-7be2-8c3e-ee924c7aaadf
+raw_rollout: /home/sittingmongoose/.codex/sessions/2026/08/25/rollout-2026-08-25T05-51-24-01a03779-311f-76a2-9c51-44633b62ff7e.jsonl
+raw_rollout_utf8_bytes: 125838
+raw_rollout_sha256: fbf4bfb4efd6599ff43034b3f413020cb3c6788dab745307750d346d377ad0e4
+prompt_utf8_bytes: 1010
+prompt_sha256: be152d9bed74c0e67c36ed987e8b475eb4b5c51f7869a058e757f06193832982
+effective_model: gpt-5.4
+effective_thinking: xhigh
+external_prompt_count: 1
+goal_status: complete
+goal_tokens: 1279
+goal_elapsed_seconds: 5
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+task_duration_ms: 24636
+
+ordinal 7 completed the sole external UserMessage containing the exact submitted prompt inside the platform delegation envelope
+ordinal 12 create_goal call
+ordinal 13 Goal receipt: status=active, threadId=01a03779-311f-76a2-9c51-44633b62ff7e
+ordinal 19 update_goal request: status=complete
+ordinal 20 Goal receipt: status=complete, tokensUsed=1279, timeUsedSeconds=5
+ordinal 25 assistant final: PM_RESULT {"decision":"reject","reason_code":"AUTHORITY_WIDENING","source_ids":["S2"]}
+
+The authoritative raw trace has one completed external task UserMessage, exactly one create_goal and one terminal update_goal call with native active/complete receipts, no other function calls, and the exact oracle as the complete final answer. No subject file action was possible or observed.

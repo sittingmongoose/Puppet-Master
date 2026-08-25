@@ -1,0 +1,39 @@
+status: PASS
+surface: omp_interactive_linux_tui
+case_id: omp_cursor_default_auto
+omp_version: 18.0.4
+pty_session_id: 96745
+omp_session_id: 01a0376e-4ec0-71dc-baec-0c70074dcd33
+fresh_cwd: /tmp/r10-required-p1-cursor-VFnXwRQJ
+omp_debug_log: /home/sittingmongoose/.omp/logs/omp.2026-08-25.1814119.log
+omp_debug_log_utf8_bytes: 5086
+omp_debug_log_sha256: 38c232ace3d85bdaf800f32d82bc2ca0a789719830a90fe28e57f39bea27eac5
+prompt_utf8_bytes: 995
+prompt_sha256: 6d78f098e66f97c89d3761b5667283673c018f20205f540cc3ed2e2258395aa4
+effective_model: cursor/default
+effective_thinking: auto
+effective_advisor_enabled: false
+effective_task_agent_advisor: {"task":"off"}
+effective_memory_backend: off
+effective_autolearn_enabled: false
+effective_mcp_project_config_enabled: false
+effective_approval_mode: yolo
+tools_enabled: false
+skills_enabled: false
+rules_enabled: false
+external_prompt_count: 1
+goal_status: complete
+goal_tokens_displayed: 0
+goal_elapsed_seconds: 6
+observed_non_goal_tool_calls: 0
+fresh_cwd_entries_after_exit: 0
+process_exit_code: 0
+
+Launch argv:
+PI_CODING_AGENT_DIR=/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1 /home/sittingmongoose/.local/bin/omp --no-session --no-title --no-tools --no-skills --no-rules --cwd /tmp/r10-required-p1-cursor-VFnXwRQJ --model cursor/default --thinking auto
+
+The controller submitted the exact frozen OMP prompt once through bracketed paste followed by one Return. The TUI showed cursor / Auto, entered native Goal, displayed `Goal: complete` with 0 tokens and 6 seconds elapsed, and then completed the post-receipt assistant answer. The final rendered answer ended with the logical terminal line below; the 80-column renderer moved the unbroken JSON word to the following display row without changing the reconstructed assistant line:
+
+PM_RESULT {"decision":"reject","reason_code":"AUTHORITY_WIDENING","source_ids":["S2"]}
+
+The debug log binds provider=cursor, model=default, stopReason=stop, hasToolCalls=true, goalStatus=complete, and normal session exit with zero pending calls. No non-Goal model tool call was displayed. Startup still connected context7 and context7-local and reported the preserved wirekitty HTTP 404 despite `--no-tools`; this is retained as an environment residual, not hidden. After the assistant became idle, Ctrl-D closed the session with exit code 0. The fresh cwd remained empty. Immediate post-exit config readback reconfirmed both advisor controls off and all other recorded profile controls unchanged.

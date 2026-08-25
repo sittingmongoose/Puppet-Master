@@ -1,0 +1,30 @@
+status: PASS
+surface: codex_app
+case_id: codex_5_4_mini_medium
+thread_id: 01a03765-427a-77d0-aa96-96a65d8cda10
+host_id: remote-ssh-discovered:pm-dev
+turn_id: 01a03765-467a-7970-bef3-dc63131d40ef
+raw_rollout: /home/sittingmongoose/.codex/sessions/2026/08/25/rollout-2026-08-25T05-29-38-01a03765-427a-77d0-aa96-96a65d8cda10.jsonl
+raw_rollout_utf8_bytes: 125166
+raw_rollout_sha256: a8e8274f097d1866c158ef08bf48ea7a230c921a9949d5e43b9935b7b3c596d5
+prompt_utf8_bytes: 1010
+prompt_sha256: be152d9bed74c0e67c36ed987e8b475eb4b5c51f7869a058e757f06193832982
+effective_model: gpt-5.4-mini
+effective_thinking: medium
+external_prompt_count: 1
+goal_status: complete
+goal_tokens: 16423
+goal_elapsed_seconds: 3
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+task_duration_ms: 21879
+
+ordinal 7 completed the sole external UserMessage containing the exact submitted prompt inside the platform delegation envelope
+ordinal 12 create_goal call
+ordinal 13 Goal receipt: status=active, threadId=01a03765-427a-77d0-aa96-96a65d8cda10
+ordinal 19 update_goal request: status=complete
+ordinal 20 Goal receipt: status=complete, tokensUsed=16423, timeUsedSeconds=3
+ordinal 25 assistant final: Goal completed: 16,423 tokens, 3s. followed by the terminal typed-result line
+terminal_typed_result: PM_RESULT {"decision":"reject","reason_code":"AUTHORITY_WIDENING","source_ids":["S2"]}
+
+The authoritative raw trace has one completed external task UserMessage, exactly one create_goal and one terminal update_goal call with native active/complete receipts, no other function calls, and the exact oracle as its terminal PM_RESULT line. The owned test root was Git-clean immediately after capture, so the row observed no filesystem change.
