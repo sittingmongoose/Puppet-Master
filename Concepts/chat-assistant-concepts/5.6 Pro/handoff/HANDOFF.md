@@ -37,7 +37,7 @@ any source edit; never hand-edit `index.html` or the standalone.
 | **D1** | DONE — exit holds children through `.empty` max-height collapse |
 | **D2 / D3** | DONE — take 7 actions pinned; ≤400 aside peek 72px; ans+Next reachable at 360 |
 | **L1** | DONE — Focus elevation layout-neutral |
-| **T6** | DONE — `overflow-anchor: none` on `.transcript` |
+| **T6** | DONE — `.working-card { overflow-anchor:none }` + `followWorkCardHeight` scroll absorb during FLIP |
 | **G10** | DONE — `data-flip-move`; reorder animates (~14%/frame) |
 | **G11 / G12** | Arrival half via G1; movement FLIP opted in; no remaining teleport measured |
 | **G2** | DONE — `renderGoalSurfaces()` scoped patch; ~0.27–0.6× bare `renderApp` |
@@ -73,3 +73,24 @@ Targeted CDP contact-sheet re-film of D1, D2/D3, RM, L1, G1, G10, T1, T6, G2:
 **OVERALL GREEN** (see `handoff/closeout-record/refilm-verdict.json`).
 Film PNGs and temporary `handoff/refilm/film/` + `handoff/w5/` tooling were deleted
 after the green pass per owner request. Deleting evidence does not shrink `.git`.
+
+## 7. Dense film QA (2026-08-25 night)
+
+Near-max-fps CDP capture (`everyNthFrame:1`, all raw frames kept during the run,
+~41–50 fps median) with per-module fix asserts + new-bug checklist:
+**OVERALL GREEN** — `handoff/closeout-record/dense-verdict.json`.
+
+Product residual found and fixed in this pass:
+- **T6** — prior `overflow-anchor:none` on `.transcript` was the wrong polarity.
+  Real mid-thread hover still shifted 1:1 with `.working-body` FLIP growth.
+  Fix: keep `overflow-anchor:none` on `.working-card`, leave transcript `auto`,
+  and absorb live card-height delta into `scrollTop` for one FLIP window
+  (`followWorkCardHeight` in `app.js`). Max hover shift under expand ≤0.5px.
+
+Probe honesty notes (not product bugs): L1 absolute tops can move when
+`renderApp` restores scroll — assert neighbour gaps/heights; G1 must ignore
+`data-wipe` / `goal-phase-complete` opacity; T6 probes must clear boot
+scroll-to-end intent (wheel) before measuring mid-thread hover.
+
+Temporary `handoff/dense-film/film|traces|reviews` deleted after green; keep
+`dense-verdict.json` + `dense-qa.mjs` tooling under handoff as needed.

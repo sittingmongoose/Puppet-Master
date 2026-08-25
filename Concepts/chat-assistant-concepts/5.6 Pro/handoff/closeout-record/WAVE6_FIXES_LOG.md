@@ -385,3 +385,19 @@ Audit after closeout edits: **447 pass / 0 fail / 0 console / 0 page**.
 
 Harness resume (read-only): Thread Ops C2c PASS controlled; 15a take-7 narrow REFUTED (fix live) / D7 draft CONFIRMED; Orbit blank-core REFUTED; Context smoke PASS 8/8.
 History status film: 24 thread rows with distinct status-dot classes captured in `handoff/w6/hist/status-film.json`.
+
+---
+
+# Dense film follow-up (2026-08-25 night)
+
+Dense CDP film (~46 fps median, `everyNthFrame:1`) found T6 still real under mid-thread hover
+when `.working-body` FLIP-grows (history expand): hover target tracked height 1:1.
+
+## Correction
+
+| id | change | negative control |
+|---|---|---|
+| T6 | Revert transcript `overflow-anchor:none` (wrong polarity). Set `.working-card{overflow-anchor:none}`. `app.js` `followWorkCardHeight` absorbs live card-height into transcript `scrollTop` for one FLIP window. | Dense T6: dh≈237px, maxShift≤0.5px, end shift≈0.2px after clearing boot scroll-to-end via wheel |
+
+Dense QA overall **GREEN** — `handoff/closeout-record/dense-verdict.json`.
+Deliverable sha after T6: `1d8a8e78bd9c92d9`. Audit **447/0/0/0**.
