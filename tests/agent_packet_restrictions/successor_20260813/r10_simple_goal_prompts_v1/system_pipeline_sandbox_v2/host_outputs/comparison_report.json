@@ -1,0 +1,26 @@
+{
+  "acceptance_units_canonical_jsonl_sha256": "fdaf1175c68606d0136b062f4ad5a7dad18242429cda6e05f0afcf75b8c0550f",
+  "acceptance_units_exact_match": true,
+  "counts": {
+    "acceptance_unit_count": 811,
+    "dependency_edge_count": 1047,
+    "depends_on_edge_count": 1023,
+    "external_known_target_count": 961,
+    "gui_related_false_count": 151,
+    "gui_related_true_count": 97,
+    "internal_target_count": 86,
+    "migration_span_count": 130,
+    "missing_target_count": 0,
+    "plan_unit_count": 248,
+    "reasoning_tier_high_count": 30,
+    "reasoning_tier_standard_count": 218,
+    "unblocks_edge_count": 24
+  },
+  "dependency_edges_exact_match": true,
+  "ordered_plan_unit_ids_sha256": "ad9b7577f0e47fe409f6f0aa84cef9d768b5b3341e6d750412e383dc851a7aea",
+  "plan_units_canonical_jsonl_sha256": "540cd5e7a0a2b0f7e131fe5cfb92677dff303dc3621b691278a4d214af454bda",
+  "plan_units_exact_match": true,
+  "schema_id": "pm.r10.storage_pipeline.comparison_report.v1",
+  "source_match": true,
+  "status": "pass"
+}

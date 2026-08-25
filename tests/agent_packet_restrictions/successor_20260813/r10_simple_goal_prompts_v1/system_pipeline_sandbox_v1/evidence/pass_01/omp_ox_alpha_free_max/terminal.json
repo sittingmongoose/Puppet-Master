@@ -1,0 +1,40 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.terminal.v1",
+  "pass_id": "pass_01",
+  "route_id": "omp_ox_alpha_free_max",
+  "ordinal": 1,
+  "attempt_id": "storage-pass_01-01-922fcced6d",
+  "nonce": "922fcced6d2c5f47cc84da2bde624d9a",
+  "surface": "omp_tui",
+  "model": "opencode-go/ox-alpha-free",
+  "thinking": "max",
+  "status": "FAIL",
+  "failure_code": "EXACT_ORACLE_MISMATCH",
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "final_assistant_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":\"pass\",\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"stale_generated_index_artifact\",\"blocked_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "observed_non_goal_tool_calls": 0,
+  "no_retry": true,
+  "cwd_entries_after": 0,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "observed_identity": "01a03972-5a91-7685-a19c-c4f53d9bc583",
+  "finished_at_utc": "2026-08-25T15:08:11Z",
+  "evidence": [
+    {
+      "path": "omp_preflight.json",
+      "bytes": 1155,
+      "sha256": "e70cff6054c75d8c1f14f3dd53f0c1f647f9efa6f045485cfe86c169d820c0a6"
+    },
+    {
+      "path": "transcript.raw",
+      "bytes": 6470414,
+      "sha256": "be2bc463557fe5fd1725f5a62d7248990806ca5e55fa4df729700152080adb3d"
+    },
+    {
+      "path": "omp.debug.jsonl",
+      "bytes": 5101,
+      "sha256": "a01b6125c2e98c5010b35b23ce728698414371a2d1ef248dabaede63bbfbd6cf"
+    }
+  ]
+}

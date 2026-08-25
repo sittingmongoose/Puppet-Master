@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.omp_preflight.v1",
+  "pass_id": "pass_01",
+  "route_id": "omp_cursor_default_auto",
+  "ordinal": 2,
+  "attempt_id": "storage-pass_01-02-7a11dea4a4",
+  "nonce": "7a11dea4a49593e3c08a6849a209ecd9",
+  "observed_at_utc": "2026-08-25T15:11:38Z",
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 179881160,
+  "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+  "version_stdout": "omp/18.0.4",
+  "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+  "config_commands": [
+    {
+      "key": "advisor.enabled",
+      "exit_code": 0,
+      "stdout": "false"
+    },
+    {
+      "key": "task.agentAdvisor",
+      "exit_code": 0,
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "key": "memory.backend",
+      "exit_code": 0,
+      "stdout": "off"
+    },
+    {
+      "key": "autolearn.enabled",
+      "exit_code": 0,
+      "stdout": "false"
+    },
+    {
+      "key": "mcp.enableProjectConfig",
+      "exit_code": 0,
+      "stdout": "false"
+    },
+    {
+      "key": "tools.approvalMode",
+      "exit_code": 0,
+      "stdout": "yolo"
+    }
+  ]
+}
