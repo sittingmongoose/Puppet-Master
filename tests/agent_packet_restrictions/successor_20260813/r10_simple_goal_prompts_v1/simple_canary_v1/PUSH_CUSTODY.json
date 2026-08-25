@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.r10.simple_bounded_context_push_custody.v1",
+  "recorded_at_utc": "2026-08-25T06:05:26Z",
+  "candidate_commit": "e8e2e80daaf400727d822b54078dbb97f1296677",
+  "branch": "main",
+  "push_result": "PASS",
+  "verified_remote_heads": {
+    "github_main": "e8e2e80daaf400727d822b54078dbb97f1296677",
+    "truenas_main": "e8e2e80daaf400727d822b54078dbb97f1296677"
+  },
+  "verification": {
+    "scoped_worktree_clean_at_candidate": true,
+    "candidate_bytes_reopened": true,
+    "command": "python3 -B verify_completion.py required_pass_01 required_pass_02",
+    "output": "{\"status\":\"PASS\",\"passes\":[\"required_pass_01\",\"required_pass_02\"]}"
+  },
+  "qualification_receipt": "QUALIFICATION.json",
+  "plans_or_planning_ledger_modified": false,
+  "claim_boundary": "Push custody for disposable empirical evidence only; not production readiness or canonical Plan completion."
+}
