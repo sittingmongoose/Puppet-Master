@@ -1,0 +1,158 @@
+{
+  "attempt_id": "xml-probe-v1-01-adbd4effd4",
+  "composer_acknowledged": true,
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 331,
+      "path": "reservation.json",
+      "sha256": "6cb84180f181561c843a776886529e53aea2136b165738b659b47858f559baa8"
+    },
+    {
+      "bytes": 5954,
+      "path": "omp_preflight.json",
+      "sha256": "17fb83affbd163d32a3e0ad5dd33e1b6a489bbcb6aa6ccbfbe06d4ae5a470d8e"
+    },
+    {
+      "bytes": 1616,
+      "path": "launch.json",
+      "sha256": "888b45491a18437272492e480d0499e56be8d58b53216a9a69b517cdd8e72667"
+    },
+    {
+      "bytes": 89457,
+      "path": "pre_prompt.raw",
+      "sha256": "e836ec594e588e9eca1c0893d1327e29e2ff489139367fc494f59f8679e3dc31"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 674,
+      "path": "prompt_write.json",
+      "sha256": "783921b2c874651d40aea3eedd063fe042c3619a79f17c957ade6352fa0ed2fa"
+    },
+    {
+      "bytes": 98784,
+      "path": "composer_ack.raw",
+      "sha256": "4df6f78f3e1434ebfa33ac4d12dd50d969ae3ccf2bad7e369ddbf6841d76b2f3"
+    },
+    {
+      "bytes": 703,
+      "path": "composer_ack.json",
+      "sha256": "558ed52c324497753d3b29b0e04b723a1c37ed970a8dbe462062f2da9ebcfb19"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 726,
+      "path": "enter_write.json",
+      "sha256": "ef6b0dc021c00460c66159a0285d0f729c64a24c789f7bf59c805d353cf93111"
+    },
+    {
+      "bytes": 37275,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "3d53529241b9f391d3b59a1831cd84024fa4b307bba3caba45f03664b2f6b45f"
+    },
+    {
+      "bytes": 1316,
+      "path": "submission_acceptance.json",
+      "sha256": "db08a085f592f5a02aa7600d957f36e495680e491145774df4b4018c3b74b3db"
+    },
+    {
+      "bytes": 3692017,
+      "path": "transcript.raw",
+      "sha256": "9fc4ae781f2e6796e46d9f6dda3cfd4a74f31a28f50f2c30237b0ff0d53fc760"
+    },
+    {
+      "bytes": 1,
+      "path": "control.raw",
+      "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+    },
+    {
+      "bytes": 43899,
+      "path": "session.raw.jsonl",
+      "sha256": "890303649b244f07c2e2278cb0c18f5afd41b8cdfdc0f2a60cd69f8848b5620e"
+    }
+  ],
+  "external_submission_count": 1,
+  "failure_code": null,
+  "final_assistant_text": "Goal complete — time used: 45 seconds. Disposition derived solely from admitted receipts; structural success (248/811 units parsed clean, registry resolved, migration pass) preserved separately from the two gate blockers (stale canonical node-readiness artifact at SHA mismatch, incomplete runtime certification PNC-019), mandating a blocked pre-WorkNode disposition with no WorkNodes created.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "finished_at_utc": "2026-08-25T22:17:39.958Z",
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "low_level_input_write_count": 2,
+  "model": "opencode-go/ox-alpha-free",
+  "no_retry": true,
+  "nonce": "adbd4effd45d2b2e46049616ec70143b",
+  "observed_identity": "01a03aff-39b5-741f-b353-f3c21c822147",
+  "observed_non_goal_tool_calls": 0,
+  "ordinal": 1,
+  "pass_id": "probe_01",
+  "persisted_submission_accepted": true,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "session_projection": {
+    "assistant_lifecycle_shape": "standard_tool_cycle",
+    "assistant_message_count": 2,
+    "entry_ids": {
+      "final_assistant": "0ceb070a",
+      "goal_active": "f3fa181b",
+      "goal_call_assistant": "c394102a",
+      "goal_complete_mode": "3a8ab38a",
+      "goal_completed": "fff430f3",
+      "goal_contexts": [
+        "55cb0201"
+      ],
+      "goal_exit": "a8b1d15c",
+      "goal_result": "d48dca1a",
+      "goal_tool_start": "2fec0d31",
+      "native_continuation": null,
+      "session_exit": "97895697",
+      "user": "7078a8b4"
+    },
+    "final_text_sha256": "8fbd04c22ee055d398715c71ff7742f9fe3afb3c3db52b81ce8118ef6071ab3f",
+    "goal_context_count": 1,
+    "goal_id": "15660d24266e881f",
+    "goal_tool_call_id": "ptc_mt986snr_1",
+    "leaf_id": "97895697",
+    "logical_entry_count": 15,
+    "model": "ox-alpha-free",
+    "native_continuation_count": 0,
+    "ordinary_tool_calls": 0,
+    "owned_xml_goal_call": {
+      "bytes": 70,
+      "canonical_arguments": {
+        "op": "complete"
+      },
+      "canonical_name": "goal",
+      "present": true,
+      "sha256": "d01dc933d82d8f217696ab17731828c8ec5bf55343620f0a67168e0cefdb9b49"
+    },
+    "pre_goal_call_text_utf8_bytes": 914,
+    "provider": "opencode-go",
+    "selector": "opencode-go/ox-alpha-free",
+    "session_file_bytes": 43899,
+    "session_file_sha256": "890303649b244f07c2e2278cb0c18f5afd41b8cdfdc0f2a60cd69f8848b5620e",
+    "session_id": "01a03aff-39b5-741f-b353-f3c21c822147",
+    "session_started_at_utc": "2026-08-25T22:16:40.117Z",
+    "thinking": "max",
+    "thinking_receipt_count": 1,
+    "title_slot_bytes": 256
+  },
+  "status": "PASS",
+  "surface": "omp_tui",
+  "terminal_control_sent_once": true,
+  "thinking": "max",
+  "tui_corroboration": {
+    "goal_activation": true,
+    "goal_complete": true,
+    "pm_result_marker": true
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "attempt_id": "xml-probe-v1-01-adbd4effd4",
+  "baseline_config_commands": [
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "advisor.enabled"
+      ],
+      "exit_code": 0,
+      "key": "advisor.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "task.agentAdvisor"
+      ],
+      "exit_code": 0,
+      "key": "task.agentAdvisor",
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "memory.backend"
+      ],
+      "exit_code": 0,
+      "key": "memory.backend",
+      "stdout": "off"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "autolearn.enabled"
+      ],
+      "exit_code": 0,
+      "key": "autolearn.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "mcp.enableProjectConfig"
+      ],
+      "exit_code": 0,
+      "key": "mcp.enableProjectConfig",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "tools.approvalMode"
+      ],
+      "exit_code": 0,
+      "key": "tools.approvalMode",
+      "stdout": "yolo"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.enabled"
+      ],
+      "exit_code": 0,
+      "key": "goal.enabled",
+      "stdout": "true"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.continuationModes"
+      ],
+      "exit_code": 0,
+      "key": "goal.continuationModes",
+      "stdout": "[\"interactive\"]"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "plan.defaultOnStartup"
+      ],
+      "exit_code": 0,
+      "key": "plan.defaultOnStartup",
+      "stdout": "false"
+    }
+  ],
+  "baseline_effective_config": {
+    "advisor.enabled": false,
+    "autolearn.enabled": false,
+    "goal.continuationModes": [
+      "interactive"
+    ],
+    "goal.enabled": true,
+    "mcp.enableProjectConfig": false,
+    "memory.backend": "off",
+    "plan.defaultOnStartup": false,
+    "task.agentAdvisor": {
+      "task": "off"
+    },
+    "tools.approvalMode": "yolo"
+  },
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 179881160,
+  "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+  "expected_argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--config",
+    "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/tools_xml.config.yml",
+    "--session-dir",
+    "/tmp/pm-r10-storage-v7-session-xml-probe-01-adbd4effd4",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--cwd",
+    "/tmp/pm-r10-storage-v7-xml-probe-01-adbd4effd4",
+    "--model",
+    "opencode-go/ox-alpha-free",
+    "--thinking",
+    "max"
+  ],
+  "git_custody": {
+    "head": "0c49fbdf2a3fbd8653d8ae36e68b493bf1052b27",
+    "origin_main": "0c49fbdf2a3fbd8653d8ae36e68b493bf1052b27",
+    "sources": [
+      {
+        "bytes": 1650,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/README.md",
+        "sha256": "eef69f537a1602e7f53a949b4afccaf7e23129586ec12487f94421c2b34b3362"
+      },
+      {
+        "bytes": 4334,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/probe_contract.json",
+        "sha256": "0bd5b10a526cdea3d79615603af18f5c0aca95793a2a9103810a02ebee55f886"
+      },
+      {
+        "bytes": 22157,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/probe_runner.py",
+        "sha256": "8c82f5542cef5882caec7df1fc55f93c80831d275fb73a819a2f6e9907539df1"
+      },
+      {
+        "bytes": 21,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/tools_xml.config.yml",
+        "sha256": "5bd19e07fcc96021ac72f58924117bbbc73f4fd87ecba45b3b335a89cdcb0301"
+      }
+    ],
+    "truenas_backup_main": "0c49fbdf2a3fbd8653d8ae36e68b493bf1052b27"
+  },
+  "model": "opencode-go/ox-alpha-free",
+  "nonce": "adbd4effd45d2b2e46049616ec70143b",
+  "observed_at_utc": "2026-08-25T22:16:38.721Z",
+  "ordinal": 1,
+  "overlay": {
+    "bytes": 21,
+    "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/tools_xml.config.yml",
+    "sha256": "5bd19e07fcc96021ac72f58924117bbbc73f4fd87ecba45b3b335a89cdcb0301"
+  },
+  "pass_id": "probe_01",
+  "probe_contract": {
+    "bytes": 4334,
+    "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/probe_contract.json",
+    "sha256": "0bd5b10a526cdea3d79615603af18f5c0aca95793a2a9103810a02ebee55f886"
+  },
+  "profile_config": {
+    "bytes": 472,
+    "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/config.yml",
+    "sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc"
+  },
+  "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "row_time_budget_seconds": 3600,
+  "schema_id": "pm.r10.storage_pipeline.xml_probe_preflight.v1",
+  "subject_calls": 0,
+  "surface": "omp_tui",
+  "thinking": "max",
+  "tools_format_requested": "xml",
+  "version": "omp/18.0.4"
+}
