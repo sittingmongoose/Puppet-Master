@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.r10.app_probe_failure_review.v1",
+  "run_id": "r10-codex-app-canary-004",
+  "row_id": "row-alpha-004",
+  "reviewed_at_utc": "2026-08-25T01:16:08Z",
+  "classification": "FAIL_CONSUMED_ZERO_CREDIT_UNRESOLVED_APP_CREATE_TRANSPORT",
+  "causal_detail": "LOCAL_ORCHESTRATION_CELL_TERMINATED; HOST_ADMISSION_INDETERMINATE",
+  "status": "FAIL_CONSUMED_ZERO_CREDIT_NO_RETRY",
+  "qualification_credit": 0,
+  "reservation": {
+    "reserved_at_utc": "2026-08-25T00:28:15.059704Z",
+    "launch_head": "c29d1114f01ff6830e4b2d39486c9b2bec9db6dd",
+    "sha256": "0173eea30cc8938cc45d9fc05f9e7aff3725bd03587ce9432ded2fb3de19536a"
+  },
+  "launch_request": {
+    "utf8_bytes": 2418,
+    "sha256": "5b1b519094c40a8c727fa42534ce3ca2327360c75689bc6a09a6ab9cfcbce4a9",
+    "title": "R10-C4-57382dbf267c"
+  },
+  "parent_prefix": {
+    "last_ordinal": 8914,
+    "utf8_bytes": 55973016,
+    "sha256": "94705eeaf3a9c50d270438c64f6c16330b08223c22a4adc7e9f111846e59aaa8"
+  },
+  "parent_capture": {
+    "last_ordinal": 9097,
+    "utf8_bytes": 56125480,
+    "sha256": "43830354b0844ff23e8c67bb1ae82cc1db935fa6d586eda60a502aeeb872a76f",
+    "suffix_utf8_bytes": 152464,
+    "suffix_sha256": "6d9f804c4a009ab4bc0e8d28a53a200afb8deea3879a2577d30ffaeec1db2924"
+  },
+  "create_wrapper_observation": {
+    "ordinal": 8920,
+    "call_id": "call_ikKWJPHroPc6AzGmoM0iT1wp",
+    "source_utf8_bytes": 2837,
+    "source_sha256": "28e070e6439d7cba7298d4ccdae5b8eaeb75545b7a355a01dff07f632b2bb23b",
+    "arguments_equal_launch_request": true,
+    "wrapper_output_ordinal": 8921,
+    "wrapper_output": "Script running with cell ID 973",
+    "nonterminating_wait_count": 30,
+    "termination_call_ordinal": 9090,
+    "termination_output_ordinal": 9091,
+    "termination_output": "Script terminated",
+    "authoritative_dynamic_tool_event_count": 0,
+    "create_receipt_observed": false,
+    "child_thread_id_observed": false
+  },
+  "capture_failure": {
+    "error": "AppProbeError: parent app event window absent",
+    "sha256": "84554044af200d3f0b962025ac2286bdf0879b0b6b1b1fad67fd78c72a4424d3"
+  },
+  "orphan_inventory": {
+    "matching_local_session_count": 0,
+    "matching_archived_session_count": 0,
+    "remote_orphan_excluded": false,
+    "limitation": "Local session and process inventory cannot distinguish host non-admission, admitted-but-unreturned creation, or a remote orphan that never materialized locally."
+  },
+  "subject_evidence": {
+    "subject_call_count_established": false,
+    "goal_activation_observed": false,
+    "goal_terminal_observed": false,
+    "semantic_result_observed": false,
+    "qualification_interpretation_allowed": false
+  },
+  "disposition": {
+    "retry_allowed": false,
+    "replacement_allowed": false,
+    "followup_allowed": false,
+    "all_subject_launches_frozen": true,
+    "next_gate": "A repaired host control path must complete one bounded zero-subject read-only round trip with a structured result or explicit error before any newly authorized subject identity can be frozen."
+  },
+  "nonclaims": [
+    "This failure does not show that the bounded prompt, weak model, native Goal lifecycle, or semantic task failed.",
+    "No child identity, Goal receipt, semantic result, or subject-call count is established.",
+    "OMP is not a fallback and remains separately gated by the Windows interactive TUI contract.",
+    "This review is not readiness, safety, FileSafe, qualification, or canonical Plan evidence."
+  ]
+}
