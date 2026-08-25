@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.launch.v1",
+  "pass_id": "pass_01",
+  "route_id": "omp_ox_alpha_free_max",
+  "ordinal": 1,
+  "attempt_id": "storage-v2-pass_01-01-c0657e0aa2",
+  "nonce": "c0657e0aa244a90a0666850e5e4c074a",
+  "surface": "omp_tui",
+  "model": "opencode-go/ox-alpha-free",
+  "thinking": "max",
+  "prompt_utf8_bytes": 3036,
+  "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "external_prompt_count": 1,
+  "started_at_utc": "2026-08-25T15:32:16Z",
+  "cwd": "/tmp/pm-r10-storage-v2-pass_01-01-c0657e0aa2",
+  "cwd_entries_before": 0,
+  "argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--no-session",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--cwd",
+    "/tmp/pm-r10-storage-v2-pass_01-01-c0657e0aa2",
+    "--model",
+    "opencode-go/ox-alpha-free",
+    "--thinking",
+    "max"
+  ],
+  "advisor_enabled": false,
+  "task_agent_advisor": {
+    "task": "off"
+  },
+  "omp_preflight_bytes": 1159,
+  "omp_preflight_sha256": "a3ae76f84ce432c49ef799ca34ddfd4f38c9bfae1acfa230937a12118312cdff"
+}
+

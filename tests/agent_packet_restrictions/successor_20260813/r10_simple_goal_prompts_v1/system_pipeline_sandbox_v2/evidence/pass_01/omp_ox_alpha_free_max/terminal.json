@@ -1,0 +1,45 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.terminal.v1",
+  "pass_id": "pass_01",
+  "route_id": "omp_ox_alpha_free_max",
+  "ordinal": 1,
+  "attempt_id": "storage-v2-pass_01-01-c0657e0aa2",
+  "nonce": "c0657e0aa244a90a0666850e5e4c074a",
+  "surface": "omp_tui",
+  "model": "opencode-go/ox-alpha-free",
+  "thinking": "max",
+  "status": "FAIL",
+  "failure_code": "FROZEN_SCORER_CAPTURE_PROJECTION_FALSE_NEGATIVE",
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "final_assistant_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "observed_non_goal_tool_calls": 0,
+  "no_retry": true,
+  "cwd_entries_after": 0,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "observed_identity": "01a0398d-056c-74b7-9517-19fc02cbfce8",
+  "finished_at_utc": "2026-08-25T15:33:52Z",
+  "source_debug_capture": {
+    "bytes": 5097,
+    "sha256": "cb0e55b8c6920616275fa9c5213f6a8e6df9137bccb999c07a883634f040f29c",
+    "committed_projection": "exact agent_end-entered and session-exit rows only"
+  },
+  "evidence": [
+    {
+      "path": "omp_preflight.json",
+      "bytes": 1159,
+      "sha256": "a3ae76f84ce432c49ef799ca34ddfd4f38c9bfae1acfa230937a12118312cdff"
+    },
+    {
+      "path": "transcript.raw",
+      "bytes": 539014,
+      "sha256": "10a7ca7c5adcaafe41103d8729c9a6dd0592cc2841785ff07b5641e3fae6737f"
+    },
+    {
+      "path": "omp.debug.jsonl",
+      "bytes": 546,
+      "sha256": "c776f4129798913bf565d82be6dbcef319919723e97bfacecaa52022a4e1c154"
+    }
+  ]
+}
