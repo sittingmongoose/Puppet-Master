@@ -66,7 +66,7 @@ function Get-R10Contract([string]$StageRoot) {
     Assert-R10ExactKeys $contract.windows @('host', 'user', 'user_sid', 'required_session_id', 'stage_root', 'evidence_root', 'pwsh_path', 'wt_path', 'window_id', 'title') 'contract.windows'
     Assert-R10ExactKeys $contract.runtime @('ps_version', 'ps_edition', 'clr_version', 'native_argument_passing', 'input_struct_bytes') 'contract.runtime'
     Assert-R10ExactKeys $contract.schedule @('task_name', 'multiple_instances', 'restart_count', 'execution_time_limit_ms') 'contract.schedule'
-    Assert-R10ExactKeys $contract.ceilings @('reviewed_script_direct_omp_invocations', 'reviewed_script_direct_provider_invocations', 'reviewed_script_direct_subject_invocations', 'omp_endpoint_count_before', 'omp_endpoint_count_after', 'sendinput_calls_in_driver', 'receiver_readline_calls', 'retry_count', 'receiver_timeout_ms', 'driver_receipt_deadline_ms', 'scheduled_task_execution_limit_ms') 'contract.ceilings'
+    Assert-R10ExactKeys $contract.ceilings @('reviewed_script_direct_omp_invocations', 'reviewed_script_direct_provider_invocations', 'reviewed_script_direct_subject_invocations', 'omp_endpoint_count_before', 'omp_endpoint_count_after', 'sendinput_calls_in_driver', 'receiver_readline_calls', 'retry_count', 'receiver_timeout_ms', 'driver_internal_work_deadline_ms', 'scheduled_task_execution_limit_ms') 'contract.ceilings'
 
     if ($contract.schema -cne 'puppetmaster.r10.omp_tui_zero_model_probe.v2') { throw 'Contract schema mismatch' }
     if ($contract.probe_id -cne 'r10-omp-tui-zero-model-001') { throw 'Contract probe id mismatch' }
@@ -98,7 +98,7 @@ function Get-R10Contract([string]$StageRoot) {
         if ([int]$contract.ceilings.$name -ne 0) { throw "Contract zero ceiling mismatch: $name" }
     }
     if ([int]$contract.ceilings.sendinput_calls_in_driver -ne 1 -or [int]$contract.ceilings.receiver_readline_calls -ne 1) { throw 'Contract call ceiling mismatch' }
-    if ([int]$contract.ceilings.receiver_timeout_ms -ne 30000 -or [int]$contract.ceilings.driver_receipt_deadline_ms -ne 110000 -or [int]$contract.ceilings.scheduled_task_execution_limit_ms -ne 120000) { throw 'Contract time ceiling mismatch' }
+    if ([int]$contract.ceilings.receiver_timeout_ms -ne 30000 -or [int]$contract.ceilings.driver_internal_work_deadline_ms -ne 110000 -or [int]$contract.ceilings.scheduled_task_execution_limit_ms -ne 120000) { throw 'Contract time ceiling mismatch' }
     if ([int]$contract.qualification_credit -ne 0) { throw 'Contract qualification credit mismatch' }
     return $contract
 }

@@ -11,7 +11,7 @@ $nativeUiLoaded = $false
 $selectedWindow = $null
 $wrapperPid = 0
 $receiverPid = 0
-$driverDeadline = [DateTime]::UtcNow.AddMilliseconds(110000)
+$driverWorkDeadline = [DateTime]::UtcNow.AddMilliseconds(110000)
 
 function Write-BootstrapNewJson([string]$Path, [object]$Value) {
     $bytes = $bootstrapUtf8.GetBytes(($Value | ConvertTo-Json -Depth 12 -Compress))
@@ -29,8 +29,8 @@ function Write-BootstrapNewJson([string]$Path, [object]$Value) {
     [System.IO.File]::Move($publishing, $Path, $false)
 }
 
-function Assert-DriverDeadline {
-    if ([DateTime]::UtcNow -ge $driverDeadline) { throw 'Internal driver receipt deadline reached' }
+function Assert-DriverWorkDeadline {
+    if ([DateTime]::UtcNow -ge $driverWorkDeadline) { throw 'Internal driver work deadline reached' }
 }
 
 if (Test-Path -LiteralPath $evidenceRoot) {
@@ -178,7 +178,7 @@ public static class R10NativeUi {
 
 function Wait-R10Leaf([string]$Path, [int]$TimeoutMs) {
     $localDeadline = [DateTime]::UtcNow.AddMilliseconds($TimeoutMs)
-    while ([DateTime]::UtcNow -lt $localDeadline -and [DateTime]::UtcNow -lt $driverDeadline) {
+    while ([DateTime]::UtcNow -lt $localDeadline -and [DateTime]::UtcNow -lt $driverWorkDeadline) {
         if (Test-Path -LiteralPath $Path -PathType Leaf) { return }
         Start-Sleep -Milliseconds 100
     }
@@ -218,7 +218,7 @@ function Assert-R10ReceiptIdentity([object]$Receipt, [string]$Schema, [object]$C
 }
 
 function Assert-R10WindowReady([object]$Window, [object]$Contract) {
-    Assert-DriverDeadline
+    Assert-DriverWorkDeadline
     $matches = Get-ExactTitleWindows $Contract.windows.title
     if ($matches.Count -ne 1 -or -not [bool]$matches[0].Visible -or $matches[0].Hwnd -ne $Window.Hwnd -or [int]$matches[0].ProcessId -ne [int]$Window.ProcessId) {
         throw 'Exact-title HWND binding changed'
@@ -235,23 +235,6 @@ function Test-R10PidExists([int]$ProcessId) {
     return $null -ne (Get-CimInstance Win32_Process -Filter "ProcessId=$ProcessId")
 }
 
-function Write-R10DeadlineBoundPassJson([string]$Path, [object]$Value) {
-    $bytes = $bootstrapUtf8.GetBytes(($Value | ConvertTo-Json -Depth 16 -Compress))
-    $publishing = "$Path.pass-publishing-$PID"
-    if (Test-Path -LiteralPath $Path) { throw "Refusing to replace $Path" }
-    if (Test-Path -LiteralPath $publishing) { throw "Publishing path already exists: $publishing" }
-    $stream = [System.IO.File]::Open($publishing, [System.IO.FileMode]::CreateNew, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
-    try {
-        $stream.Write($bytes, 0, $bytes.Length)
-        $stream.Flush($true)
-    }
-    finally {
-        $stream.Dispose()
-    }
-    Assert-DriverDeadline
-    [System.IO.File]::Move($publishing, $Path, $false)
-}
-
 function Write-R10DriverTerminal([string]$Status, [string]$Detail, [int]$TitleMatches) {
     $value = [ordered]@{
         schema = 'puppetmaster.r10.omp_tui_zero_model_driver_terminal.v2'
@@ -265,10 +248,7 @@ function Write-R10DriverTerminal([string]$Status, [string]$Detail, [int]$TitleMa
         retry_count = 0
         qualification_credit = 0
     }
-    if ($Status -ceq 'PASS_ZERO_MODEL_TRANSPORT_ONLY') {
-        Write-R10DeadlineBoundPassJson $terminalPath $value
-    }
-    elseif ($commonLoaded) {
+    if ($commonLoaded) {
         Write-R10NewJson $terminalPath $value
     }
     else {
@@ -299,7 +279,7 @@ try {
     })
     Add-Type -TypeDefinition $nativeUiSource
     $nativeUiLoaded = $true
-    Assert-DriverDeadline
+    Assert-DriverWorkDeadline
     if ([R10NativeUi]::InputSize() -ne [int]$contract.runtime.input_struct_bytes) { throw 'INPUT structure size mismatch' }
     $activeSessionId = [int][R10NativeUi]::WTSGetActiveConsoleSessionId()
     if ($activeSessionId -ne [int]$contract.windows.required_session_id) { throw 'Active console session mismatch' }
@@ -361,7 +341,7 @@ try {
 
     $titleDeadline = [DateTime]::UtcNow.AddSeconds(15)
     $titleWindows = @()
-    while ([DateTime]::UtcNow -lt $titleDeadline -and [DateTime]::UtcNow -lt $driverDeadline) {
+    while ([DateTime]::UtcNow -lt $titleDeadline -and [DateTime]::UtcNow -lt $driverWorkDeadline) {
         $titleWindows = Get-ExactTitleWindows $contract.windows.title
         if ($titleWindows.Count -eq 1) { break }
         if ($titleWindows.Count -gt 1) { throw 'Multiple exact-title windows' }
@@ -440,7 +420,7 @@ try {
     if ($receiverTerminal.status -cne 'PASS' -or $wrapperTerminal.status -cne 'PASS' -or [int]$wrapperTerminal.receiver_exit_code -ne 0) { throw 'Receiver or wrapper terminal was not PASS' }
 
     $exitDeadline = [DateTime]::UtcNow.AddSeconds(10)
-    while ([DateTime]::UtcNow -lt $exitDeadline -and [DateTime]::UtcNow -lt $driverDeadline) {
+    while ([DateTime]::UtcNow -lt $exitDeadline -and [DateTime]::UtcNow -lt $driverWorkDeadline) {
         if (-not (Test-R10PidExists $receiverPid) -and -not (Test-R10PidExists $wrapperPid) -and -not [R10NativeUi]::WindowExists($selectedWindow.Hwnd)) { break }
         Start-Sleep -Milliseconds 100
     }

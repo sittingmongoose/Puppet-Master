@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.r10.pushed_candidate_hold.v1",
+  "probe_id": "r10-omp-tui-zero-model-001",
+  "recorded_at_utc": "2026-08-25T02:55:35Z",
+  "candidate_commit": "5fd9357199e2aecbd08529c429beb1e752c31207",
+  "custody_commit": "8684a3bbb85c05b6940aa362030503cd02342c23",
+  "pushed_freeze_manifest_sha256": "239d13b6460bbfc6f50f68fe72590eb4446e372b0ecf96dc6fadff38a20ff444",
+  "status": "HOLD_ZERO_RUNTIME_LATE_PASS_PUBLICATION_OVERCLAIM",
+  "blocking_invariant": "The pushed driver checked the 110-second deadline before atomic rename, so host descheduling between the check and rename could make PASS visible after the claimed receipt-publication deadline.",
+  "disposition": "Preserve the pushed bytes as failed prelaunch evidence, remove their launch authority, and simplify the successor to make 110 seconds an internal work cutoff rather than a terminal-publication guarantee.",
+  "empirical_attempt_consumed": false,
+  "windows_stage_created": false,
+  "scheduled_task_registered": false,
+  "windows_terminal_launched": false,
+  "input_events_sent": 0,
+  "omp_processes_launched": 0,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "qualification_credit": 0,
+  "launch_authority": false
+}

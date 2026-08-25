@@ -46,7 +46,7 @@
     "receiver_readline_calls": 1,
     "retry_count": 0,
     "receiver_timeout_ms": 30000,
-    "driver_receipt_deadline_ms": 110000,
+    "driver_internal_work_deadline_ms": 110000,
     "scheduled_task_execution_limit_ms": 120000
   },
   "qualification_credit": 0
