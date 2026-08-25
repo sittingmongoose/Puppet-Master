@@ -1,0 +1,453 @@
+/* activity-panel.css — feature module styles.  OWNER: Wave 2 — Activity Panel agent (item 1: the eight Activity Detail concepts)
+ *
+ * Concatenated LAST, after styles.css / motion.css / variants-*.css /
+ * transcripts.css, so rules here win over the base sheet and over the variant
+ * sheets at equal specificity.  Prefer adding rules here to reopening styles.css:
+ * after Wave 1 nobody edits styles.css again.
+ *
+ * Three things this file has to do:
+ *  1. NEUTRALISE the old cosmetic per-variant rules (styles.css `.activity-panel
+ *     [data-variant="N"] …`).  They were written for a body that was the same in
+ *     all eight options; several of them actively fight a real structure — the
+ *     variant-1 two-column grid on `.activity-scroll`, the variant-4 monospace
+ *     face, the variant-6 flex column, the variant-2 coloured left edge (which
+ *     the project's design rules forbid for status/selection anyway).
+ *  2. EXTEND the eight orphaned scaffolds in styles.css:364-371.  They were
+ *     written against `<div>`/`<span>` children; the live concepts need
+ *     `<button>` children for the rows to be clickable, so each scaffold's
+ *     child selector is widened rather than duplicated.
+ *  3. Carry the concept-specific structure the scaffolds never had.
+ *
+ * Conventions: no emoji (inline SVG only); no coloured left-edge accent bar for
+ * selection or status — selection is background + inset ring + a glyph, status is
+ * a dot plus a word; every looping animation carries `data-pmap-loop` and is
+ * switched off in one scoped `prefers-reduced-motion` rule at the end of the file
+ * (motion.css's own stop list cannot be edited from here).
+ */
+
+/* ── 1. neutralise the cosmetic-only variant rules ─────────────────────────
+   Specificity has to match styles.css:274 (`.activity-panel[data-variant="N"]
+   .activity-scroll` = 0,3,0), so `[data-variant]` is used rather than a bare
+   descendant selector; source order then decides. */
+.activity-panel[data-variant] .activity-scroll {
+  display: block;
+  font-family: inherit;
+}
+.activity-panel[data-variant] .pmap-section { border-left: 1px solid var(--border); }
+/* variant 2 moved the filter row ABOVE the panel head (`order:-1`).  That was
+   readable when every option rendered the same accordion; with a real Goal Tree
+   underneath it just detaches the filter from the title bar it belongs to. */
+.activity-panel[data-variant] .activity-filter { order: 0; }
+.activity-panel[data-variant="7"] .activity-summary-card { background: linear-gradient(135deg,color-mix(in srgb,var(--accent-2) 7%,var(--surface-3)),var(--surface-3)); }
+
+/* ── 2. shared panel vocabulary ────────────────────────────────────────── */
+.pmap { min-width: 0; }
+.pmap * { min-width: 0; }
+
+.pmap-dot {
+  flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--subtle); display: block;
+}
+.pmap-tone-working { background: var(--accent); }
+.pmap-tone-blocked { background: var(--danger); }
+.pmap-tone-waiting { background: var(--warning); }
+.pmap-tone-done    { background: var(--positive); }
+.pmap-tone-pending { background: var(--subtle); }
+.pmap-tone-changed { background: var(--accent-2); }
+.pmap-dot.pmap-tone-working[data-pmap-loop] { animation: pmap-breathe 1.9s ease-in-out infinite; }
+
+@keyframes pmap-breathe {
+  0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent); }
+  55%     { box-shadow: 0 0 0 4px color-mix(in srgb,var(--accent) 0%,transparent); }
+}
+@keyframes pmap-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* scope strip — the visible proof that the domain filter is not decorative */
+.pmap-scope {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 7px; margin-bottom: 7px;
+  border: 1px solid var(--border); border-radius: 9px;
+  background: var(--surface-3); font-size: 9px; color: var(--muted);
+}
+.pmap-scope-icon { display: grid; place-items: center; color: var(--subtle); }
+.pmap-scope-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-scope-btn {
+  flex: 0 0 auto; padding: 3px 8px; border-radius: 7px; cursor: pointer;
+  background: color-mix(in srgb,var(--accent) 16%,var(--surface-4));
+  color: var(--text); font-size: 9px; font-weight: 600;
+}
+.pmap-scope-btn:hover { background: color-mix(in srgb,var(--accent) 28%,var(--surface-4)); }
+
+/* five-way domain jump */
+.pmap-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.pmap-chips-foot { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
+.pmap-chip {
+  display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+  padding: 4px 7px; border-radius: 20px; border: 1px solid var(--border);
+  background: var(--surface-3); color: var(--muted); font-size: 9px;
+}
+.pmap-chip b { font-weight: 700; color: var(--subtle); }
+.pmap-chip:hover { background: var(--surface-4); color: var(--text); }
+.pmap-chip.is-on {
+  border-color: color-mix(in srgb,var(--accent) 55%,var(--border));
+  background: color-mix(in srgb,var(--accent) 15%,var(--surface-3)); color: var(--text);
+}
+.pmap-chip.is-on b { color: var(--accent); }
+
+.pmap-empty {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 8px; color: var(--subtle); font-size: 9px;
+}
+
+/* selection: background + inset ring + glyph.  Never a coloured left edge. */
+.pmap-row.is-selected,
+.pmap-card.is-selected,
+.pmap-ledger-row.is-selected,
+.pmap-feed-row.is-selected,
+.tree-leaf.is-selected {
+  background: color-mix(in srgb,var(--accent) 13%,var(--surface-3));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--accent) 52%,transparent);
+  color: var(--text);
+}
+
+/* detail card — used by every concept that has room for it */
+.pmap-detail {
+  margin: 6px 0 8px; padding: 9px;
+  border: 1px solid color-mix(in srgb,var(--accent) 32%,var(--border));
+  border-radius: 10px; background: var(--surface-3);
+  animation: pmap-in 220ms var(--ease) backwards;
+}
+.pmap-detail-head { display: flex; align-items: center; gap: 6px; }
+.pmap-detail-head strong { flex: 1; font-size: 10px; overflow-wrap: anywhere; }
+.pmap-detail-close { width: 20px; height: 20px; border-radius: 6px; cursor: pointer; }
+.pmap-detail-sub { margin: 5px 0 0; font-size: 9px; color: var(--muted); overflow-wrap: anywhere; }
+.pmap-kvs { display: grid; gap: 3px; margin-top: 7px; }
+.pmap-kv { display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 6px; font-size: 9px; }
+.pmap-kv label { color: var(--subtle); }
+.pmap-kv span { color: var(--text); overflow-wrap: anywhere; }
+.pmap-detail-actions { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+
+/* diff hunks — line numbers come from the fixture, never computed here */
+.pmap-nodiff {
+  display: flex; gap: 6px; align-items: flex-start; margin-top: 7px;
+  padding: 7px; border-radius: 8px; background: var(--surface-4);
+  color: var(--muted); font-size: 9px;
+}
+.pmap-diff {
+  margin-top: 7px; border: 1px solid var(--border); border-radius: 8px;
+  overflow: auto hidden; background: var(--code); font: 9px/1.55 var(--font-mono);
+}
+.pmap-hunk-head {
+  padding: 3px 7px; background: var(--surface-4); color: var(--muted);
+  border-bottom: 1px solid var(--border); position: sticky; left: 0;
+}
+.pmap-dl { display: grid; grid-template-columns: 26px 26px 10px minmax(0,1fr); gap: 4px; padding: 0 6px; }
+.pmap-ln { color: var(--subtle); text-align: right; -webkit-user-select: none; user-select: none; }
+.pmap-sig { text-align: center; color: var(--subtle); }
+.pmap-dl code { white-space: pre; color: var(--text); }
+.pmap-dl-add { background: color-mix(in srgb,var(--positive) 14%,transparent); }
+.pmap-dl-add .pmap-sig { color: var(--positive); }
+.pmap-dl-del { background: color-mix(in srgb,var(--danger) 14%,transparent); }
+.pmap-dl-del .pmap-sig { color: var(--danger); }
+.pmap-dl-meta code { color: var(--subtle); font-style: italic; }
+
+/* ── 3. concept 0 — Accordion Inspector ───────────────────────────────── */
+.pmap-accordion .pmap-section { animation: pmap-in 240ms var(--ease) backwards; }
+.pmap-accordion .activity-section-head .pmap-head-sub {
+  font-size: 9px; color: var(--muted); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
+.pmap-accordion .pmap-section.is-focus {
+  border-color: color-mix(in srgb,var(--accent) 45%,var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb,var(--accent) 24%,transparent);
+}
+.pmap-focus-pill {
+  display: inline-flex; align-items: center; gap: 3px; flex: 0 0 auto;
+  background: color-mix(in srgb,var(--accent) 20%,var(--surface-4));
+  color: var(--accent);
+}
+.pmap-accordion .activity-section-head { gap: 5px; padding: 8px 7px; }
+.pmap-accordion .activity-section-head > .meta-pill { flex: 0 0 auto; }
+.pmap-accordion .activity-section-head > svg:last-child { flex: 0 0 auto; }
+
+/* shared sub-head used by the board / master-detail / dashboard concepts */
+.pmap-sub-head {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 0 6px; margin-bottom: 6px;
+  border-bottom: 1px solid var(--border); color: var(--muted);
+}
+.pmap-sub-head strong { font-size: 10px; color: var(--text); }
+.pmap-sub-head .spacer { flex: 1; }
+
+/* compact row (concepts 1, 3, 7) */
+.pmap-row {
+  display: flex; align-items: flex-start; gap: 7px; width: 100%;
+  text-align: left; cursor: pointer; background: transparent;
+  border-radius: 8px; padding: 6px 5px; font-size: 10px; color: inherit;
+}
+.pmap-row:hover { background: var(--surface-3); }
+.pmap-row .pmap-row-mark { display: grid; place-items: center; width: 12px; padding-top: 4px; }
+.pmap-row .copy { min-width: 0; flex: 1; }
+.pmap-row .copy strong { display: block; font-size: 10px; overflow-wrap: anywhere; }
+.pmap-row .copy span { display: block; color: var(--muted); overflow-wrap: anywhere; }
+.pmap-row .right { color: var(--subtle); font-size: 9px; white-space: nowrap; flex: 0 0 auto; }
+
+/* ── concept 1 — Status Board ─────────────────────────────────────────
+   Extends styles.css:364.  The scaffold styled `>div`; the tiles have to be
+   buttons to be the navigation, so the child selector is widened and the tile
+   is given the internal rows the scaffold never described. */
+.activity-concept-board > button {
+  padding: 8px; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface-3); text-align: left; cursor: pointer;
+  display: grid; gap: 3px; align-content: start; min-width: 0; color: inherit;
+  animation: pmap-in 240ms var(--ease) backwards;
+}
+.activity-concept-board > button:hover { background: var(--surface-4); }
+.pmap-tile label {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 8px; color: var(--subtle); text-transform: uppercase; letter-spacing: .04em;
+}
+.pmap-tile label span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-tile > strong { display: block; font-size: 17px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.pmap-tile-sum {
+  font-size: 9px; color: var(--muted);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pmap-meter { display: block; height: 3px; border-radius: 3px; background: var(--surface-4); overflow: hidden; margin-top: 2px; }
+.pmap-meter b { display: block; height: 100%; border-radius: inherit; background: var(--accent); transition: width 420ms var(--ease); }
+.pmap-tile-foot { display: flex; align-items: center; gap: 5px; font-style: normal; font-size: 8px; color: var(--subtle); }
+.pmap-tile-foot span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-tile.is-focus {
+  grid-column: 1 / -1;
+  border-color: color-mix(in srgb,var(--accent) 52%,var(--border));
+  background: color-mix(in srgb,var(--accent) 10%,var(--surface-3));
+}
+.pmap-tile.is-focus > strong { font-size: 21px; }
+.pmap-board-detail { padding-top: 2px; }
+
+/* ── concept 2 — Goal Tree ────────────────────────────────────────────
+   Extends styles.css:365.  The scaffold styled bare `span` children; the live
+   tree needs buttons, a twisty, and a second indent level for leaves.  The
+   scaffold's `span{padding:5px 7px}` is neutralised for nested spans, which
+   would otherwise pad every label inside a button. */
+.activity-goal-tree > button {
+  position: relative; display: flex; align-items: center; gap: 5px;
+  padding: 5px 7px; border-radius: 7px; font-size: 9px;
+  cursor: pointer; background: transparent; color: var(--muted); text-align: left;
+}
+.activity-goal-tree > button:hover { background: var(--surface-4); color: var(--text); }
+.activity-goal-tree button span, .activity-goal-tree .tree-leafbox span { padding: 0; }
+.activity-goal-tree .pmap-tree-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.activity-goal-tree b { flex: 0 0 auto; font-variant-numeric: tabular-nums; color: var(--subtle); }
+.activity-goal-tree .tree-root {
+  background: color-mix(in srgb,var(--accent) 14%,var(--surface-4));
+  font-weight: 700; color: var(--text);
+}
+.activity-goal-tree .tree-branch.is-focus {
+  background: color-mix(in srgb,var(--accent) 12%,var(--surface-4)); color: var(--text);
+}
+.activity-goal-tree .tree-branch .pmap-twisty { display: grid; place-items: center; color: var(--subtle); }
+.activity-goal-tree .tree-leaf { margin-left: 34px; border-left: 1px solid var(--border-strong); }
+.activity-goal-tree .tree-leafbox {
+  margin-left: 34px; padding: 6px 0 6px 8px; min-width: 0;
+  border-left: 1px solid var(--border-strong); font-size: 9px; color: var(--muted);
+}
+/* the goalSection / render.compact output is foreign markup sized for a wider
+   host; inside a 240px panel its long paths and command lines have to wrap or
+   they push the whole document into horizontal overflow */
+.activity-goal-tree .tree-leafbox, .activity-goal-tree .tree-leafbox * { overflow-wrap: anywhere; min-width: 0; max-width: 100%; }
+.activity-goal-tree .pmap-tree-note {
+  display: block; margin-left: 34px; padding: 5px 8px;
+  border-left: 1px solid var(--border-strong); color: var(--subtle); font-size: 9px;
+}
+.pmap-treewrap .pmap-detail { margin-top: 8px; }
+
+/* ── concept 3 — Split Master/Detail ──────────────────────────────────
+   Extends styles.css:366.  Deliberate structural note: the scaffold styles
+   EVERY descendant `button`, `span` and `strong` of `.activity-master-detail`
+   / `.detail`, which is right for a rail plus a two-line summary box and wrong
+   for a record list (it would flatten `.soft-button` fills, the danger text
+   colour, and every foreign fragment the goalSection slot returns).  So the
+   scaffold is used for exactly what it describes — the rail and the summary
+   box — and the record list sits underneath at full panel width, outside it.
+   That is also the only readable split at the panel's 240px minimum. */
+.pmap-mdwrap .activity-master-detail { margin-bottom: 8px; align-items: start; }
+.activity-master-detail .master button.active {
+  background: color-mix(in srgb,var(--accent) 18%,var(--surface-4));
+  color: var(--text); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent);
+}
+.pmap-md-btn { min-width: 0; cursor: pointer; }
+.pmap-md-btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.activity-master-detail .master button:hover { background: var(--surface-4); color: var(--text); }
+.activity-master-detail .detail { align-content: start; }
+.pmap-md-list { display: grid; gap: 8px; }
+.pmap-md-group { min-width: 0; }
+
+/* ── concept 4 — Agent Board ──────────────────────────────────────────
+   Extends styles.css:367.  The scaffold gave the card a 26px/1fr grid and an
+   `.agent-progress` bar but never said where `strong` and the sub-line go, so
+   the avatar is spanned down the first column and everything else pinned to
+   the second. */
+.pmap-lane { margin-bottom: 9px; animation: pmap-in 240ms var(--ease) backwards; }
+.pmap-lane-head {
+  display: flex; align-items: center; gap: 5px; padding: 0 2px 5px;
+  color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .05em;
+}
+.pmap-lane-head strong { font-size: 9px; color: var(--text); letter-spacing: 0; text-transform: none; }
+.pmap-lane-head .spacer { flex: 1; }
+.pmap-lane-head b { font-variant-numeric: tabular-nums; color: var(--subtle); }
+.activity-agent-board button { cursor: pointer; align-items: center; row-gap: 3px; color: inherit; }
+.activity-agent-board button:hover { background: var(--surface-4); }
+.activity-agent-board button > .pmap-av { grid-column: 1; grid-row: 1 / 5; align-self: start; }
+.activity-agent-board button > :not(.pmap-av) { grid-column: 2; }
+.pmap-av {
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px;
+  background: color-mix(in srgb,var(--accent) 20%,var(--surface-4));
+  color: var(--accent); font-size: 9px; font-weight: 700; letter-spacing: .02em;
+}
+.pmap-av-glyph { color: var(--accent-2); background: color-mix(in srgb,var(--accent-2) 18%,var(--surface-4)); }
+.activity-agent-board button strong { overflow-wrap: anywhere; }
+.pmap-card-sub {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; overflow-wrap: anywhere;
+}
+.pmap-card-foot { display: flex; align-items: center; gap: 6px; font-size: 8px; color: var(--subtle); }
+.pmap-card-dom { flex: 0 0 auto; text-transform: uppercase; letter-spacing: .05em; }
+.pmap-card-right { flex: 1; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── concept 5 — File Ledger ──────────────────────────────────────────
+   Extends styles.css:368.  The scaffold's `>div` row is widened to `>button`
+   (a ledger you cannot click is a screenshot) and its 70/70/1fr template is
+   replaced by four columns, because the ledger carries a delta column the
+   scaffold never had.  The inline diff row spans all four. */
+.activity-ledger > button,
+.activity-ledger > .pmap-ledger-head {
+  display: grid; grid-template-columns: 52px 60px minmax(0,1fr) auto;
+  gap: 6px; padding: 5px 7px; border-top: 1px solid var(--border);
+  text-align: left; color: inherit; background: transparent;
+  font: inherit; align-items: center;
+}
+.activity-ledger > button { cursor: pointer; }
+.activity-ledger > button:hover { background: var(--surface-3); }
+.activity-ledger > .pmap-ledger-head {
+  border-top: 0; background: var(--surface-3); color: var(--subtle);
+  text-transform: uppercase; letter-spacing: .06em; font-size: 8px;
+}
+.pmap-lg-dom { display: flex; align-items: center; gap: 4px; color: var(--subtle); min-width: 0; }
+.pmap-lg-dom > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-lg-state { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-lg-rec { color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-lg-delta { display: flex; align-items: center; gap: 3px; color: var(--subtle); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pmap-lg-twist { display: grid; place-items: center; color: var(--muted); }
+.pmap-lg-diff { grid-column: 1 / -1; padding: 0 7px 8px; border-top: 1px solid var(--border); background: var(--surface-2); }
+.pmap-lg-none { padding: 9px 7px; color: var(--subtle); }
+.pmap-ledgerwrap .activity-ledger { animation: pmap-in 240ms var(--ease) backwards; }
+
+/* ── concept 6 — Live Work Feed ───────────────────────────────────────
+   Extends styles.css:369.  The scaffold described `span` entries with an
+   absolutely-positioned dot; the live feed needs the same geometry on a
+   `button` and a head node that names what is moving right now. */
+.activity-live-feed > button {
+  position: relative; display: grid; grid-template-columns: minmax(0,1fr) auto;
+  gap: 0 8px; padding: 6px 7px 7px 15px; text-align: left;
+  background: transparent; color: var(--muted); font-size: 9px; cursor: pointer;
+}
+.activity-live-feed > .pmap-feed-head {
+  position: relative; display: block; padding: 6px 7px 8px 15px;
+  color: var(--text); font-size: 9px;
+}
+.activity-live-feed span { padding: 0; }
+.activity-live-feed > button:hover { background: var(--surface-3); border-radius: 0 8px 8px 0; }
+.activity-live-feed > button > i,
+.activity-live-feed > .pmap-feed-head > i {
+  position: absolute; left: -4px; top: 10px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 4px var(--surface-2);
+}
+.activity-live-feed b { grid-column: 2; grid-row: 1; color: var(--subtle); font-variant-numeric: tabular-nums; }
+.pmap-feed-title { grid-column: 1; grid-row: 1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-feed-sub { grid-column: 1 / -1; grid-row: 2; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-feed-head {
+  border-bottom: 1px dashed var(--border); margin-bottom: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pmap-feed-head b { margin-right: 6px; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.pmap-feed-head > i[data-pmap-loop] { animation: pmap-feed-live 1.8s ease-in-out infinite; }
+@keyframes pmap-feed-live {
+  0%,100% { transform: scale(1);   box-shadow: 0 0 0 4px var(--surface-2), 0 0 0 5px color-mix(in srgb,var(--accent) 55%,transparent); }
+  55%     { transform: scale(1.25); box-shadow: 0 0 0 4px var(--surface-2), 0 0 0 9px color-mix(in srgb,var(--accent) 0%,transparent); }
+}
+.activity-live-feed > button > i[data-pmap-loop] { animation: pmap-breathe 1.9s ease-in-out infinite; }
+
+/* ── concept 7 — Overview Dashboard ───────────────────────────────────
+   Extends styles.css:370.  The scaffold made `.ring-mini` a 28px filled disc;
+   here it hosts a real SVG donut, so the disc background is dropped and the
+   percentage sits inside the arc.  Five cells, not four — the grid is
+   auto-fit so a 5th does not fall off a 4-column track. */
+.activity-dashboard { grid-template-columns: repeat(auto-fit,minmax(64px,1fr)); }
+.activity-dashboard > button {
+  min-width: 0; padding: 8px 4px; border-radius: 10px;
+  background: var(--surface-3); border: 1px solid var(--border);
+  text-align: center; cursor: pointer; color: inherit;
+  display: grid; justify-items: center; gap: 3px;
+  animation: pmap-in 240ms var(--ease) backwards;
+}
+.activity-dashboard > button:hover { background: var(--surface-4); }
+.activity-dashboard .ring-mini {
+  position: relative; width: 38px; height: 38px; background: none; border-radius: 0;
+}
+.activity-dashboard .ring-mini em {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-style: normal; font-size: 9px; font-weight: 700; color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.pmap-ring-arc { transition: stroke-dasharray 480ms var(--ease); }
+.activity-dashboard b {
+  display: block; margin-top: 2px; font-size: 8px; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+}
+.pmap-cell-cap {
+  font-style: normal; font-size: 7px; color: var(--subtle); line-height: 1.25;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pmap-cell.is-focus {
+  border-color: color-mix(in srgb,var(--accent) 52%,var(--border));
+  background: color-mix(in srgb,var(--accent) 10%,var(--surface-3));
+}
+.pmap-metrics { display: grid; grid-template-columns: repeat(auto-fit,minmax(86px,1fr)); gap: 5px; margin: 8px 0; }
+.pmap-metric { padding: 7px 8px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface-3); min-width: 0; }
+.pmap-metric label { display: block; font-size: 8px; color: var(--subtle); text-transform: uppercase; letter-spacing: .05em; }
+.pmap-metric strong { display: block; font-size: 14px; font-variant-numeric: tabular-nums; }
+.pmap-metric span { display: block; font-size: 8px; color: var(--muted); }
+.pmap-dash-focus { margin-top: 4px; }
+
+/* ── narrow panel (the panel resizes down to 240px, and the transient form
+       to calc(100% - 20px) on a phone) ───────────────────────────────── */
+@media (max-width: 1100px) {
+  .pmap-kv { grid-template-columns: 62px minmax(0,1fr); }
+}
+.activity-panel { container-type: inline-size; }
+@container (max-width: 300px) {
+  .activity-concept-board { grid-template-columns: 1fr; }
+  .activity-ledger > button, .activity-ledger > .pmap-ledger-head { grid-template-columns: 56px minmax(0,1fr) auto; }
+  .activity-ledger .pmap-lg-state { display: none; }
+  .pmap-accordion .pmap-head-sub { display: none; }
+  .pmap-metrics { grid-template-columns: 1fr 1fr; }
+  .pmap-md-btn span { display: none; }
+  .activity-master-detail { grid-template-columns: 34px minmax(0,1fr); }
+}
+
+/* ── reduced motion ────────────────────────────────────────────────────
+   motion.css:247 carries the project stop list and cannot be edited from a
+   feature module, so every loop this file introduces is tagged
+   `data-pmap-loop` and stopped here.  State still advances; only the
+   decoration stops — the selective behaviour motion.css already implements. */
+@media (prefers-reduced-motion: reduce) {
+  .pmap [data-pmap-loop], .pmap [data-pmap-loop]::before, .pmap [data-pmap-loop]::after {
+    animation: none !important;
+  }
+  .pmap, .pmap * { animation-duration: 1ms !important; }
+}

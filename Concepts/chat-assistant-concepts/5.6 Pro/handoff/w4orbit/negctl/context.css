@@ -1,0 +1,356 @@
+/* context.css — feature module styles.  OWNER: Wave 3 — Context agent (item 6: u11 compact menu, drawer gaps, legible growth chart)
+ *
+ * Concatenated LAST, after styles.css / motion.css / variants-*.css /
+ * transcripts.css, so rules here win over the base sheet and over the variant
+ * sheets at equal specificity.  Prefer adding rules here to reopening styles.css:
+ * after Wave 1 nobody edits styles.css again.
+ *
+ * Two specificity facts this file depends on, both verified against styles.css:
+ *   `.composition-bar i:nth-child(N)` (styles.css:297) pins five WIDTHS and five
+ *   COLOURS at specificity (0,2,1).  A bare `.ctxseg-N` class is (0,1,0) and
+ *   would lose, so the colour rules below are written as
+ *   `.composition-bar i.ctxseg-N` — equal specificity, later sheet wins — and
+ *   the widths are set inline by context.js, which beats both.
+ *   `.composition-key div` (0,1,1) likewise beats a bare `.ctx-srcrow`, so the
+ *   row rule is `.composition-key .ctx-srcrow` (0,2,0).
+ */
+
+/* =====================================================================
+   SIX SOURCE FAMILIES, SIX DISTINCT COLOURS, EIGHT THEMES.
+
+   The drawer used to draw five families from --accent / --accent-2 /
+   --positive / --warning / --subtle.  That cannot carry six families, and
+   it is not even safe for five: in retro-light --accent is #19734c and
+   --positive is #16734c, i.e. the same green, so "Conversation" and
+   "Files and code" were indistinguishable.  Each family now owns a real
+   token in every theme.  Colour is assigned by FAMILY NAME in context.js,
+   never by array index, so a family keeps its colour between threads.
+   ===================================================================== */
+body {
+  --ctxseg-1: #8b72ff; --ctxseg-2: #5cc8ff; --ctxseg-3: #5cd69b;
+  --ctxseg-4: #f5bd55; --ctxseg-5: #ff8fb3; --ctxseg-6: #9aa4bb;
+}
+body[data-theme="basic-dark"] {
+  --ctxseg-1: #8b72ff; --ctxseg-2: #5cc8ff; --ctxseg-3: #5cd69b;
+  --ctxseg-4: #f5bd55; --ctxseg-5: #ff8fb3; --ctxseg-6: #9aa4bb;
+}
+body[data-theme="basic-light"] {
+  --ctxseg-1: #6552df; --ctxseg-2: #0f6f96; --ctxseg-3: #16845a;
+  --ctxseg-4: #a96400; --ctxseg-5: #c2385f; --ctxseg-6: #5c6577;
+}
+body[data-theme="friendly-dark"] {
+  --ctxseg-1: #ff8eb0; --ctxseg-2: #8fdbcf; --ctxseg-3: #ffd078;
+  --ctxseg-4: #b9a2ff; --ctxseg-5: #7fc4f5; --ctxseg-6: #b5aebd;
+}
+body[data-theme="friendly-light"] {
+  --ctxseg-1: #cf5f85; --ctxseg-2: #1c7d72; --ctxseg-3: #9b6815;
+  --ctxseg-4: #6d5bbd; --ctxseg-5: #2f6f9b; --ctxseg-6: #7d6f79;
+}
+body[data-theme="glass-dark"] {
+  --ctxseg-1: #b287ff; --ctxseg-2: #75d7ef; --ctxseg-3: #7be0af;
+  --ctxseg-4: #ffd074; --ctxseg-5: #ff8198; --ctxseg-6: #a79fc0;
+}
+body[data-theme="glass-light"] {
+  --ctxseg-1: #7a55ca; --ctxseg-2: #17708f; --ctxseg-3: #1f7a55;
+  --ctxseg-4: #9b6710; --ctxseg-5: #ba435c; --ctxseg-6: #6f6784;
+}
+body[data-theme="retro-dark"] {
+  --ctxseg-1: #60f39a; --ctxseg-2: #59d6ff; --ctxseg-3: #f2d35e;
+  --ctxseg-4: #ff9d5c; --ctxseg-5: #ff6b95; --ctxseg-6: #7db394;
+}
+body[data-theme="retro-light"] {
+  --ctxseg-1: #19734c; --ctxseg-2: #166d83; --ctxseg-3: #86600d;
+  --ctxseg-4: #a33d42; --ctxseg-5: #52489c; --ctxseg-6: #5d7566;
+}
+
+.ctxseg-1 { background: var(--ctxseg-1); }
+.ctxseg-2 { background: var(--ctxseg-2); }
+.ctxseg-3 { background: var(--ctxseg-3); }
+.ctxseg-4 { background: var(--ctxseg-4); }
+.ctxseg-5 { background: var(--ctxseg-5); }
+.ctxseg-6 { background: var(--ctxseg-6); }
+/* equal specificity to `.composition-bar i:nth-child(N)`, later sheet wins */
+.composition-bar i.ctxseg-1, .ctx-segbar i.ctxseg-1 { background: var(--ctxseg-1); }
+.composition-bar i.ctxseg-2, .ctx-segbar i.ctxseg-2 { background: var(--ctxseg-2); }
+.composition-bar i.ctxseg-3, .ctx-segbar i.ctxseg-3 { background: var(--ctxseg-3); }
+.composition-bar i.ctxseg-4, .ctx-segbar i.ctxseg-4 { background: var(--ctxseg-4); }
+.composition-bar i.ctxseg-5, .ctx-segbar i.ctxseg-5 { background: var(--ctxseg-5); }
+.composition-bar i.ctxseg-6, .ctx-segbar i.ctxseg-6 { background: var(--ctxseg-6); }
+/* The roll-up entry is not a source family and never borrows a family
+   colour: a neutral outline swatch that belongs to nobody. */
+.ctx-seg-rest { background: transparent; border: 1px solid var(--subtle); }
+
+/* =====================================================================
+   A. THE COMPACT MENU  (slot contextCompactMenu)
+   Replaces the two stacked full-width `.menu-item` rows with u11's
+   density, drawn in 5.6 Pro tokens.
+   ===================================================================== */
+.ctx-pop {
+  width: 322px; max-width: 100%;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 4px 5px 5px;
+}
+
+.ctx-head { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.ctx-tt { font-size: 11px; font-weight: 800; letter-spacing: .01em; color: var(--text); }
+.ctx-frac {
+  margin-left: auto; font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+
+.ctx-caption {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  font-size: 8px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--subtle); margin-bottom: -3px;
+}
+.ctx-caption span:last-child { letter-spacing: .02em; text-transform: none; font-weight: 600; }
+
+/* segmented source bar + legend */
+.ctx-segbar {
+  display: flex; width: 100%; height: 8px; border-radius: 8px; overflow: hidden;
+  background: var(--surface-4);
+}
+.ctx-segbar i { display: block; height: 100%; min-width: 2px; }
+.ctx-legend { display: flex; flex-wrap: wrap; gap: 3px 9px; }
+.ctx-leg {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 9px; color: var(--muted); white-space: nowrap;
+}
+.ctx-leg i { width: 7px; height: 7px; border-radius: 2px; flex: none; }
+.ctx-leg.dim { color: var(--subtle); }
+.ctx-segbase { font-size: 9px; color: var(--subtle); line-height: 1.45; }
+
+/* plan limits */
+.ctx-limits { display: flex; flex-direction: column; gap: 5px; padding-top: 2px; }
+.ctx-limhead {
+  font-size: 8px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ctx-limrow {
+  display: grid; grid-template-columns: minmax(48px, 82px) minmax(34px, 1fr) auto;
+  align-items: center; gap: 7px; font-size: 9px;
+}
+.ctx-limlab { color: var(--muted); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ctx-limval { font-family: var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.ctx-limrst {
+  grid-column: 2 / 4; font-family: var(--font-mono); font-size: 8px; color: var(--subtle);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: -2px;
+}
+.ctx-limunk { font-size: 9px; color: var(--subtle); }
+.ctx-limnone { font-size: 9px; color: var(--subtle); line-height: 1.45; }
+.ctx-meter { display: block; height: 5px; border-radius: 5px; background: var(--surface-4); overflow: hidden; }
+.ctx-meter i {
+  display: block; height: 100%; border-radius: inherit; background: var(--accent);
+  transform-origin: left center;
+  animation: ctx-meter-grow 420ms var(--spring-soft-ease);
+}
+.ctx-meter.warn i { background: var(--warning); }
+.ctx-meter.hot i { background: var(--danger); }
+.ctx-meter.mute i { background: var(--subtle); }
+@keyframes ctx-meter-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.ctx-morelim { margin-top: 1px; }
+.ctx-morelim-b { display: flex; flex-direction: column; gap: 5px; margin-top: 5px; }
+.ctx-morebtn .ctx-chev { display: inline-flex; transition: transform 160ms var(--ease); }
+.ctx-morebtn.on .ctx-chev { transform: rotate(180deg); }
+
+/* the minibutton — the whole point of the replacement */
+.ctx-minibtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  padding: 4px 9px; min-height: 0;
+  border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--surface-3); color: var(--muted); cursor: pointer;
+  font-size: 9px; font-weight: 800; letter-spacing: .01em; white-space: nowrap; flex: none;
+  transition: color 140ms var(--ease), border-color 140ms var(--ease), background 140ms var(--ease), transform 140ms var(--ease);
+}
+.ctx-minibtn svg { width: 10px; height: 10px; flex: none; }
+.ctx-minibtn:hover { color: var(--text); border-color: var(--border-strong); background: var(--surface-4); }
+.ctx-minibtn:active { transform: scale(.96); }
+.ctx-minibtn.busy { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 46%, var(--border)); cursor: progress; }
+
+/* ONE dense action row: value on the left, two small buttons side by side */
+.ctx-acts {
+  display: flex; align-items: center; gap: 6px; flex-wrap: nowrap;
+  padding-top: 7px; border-top: 1px solid var(--border); min-width: 0;
+}
+/* The reading WRAPS rather than ellipsising.  "Context cache hit 78%" fits one
+   line, but the honest-unknown form ("Cache hit not reported") does not, and an
+   ellipsised value is worse than a two-line one -- the whole reason the value
+   sits on this row is that it can be read at a glance.  Wrapping grows the row
+   a few pixels and leaves the two buttons exactly where they were. */
+.ctx-cache {
+  flex: 1 1 auto; min-width: 0; font-size: 9px; color: var(--subtle);
+  white-space: normal; line-height: 1.25; overflow-wrap: anywhere;
+}
+.ctx-cache b { color: var(--text); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+/* u11 tightens the buttons on this row specifically, because the row has to
+   hold a value AND two actions on one line: at the default 9px padding the
+   cache reading ellipsised to "Context cache ...", which defeats the point of
+   putting it there. */
+.ctx-acts .ctx-minibtn { padding: 4px 7px; gap: 3px; }
+
+/* post-compact status line */
+.ctx-status {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 7px 8px; border-radius: 9px;
+  font-size: 9px; line-height: 1.45; color: var(--muted);
+  background: var(--surface-3); border: 1px solid var(--border);
+  animation: ctx-status-in 240ms var(--spring-soft-ease) both;
+}
+.ctx-status b { color: var(--text); font-size: 10px; }
+.ctx-status .ctx-hist { color: var(--subtle); font-size: 8px; }
+.ctx-status.ok { background: color-mix(in srgb, var(--positive) 12%, var(--surface-3)); border-color: color-mix(in srgb, var(--positive) 40%, var(--border)); }
+.ctx-status.info { background: color-mix(in srgb, var(--accent-2) 12%, var(--surface-3)); border-color: color-mix(in srgb, var(--accent-2) 38%, var(--border)); }
+.ctx-status.warn { background: color-mix(in srgb, var(--warning) 14%, var(--surface-3)); border-color: color-mix(in srgb, var(--warning) 44%, var(--border)); }
+.ctx-status.working { flex-direction: row; align-items: center; gap: 7px; }
+@keyframes ctx-status-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.ctx-spin {
+  width: 11px; height: 11px; flex: none; border-radius: 50%;
+  border: 2px solid var(--surface-4); border-top-color: var(--accent);
+  animation: ctx-spin 900ms linear infinite;
+}
+@keyframes ctx-spin { to { transform: rotate(360deg); } }
+
+.ctx-threadnote { font-size: 8px; color: var(--subtle); line-height: 1.4; }
+
+/* =====================================================================
+   B. THE DRAWER  (slot contextDrawer)
+   The existing sections are untouched; these rules only style what was
+   added, in the vocabulary already there.
+   ===================================================================== */
+.ctx-drawer .ctx-note { font-size: 9px; color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
+.ctx-drawer .ctx-note.warn { color: var(--warning); display: flex; align-items: flex-start; gap: 5px; }
+.ctx-drawer .ctx-note.warn svg { flex: none; margin-top: 2px; }
+.ctx-drawer .metric-grid.ctx-grid2 { grid-template-columns: 1fr 1fr; margin-top: 0; }
+.ctx-drawer .metric-card strong { overflow-wrap: anywhere; font-size: 12px; }
+.ctx-drawer .activity-line { margin-top: 7px; }
+
+/* source rows: [dot] [family] [pct%] [tokens], tabular-nums — copied from
+   u11 exactly, because the alignment is what makes it readable. */
+.composition-key.ctx-key4 { grid-template-columns: 1fr; gap: 2px; }
+.composition-key .ctx-srcrow {
+  display: grid; grid-template-columns: 9px minmax(0, 1fr) 44px 62px;
+  align-items: center; gap: 7px;
+  padding: 3px 4px; border-radius: 7px;
+  font-size: 9px; color: var(--muted);
+}
+.composition-key .ctx-srcrow:hover { background: var(--surface-3); }
+.composition-key .ctx-srcrow i { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.composition-key .ctx-srcrow .ctx-srclab { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.composition-key .ctx-srcrow .ctx-srcpct,
+.composition-key .ctx-srcrow .ctx-srctok {
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  text-align: right; color: var(--text); font-weight: 700;
+}
+.composition-key .ctx-srcrow .ctx-srctok { color: var(--muted); }
+.composition-key .ctx-srcrow.zero { opacity: .55; }
+.composition-key .ctx-srcrow.zero .ctx-srcpct, .composition-key .ctx-srcrow.zero .ctx-srctok { color: var(--subtle); font-weight: 500; }
+
+/* capabilities */
+.ctx-caps { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.ctx-cap {
+  display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; align-items: center; gap: 6px;
+  padding: 6px 8px; border-radius: 9px; background: var(--surface-3); border: 1px solid var(--border);
+  font-size: 9px; color: var(--subtle);
+}
+.ctx-cap .ctx-capdot { width: 7px; height: 7px; border-radius: 50%; background: var(--subtle); }
+.ctx-cap.on { color: var(--muted); border-color: color-mix(in srgb, var(--accent) 34%, var(--border)); }
+.ctx-cap.on .ctx-capdot { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.ctx-cap .ctx-caplab { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ctx-cap .ctx-capval { font-family: var(--font-mono); font-size: 9px; font-weight: 700; color: var(--text); }
+.ctx-cap:not(.on) .ctx-capval { color: var(--subtle); font-weight: 500; }
+
+/* compaction preview: retains vs drops */
+.ctx-prevcols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.ctx-prevcols h4 {
+  margin: 0 0 4px; font-size: 8px; font-weight: 800; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--subtle);
+}
+.ctx-prevrow { display: flex; align-items: flex-start; gap: 5px; font-size: 9px; color: var(--muted); line-height: 1.45; padding: 2px 0; }
+.ctx-prevrow svg { flex: none; margin-top: 2px; }
+.ctx-prevrow.keep svg { color: var(--positive); }
+.ctx-prevrow.drop svg { color: var(--danger); }
+
+/* =====================================================================
+   THE GROWTH CHART.
+   `preserveAspectRatio="none"` is gone.  Instead the container carries the
+   viewBox's aspect ratio, so the default (uniform) `xMidYMid meet` fits
+   exactly with no letterboxing and no non-uniform stretch of the curve or
+   its stroke.  Below `min-width` the wrapper scrolls horizontally rather
+   than shrinking the tick labels into illegibility — the drawer itself
+   never scrolls sideways.
+   ===================================================================== */
+/* The wrapper also carries the base sheet's `.growth-chart` (styles.css:297) so
+   that rule keeps a live match and the section keeps its designed bottom rule.
+   Its three geometry declarations are the ones that have to go: a fixed 90px
+   height and `overflow:hidden` would clip the new plot and kill its scroll. */
+.ctx-growth-wrap { overflow-x: auto; overflow-y: hidden; scrollbar-gutter: stable; overscroll-behavior-x: contain; }
+.growth-chart.ctx-growth-wrap { height: auto; overflow-x: auto; overflow-y: hidden; padding-bottom: 7px; }
+.growth-chart .ctx-growth svg { position: static; }
+.ctx-growth { width: 100%; min-width: 392px; aspect-ratio: 460 / 184; }
+.ctx-growth svg { width: 100%; height: 100%; display: block; }
+
+.ctx-growth .ctx-axis { stroke: var(--border-strong); stroke-width: 1; }
+.ctx-growth .ctx-grid { stroke: var(--border); stroke-width: 1; }
+.ctx-growth .ctx-tick { stroke: var(--border-strong); stroke-width: 1; }
+.ctx-growth .ctx-ceiling { stroke: var(--danger); stroke-width: 1.4; stroke-dasharray: 5 4; opacity: .9; }
+.ctx-growth .ctx-ylab, .ctx-growth .ctx-xlab {
+  fill: var(--subtle); font-family: var(--font-mono); font-size: 9.5px;
+}
+.ctx-growth .ctx-unitlab { fill: var(--subtle); font-size: 9px; font-weight: 700; letter-spacing: .04em; }
+.ctx-growth .ctx-ceillab { fill: var(--danger); font-size: 9.5px; font-weight: 800; }
+.ctx-growth .ctx-area { fill: url(#ctxgrad); }
+.ctx-growth .ctx-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.ctx-growth .ctx-hit { fill: transparent; }
+.ctx-growth .ctx-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 1.2; transition: r 140ms var(--ease); }
+.ctx-growth .ctx-dot.unknown { fill: none; stroke: var(--subtle); stroke-dasharray: 2 2; }
+.ctx-growth .ctx-pt { cursor: crosshair; }
+.ctx-growth .ctx-pt:hover .ctx-dot { r: 4.8; stroke-width: 1.6; }
+
+.ctx-growth-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin-top: 7px; }
+.ctx-gleg { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; color: var(--muted); white-space: nowrap; }
+.ctx-gleg.dim { color: var(--subtle); }
+.ctx-gleg i { width: 14px; height: 0; flex: none; }
+.ctx-gleg i.line { border-top: 2px solid var(--accent); }
+.ctx-gleg i.ceil { border-top: 2px dashed var(--danger); }
+.ctx-growth-read {
+  margin-top: 6px; font-size: 9px; color: var(--subtle); line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+.ctx-growth-read b { color: var(--text); font-family: var(--font-mono); }
+.ctx-growth-empty { font-size: 9px; color: var(--subtle); line-height: 1.5; padding: 10px 2px; }
+
+/* =====================================================================
+   Narrow widths.  The drawer is min(500px, 100vw - 14px); below roughly
+   430px the growth plot hits its min-width and its wrapper scrolls, and
+   the two-column blocks fold.
+   ===================================================================== */
+@media (max-width: 700px) {
+  .ctx-caps, .ctx-prevcols, .ctx-drawer .metric-grid.ctx-grid2 { grid-template-columns: 1fr; }
+  .composition-key .ctx-srcrow { grid-template-columns: 9px minmax(0, 1fr) 40px 56px; }
+  .ctx-pop { width: min(322px, calc(100vw - 26px)); }
+}
+@media (max-width: 390px) {
+  .ctx-acts { flex-wrap: wrap; }
+  .ctx-cache { flex: 1 0 100%; }
+}
+
+/* =====================================================================
+   Reduced motion.  motion.css:179-195 is a SELECTIVE stop list keyed on
+   named loops, so a new looping animation that is not added to a stop rule
+   runs forever.  This module scopes its own stop rule rather than reaching
+   into motion.css.  State still advances — the compaction outcome is
+   driven by a timer, not by an animation — it simply stops moving.
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ctx-spin {
+    animation: none;
+    border-color: var(--surface-4);
+    border-top-color: var(--accent);
+    border-right-color: var(--accent);
+  }
+  .ctx-status { animation: none; }
+  .ctx-meter i { animation: none; }
+  .ctx-morebtn .ctx-chev { transition: none; }
+  .ctx-growth .ctx-dot { transition: none; }
+}

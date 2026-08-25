@@ -1,0 +1,100 @@
+{
+ "menu": {
+  "top": 8.6,
+  "bottom": 212.6,
+  "vh": 220,
+  "inViewport": true,
+  "maxH": "204px",
+  "overflowY": "auto",
+  "overscroll": "contain",
+  "clientH": 202,
+  "scrollH": 236
+ },
+ "menuScroll": {
+  "before": 0,
+  "after": 34,
+  "didScroll": true,
+  "rows": 5,
+  "lastText": "TeacherExplanations, tours, an",
+  "lastRect": {
+   "top": 167,
+   "bottom": 205.6
+  },
+  "lastInViewport": true,
+  "lastIsPaintedElement": true
+ },
+ "menuLastRowPixels": {
+  "colours": 395,
+  "mean": 29.08
+ },
+ "toasts": [
+  {
+   "nodeChanges": 1,
+   "partialOpacitySamples": 8,
+   "opacities": [
+    0.112,
+    0.55,
+    0.876,
+    0.962,
+    0.954,
+    0.897,
+    0.727,
+    0.479
+   ],
+   "fadeStart": 62,
+   "lastPresent": 2761,
+   "animName": "(gone)"
+  },
+  {
+   "nodeChanges": 1,
+   "partialOpacitySamples": 8,
+   "opacities": [
+    0.221,
+    0.55,
+    0.875,
+    0.962,
+    0.954,
+    0.897,
+    0.727,
+    0.372
+   ],
+   "fadeStart": 61,
+   "lastPresent": 2761,
+   "animName": "(gone)"
+  },
+  {
+   "nodeChanges": 1,
+   "partialOpacitySamples": 8,
+   "opacities": [
+    0.221,
+    0.55,
+    0.875,
+    0.962,
+    0.954,
+    0.897,
+    0.727,
+    0.372
+   ],
+   "fadeStart": 61,
+   "lastPresent": 2761,
+   "animName": "(gone)"
+  },
+  {
+   "nodeChanges": 1,
+   "partialOpacitySamples": 7,
+   "opacities": [
+    0.331,
+    0.661,
+    0.911,
+    0.939,
+    0.868,
+    0.658,
+    0.255
+   ],
+   "fadeStart": 66,
+   "lastPresent": 2765,
+   "animName": "(gone)"
+  }
+ ],
+ "errs": []
+}

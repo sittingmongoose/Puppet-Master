@@ -1,0 +1,4216 @@
+{
+  "overall": "FAIL",
+  "summary": {
+    "passed": 441,
+    "failed": 3,
+    "consoleErrors": 0,
+    "pageErrors": 0
+  },
+  "passes": [
+    {
+      "label": "Boots from direct file URL",
+      "detail": ""
+    },
+    {
+      "label": "Initial demo content is populated"
+    },
+    {
+      "label": "Initial working animation advances"
+    },
+    {
+      "label": "No page horizontal overflow: initial",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "No page horizontal overflow: initial"
+    },
+    {
+      "label": "Viewport containment: Context compact menu",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1075.38671875,\"top\":87.93785858154297,\"right\":1430.47265625,\"bottom\":411.3683090209961,\"width\":355.0859375,\"height\":323.4304504394531},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Context Ring opens compact menu"
+    },
+    {
+      "label": "Context More Details contains required metrics"
+    },
+    {
+      "label": "Viewport containment: goal hover",
+      "detail": "{\"ok\":true,\"r\":{\"left\":903.140625,\"top\":473.59375,\"right\":1257.140625,\"bottom\":700.109375,\"width\":354,\"height\":226.515625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Activity hover preview: goal"
+    },
+    {
+      "label": "Activity click opens all-category detail: goal"
+    },
+    {
+      "label": "Viewport containment: todo hover",
+      "detail": "{\"ok\":true,\"r\":{\"left\":958.53125,\"top\":389.1927490234375,\"right\":1312.53125,\"bottom\":698.0677490234375,\"width\":354,\"height\":308.875},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Activity hover preview: todo"
+    },
+    {
+      "label": "Activity click opens all-category detail: todo"
+    },
+    {
+      "label": "Viewport containment: subagents hover",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1012.484375,\"top\":391.234375,\"right\":1366.484375,\"bottom\":700.109375,\"width\":354,\"height\":308.875},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Activity hover preview: subagents"
+    },
+    {
+      "label": "Activity click opens all-category detail: subagents"
+    },
+    {
+      "label": "Viewport containment: changes hover",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":404.28125,\"right\":1432,\"bottom\":700.109375,\"width\":354,\"height\":295.828125},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Activity hover preview: changes"
+    },
+    {
+      "label": "Activity click opens all-category detail: changes"
+    },
+    {
+      "label": "Viewport containment: artifacts hover",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":422.7196350097656,\"right\":1432,\"bottom\":696.5008544921875,\"width\":354,\"height\":273.7812194824219},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Activity hover preview: artifacts"
+    },
+    {
+      "label": "Activity click opens all-category detail: artifacts"
+    },
+    {
+      "label": "Activity Detail pin and unpin"
+    },
+    {
+      "label": "Viewport containment: model picker",
+      "detail": "{\"ok\":true,\"r\":{\"left\":931.717041015625,\"top\":442.914794921875,\"right\":1276.0052490234375,\"bottom\":815.4380493164062,\"width\":344.2882080078125,\"height\":372.52325439453125},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: model sidecar",
+      "detail": "{\"ok\":true,\"r\":{\"left\":511.6412353515625,\"top\":249.0636749267578,\"right\":858.8592529296875,\"bottom\":477.0935974121094,\"width\":347.218017578125,\"height\":228.02992248535156},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Model picker and effort sidecar"
+    },
+    {
+      "label": "Viewport containment: Plan sidecar",
+      "detail": "{\"ok\":true,\"r\":{\"left\":910.5006103515625,\"top\":570.81005859375,\"right\":1138.8682861328125,\"bottom\":734.3739013671875,\"width\":228.36767578125,\"height\":163.5638427734375},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: Deep Plan sidecar",
+      "detail": "{\"ok\":true,\"r\":{\"left\":905.96875,\"top\":571.3125,\"right\":1139.46875,\"bottom\":693.53125,\"width\":233.5,\"height\":122.21875},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Plan and Deep Plan hover sidecars"
+    },
+    {
+      "label": "Viewport containment: goal-menu",
+      "detail": "{\"ok\":true,\"r\":{\"left\":828.9375,\"top\":532.65625,\"right\":1131.5625,\"bottom\":654.875,\"width\":302.625,\"height\":122.21875},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: bsd-menu",
+      "detail": "{\"ok\":true,\"r\":{\"left\":931.0179443359375,\"top\":532.9649658203125,\"right\":1131.958984375,\"bottom\":692.1093139648438,\"width\":200.9410400390625,\"height\":159.14434814453125},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: context-lens",
+      "detail": "{\"ok\":true,\"r\":{\"left\":711.578125,\"top\":532.671875,\"right\":1131.578125,\"bottom\":820.09375,\"width\":420,\"height\":287.421875},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: thought-menu",
+      "detail": "{\"ok\":true,\"r\":{\"left\":887.765625,\"top\":532.65625,\"right\":1131.5625,\"bottom\":654.875,\"width\":243.796875,\"height\":122.21875},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Capability hover sidecars"
+    },
+    {
+      "label": "Working Animation controls and history"
+    },
+    {
+      "label": "Distinct Working Animation option 1"
+    },
+    {
+      "label": "Distinct Working Animation option 2"
+    },
+    {
+      "label": "Distinct Working Animation option 3"
+    },
+    {
+      "label": "Distinct Working Animation option 4"
+    },
+    {
+      "label": "Distinct Working Animation option 5"
+    },
+    {
+      "label": "Distinct Working Animation option 6"
+    },
+    {
+      "label": "Distinct Working Animation option 7"
+    },
+    {
+      "label": "Distinct Working Animation option 8"
+    },
+    {
+      "label": "Distinct Working Animation option 9"
+    },
+    {
+      "label": "Distinct Working Animation option 10"
+    },
+    {
+      "label": "Distinct Working Animation option 11"
+    },
+    {
+      "label": "Distinct Working Animation option 12"
+    },
+    {
+      "label": "Distinct Working Animation option 13"
+    },
+    {
+      "label": "Distinct Working Animation option 14"
+    },
+    {
+      "label": "Distinct Working Animation option 15"
+    },
+    {
+      "label": "Distinct Working Animation option 16"
+    },
+    {
+      "label": "Distinct Working Animation option 17"
+    },
+    {
+      "label": "Distinct Working Animation option 18"
+    },
+    {
+      "label": "Distinct Working Animation option 19"
+    },
+    {
+      "label": "Distinct Working Animation option 20"
+    },
+    {
+      "label": "Distinct Working Animation option 21"
+    },
+    {
+      "label": "Distinct Working Animation option 22"
+    },
+    {
+      "label": "Distinct Working Animation option 23"
+    },
+    {
+      "label": "Distinct Working Animation option 24"
+    },
+    {
+      "label": "Working chrome compacts and re-expands a phase"
+    },
+    {
+      "label": "Plan card has View, Revise, Build"
+    },
+    {
+      "label": "Plan decision is in flow above Activity Bar"
+    },
+    {
+      "label": "Questionnaire persists and stays in flow"
+    },
+    {
+      "label": "Artifact opens: mermaid-runtime"
+    },
+    {
+      "label": "Artifact opens: dashboard-query"
+    },
+    {
+      "label": "Artifact opens: data-explorer"
+    },
+    {
+      "label": "Artifact opens: architecture-map"
+    },
+    {
+      "label": "Artifact opens: quiz-indexes"
+    },
+    {
+      "label": "Artifact opens: periodic-capabilities"
+    },
+    {
+      "label": "Artifact opens: flow-plan"
+    },
+    {
+      "label": "Artifact opens: chart-cost"
+    },
+    {
+      "label": "Artifact opens: generated-image"
+    },
+    {
+      "label": "Artifact opens: test-evidence"
+    },
+    {
+      "label": "Artifact opens: broken-viz"
+    },
+    {
+      "label": "Interactive quiz responds"
+    },
+    {
+      "label": "Mermaid source/render switches"
+    },
+    {
+      "label": "Live subagent content is visible without hover"
+    },
+    {
+      "label": "Ordinary text-only conversation exists"
+    },
+    {
+      "label": "Message More Details opens"
+    },
+    {
+      "label": "No page horizontal overflow: basic-dark 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-dark 430"
+    },
+    {
+      "label": "No page horizontal overflow: basic-dark 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-dark 650"
+    },
+    {
+      "label": "No page horizontal overflow: basic-dark 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-dark 1024"
+    },
+    {
+      "label": "No page horizontal overflow: basic-dark 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-dark 1440"
+    },
+    {
+      "label": "No page horizontal overflow: basic-dark 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-dark 1920"
+    },
+    {
+      "label": "No page horizontal overflow: basic-light 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-light 430"
+    },
+    {
+      "label": "No page horizontal overflow: basic-light 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.015625,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-light 650"
+    },
+    {
+      "label": "No page horizontal overflow: basic-light 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-light 1024"
+    },
+    {
+      "label": "No page horizontal overflow: basic-light 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-light 1440"
+    },
+    {
+      "label": "No page horizontal overflow: basic-light 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell basic-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage basic-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer basic-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap basic-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry basic-light 1920"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-dark 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-dark 430"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-dark 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-dark 650"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-dark 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-dark 1024"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-dark 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-dark 1440"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-dark 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-dark 1920"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-light 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-light 430"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-light 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.015625,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-light 650"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-light 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-light 1024"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-light 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-light 1440"
+    },
+    {
+      "label": "No page horizontal overflow: friendly-light 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell friendly-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage friendly-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer friendly-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap friendly-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry friendly-light 1920"
+    },
+    {
+      "label": "No page horizontal overflow: glass-dark 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-dark 430"
+    },
+    {
+      "label": "No page horizontal overflow: glass-dark 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.015625,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-dark 650"
+    },
+    {
+      "label": "No page horizontal overflow: glass-dark 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":754.140625,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":269.859375,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-dark 1024"
+    },
+    {
+      "label": "No page horizontal overflow: glass-dark 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-dark 1440"
+    },
+    {
+      "label": "No page horizontal overflow: glass-dark 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-dark 1920"
+    },
+    {
+      "label": "No page horizontal overflow: glass-light 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-light 430"
+    },
+    {
+      "label": "No page horizontal overflow: glass-light 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":198.75,\"top\":42,\"right\":650,\"bottom\":876,\"width\":451.25,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450.109375,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-light 650"
+    },
+    {
+      "label": "No page horizontal overflow: glass-light 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":754.71875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":269.28125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.296875,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-light 1024"
+    },
+    {
+      "label": "No page horizontal overflow: glass-light 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-light 1440"
+    },
+    {
+      "label": "No page horizontal overflow: glass-light 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell glass-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage glass-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer glass-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap glass-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry glass-light 1920"
+    },
+    {
+      "label": "No page horizontal overflow: retro-dark 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":762.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":113.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-dark 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":711.15625,\"right\":430,\"bottom\":762.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-dark 430"
+    },
+    {
+      "label": "No page horizontal overflow: retro-dark 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":742.109375,\"right\":650,\"bottom\":876,\"width\":450.015625,\"height\":133.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-dark 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":689.109375,\"right\":650,\"bottom\":742.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-dark 650"
+    },
+    {
+      "label": "No page horizontal overflow: retro-dark 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":729.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":146.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-dark 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":676.0625,\"right\":1024,\"bottom\":729.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-dark 1024"
+    },
+    {
+      "label": "No page horizontal overflow: retro-dark 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.5625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.4375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":742.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":133.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-dark 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":689.109375,\"right\":1440,\"bottom\":742.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-dark 1440"
+    },
+    {
+      "label": "No page horizontal overflow: retro-dark 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":742.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":133.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-dark 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":689.109375,\"right\":1920,\"bottom\":742.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-dark 1920"
+    },
+    {
+      "label": "No page horizontal overflow: retro-light 430",
+      "detail": "{\"sw\":430,\"cw\":430,\"bw\":430}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":762.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":113.84375},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-light 430",
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":711.15625,\"right\":430,\"bottom\":762.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-light 430"
+    },
+    {
+      "label": "No page horizontal overflow: retro-light 650",
+      "detail": "{\"sw\":650,\"cw\":650,\"bw\":650}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":742.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":133.890625},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-light 650",
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":689.109375,\"right\":650,\"bottom\":742.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-light 650"
+    },
+    {
+      "label": "No page horizontal overflow: retro-light 1024",
+      "detail": "{\"sw\":1024,\"cw\":1024,\"bw\":1024}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":729.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":146.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-light 1024",
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":676.0625,\"right\":1024,\"bottom\":729.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-light 1024"
+    },
+    {
+      "label": "No page horizontal overflow: retro-light 1440",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":742.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":133.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-light 1440",
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":689.109375,\"right\":1440,\"bottom\":742.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-light 1440"
+    },
+    {
+      "label": "No page horizontal overflow: retro-light 1920",
+      "detail": "{\"sw\":1920,\"cw\":1920,\"bw\":1920}"
+    },
+    {
+      "label": "Viewport containment: .pm-shell retro-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .chat-stage retro-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .composer retro-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":742.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":133.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: .activity-wrap retro-light 1920",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":689.109375,\"right\":1920,\"bottom\":742.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+    },
+    {
+      "label": "Core geometry retro-light 1920"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 0",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 1"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 1",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 2"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 2",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 3"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 3",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 4"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 4",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 5"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 5",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 6"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 6",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 7"
+    },
+    {
+      "label": "No page horizontal overflow: family 0 option 7",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 1, option 8"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 0",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 1"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 1",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 2"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 2",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 3"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 3",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 4"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 4",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 5"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 5",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 6"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 6",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 7"
+    },
+    {
+      "label": "No page horizontal overflow: family 1 option 7",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 2, option 8"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 0",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 1"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 1",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 2"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 2",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 3"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 3",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 4"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 4",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 5"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 5",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 6"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 6",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 7"
+    },
+    {
+      "label": "No page horizontal overflow: family 2 option 7",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 3, option 8"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 0",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 1"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 1",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 2"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 2",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 3"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 3",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 4"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 4",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 5"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 5",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 6"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 6",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 7"
+    },
+    {
+      "label": "No page horizontal overflow: family 3 option 7",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 4, option 8"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 0",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 1"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 1",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 2"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 2",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 3"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 3",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 4"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 4",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 5"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 5",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 6"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 6",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 7"
+    },
+    {
+      "label": "No page horizontal overflow: family 4 option 7",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 5, option 8"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 0",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 1"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 1",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 2"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 2",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 3"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 3",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 4"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 4",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 5"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 5",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 6"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 6",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 7"
+    },
+    {
+      "label": "No page horizontal overflow: family 5 option 7",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 6, option 8"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 0",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 1"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 1",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 2"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 2",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 3"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 3",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 4"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 4",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 5"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 5",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 6"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 6",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 7"
+    },
+    {
+      "label": "No page horizontal overflow: family 6 option 7",
+      "detail": "{\"sw\":1440,\"cw\":1440,\"bw\":1440}"
+    },
+    {
+      "label": "Component family 7, option 8"
+    },
+    {
+      "label": "No page overflow at 1920 across the editor split range"
+    },
+    {
+      "label": "No page overflow at 1100 across the editor split range"
+    },
+    {
+      "label": "Global reset restores stock state"
+    },
+    {
+      "label": "Matcher hygiene: text assertions were actually exercised",
+      "detail": "28 matchers"
+    },
+    {
+      "label": "Matcher hygiene: no text assertion matched zero elements",
+      "detail": "[]"
+    },
+    {
+      "label": "Matcher hygiene: no text assertion is unscoped",
+      "detail": "[]"
+    },
+    {
+      "label": "Test isolation: no test left an overlay open for its successor",
+      "detail": "[]"
+    },
+    {
+      "label": "No browser console errors",
+      "detail": ""
+    },
+    {
+      "label": "No uncaught page errors",
+      "detail": ""
+    }
+  ],
+  "failures": [
+    {
+      "label": "Phase compact and expand across all 24 working takes",
+      "detail": "Error: takes with a phase disc that does not expand/collapse: [{\"take\":1,\"opened\":0,\"closed\":0,\"err\":\"\"},{\"take\":12,\"opened\":0,\"closed\":0,\"err\":\"\"},{\"take\":16,\"opened\":0,\"closed\":0,\"err\":\"\"}]"
+    },
+    {
+      "label": "No page overflow at 1440 across the editor split range",
+      "detail": "Error: page overflows with the VIEWPORT unchanged, only the split moved: [{\"askedPct\":70,\"cw\":1440,\"sw\":1440,\"bw\":1469,\"editorPct\":69.8,\"over\":[\"button.context-ring+29px\"]},{\"askedPct\":80,\"cw\":1440,\"sw\":1440,\"bw\":1469,\"editorPct\":69.8,\"over\":[\"button.context-ring+29px\"]}]"
+    },
+    {
+      "label": "No page overflow at 1280 across the editor split range",
+      "detail": "Error: page overflows with the VIEWPORT unchanged, only the split moved: [{\"askedPct\":70,\"cw\":1280,\"sw\":1280,\"bw\":1309,\"editorPct\":66,\"over\":[\"button.context-ring+29px\"]},{\"askedPct\":80,\"cw\":1280,\"sw\":1280,\"bw\":1309,\"editorPct\":66,\"over\":[\"button.context-ring+29px\"]}]"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "matcherHygiene": [
+    {
+      "text": "Query Performance",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Query Performance",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Analyze the analytics query performance",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Compact now",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "More details",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "83.9K",
+      "exact": false,
+      "found": 2,
+      "allow": 2
+    },
+    {
+      "text": "78%",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Source composition",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Context More Details",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "current window used",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Tokens loaded",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Cache hit",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Cached tokens",
+      "exact": false,
+      "found": 2,
+      "allow": 2
+    },
+    {
+      "text": "Source composition",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Context growth",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "API billed",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Worked for",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Organized work stream and evidence",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Read src/analytics/queries.rs",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "View Plan",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Revise",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Build",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Revise",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Create revision",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Deployment questionnaire",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Correct",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "flowchart LR",
+      "exact": false,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Cache hit",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    }
+  ],
+  "cleanupLog": [
+    {
+      "after": "Initial demo content is populated",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Initial working animation advances",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "No page horizontal overflow: initial",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Context Ring opens compact menu",
+      "before": {
+        "menu": true,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 1,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 4
+    },
+    {
+      "after": "Context More Details contains required metrics",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Activity hover preview: goal",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": true,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 1,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity click opens all-category detail: goal",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": true,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 1,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity hover preview: todo",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": true,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 1,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity click opens all-category detail: todo",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": true,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 1,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity hover preview: subagents",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": true,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 1,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity click opens all-category detail: subagents",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": true,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 1,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity hover preview: changes",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": true,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 1,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity click opens all-category detail: changes",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": true,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 1,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity hover preview: artifacts",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": true,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 1,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity click opens all-category detail: artifacts",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": true,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 1,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Activity Detail pin and unpin",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": true,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 1,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Model picker and effort sidecar",
+      "before": {
+        "menu": true,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 1,
+        "domSidecar": 1,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 4
+    },
+    {
+      "after": "Plan and Deep Plan hover sidecars",
+      "before": {
+        "menu": true,
+        "dialog": false,
+        "hover": true,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 1,
+        "domSidecar": 1,
+        "domHover": 1,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 3
+    },
+    {
+      "after": "Capability hover sidecars",
+      "before": {
+        "menu": true,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 1,
+        "domSidecar": 1,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 4
+    },
+    {
+      "after": "Working Animation controls and history",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 1",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 2",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 3",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 4",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 5",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 6",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 7",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 8",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 9",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 10",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 11",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 12",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 13",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 14",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 15",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 16",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 17",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 18",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 19",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 20",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 21",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 22",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 23",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Distinct Working Animation option 24",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Working chrome compacts and re-expands a phase",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Phase compact and expand across all 24 working takes",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Plan card has View, Revise, Build",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Plan decision is in flow above Activity Bar",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": true,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Questionnaire persists and stays in flow",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": true,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 2
+    },
+    {
+      "after": "Artifact opens: mermaid-runtime",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: dashboard-query",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: data-explorer",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: architecture-map",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: quiz-indexes",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: periodic-capabilities",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: flow-plan",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: chart-cost",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: generated-image",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: test-evidence",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Artifact opens: broken-viz",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Interactive quiz responds",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Mermaid source/render switches",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Live subagent content is visible without hover",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Ordinary text-only conversation exists",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Message More Details opens",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "theme and width sweep",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "component family sweep",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "editor split sweep",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
+      "after": "Global reset restores stock state",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    }
+  ],
+  "generatedAt": "2026-08-25T04:17:52.267Z"
+}

@@ -1,0 +1,33 @@
+import {chromium} from 'playwright';import {pathToFileURL} from 'url';
+const FILE="/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html";
+const b=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
+const p=await b.newPage({viewport:{width:1440,height:900}});
+await p.goto(pathToFileURL(FILE).href,{waitUntil:'load'});
+await p.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
+await p.waitForTimeout(700);
+await p.evaluate(()=>{document.querySelector('[data-action="ph-toggle-pin"]').click();});
+await p.waitForTimeout(600);
+const edge=await p.evaluate(()=>{const r=document.querySelector('.history-flyout').getBoundingClientRect();
+  return {right:Math.round(r.right),y:Math.round(r.top+r.height/2),left:Math.round(r.left),clip:getComputedStyle(document.querySelector('.history-flyout')).clipPath};});
+console.log('edge',edge);
+async function lum(x,y,w,h){const s=await p.screenshot({clip:{x,y,width:w,height:h}});
+ return await p.evaluate(async d=>{const i=new Image();await new Promise(r=>{i.onload=r;i.src=d});
+  const c=document.createElement('canvas');c.width=i.width;c.height=i.height;const g=c.getContext('2d');g.drawImage(i,0,0);
+  const px=g.getImageData(0,0,c.width,c.height).data;let t=0;for(let k=0;k<px.length;k+=4)t+=(px[k]+px[k+1]+px[k+2])/3;
+  return Math.round(t*100/(px.length/4))/100;},'data:image/png;base64,'+s.toString('base64'));}
+const withShadow=await lum(edge.right+2,edge.y-8,20,16);
+await p.evaluate(()=>{document.querySelector('.history-flyout').style.boxShadow='none';});
+await p.waitForTimeout(120);
+const noShadow=await lum(edge.right+2,edge.y-8,20,16);
+await p.evaluate(()=>{document.querySelector('.history-flyout').style.boxShadow='';document.querySelector('.history-flyout').style.clipPath='inset(0 0 0 0)';});
+await p.waitForTimeout(120);
+const clipZero=await lum(edge.right+2,edge.y-8,20,16);
+console.log('right of drawer  withShadow',withShadow,' shadowOff',noShadow,' clipPathInset0',clipZero);
+console.log('=> shadow survives the clip:', withShadow < noShadow-0.3, '| inset(0) WOULD have killed it:', Math.abs(clipZero-noShadow)<0.3);
+// left of the drawer must be CLEAN (no shadow spilling over the editor)
+const leftIn=await lum(edge.left-24,edge.y-8,20,16);
+await p.evaluate(()=>{document.querySelector('.history-flyout').style.clipPath='none';});
+await p.waitForTimeout(120);
+const leftUnclipped=await lum(edge.left-24,edge.y-8,20,16);
+console.log('left of drawer  clipped',leftIn,' unclipped',leftUnclipped,'=> left edge is clipped:',leftIn>leftUnclipped+0.3);
+await b.close();

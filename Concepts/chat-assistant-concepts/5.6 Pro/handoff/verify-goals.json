@@ -1,0 +1,597 @@
+{
+ "boot": {
+  "status": "active",
+  "current": "ph-implement",
+  "phases": [
+   "ph-audit:completed",
+   "ph-research:completed",
+   "ph-proto:completed",
+   "ph-implement:in_progress",
+   "ph-verify:blocked",
+   "ph-handoff:pending"
+  ],
+  "budget": {
+   "used": 42000,
+   "limit": 100000,
+   "unit": "tokens"
+  },
+  "replans": 2,
+  "progress": {
+   "completed": 3,
+   "total": 6,
+   "open": 2
+  },
+  "blocker": true,
+  "summary": {
+   "status": "active",
+   "statusLabel": "Running",
+   "tone": "working",
+   "sidebar": "Running · 8/14 tasks · 3 subgoals active",
+   "counter": "3/6 done · 2 open",
+   "phaseLine": "Phase 4 of 6 · Implement",
+   "budgetLine": "42.0K / 100K",
+   "revision": 3
+  }
+ },
+ "phaseRows": [
+  {
+   "k": "ph:ph-audit:completed:0",
+   "cls": "goal-phase completed",
+   "num": "1",
+   "title": "Audit",
+   "badge": "Done",
+   "glyphPath": "<circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M7.8 12.4l2.9 2.9 5.5-6.1\" stroke=\"var(--surface)\" stroke-width=\"2.4\"></path>"
+  },
+  {
+   "k": "ph:ph-research:completed:0",
+   "cls": "goal-phase completed",
+   "num": "2",
+   "title": "Research",
+   "badge": "Done",
+   "glyphPath": "<circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M7.8 12.4l2.9 2.9 5.5-6.1\" stroke=\"var(--surface)\" stroke-width=\"2.4\"></path>"
+  },
+  {
+   "k": "ph:ph-proto:completed:0",
+   "cls": "goal-phase completed",
+   "num": "3",
+   "title": "Prototype",
+   "badge": "Done",
+   "glyphPath": "<circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M7.8 12.4l2.9 2.9 5.5-6.1\" stroke=\"var(--surface)\" stroke-width=\"2.4\"></path>"
+  },
+  {
+   "k": "ph:ph-matview:abandoned:0",
+   "cls": "goal-phase abandoned",
+   "num": "—",
+   "title": "Materialized-view spike",
+   "badge": "Abandoned",
+   "glyphPath": "<circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M6.2 17.8L17.8 6.2\"></path>"
+  },
+  {
+   "k": "ph:ph-implement:in_progress:1",
+   "cls": "goal-phase in-progress is-current",
+   "num": "4",
+   "title": "Implement",
+   "badge": "In progress",
+   "glyphPath": "<circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M10.1 8.2l5.9 3.8-5.9 3.8z\" fill=\"currentColor\" stroke=\"none\"></path>"
+  },
+  {
+   "k": "ph:ph-verify:blocked:0",
+   "cls": "goal-phase blocked",
+   "num": "5",
+   "title": "Verify",
+   "badge": "Stalled",
+   "glyphPath": "<rect x=\"4.8\" y=\"10.4\" width=\"14.4\" height=\"8.8\" rx=\"2.4\"></rect><path d=\"M8.2 10.4V8.1a3.8 3.8 0 017.6 0v2.3\"></path>"
+  },
+  {
+   "k": "ph:ph-handoff:pending:0",
+   "cls": "goal-phase pending",
+   "num": "6",
+   "title": "Handoff",
+   "badge": "Not started",
+   "glyphPath": "<circle cx=\"12\" cy=\"12\" r=\"8.2\" stroke-dasharray=\"2.4 3.4\"></circle>"
+  }
+ ],
+ "rowsHit": [
+  {
+   "title": "Audit",
+   "isSelf": true,
+   "w": 201,
+   "h": 49
+  },
+  {
+   "title": "Research",
+   "isSelf": true,
+   "w": 201,
+   "h": 49
+  },
+  {
+   "title": "Prototype",
+   "isSelf": true,
+   "w": 201,
+   "h": 49
+  },
+  {
+   "title": "Materialized-view spike",
+   "isSelf": true,
+   "w": 201,
+   "h": 49
+  },
+  {
+   "title": "Implement",
+   "isSelf": true,
+   "w": 201,
+   "h": 76
+  },
+  {
+   "title": "Verify",
+   "isSelf": true,
+   "w": 201,
+   "h": 49
+  },
+  {
+   "title": "Handoff",
+   "isSelf": true,
+   "w": 201,
+   "h": 49
+  }
+ ],
+ "currentGlyph": {
+  "found": true,
+  "ink": [
+   139,
+   114,
+   255
+  ],
+  "bg": [
+   31,
+   32,
+   59
+  ],
+  "delta": 386,
+  "hitTestsToSelf": true
+ },
+ "doneGlyph": {
+  "found": true,
+  "ink": [
+   92,
+   214,
+   155
+  ],
+  "bg": [
+   19,
+   23,
+   37
+  ],
+  "delta": 382,
+  "hitTestsToSelf": true
+ },
+ "blockedGlyph": {
+  "found": true,
+  "ink": [
+   255,
+   108,
+   125
+  ],
+  "bg": [
+   19,
+   23,
+   37
+  ],
+  "delta": 409,
+  "hitTestsToSelf": true
+ },
+ "pendingGlyph": {
+  "found": true,
+  "ink": [
+   142,
+   151,
+   170
+  ],
+  "bg": [
+   19,
+   23,
+   37
+  ],
+  "delta": 384,
+  "hitTestsToSelf": true
+ },
+ "abandonedGlyph": {
+  "found": true,
+  "ink": [
+   96,
+   104,
+   122
+  ],
+  "bg": [
+   19,
+   23,
+   37
+  ],
+  "delta": 243,
+  "hitTestsToSelf": true
+ },
+ "strikePainted": {
+  "strikeW": 30,
+  "titleW": 30,
+  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+  "currentStrike": "matrix(0, 0, 0, 1, 0, 0)"
+ },
+ "currentBg": {
+  "found": true,
+  "rgba": [
+   31,
+   32,
+   59,
+   255
+  ],
+  "isSelf": true,
+  "topTag": "BUTTON.goal-phase-row",
+  "w": 203,
+  "h": 77.96875
+ },
+ "pendingBg": {
+  "found": true,
+  "rgba": [
+   19,
+   23,
+   37,
+   255
+  ],
+  "isSelf": true,
+  "topTag": "BUTTON.goal-phase-row",
+  "w": 203,
+  "h": 51.4375
+ },
+ "glyphShapes": {
+  "completed": "<circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M7.8 12.",
+  "abandoned": "<circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M6.2 17.8L17.8 6.2\"></path>",
+  "in-progress": "<circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M10.1 8.2l5.9 3.8-5.9 3.8z\" fill=\"currentC",
+  "blocked": "<rect x=\"4.8\" y=\"10.4\" width=\"14.4\" height=\"8.8\" rx=\"2.4\"></rect><path d=\"M8.2 10.4V8.1a3.",
+  "pending": "<circle cx=\"12\" cy=\"12\" r=\"8.2\" stroke-dasharray=\"2.4 3.4\"></circle>"
+ },
+ "blockerFields": {
+  "dts": [
+   "Cause",
+   "Next safe action"
+  ],
+  "dds": [
+   179,
+   147
+  ]
+ },
+ "replanMarkers": [
+  "Replan 10:05 · −1",
+  "Replan 09:52 · +1"
+ ],
+ "counter": "3/6 done·2 open1 stalled1 abandoned",
+ "headerChip": "3/6 phases · 42.0K / 100K | title=Goal — Running · Phase 4 of 6 · Implement · 3/6 done · 2 ope",
+ "sidebar": "Running · 8/14 tasks · 3 subgoals active",
+ "drill": {
+  "found": true,
+  "rgba": [
+   9,
+   13,
+   22,
+   255
+  ],
+  "isSelf": true,
+  "topTag": "CODE.",
+  "w": 201,
+  "h": 209.1875
+ },
+ "drillText": "Exit criterionAll four acceptance gates report pass: unit, integration, browser, and write amplification at or below 8%Stalledstarted 10:240 evidenceEvidence is attached only when a phase completes — evidence on unfinish",
+ "life": {
+  "afterPause": {
+   "status": "paused",
+   "current": "ph-implement",
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:in_progress",
+    "ph-verify:blocked",
+    "ph-handoff:pending"
+   ],
+   "budget": {
+    "used": 42000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "replans": 2,
+   "progress": {
+    "completed": 3,
+    "total": 6,
+    "open": 2
+   },
+   "blocker": true,
+   "summary": {
+    "status": "paused",
+    "statusLabel": "Paused",
+    "tone": "paused",
+    "sidebar": "Paused · 8/14 tasks · 3 subgoals active",
+    "counter": "3/6 done · 2 open",
+    "phaseLine": "Phase 4 of 6 · Implement",
+    "budgetLine": "42.0K / 100K",
+    "revision": 3
+   }
+  },
+  "pauseChip": "Paused",
+  "pauseDisabled": {
+   "pause": true,
+   "resume": false
+  },
+  "afterResume": {
+   "status": "active",
+   "current": "ph-implement",
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:in_progress",
+    "ph-verify:blocked",
+    "ph-handoff:pending"
+   ],
+   "budget": {
+    "used": 42000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "replans": 2,
+   "progress": {
+    "completed": 3,
+    "total": 6,
+    "open": 2
+   },
+   "blocker": true,
+   "summary": {
+    "status": "active",
+    "statusLabel": "Running",
+    "tone": "working",
+    "sidebar": "Running · 8/14 tasks · 3 subgoals active",
+    "counter": "3/6 done · 2 open",
+    "phaseLine": "Phase 4 of 6 · Implement",
+    "budgetLine": "42.0K / 100K",
+    "revision": 3
+   }
+  },
+  "afterStop": {
+   "status": "stopped",
+   "current": "ph-implement",
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:in_progress",
+    "ph-verify:blocked",
+    "ph-handoff:pending"
+   ],
+   "budget": {
+    "used": 42000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "replans": 2,
+   "progress": {
+    "completed": 3,
+    "total": 6,
+    "open": 2
+   },
+   "blocker": true,
+   "summary": {
+    "status": "stopped",
+    "statusLabel": "Stopped",
+    "tone": "idle",
+    "sidebar": "Stopped · 8/14 tasks · 3 subgoals active",
+    "counter": "3/6 done · 2 open",
+    "phaseLine": "Phase 4 of 6 · Implement",
+    "budgetLine": "42.0K / 100K",
+    "revision": 3
+   }
+  },
+  "stopChip": "Stopped",
+  "confirmVisible": true,
+  "afterClear": {
+   "status": "cleared",
+   "current": null,
+   "phases": [],
+   "budget": null,
+   "replans": 0,
+   "progress": {
+    "completed": 0,
+    "total": 0,
+    "open": 0
+   },
+   "blocker": false,
+   "summary": {
+    "status": "cleared",
+    "statusLabel": "Cleared",
+    "tone": "idle",
+    "sidebar": "Cleared · 0/0 tasks · 0 subgoals active",
+    "counter": "0/0 done · 0 open",
+    "phaseLine": "No phases",
+    "budgetLine": "",
+    "revision": 1
+   }
+  },
+  "clearedBlock": "No goal on this threadThe goal was cleared. Clearing detaches the goal from the thread — it is not the same as",
+  "barCountWhenCleared": "—",
+  "afterRestore": {
+   "status": "active",
+   "current": "ph-implement",
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:in_progress",
+    "ph-verify:blocked",
+    "ph-handoff:pending"
+   ],
+   "budget": {
+    "used": 42000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "replans": 2,
+   "progress": {
+    "completed": 3,
+    "total": 6,
+    "open": 2
+   },
+   "blocker": true,
+   "summary": {
+    "status": "active",
+    "statusLabel": "Running",
+    "tone": "working",
+    "sidebar": "Running · 8/14 tasks · 3 subgoals active",
+    "counter": "3/6 done · 2 open",
+    "phaseLine": "Phase 4 of 6 · Implement",
+    "budgetLine": "42.0K / 100K",
+    "revision": 3
+   }
+  }
+ },
+ "edit": {
+  "editorOpen": true,
+  "after": {
+   "status": "planning",
+   "current": "ph-implement",
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:in_progress",
+    "ph-verify:blocked",
+    "ph-handoff:pending"
+   ],
+   "budget": {
+    "used": 42000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "replans": 3,
+   "progress": {
+    "completed": 3,
+    "total": 6,
+    "open": 2
+   },
+   "blocker": true,
+   "summary": {
+    "status": "planning",
+    "statusLabel": "Replanning",
+    "tone": "working",
+    "sidebar": "Replanning · 8/14 tasks · 3 subgoals active",
+    "counter": "3/6 done · 2 open",
+    "phaseLine": "Phase 4 of 6 · Implement",
+    "budgetLine": "42.0K / 100K",
+    "revision": 4
+   }
+  },
+  "callout": "ReplanningA material edit was recorded as revision 4. The goal is not running until the revision is accepted.Accept revi",
+  "newMarkerCount": 2,
+  "accepted": "active"
+ },
+ "editor": {
+  "chars": 4037,
+  "hasOldLiterals": true,
+  "hasRuntimeLabels": true,
+  "phases": 7,
+  "tabLabel": "Active Goal"
+ },
+ "flow": [
+  {
+   "label": "step1",
+   "status": "active",
+   "current": "ph-handoff",
+   "budget": {
+    "used": 63000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:completed",
+    "ph-verify:blocked",
+    "ph-handoff:in_progress"
+   ]
+  },
+  {
+   "label": "unblock-before",
+   "blocker": true
+  },
+  {
+   "label": "unblocked",
+   "status": "active",
+   "current": "ph-verify",
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:completed",
+    "ph-verify:in_progress",
+    "ph-handoff:pending"
+   ]
+  },
+  {
+   "label": "step2",
+   "status": "active",
+   "current": "ph-handoff",
+   "budget": {
+    "used": 87000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:completed",
+    "ph-verify:completed",
+    "ph-handoff:in_progress"
+   ]
+  },
+  {
+   "label": "step3-budget",
+   "status": "budget_limited",
+   "current": "ph-handoff",
+   "budget": {
+    "used": 87000,
+    "limit": 100000,
+    "unit": "tokens"
+   },
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:completed",
+    "ph-verify:completed",
+    "ph-handoff:in_progress"
+   ]
+  },
+  {
+   "label": "budgetLimited",
+   "status": "budget_limited"
+  },
+  {
+   "label": "step4-complete",
+   "status": "complete",
+   "current": null,
+   "budget": {
+    "used": 106000,
+    "limit": 150000,
+    "unit": "tokens"
+   },
+   "phases": [
+    "ph-audit:completed",
+    "ph-research:completed",
+    "ph-proto:completed",
+    "ph-implement:completed",
+    "ph-verify:completed",
+    "ph-handoff:completed"
+   ]
+  }
+ ],
+ "completionReport": "Completion reportPhases completed6 / 6Evidence items10Skipped or abandoned1Budget used106K Degraded: Materialized-view spike was abandoned and never verified.command output4 plans captured · p95 482 m",
+ "consoleErrors": []
+}

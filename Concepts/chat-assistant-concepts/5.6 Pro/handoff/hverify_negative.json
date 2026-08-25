@@ -1,0 +1,669 @@
+{
+ "pass": 2,
+ "fail": 58,
+ "reduced": false,
+ "results": [
+  {
+   "ok": false,
+   "label": "All nine statuses render a .ph-status indicator",
+   "detail": {}
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: working",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: reviewing",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: waiting",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: idle",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: complete",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: blocked",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: failed",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: paused",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "Painted signature: recovering",
+   "detail": "no such row"
+  },
+  {
+   "ok": false,
+   "label": "All nine indicators are pairwise visually distinct",
+   "detail": {
+    "duplicates": [],
+    "measured": 0
+   }
+  },
+  {
+   "ok": false,
+   "label": "Every status has at least one animation",
+   "detail": {}
+  },
+  {
+   "ok": false,
+   "label": "complete is terminal — one iteration, no loop"
+  },
+  {
+   "ok": false,
+   "label": "All nine motion signatures differ",
+   "detail": {}
+  },
+  {
+   "ok": false,
+   "label": "[item3: status survives row hover] threw before it could assert",
+   "detail": "locator.boundingBox: Timeout 6000ms exceeded.\nCall log:\n  - waiting for locator('.history-flyout .thread-row .ph-status').first()\n"
+  },
+  {
+   "ok": false,
+   "label": "[item3: row padding before/after] threw before it could assert",
+   "detail": "locator.evaluate: Timeout 6000ms exceeded.\nCall log:\n  - waiting for locator('.history-flyout .thread-row').first()\n"
+  },
+  {
+   "ok": false,
+   "label": "Floating flyout wears take 6 (not take 0)",
+   "detail": null
+  },
+  {
+   "ok": false,
+   "label": "No coloured left-edge accent bar on the selected row",
+   "detail": null
+  },
+  {
+   "ok": false,
+   "label": "Selection replacement paints (inset ring + tint)",
+   "detail": null
+  },
+  {
+   "ok": false,
+   "label": "[item3: selection treatment] threw before it could assert",
+   "detail": "page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at eval (eval at evaluate (:311:30), <anonymous>:3:15)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  },
+  {
+   "ok": false,
+   "label": "Drawer rows stack without overlap even with a second module in historyChrome",
+   "detail": {
+    "children": 4,
+    "worstOverlap": 17,
+    "searchH": 17,
+    "scrollFits": 0
+   }
+  },
+  {
+   "ok": false,
+   "label": "[item3: only the summary wraps] threw before it could assert",
+   "detail": "page.evaluate: TypeError: Cannot read properties of null (reading 'querySelector')\n    at eval (eval at evaluate (:311:30), <anonymous>:3:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  },
+  {
+   "ok": false,
+   "label": "Boots as ONE drawer at the assistant pane's LEFT edge (no .history-panel column)",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "The old .history-panel grid column is gone",
+   "detail": {
+    "count": 1
+   }
+  },
+  {
+   "ok": false,
+   "label": "Toggle closes a PINNED drawer and the gutter collapses with it (the bug not ported)",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "OPEN interpolates from the left (transform is sampled mid-flight, not snapped)",
+   "detail": {
+    "distinctX": 0,
+    "inflight": 0,
+    "paneLeft": 782.59375
+   }
+  },
+  {
+   "ok": false,
+   "label": "Scrim opacity ramps in step with the slide",
+   "detail": {
+    "distinctScrim": 0,
+    "scr": []
+   }
+  },
+  {
+   "ok": false,
+   "label": "The pane clip stays in lockstep with the slide (drawer never bleeds over the editor)",
+   "detail": {
+    "frames": 0,
+    "drift": []
+   }
+  },
+  {
+   "ok": false,
+   "label": "Opens LEFT with a live scrim",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "[item4: the clip keeps the float shadow] threw before it could assert",
+   "detail": "page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at eval (eval at evaluate (:311:30), <anonymous>:1:55)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  },
+  {
+   "ok": false,
+   "label": "Esc dismisses an UNPINNED drawer",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "Scrim click dismisses an UNPINNED drawer",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "precondition: click [data-action=\"ph-toggle-pin\"]",
+   "detail": "locator.click: Timeout 4000ms exceeded.\nCall log:\n  - waiting for locator('[data-action=\"ph-toggle-pin\"]').first()\n"
+  },
+  {
+   "ok": false,
+   "label": "PIN narrows the drawer",
+   "detail": {
+    "before": null,
+    "after": null
+   }
+  },
+  {
+   "ok": false,
+   "label": "PIN does not MOVE the drawer (narrows in place)",
+   "detail": {
+    "moved": 0,
+    "before": null,
+    "after": null
+   }
+  },
+  {
+   "ok": false,
+   "label": "Width and gutter interpolate together, not in one step",
+   "detail": {
+    "widths": 0,
+    "gutters": 0
+   }
+  },
+  {
+   "ok": false,
+   "label": "Reserved gutter tracks the pinned width exactly",
+   "detail": {
+    "gutter": 0,
+    "width": null
+   }
+  },
+  {
+   "ok": false,
+   "label": "The transcript slid RIGHT into the gutter",
+   "detail": {
+    "before": 1006.59375,
+    "after": 1006.59375
+   }
+  },
+  {
+   "ok": false,
+   "label": "Scrim goes on pin (chat stays interactive)",
+   "detail": {
+    "op": 1,
+    "pe": "auto"
+   }
+  },
+  {
+   "ok": false,
+   "label": "Heavy overlay shadow becomes a quiet border on pin",
+   "detail": {
+    "shadow": null
+   }
+  },
+  {
+   "ok": false,
+   "label": "Esc does NOT dismiss a pinned drawer (guarded)",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "Scrim area click does NOT dismiss a pinned drawer (guarded)",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "precondition: click [data-action=\"ph-toggle-pin\"]",
+   "detail": "locator.click: Timeout 4000ms exceeded.\nCall log:\n  - waiting for locator('[data-action=\"ph-toggle-pin\"]').first()\n"
+  },
+  {
+   "ok": false,
+   "label": "UNPIN restores the scrim (the reference's sibling defect, fixed)",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "UNPIN widens in place",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "Gutter collapses on unpin",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "precondition: click [data-action=\"ph-toggle-pin\"]",
+   "detail": "locator.click: Timeout 4000ms exceeded.\nCall log:\n  - waiting for locator('[data-action=\"ph-toggle-pin\"]').first()\n"
+  },
+  {
+   "ok": false,
+   "label": "Re-pinned with a live gutter",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "THE TOGGLE CLOSES A PINNED DRAWER (kimi-k3 w1-solo-column.js:330 bug NOT ported)",
+   "detail": {
+    "mode": null,
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": false,
+   "label": "Closing a pinned drawer unpins, so the gutter collapses too",
+   "detail": {
+    "was": 0,
+    "now": 0
+   }
+  },
+  {
+   "ok": false,
+   "label": "The close is ANIMATED — the node survives the exit instead of being dropped",
+   "detail": {
+    "distinctX": 0,
+    "samples": 0
+   }
+  },
+  {
+   "ok": false,
+   "label": "[item4: exit contract] threw before it could assert",
+   "detail": "page.evaluate: TypeError: Cannot read properties of null (reading 'classList')\n    at eval (eval at evaluate (:311:30), <anonymous>:4:7)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  },
+  {
+   "ok": false,
+   "label": "pmPatch cannot remove the drawer before the exit finishes",
+   "detail": {
+    "present": false,
+    "mode": "closing",
+    "historyMode": "closed"
+   }
+  },
+  {
+   "ok": false,
+   "label": "…and it IS removed once the exit lands",
+   "detail": {
+    "mid": {
+     "present": false,
+     "mode": "closing",
+     "historyMode": "closed"
+    },
+    "gone": true
+   }
+  },
+  {
+   "ok": false,
+   "label": "[item4: pinned thread animates into Pinned] threw before it could assert",
+   "detail": "Cannot read properties of null (reading 'id')"
+  },
+  {
+   "ok": false,
+   "label": "No overflow and the drawer paints in all 8 themes",
+   "detail": {
+    "bad": [
+     {
+      "id": "basic-dark",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     },
+     {
+      "id": "basic-light",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     },
+     {
+      "id": "friendly-dark",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     },
+     {
+      "id": "friendly-light",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     },
+     {
+      "id": "glass-dark",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     },
+     {
+      "id": "glass-light",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     },
+     {
+      "id": "retro-dark",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     },
+     {
+      "id": "retro-light",
+      "sw": 1440,
+      "cw": 1440,
+      "bw": 1440,
+      "drawer": false
+     }
+    ],
+    "ids": [
+     "basic-dark",
+     "basic-light",
+     "friendly-dark",
+     "friendly-light",
+     "glass-dark",
+     "glass-light",
+     "retro-dark",
+     "retro-light"
+    ]
+   }
+  },
+  {
+   "ok": false,
+   "label": "The other seven takes still render the stock indicator",
+   "detail": {
+    "other": [
+     {
+      "v": 0,
+      "ph": 0,
+      "stock": 0
+     },
+     {
+      "v": 1,
+      "ph": 0,
+      "stock": 0
+     },
+     {
+      "v": 2,
+      "ph": 0,
+      "stock": 0
+     },
+     {
+      "v": 3,
+      "ph": 0,
+      "stock": 0
+     },
+     {
+      "v": 4,
+      "ph": 0,
+      "stock": 0
+     },
+     {
+      "v": 6,
+      "ph": 0,
+      "stock": 0
+     },
+     {
+      "v": 7,
+      "ph": 0,
+      "stock": 0
+     }
+    ],
+    "seen": 7
+   }
+  },
+  {
+   "ok": false,
+   "label": "Reset all does not resurrect the old .history-panel column",
+   "detail": {
+    "mode": "closing",
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 1006.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Zero console errors/warnings",
+   "detail": []
+  },
+  {
+   "ok": true,
+   "label": "Zero page errors",
+   "detail": []
+  }
+ ],
+ "consoleErrors": [],
+ "pageErrors": []
+}

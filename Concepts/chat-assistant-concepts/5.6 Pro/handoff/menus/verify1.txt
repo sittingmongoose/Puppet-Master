@@ -1,0 +1,66 @@
+PASS  worktree button exists in .chat-header  {"l":1327,"r":1357,"w":30,"h":30}
+FAIL  worktree sits between the search icon and the context ring  {"idxSearch":5,"idxWt":7,"idxRing":9,"order":["icon-button","icon-button","chat-title","chat-meta","chat-head-spacer","icon-button","goal-chip.tone-working","icon-button.worktree-button","icon-button.pm-lens-trigger","context-ring"]}
+PASS  worktree is horizontally between them in painted geometry  {"search":{"l":1224.1,"r":1254.1,"w":30,"h":30},"wt":{"l":1327,"r":1357,"w":30,"h":30},"ring":{"l":1401,"r":1430,"w":29,"h":31}}
+PASS  worktree button keeps its 30x30 hit target (no flex-shrink)  {"l":1327,"r":1357,"w":30,"h":30}
+PASS  worktree state is read from D.operational.worktrees, not the branch string  {"attr":"bound-dirty","fixture":{"id":"feature/query-index","state":"bound-dirty"}}
+PASS  exactly one VISIBLE data-menu-anchor="worktree"  [{"tag":"BUTTON","cls":"icon-button worktree-button","display":"flex"},{"tag":"BUTTON","cls":"selector-button active","display":"none"}]
+PASS  worktree button owns the pixel at its own centre  {"found":true,"owns":true,"hit":"BUTTON.icon-button","rect":{"x":1327,"y":49.5,"w":30,"h":30}}
+PASS  worktree button paints (crop has real content)  {"colours":80,"mean":[27,28,35],"centre":[13,16,26]}
+PASS  the state dot paints a different colour per worktree state  {"main":{"state":"bound-clean","centre":[92,214,155]},"feature/query-index":{"state":"bound-dirty","centre":[245,189,85]},"concept/chat-5-6-pro":{"state":"bound-conflict","centre":[255,108,125]},"review/query-benchmarks":{"state":"unbound","centre":[19,23,37]}}
+PASS  persona: exactly one root menu open  {"count":1,"rect":{"x":1076.7,"y":571.3,"w":304.2,"h":238.1},"opacity":1,"transform":"none","origin":"46.7578px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  persona: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  persona: inside the viewport  {"x":1076.7,"y":571.3,"w":304.2,"h":238.1}
+PASS  persona: hit-tests to itself  {"count":1,"rect":{"x":1076.7,"y":571.3,"w":304.2,"h":238.1},"opacity":1,"transform":"none","origin":"46.7578px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  persona: sprout origin published  "b"
+PASS  persona: paints real content  {"colours":1018,"mean":[25,29,42],"centre":[18,22,34]}
+PASS  persona: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":571.3,"b":809.5}}
+PASS  persona: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  model: exactly one root menu open  {"count":1,"rect":{"x":866.2,"y":249,"w":420,"h":560},"opacity":1,"transform":"none","origin":"363.516px 560px","sprout":"b","inView":true,"owns":true}
+PASS  model: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  model: inside the viewport  {"x":866.2,"y":249,"w":420,"h":560}
+PASS  model: hit-tests to itself  {"count":1,"rect":{"x":866.2,"y":249,"w":420,"h":560},"opacity":1,"transform":"none","origin":"363.516px 560px","sprout":"b","inView":true,"owns":true}
+PASS  model: sprout origin published  "b"
+PASS  model: paints real content  {"colours":2027,"mean":[25,30,44],"centre":[18,22,35]}
+PASS  model: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":249,"b":809}}
+PASS  model: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  mode: exactly one root menu open  {"count":1,"rect":{"x":1146.5,"y":571.3,"w":285.5,"h":238.1},"opacity":1,"transform":"none","origin":"162.93px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  mode: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  mode: inside the viewport  {"x":1146.5,"y":571.3,"w":285.5,"h":238.1}
+PASS  mode: hit-tests to itself  {"count":1,"rect":{"x":1146.5,"y":571.3,"w":285.5,"h":238.1},"opacity":1,"transform":"none","origin":"162.93px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  mode: sprout origin published  "b"
+PASS  mode: paints real content  {"colours":1087,"mean":[24,28,42],"centre":[18,22,34]}
+PASS  mode: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":571.3,"b":809.5}}
+PASS  mode: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  permissions: exactly one root menu open  {"count":1,"rect":{"x":1151.7,"y":601.9,"w":274.3,"h":199.5},"opacity":1,"transform":"none","origin":"197.979px 199.5px","sprout":"b","inView":true,"owns":true}
+PASS  permissions: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  permissions: inside the viewport  {"x":1151.7,"y":601.9,"w":274.3,"h":199.5}
+PASS  permissions: hit-tests to itself  {"count":1,"rect":{"x":1151.7,"y":601.9,"w":274.3,"h":199.5},"opacity":1,"transform":"none","origin":"197.979px 199.5px","sprout":"b","inView":true,"owns":true}
+PASS  permissions: sprout origin published  "b"
+PASS  permissions: paints real content  {"colours":1002,"mean":[26,30,43],"centre":[18,22,34]}
+PASS  permissions: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":601.9,"b":801.4}}
+PASS  permissions: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  worktree: exactly one root menu open  {"count":1,"rect":{"x":1142.8,"y":86.5,"w":289.2,"h":199.5},"opacity":1,"transform":"none","origin":"199.156px 0px","sprout":"t","inView":true,"owns":true}
+PASS  worktree: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  worktree: inside the viewport  {"x":1142.8,"y":86.5,"w":289.2,"h":199.5}
+PASS  worktree: hit-tests to itself  {"count":1,"rect":{"x":1142.8,"y":86.5,"w":289.2,"h":199.5},"opacity":1,"transform":"none","origin":"199.156px 0px","sprout":"t","inView":true,"owns":true}
+PASS  worktree: sprout origin published  "t"
+PASS  worktree: paints real content  {"colours":1154,"mean":[27,31,45],"centre":[19,22,36]}
+PASS  worktree: does not cover its own trigger  {"overlap":false,"anchor":{"t":49.5,"b":79.5},"menu":{"t":86.5,"b":286}}
+PASS  worktree: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  model menu paints every fixture model  {"fixture":14,"rows":14,"groups":5,"providers":5,"clientH":511,"scrollH":740,"overflow":"auto"}
+PASS  model menu groups them by provider  {"fixture":14,"rows":14,"groups":5,"providers":5,"clientH":511,"scrollH":740,"overflow":"auto"}
+PASS  model list overflows and is scrollable  {"fixture":14,"rows":14,"groups":5,"providers":5,"clientH":511,"scrollH":740,"overflow":"auto"}
+PASS  model list actually scrolls  {"scrolled":true,"scrollTop":229,"name":"Cursor Auto","owns":true,"rect":{"x":920.2,"y":757,"w":349,"h":44}}
+PASS  the LAST model row hit-tests to itself after scrolling  {"scrolled":true,"scrollTop":229,"name":"Cursor Auto","owns":true,"rect":{"x":920.2,"y":757,"w":349,"h":44}}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.screenshot: Expected options.clip.width to be greater than 0.
+    at paint (/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/menus-verify.mjs:39:26)
+    at /tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/menus-verify.mjs:275:27 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v20.19.4

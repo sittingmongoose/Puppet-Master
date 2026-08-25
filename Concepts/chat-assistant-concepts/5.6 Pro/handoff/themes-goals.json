@@ -1,0 +1,144 @@
+{
+ "themes": {
+  "basic-dark": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(139, 114, 255)",
+    "done": "rgb(92, 214, 155)",
+    "blocked": "rgb(255, 108, 125)",
+    "pending": "rgb(142, 151, 170)",
+    "abandoned": "rgb(98, 107, 125)"
+   }
+  },
+  "basic-light": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(101, 82, 223)",
+    "done": "rgb(22, 132, 90)",
+    "blocked": "rgb(199, 59, 82)",
+    "pending": "rgb(102, 112, 133)",
+    "abandoned": "rgb(141, 150, 168)"
+   }
+  },
+  "friendly-dark": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(255, 142, 176)",
+    "done": "rgb(134, 216, 167)",
+    "blocked": "rgb(255, 126, 135)",
+    "pending": "rgb(181, 174, 189)",
+    "abandoned": "rgb(130, 122, 141)"
+   }
+  },
+  "friendly-light": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(207, 95, 133)",
+    "done": "rgb(47, 141, 99)",
+    "blocked": "rgb(201, 79, 92)",
+    "pending": "rgb(117, 103, 114)",
+    "abandoned": "rgb(163, 146, 157)"
+   }
+  },
+  "glass-dark": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(178, 135, 255)",
+    "done": "rgb(123, 224, 175)",
+    "blocked": "rgb(255, 129, 152)",
+    "pending": "rgb(176, 168, 201)",
+    "abandoned": "rgb(124, 114, 152)"
+   }
+  },
+  "glass-light": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(122, 85, 202)",
+    "done": "rgb(37, 132, 94)",
+    "blocked": "rgb(186, 67, 92)",
+    "pending": "rgb(113, 105, 135)",
+    "abandoned": "rgb(153, 145, 170)"
+   }
+  },
+  "retro-dark": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(96, 243, 154)",
+    "done": "rgb(116, 255, 176)",
+    "blocked": "rgb(255, 107, 112)",
+    "pending": "rgb(125, 179, 148)",
+    "abandoned": "rgb(79, 128, 101)"
+   }
+  },
+  "retro-light": {
+   "docScrollW": 1440,
+   "bodyScrollW": 1557,
+   "overflowing": [
+    "BUTTON.goal-chip"
+   ],
+   "chipText": "Running",
+   "colours": {
+    "current": "rgb(25, 115, 76)",
+    "done": "rgb(22, 115, 76)",
+    "blocked": "rgb(163, 61, 66)",
+    "pending": "rgb(96, 117, 103)",
+    "abandoned": "rgb(138, 154, 143)"
+   }
+  }
+ },
+ "errs": [],
+ "reduced": {
+  "loops": [],
+  "pulseAnim": "none",
+  "chipDot": "none",
+  "before": {
+   "s": "active",
+   "c": "ph-implement",
+   "done": 3
+  },
+  "afterPause": "paused",
+  "after": {
+   "s": "active",
+   "c": "ph-handoff",
+   "done": 4,
+   "strikeTransform": "matrix(1, 0, 0, 1, 0, 0)",
+   "wipeDur": "0.001s"
+  },
+  "errs": []
+ }
+}

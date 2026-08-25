@@ -1,0 +1,208 @@
+/* =====================================================================
+   Transcript takes 8-15.
+   Options 0-7 live in styles.css. These are scoped under
+   .transcript[data-variant="N"] exactly like those, so they operate on the
+   same markup and inherit every feature it carries: long-message fade and
+   expand, message details, per-message actions, system and event cards,
+   the working card, plan cards, artifact cards and decision surfaces.
+
+   Drawn from a survey of 36 open-source AI chat clients. Each fills a gap
+   the first eight leave open; provenance is noted per take.
+
+   Shared hooks emitted by renderTextMessage():
+     data-index / --msg-index   ordinal within the thread
+     data-time                  deterministic wall clock
+     data-speaker               "You" | "Assistant"
+   ===================================================================== */
+
+/* ---- 8 Aligned Bubbles ----------------------------------------------
+   The modern consensus: user writes a sentence, the model writes a
+   document, so only the user gets a bubble. 5 of 12 surveyed web clients
+   land here (LibreChat, Jan, Lobe Chat, Open WebUI, AnythingLLM). The
+   base transcript right-aligns the user at 88% width, which is not the
+   same thing -- a bubble has to be compact to read as one. Jan's trick of
+   putting the larger gap BEFORE a user turn restores the rhythm that a
+   full-bleed assistant turn loses. */
+.transcript[data-variant="8"] .transcript-inner{gap:10px}
+.transcript[data-variant="8"] .message-user{margin-top:16px}
+.transcript[data-variant="8"] .message-user .message-surface{
+  width:fit-content;max-width:min(72%,560px);
+  border-radius:16px 16px 4px 16px;padding:10px 14px}
+.transcript[data-variant="8"] .message-assistant .message-surface{
+  width:100%;padding:0 2px;background:none;border:0}
+.transcript[data-variant="8"] .message-assistant .message-role{
+  color:var(--accent);letter-spacing:.02em}
+.transcript[data-variant="8"] .message-user{animation:tr8-user 320ms var(--pm-ease-pop) both}
+.transcript[data-variant="8"] .message-assistant{animation:tr8-reply 260ms var(--pm-ease-out) both}
+@keyframes tr8-user{from{opacity:0;transform:translateX(20px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes tr8-reply{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:blur(0)}}
+
+/* ---- 9 Zebra Rows ---------------------------------------------------
+   Full-bleed alternating bands. Unambiguous turn boundaries at any
+   length, and the band is a free status channel -- Big-AGI tints rows for
+   errors and for edited system prompts. Newer apps abandoned stripes as
+   tool rendering got richer, so the band here is kept very quiet. */
+.transcript[data-variant="9"] .transcript-inner{gap:0}
+.transcript[data-variant="9"] .message,
+.transcript[data-variant="9"] .system-card,
+.transcript[data-variant="9"] .event-card{
+  padding:14px clamp(10px,2vw,22px);margin:0 calc(-1 * clamp(10px,2vw,22px));
+  border-bottom:1px solid var(--border)}
+.transcript[data-variant="9"] .message:nth-child(odd){background:var(--surface-2)}
+.transcript[data-variant="9"] .event-card{background:color-mix(in srgb,var(--warning) 7%,var(--surface-2))}
+.transcript[data-variant="9"] .message-user .message-surface{
+  width:100%;background:none;border:0;border-radius:0;padding:0}
+.transcript[data-variant="9"] .message-assistant .message-surface{width:100%;padding:0}
+.transcript[data-variant="9"] .message-user::before{
+  content:attr(data-speaker);display:block;font-size:10px;font-weight:700;
+  color:var(--muted);margin-bottom:6px}
+.transcript[data-variant="9"] .message{animation:tr9-band 340ms var(--pm-ease-out) both}
+@keyframes tr9-band{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0)}}
+
+/* ---- 10 Sticky Rail -------------------------------------------------
+   Big-AGI pins the avatar column beside a long answer
+   (position:sticky; top:0.25rem) so attribution never scrolls away from
+   the text it belongs to. Worth having as a whole layout, not a detail. */
+.transcript[data-variant="10"] .transcript-inner{gap:18px}
+.transcript[data-variant="10"] .message{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;justify-content:start}
+.transcript[data-variant="10"] .message::before{
+  content:attr(data-speaker);position:sticky;top:4px;align-self:start;
+  font-size:10px;font-weight:750;color:var(--muted);text-align:right;
+  padding-top:2px;border-right:2px solid var(--border);padding-right:10px;min-height:22px}
+.transcript[data-variant="10"] .message-assistant::before{
+  color:var(--accent);border-right-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+.transcript[data-variant="10"] .message-assistant .message-role{display:none}
+.transcript[data-variant="10"] .message-user .message-surface{
+  width:100%;border-radius:10px;padding:9px 12px}
+.transcript[data-variant="10"] .message-assistant .message-surface{width:100%;padding:0}
+.transcript[data-variant="10"] .message{animation:tr10-rail 300ms var(--pm-ease-out) both}
+@keyframes tr10-rail{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+
+/* ---- 11 Timeline Gutter ---------------------------------------------
+   Jan threads tool calls between reasoning paragraphs on one continuous
+   dotted rail. Applied to whole turns, with the deterministic clock from
+   data-time as the tick label, the transcript reads as a record. */
+.transcript[data-variant="11"] .transcript-inner{gap:16px;padding-left:4px}
+.transcript[data-variant="11"] .message{
+  display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;position:relative}
+.transcript[data-variant="11"] .message::before{
+  content:attr(data-time);font-family:var(--font-mono);font-size:9px;color:var(--subtle);
+  text-align:right;padding-top:3px}
+.transcript[data-variant="11"] .message::after{
+  content:"";position:absolute;left:63px;top:6px;bottom:-16px;width:1px;
+  border-left:1px dotted color-mix(in srgb,var(--accent) 35%,var(--border));
+  animation:tr11-rail 380ms var(--pm-ease-out) both;transform-origin:top}
+.transcript[data-variant="11"] .message:last-child::after{display:none}
+.transcript[data-variant="11"] .message-surface{position:relative}
+.transcript[data-variant="11"] .message-surface::before{
+  content:"";position:absolute;left:-19px;top:6px;width:7px;height:7px;border-radius:50%;
+  background:var(--surface);border:2px solid var(--accent);
+  animation:tr11-dot 260ms var(--pm-ease-pop) both}
+.transcript[data-variant="11"] .message-user .message-surface{width:100%;border-radius:10px;padding:9px 12px}
+.transcript[data-variant="11"] .message-assistant .message-surface{width:100%;padding:0}
+@keyframes tr11-rail{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes tr11-dot{from{opacity:0;transform:scale(.2) translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---- 12 Notebook Cells ----------------------------------------------
+   In[n] / Out[n]. No surveyed chat client ships this, though every one of
+   them is a sequence of numbered request/response pairs -- which is what a
+   notebook is. The ordinal comes from data-index. */
+.transcript[data-variant="12"] .transcript-inner{gap:12px}
+.transcript[data-variant="12"] .message{
+  display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:start}
+.transcript[data-variant="12"] .message::before{
+  font-family:var(--font-mono);font-size:10px;color:var(--subtle);text-align:right;padding-top:8px;
+  animation:tr12-stamp 240ms var(--pm-ease-pop) both}
+.transcript[data-variant="12"] .message-user::before{content:"In [" counter(msgc) "]";color:var(--accent)}
+.transcript[data-variant="12"] .message-assistant::before{content:"Out [" counter(msgc) "]";color:var(--positive)}
+.transcript[data-variant="12"] .transcript-inner{counter-reset:msgc}
+.transcript[data-variant="12"] .message{counter-increment:msgc}
+.transcript[data-variant="12"] .message-surface{
+  width:100%!important;border-radius:0;border:0;border-left:2px solid var(--border);
+  background:var(--surface-2);padding:8px 12px}
+.transcript[data-variant="12"] .message-user .message-surface{
+  border-left-color:var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--surface-2))}
+.transcript[data-variant="12"] .message-assistant .message-surface{border-left-color:var(--positive)}
+.transcript[data-variant="12"] .message-assistant .message-role{display:none}
+.transcript[data-variant="12"] .message-surface{animation:tr12-cell 300ms var(--pm-ease-out) both}
+@keyframes tr12-stamp{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes tr12-cell{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0)}}
+
+/* ---- 13 Focus Reader ------------------------------------------------
+   Big-AGI ghosts messages dropped from context (1px dashed + grayscale)
+   rather than hiding them. As a mode: everything recedes except the turn
+   you are reading, so a long transcript stops competing with itself.
+   Hover or focus restores any turn, so nothing is unreachable. */
+.transcript[data-variant="13"] .transcript-inner{gap:16px}
+.transcript[data-variant="13"] .transcript-inner > *{
+  filter:opacity(.42) saturate(.55);
+  transition:filter 320ms var(--pm-ease-out)}
+.transcript[data-variant="13"] .transcript-inner > :nth-last-child(-n+2),
+.transcript[data-variant="13"] .transcript-inner > *:hover,
+.transcript[data-variant="13"] .transcript-inner > *:focus-within{
+  filter:none}
+.transcript[data-variant="13"] .message-user .message-surface{width:min(80%,700px)}
+.transcript[data-variant="13"] .message{animation:tr13-focus 360ms var(--pm-ease-out) both}
+@keyframes tr13-focus{from{transform:translateY(10px) scale(.99)}to{transform:none}}
+
+/* ---- 14 Print Sheet -------------------------------------------------
+   Khoj ships a ~120-line @media print stylesheet that re-renders the
+   conversation as a document: user turns become headings, the assistant
+   goes full width, chrome vanishes, and the timestamp is re-injected as a
+   divider from a data attribute. It is the only project in the survey
+   treating "the transcript as a printed page" as a first-class rendering.
+   Here it is a live mode rather than something you only get on paper. */
+.transcript[data-variant="14"]{background:var(--surface-2)}
+.transcript[data-variant="14"] .transcript-inner{
+  max-width:760px;gap:20px;background:var(--surface);
+  padding:30px clamp(18px,3vw,40px);border-radius:4px;
+  box-shadow:0 1px 3px rgb(0 0 0 / .10),0 10px 34px rgb(0 0 0 / .06)}
+.transcript[data-variant="14"] .message-user{display:block}
+.transcript[data-variant="14"] .message-user .message-surface{
+  width:100%;background:none;border:0;border-radius:0;padding:0;
+  border-bottom:1px solid var(--border);padding-bottom:8px}
+.transcript[data-variant="14"] .message-user .message-body{
+  font-size:16px;font-weight:750;line-height:1.35;letter-spacing:-.01em}
+.transcript[data-variant="14"] .message-user::before{
+  content:attr(data-time);display:block;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--subtle);margin-bottom:5px}
+.transcript[data-variant="14"] .message-assistant .message-surface{width:100%;padding:0}
+.transcript[data-variant="14"] .message-assistant .message-body{font-size:13.5px;line-height:1.75}
+.transcript[data-variant="14"] .message-assistant .message-role{
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);
+  margin-bottom:7px}
+.transcript[data-variant="14"] .message-assistant .message-role svg{display:none}
+.transcript[data-variant="14"] .message-actions .text-button{font-size:9px;color:var(--subtle)}
+.transcript[data-variant="14"] .message{animation:tr14-page 380ms var(--pm-ease-out) both}
+@keyframes tr14-page{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---- 15 Threaded Turns ----------------------------------------------
+   No app in the survey renders a branching transcript -- all eight that
+   support regeneration collapse siblings to a "< n/m >" stepper, and any
+   nesting happens INSIDE one assistant turn. So: the work a turn spawned
+   hangs off it on a drawn branch, and the turn itself stays the trunk. */
+.transcript[data-variant="15"] .transcript-inner{gap:10px}
+.transcript[data-variant="15"] .message-user .message-surface{width:min(78%,640px)}
+.transcript[data-variant="15"] .message-assistant .message-surface{width:100%;padding:0}
+.transcript[data-variant="15"] .transcript-inner > :not(.message){
+  margin-left:28px;position:relative}
+.transcript[data-variant="15"] .transcript-inner > :not(.message)::before{
+  content:"";position:absolute;left:-15px;top:-8px;bottom:50%;width:13px;
+  border-left:1px solid color-mix(in srgb,var(--accent) 40%,var(--border));
+  border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,var(--border));
+  border-bottom-left-radius:9px;
+  animation:tr15-branch 340ms var(--pm-ease-out) both;transform-origin:top left}
+.transcript[data-variant="15"] .message{animation:tr15-turn 300ms var(--pm-ease-out) both}
+@keyframes tr15-branch{from{opacity:0;transform:scaleY(.1)}to{opacity:1;transform:scaleY(1)}}
+@keyframes tr15-turn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion: reduce){
+  .transcript[data-variant="8"] .message-user,.transcript[data-variant="8"] .message-assistant,
+  .transcript[data-variant="9"] .message,.transcript[data-variant="10"] .message,
+  .transcript[data-variant="11"] .message::after,.transcript[data-variant="11"] .message-surface::before,
+  .transcript[data-variant="12"] .message::before,.transcript[data-variant="12"] .message-surface,
+  .transcript[data-variant="13"] .message,.transcript[data-variant="14"] .message,
+  .transcript[data-variant="15"] .message,
+    .transcript[data-variant="15"] .transcript-inner > :not(.message)::before{
+    animation:none}
+}

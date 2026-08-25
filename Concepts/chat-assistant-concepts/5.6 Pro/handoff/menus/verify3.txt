@@ -1,0 +1,78 @@
+PASS  worktree button exists in .chat-header  {"l":1327,"r":1357,"w":30,"h":30}
+PASS  worktree sits between the search icon and the context ring  {"idxSearch":5,"idxWt":7,"idxRing":9,"order":["icon-button","icon-button","chat-title","chat-meta","chat-head-spacer","icon-button","goal-chip.tone-working","icon-button.worktree-button","icon-button.pm-lens-trigger","context-ring"]}
+PASS  worktree is horizontally between them in painted geometry  {"search":{"l":1224.1,"r":1254.1,"w":30,"h":30},"wt":{"l":1327,"r":1357,"w":30,"h":30},"ring":{"l":1401,"r":1430,"w":29,"h":31}}
+PASS  worktree button keeps its 30x30 hit target (no flex-shrink)  {"l":1327,"r":1357,"w":30,"h":30}
+PASS  worktree state is read from D.operational.worktrees, not the branch string  {"attr":"bound-dirty","fixture":{"id":"feature/query-index","state":"bound-dirty"}}
+PASS  exactly one VISIBLE data-menu-anchor="worktree"  [{"tag":"BUTTON","cls":"icon-button worktree-button","display":"flex"},{"tag":"BUTTON","cls":"selector-button active","display":"none"}]
+PASS  worktree button owns the pixel at its own centre  {"found":true,"owns":true,"hit":"BUTTON.icon-button","rect":{"x":1327,"y":49.5,"w":30,"h":30}}
+PASS  worktree button paints (crop has real content)  {"colours":80,"mean":[27,28,35],"centre":[13,16,26]}
+PASS  the state dot paints a different colour per worktree state  {"main":{"state":"bound-clean","centre":[92,214,155]},"feature/query-index":{"state":"bound-dirty","centre":[245,189,85]},"concept/chat-5-6-pro":{"state":"bound-conflict","centre":[255,108,125]},"review/query-benchmarks":{"state":"unbound","centre":[19,23,37]}}
+PASS  persona: exactly one root menu open  {"count":1,"rect":{"x":1076.7,"y":571.3,"w":304.2,"h":238.1},"opacity":1,"transform":"none","origin":"46.7578px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  persona: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  persona: inside the viewport  {"x":1076.7,"y":571.3,"w":304.2,"h":238.1}
+PASS  persona: hit-tests to itself  {"count":1,"rect":{"x":1076.7,"y":571.3,"w":304.2,"h":238.1},"opacity":1,"transform":"none","origin":"46.7578px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  persona: sprout origin published  "b"
+PASS  persona: paints real content  {"colours":1010,"mean":[25,29,42],"centre":[18,22,34]}
+PASS  persona: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":571.3,"b":809.5}}
+PASS  persona: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  model: exactly one root menu open  {"count":1,"rect":{"x":866.2,"y":8,"w":420,"h":560},"opacity":1,"transform":"none","origin":"363.516px 560px","sprout":"b","inView":true,"owns":true}
+PASS  model: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  model: inside the viewport  {"x":866.2,"y":8,"w":420,"h":560}
+PASS  model: hit-tests to itself  {"count":1,"rect":{"x":866.2,"y":8,"w":420,"h":560},"opacity":1,"transform":"none","origin":"363.516px 560px","sprout":"b","inView":true,"owns":true}
+PASS  model: sprout origin published  "b"
+PASS  model: paints real content  {"colours":2194,"mean":[25,30,44],"centre":[18,22,33]}
+PASS  model: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":8,"b":568}}
+PASS  model: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  mode: exactly one root menu open  {"count":1,"rect":{"x":1146.5,"y":571.3,"w":285.5,"h":238.1},"opacity":1,"transform":"none","origin":"162.93px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  mode: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  mode: inside the viewport  {"x":1146.5,"y":571.3,"w":285.5,"h":238.1}
+PASS  mode: hit-tests to itself  {"count":1,"rect":{"x":1146.5,"y":571.3,"w":285.5,"h":238.1},"opacity":1,"transform":"none","origin":"162.93px 238.141px","sprout":"b","inView":true,"owns":true}
+PASS  mode: sprout origin published  "b"
+PASS  mode: paints real content  {"colours":1089,"mean":[24,28,42],"centre":[18,22,34]}
+PASS  mode: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":571.3,"b":809.5}}
+PASS  mode: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  permissions: exactly one root menu open  {"count":1,"rect":{"x":1157.7,"y":610,"w":274.3,"h":199.5},"opacity":1,"transform":"none","origin":"192.039px 199.5px","sprout":"b","inView":true,"owns":true}
+PASS  permissions: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  permissions: inside the viewport  {"x":1157.7,"y":610,"w":274.3,"h":199.5}
+PASS  permissions: hit-tests to itself  {"count":1,"rect":{"x":1157.7,"y":610,"w":274.3,"h":199.5},"opacity":1,"transform":"none","origin":"192.039px 199.5px","sprout":"b","inView":true,"owns":true}
+PASS  permissions: sprout origin published  "b"
+PASS  permissions: paints real content  {"colours":1015,"mean":[26,30,43],"centre":[18,22,34]}
+PASS  permissions: does not cover its own trigger  {"overlap":false,"anchor":{"t":816.5,"b":846.5},"menu":{"t":610,"b":809.5}}
+PASS  permissions: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  worktree: exactly one root menu open  {"count":1,"rect":{"x":1142.8,"y":86.5,"w":289.2,"h":199.5},"opacity":1,"transform":"none","origin":"199.156px 0px","sprout":"t","inView":true,"owns":true}
+PASS  worktree: settles fully open (opacity 1, transform none)  {"opacity":1,"transform":"none"}
+PASS  worktree: inside the viewport  {"x":1142.8,"y":86.5,"w":289.2,"h":199.5}
+PASS  worktree: hit-tests to itself  {"count":1,"rect":{"x":1142.8,"y":86.5,"w":289.2,"h":199.5},"opacity":1,"transform":"none","origin":"199.156px 0px","sprout":"t","inView":true,"owns":true}
+PASS  worktree: sprout origin published  "t"
+PASS  worktree: paints real content  {"colours":1154,"mean":[27,31,45],"centre":[19,22,36]}
+PASS  worktree: does not cover its own trigger  {"overlap":false,"anchor":{"t":49.5,"b":79.5},"menu":{"t":86.5,"b":286}}
+PASS  worktree: closes cleanly (no menu, no leaked ghost)  {"menus":0,"ghosts":0}
+PASS  model menu paints every fixture model  {"fixture":14,"rows":14,"groups":5,"providers":5,"clientH":511,"scrollH":740,"overflow":"auto"}
+PASS  model menu groups them by provider  {"fixture":14,"rows":14,"groups":5,"providers":5,"clientH":511,"scrollH":740,"overflow":"auto"}
+PASS  model list overflows and is scrollable  {"fixture":14,"rows":14,"groups":5,"providers":5,"clientH":511,"scrollH":740,"overflow":"auto"}
+PASS  model list actually scrolls  {"scrolled":true,"scrollTop":229,"name":"Cursor Auto","owns":true,"rect":{"x":920.2,"y":516,"width":349,"height":44}}
+PASS  the LAST model row hit-tests to itself after scrolling  {"scrolled":true,"scrollTop":229,"name":"Cursor Auto","owns":true,"rect":{"x":920.2,"y":516,"width":349,"height":44}}
+PASS  the last model row paints  {"colours":502,"mean":[26,30,46],"centre":[20,23,36]}
+PASS  provider rail filters the list  {"favorites":3,"all":14,"Anthropic":6,"Alibaba":3,"Moonshot":2,"z.ai":2,"Cursor":1}
+PASS  height animates rather than jumping (intermediate frames exist)  {"inFlight":18,"first10":[[2,560,568],[11,560,568],[29,560,568],[51,502.17,568],[79,403.33,568],[104,371.43,568],[123,351.02,568],[130,339.29,568],[144,333.85,568],[162,332.66,568]]}
+PASS  height overshoots past the target and settles (spring, not an ease)  {"min":328.09,"end":347}
+PASS  the BOTTOM edge stays pinned while filtering (top edge absorbs the change)  {"spread":0,"startBottom":568,"endBottom":568}
+PASS  filter really filtered  {"rows":6,"startH":560,"endH":347}
+PASS  a closing ghost exists (there is an exit animation at all)  {"frames":13}
+PASS  still fully opaque at 50% of the vertical collapse  {"at50pct":[195,1,0.838,0.699],"sample":[[17,1,1,1],[28,1,1,1],[45,1,0.997,0.995],[63,1,0.993,0.988],[80,1,0.988,0.977],[96,1,0.979,0.962],[111,1,0.968,0.94],[183,1,0.951,0.909],[189,1,0.872,0.762],[195,1,0.838,0.699],[213,0.946,0.802,0.632],[230,0.622,0.765,0.564],[246,0.121,0.728,0.494]]}
+PASS  the fade is held back to the last third of the close  {"fadeStartsAtFraction":0.856,"fadeFrame":[213,0.946,0.802,0.632],"firstT":17,"lastT":246}
+PASS  close is non-uniform (y collapses further than x)  {"last":[246,0.121,0.728,0.494]}
+PASS  ghost is cleaned up  {"samples":[[17,1,1,1],[28,1,1,1],[45,1,0.997,0.995],[63,1,0.993,0.988],[80,1,0.988,0.977],[96,1,0.979,0.962],[111,1,0.968,0.94],[183,1,0.951,0.909],[189,1,0.872,0.762],[195,1,0.838,0.699],[213,0.946,0.802,0.632],[230,0.622,0.765,0.564],[246,0.121,0.728,0.494]],"ghostGone":true,"menus":0}
+PASS  never more than one root menu at a time  [1,1,1,1]
+PASS  worktree control paints and hit-tests in all 8 themes  {"basic-dark":{"colours":73,"owns":true},"basic-light":{"colours":73,"owns":true},"friendly-dark":{"colours":77,"owns":true},"friendly-light":{"colours":74,"owns":true},"glass-dark":{"colours":72,"owns":true},"glass-light":{"colours":68,"owns":true},"retro-dark":{"colours":68,"owns":true},"retro-light":{"colours":79,"owns":true}}
+PASS  no console errors  []
+PASS  no page errors  []
+PASS  reduced motion: menu is fully open within 3 frames  {"opened":true,"opacity":1,"transform":"none","transition":"0s","owns":true,"ghosts":0,"menus":0}
+PASS  reduced motion: no residual transform  "none"
+PASS  reduced motion: transitions are off  "0s"
+PASS  reduced motion: menu is hit-testable  {"opened":true,"opacity":1,"transform":"none","transition":"0s","owns":true,"ghosts":0,"menus":0}
+PASS  reduced motion: close is instant, no ghost  {"opened":true,"opacity":1,"transform":"none","transition":"0s","owns":true,"ghosts":0,"menus":0}
+PASS  reduced motion: no console/page errors  []
+
+75 passed / 0 failed
+EXIT=0

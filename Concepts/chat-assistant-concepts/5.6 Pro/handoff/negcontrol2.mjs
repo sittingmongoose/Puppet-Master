@@ -1,0 +1,24 @@
+import pw from '/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/node_modules/playwright-core/index.js';
+const { chromium } = pw; import path from 'path';
+const ROOT='/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro';
+const b=await chromium.launch({headless:true,executablePath:process.env.HOME+'/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome',args:['--no-sandbox','--allow-file-access-from-files','--disable-gpu']});
+const p=await b.newPage({viewport:{width:1440,height:900}});
+await p.goto('file://'+path.join(ROOT,'PM_Chat_Assistant_5.6_Pro_Standalone.html'),{waitUntil:'load'});
+await p.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
+const check=()=>p.evaluate(()=>{
+  const D=window.PM56_DATA; const rt=D.threads.flatMap(t=>t.messages).filter(m=>m.runtime);
+  const by={}; for(const m of rt)(by[m.runtime.terminal]=by[m.runtime.terminal]||[]).push(m.id);
+  const err=by.error||[], stop=by.stopped||[];
+  const okErr=err.every(id=>{const m=rt.find(x=>x.id===id);return typeof m.runtime.error==='string'&&m.runtime.error.length>10;});
+  return {pass: err.length>=1 && stop.length>=1 && okErr, err:err.length, stop:stop.length, okErr};
+});
+console.log('baseline (shipped fixture)                          ->', JSON.stringify(await check()));
+await p.evaluate(()=>{for(const t of window.PM56_DATA.threads)for(const m of t.messages)if(m.runtime&&m.runtime.terminal==='stopped')m.runtime.terminal='complete';});
+console.log('fault: a future pass removes the stopped turn       ->', JSON.stringify(await check()));
+await p.reload({waitUntil:'load'}); await p.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
+await p.evaluate(()=>{for(const t of window.PM56_DATA.threads)for(const m of t.messages)if(m.runtime&&m.runtime.terminal==='error')m.runtime.terminal='complete';});
+console.log('fault: a future pass removes the error turn         ->', JSON.stringify(await check()));
+await p.reload({waitUntil:'load'}); await p.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
+await p.evaluate(()=>{for(const t of window.PM56_DATA.threads)for(const m of t.messages)if(m.runtime&&m.runtime.terminal==='error')delete m.runtime.error;});
+console.log('fault: error turn keeps terminal but loses a reason ->', JSON.stringify(await check()));
+await b.close();

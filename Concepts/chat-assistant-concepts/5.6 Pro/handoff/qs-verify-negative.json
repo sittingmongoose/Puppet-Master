@@ -1,0 +1,494 @@
+{
+ "file": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/noq.html",
+ "reducedMotion": false,
+ "passed": 29,
+ "failed": 66,
+ "consoleErrors": [],
+ "pageErrors": [],
+ "results": [
+  {
+   "name": "A0. take 0 emits its own root (.qs-card) and data-qs=\"0\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A1. take 1 emits its own root (.qs-morph) and data-qs=\"1\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A2. take 2 emits its own root (.qs-sheet) and data-qs=\"2\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A3. take 3 emits its own root (.qs-inspector) and data-qs=\"3\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A4. take 4 emits its own root (.qs-seq) and data-qs=\"4\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A5. take 5 emits its own root (.qs-tech) and data-qs=\"5\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A6. take 6 emits its own root (.qs-stack) and data-qs=\"6\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A7. take 7 emits its own root (.qs-split) and data-qs=\"7\"",
+   "ok": false,
+   "error": "root was \"decision-surface\""
+  },
+  {
+   "name": "A8. all 8 class-sets are pairwise distinct",
+   "ok": false,
+   "error": "only 1 distinct class-sets"
+  },
+  {
+   "name": "A9. all 8 tag-count vectors are pairwise distinct (structure, not skins)",
+   "ok": false,
+   "error": "only 1 distinct tag vectors"
+  },
+  {
+   "name": "A10. all 8 painted luminance fingerprints are pairwise distinct",
+   "ok": false,
+   "error": "take 3 paints the same pixels as take 0"
+  },
+  {
+   "name": "A11. every take paints real content (>100 distinct colours in its crop)",
+   "ok": true,
+   "info": [
+    2024,
+    2067,
+    1937,
+    2019,
+    1853,
+    1921,
+    2020,
+    2168
+   ]
+  },
+  {
+   "name": "B. host 457px take 0: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 1: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 2: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 3: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 4: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 5: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 6: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 457px take 7: evidence pane painted (expected)",
+   "ok": true,
+   "info": 1
+  },
+  {
+   "name": "B. host 357px take 0: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 1: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 2: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 3: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 4: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 5: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 6: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 357px take 7: evidence pane painted (expected)",
+   "ok": true,
+   "info": 1
+  },
+  {
+   "name": "B. host 249px take 0: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 1: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 2: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 3: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 4: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 5: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 6: evidence pane painted (must not be)",
+   "ok": true,
+   "info": 0
+  },
+  {
+   "name": "B. host 249px take 7: evidence pane painted (expected)",
+   "ok": true,
+   "info": 1
+  },
+  {
+   "name": "B10. take 7 pane content is the fixture rationale at every width",
+   "ok": false,
+   "error": "at 688px the pane did not carry the question's own why"
+  },
+  {
+   "name": "B9. no stylesheet rule turns .decision-evidence/.qs-evidence on outside [data-variant=\"7\"]",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "C0a. take 0: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C0b. take 0: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-card [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C0c. take 0: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-card"
+  },
+  {
+   "name": "C0d. take 0: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-card"
+  },
+  {
+   "name": "C0e. take 0: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-card is not painted"
+  },
+  {
+   "name": "C1a. take 1: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C1b. take 1: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-morph [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C1c. take 1: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-morph"
+  },
+  {
+   "name": "C1d. take 1: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-morph"
+  },
+  {
+   "name": "C1e. take 1: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-morph is not painted"
+  },
+  {
+   "name": "C2a. take 2: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C2b. take 2: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-sheet [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C2c. take 2: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-sheet"
+  },
+  {
+   "name": "C2d. take 2: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-sheet"
+  },
+  {
+   "name": "C2e. take 2: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-sheet is not painted"
+  },
+  {
+   "name": "C3a. take 3: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C3b. take 3: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-inspector [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C3c. take 3: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-inspector"
+  },
+  {
+   "name": "C3d. take 3: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-inspector"
+  },
+  {
+   "name": "C3e. take 3: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-inspector is not painted"
+  },
+  {
+   "name": "C4a. take 4: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C4b. take 4: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-seq [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C4c. take 4: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-seq"
+  },
+  {
+   "name": "C4d. take 4: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-seq"
+  },
+  {
+   "name": "C4e. take 4: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-seq is not painted"
+  },
+  {
+   "name": "C5a. take 5: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C5b. take 5: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-tech [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C5c. take 5: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-tech"
+  },
+  {
+   "name": "C5d. take 5: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-tech"
+  },
+  {
+   "name": "C5e. take 5: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-tech is not painted"
+  },
+  {
+   "name": "C6a. take 6: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C6b. take 6: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-stack [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C6c. take 6: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-stack"
+  },
+  {
+   "name": "C6d. take 6: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-stack"
+  },
+  {
+   "name": "C6e. take 6: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-stack is not painted"
+  },
+  {
+   "name": "C7a. take 7: an unselected option hit-tests to itself and answers the question",
+   "ok": false,
+   "error": "only 0 choice buttons"
+  },
+  {
+   "name": "C7b. take 7: Next advances the question index",
+   "ok": false,
+   "error": "not painted: .decision-host .qs-split [data-action=\"next-question\"] [0]"
+  },
+  {
+   "name": "C7c. take 7: exactly one painted close control, and clicking it closes",
+   "ok": false,
+   "error": "the close control is not inside .qs-split"
+  },
+  {
+   "name": "C7d. take 7: exactly one element with exact text \"Deployment questionnaire\"",
+   "ok": false,
+   "error": "the title is not inside .qs-split"
+  },
+  {
+   "name": "C7e. take 7: the decision pushes the transcript, it never covers the activity bar",
+   "ok": false,
+   "error": ".qs-split is not painted"
+  },
+  {
+   "name": "D1. every question paints ITS OWN rationale, not one hardcoded sentence",
+   "ok": false,
+   "error": "questions 0,1,2,3,4 did not paint their own why"
+  },
+  {
+   "name": "D2. the stock hardcoded rationale is gone from every question",
+   "ok": false,
+   "error": "question 0 still prints the hardcoded sentence"
+  },
+  {
+   "name": "D3. the summary page derives from the answers, not from indices 0-2",
+   "ok": false,
+   "error": "still prints the hardcoded \"Resolved deployment\" block"
+  },
+  {
+   "name": "D4. the queue is the fixture: take 6 paints the other three flows",
+   "ok": false,
+   "error": "painted 0 of 3"
+  },
+  {
+   "name": "D5. the \"N queued\" pill equals the number of queued rows actually rendered",
+   "ok": false,
+   "error": "no queued pill"
+  },
+  {
+   "name": "D6. qs-open-flow really opens a queued flow (title, count and active flow all change)",
+   "ok": false,
+   "error": "not painted: .decision-host [data-flow=\"flow-migration\"] [0]"
+  },
+  {
+   "name": "D7. leaving a flow keeps its draft (the fixture claims this; now it is true)",
+   "ok": false,
+   "error": "not painted: .decision-host [data-flow=\"flow-deploy\"] [0]"
+  },
+  {
+   "name": "D8. plan evidence comes from the artifact payload, not the hardcoded string",
+   "ok": false,
+   "error": "payload.decision not painted"
+  },
+  {
+   "name": "D9. the plan stepper is the fixture revision history, in plan vocabulary",
+   "ok": false,
+   "error": "revision 1 note missing"
+  },
+  {
+   "name": "D10. permission evidence names the real operational hosts",
+   "ok": false,
+   "error": "host Windows native missing"
+  },
+  {
+   "name": "D11. every painted flow state EQUALS labels.questionFlowState[value]",
+   "ok": false,
+   "error": "only 0 flow rows"
+  },
+  {
+   "name": "E1. the surface survives two full work ticks without remounting (stable data-k)",
+   "ok": false,
+   "error": "page.evaluate: TypeError: Cannot set properties of null (setting '__qsMark')\n    at eval (eval at evaluate (:311:30), <anonymous>:1:63)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  },
+  {
+   "name": "E2. no infinite animation inside the decision host once a decision is idle",
+   "ok": false,
+   "error": "take 2 root .qs-sheet absent"
+  },
+  {
+   "name": "E3. no take is worse than the stock surface for horizontal overflow, in all 8 themes",
+   "ok": true,
+   "info": 64
+  },
+  {
+   "name": "E4. nothing escapes the decision host horizontally in any take",
+   "ok": false,
+   "error": "t0: MODULE ROOT .qs-card ABSENT | t1: MODULE ROOT .qs-morph ABSENT | t2: MODULE ROOT .qs-sheet ABSENT | t3: MODULE ROOT .qs-inspector ABSENT | t4: MODULE ROOT .qs-seq ABSENT | t5: MODULE ROOT .qs-tech ABSENT | t6: MODULE ROOT .qs-stack ABSENT | t7: MODULE ROOT .qs-split ABSENT"
+  },
+  {
+   "name": "E5. zero console errors",
+   "ok": true,
+   "info": null
+  },
+  {
+   "name": "E6. zero page errors",
+   "ok": true,
+   "info": null
+  }
+ ]
+}

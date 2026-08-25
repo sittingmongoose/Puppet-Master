@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+import path from 'path'; import { pathToFileURL } from 'url';
+const ROOT='/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro';
+const browser=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
+const page=await browser.newPage({viewport:{width:900,height:900}});
+await page.goto(pathToFileURL(path.join(ROOT,'index.html')).href,{waitUntil:'load'});
+await page.waitForFunction(()=>window.__PM56_BOOT_OK===true);
+const closed=await page.evaluate(async ()=>{const out=[];for(let i=0;i<14;i++){out.push(document.body.scrollWidth);await new Promise(r=>setTimeout(r,600));}return out;});
+await page.evaluate(()=>PM56_DEMO.openActivity('goal'));
+await page.waitForTimeout(500);
+const open=await page.evaluate(async ()=>{const out=[];for(let i=0;i<14;i++){out.push(document.body.scrollWidth);await new Promise(r=>setTimeout(r,600));}return out;});
+console.log(JSON.stringify({panelClosed:closed, panelOpen:open},null,1));
+await browser.close();

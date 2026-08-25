@@ -1,0 +1,1120 @@
+{
+ "pass": 60,
+ "fail": 0,
+ "reduced": false,
+ "results": [
+  {
+   "ok": true,
+   "label": "All nine statuses render a .ph-status indicator",
+   "detail": {
+    "working": 5,
+    "idle": 4,
+    "waiting": 2,
+    "reviewing": 1,
+    "complete": 7,
+    "recovering": 1,
+    "blocked": 2,
+    "paused": 1,
+    "failed": 1
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: working",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      49,
+      49,
+      88
+     ],
+     "distinct": 44,
+     "grid": [
+      49,
+      49,
+      52,
+      50,
+      49,
+      49,
+      52,
+      49,
+      51,
+      50,
+      52,
+      49,
+      49,
+      49,
+      51,
+      52,
+      49,
+      49,
+      51,
+      51,
+      49,
+      51,
+      54,
+      120,
+      57
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: reviewing",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      28,
+      42,
+      61
+     ],
+     "distinct": 45,
+     "grid": [
+      23,
+      40,
+      150,
+      51,
+      23,
+      40,
+      39,
+      23,
+      28,
+      44,
+      54,
+      23,
+      23,
+      23,
+      46,
+      51,
+      28,
+      23,
+      23,
+      47,
+      23,
+      44,
+      46,
+      47,
+      27
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: waiting",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      28,
+      43,
+      62
+     ],
+     "distinct": 100,
+     "grid": [
+      24,
+      32,
+      44,
+      35,
+      25,
+      26,
+      35,
+      23,
+      28,
+      32,
+      42,
+      23,
+      153,
+      57,
+      39,
+      43,
+      25,
+      57,
+      28,
+      40,
+      25,
+      33,
+      33,
+      40,
+      26
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: idle",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      28,
+      47,
+      52
+     ],
+     "distinct": 61,
+     "grid": [
+      23,
+      33,
+      45,
+      41,
+      23,
+      34,
+      35,
+      23,
+      27,
+      37,
+      45,
+      23,
+      153,
+      57,
+      39,
+      41,
+      27,
+      57,
+      28,
+      40,
+      23,
+      37,
+      39,
+      40,
+      26
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: complete",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      35,
+      64,
+      63
+     ],
+     "distinct": 84,
+     "grid": [
+      23,
+      41,
+      60,
+      53,
+      23,
+      41,
+      58,
+      48,
+      67,
+      48,
+      61,
+      72,
+      103,
+      71,
+      57,
+      53,
+      92,
+      79,
+      46,
+      54,
+      23,
+      48,
+      57,
+      54,
+      27
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: blocked",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      54,
+      36,
+      50
+     ],
+     "distinct": 46,
+     "grid": [
+      23,
+      23,
+      23,
+      23,
+      23,
+      32,
+      33,
+      23,
+      23,
+      37,
+      56,
+      83,
+      89,
+      89,
+      60,
+      53,
+      24,
+      23,
+      23,
+      45,
+      28,
+      52,
+      46,
+      49,
+      35
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: failed",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      85,
+      46,
+      61
+     ],
+     "distinct": 79,
+     "grid": [
+      23,
+      28,
+      56,
+      36,
+      23,
+      32,
+      74,
+      51,
+      67,
+      43,
+      68,
+      62,
+      130,
+      66,
+      62,
+      69,
+      63,
+      99,
+      65,
+      63,
+      30,
+      64,
+      68,
+      66,
+      38
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: paused",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      29,
+      43,
+      61
+     ],
+     "distinct": 32,
+     "grid": [
+      23,
+      24,
+      32,
+      27,
+      23,
+      26,
+      34,
+      25,
+      31,
+      28,
+      34,
+      69,
+      58,
+      115,
+      31,
+      35,
+      68,
+      57,
+      113,
+      32,
+      25,
+      32,
+      32,
+      32,
+      27
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "Painted indicator + hit-test: recovering",
+   "detail": {
+    "p": {
+     "w": 17,
+     "h": 17,
+     "mean": [
+      49,
+      46,
+      47
+     ],
+     "distinct": 93,
+     "grid": [
+      24,
+      56,
+      88,
+      90,
+      35,
+      52,
+      73,
+      26,
+      36,
+      82,
+      34,
+      23,
+      72,
+      43,
+      69,
+      34,
+      23,
+      78,
+      36,
+      60,
+      25,
+      31,
+      31,
+      31,
+      27
+     ]
+    },
+    "hit": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "All nine indicators are pairwise visually distinct",
+   "detail": {
+    "duplicates": [],
+    "measured": 9
+   }
+  },
+  {
+   "ok": true,
+   "label": "Every status has at least one animation",
+   "detail": {
+    "working": [
+     "spin|1.7s|infinite"
+    ],
+    "idle": [
+     "ph-breathe|3.2s|infinite"
+    ],
+    "waiting": [
+     "ph-pulse|2.4s|infinite",
+     "spin|6s|infinite"
+    ],
+    "reviewing": [
+     "ph-sweep|1.9s|infinite"
+    ],
+    "complete": [
+     "ph-draw-a|0.32s|1",
+     "ph-draw-b|0.32s|1"
+    ],
+    "recovering": [
+     "ph-recover|2.2s|infinite"
+    ],
+    "blocked": [
+     "ph-nudge|2.8s|infinite"
+    ],
+    "paused": [
+     "ph-dim|2.6s|infinite"
+    ],
+    "failed": [
+     "ph-blink|1.6s|infinite"
+    ]
+   }
+  },
+  {
+   "ok": true,
+   "label": "complete is terminal — one iteration, no loop",
+   "detail": [
+    "ph-draw-a|0.32s|1",
+    "ph-draw-b|0.32s|1"
+   ]
+  },
+  {
+   "ok": true,
+   "label": "All nine motion signatures differ",
+   "detail": {
+    "working": [
+     "spin|1.7s|infinite"
+    ],
+    "idle": [
+     "ph-breathe|3.2s|infinite"
+    ],
+    "waiting": [
+     "ph-pulse|2.4s|infinite",
+     "spin|6s|infinite"
+    ],
+    "reviewing": [
+     "ph-sweep|1.9s|infinite"
+    ],
+    "complete": [
+     "ph-draw-a|0.32s|1",
+     "ph-draw-b|0.32s|1"
+    ],
+    "recovering": [
+     "ph-recover|2.2s|infinite"
+    ],
+    "blocked": [
+     "ph-nudge|2.8s|infinite"
+    ],
+    "paused": [
+     "ph-dim|2.6s|infinite"
+    ],
+    "failed": [
+     "ph-blink|1.6s|infinite"
+    ]
+   }
+  },
+  {
+   "ok": true,
+   "label": "Status indicator survives row hover (styles.css:123 fade defeated)",
+   "detail": {
+    "opacity": "1",
+    "hit": true,
+    "rest": 32,
+    "hovered": 43
+   }
+  },
+  {
+   "ok": true,
+   "label": "Take-6 row padding and height actually decreased",
+   "detail": {
+    "withModule": {
+     "h": 54.390625,
+     "pt": "3px",
+     "pb": "3px",
+     "mh": "44px"
+    },
+    "withoutModule": {
+     "removed": 1,
+     "h": 60.390625,
+     "pt": "6px",
+     "pb": "6px",
+     "mh": "52px"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Floating flyout wears take 6 (not take 0)",
+   "detail": {
+    "attr": "5",
+    "clamp": "2",
+    "white": "normal"
+   }
+  },
+  {
+   "ok": true,
+   "label": "No coloured left-edge accent bar on the selected row",
+   "detail": {
+    "beforeContent": "none",
+    "beforeW": "auto",
+    "shadow": "color(srgb 0.545098 0.447059 1 / 0.55) 0px 0px 0px 1px inset",
+    "bg": "color(srgb 0.172863 0.176941 0.318118)",
+    "bgInactive": "rgba(0, 0, 0, 0)",
+    "weight": "650",
+    "weightInactive": "620"
+   }
+  },
+  {
+   "ok": true,
+   "label": "Selection replacement paints (inset ring + tint)",
+   "detail": {
+    "beforeContent": "none",
+    "beforeW": "auto",
+    "shadow": "color(srgb 0.545098 0.447059 1 / 0.55) 0px 0px 0px 1px inset",
+    "bg": "color(srgb 0.172863 0.176941 0.318118)",
+    "bgInactive": "rgba(0, 0, 0, 0)",
+    "weight": "650",
+    "weightInactive": "620"
+   }
+  },
+  {
+   "ok": true,
+   "label": "Selection ring covers all four edges (not one side)",
+   "detail": [
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "ok": true,
+   "label": "Drawer rows stack without overlap even with a second module in historyChrome",
+   "detail": {
+    "children": 5,
+    "worstOverlap": 0,
+    "searchH": 49,
+    "scrollFits": 0
+   }
+  },
+  {
+   "ok": true,
+   "label": "The timestamp stays on one line",
+   "detail": {
+    "white": "nowrap",
+    "text": "2m",
+    "lineBoxes": 1
+   }
+  },
+  {
+   "ok": true,
+   "label": "Boots as ONE drawer at the assistant pane's LEFT edge (no .history-panel column)",
+   "detail": {
+    "mode": "pinned",
+    "present": true,
+    "x": 782.59375,
+    "w": 200,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "none",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 200,
+    "stageLeft": 982.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "The old .history-panel grid column is gone",
+   "detail": {
+    "count": 0
+   }
+  },
+  {
+   "ok": true,
+   "label": "Toggle closes a PINNED drawer and the gutter collapses with it (the bug not ported)",
+   "detail": {
+    "mode": "closed",
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "OPEN interpolates from the left (transform is sampled mid-flight, not snapped)",
+   "detail": {
+    "distinctX": 14,
+    "inflight": 10,
+    "first": 476.59,
+    "last": 782.59,
+    "paneLeft": 782.59375
+   }
+  },
+  {
+   "ok": true,
+   "label": "Scrim opacity ramps in step with the slide",
+   "detail": {
+    "distinctScrim": 13,
+    "scr": [
+     0,
+     0.012,
+     0.055,
+     0.148,
+     0.493,
+     0.647,
+     0.757,
+     0.837,
+     0.894,
+     0.964,
+     0.983,
+     0.995,
+     1
+    ]
+   }
+  },
+  {
+   "ok": true,
+   "label": "The pane clip stays in lockstep with the slide (drawer never bleeds over the editor)",
+   "detail": {
+    "frames": 12,
+    "drift": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "ok": true,
+   "label": "Opens LEFT with a live scrim",
+   "detail": {
+    "mode": "open",
+    "present": true,
+    "x": 782.59375,
+    "w": 300,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "rgba(0, 0, 0, 0.42) 0px 18px 65px 0px, rgba(0, 0, 0, 0.26) 0px 4px 18px 0px",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "The float shadow still paints through the pane clip",
+   "detail": {
+    "withShadow": 15.64,
+    "without": 19.67
+   }
+  },
+  {
+   "ok": true,
+   "label": "Esc dismisses an UNPINNED drawer",
+   "detail": {
+    "mode": "closed",
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Scrim click dismisses an UNPINNED drawer",
+   "detail": {
+    "mode": "closed",
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "PIN narrows the drawer",
+   "detail": {
+    "before": 300,
+    "after": 200
+   }
+  },
+  {
+   "ok": true,
+   "label": "PIN does not MOVE the drawer (narrows in place)",
+   "detail": {
+    "moved": 0,
+    "before": 782.59375,
+    "after": 782.59375
+   }
+  },
+  {
+   "ok": true,
+   "label": "Width and gutter interpolate together, not in one step",
+   "detail": {
+    "widths": 10,
+    "gutters": 10
+   }
+  },
+  {
+   "ok": true,
+   "label": "Reserved gutter tracks the pinned width exactly",
+   "detail": {
+    "gutter": 200,
+    "width": 200
+   }
+  },
+  {
+   "ok": true,
+   "label": "The transcript slid RIGHT into the gutter",
+   "detail": {
+    "before": 782.59375,
+    "after": 982.59375
+   }
+  },
+  {
+   "ok": true,
+   "label": "Scrim goes on pin (chat stays interactive)",
+   "detail": {
+    "op": 0,
+    "pe": "none"
+   }
+  },
+  {
+   "ok": true,
+   "label": "Heavy overlay shadow becomes a quiet border on pin",
+   "detail": {
+    "shadow": "none"
+   }
+  },
+  {
+   "ok": true,
+   "label": "Esc does NOT dismiss a pinned drawer (guarded)",
+   "detail": {
+    "mode": "pinned",
+    "present": true,
+    "x": 782.59375,
+    "w": 200,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "none",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 200,
+    "stageLeft": 982.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Scrim area click does NOT dismiss a pinned drawer (guarded)",
+   "detail": {
+    "mode": "pinned",
+    "present": true,
+    "x": 782.59375,
+    "w": 200,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "none",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 200,
+    "stageLeft": 982.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "UNPIN restores the scrim (the reference's sibling defect, fixed)",
+   "detail": {
+    "mode": "open",
+    "present": true,
+    "x": 782.59375,
+    "w": 300,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "rgba(0, 0, 0, 0.42) 0px 18px 65px 0px, rgba(0, 0, 0, 0.26) 0px 4px 18px 0px",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "UNPIN widens in place",
+   "detail": {
+    "mode": "open",
+    "present": true,
+    "x": 782.59375,
+    "w": 300,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "rgba(0, 0, 0, 0.42) 0px 18px 65px 0px, rgba(0, 0, 0, 0.26) 0px 4px 18px 0px",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Gutter collapses on unpin",
+   "detail": {
+    "mode": "open",
+    "present": true,
+    "x": 782.59375,
+    "w": 300,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "rgba(0, 0, 0, 0.42) 0px 18px 65px 0px, rgba(0, 0, 0, 0.26) 0px 4px 18px 0px",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 1,
+     "pe": "auto"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Re-pinned with a live gutter",
+   "detail": {
+    "mode": "pinned",
+    "present": true,
+    "x": 782.59375,
+    "w": 200,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "none",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 200,
+    "stageLeft": 982.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "THE TOGGLE CLOSES A PINNED DRAWER (kimi-k3 w1-solo-column.js:330 bug NOT ported)",
+   "detail": {
+    "mode": "closed",
+    "present": false,
+    "x": null,
+    "w": null,
+    "transform": null,
+    "shadow": null,
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 0,
+    "stageLeft": 782.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Closing a pinned drawer unpins, so the gutter collapses too",
+   "detail": {
+    "was": 200,
+    "now": 0
+   }
+  },
+  {
+   "ok": true,
+   "label": "The close is ANIMATED — the node survives the exit instead of being dropped",
+   "detail": {
+    "distinctX": 11,
+    "samples": 15
+   }
+  },
+  {
+   "ok": true,
+   "label": "Exit contract: pm-leaving yields a readable animationDuration and kills pointer events",
+   "detail": {
+    "name": "ph-drawer-out",
+    "dur": "0.24s",
+    "ms": 240,
+    "pe": "none"
+   }
+  },
+  {
+   "ok": true,
+   "label": "Exit duration is 240ms",
+   "detail": {
+    "name": "ph-drawer-out",
+    "dur": "0.24s",
+    "ms": 240,
+    "pe": "none"
+   }
+  },
+  {
+   "ok": true,
+   "label": "pmPatch cannot remove the drawer before the exit finishes",
+   "detail": {
+    "present": true,
+    "mode": "closing",
+    "historyMode": "floating"
+   }
+  },
+  {
+   "ok": true,
+   "label": "…and it IS removed once the exit lands",
+   "detail": {
+    "mid": {
+     "present": true,
+     "mode": "closing",
+     "historyMode": "floating"
+    },
+    "gone": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "The thread really moved into the Pinned group",
+   "detail": {
+    "target": {
+     "id": "subagents",
+     "y": 460.3125
+    },
+    "after": {
+     "inPinned": true,
+     "y": 429.3125
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "The move is ANIMATED (FLIP), not a teleport",
+   "detail": {
+    "count": 1,
+    "mine": [
+     {
+      "id": "subagents",
+      "kf": "[{\"transform\":\"translate(0px,31px)\"},{\"transform\":\"none\"}]",
+      "dur": 420
+     }
+    ]
+   }
+  },
+  {
+   "ok": true,
+   "label": "Pinning also closes the thread menu (app.js:1506 left it open for 2s)",
+   "detail": {
+    "anims": [
+     {
+      "id": "subagents",
+      "kf": "[{\"transform\":\"translate(0px,31px)\"},{\"transform\":\"none\"}]",
+      "dur": 420
+     }
+    ],
+    "menuState": null,
+    "liveMenu": false,
+    "menuGone": true
+   }
+  },
+  {
+   "ok": true,
+   "label": "No overflow and the drawer paints in all 8 themes",
+   "detail": {
+    "bad": [],
+    "ids": [
+     "basic-dark",
+     "basic-light",
+     "friendly-dark",
+     "friendly-light",
+     "glass-dark",
+     "glass-light",
+     "retro-dark",
+     "retro-light"
+    ]
+   }
+  },
+  {
+   "ok": true,
+   "label": "The other seven takes still render the stock indicator",
+   "detail": {
+    "other": [],
+    "seen": 7
+   }
+  },
+  {
+   "ok": true,
+   "label": "Reset all does not resurrect the old .history-panel column",
+   "detail": {
+    "mode": "pinned",
+    "present": true,
+    "x": 782.59375,
+    "w": 200,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "shadow": "none",
+    "paneLeft": 782.59375,
+    "paneW": 657.40625,
+    "gutter": 200,
+    "stageLeft": 982.59375,
+    "scrim": {
+     "op": 0,
+     "pe": "none"
+    }
+   }
+  },
+  {
+   "ok": true,
+   "label": "Zero console errors/warnings",
+   "detail": []
+  },
+  {
+   "ok": true,
+   "label": "Zero page errors",
+   "detail": []
+  }
+ ],
+ "consoleErrors": [],
+ "pageErrors": []
+}
