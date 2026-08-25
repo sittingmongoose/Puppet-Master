@@ -1,0 +1,80 @@
+{
+  "ok": true,
+  "verdicts": {
+    "D1": {
+      "ok": true,
+      "distinct": 14,
+      "mid": 16
+    },
+    "D2D3": {
+      "ok": true,
+      "mainH": 182.125,
+      "scrollH": 100,
+      "asideH": 72,
+      "hostH": 397,
+      "ansReach": true,
+      "nextReach": false,
+      "nextInHost": true,
+      "nextTop": 647.03125,
+      "hostBottom": 712.15625
+    },
+    "RM": {
+      "ok": true,
+      "name": "decision-enter",
+      "duration": "0.001s"
+    },
+    "L1": {
+      "ok": true,
+      "worst": 0,
+      "shifts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "G1": {
+      "ok": true,
+      "badOp": 0,
+      "badArrive": 0,
+      "n": 169
+    },
+    "G10": {
+      "ok": true,
+      "total": 204.41,
+      "worstJump": 29.28,
+      "pct": 14
+    },
+    "T1": {
+      "ok": true,
+      "inView": true,
+      "painted": true,
+      "overlap": 100.3,
+      "below": -278.8
+    },
+    "T6": {
+      "ok": true,
+      "overflowAnchor": "none"
+    },
+    "G2": {
+      "ok": true,
+      "bare": 81.1,
+      "stepSync": 29.7,
+      "disabled": false
+    }
+  },
+  "errs": [],
+  "sheets": [
+    "D1-decision-exit.png",
+    "D2D3-take7-vw360.png",
+    "G1-no-vanish.png",
+    "G10-reorder-flip.png",
+    "L1-focus-neutral.png",
+    "RM-take7-reduce.png",
+    "T1-send-scroll.png"
+  ]
+}
