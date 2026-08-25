@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.muse_owned_xml_probe.v1",
+  "status": "PREREGISTERED_ZERO_CREDIT",
+  "created_at_utc": "2026-08-25T21:56:38Z",
+  "source_candidate_commit": "e78ad938150bd1bd47a91e22aaeacc9d65b5570b",
+  "source_freeze_manifest_sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3",
+  "hypothesis": "OMP's generic owned XML tool wire will preserve the unchanged one-prompt native Goal contract while making the sole Goal tool selectable on the Muse/OpenCode-Go route that returned text but no native Responses function call.",
+  "smallest_changed_invariant": "Only tools.format changes from auto to xml through one frozen OMP config overlay. The subject prompt, capsule, oracle, scorer, model selectors, thinking levels, advisor controls, no-ordinary-tools restriction, native Goal runtime, and terminal acceptance bar remain unchanged.",
+  "source_prompt": {
+    "path": "../system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+    "utf8_bytes": 3036,
+    "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "required_prefix": "/goal ",
+    "external_submission_count": 1
+  },
+  "runtime": {
+    "binary": "/home/sittingmongoose/.local/bin/omp",
+    "binary_bytes": 179881160,
+    "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+    "version": "omp/18.0.4",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "profile_config_bytes": 472,
+    "profile_config_sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc",
+    "overlay_path": "tools_xml.config.yml",
+    "overlay_bytes": 21,
+    "overlay_sha256": "5bd19e07fcc96021ac72f58924117bbbc73f4fd87ecba45b3b335a89cdcb0301",
+    "tools_format": "xml",
+    "row_time_budget_seconds": 3600,
+    "advisor_enabled": false,
+    "task_agent_advisor": {
+      "task": "off"
+    },
+    "ordinary_tools_enabled": false
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "pass_id": "probe_01",
+      "route_id": "omp_ox_alpha_free_max",
+      "surface": "omp_tui",
+      "model": "opencode-go/ox-alpha-free",
+      "thinking": "max",
+      "attempt_id": "xml-probe-v1-01-adbd4effd4",
+      "nonce": "adbd4effd45d2b2e46049616ec70143b",
+      "cwd": "/tmp/pm-r10-storage-v7-xml-probe-01-adbd4effd4",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-xml-probe-01-adbd4effd4",
+      "evidence_path": "evidence/probe_01/omp_ox_alpha_free_max"
+    },
+    {
+      "ordinal": 2,
+      "pass_id": "probe_01",
+      "route_id": "omp_muse_spark_xhigh",
+      "surface": "omp_tui",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "thinking": "xhigh",
+      "attempt_id": "xml-probe-v1-02-a07db988f8",
+      "nonce": "a07db988f850754d1ea28dcbc6bc59c4",
+      "cwd": "/tmp/pm-r10-storage-v7-xml-probe-02-a07db988f8",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-xml-probe-02-a07db988f8",
+      "evidence_path": "evidence/probe_01/omp_muse_spark_xhigh"
+    }
+  ],
+  "sequencing": {
+    "exact_order": [
+      "omp_ox_alpha_free_max",
+      "omp_muse_spark_xhigh"
+    ],
+    "fail_stop": true,
+    "retry_count": 0,
+    "replacement_count": 0,
+    "best_of": false,
+    "qualification_credit": 0
+  },
+  "row_acceptance": {
+    "goal_activation_required": true,
+    "goal_completion_required": true,
+    "successful_goal_result_required": true,
+    "exact_v7_oracle_required": true,
+    "ordinary_tool_calls": 0,
+    "normal_process_exit_required": true,
+    "unchanged_v7_session_parser": true,
+    "unchanged_v7_terminal_scorer": true
+  },
+  "terminal_interpretation": {
+    "ox_fail": "Stop permanently. The generic XML wire is not an admissible common control and Muse is not launched.",
+    "ox_pass_muse_fail": "Preserve Muse as a route capability blocker. Do not try another dialect, retry, or advance the matrix.",
+    "both_pass": "The tool-wire hypothesis is supported only as zero-credit diagnostic evidence. Build a fresh full denominator beginning again with Ox and Cursor; do not retro-credit V7."
+  },
+  "nonclaims": [
+    "No row in this diagnostic earns matrix qualification credit.",
+    "A diagnostic pass does not repair or replace the consumed V7 Muse failure.",
+    "This diagnostic does not establish production readiness, safety certification, canonical Plan completion, or WorkNode readiness."
+  ]
+}
