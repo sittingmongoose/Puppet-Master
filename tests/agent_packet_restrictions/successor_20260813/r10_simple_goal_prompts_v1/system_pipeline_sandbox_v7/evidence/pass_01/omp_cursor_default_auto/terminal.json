@@ -1,0 +1,149 @@
+{
+  "attempt_id": "storage-v7-pass_01-02-0e67142201",
+  "composer_acknowledged": true,
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 338,
+      "path": "reservation.json",
+      "sha256": "4a00875ae3b4798debc4c3b2f927ca8278a26597661c703d3904abe61caeee20"
+    },
+    {
+      "bytes": 3293,
+      "path": "omp_preflight.json",
+      "sha256": "47c738369be16d46d9001dee4475bf6c43b9d2cfae14a5f3f5b9fe4b3c400b07"
+    },
+    {
+      "bytes": 1424,
+      "path": "launch.json",
+      "sha256": "8fa38be8915f5eb5eca89d3f762cfaf9c9b789bebab728764976d582aa560862"
+    },
+    {
+      "bytes": 93240,
+      "path": "pre_prompt.raw",
+      "sha256": "46b1d66dd604c172134b18bce5bb25257198a2b03a5425c064983ef46f994021"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 681,
+      "path": "prompt_write.json",
+      "sha256": "5dc1e96e51e683b952ee1b4d25935696b291f8f051bb64e0357789c9ac3396c0"
+    },
+    {
+      "bytes": 103515,
+      "path": "composer_ack.raw",
+      "sha256": "ecd6a7b52cf702345eb0120a701c37d7b130fcc99d45711e777b1d58c4ca4c81"
+    },
+    {
+      "bytes": 712,
+      "path": "composer_ack.json",
+      "sha256": "c75fa718ca8a9f23e9217ccb042cf3f5ae9dcb7bdcd2e4ce93269326c0f99884"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 733,
+      "path": "enter_write.json",
+      "sha256": "cfb18b156c059af96d0bcb8c542a4e8d70660f2018e9c755f2f6ed05feea91b9"
+    },
+    {
+      "bytes": 25087,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "a903fcddeb9346ff7c6dff83e1e44745f9e2878dc1cc386454038ee9438fc1ba"
+    },
+    {
+      "bytes": 1312,
+      "path": "submission_acceptance.json",
+      "sha256": "11c11de07d95b55698414b4a3f930c870e2aadb7dc5d6a1ab6c4a53bde4edec3"
+    },
+    {
+      "bytes": 415303,
+      "path": "transcript.raw",
+      "sha256": "4cfed40a82619502a465fa6d150a6f6b218738c0e9acc6d2f0c815776592b7c4"
+    },
+    {
+      "bytes": 1,
+      "path": "control.raw",
+      "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+    },
+    {
+      "bytes": 28785,
+      "path": "session.raw.jsonl",
+      "sha256": "13dfc72b1d3abae8f6d1def28b0b52f294caf45e80bd858826229ca8562d2759"
+    }
+  ],
+  "external_submission_count": 1,
+  "failure_code": null,
+  "final_assistant_text": "Structural extraction and comparison match (plan units, acceptance units, dependency registry, migration coverage, canonical comparison). Canonical currentness failed (stale node-readiness artifact) and runtime certification is incomplete (PNC-019), so disposition remains blocked.Structural success is preserved (source match, 248 plan units, 811 acceptance units, resolved dependency registry, pass migration coverage, pass canonical comparison). Gate blockers remain: stale node-readiness artifact and incomplete PNC-019 runtime certification → pre-WorkNode disposition is blocked; no WorkNodes created.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "finished_at_utc": "2026-08-25T20:14:44.340Z",
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "low_level_input_write_count": 2,
+  "model": "cursor/default",
+  "no_retry": true,
+  "nonce": "0e671422019bbce8a1e99d5b82e81a1a",
+  "observed_identity": "01a03a8f-58c1-7309-abc9-b4802d64c301",
+  "observed_non_goal_tool_calls": 0,
+  "ordinal": 2,
+  "pass_id": "pass_01",
+  "persisted_submission_accepted": true,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "route_id": "omp_cursor_default_auto",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "session_projection": {
+    "assistant_lifecycle_shape": "cursor_aggregate",
+    "assistant_message_count": 1,
+    "entry_ids": {
+      "final_assistant": "14bdb8a5",
+      "goal_active": "caac9c9d",
+      "goal_call_assistant": "14bdb8a5",
+      "goal_complete_mode": "44b30b12",
+      "goal_completed": "9eba0529",
+      "goal_contexts": [
+        "3babe984"
+      ],
+      "goal_exit": "2c7bb62a",
+      "goal_result": "5b677dc1",
+      "goal_tool_start": "26e1866f",
+      "native_continuation": null,
+      "session_exit": "914cb012",
+      "user": "c6f8e319"
+    },
+    "final_text_sha256": "8a13c45f7dfbfcf1b641f7e5dcf1a88667511484f1cb4aa0b15365e245535c58",
+    "goal_context_count": 1,
+    "goal_id": "1565f12c042e81a9",
+    "goal_tool_call_id": "call-f115e251-b048-40b8-b7b5-a44b2be2c704-0\nfc_ba4100d6-955b-9880-90a2-597e71b8c863_0",
+    "leaf_id": "914cb012",
+    "logical_entry_count": 12,
+    "model": "default",
+    "native_continuation_count": 0,
+    "ordinary_tool_calls": 0,
+    "pre_goal_call_text_utf8_bytes": 281,
+    "provider": "cursor",
+    "selector": "cursor/default",
+    "session_file_bytes": 28785,
+    "session_file_sha256": "13dfc72b1d3abae8f6d1def28b0b52f294caf45e80bd858826229ca8562d2759",
+    "session_id": "01a03a8f-58c1-7309-abc9-b4802d64c301",
+    "session_started_at_utc": "2026-08-25T20:14:28.033Z",
+    "thinking": "auto",
+    "thinking_receipt_count": 0,
+    "title_slot_bytes": 256
+  },
+  "status": "PASS",
+  "surface": "omp_tui",
+  "terminal_control_sent_once": true,
+  "thinking": "auto",
+  "tui_corroboration": {
+    "goal_activation": true,
+    "goal_complete": true,
+    "pm_result_marker": true
+  }
+}
