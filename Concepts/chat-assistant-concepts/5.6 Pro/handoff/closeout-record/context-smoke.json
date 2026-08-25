@@ -1,0 +1,286 @@
+{
+  "started": "2026-08-25T19:34:11.906Z",
+  "target": "/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/index.html",
+  "items": [
+    {
+      "id": "CX.helper",
+      "what": "PM56_CTX helper exposed (or openContext demo path available)",
+      "verdict": "PASS",
+      "detail": {
+        "hasCtx": true,
+        "hasDemo": true
+      }
+    },
+    {
+      "id": "CX.drawer-or-surface",
+      "what": "openContext mounts a visible context surface",
+      "verdict": "PASS",
+      "detail": {
+        "visible": [
+          {
+            "cls": "drawer ctx-drawer",
+            "w": 500,
+            "h": 820
+          },
+          {
+            "cls": "composition-key ctx-key4",
+            "w": 450,
+            "h": 124
+          },
+          {
+            "cls": "ctx-growth-wrap growth-chart",
+            "w": 450,
+            "h": 184
+          },
+          {
+            "cls": "ctx-growth",
+            "w": 440,
+            "h": 176
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 387,
+            "h": 72
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 387,
+            "h": 62
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "w": 21,
+            "h": 21
+          },
+          {
+            "cls": "ctx-growth-read",
+            "w": 450,
+            "h": 28
+          },
+          {
+            "cls": "metric-grid ctx-grid2",
+            "w": 450,
+            "h": 106
+          },
+          {
+            "cls": "ctx-caps",
+            "w": 450,
+            "h": 91
+          },
+          {
+            "cls": "ctx-cap on",
+            "w": 223,
+            "h": 27
+          },
+          {
+            "cls": "ctx-cap",
+            "w": 223,
+            "h": 27
+          },
+          {
+            "cls": "ctx-cap on",
+            "w": 223,
+            "h": 27
+          },
+          {
+            "cls": "ctx-cap",
+            "w": 223,
+            "h": 27
+          },
+          {
+            "cls": "ctx-cap",
+            "w": 223,
+            "h": 27
+          },
+          {
+            "cls": "ctx-cap on",
+            "w": 223,
+            "h": 27
+          },
+          {
+            "cls": "ctx-note",
+            "w": 450,
+            "h": 27
+          },
+          {
+            "cls": "ctx-note",
+            "w": 450,
+            "h": 27
+          },
+          {
+            "cls": "ctx-prevcols",
+            "w": 450,
+            "h": 67
+          }
+        ],
+        "count": 36
+      }
+    },
+    {
+      "id": "CX.painted-surface",
+      "what": "elementsFromPoint at context surface centre lands in a ctx-* node",
+      "verdict": "PASS",
+      "detail": {
+        "cls": "drawer ctx-drawer",
+        "x": 1183,
+        "y": 89,
+        "owns": true,
+        "topCls": "drawer-head",
+        "stackDepth": 16
+      }
+    },
+    {
+      "id": "CX.N-forced-invisible",
+      "what": "NEGATIVE: opacity:0 + pointer-events:none must make owns=false",
+      "verdict": "PASS (went red)",
+      "detail": {
+        "stillOwns": false,
+        "topCls": "P"
+      }
+    },
+    {
+      "id": "CX.drawer-content",
+      "what": "drawer surfaces Capabilities and/or growth chart / meter rows",
+      "verdict": "PASS",
+      "detail": {
+        "hasCapabilities": true,
+        "hasGrowth": true,
+        "hasCeiling": true,
+        "hasCapRows": 25,
+        "meterRows": 0
+      }
+    },
+    {
+      "id": "CX.live-state",
+      "what": "context state is reachable via PM56_EXT.ctx().state (live, not only clone)",
+      "verdict": "PASS",
+      "detail": {
+        "before": null,
+        "live": {
+          "compact": false,
+          "details": true,
+          "compacted": false
+        },
+        "cloneSees": {
+          "compact": false,
+          "details": true,
+          "compacted": false
+        },
+        "mutatedVisible": true
+      }
+    },
+    {
+      "id": "CX.compact-now",
+      "what": "Compact Now control exists and produces an outcome signal (node or tone text)",
+      "verdict": "PASS",
+      "detail": {
+        "found": true,
+        "action": "ctx-compact-now",
+        "hasOutcomeNode": false,
+        "hadBusy": false,
+        "dialogOpen": false,
+        "toneHit": true
+      }
+    },
+    {
+      "id": "CX.N-bogus-selector",
+      "what": "NEGATIVE: fabricated .ctx-w4b-totally-fake-slot must be absent",
+      "verdict": "PASS (went red / absent)",
+      "detail": {
+        "bogus": false
+      }
+    }
+  ],
+  "finished": "2026-08-25T19:34:17.019Z",
+  "summary": {
+    "total": 8,
+    "fails": [],
+    "skips": [],
+    "overall": "PASS"
+  }
+}

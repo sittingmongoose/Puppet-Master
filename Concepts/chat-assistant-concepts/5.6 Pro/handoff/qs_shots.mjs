@@ -9,7 +9,7 @@ const ROOT = '/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro'
 const url = pathToFileURL(path.join(ROOT, 'index.html')).href;
 const theme = process.argv[2] || 'basic-dark';
 const kind = process.argv[3] || 'question';
-const outDir = process.argv[4] || '/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/qsshots';
+const outDir = process.argv[4] || '/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/qsshots';
 fs.mkdirSync(outDir, { recursive: true });
 
 const OPEN = {

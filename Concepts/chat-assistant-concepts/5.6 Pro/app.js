@@ -204,7 +204,7 @@
       activeThread, selectedModel, statusLabel, activityDefs, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
       /* mutators -- each triggers the render the change actually needs */
-      renderApp, renderOverlays, toast, addReceipt, openEditor, closeEditor,
+      renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
       openDialog, closeDialog, copyText, savePrefs, extRender
     }, extra);
@@ -970,8 +970,52 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(id==='changes') return D.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" style="color:var(--positive)">+${c.add} <i style="color:var(--danger)">−${c.del}</i></span></button>`).join('');
     return D.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px;color:${a.status==='error'?'var(--danger)':a.status==='stale'?'var(--warning)':'var(--accent)'}">${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
   }
+  /* D1: .decision-host.empty transitions max-height, but only if children stay
+     mounted for the collapse. Snapshot the last surface, render it under .empty,
+     then clear after transitionend (or a 600ms fallback). */
+  let decisionExit=null;
+  function finishDecisionExit(){
+    if(!decisionExit) return;
+    if(decisionExit.timer) clearTimeout(decisionExit.timer);
+    decisionExit=null;
+    renderApp();
+  }
+  function armDecisionExitClear(){
+    requestAnimationFrame(()=>{
+      const host=document.querySelector('.decision-host.empty');
+      if(!host || !decisionExit){ finishDecisionExit(); return; }
+      const done=()=>{
+        host.removeEventListener('transitionend', onEnd);
+        finishDecisionExit();
+      };
+      const onEnd=(e)=>{
+        if(e.target!==host || e.propertyName!=='max-height') return;
+        done();
+      };
+      host.addEventListener('transitionend', onEnd);
+      if(decisionExit.timer) clearTimeout(decisionExit.timer);
+      decisionExit.timer=setTimeout(done, 600);
+    });
+  }
+  function closeDecision(thenRender=true){
+    const host=document.querySelector('.decision-host:not(.empty)');
+    const html=host?host.innerHTML:'';
+    if(decisionExit?.timer) clearTimeout(decisionExit.timer);
+    state.decision=null;
+    if(html){
+      decisionExit={html, timer:null};
+      if(thenRender){ renderApp(); armDecisionExitClear(); }
+      else armDecisionExitClear();
+    } else {
+      decisionExit=null;
+      if(thenRender) renderApp();
+    }
+  }
   function renderDecisionHost(){
-    if(!state.decision) return `<div class="decision-host empty" data-variant="${state.variants[6]}"></div>`;
+    if(decisionExit){
+      return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}">${decisionExit.html}</div>`;
+    }
+    if(!state.decision) return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}"></div>`;
     const type=state.decision.type;
     let body='';
     if(type==='question') body=renderQuestionDecision();
@@ -981,7 +1025,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(type==='permission') body=renderPermissionDecision();
     else if(type==='conflict') body=renderConflictDecision();
     body=extReplace('questionSurface',{type,decision:state.decision,variant:state.variants[6]},body);
-    return `<div class="decision-host" data-variant="${state.variants[6]}">${body}</div>`;
+    return `<div class="decision-host" data-k="decision-host" data-variant="${state.variants[6]}">${body}</div>`;
   }
 
   function renderPreparingDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('sparkles',13)}</span><strong>Preparing questions…</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="work-progress"><i style="width:72%;animation:activity-scan 1.6s linear infinite"></i></div><p style="color:var(--muted);font-size:10px;margin:9px 0 0">Resolving what is already known so the assistant asks only material questions.</p></div></section>`; }
@@ -1143,6 +1187,63 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     renderOverlays();
   }
 
+  /* G2: goal mutations project into a handful of in-tree islands. Patch those
+     instead of regenerating the whole shell (bare renderApp ~69ms). Falls back
+     to a full render when an expected keyed host is missing. */
+  function renderGoalSurfaces(){
+    const G=window.PM56_GOAL;
+    if(!G||!G.render){ renderApp(); return; }
+    const ctx=extCtx();
+    const positions=captureScroll();
+    const moveTargets=[...document.querySelectorAll('[data-flip-move]')];
+    const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
+    let patched=0;
+    const patchKey=(html)=>{
+      if(!html||!String(html).trim()) return false;
+      const tpl=document.createElement('template');
+      tpl.innerHTML=String(html).trim();
+      const src=tpl.content.firstElementChild;
+      if(!src) return false;
+      const k=src.getAttribute('data-k');
+      if(!k) return false;
+      const live=document.querySelector(`[data-k="${CSS.escape(k)}"]`);
+      if(!live) return false;
+      pmPatchNode(live,src);
+      patched++;
+      return true;
+    };
+    const sectionHost=document.querySelector('[data-domain-section="goal"] .activity-section-body');
+    if(sectionHost){
+      const html=extReplace('goalSection',{},'');
+      if(html){ pmPatch(sectionHost, html); patched++; }
+      else { sectionHost.innerHTML=''; patched++; }
+    }
+    if(state.activeEditor==='goal-artifact'){
+      const ed=extReplace('goalEditor',{},'');
+      if(ed && !patchKey(ed)){ renderApp(); return; }
+    }
+    if(typeof G.chip==='function'){
+      const chip=G.chip(ctx);
+      if(chip){ if(!patchKey(chip) && document.querySelector('.chat-header')){ renderApp(); return; } }
+      else {
+        const dead=document.querySelector('[data-k="goalheadchip"]');
+        if(dead) dead.remove();
+      }
+    }
+    if(typeof G.sidebar==='function'){
+      const side=G.sidebar(ctx);
+      if(side){ if(!patchKey(side) && document.querySelector('.history-panel')){ renderApp(); return; } }
+      else {
+        const dead=document.querySelector('[data-k="goalsidebar"]');
+        if(dead) dead.remove();
+      }
+    }
+    if(patched===0){ renderApp(); return; }
+    flipMoves(moveTargets, moveBefore);
+    restoreScroll(positions);
+    renderOverlays();
+  }
+
   /* height:auto is not animatable, so a card that gains a receipt or an
      agent list used to snap open. Measure before the patch, animate the
      delta after it, and clip for the duration so growing content does not
@@ -1186,6 +1287,33 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
 
+  /* A FLIP is only honest if the target it measured is where the box actually
+     ends up, and here it often was not. flipHeights runs synchronously one line
+     after the pmPatch, so `h1` is read at t=0 of whatever CSS transitions that
+     patch just started -- and by spec a transition still presents its OLD value
+     at t=0. The Orbit take flips the panel track 0fr <-> 1fr over 420ms
+     (orbit.css:206-213, row-axis form at orbit.css:570-579), so the rect came
+     back WITHOUT the panel's 188-260px: on an expand h1 was 40px SMALLER than
+     h0 and on a collapse 40px LARGER (that residual is the .orbit-caption,
+     which exists only while collapsed). The card therefore travelled backwards
+     for 320ms and then handed the box back to layout in a single frame --
+     +231.4px on expand, -271.0px on collapse, measured at t=338ms.
+     Evidence: handoff/w6/flip/e1-expand.json, e1-collapse.json; killing just
+     `.orbit-layout`'s transition at runtime drops that frame to +29.9px and
+     makes h1 read the correct 384.06px (e4-orbit-transition-none.json), while
+     killing `.working-body`'s own min-height transition changes nothing
+     (e4-workingbody-transition-none.json) -- so this is the grid track, not
+     styles.css:192.
+
+     Deferring the measurement by a frame is not a fix: one rAF later the panel
+     has travelled ~1px of 200, so the reading is just as wrong. Instead, watch
+     the CONTENT while the FLIP plays. If the children's own heights move at all
+     after the patch, `h1` described a layout that no longer exists, and the
+     honest thing is to get out of the way: cancel, un-clip, and let the CSS
+     transition that is already running own the height. That is take-agnostic --
+     it keys off the FLIP subject's own children, not off any take's markup --
+     and it degrades to the motion Orbit already does well, since the panel
+     track grows smoothly on its own. */
   function flipHeights(targets, before){
     if(window.PM56_MOTION && window.PM56_MOTION.reduced()) return;
     for(const el of targets){
@@ -1197,14 +1325,192 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       el.style.overflow='hidden';
       const a=el.animate([{height:`${h0}px`},{height:`${h1}px`}],
         {duration:320, easing:'cubic-bezier(.22,.80,.28,1)'});
-      a.finished.then(()=>{el.style.overflow=prevOverflow;}, ()=>{el.style.overflow=prevOverflow;});
+      /* Start the clock on the NEXT frame, not this one. This frame still has
+         to lay out and paint everything pmPatch just wrote, and on a card that
+         gains the whole work history that costs 33-50ms -- during which the
+         animation clock was already running, so the FIRST frame the user
+         actually saw was 36-64% of the way through a 547px travel: a 282-349px
+         jump on every one of the 24 takes, measured identically before and
+         after the target fix above (handoff/w6/flip/measure-baseline.json vs
+         measure-fixed.json). A paused animation still applies its effect, so
+         holding at h0 for that one frame shows the old height rather than a
+         gap, and the travel afterwards is the plain 19%-per-frame first step
+         the easing is supposed to give. */
+      a.pause();
+      const release=()=>{el.style.overflow=prevOverflow;};
+      /* A CANCEL is the guard's business, not a release: it hands over to the
+         hold, which is still clipping. Only an honest finish releases here. */
+      a.finished.then(release, ()=>{});
+      guardFlip(el, a, h0, release, layoutTransitionPending(el));
     }
   }
 
-  function captureScroll(){
-    const out={}; document.querySelectorAll('[data-scroll-key]').forEach(el=>out[el.dataset.scrollKey]=el.scrollTop); return out;
+  /* Properties whose transition, anywhere in this subtree, could change this
+     box's height. The `spin 24s` ring, `orbit-pulse` and `.lane-pulse` are
+     infinite CSS ANIMATIONS, and they are excluded by the CSSTransition test
+     rather than by this list -- getAnimations({subtree:true}) returns them all
+     and a naive scan would treat every Orbit card as permanently suspect. */
+  const FLIP_LAYOUT_PROPS=new Set(['height','min-height','max-height','flex-basis',
+    'grid-template-rows','grid-template-columns','gap','row-gap','column-gap',
+    'padding-top','padding-bottom']);
+  function layoutTransitionPending(el){
+    let list; try{ list=el.getAnimations({subtree:true}); }catch(e){ return false; }
+    for(const an of list)
+      if(an.constructor.name==='CSSTransition' && an.playState==='running'
+         && FLIP_LAYOUT_PROPS.has(an.transitionProperty)) return true;
+    return false;
   }
-  function restoreScroll(pos){ requestAnimationFrame(()=>document.querySelectorAll('[data-scroll-key]').forEach(el=>{if(pos&&pos[el.dataset.scrollKey]!=null)el.scrollTop=pos[el.dataset.scrollKey]})); }
+
+  /* The guard for the above, and the part that keeps the correction itself
+     from being a second lurch.
+
+     It watches the CONTENT, summing the children's offsetHeight rather than
+     reading the parent's: the parent's height is exactly what the WAAPI
+     animation is currently faking, while the children are content-sized and
+     immune to it. Transform-immune too, so an entrance that slides or scales a
+     row does not register. The comparison is against the sum captured at FLIP
+     time, not the previous frame, so a slow 420ms grid track trips it within a
+     frame or two instead of creeping under a per-frame threshold.
+
+     Cancelling alone is not enough, twice over.
+
+     First, on an Orbit expand the caption disappears the instant the patch
+     lands while the panel needs 420ms to arrive, so the honest live height is
+     30px BELOW where the card started -- hand the box straight back to layout
+     and it visibly flinches downward before growing. So we HOLD it at h0 until
+     layout catches up, and only then let go. The hold is a second WAAPI
+     animation pinned at h0; to read the true live height underneath it we
+     cancel it, measure, and re-pin inside the SAME rAF callback, which is
+     before style and paint, so no unpinned frame is ever rendered and the
+     reading needs no arithmetic guess about padding.
+
+     Second, detecting the divergence only AFTER it appears always leaves one
+     frame of exposure, and measurement caught it: in 2 of 12 recorded expands
+     the grid transition's first content movement landed one frame later than
+     the FLIP's first moving frame, and the card rendered a single 7.5px dip
+     before the guard could react (handoff/w6/flip/blip-diagnosis.json). So when
+     a layout-affecting transition is already running at FLIP time we start
+     HELD rather than playing, which has zero exposure by construction. If the
+     content then never moves, the target was honest after all -- a descendant
+     transition that cannot reach this box, such as take 12's phase register
+     inside its fixed-height row (variants-b.css:99) -- and the real FLIP plays,
+     five frames late and none the worse. That grace is 5 rather than 3 because
+     the slow runs above only moved on the third frame. */
+  function guardFlip(el, a, h0, release, suspect){
+    const content=()=>{let s=0; for(const c of el.children) s+=c.offsetHeight; return s;};
+    const at0=content();
+    const t0=performance.now();
+    let hold=null, dir=0, grace=0;
+    const pin=()=>el.animate([{height:`${h0}px`},{height:`${h0}px`}],{duration:800});
+    /* A PAUSED animation still applies its effect, so `a` has to be cancelled
+       before the live height can be read -- otherwise every measurement comes
+       back as h0 and the guard concludes layout has caught up on its very
+       first frame. That mistake froze the Orbit card at 224.77px forever
+       (handoff/w6/flip/t1-orbit-repeat.json, before this line existed). */
+    const letGo=()=>{ if(hold){hold.cancel(); hold=null;} if(a.playState==='paused') a.cancel(); release(); };
+    if(suspect) hold=pin();                       // held before this frame paints
+    const tick=()=>{
+      if(!el.isConnected){ a.cancel(); letGo(); return; }
+      const moved=content()-at0;
+      if(hold){
+        if(dir===0 && Math.abs(moved)>1){ dir=moved; a.cancel(); }
+        if(dir!==0){
+          hold.cancel(); hold=null;               // read the truth underneath
+          const live=el.getBoundingClientRect().height;
+          /* 640ms is a hard stop: the longest layout transition the concept
+             runs is 520ms (--spring), so anything still moving past that is
+             not a handover this FLIP can wait out. */
+          if((dir>0 ? live>=h0-0.5 : live<=h0+0.5) || performance.now()-t0>640){ letGo(); return; }
+          hold=pin();
+        } else if(++grace>5){
+          hold.cancel(); hold=null; a.play();
+        }
+        requestAnimationFrame(tick); return;
+      }
+      const st=a.playState;
+      if(st==='finished'){ letGo(); return; }
+      if(st!=='running' && st!=='paused') return; // cancelled by someone else
+      if(Math.abs(moved)>1){ dir=moved; a.cancel(); hold=pin(); requestAnimationFrame(tick); return; }
+      if(st==='paused') a.play();                 // clock starts on the SECOND frame
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  /* --- scroll custody (T2) ---------------------------------------------
+     `.transcript` carries scroll-behavior:smooth (styles.css:153), so every
+     programmatic scrollTop write ANIMATES. captureScroll/restoreScroll run
+     around every patch, and a capture taken while such an animation is in
+     flight records a position the scroller is only passing THROUGH; writing
+     that back on the next frame cancels the animation and parks the scroller
+     there. Measured at boot: 0 -> 847 -> 116 of 2892 -- the transcript came up
+     near the top and stayed there permanently.
+     So a commanded scroll registers an INTENT, and capture reports the intent
+     instead of the live offset until the scroller arrives or the reader takes
+     over. 'end' is a sentinel rather than a number so it stays correct even
+     when the patch that ran in between grew the content.
+     This is deliberately robust to a scroll still in flight rather than being
+     a race the fast path happens to win: the same CSS property has now broken
+     two measuring instruments on this project as well as this feature. */
+  const scrollIntents=new Map();
+  /* A reader who scrolls owns the scroller. keydown is deliberately NOT in
+     this list: typing in the composer is not scrolling, and Ctrl+Enter would
+     cancel the very intent the send it triggered had just registered. */
+  for(const ev of ['wheel','touchstart'])
+    document.addEventListener(ev,()=>scrollIntents.clear(),{passive:true,capture:true});
+  function scrollKeyEl(key){ return document.querySelector(`[data-scroll-key="${key}"]`); }
+  function scrollToEnd(key,instant=false){
+    scrollIntents.set(key,{to:'end',at:performance.now()});
+    requestAnimationFrame(()=>{
+      const el=scrollKeyEl(key);
+      if(!el){ scrollIntents.delete(key); return; }
+      if(instant){
+        const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto';
+        el.scrollTop=el.scrollHeight; el.style.scrollBehavior=prev;
+      } else el.scrollTop=el.scrollHeight;
+      const settle=()=>{
+        const cur=scrollIntents.get(key); if(!cur||cur.to!=='end') return;   // reader took over
+        const e2=scrollKeyEl(key);
+        if(!e2){ scrollIntents.delete(key); return; }
+        /* Arrived, or out of time. 1600ms is past the longest smooth scroll
+           this transcript can run; an intent that outlived its own animation
+           would keep dragging the reader back to the bottom. */
+        if(e2.scrollHeight-e2.clientHeight-e2.scrollTop<=2 || performance.now()-cur.at>1600){
+          scrollIntents.delete(key); return;
+        }
+        requestAnimationFrame(settle);
+      };
+      requestAnimationFrame(settle);
+    });
+  }
+  function captureScroll(){
+    const out={};
+    document.querySelectorAll('[data-scroll-key]').forEach(el=>{
+      const k=el.dataset.scrollKey, intent=scrollIntents.get(k);
+      out[k]=intent?intent.to:el.scrollTop;
+    });
+    return out;
+  }
+  function restoreScroll(pos){
+    requestAnimationFrame(()=>document.querySelectorAll('[data-scroll-key]').forEach(el=>{
+      const v=pos?pos[el.dataset.scrollKey]:null;
+      if(v==null) return;
+      if(v==='end'){
+        /* A commanded scroll owns this scroller. Re-aim it at the bottom --
+           the patch may have grown the content out from under the animation --
+           and leave scroll-behavior alone so it keeps travelling smoothly
+           instead of being snapped there. */
+        el.scrollTop=el.scrollHeight; return;
+      }
+      /* A restore re-applies a position; it is never a journey to one. Left
+         smooth, the restore is itself an in-flight scroll for the NEXT render
+         to misread, which is how one stale capture became permanent. */
+      const prev=el.style.scrollBehavior;
+      el.style.scrollBehavior='auto';
+      el.scrollTop=v;
+      el.style.scrollBehavior=prev;
+    }));
+  }
   function renderOverlays(){
     const root=document.getElementById('pmOverlayRoot');
     const parts=[];
@@ -1464,17 +1770,45 @@ recommended path                  migration 0043 + rollback</div></div></section
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
-    state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;
-    renderApp(false);requestAnimationFrame(()=>{const tr=document.querySelector('[data-scroll-key="transcript"]');if(tr)tr.scrollTop=tr.scrollHeight;});
+    state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;decisionExit=null;
+    /* Leaving the thread abandons its work sequence; abandoning it without
+       stopping the clock is the leak described above. state.work.running is
+       cleared with it so the two never disagree -- a card that says "running"
+       with no timer behind it is the next bug report. */
+    stopWorkTimer(); state.work.running=false;
+    renderApp(false);scrollTranscriptToEnd();
   }
   function mutateThread(id,fn){const t=state.threads.find(x=>x.id===id);if(t)fn(t);renderApp();}
-  function appendMessage(msg,thread=activeThread()){thread.messages.push(msg);thread.updated='now';renderApp();requestAnimationFrame(()=>{const tr=document.querySelector('[data-scroll-key="transcript"]');if(tr)tr.scrollTop=tr.scrollHeight;});}
+  /* T1. The scroll-to-bottom appendMessage has always done, given a name so
+     handleSend() can use the SAME mechanism rather than a second copy of it.
+     handleSend pushed the user's turn onto the thread and rendered without it,
+     so a sent message landed 2787px below the fold and stayed there --
+     inView:false for 3s and elementFromPoint over its box returning null. */
+  function scrollTranscriptToEnd(instant=false){ scrollToEnd('transcript',instant); }
+  function appendMessage(msg,thread=activeThread()){thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();}
 
   function startWorking(reset=false){
     if(reset||state.work.completed){state.work={step:0,running:false,expanded:false,started:true,completed:false,elapsed:0,openPhase:null};}
     state.work.started=true;state.work.running=true;clearInterval(workTimer);renderApp();
+    armWorkTimer();
+  }
+  /* The ONE place that installs the work sequence's interval, so a caller
+     that wants a live sequence gets a real timer instead of inheriting a
+     leaked one. switchThread() abandoned a running sequence WITHOUT clearing
+     it, while every other path that abandons it -- pauseWorking, stepWorking,
+     completeWorking, resetWorking, globalReset, inspect-work-step,
+     PM56_DEMO.setWorkStep -- already did. So the app re-rendered itself every
+     2s, unprompted, for ~28s in whatever thread the reader had switched to
+     (9 mutations/5s as booted, 0 after pauseWorking()).
+     That is not only noise: every one of those renders runs
+     captureScroll/restoreScroll across a scroller that may be mid
+     smooth-scroll, which is what turned T2 from "a render CAN land inside a
+     scroll" into "a render is GUARANTEED to, every two seconds". */
+  function armWorkTimer(){
+    clearInterval(workTimer);
     workTimer=setInterval(()=>{state.work.elapsed+=2;if(state.work.step<D.workSteps.length-1){state.work.step++;if(state.work.step===D.workSteps.length-1){state.work.completed=true;state.work.running=false;clearInterval(workTimer);}}else{state.work.completed=true;state.work.running=false;clearInterval(workTimer);}renderApp();},2000);
   }
+  function stopWorkTimer(){ clearInterval(workTimer); workTimer=null; }
   function pauseWorking(){state.work.running=false;clearInterval(workTimer);renderApp();}
   function stepWorking(){clearInterval(workTimer);state.work.running=false;state.work.started=true;state.work.elapsed+=3;state.work.step=clamp(state.work.step+1,0,D.workSteps.length-1);state.work.completed=state.work.step===D.workSteps.length-1;renderApp();}
   function completeWorking(){clearInterval(workTimer);state.work.running=false;state.work.started=true;state.work.step=D.workSteps.length-1;state.work.elapsed=Math.max(state.work.elapsed,134);state.work.completed=true;state.work.expanded=false;state.work.openPhase=null;renderApp();}
@@ -1502,6 +1836,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/web')){state.work.step=3;state.work.started=true;state.work.running=false;t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research'});}
     else{t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString()});}
     renderApp();
+    scrollTranscriptToEnd();
   }
 
   /* 15e: nineteen Demo Studio triggers used to funnel through one
@@ -1510,7 +1845,7 @@ recommended path                  migration 0043 + rollback</div></div></section
      timeout" all just selected the BSD thread and stopped. Every entry here
      lands on a state you can tell apart on screen. */
   const DEMO_EFFECTS={
-    'Live subagents':()=>{switchThread('subagents');state.work={step:7,running:true,expanded:false,started:true,completed:false,elapsed:47,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();},
+    'Live subagents':()=>{switchThread('subagents');state.work={step:7,running:true,expanded:false,started:true,completed:false,elapsed:47,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();armWorkTimer();},
     'Blocked subagent':()=>{switchThread('subagents');state.work={step:7,running:false,expanded:true,started:true,completed:false,elapsed:96,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();addReceipt('blocked','Schema Reviewer blocked','Production schema modification requires explicit approval. The other agents continued.');},
 
     'BSD intervention':()=>{switchThread('bsd');addReceipt('bsd-advice','Back Seat Driver intervened','Rewriting applied migration history would destroy rollback evidence, so a forward migration was substituted.');openDialog({type:'bsd'});},
@@ -1618,7 +1953,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');state.threads.unshift({...clone(src),id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
     if(a==='select-editor'){if(e.target.closest('[data-action="close-editor"]'))return;state.activeEditor=btn.dataset.id;renderApp();return;}
     if(a==='close-editor'){e.stopPropagation();closeEditor(btn.dataset.id);return;}
-    if(a==='open-artifact'){state.decision=null;openEditor(btn.dataset.id);return;}
+    if(a==='open-artifact'){decisionExit=null;state.decision=null;openEditor(btn.dataset.id);return;}
     if(a==='open-agent'){openEditor(`thread-${btn.dataset.id}`);return;}
     if(a==='open-change'){openEditor(`file:${btn.dataset.path}`);return;}
     if(a==='toggle-message'){state.messageExpanded[btn.dataset.id]=!state.messageExpanded[btn.dataset.id];renderApp();return;}
@@ -1658,25 +1993,25 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='set-context-cap'){state.capabilities.context=btn.dataset.value;if(btn.dataset.value==='Subcompact'){state.menu.sub='context-lens';renderOverlays();}else{closeMenu();addReceipt(btn.dataset.value==='Focus'?'context-focus':'context-mute',`Context Lens · ${btn.dataset.value}`,btn.dataset.value==='Focus'?'Current files and final references prioritized.':'Selected superseded sources omitted from the active projection.');}return;}
     if(a==='set-eli5-cap'){state.capabilities.eli5=btn.dataset.value==='On';closeMenu();renderApp();return;}
     if(a==='set-thought-cap'){state.capabilities.thought=btn.dataset.value;closeMenu();renderApp();return;}
-    if(a==='open-questionnaire'){state.decision={type:'question'};renderApp();return;}
+    if(a==='open-questionnaire'){decisionExit=null;state.decision={type:'question'};renderApp();return;}
     if(a==='prev-question'){state.questionIndex=Math.max(0,state.questionIndex-1);renderApp();return;}
     if(a==='next-question'){const q=state.questions[state.questionIndex];if(q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim())){toast('Answer required','Complete this question or use Skip to return later.');return;}state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);renderApp();return;}
     if(a==='answer-choice'){state.questions[state.questionIndex].answer=btn.dataset.value;renderApp();return;}
     if(a==='answer-multi'){const q=state.questions[state.questionIndex];q.answer=Array.isArray(q.answer)?q.answer:[];q.answer=q.answer.includes(btn.dataset.value)?q.answer.filter(x=>x!==btn.dataset.value):[...q.answer,btn.dataset.value];renderApp();return;}
     if(a==='skip-question'){state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);toast('Question skipped','It remains queued and can be answered later.');renderApp();return;}
-    if(a==='close-decision'){state.decision=null;renderApp();return;}
-    if(a==='cancel-questionnaire'){state.decision=null;addReceipt('question-receipt','Questionnaire cancelled','The explicit cancellation is recorded. Existing answers remain in thread history.');return;}
-    if(a==='submit-questionnaire'){const missing=state.questions.find(q=>q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim()));if(missing){toast('Required answers remain',missing.prompt);return;}state.decision={type:'question-submitting'};renderApp();setTimeout(()=>{state.decision=null;state.questionQueue=Math.max(0,state.questionQueue-1);addReceipt('question-receipt','Questionnaire submitted','5 answers attached to the deployment planning context.');},950);return;}
-    if(a==='revise-plan'){state.decision={type:'plan',mode:'revise',feedback:''};renderApp();return;}
-    if(a==='build-plan'){state.decision={type:'plan',mode:'review'};renderApp();return;}
-    if(a==='cancel-plan'){state.decision=null;state.planStatus='cancelled';toast('Plan decision closed','The durable plan card remains in the transcript with View, Revise, and Build.');renderApp();return;}
-    if(a==='submit-plan-revision'){state.planRevision++;state.decision={type:'plan',mode:'review'};toast('Plan revision created',`Revision ${state.planRevision} is open in the editor and ready for review.`);openEditor('plan-query');return;}
-    if(a==='approve-plan'){state.decision=null;state.planStatus='building';state.mode='Agent';addReceipt('goal-receipt','Plan approved · Build started','The assistant switched from planning to execution and preserved the Plan artifact.');startWorking(true);return;}
-    if(a==='open-permission'){state.decision={type:'permission'};renderApp();return;}
-    if(a==='deny-permission'){state.decision=null;addReceipt('permission','Permission denied','The checkpoint remains available; no action was replayed.');return;}
-    if(a==='approve-permission'){state.decision=null;state.work.step=5;startWorking();return;}
-    if(a==='resolve-conflict'){state.decision=null;addReceipt('route-change','Parent mediation resolved',btn.dataset.value==='indexes'?'Composite indexes approved as the reversible first step.':btn.dataset.value==='views'?'Materialized-view follow-up selected.':'Explicit schema-policy override recorded.');return;}
-    if(a==='trigger-work-recovery'){state.decision={type:'permission'};renderApp();return;}
+    if(a==='close-decision'){closeDecision();return;}
+    if(a==='cancel-questionnaire'){closeDecision(false);addReceipt('question-receipt','Questionnaire cancelled','The explicit cancellation is recorded. Existing answers remain in thread history.');return;}
+    if(a==='submit-questionnaire'){const missing=state.questions.find(q=>q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim()));if(missing){toast('Required answers remain',missing.prompt);return;}decisionExit=null;state.decision={type:'question-submitting'};renderApp();setTimeout(()=>{closeDecision(false);state.questionQueue=Math.max(0,state.questionQueue-1);addReceipt('question-receipt','Questionnaire submitted','5 answers attached to the deployment planning context.');},950);return;}
+    if(a==='revise-plan'){decisionExit=null;state.decision={type:'plan',mode:'revise',feedback:''};renderApp();return;}
+    if(a==='build-plan'){decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();return;}
+    if(a==='cancel-plan'){state.planStatus='cancelled';toast('Plan decision closed','The durable plan card remains in the transcript with View, Revise, and Build.');closeDecision();return;}
+    if(a==='submit-plan-revision'){state.planRevision++;decisionExit=null;state.decision={type:'plan',mode:'review'};toast('Plan revision created',`Revision ${state.planRevision} is open in the editor and ready for review.`);openEditor('plan-query');return;}
+    if(a==='approve-plan'){closeDecision(false);state.planStatus='building';state.mode='Agent';addReceipt('goal-receipt','Plan approved · Build started','The assistant switched from planning to execution and preserved the Plan artifact.');startWorking(true);return;}
+    if(a==='open-permission'){decisionExit=null;state.decision={type:'permission'};renderApp();return;}
+    if(a==='deny-permission'){closeDecision(false);addReceipt('permission','Permission denied','The checkpoint remains available; no action was replayed.');return;}
+    if(a==='approve-permission'){closeDecision(false);state.work.step=5;startWorking();return;}
+    if(a==='resolve-conflict'){closeDecision(false);addReceipt('route-change','Parent mediation resolved',btn.dataset.value==='indexes'?'Composite indexes approved as the reversible first step.':btn.dataset.value==='views'?'Materialized-view follow-up selected.':'Explicit schema-policy override recorded.');return;}
+    if(a==='trigger-work-recovery'){decisionExit=null;state.decision={type:'permission'};renderApp();return;}
     if(a==='open-goal'){openEditor('goal-artifact');return;}
     if(a==='edit-goal'){toast('Goal edited','A material edit created Revision 5 and moved the Goal into Replanning.');addReceipt('goal-receipt','Goal replanning','Revision 5 · material scope change detected.');return;}
     /* The four goal-lifecycle verbs stay honest stubs until there is a goal
@@ -1729,7 +2064,7 @@ recommended path                  migration 0043 + rollback</div></div></section
       if(state.dialog){if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
       if(state.context.details){state.context.details=false;renderOverlays();return;}
       if(state.historyMode==='floating'){state.historyMode='closed';renderApp();return;}
-      if(state.decision){state.decision=null;renderApp();}
+      if(state.decision||decisionExit){closeDecision();}
     }
   });
 
@@ -1824,9 +2159,9 @@ recommended path                  migration 0043 + rollback</div></div></section
     openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;renderApp();}},
     pinActivity:()=>{state.activity.open=true;state.activity.pinned=true;renderApp();},
     openContext:()=>{state.context.details=true;renderOverlays();},
-    openQuestionnaire:()=>{state.decision={type:'question'};renderApp();},
-    openPlan:()=>{state.decision={type:'plan',mode:'review'};renderApp();},
-    openPermission:()=>{state.decision={type:'permission'};renderApp();},
+    openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
+    openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
+    openPermission:()=>{decisionExit=null;state.decision={type:'permission'};renderApp();},
     startWorking:()=>startWorking(true),pauseWorking,stepWorking,completeWorking,resetWorking,
     setWorkStep:(i)=>{clearInterval(workTimer);state.work.step=clamp(Number(i),0,D.workSteps.length-1);state.work.started=true;state.work.running=false;state.work.completed=state.work.step===D.workSteps.length-1;renderApp();},
     trigger:runDemoTrigger,
@@ -1837,7 +2172,7 @@ recommended path                  migration 0043 + rollback</div></div></section
 
   // Initial full render and a real, one-shot working sequence so the first open is not static.
   renderApp(false);
-  requestAnimationFrame(()=>{const tr=document.querySelector('[data-scroll-key="transcript"]');if(tr)tr.scrollTop=tr.scrollHeight;});
+  scrollTranscriptToEnd(true);
   setTimeout(()=>{if(state.demoAutoStart&&!state.work.started&&state.selectedThread==='query')startWorking(true);},250);
 })();
 

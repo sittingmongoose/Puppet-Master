@@ -195,8 +195,12 @@
   var ui = { openPhase:null, editing:false, draft:null, confirmClear:false, showReplans:false,
              showHistory:false, showSubgoals:false, showBlocker:false, tab:'phases' };
   var settled = Object.create(null);   /* phase ids whose completion wipe has already played */
+  var arrived = Object.create(null);   /* phase ids that have already mounted once */
+  var arrivePending = null;
   function seedSettled(){
     settled = Object.create(null);
+    arrived = Object.create(null);
+    arrivePending = null;
     (D.goal && D.goal.phases || []).forEach(function(p){ if(p.status==='completed') settled[p.id]=true; });
   }
   seedSettled();
@@ -376,8 +380,36 @@
   var wipeTimers = Object.create(null);
   function wipeFlag(p){
     if(p.status!=='completed' || settled[p.id]) return '';
-    if(!wipeTimers[p.id]) wipeTimers[p.id]=setTimeout(function(){ settled[p.id]=true; delete wipeTimers[p.id]; },420);
+    /* 520ms, not 420: the row wash this flag also carries
+       (goal-phase-complete) is 520ms, so a render landing in the 100ms gap
+       used to tear the wash off ~85% of the way through and snap the
+       background back to rest. This is NOT what stops the row replaying its
+       entrance -- that guard is arriveFlag() below, and it is permanent.
+       Lengthening a finite guard only ever moves a defect later. */
+    if(!wipeTimers[p.id]) wipeTimers[p.id]=setTimeout(function(){ settled[p.id]=true; delete wipeTimers[p.id]; },520);
     return ' data-wipe="1"';
+  }
+
+  /* G1's actual guard. The entrance is emitted for the FIRST mount of a phase
+     id and never again, so nothing a later render does -- dropping data-wipe,
+     changing the row's status key, re-inserting the row during a reorder --
+     can hand a settled row a fresh entrance to play.
+     The commit is deferred to the end of the task rather than done inline
+     because ONE task can legitimately paint the same phase list twice (the
+     Activity panel and the goal editor both show it) and both copies must
+     get the entrance; marking inline would give it to whichever rendered
+     first and leave the other snapping in. */
+  function arriveFlag(p){
+    if(arrived[p.id]) return '';
+    if(!arrivePending){
+      arrivePending = [];
+      setTimeout(function(){
+        var list = arrivePending || []; arrivePending = null;
+        for(var i=0;i<list.length;i++) arrived[list[i]] = true;
+      },0);
+    }
+    arrivePending.push(p.id);
+    return ' data-arrive="1"';
   }
 
   /* =====================================================================
@@ -480,7 +512,8 @@
       var st=p.status;
       var pre = anchor[p.id] ? replanMarker(ctx,anchor[p.id]) : '';
       return pre + '<li class="goal-phase '+st.replace('_','-')+(isCur?' is-current':'')+(open?' is-open':'')+'"'
-        + wipeFlag(p)
+        + wipeFlag(p) + arriveFlag(p)
+        + ' data-flip-move'
         + ' data-k="ph:'+ctx.esc(p.id)+':'+ctx.esc(st)+':'+(isCur?'1':'0')+'">'
         + '<button class="goal-phase-row" data-action="goal-phase" data-id="'+ctx.esc(p.id)+'"'
         + ' aria-expanded="'+(open?'true':'false')+'"'
@@ -864,8 +897,13 @@
     syncProgress();
   }
 
+  function paint(ctx){
+    if(typeof ctx.renderGoals==='function') ctx.renderGoals();
+    else ctx.renderApp();
+  }
+
   var ACTIONS = {
-    'goal-phase': function(ctx,btn){ var id=btn.dataset.id; ui.openPhase = (ui.openPhase===id)?null:id; ctx.renderApp(); },
+    'goal-phase': function(ctx,btn){ var id=btn.dataset.id; ui.openPhase = (ui.openPhase===id)?null:id; paint(ctx); },
 
     'goal-toggle': function(ctx,btn){
       var v=btn.dataset.value;
@@ -873,10 +911,10 @@
       else if(v==='history') ui.showHistory=!ui.showHistory;
       else if(v==='subgoals') ui.showSubgoals=!ui.showSubgoals;
       else if(v==='blocker') ui.showBlocker=!ui.showBlocker;
-      ctx.renderApp();
+      paint(ctx);
     },
 
-    'goal-agent-step': function(ctx){ agentStep(ctx); ctx.renderApp(); },
+    'goal-agent-step': function(ctx){ agentStep(ctx); paint(ctx); },
 
     'goal-unblock': function(ctx){
       var g=goal(); if(!g) return;
@@ -889,7 +927,7 @@
       pushHistory('resumed','Blocker cleared','CHG-4471 approved by a schema owner.'+(ph?' The pointer moved back to '+ph.title+' — a goal pointer legitimately moves backward.':''));
       syncProgress();
       ctx.toast('Blocker cleared',(ph?ph.title+' resumed. ':'')+'The pointer moved back — do not drive a monotonic stepper off currentPhaseId.');
-      ctx.renderApp();
+      paint(ctx);
     },
 
     /* User authority: only a user may re-open, reorder or edit a phase. */
@@ -900,7 +938,7 @@
       setCurrent(p.id);
       pushHistory('phase',p.title+' re-opened','Re-opened by the user.'+(n?' '+n+' evidence item'+(n===1?'':'s')+' detached — evidence belongs only to a completed phase.':''));
       syncProgress(); ctx.toast('Phase re-opened',p.title+' is in progress again. Only a user can do this; the agent may only push a phase forward.');
-      ctx.renderApp();
+      paint(ctx);
     },
     'goal-move-phase': function(ctx,btn){
       var g=goal(); if(!g) return;
@@ -910,7 +948,7 @@
       if(i<0||j<0||j>=g.phases.length) return;
       var t=g.phases[i]; g.phases[i]=g.phases[j]; g.phases[j]=t;
       pushHistory('replan','Phases reordered','“'+t.title+'” moved '+(dir<0?'earlier':'later')+' by the user. Numbering is computed at render time, so the list never prints 3/1/2.');
-      ctx.renderApp();
+      paint(ctx);
     },
     'goal-raise-budget': function(ctx){
       var g=goal(); if(!g||!g.budget) return;
@@ -918,7 +956,7 @@
       if(g.status==='budget_limited'){ g.status='active'; g.statusSince=now(); }
       pushHistory('budget','Budget raised','Goal budget raised to 150K tokens by the user. One budget covers the whole goal, never a phase.');
       ctx.toast('Budget raised','150K tokens for the whole goal.');
-      ctx.renderApp();
+      paint(ctx);
     },
 
     'edit-goal': function(ctx){
@@ -1067,4 +1105,6 @@
   });
 
   window.PM56_GOAL.render = { section:renderSection, compact:renderCompact, editor:renderEditor };
+  window.PM56_GOAL.chip = headerChip;
+  window.PM56_GOAL.sidebar = sidebarSummary;
 })();

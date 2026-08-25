@@ -132,13 +132,61 @@
     s.setProperty('--ph-pane', r.width + 'px');
   }
 
+  /* ---- the pinned drawer's width ----------------------------------------
+     The JS clamp and history.css's min()/max() are deliberately the SAME two
+     clamps stated twice, in the two places that can each be reached without the
+     other: a pointer drag never touches CSS, and an editor-resizer drag or a
+     window resize never touches JS. 170/360 are app.js:1928's own numbers for
+     the deleted `.history-panel` column — kept identical so the restored handle
+     has the range the original had, not a new one. */
+  var W_MIN = 170, W_MAX = 360, W_PANE = 0.42;
+  function paneWidth(){
+    var pane = document.querySelector('.assistant-pane');
+    return pane ? pane.getBoundingClientRect().width : window.innerWidth;
+  }
+  function clampWidth(px){
+    var cap = Math.min(W_MAX, paneWidth() * W_PANE);
+    if(!(cap > W_MIN)) cap = W_MIN;          /* a very narrow pane: floor wins */
+    return Math.round(Math.max(W_MIN, Math.min(cap, Math.round(px))));
+  }
+  /* THE WIDTH IS MODULE STATE, exactly like `pinned` above, and for the same
+     reason. It is deliberately NOT app.js's `state.historyWidth`: that field
+     defaults to 224 (app.js:50) and is written to prefs on every savePrefs, so
+     there is no way to tell "the user dragged to 224" from "nobody has ever
+     touched it". Until someone actually drags, nothing is published and
+     history.css falls back to --ph-pin-w — so the shipped default stays exactly
+     the 200px this module declared, and only a deliberate drag changes it.
+     (`pm56-history-pin` already sets this precedent, including surviving Reset
+     all: see the note in normalise().) */
+  var W_KEY = 'pm56-history-w';
+  var userW = null;
+  function storeW(v){ try{ if(v==null) return window.localStorage.getItem(W_KEY); window.localStorage.setItem(W_KEY, String(v)); }catch(e){} return null; }
+  /* The fallback is read back from --ph-pin-w rather than repeated as a literal,
+     so history.css stays the single place the default pinned width is stated.
+     A custom-property read off documentElement is a style read, not a layout
+     read, so it is safe to call from inside a render. */
+  var pinDefault = null;
+  function pinDefaultW(){
+    if(pinDefault == null){
+      var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-pin-w'));
+      pinDefault = v > 0 ? Math.round(v) : 200;
+    }
+    return pinDefault;
+  }
+  function widthNow(){ return userW == null ? pinDefaultW() : userW; }
+  function setWidth(px){
+    userW = clampWidth(px);
+    document.documentElement.style.setProperty('--ph-user-w', userW + 'px');
+    storeW(userW);
+    return userW;
+  }
+
   /* Any code path that is not this module can still set historyMode to
      'pinned' — app.js does it in `show-archived` (overridden below) and in the
      "Archived threads" demo trigger, which is not an interceptable action.
      Rather than chase each one, every render normalises: 'pinned' is folded
      back into floating + pinned-drawer, which is the same thing on screen. */
-  function normalise(){
-    var st = api && S();
+  function normalise(st){
     if(!st || st.historyMode !== 'pinned') return false;
     st.historyMode = 'floating';
     pinned = true; store('1');
@@ -153,7 +201,8 @@
     syncQueued = true;
     requestAnimationFrame(function(){
       syncQueued = false;
-      if(normalise()){ api.renderApp(); return; }
+      var st = api && S();               /* read the state ONCE per heartbeat */
+      if(normalise(st)){ api.renderApp(); return; }
       sync();
     });
   }
@@ -182,7 +231,31 @@
          + ' title="' + (pinned ? 'Unpin — float the drawer over the chat again' : 'Pin left — reserve a gutter so the transcript stays usable') + '">'
          + ctx.icon(pinned ? 'unpin' : 'pin', 12)
          + '<span>' + (pinned ? 'Unpin' : 'Pin left') + '</span></button>'
-         + '</div>';
+         + '</div>'
+         /* THE RESIZE HANDLE the pinned grid column had and the drawer lost.
+            Emitted here because historyChrome is the only append slot inside
+            the flyout; it is position:absolute so it is not a flex item and
+            its place in the child order does not matter.
+
+            `data-ph-resize`, NOT app.js's `data-resize`: app.js:1903 would pick
+            a `[data-resize]` up and run its own drag, which writes
+            `--history-w` (dead here, see history.css) and, more to the point,
+            would leave the 240ms width transition running under the pointer.
+            The drag below is this module's, so it can suppress that and keep
+            width and gutter on the same frame.
+
+            data-k so pmPatch patches the same node across the 2s work tick
+            instead of remounting it — a remount mid-drag would drop the pointer
+            capture. role="separator" + aria-orientation + the three aria-value*
+            attributes are the window-splitter pattern; aria-valuenow is
+            re-emitted by the renderOverlays() at the end of each drag or key
+            press, since nothing renders during a drag. */
+         + '<div class="ph-resize" data-k="phresize" data-ph-resize'
+         + ' role="separator" aria-orientation="vertical" tabindex="0"'
+         + ' aria-valuemin="' + W_MIN + '" aria-valuemax="' + Math.round(Math.min(W_MAX, paneWidth() * W_PANE)) + '"'
+         + ' aria-valuenow="' + clampWidth(widthNow()) + '"'
+         + ' aria-label="Resize the pinned history drawer"'
+         + ' title="Drag to resize the pinned drawer"></div>';
   });
 
   /* ---- open / pin / close ------------------------------------------------ */
@@ -309,12 +382,81 @@
      (opacity 0, pointer-events none), so this cannot fire while pinned; the
      mode test is a second, explicit guard. */
   document.addEventListener('pointerdown', function(e){
+    /* The resize handle is checked FIRST, and in the capture phase, so the
+       stopPropagation() below also keeps app.js's own bubble-phase pointerdown
+       (app.js:1882) out of it. */
+    var h = e.target && e.target.closest && e.target.closest('[data-ph-resize]');
+    if(h){
+      if(mode() !== 'pinned') return;      /* the handle is display:none anyway */
+      var el = document.querySelector('.history-flyout');
+      /* Start from the PAINTED width, not from the stored number: if the 42%
+         pane cap is currently binding, those two differ, and starting from the
+         stored one would make the first pixel of the drag jump. */
+      resizing = { x0:e.clientX, w0: el ? el.getBoundingClientRect().width : widthNow() };
+      document.body.dataset.phResizing = '1';
+      try{ h.setPointerCapture(e.pointerId); }catch(err){}
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
     if(mode() !== 'open') return;
     var pane = document.querySelector('.assistant-pane');
     if(!pane || e.target !== pane) return;
     e.stopPropagation();
     e.preventDefault();
     closeDrawer(true);
+  }, true);
+
+  /* ---- the drag ----------------------------------------------------------
+     Nothing renders during the drag: the width and the gutter are both driven
+     by one custom property on documentElement, which is outside #pmRoot and
+     #pmOverlayRoot and therefore survives pmPatch. A renderOverlays() per
+     pointermove would be 4ms of work sixty times a second to change one number
+     that is not in the markup. */
+  var resizing = null;
+  document.addEventListener('pointermove', function(e){
+    if(!resizing) return;
+    setWidth(resizing.w0 + (e.clientX - resizing.x0));
+  }, true);
+  function endResize(){
+    if(!resizing) return;
+    resizing = null;
+    delete document.body.dataset.phResizing;
+    if(!api) return;
+    settleWidth();
+  }
+  document.addEventListener('pointerup', endResize, true);
+  document.addEventListener('pointercancel', endResize, true);
+
+  /* One render at the END of an interaction, never during it: renderOverlays
+     re-emits aria-valuenow from state. pmPatch matches the handle by data-k and
+     patches it in place, so focus normally survives — the re-focus is
+     belt-and-braces for the case where a sibling slot changes shape and the
+     node really is rebuilt. */
+  function settleWidth(){
+    var had = document.activeElement && document.activeElement.hasAttribute
+              && document.activeElement.hasAttribute('data-ph-resize');
+    api.renderOverlays();
+    if(!had) return;
+    var h = document.querySelector('[data-ph-resize]');
+    if(h && document.activeElement !== h) h.focus();
+  }
+  /* Keyboard: role="separator" with tabindex is the window-splitter pattern and
+     it is only honest if the arrows actually move it. */
+  document.addEventListener('keydown', function(e){
+    var h = e.target && e.target.closest && e.target.closest('[data-ph-resize]');
+    if(!h || mode() !== 'pinned') return;
+    var cap = Math.min(W_MAX, paneWidth() * W_PANE);
+    var step = e.shiftKey ? 40 : 12, cur = widthNow(), next = null;
+    if(e.key === 'ArrowLeft')  next = cur - step;
+    else if(e.key === 'ArrowRight') next = cur + step;
+    else if(e.key === 'Home')  next = W_MIN;
+    else if(e.key === 'End')   next = cap;
+    if(next === null) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setWidth(next);
+    if(api) settleWidth();
   }, true);
 
   window.addEventListener('resize', sync);
@@ -397,6 +539,8 @@
     }
     store(pinned ? '1' : '0');
     setMode(st.historyMode === 'floating' ? (pinned ? 'pinned' : 'open') : 'closed');
+    var savedW = storeW(null);
+    if(savedW != null && isFinite(parseFloat(savedW))) setWidth(parseFloat(savedW));
     sync();
     api.renderApp();
     requestAnimationFrame(sync);

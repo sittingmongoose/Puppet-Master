@@ -68,8 +68,25 @@
 
 /* ---------- phase list ---------- */
 .goal-phases{list-style:none;margin:0;padding:0;display:grid;gap:3px}
-.goal-phase{border:1px solid var(--border);border-radius:9px;background:var(--surface-2);overflow:hidden;
-  animation:goal-phase-arrive var(--spring-soft) both}
+.goal-phase{border:1px solid var(--border);border-radius:9px;background:var(--surface-2);overflow:hidden}
+/* G1. An entrance belongs to the EVENT of arriving, never to the element.
+   This animation used to sit on .goal-phase unconditionally and PERMANENTLY,
+   suppressed only while data-wipe="1" was present -- and that flag had a
+   420ms lifetime (goals.js). A finite guard against a permanent threat only
+   postpones it: the row that had just completed replayed its whole entrance
+   on whatever render happened next -- fully invisible for 66.7ms, then a
+   ~450ms re-reveal, measured at 583ms and at 1550ms from identical input,
+   and a two-state hard blink under reduced motion. Node identity was
+   unchanged across the vanish; it was a live row restarting its entrance,
+   because dropping data-wipe flips animation-name back to goal-phase-arrive
+   and a changed animation-name restarts the animation.
+   goals.js now emits data-arrive="1" for the FIRST mount of a phase id and
+   never again, so the guard's lifetime matches the threat's.
+   The same guard settles the arrival half of G10/G12: the keyed patch
+   re-INSERTS rows on a reorder or a status change, Blink restarts CSS
+   animations on re-insert, and a row the reordered one passed used to replay
+   a full 440ms (--spring-soft) entrance from opacity:0 in place. */
+.goal-phase[data-arrive="1"]{animation:goal-phase-arrive var(--spring-soft) both}
 .goal-phase-row{display:grid;grid-template-columns:13px 16px minmax(0,1fr) auto;gap:6px;align-items:start;
   width:100%;padding:6px 7px;background:transparent;border:0;color:inherit;text-align:left;cursor:pointer;
   transition:background 160ms var(--ease)}
@@ -366,7 +383,7 @@
    the phase still reads completed, it just is not decorated. */
 @media (prefers-reduced-motion: reduce){
   .goal-pulse,.goal-status-chip.tone-working .goal-chip-dot{animation:none!important}
-  .goal-phase,.goal-replan-marker,.goal-phase-detail{animation-duration:1ms!important}
+  .goal-phase,.goal-phase[data-arrive="1"],.goal-replan-marker,.goal-phase-detail{animation-duration:1ms!important}
   .goal-phase.completed[data-wipe="1"]{animation-duration:1ms!important}
   .goal-phase.completed[data-wipe="1"] .goal-strike,
   .goal-phase.completed[data-wipe="1"] .goal-phase-text{animation-duration:1ms!important}

@@ -227,15 +227,50 @@
   --ph-open-w: 300px;   /* reference: min(300px, 85%) */
   --ph-pin-w: 200px;    /* reference: min(220px, 42%) — 200 keeps the        */
                         /* narrowing visible at 5.6 Pro's denser type scale  */
+  --ph-min-w: 170px;    /* the floor app.js:1928 already used for the deleted */
+                        /* .history-panel column; kept identical on purpose   */
 }
-/* Width and gutter are the same expression twice, exactly as the reference
-   insists ("the same value drives both the drawer width and the reserved
-   gutter so they track each other"). --ph-pane is the ASSISTANT PANE's width,
-   published by history.js — the drawer belongs to that pane, not to the
-   viewport, so the reference's percentages are taken against it. */
+/* ---------------------------------------------------------------------------
+   WIDTH AND GUTTER ARE ONE EXPRESSION — now a NAMED one, which is what lets the
+   resize handle exist at all.
+
+   The reference insists "the same value drives both the drawer width and the
+   reserved gutter so they track each other", and an earlier wave bought that by
+   making the width a constant — which is why the pinned drawer lost the resize
+   handle the old `.history-panel` grid column had (app.js:498 still emits one
+   for a column this module no longer spawns). The user asked for it back.
+
+   So the expression is given a name and declared ONCE, on <body>. Custom
+   properties are substituted at computed-value time on the element that
+   declares them, so `--ph-w` is resolved on <body> and then INHERITED as a
+   settled value by both use sites. That is strictly stronger than the two
+   textually-identical copies it replaces: those two rules could have drifted if
+   an intervening rule had redefined an input for only one of them, and one very
+   nearly does — styles.css:326 declares `.assistant-grid{--history-w:190px}`
+   inside a narrow media query, so reading a width variable AT THE USE SITES
+   would give the gutter (a descendant of .assistant-grid) a different number
+   from the drawer (which lives in #pmOverlayRoot and is not a descendant).
+   Resolving on <body>, above both, makes that class of desync unrepresentable.
+
+   --ph-user-w is published on documentElement by history.js from
+   state.historyWidth — the app's own persisted history width, so the drag
+   survives a reload through app.js's existing savePrefs() with no new storage
+   key. The min()/max() around it are the DECLARATIVE clamps: history.js clamps
+   the same way in JS, but the pane clamp must also hold when the pane changes
+   size with no pointer involved (editor-resizer drag, window resize), and CSS
+   is the only thing that can guarantee that on the same frame for both.
+   --ph-pane is the ASSISTANT PANE's width, published by history.js — the drawer
+   belongs to that pane, not to the viewport, so the reference's percentages are
+   taken against it. The safety clamp is applied LAST so it always wins: a
+   clamp() would let the 170px floor beat the 42% cap on a narrow pane.
+   --------------------------------------------------------------------------- */
+body[data-ph-drawer="pinned"]{
+  --ph-w: min( max(var(--ph-user-w, var(--ph-pin-w)), var(--ph-min-w)),
+               calc(var(--ph-pane, 100vw) * .42) );
+}
 body[data-ph-drawer] .history-flyout{ width:min(var(--ph-open-w), calc(var(--ph-pane, 100vw) * .85)); }
-body[data-ph-drawer="pinned"] .history-flyout{ width:min(var(--ph-pin-w), calc(var(--ph-pane, 100vw) * .42)); }
-body[data-ph-drawer="pinned"] .assistant-grid{ padding-left:min(var(--ph-pin-w), calc(var(--ph-pane, 100vw) * .42)); }
+body[data-ph-drawer="pinned"] .history-flyout{ width:var(--ph-w); }
+body[data-ph-drawer="pinned"] .assistant-grid{ padding-left:var(--ph-w); }
 
 body[data-ph-drawer] .history-flyout{
   /* OPEN LEFT.  styles.css:298 pins the flyout to `right:6px` and animates it
@@ -340,6 +375,55 @@ body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ 
 /* pressed = accent tint, never a coloured edge bar */
 .ph-pin.is-pinned{ background:color-mix(in srgb,var(--accent) 20%,var(--surface-3)); color:var(--text); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent); }
 .ph-pin svg{ flex:0 0 auto; }
+
+/* ---- the pinned drawer's resize handle ----------------------------------
+   Restores the affordance the deleted `.history-panel` column had
+   (styles.css:370 `.panel-resize`, emitted at app.js:498). Same look — an
+   invisible strip that grows a 1px accent rule on hover — and the same
+   `col-resize` cursor, so the two remaining resizers in the concept (editor,
+   activity panel) and this one all read as the same control.
+
+   WHY IT IS INSIDE THE DRAWER AND `.panel-resize` WAS NOT.
+   `.panel-resize` sits at `right:-3px`: 4px of it hangs outside the panel, over
+   the transcript, straddling the seam. That is impossible here, and the reason
+   was measured rather than assumed. `.history-flyout` carries `overflow:hidden`
+   (styles.css:304), which clips at the padding box. Forcing `overflow:visible`
+   — or `overflow:clip` with an `overflow-clip-margin` big enough to let a child
+   hang out — changes 12,196 painted pixels inside the drawer against an A/A
+   noise floor of ZERO: Chromium drops LCD subpixel antialiasing on every glyph
+   in the drawer and falls back to greyscale (sampled text edge 61,107,153 ->
+   96,104,121). Plain `overflow:clip` is pixel-identical (n=0, max delta 2) but
+   clips exactly as tightly. Evidence: handoff/w6/hist/ovcands.mjs.
+   A 7px handle wholly inside would have covered 4 of the 5 visible pixels of
+   `.history-scroll`'s scrollbar thumb (9px track, thumb inset 2px each side by
+   styles.css:349's padding-box border). 5px leaves 3 of those 5 clear, which is
+   the same order of overlap `.panel-resize` had, and still a larger grab target
+   than the 4px sash most editors ship. Measured, not guessed — and asserted in
+   history-verify.mjs so a later width change cannot quietly swallow the bar.
+
+   It is rendered in every drawer state and shown only when pinned: keeping the
+   node present means pmPatch never mounts or unmounts it mid-pin. */
+.ph-resize{
+  position:absolute; top:0; bottom:0; right:0; width:5px; z-index:30;
+  display:none; cursor:col-resize; touch-action:none; background:transparent;
+}
+body[data-ph-drawer="pinned"] .ph-resize{ display:block; }
+.ph-resize::after{
+  content:""; position:absolute; top:0; bottom:0; right:0; width:1px;
+  background:transparent; transition:background 140ms;
+}
+.ph-resize:hover::after,
+.ph-resize:focus-visible::after,
+body[data-ph-resizing] .ph-resize::after{ background:var(--accent); }
+.ph-resize:focus-visible{ outline:none; }
+/* WHILE DRAGGING, THE 240ms TRANSITION MUST NOT RUN. It is declared for the pin
+   choreography; left on during a drag it lags the pointer by a full --ph-t and
+   the drawer feels elastic instead of attached. Both use sites are killed
+   together, because killing one and not the other is exactly the desync the
+   single --ph-w expression exists to prevent. These selectors are (0,2,1) and
+   sit after the (0,2,1) transition rule above, so they win at equal weight. */
+body[data-ph-resizing] .history-flyout,
+body[data-ph-resizing] .assistant-grid{ transition:none; }
 
 @media (prefers-reduced-motion: reduce){
   /* Must be re-declared here: motion.css's 1ms rule for `.history-flyout

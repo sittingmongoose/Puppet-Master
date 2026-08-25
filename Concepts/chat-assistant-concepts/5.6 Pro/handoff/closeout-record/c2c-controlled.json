@@ -1,0 +1,90 @@
+{
+  "started": "2026-08-25T19:32:01.897Z",
+  "target": "/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/index.html",
+  "items": [
+    {
+      "id": "T13.C2c-real-click",
+      "what": "fresh page: real click on non-selected thread behind modal must NOT switch",
+      "verdict": "PASS",
+      "detail": {
+        "openThread": "query",
+        "target": {
+          "id": "plain",
+          "x": 877,
+          "y": 377,
+          "topIsIt": true,
+          "stackTop": "summary"
+        },
+        "before": "query",
+        "after": "query",
+        "threadSwitched": false,
+        "dialogStillOpen": true,
+        "hitBefore": {
+          "stackTop": {
+            "tag": "DD",
+            "action": null,
+            "cls": "DD"
+          },
+          "hasScrimOrDialog": true
+        }
+      }
+    },
+    {
+      "id": "T13.C2e-antimodal-control",
+      "what": "ANTI-MODAL (fresh page): with pointer-events killed, click MUST leak to non-selected thread",
+      "verdict": "PASS (instrument can see a leak)",
+      "detail": {
+        "openThread": "query",
+        "before": "query",
+        "after": "plain",
+        "target": {
+          "id": "plain",
+          "x": 877,
+          "y": 377,
+          "topIsIt": true,
+          "stackTop": "summary"
+        },
+        "leaked": true,
+        "stackTop3": [
+          {
+            "action": null,
+            "id": null,
+            "cls": "summary"
+          },
+          {
+            "action": null,
+            "id": null,
+            "cls": "thread-sub"
+          },
+          {
+            "action": null,
+            "id": null,
+            "cls": "thread-copy"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T13.C2d-trigger-control",
+      "what": "TRIGGER CONTROL (fresh page, no dialog): same kind of click MUST switch thread",
+      "verdict": "PASS",
+      "detail": {
+        "before": "query",
+        "after": "plain",
+        "target": {
+          "id": "plain",
+          "x": 877,
+          "y": 377,
+          "topIsIt": true,
+          "stackTop": "summary"
+        }
+      }
+    }
+  ],
+  "finished": "2026-08-25T19:32:08.869Z",
+  "summary": {
+    "controlled": true,
+    "c2cVerdict": "PASS",
+    "overall": "PASS — modality claim survives with firing controls"
+  }
+}

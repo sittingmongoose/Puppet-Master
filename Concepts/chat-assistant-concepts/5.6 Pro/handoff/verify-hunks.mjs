@@ -1,5 +1,5 @@
 import {chromium} from 'playwright';import {pathToFileURL} from 'url';import fs from 'fs';
-const OUT=process.env.SHOTS||'/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/shots';
+const OUT=process.env.SHOTS||'/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/shots';
 fs.mkdirSync(OUT,{recursive:true});
 const b=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
 const p=await b.newPage({viewport:{width:1600,height:1000}});

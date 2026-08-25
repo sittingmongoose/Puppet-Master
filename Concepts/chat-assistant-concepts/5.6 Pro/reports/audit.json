@@ -1,7 +1,7 @@
 {
   "overall": "PASS",
   "summary": {
-    "passed": 446,
+    "passed": 447,
     "failed": 0,
     "consoleErrors": 0,
     "pageErrors": 0
@@ -1861,11 +1861,11 @@
         }
       }
     ],
-    "live": 1142,
-    "staticTokens": 1000,
+    "live": 1144,
+    "staticTokens": 1002,
     "patterns": 106,
-    "unconstrainedPatterns": 243,
-    "runtimeClasses": 714
+    "unconstrainedPatterns": 246,
+    "runtimeClasses": 715
   },
   "passes": [
     {
@@ -1887,7 +1887,7 @@
     },
     {
       "label": "Viewport containment: Context compact menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1077.2020263671875,\"top\":87.74020385742188,\"right\":1430.373046875,\"bottom\":408.0009460449219,\"width\":353.1710205078125,\"height\":320.2607421875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1077.196533203125,\"top\":87.74079895019531,\"right\":1430.3734130859375,\"bottom\":408.0110626220703,\"width\":353.1768798828125,\"height\":320.270263671875},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Context Ring opens compact menu"
@@ -1897,7 +1897,7 @@
     },
     {
       "label": "Viewport containment: goal hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":903.140625,\"top\":469.98883056640625,\"right\":1257.140625,\"bottom\":696.5044555664062,\"width\":354,\"height\":226.515625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":903.140625,\"top\":469.9918212890625,\"right\":1257.140625,\"bottom\":696.5074462890625,\"width\":354,\"height\":226.515625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: goal"
@@ -1907,7 +1907,7 @@
     },
     {
       "label": "Viewport containment: todo hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":958.53125,\"top\":387.6266174316406,\"right\":1312.53125,\"bottom\":696.5015869140625,\"width\":354,\"height\":308.8749694824219},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":958.53125,\"top\":387.6272277832031,\"right\":1312.53125,\"bottom\":696.502197265625,\"width\":354,\"height\":308.8749694824219},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: todo"
@@ -1917,7 +1917,7 @@
     },
     {
       "label": "Viewport containment: subagents hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1012.484375,\"top\":389.1968078613281,\"right\":1366.484375,\"bottom\":698.07177734375,\"width\":354,\"height\":308.8749694824219},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1012.484375,\"top\":391.234375,\"right\":1366.484375,\"bottom\":700.109375,\"width\":354,\"height\":308.875},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: subagents"
@@ -1927,7 +1927,7 @@
     },
     {
       "label": "Viewport containment: changes hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":399.1474914550781,\"right\":1432,\"bottom\":694.9755859375,\"width\":354,\"height\":295.8280944824219},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":402.2486572265625,\"right\":1432,\"bottom\":698.0767822265625,\"width\":354,\"height\":295.828125},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: changes"
@@ -1937,7 +1937,7 @@
     },
     {
       "label": "Viewport containment: artifacts hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":424.29351806640625,\"right\":1432,\"bottom\":698.0747680664062,\"width\":354,\"height\":273.78125},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":422.71844482421875,\"right\":1432,\"bottom\":696.4996948242188,\"width\":354,\"height\":273.78125},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: artifacts"
@@ -1950,11 +1950,11 @@
     },
     {
       "label": "Viewport containment: model picker",
-      "detail": "{\"ok\":true,\"r\":{\"left\":903.40185546875,\"top\":359.1246032714844,\"right\":1280.405029296875,\"bottom\":812.6561889648438,\"width\":377.003173828125,\"height\":453.5315856933594},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":903.3235473632812,\"top\":358.8929138183594,\"right\":1280.4171142578125,\"bottom\":812.6484985351562,\"width\":377.09356689453125,\"height\":453.7555847167969},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: model sidecar",
-      "detail": "{\"ok\":true,\"r\":{\"left\":513.774169921875,\"top\":249.19320678710938,\"right\":858.9729614257812,\"bottom\":476.5035095214844,\"width\":345.19879150390625,\"height\":227.310302734375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":513.7841796875,\"top\":249.19381713867188,\"right\":858.9735107421875,\"bottom\":476.5007629394531,\"width\":345.1893310546875,\"height\":227.30694580078125},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Model picker and effort sidecar"
@@ -1976,7 +1976,7 @@
     },
     {
       "label": "Viewport containment: bsd-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":930.981689453125,\"top\":532.9624633789062,\"right\":1131.955810546875,\"bottom\":692.1207885742188,\"width\":200.97412109375,\"height\":159.1583251953125},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":921.2213134765625,\"top\":532.2838134765625,\"right\":1131.11865234375,\"bottom\":695.21240234375,\"width\":209.8973388671875,\"height\":162.9285888671875},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: context-lens",
@@ -2071,6 +2071,9 @@
       "label": "Phase compact and expand across all 24 working takes"
     },
     {
+      "label": "Working-card FLIP travels forward, in steps, and stops"
+    },
+    {
       "label": "Plan card has View, Revise, Build"
     },
     {
@@ -2160,11 +2163,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.015625,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 650",
@@ -2183,11 +2186,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 1024",
@@ -2206,7 +2209,7 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 1440",
@@ -2275,11 +2278,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.015625,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 650",
@@ -2298,11 +2301,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.15625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1024",
@@ -2321,11 +2324,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.515625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.484375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1440",
@@ -2417,7 +2420,7 @@
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1024",
@@ -2436,11 +2439,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.5625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.4375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1440",
@@ -2505,7 +2508,7 @@
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.015625,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 650",
@@ -2528,11 +2531,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1024",
@@ -2555,7 +2558,7 @@
     },
     {
       "label": "Viewport containment: .composer friendly-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1440",
@@ -2620,7 +2623,7 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":196.84375,\"top\":42,\"right\":650,\"bottom\":876,\"width\":453.15625,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 650",
@@ -2643,15 +2646,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":754.71875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":269.28125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":754.140625,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":269.859375,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.15625,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 1024"
@@ -2666,11 +2669,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.5625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.4375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1440",
@@ -2735,11 +2738,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":198.75,\"top\":42,\"right\":650,\"bottom\":876,\"width\":451.25,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 650",
@@ -2758,15 +2761,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":754.375,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":269.625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.15625,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.25,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 1024"
@@ -2781,7 +2784,7 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.5625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.4375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 1440",
@@ -2850,7 +2853,7 @@
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 650",
@@ -2873,7 +2876,7 @@
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 1024",
@@ -3011,11 +3014,11 @@
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.5625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.4375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.515625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.484375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":742.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":133.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":742.109375,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":133.890625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 1440",
@@ -3484,7 +3487,7 @@
     },
     {
       "label": "Orphan gate: the emitted-token set is real",
-      "detail": "LIVE 1142 (static 1000 + 106 patterns, runtime 714); 243 wildcard patterns discarded"
+      "detail": "LIVE 1144 (static 1002 + 106 patterns, runtime 715); 246 wildcard patterns discarded"
     }
   ],
   "failures": [],
@@ -5272,6 +5275,41 @@
       "tries": 1
     },
     {
+      "after": "Working-card FLIP travels forward, in steps, and stops",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 1
+    },
+    {
       "after": "Plan card has View, Revise, Build",
       "before": {
         "menu": false,
@@ -6077,5 +6115,5 @@
       "tries": 1
     }
   ],
-  "generatedAt": "2026-08-25T05:04:52.157Z"
+  "generatedAt": "2026-08-25T19:29:53.195Z"
 }

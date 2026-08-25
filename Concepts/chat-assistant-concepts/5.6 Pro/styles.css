@@ -92,7 +92,7 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .resizer { position:relative;background:transparent;cursor:col-resize;z-index:14; }
 .resizer::after { content:"";position:absolute;inset:0 1px;background:var(--border);transition:background 150ms; }
 .resizer:hover::after,.resizer.dragging::after { background:var(--accent); }
-.assistant-pane { min-width:0;min-height:0;background:var(--surface);display:grid;grid-template-rows:minmax(0,1fr); }
+.assistant-pane { min-width:0;min-height:0;background:var(--surface);display:grid;grid-template-rows:minmax(0,1fr);container-type:inline-size;container-name:assistantPane; }
 .assistant-grid { min-width:0;min-height:0;display:grid;grid-template-columns:var(--history-w,224px) minmax(0,1fr); }
 .assistant-grid.history-closed { grid-template-columns:minmax(0,1fr); }
 /* Column minimums are 0 for history/activity and min(Npx,100%) for chat: the hard
@@ -150,7 +150,7 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .context-ring { width:31px;height:31px;border-radius:50%;padding:3px;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--context-pct,64)*1%),var(--surface-3) 0);cursor:pointer;transition:transform var(--spring-soft),filter 160ms;box-shadow:0 0 0 1px var(--border); }
 .context-ring:hover { transform:scale(1.08) rotate(3deg);filter:brightness(1.08); }
 .context-ring::after { content:attr(data-value);width:23px;height:23px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--text);font-size:8px;font-weight:800; }
-.transcript { min-height:0;overflow:auto;padding:18px clamp(12px,2.4vw,28px) 24px;scroll-behavior:smooth;scrollbar-gutter:stable; }
+.transcript { min-height:0;overflow:auto;padding:18px clamp(12px,2.4vw,28px) 24px;scroll-behavior:smooth;scrollbar-gutter:stable;overflow-anchor:none; }
 .transcript-inner { width:100%;max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:15px; }
 .message { position:relative;min-width:0;animation:message-arrive 420ms var(--spring-soft-ease) both; }
 .message-user { display:flex;justify-content:flex-end; }
@@ -200,7 +200,7 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .wa-chrome{margin-bottom:10px}
 .wa-head{display:flex;align-items:center;gap:8px;min-height:26px}
 .wa-track{flex:0 1 auto;overflow:hidden}
-.wa-label{display:flex;align-items:baseline;gap:6px;min-width:0;white-space:nowrap}
+.wa-label{display:flex;align-items:baseline;gap:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .wa-verb{font-weight:600;font-size:12px;color:var(--text)}
 .wa-count{color:var(--muted);font-size:11px;font-style:normal}
 .wa-head .pm-roll{font-weight:600;font-size:12px}

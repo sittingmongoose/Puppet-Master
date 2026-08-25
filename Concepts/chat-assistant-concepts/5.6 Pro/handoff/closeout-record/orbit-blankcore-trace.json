@@ -1,0 +1,458 @@
+{
+  "beforeLabel": "Web search",
+  "hand": {
+    "frames": 29,
+    "blankFrames": 0,
+    "longestBlank": null,
+    "labels": [
+      "Web search",
+      "Web fetch"
+    ],
+    "minSop": 1,
+    "minIop": 0.35,
+    "sample": [
+      {
+        "t": 14.5,
+        "label": "Web search",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 114.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.35,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 130.3,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.35,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 169.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.657,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 198.8,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.941,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 232.2,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 265.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 301.1,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 332.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 366.1,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 400.2,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 431.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 464.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 497.9,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 531.3,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      }
+    ],
+    "all": [
+      {
+        "t": 14.5,
+        "label": "Web search",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 30.7,
+        "label": "Web search",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 114.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.35,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 121.3,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.35,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 130.3,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.35,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 148.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.472,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 169.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.657,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 182,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.834,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 198.8,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.941,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 215.7,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 0.991,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 232.2,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 248.8,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 265.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 282.1,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 301.1,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 315.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 332.5,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 349.1,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 366.1,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 383.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 400.2,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 415.2,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 431.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 447.8,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 464.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 481.3,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 497.9,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 514.6,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      },
+      {
+        "t": 531.3,
+        "label": "Web fetch",
+        "sop": 1,
+        "iop": 1,
+        "inCore": true,
+        "topCls": "STRONG",
+        "blank": false,
+        "strongKey": "corelabel"
+      }
+    ]
+  }
+}

@@ -40,6 +40,6 @@ console.log('LASTROW',JSON.stringify(await p.evaluate(()=>{
   const t=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
   return {text:last.textContent.trim().slice(0,40),isTop:!!(t&&last.contains(t)),top:r.top,bottom:r.bottom};
 })));
-await p.screenshot({path:'/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/shots/model-scrolled.png'});
+await p.screenshot({path:'/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/shots/model-scrolled.png'});
 console.log('ERRS',JSON.stringify(errs));
 await b.close();

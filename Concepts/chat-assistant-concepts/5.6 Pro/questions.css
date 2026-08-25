@@ -403,8 +403,10 @@ div.qs-step-body{ cursor:default; }
 .qs-split-body{
   display:flex; align-items:stretch; min-height:0; flex:1 1 auto;
 }
-.qs-split-main{ flex:1 1 60%; min-width:0; display:flex; flex-direction:column; padding:11px 11px 0; }
-.qs-split-main .qs-actions{ padding-left:0; padding-right:0; margin-top:auto; }
+.qs-split-main{ flex:1 1 60%; min-width:0; min-height:0; display:flex; flex-direction:column; padding:11px 11px 0; }
+/* Scroll the prompt/answers; keep the primary action row pinned in the host. */
+.qs-split-main > .qs-split-main-scroll{ flex:1 1 auto; min-height:0; overflow:auto; overscroll-behavior:contain; }
+.qs-split-main .qs-actions{ padding-left:0; padding-right:0; margin-top:0; flex:0 0 auto; }
 /* Measured, not guessed: `.decision-host` is 238px…916px across the real
    viewport x editor-split matrix (10 widths x 3 splits, see qs_width.mjs), and
    916 is reached only with the editor dragged to 30%. A fixed 300px aside would
@@ -429,9 +431,16 @@ div.qs-step-body{ cursor:default; }
    cannot see.  Nothing here re-declares .decision-evidence / .qs-evidence.
    ========================================================================== */
 @container qsHost (max-width: 400px){
-  .qs-split-body{ flex-direction:column; }
-  .qs-split-aside{ flex:0 0 auto; border-left:0; border-top:1px solid var(--border); }
-  .qs-split-main{ padding-bottom:0; }
+  /* Main (question + pinned actions) keeps the host budget; aside becomes a
+     short scrollable peek so it cannot starve the question the way
+     flex:0 0 auto did (D2/D3). */
+  .qs-split-body{ flex-direction:column; min-height:0; flex:1 1 auto; }
+  .qs-split-main{ flex:1 1 auto; min-height:180px; padding-bottom:0; }
+  .qs-split-main > .qs-split-main-scroll{ flex:1 1 auto; min-height:100px; }
+  .qs-split-aside{
+    flex:0 0 auto; max-height:72px; min-height:0; overflow:auto;
+    border-left:0; border-top:1px solid var(--border);
+  }
   .qs-inspector{ width:100%; }
   .qs-summary-row{ grid-template-columns:1fr; gap:2px; }
   .qs-dl-row{ grid-template-columns:1fr; gap:1px; }
@@ -458,7 +467,8 @@ div.qs-step-body{ cursor:default; }
    ========================================================================== */
 @media (prefers-reduced-motion: reduce){
   .qs-progress-track.is-scan i{ animation:none; }
-  .qs-card, .qs-sheet, .qs-inspector, .qs-morph-field, .qs-fold, .qs-step-live, .qs-stack-live{
+  .qs-card, .qs-sheet, .qs-inspector, .qs-morph-field, .qs-fold, .qs-step-live, .qs-stack-live,
+  .decision-surface{
     animation-duration:1ms;
   }
   .qs-stack-peek:hover{ transform:none; }
