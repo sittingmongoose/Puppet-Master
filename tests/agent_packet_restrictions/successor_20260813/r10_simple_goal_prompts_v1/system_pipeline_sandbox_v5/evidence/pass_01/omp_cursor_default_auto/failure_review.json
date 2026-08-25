@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.failure_review.v1",
+  "classification": "CHURN_RESET_AFTER_SUBJECT_SEMANTIC_AND_NATIVE_GOAL_SUCCESS_AND_FROZEN_ADAPTER_FAILURE",
+  "pass_id": "pass_01",
+  "route_id": "omp_cursor_default_auto",
+  "ordinal": 2,
+  "attempt_id": "storage-v5-pass_01-02-4038750a2d",
+  "nonce": "4038750a2dc4fc2e57d5fec1184dd012",
+  "model": "cursor/default",
+  "thinking": "auto",
+  "terminal_status": "FAIL",
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "no_retry": true,
+  "qualification_credit": 0,
+  "frozen_error": "PostPopenRunnerError: post-Popen failure for pid 368986: RunnerError: persisted active-Goal submission acceptance timeout",
+  "frozen_terminal_sha256": "f1d303089f0465c66572cedd27fbcbc36f7262572007795b32160e4e5de1a788",
+  "input_custody": {
+    "prompt_utf8_bytes": 3036,
+    "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "prompt_written_at_utc": "2026-08-25T18:23:29.676Z",
+    "composer_acknowledged_at_utc": "2026-08-25T18:23:29.817Z",
+    "enter_written_at_utc": "2026-08-25T18:23:29.823Z",
+    "external_submission_count": 1,
+    "low_level_input_write_count": 2
+  },
+  "postfailure_session": {
+    "path": "postfailure_session.raw.jsonl",
+    "utf8_bytes": 28632,
+    "sha256": "e47d6cdddd3a90cdc795300d2d2d2f8661d463d13902e52e59ebc919491bb4a0",
+    "session_id": "01a03a29-b9b3-77ab-89b8-9aba34a74060",
+    "goal_id": "1565d7c40f77bd1e",
+    "logical_entry_count": 12,
+    "session_exit_kind": "signal",
+    "session_exit_reason": "sigterm"
+  },
+  "observed_subject_facts": {
+    "goal_activation_observed": true,
+    "goal_complete_observed": true,
+    "exact_typed_result_observed": true,
+    "ordinary_tool_calls": 0,
+    "assistant_message_count": 1,
+    "native_continuation_count": 0,
+    "thinking_level_change_count": 0,
+    "aggregate_assistant_shape": [
+      "thinking",
+      "text",
+      "goal_tool_call",
+      "thinking",
+      "text"
+    ],
+    "goal_active_at_utc": "2026-08-25T18:23:29.854Z",
+    "goal_complete_at_utc": "2026-08-25T18:23:36.555Z",
+    "assistant_persisted_at_utc": "2026-08-25T18:23:39.136Z",
+    "goal_completed_event_at_utc": "2026-08-25T18:23:39.165Z"
+  },
+  "confirmed_adapter_failures": [
+    {
+      "surface": "submission_prefix",
+      "error": "OmpSessionError: OMP submission thinking receipt",
+      "cause": "The frozen parser requires a thinking_level_change for every route, while this cursor/default auto session persists none."
+    },
+    {
+      "surface": "full_session",
+      "error": "OmpSessionError: OMP thinking change evidence",
+      "cause": "The same unconditional thinking receipt requirement rejects the completed trace."
+    },
+    {
+      "surface": "full_session_shape",
+      "error": "The frozen two-assistant grammar cannot accept the one-assistant native Cursor aggregate record.",
+      "cause": "Cursor persists the sole Goal tool call and terminal PM_RESULT in one ordered assistant record around the native Goal completion event."
+    }
+  ],
+  "unretained_runtime_residual": "The frozen runner did not preserve the live pre-exit session-directory artifact roster or last parser error. OMP draft-marker state during the acceptance loop is therefore not claimed from this evidence.",
+  "successor_invariant": "Permit omitted thinking_level_change only for the exact cursor/default auto route joined to frozen plan, preflight, and argv; admit one closed Cursor aggregate-assistant native Goal shape; preserve the live session roster, raw session, and last parser error on every timeout. Keep the Ox grammar unchanged and require normal exit for any PASS.",
+  "suffix_launch_count": 0,
+  "unlaunched_suffix_ordinals": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+  ],
+  "claims_excluded": [
+    "V5 row pass",
+    "matrix qualification",
+    "normal session exit",
+    "production readiness",
+    "canonical Plan completion"
+  ]
+}

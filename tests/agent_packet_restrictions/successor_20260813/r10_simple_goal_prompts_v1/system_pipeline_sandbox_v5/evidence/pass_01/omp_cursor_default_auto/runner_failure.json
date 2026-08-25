@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-v5-pass_01-02-4038750a2d",
+  "captured_at_utc": "2026-08-25T18:24:59.965Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 368986: RunnerError: persisted active-Goal submission acceptance timeout",
+  "no_retry": true,
+  "nonce": "4038750a2dc4fc2e57d5fec1184dd012",
+  "ordinal": 2,
+  "pass_id": "pass_01",
+  "pid": 368986,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_cursor_default_auto",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

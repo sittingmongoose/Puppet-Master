@@ -1,0 +1,85 @@
+{
+  "attempt_id": "storage-v5-pass_01-02-4038750a2d",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 710,
+      "path": "composer_ack.json",
+      "sha256": "da3236b1e0443fdf192ce02a98a6af1921b8f05d37f347cdd8b32f59ba59c76b"
+    },
+    {
+      "bytes": 99361,
+      "path": "composer_ack.raw",
+      "sha256": "95e2d44de04ffc95f22ad1a09ea02e731254d562cce3c75c3cc8f35d6138727e"
+    },
+    {
+      "bytes": 733,
+      "path": "enter_write.json",
+      "sha256": "14ecdbbc29ac9cd1eafc1d3d948b9d8b088f10db2544e189b59ceb7020a6cb63"
+    },
+    {
+      "bytes": 1424,
+      "path": "launch.json",
+      "sha256": "c0ea25e375dfdff694a8b262fab0960708a8a9ea92df3c70afdd0d3b8226c95a"
+    },
+    {
+      "bytes": 3293,
+      "path": "omp_preflight.json",
+      "sha256": "6c05d0a0e56be1a86f407127c165eb60209078643c36dbddf7f8b4de44fe0888"
+    },
+    {
+      "bytes": 89596,
+      "path": "pre_prompt.raw",
+      "sha256": "6d7b2309f07877fe0327247fc85f195272661537706e039740193503fb9ca09a"
+    },
+    {
+      "bytes": 681,
+      "path": "prompt_write.json",
+      "sha256": "c03ac57a815aefcf7ff634b1337701095784f84447794d36288702f647390506"
+    },
+    {
+      "bytes": 338,
+      "path": "reservation.json",
+      "sha256": "d0f10047710ae47f4d2b52ce19c7989d7a81b2bbe1223101ad3a317d7a8995bb"
+    },
+    {
+      "bytes": 520,
+      "path": "runner_failure.json",
+      "sha256": "da0335ce2dc2af5d974faff91b3a5d68c22370ad5a6e94472c408c914f1c2028"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 383326,
+      "path": "transcript.raw",
+      "sha256": "3ca90ec893bc4655762e6e05b4dc47399ed977fd7608400e1181ff78a13cf879"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-25T18:24:59.970Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "cursor/default",
+  "no_retry": true,
+  "nonce": "4038750a2dc4fc2e57d5fec1184dd012",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 2,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_cursor_default_auto",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "auto"
+}
