@@ -402,10 +402,33 @@ await sec('item4: open interpolates', async()=>{
 check(g.mode==='open' && Math.abs(g.x-g.paneLeft)<2 && g.scrim.op>0.9 && g.scrim.pe==='auto',
       'Opens LEFT with a live scrim', g);
 
-/* The pane clip must not eat the float shadow.  A/B pixel read just outside the
-   drawer's right edge, with the declared shadow on and then forced off — a
-   computed-style read would report the shadow either way, because clip-path
-   removes it at paint time, not at cascade time. */
+/* THE PANE CLIP MUST NOT EAT THE FLOAT SHADOW — and this guard now toggles the
+   CLIP, which is the thing its name is about.
+   ---------------------------------------------------------------------------
+   It used to A/B `box-shadow:none` only.  That is not vacuous — it still went
+   red, delta 4.03 -> 0.00 against a `>1` threshold with an A/A floor of 0.00 —
+   but it proves "a shadow is painted here", not "the shadow survives the clip",
+   and the comment above it claimed the second thing.  A guard whose stated
+   purpose and actual behaviour differ is worse than no guard, because the next
+   agent reads the name.
+
+   Three arms now, all painted-pixel reads just outside the drawer's right edge:
+     A  as shipped                      -> clip inset(-90px -90px -90px 0), shadow on
+     B  clip-path forced to inset(0)    -> the clip hugs the box; if the -90px
+                                           insets are what let the shadow out,
+                                           this must go dark
+     C  box-shadow forced to none       -> the original arm, kept
+   The claim is A > B and A > C.  The extra statement worth having is B ~= C:
+   clipping the shadow away is indistinguishable from deleting it, which is what
+   makes `inset(0)` the wrong declaration and `-90px` the load-bearing one.
+   Independently confirmed last wave by a different method at -0.007 delta.
+
+   Every override goes through an injected <style> in <head>, NEVER an inline
+   style on the node: pmSyncAttrs deletes attributes the render did not emit, so
+   an inline `style` is wiped by whichever 2s work tick lands inside the sample
+   window.  That made this assertion flaky exactly once, under reduced motion,
+   before it was moved into <head>.  The waits are 320ms because clip-path is on
+   the 240ms transition and a 160ms sample would read it mid-flight. */
 await sec('item4: the clip keeps the float shadow', async()=>{
   const e = await page.evaluate(()=>{const r=document.querySelector('.history-flyout').getBoundingClientRect();
     return {right:Math.round(r.right), y:Math.round(r.top+r.height/2)};});
@@ -418,20 +441,33 @@ await sec('item4: the clip keeps the float shadow', async()=>{
       for(let k=0;k<px.length;k+=4)s+=(px[k]+px[k+1]+px[k+2])/3;
       return Math.round(s*100/(px.length/4))/100;},'data:image/png;base64,'+s.toString('base64'));
   };
-  const withShadow = await lum();
-  /* The shadow is turned off through an injected <style> in <head>, NOT through
-     an inline style on the node: pmSyncAttrs deletes attributes the render did
-     not emit, so an inline `style` is wiped by whichever 2s work tick lands
-     inside the 140ms sample window.  That made this assertion flaky exactly
-     once, under reduced motion, before it was moved into <head>. */
-  await page.evaluate(()=>{const s=document.createElement('style');s.id='__phNoShadow';
-    s.textContent='.history-flyout{box-shadow:none !important}';document.head.appendChild(s);});
-  await page.waitForTimeout(160);
-  const without = await lum();
-  await page.evaluate(()=>{const s=document.getElementById('__phNoShadow');if(s)s.remove();});
-  await page.waitForTimeout(160);
-  check(withShadow < without - 1,
-        'The float shadow still paints through the pane clip', {withShadow, without});
+  const force = async (css)=>{
+    await page.evaluate(c=>{let s=document.getElementById('__phForce');
+      if(!c){ if(s) s.remove(); return; }
+      if(!s){ s=document.createElement('style'); s.id='__phForce'; document.head.appendChild(s); }
+      s.textContent=c;}, css);
+    await page.waitForTimeout(320);
+  };
+  const A  = await lum();
+  await page.waitForTimeout(320);
+  const A2 = await lum();                      /* A/A floor: no change, no delta */
+  await force('body[data-ph-drawer] .history-flyout{clip-path:inset(0) !important}');
+  const B  = await lum();
+  await force('.history-flyout{box-shadow:none !important}');
+  const C  = await lum();
+  await force(null);
+  /* A shadow DARKENS the strip outside the drawer, so the shipped reading is the
+     LOW one; both ways of removing the shadow must make it brighter. */
+  check(Math.abs(A-A2) <= 0.5, 'A/A floor: two reads of the same pixels agree', {A, A2});
+  check(A < B - 1,
+        'The float shadow paints THROUGH the pane clip (forcing clip-path:inset(0) clips it away)',
+        {shipped:A, clippedToBox:B, delta:+(B-A).toFixed(3)});
+  check(A < C - 1,
+        'That reading really is the shadow (forcing box-shadow:none removes it too)',
+        {shipped:A, noShadow:C, delta:+(C-A).toFixed(3)});
+  check(Math.abs(B-C) <= 0.5,
+        'Clipping the shadow away is INDISTINGUISHABLE from deleting it — which is why the insets are -90px and not 0',
+        {clippedToBox:B, noShadow:C, delta:+(B-C).toFixed(3)});
 });
 await shot(`item4-open${REDUCED?'-reduced':''}.png`);
 
@@ -618,6 +654,158 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
   check(flip.menuState===null && !flip.liveMenu && flip.menuGone,
         'Pinning also closes the thread menu (app.js:1506 left it open for 2s)',flip);
 });
+
+/* =====================================================================
+   WAVE 6 — THE PINNED DRAWER'S RESIZE HANDLE, restored.
+   ---------------------------------------------------------------------
+   The invariant an earlier wave traded the handle away to protect is that the
+   drawer's width and the transcript's reserved gutter are ONE expression.  So
+   the assertions below are not "the drag works": they are "on every frame of
+   the drag the gutter still equals the width, and the drawer's left edge has
+   not moved".  Anything less would let the handle back in at the cost of
+   pin-in-place, which is the whole point of the choreography.
+
+   The work tick is paused first: renderApp() every 2s would land inside the
+   drag window and make the "renders nothing" assertion a coin flip.
+   ===================================================================== */
+await sec('wave6: the pinned drawer resizes without breaking pin-in-place', async()=>{
+  await page.evaluate(()=>{const b=document.querySelector('[data-action="pause-working"]'); if(b) b.click();});
+  await page.waitForTimeout(250);
+  /* The "renders nothing" assertion is only meaningful if the 2s work tick is
+     actually stopped; say so out loud rather than reporting a silent green. */
+  const tickStopped = await page.evaluate(()=>!PM56_DEMO.getState().work.running);
+  /* reach a resting PINNED drawer without measuring a toggle by toggling it */
+  const st0 = await page.evaluate(async()=>{
+    if(!document.querySelector('.history-flyout')) document.querySelector('[data-action="toggle-history"]').click();
+    await new Promise(r=>setTimeout(r,650));
+    if(document.body.dataset.phDrawer!=='pinned') document.querySelector('.history-flyout [data-action="ph-toggle-pin"]').click();
+    await new Promise(r=>setTimeout(r,700));
+    return document.body.dataset.phDrawer;
+  });
+  check(st0==='pinned','precondition: pinned and at rest before the resize is measured',{mode:st0});
+
+  const g0 = await page.evaluate(()=>{
+    const h=document.querySelector('[data-ph-resize]');
+    const f=document.querySelector('.history-flyout');
+    const sc=document.querySelector('.history-flyout .history-scroll');
+    if(!h||!f) return {present:!!h};
+    const hr=h.getBoundingClientRect(), fr=f.getBoundingClientRect(), sr=sc.getBoundingClientRect();
+    const cs=getComputedStyle(h);
+    const t=document.elementFromPoint(hr.left+hr.width/2, hr.top+hr.height/2);
+    return {present:true, display:cs.display, cursor:cs.cursor,
+      hitsSelf:!!(t&&(t===h||h.contains(t))),
+      role:h.getAttribute('role'), tab:h.getAttribute('tabindex'),
+      now:Number(h.getAttribute('aria-valuenow')), min:Number(h.getAttribute('aria-valuemin')),
+      left:hr.left, width:hr.width, flyoutRight:fr.right,
+      scrollbarPx: sc.offsetWidth - sc.clientWidth, scrollTrackLeft: sr.right-(sc.offsetWidth-sc.clientWidth),
+      scrollable: sc.scrollHeight > sc.clientHeight};
+  });
+  check(g0.present && g0.display==='block' && g0.cursor==='col-resize' && g0.hitsSelf,
+        'The pinned drawer has a hit-testable resize handle with a col-resize cursor', g0);
+  check(g0.role==='separator' && g0.tab==='0' && g0.now>0 && g0.min>0,
+        'It is the ARIA window-splitter pattern (separator + tabindex + a value range)', g0);
+  /* It lives INSIDE the drawer because .history-flyout is overflow:hidden
+     (styles.css:304) — measured, see history.css.  It must therefore not
+     swallow the scrollbar thumb, which styles.css:349 insets 2px each side. */
+  check(!g0.scrollable || (g0.left - (g0.scrollTrackLeft + 2)) >= 2.5,
+        'It leaves usable scrollbar thumb to its left', {handleLeft:g0.left, trackLeft:g0.scrollTrackLeft, freePx:g0.left-(g0.scrollTrackLeft+2)});
+
+  /* the SAME node must exist and be hidden while floating: pmPatch must never
+     mount or unmount it, or a pin would remount it mid-transition */
+  await click('[data-action="ph-toggle-pin"]'); await page.waitForTimeout(650);
+  const floatState = await page.evaluate(()=>{const h=document.querySelector('[data-ph-resize]');
+    return {present:!!h, display:h?getComputedStyle(h).display:null};});
+  check(floatState.present && floatState.display==='none',
+        'The handle node stays mounted but hidden while floating', floatState);
+  await click('[data-action="ph-toggle-pin"]'); await page.waitForTimeout(700);
+
+  /* --- the drag, traced on the FRAME CLOCK ------------------------------- */
+  const start = await page.evaluate(()=>{const r=document.querySelector('.history-flyout').getBoundingClientRect();
+    return {x:Math.round(r.right-3), y:Math.round(r.top+r.height/2), w0:r.width};});
+  await page.evaluate(()=>{
+    window.__phRz={out:[],stop:false,mut:0};
+    const o=new MutationObserver(rs=>{window.__phRz.mut+=rs.length;});
+    o.observe(document.getElementById('pmRoot'),{childList:true,subtree:true,attributes:true,characterData:true});
+    o.observe(document.getElementById('pmOverlayRoot'),{childList:true,subtree:true,attributes:true,characterData:true});
+    window.__phRzStop=()=>o.disconnect();
+    const tick=(ts)=>{const T=window.__phRz; if(T.t0==null)T.t0=ts;
+      const f=document.querySelector('.history-flyout');
+      const gr=document.querySelector('.assistant-grid');
+      const pane=document.querySelector('.assistant-pane');
+      const tr=document.querySelector('.transcript');
+      const r=f&&f.getBoundingClientRect();
+      T.out.push({t:+(ts-T.t0).toFixed(1), x:r?+r.left.toFixed(2):null, w:r?+r.width.toFixed(2):null,
+        right:r?+r.right.toFixed(2):null,
+        paneL:pane?+pane.getBoundingClientRect().left.toFixed(2):null,
+        gutter:gr?+parseFloat(getComputedStyle(gr).paddingLeft).toFixed(2):null,
+        trL:tr?+tr.getBoundingClientRect().left.toFixed(2):null,
+        rz:document.body.dataset.phResizing||null,
+        v:getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w').trim()});
+      if(!T.stop) requestAnimationFrame(tick);};
+    requestAnimationFrame(tick);
+  });
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  for(let i=1;i<=10;i++){ await page.mouse.move(start.x + i*8, start.y); await page.waitForTimeout(24); }
+  await page.waitForTimeout(60);
+  const flagDuring = await page.evaluate(()=>document.body.dataset.phResizing||null);
+  const mutDuring  = await page.evaluate(()=>window.__phRz.mut);
+  await page.mouse.up();
+  await page.waitForTimeout(350);
+  const rz = await page.evaluate(()=>{window.__phRz.stop=true;window.__phRzStop();return window.__phRz.out;});
+
+  const moving = rz.filter(s=>s.rz==='1');
+  const ws=[...new Set(moving.map(s=>s.w))];
+  check(moving.length>4 && ws.length>=4 && Math.max(...ws)-Math.min(...ws)>30,
+        'DRAG: the drawer width follows the pointer', {frames:moving.length, distinct:ws.length, min:Math.min(...ws), max:Math.max(...ws)});
+  check(flagDuring==='1','body[data-ph-resizing] is set for the whole drag',{flagDuring});
+  check(moving.length>4 && moving.every(s=>Math.abs(s.x-s.paneL)<=1),
+        'PIN-IN-PLACE HOLDS DURING A RESIZE: the drawer\'s left edge never moves',
+        {offenders:moving.filter(s=>Math.abs(s.x-s.paneL)>1).slice(0,4)});
+  check(moving.length>4 && moving.every(s=>s.gutter!=null && Math.abs(s.w-s.gutter)<=1),
+        'COUPLING HOLDS ON EVERY FRAME: the reserved gutter equals the drawer width',
+        {offenders:moving.filter(s=>s.gutter==null||Math.abs(s.w-s.gutter)>1).slice(0,4)});
+  check(moving.length>4 && moving.every(s=>s.trL!=null && Math.abs(s.trL-s.right)<=1),
+        'SEAM HOLDS ON EVERY FRAME: the transcript starts at the drawer\'s right edge',
+        {offenders:moving.filter(s=>s.trL==null||Math.abs(s.trL-s.right)>1).slice(0,4)});
+  /* The 240ms pin transition must be suppressed while dragging, or the drawer
+     lags the pointer by a full --ph-t.  Painted width == published width, same frame. */
+  check(moving.length>4 && moving.every(s=>!s.v || Math.abs(s.w-parseFloat(s.v))<=1.5),
+        'NO TRANSITION LAG: the painted width equals the published --ph-user-w on the same frame',
+        {offenders:moving.filter(s=>s.v&&Math.abs(s.w-parseFloat(s.v))>1.5).slice(0,4)});
+  check(tickStopped && mutDuring===0,
+        tickStopped ? 'CHEAP PATH: the drag renders nothing — zero mutations in #pmRoot and #pmOverlayRoot'
+                    : 'CHEAP PATH: NOT MEASURED — the work tick could not be stopped, so a render inside the drag window would be indistinguishable from the drag rendering',
+        {tickStopped, mutDuring});
+
+  /* keyboard: role="separator" + tabindex is only honest if the arrows move it */
+  const kb0 = await page.evaluate(()=>{const h=document.querySelector('[data-ph-resize]');h.focus();
+    return {focused:document.activeElement===h, w:document.querySelector('.history-flyout').getBoundingClientRect().width};});
+  await page.keyboard.press('ArrowLeft');
+  await page.waitForTimeout(330);
+  const kb1 = await page.evaluate(()=>{const h=document.querySelector('[data-ph-resize]');
+    return {w:document.querySelector('.history-flyout').getBoundingClientRect().width,
+            g:parseFloat(getComputedStyle(document.querySelector('.assistant-grid')).paddingLeft),
+            now:h?Number(h.getAttribute('aria-valuenow')):null,
+            focused:!!(document.activeElement&&document.activeElement.hasAttribute&&document.activeElement.hasAttribute('data-ph-resize'))};});
+  check(kb0.focused && kb1.w < kb0.w-6 && Math.abs(kb1.w-kb1.g)<1,
+        'KEYBOARD: ArrowLeft narrows the drawer and the gutter follows it', {kb0, kb1});
+  check(kb1.now===Math.round(kb1.w) && kb1.focused,
+        'KEYBOARD: aria-valuenow is refreshed and focus survives the render', kb1);
+
+  /* Leave the drawer at its declared default so the sections after this one
+     measure what they were written to measure. */
+  await page.evaluate(()=>{try{localStorage.removeItem('pm56-history-w');}catch(e){}
+    document.documentElement.style.removeProperty('--ph-user-w');});
+  await page.waitForTimeout(350);
+  const back = await page.evaluate(()=>({w:document.querySelector('.history-flyout').getBoundingClientRect().width,
+    g:parseFloat(getComputedStyle(document.querySelector('.assistant-grid')).paddingLeft),
+    dflt:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-pin-w'))}));
+  check(back.dflt>0 && Math.abs(back.w-back.dflt)<1 && Math.abs(back.w-back.g)<1,
+        'With no stored width the drawer returns to the --ph-pin-w default, gutter still coupled', back);
+  await page.evaluate(()=>{const b=document.querySelector('[data-action="start-working"]'); if(b) b.click();});
+});
+await shot(`item4-resized${REDUCED?'-reduced':''}.png`);
 
 /* =====================================================================
    Regressions: 8 themes, no overflow, other takes untouched

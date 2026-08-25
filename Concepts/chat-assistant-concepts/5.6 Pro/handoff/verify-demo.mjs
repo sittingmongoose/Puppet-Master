@@ -24,7 +24,7 @@ await p.waitForTimeout(150);
 const g2=await p.evaluate(()=>PM56_DEMO.getState().dialog.geom);
 // pixel proof: sample a colour inside the dialog body vs outside it after the move
 const shotBox=await p.evaluate(()=>{const r=document.querySelector('.demo-dialog').getBoundingClientRect();return {x:Math.round(r.left+8),y:Math.round(r.top+8),width:20,height:20};});
-await p.screenshot({path:'/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/demo-dialog.png'});
+await p.screenshot({path:'/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/demo-dialog.png'});
 const insideHit=await p.evaluate(()=>{const r=document.querySelector('.demo-dialog').getBoundingClientRect();const el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return !!(el&&el.closest('.demo-dialog'));});
 console.log(JSON.stringify({headHit,g0,g1,g2,moved:(g1.left!==g0.left&&g1.top!==g0.top),resized:(g2.width!==g1.width&&g2.height!==g1.height),insideHit,errs},null,1));
 await b.close();

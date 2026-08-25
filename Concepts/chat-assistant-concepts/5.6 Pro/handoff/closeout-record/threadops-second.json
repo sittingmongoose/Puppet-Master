@@ -1,0 +1,230 @@
+{
+  "started": "2026-08-25T19:01:07.052Z",
+  "items": [
+    {
+      "id": "T13.pre-live-state",
+      "what": "PM56_EXT.ctx().state is the live object (not a clone) — precondition for every measurement below",
+      "verdict": "PASS",
+      "detail": {
+        "same": true,
+        "cloneIsSeparate": true
+      }
+    },
+    {
+      "id": "T13.C1a-order",
+      "what": "restore point is written BEFORE any message is removed",
+      "verdict": "PASS",
+      "detail": {
+        "mutationTimeline": [
+          "push(threadops-restore-point)",
+          "splice(14,4) rpCardsAlreadyInThread=1",
+          "push(threadops-restore-point)",
+          "push(threadops-rewind)"
+        ],
+        "restorePointPushIndex": 0,
+        "spliceIndex": 1,
+        "pageErrors": []
+      }
+    },
+    {
+      "id": "T13.C1b-rewind-folds",
+      "what": "rewind actually removes later turns (trigger control for C1c)",
+      "verdict": "PASS",
+      "detail": {
+        "before": 17,
+        "afterRewind": 16,
+        "foldedIds": [
+          "query-15",
+          "query-16",
+          "query-17"
+        ],
+        "cardsAdded": [
+          "threadops-restore-point",
+          "threadops-rewind"
+        ]
+      }
+    },
+    {
+      "id": "T13.C1c-restore",
+      "what": "Restore puts every folded turn back, in order, byte-identical",
+      "verdict": "PASS",
+      "detail": {
+        "restoreControl": {
+          "text": "Restore 3 turns",
+          "rect": [
+            1023,
+            1029,
+            141,
+            30
+          ],
+          "hit": {
+            "x": 1093.2578125,
+            "y": 650.5,
+            "rect": [
+              1023,
+              636,
+              141,
+              30
+            ],
+            "inViewport": true,
+            "topIsIt": true,
+            "stack": [
+              "soft-button",
+              "pm-tops-card",
+              "plan-actions"
+            ]
+          }
+        },
+        "missingAfterRestore": [],
+        "mutatedAfterRestore": [],
+        "orderPreserved": true,
+        "cardsAdded": [
+          "threadops-restore-point",
+          "threadops-rewind"
+        ],
+        "len": {
+          "before": 17,
+          "afterRestore": 19
+        }
+      }
+    },
+    {
+      "id": "T13.C1c-N1",
+      "what": "NEGATIVE: same comparator against the post-rewind (folded) state must FAIL",
+      "verdict": "PASS (went red)",
+      "detail": {
+        "missing": 3
+      }
+    },
+    {
+      "id": "T13.C1c-N2",
+      "what": "NEGATIVE: one byte altered in the expected set must FAIL the comparator",
+      "verdict": "PASS (went red)",
+      "detail": {
+        "changed": [
+          "query-09"
+        ]
+      }
+    },
+    {
+      "id": "T13.C1d-induced-throw",
+      "what": "NEGATIVE: force the restore-point append to throw — nothing may be folded",
+      "verdict": "PASS",
+      "detail": {
+        "timeline": [
+          "slice",
+          "push(threadops-restore-point)",
+          "INDUCED-THROW"
+        ],
+        "spliceHappened": false,
+        "messagesLostAnyway": [],
+        "pageErrors": [
+          "PM56_EXT action \"rewind-to-message\" threw Error: w4b induced failure inside restore-point append\n    at msgs.push (eval at evaluate (:311:30), <anonymous>:17:15)\n    at Object.appendMessage (file:///m"
+        ]
+      }
+    },
+    {
+      "id": "T13.C2a-shell",
+      "what": "destructive confirm renders with its own scrim, alertdialog role and z-index",
+      "verdict": "PASS",
+      "detail": {
+        "title": "Delete thread?",
+        "role": "alertdialog",
+        "ariaModal": "true",
+        "dialogZ": "1151",
+        "scrimZ": "1150",
+        "scrimPointerEvents": "auto",
+        "scrimCoversViewport": true,
+        "scrimRect": [
+          0,
+          0,
+          1440,
+          900
+        ],
+        "viewport": [
+          1440,
+          900
+        ],
+        "zDialogVar": "1150"
+      }
+    },
+    {
+      "id": "T13.C2b-cover",
+      "what": "elementsFromPoint at every previously-topmost interactive point: dialog or scrim must be on top",
+      "verdict": "PASS",
+      "detail": {
+        "pointsTested": 39,
+        "blocked": 39,
+        "leaks": [],
+        "coveredNotRemoved": 39,
+        "removedFromDom": []
+      }
+    },
+    {
+      "id": "T13.C2c-real-click",
+      "what": "a real mouse click at a behind control must not reach it",
+      "verdict": "PASS",
+      "detail": {
+        "target": {
+          "action": "select-thread",
+          "x": 877,
+          "y": 633,
+          "id": "bsd",
+          "value": null
+        },
+        "beforeSel": "query",
+        "afterSel": "query",
+        "threadSwitched": false,
+        "dialogStillOpenAfterScrimClick": false
+      }
+    },
+    {
+      "id": "T13.C2d-trigger-control",
+      "what": "TRIGGER CONTROL: same coordinates with no dialog must actuate the control",
+      "verdict": "PASS",
+      "detail": {
+        "dialogClosed": true,
+        "before": "query",
+        "after": "bsd",
+        "switched": true
+      }
+    },
+    {
+      "id": "T13.C2e-antimodal-control",
+      "what": "ANTI-MODAL CONTROL: with the scrim pointer-events removed the same click MUST leak through",
+      "verdict": "FAIL (T13.C2c cannot be trusted)",
+      "detail": {
+        "before": "bsd",
+        "after": "bsd",
+        "leaked": false,
+        "dialogPresent": true
+      }
+    },
+    {
+      "id": "T13.C2f-focus",
+      "what": "keyboard: 14 Tab presses from the open confirm — how many land outside it",
+      "verdict": "PASS (focus contained)",
+      "detail": {
+        "outsideCount": 0,
+        "firstEscapes": [],
+        "sequence": [
+          "in:close-dialog",
+          "in:confirm-delete-thread",
+          "in:confirm-delete-thread",
+          "in:close-dialog",
+          "in:close-dialog",
+          "in:confirm-delete-thread",
+          "in:confirm-delete-thread",
+          "in:close-dialog",
+          "in:close-dialog",
+          "in:confirm-delete-thread",
+          "in:confirm-delete-thread",
+          "in:close-dialog",
+          "in:close-dialog",
+          "in:confirm-delete-thread"
+        ]
+      }
+    }
+  ],
+  "finished": "2026-08-25T19:01:17.559Z"
+}

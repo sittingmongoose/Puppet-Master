@@ -1,0 +1,294 @@
+{
+  "started": "2026-08-25T19:32:56.369Z",
+  "target": "/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/index.html",
+  "items": [
+    {
+      "id": "D15.A-take7-vw360",
+      "what": "take7 at 360: choices NOT pointer-reachable",
+      "verdict": "FAIL",
+      "detail": {
+        "expectReachable": false,
+        "reachable": true,
+        "contentW": 348,
+        "hostW": 360,
+        "splitDir": "column",
+        "mainH": 282.8,
+        "asideH": 72,
+        "choiceCount": 4,
+        "choice0": {
+          "x": 98,
+          "y": 524,
+          "rect": [
+            18,
+            514,
+            159,
+            37
+          ],
+          "owns": true,
+          "topCls": "STRONG",
+          "stackActions": [
+            "answer-choice"
+          ]
+        },
+        "primary": {
+          "x": 304,
+          "y": 690,
+          "rect": [
+            266,
+            680,
+            76,
+            30
+          ],
+          "owns": true,
+          "topCls": "primary-button qs-action",
+          "stackActions": [
+            "next-question"
+          ]
+        },
+        "promptText": "Where should the primary Puppet Master server run?*"
+      }
+    },
+    {
+      "id": "D15.A-take7-vw400",
+      "what": "take7 at 400: choices NOT pointer-reachable",
+      "verdict": "FAIL",
+      "detail": {
+        "expectReachable": false,
+        "reachable": true,
+        "contentW": 388,
+        "hostW": 400,
+        "splitDir": "column",
+        "mainH": 282.8,
+        "asideH": 72,
+        "choiceCount": 4,
+        "choice0": {
+          "x": 108,
+          "y": 524,
+          "rect": [
+            18,
+            514,
+            179,
+            37
+          ],
+          "owns": true,
+          "topCls": "STRONG",
+          "stackActions": [
+            "answer-choice"
+          ]
+        },
+        "primary": {
+          "x": 344,
+          "y": 690,
+          "rect": [
+            306,
+            680,
+            76,
+            30
+          ],
+          "owns": true,
+          "topCls": "primary-button qs-action",
+          "stackActions": [
+            "next-question"
+          ]
+        },
+        "promptText": "Where should the primary Puppet Master server run?*"
+      }
+    },
+    {
+      "id": "D15.A-take7-vw480-pos",
+      "what": "POSITIVE: take7 at 480 choices ARE reachable",
+      "verdict": "PASS",
+      "detail": {
+        "expectReachable": true,
+        "reachable": true,
+        "contentW": 468,
+        "hostW": 480,
+        "splitDir": "row",
+        "mainH": 354.8,
+        "asideH": 354.8,
+        "choiceCount": 4,
+        "choice0": {
+          "x": 147,
+          "y": 524,
+          "rect": [
+            18,
+            514,
+            258,
+            37
+          ],
+          "owns": true,
+          "topCls": "choice selected",
+          "stackActions": [
+            "answer-choice"
+          ]
+        },
+        "primary": {
+          "x": 237,
+          "y": 762,
+          "rect": [
+            199,
+            752,
+            76,
+            30
+          ],
+          "owns": true,
+          "topCls": "primary-button qs-action",
+          "stackActions": [
+            "next-question"
+          ]
+        },
+        "promptText": "Where should the primary Puppet Master server run?*"
+      }
+    },
+    {
+      "id": "D15.A-take0-vw360-pos",
+      "what": "POSITIVE: take0 at 360 choices ARE reachable",
+      "verdict": "PASS",
+      "detail": {
+        "expectReachable": true,
+        "reachable": true,
+        "contentW": 348,
+        "hostW": 360,
+        "splitDir": null,
+        "mainH": null,
+        "asideH": null,
+        "choiceCount": 4,
+        "choice0": {
+          "x": 98,
+          "y": 587,
+          "rect": [
+            18,
+            577,
+            159,
+            37
+          ],
+          "owns": true,
+          "topCls": "STRONG",
+          "stackActions": [
+            "answer-choice"
+          ]
+        },
+        "primary": {
+          "x": 304,
+          "y": 762,
+          "rect": [
+            266,
+            752,
+            76,
+            30
+          ],
+          "owns": true,
+          "topCls": "primary-button qs-action",
+          "stackActions": [
+            "next-question"
+          ]
+        },
+        "promptText": "Where should the primary Puppet Master server run?*"
+      }
+    },
+    {
+      "id": "D15.A-N1-forced-unreachable",
+      "what": "NEGATIVE: forcing choice opacity:0 + pointer-events:none must make owns=false",
+      "verdict": "PASS (went red)",
+      "detail": {
+        "beforeOwns": true,
+        "afterOwns": false,
+        "afterTop": "choice-grid qs-grid"
+      }
+    },
+    {
+      "id": "D15.B-draft-preserve",
+      "what": "D7: answer → other flow → back to flow-query preserves the draft answer",
+      "verdict": "PASS",
+      "detail": {
+        "pick": "Windows native",
+        "afterAnswer": {
+          "answer": "Windows native"
+        },
+        "switched": {
+          "ok": true,
+          "flow": "flow-migration"
+        },
+        "mid": {
+          "drafts": {
+            "flow-deploy": [
+              "Windows native",
+              [
+                "Windows native",
+                "Windows WSL"
+              ],
+              "",
+              "Keep provider credentials on the server and allow clients to reconnect without losing draft state.",
+              ""
+            ]
+          },
+          "q0": "",
+          "title": "Migration approval\n0/4 answered\n1 queued\n+1 queued this sess"
+        },
+        "back": {
+          "ok": true,
+          "flow": "flow-deploy"
+        },
+        "restored": {
+          "answer": "Windows native",
+          "drafts": {
+            "flow-deploy": [
+              "Windows native",
+              [
+                "Windows native",
+                "Windows WSL"
+              ],
+              "",
+              "Keep provider credentials on the server and allow clients to reconnect without losing draft state.",
+              ""
+            ],
+            "flow-migration": [
+              "",
+              "",
+              [],
+              ""
+            ]
+          },
+          "selectedDom": [
+            "Windows native"
+          ],
+          "title": "Migration approval"
+        },
+        "bootFlows": [
+          {
+            "flow": "flow-migration",
+            "text": "Queued Migration approval 0/4"
+          },
+          {
+            "flow": "flow-hosts",
+            "text": "Queued Execution host capabilities 0/3"
+          },
+          {
+            "flow": "flow-retention",
+            "text": "Completed Retention policy 4/4"
+          }
+        ]
+      }
+    },
+    {
+      "id": "D15.B-N1-cleared-drafts",
+      "what": "NEGATIVE: clearing state.qs.drafts mid-flight must prevent restoration",
+      "verdict": "PASS (went red)",
+      "detail": {
+        "label": "Windows native",
+        "ans": "",
+        "wentRed": true
+      }
+    }
+  ],
+  "finished": "2026-08-25T19:33:13.861Z",
+  "summary": {
+    "total": 7,
+    "fails": [
+      "D15.A-take7-vw360",
+      "D15.A-take7-vw400"
+    ],
+    "take7NarrowClaim": "REFUTED — take7 choices were reachable",
+    "d7DraftClaim": "CONFIRMED — draft preserved; clear-drafts control went red"
+  }
+}

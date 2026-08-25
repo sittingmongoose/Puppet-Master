@@ -6,7 +6,7 @@ import {pathToFileURL} from 'url';
 import fs from 'fs';
 import path from 'path';
 
-const DIR='/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/hfilm';
+const DIR='/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/hfilm';
 fs.mkdirSync(DIR,{recursive:true});
 const FILE=process.argv[2]||"/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html";
 

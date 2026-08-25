@@ -1,1 +1,0 @@
-/* orbit.js — feature module.  OWNER: Wave 4 — Orbit agent (item 12: clickable orbit, responsive radius, shared trail icon fix)

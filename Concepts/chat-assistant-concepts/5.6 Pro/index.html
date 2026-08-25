@@ -99,7 +99,7 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .resizer { position:relative;background:transparent;cursor:col-resize;z-index:14; }
 .resizer::after { content:"";position:absolute;inset:0 1px;background:var(--border);transition:background 150ms; }
 .resizer:hover::after,.resizer.dragging::after { background:var(--accent); }
-.assistant-pane { min-width:0;min-height:0;background:var(--surface);display:grid;grid-template-rows:minmax(0,1fr); }
+.assistant-pane { min-width:0;min-height:0;background:var(--surface);display:grid;grid-template-rows:minmax(0,1fr);container-type:inline-size;container-name:assistantPane; }
 .assistant-grid { min-width:0;min-height:0;display:grid;grid-template-columns:var(--history-w,224px) minmax(0,1fr); }
 .assistant-grid.history-closed { grid-template-columns:minmax(0,1fr); }
 /* Column minimums are 0 for history/activity and min(Npx,100%) for chat: the hard
@@ -157,7 +157,7 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .context-ring { width:31px;height:31px;border-radius:50%;padding:3px;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--context-pct,64)*1%),var(--surface-3) 0);cursor:pointer;transition:transform var(--spring-soft),filter 160ms;box-shadow:0 0 0 1px var(--border); }
 .context-ring:hover { transform:scale(1.08) rotate(3deg);filter:brightness(1.08); }
 .context-ring::after { content:attr(data-value);width:23px;height:23px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--text);font-size:8px;font-weight:800; }
-.transcript { min-height:0;overflow:auto;padding:18px clamp(12px,2.4vw,28px) 24px;scroll-behavior:smooth;scrollbar-gutter:stable; }
+.transcript { min-height:0;overflow:auto;padding:18px clamp(12px,2.4vw,28px) 24px;scroll-behavior:smooth;scrollbar-gutter:stable;overflow-anchor:none; }
 .transcript-inner { width:100%;max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:15px; }
 .message { position:relative;min-width:0;animation:message-arrive 420ms var(--spring-soft-ease) both; }
 .message-user { display:flex;justify-content:flex-end; }
@@ -207,7 +207,7 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .wa-chrome{margin-bottom:10px}
 .wa-head{display:flex;align-items:center;gap:8px;min-height:26px}
 .wa-track{flex:0 1 auto;overflow:hidden}
-.wa-label{display:flex;align-items:baseline;gap:6px;min-width:0;white-space:nowrap}
+.wa-label{display:flex;align-items:baseline;gap:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .wa-verb{font-weight:600;font-size:12px;color:var(--text)}
 .wa-count{color:var(--muted);font-size:11px;font-style:normal}
 .wa-head .pm-roll{font-weight:600;font-size:12px}
@@ -2826,8 +2826,8 @@ body.pm-theming .composer, body.pm-theming .composer-box, body.pm-theming .statu
 @media (max-width: 1100px) {
   .pmap-kv { grid-template-columns: 62px minmax(0,1fr); }
 }
-.activity-panel { container-type: inline-size; }
-@container (max-width: 300px) {
+.activity-panel { container-type: inline-size; container-name: activityPanel; }
+@container activityPanel (max-width: 300px) {
   .activity-concept-board { grid-template-columns: 1fr; }
   .activity-ledger > button, .activity-ledger > .pmap-ledger-head {
     grid-template-columns: 44px minmax(0,1fr) minmax(0,62px); gap: 5px; padding: 5px 6px;
@@ -3223,8 +3223,25 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
 
 /* ---------- phase list ---------- */
 .goal-phases{list-style:none;margin:0;padding:0;display:grid;gap:3px}
-.goal-phase{border:1px solid var(--border);border-radius:9px;background:var(--surface-2);overflow:hidden;
-  animation:goal-phase-arrive var(--spring-soft) both}
+.goal-phase{border:1px solid var(--border);border-radius:9px;background:var(--surface-2);overflow:hidden}
+/* G1. An entrance belongs to the EVENT of arriving, never to the element.
+   This animation used to sit on .goal-phase unconditionally and PERMANENTLY,
+   suppressed only while data-wipe="1" was present -- and that flag had a
+   420ms lifetime (goals.js). A finite guard against a permanent threat only
+   postpones it: the row that had just completed replayed its whole entrance
+   on whatever render happened next -- fully invisible for 66.7ms, then a
+   ~450ms re-reveal, measured at 583ms and at 1550ms from identical input,
+   and a two-state hard blink under reduced motion. Node identity was
+   unchanged across the vanish; it was a live row restarting its entrance,
+   because dropping data-wipe flips animation-name back to goal-phase-arrive
+   and a changed animation-name restarts the animation.
+   goals.js now emits data-arrive="1" for the FIRST mount of a phase id and
+   never again, so the guard's lifetime matches the threat's.
+   The same guard settles the arrival half of G10/G12: the keyed patch
+   re-INSERTS rows on a reorder or a status change, Blink restarts CSS
+   animations on re-insert, and a row the reordered one passed used to replay
+   a full 440ms (--spring-soft) entrance from opacity:0 in place. */
+.goal-phase[data-arrive="1"]{animation:goal-phase-arrive var(--spring-soft) both}
 .goal-phase-row{display:grid;grid-template-columns:13px 16px minmax(0,1fr) auto;gap:6px;align-items:start;
   width:100%;padding:6px 7px;background:transparent;border:0;color:inherit;text-align:left;cursor:pointer;
   transition:background 160ms var(--ease)}
@@ -3521,7 +3538,7 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
    the phase still reads completed, it just is not decorated. */
 @media (prefers-reduced-motion: reduce){
   .goal-pulse,.goal-status-chip.tone-working .goal-chip-dot{animation:none!important}
-  .goal-phase,.goal-replan-marker,.goal-phase-detail{animation-duration:1ms!important}
+  .goal-phase,.goal-phase[data-arrive="1"],.goal-replan-marker,.goal-phase-detail{animation-duration:1ms!important}
   .goal-phase.completed[data-wipe="1"]{animation-duration:1ms!important}
   .goal-phase.completed[data-wipe="1"] .goal-strike,
   .goal-phase.completed[data-wipe="1"] .goal-phase-text{animation-duration:1ms!important}
@@ -4114,15 +4131,50 @@ body[data-theme="retro-light"] {
   --ph-open-w: 300px;   /* reference: min(300px, 85%) */
   --ph-pin-w: 200px;    /* reference: min(220px, 42%) — 200 keeps the        */
                         /* narrowing visible at 5.6 Pro's denser type scale  */
+  --ph-min-w: 170px;    /* the floor app.js:1928 already used for the deleted */
+                        /* .history-panel column; kept identical on purpose   */
 }
-/* Width and gutter are the same expression twice, exactly as the reference
-   insists ("the same value drives both the drawer width and the reserved
-   gutter so they track each other"). --ph-pane is the ASSISTANT PANE's width,
-   published by history.js — the drawer belongs to that pane, not to the
-   viewport, so the reference's percentages are taken against it. */
+/* ---------------------------------------------------------------------------
+   WIDTH AND GUTTER ARE ONE EXPRESSION — now a NAMED one, which is what lets the
+   resize handle exist at all.
+
+   The reference insists "the same value drives both the drawer width and the
+   reserved gutter so they track each other", and an earlier wave bought that by
+   making the width a constant — which is why the pinned drawer lost the resize
+   handle the old `.history-panel` grid column had (app.js:498 still emits one
+   for a column this module no longer spawns). The user asked for it back.
+
+   So the expression is given a name and declared ONCE, on <body>. Custom
+   properties are substituted at computed-value time on the element that
+   declares them, so `--ph-w` is resolved on <body> and then INHERITED as a
+   settled value by both use sites. That is strictly stronger than the two
+   textually-identical copies it replaces: those two rules could have drifted if
+   an intervening rule had redefined an input for only one of them, and one very
+   nearly does — styles.css:326 declares `.assistant-grid{--history-w:190px}`
+   inside a narrow media query, so reading a width variable AT THE USE SITES
+   would give the gutter (a descendant of .assistant-grid) a different number
+   from the drawer (which lives in #pmOverlayRoot and is not a descendant).
+   Resolving on <body>, above both, makes that class of desync unrepresentable.
+
+   --ph-user-w is published on documentElement by history.js from
+   state.historyWidth — the app's own persisted history width, so the drag
+   survives a reload through app.js's existing savePrefs() with no new storage
+   key. The min()/max() around it are the DECLARATIVE clamps: history.js clamps
+   the same way in JS, but the pane clamp must also hold when the pane changes
+   size with no pointer involved (editor-resizer drag, window resize), and CSS
+   is the only thing that can guarantee that on the same frame for both.
+   --ph-pane is the ASSISTANT PANE's width, published by history.js — the drawer
+   belongs to that pane, not to the viewport, so the reference's percentages are
+   taken against it. The safety clamp is applied LAST so it always wins: a
+   clamp() would let the 170px floor beat the 42% cap on a narrow pane.
+   --------------------------------------------------------------------------- */
+body[data-ph-drawer="pinned"]{
+  --ph-w: min( max(var(--ph-user-w, var(--ph-pin-w)), var(--ph-min-w)),
+               calc(var(--ph-pane, 100vw) * .42) );
+}
 body[data-ph-drawer] .history-flyout{ width:min(var(--ph-open-w), calc(var(--ph-pane, 100vw) * .85)); }
-body[data-ph-drawer="pinned"] .history-flyout{ width:min(var(--ph-pin-w), calc(var(--ph-pane, 100vw) * .42)); }
-body[data-ph-drawer="pinned"] .assistant-grid{ padding-left:min(var(--ph-pin-w), calc(var(--ph-pane, 100vw) * .42)); }
+body[data-ph-drawer="pinned"] .history-flyout{ width:var(--ph-w); }
+body[data-ph-drawer="pinned"] .assistant-grid{ padding-left:var(--ph-w); }
 
 body[data-ph-drawer] .history-flyout{
   /* OPEN LEFT.  styles.css:298 pins the flyout to `right:6px` and animates it
@@ -4227,6 +4279,55 @@ body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ 
 /* pressed = accent tint, never a coloured edge bar */
 .ph-pin.is-pinned{ background:color-mix(in srgb,var(--accent) 20%,var(--surface-3)); color:var(--text); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent); }
 .ph-pin svg{ flex:0 0 auto; }
+
+/* ---- the pinned drawer's resize handle ----------------------------------
+   Restores the affordance the deleted `.history-panel` column had
+   (styles.css:370 `.panel-resize`, emitted at app.js:498). Same look — an
+   invisible strip that grows a 1px accent rule on hover — and the same
+   `col-resize` cursor, so the two remaining resizers in the concept (editor,
+   activity panel) and this one all read as the same control.
+
+   WHY IT IS INSIDE THE DRAWER AND `.panel-resize` WAS NOT.
+   `.panel-resize` sits at `right:-3px`: 4px of it hangs outside the panel, over
+   the transcript, straddling the seam. That is impossible here, and the reason
+   was measured rather than assumed. `.history-flyout` carries `overflow:hidden`
+   (styles.css:304), which clips at the padding box. Forcing `overflow:visible`
+   — or `overflow:clip` with an `overflow-clip-margin` big enough to let a child
+   hang out — changes 12,196 painted pixels inside the drawer against an A/A
+   noise floor of ZERO: Chromium drops LCD subpixel antialiasing on every glyph
+   in the drawer and falls back to greyscale (sampled text edge 61,107,153 ->
+   96,104,121). Plain `overflow:clip` is pixel-identical (n=0, max delta 2) but
+   clips exactly as tightly. Evidence: handoff/w6/hist/ovcands.mjs.
+   A 7px handle wholly inside would have covered 4 of the 5 visible pixels of
+   `.history-scroll`'s scrollbar thumb (9px track, thumb inset 2px each side by
+   styles.css:349's padding-box border). 5px leaves 3 of those 5 clear, which is
+   the same order of overlap `.panel-resize` had, and still a larger grab target
+   than the 4px sash most editors ship. Measured, not guessed — and asserted in
+   history-verify.mjs so a later width change cannot quietly swallow the bar.
+
+   It is rendered in every drawer state and shown only when pinned: keeping the
+   node present means pmPatch never mounts or unmounts it mid-pin. */
+.ph-resize{
+  position:absolute; top:0; bottom:0; right:0; width:5px; z-index:30;
+  display:none; cursor:col-resize; touch-action:none; background:transparent;
+}
+body[data-ph-drawer="pinned"] .ph-resize{ display:block; }
+.ph-resize::after{
+  content:""; position:absolute; top:0; bottom:0; right:0; width:1px;
+  background:transparent; transition:background 140ms;
+}
+.ph-resize:hover::after,
+.ph-resize:focus-visible::after,
+body[data-ph-resizing] .ph-resize::after{ background:var(--accent); }
+.ph-resize:focus-visible{ outline:none; }
+/* WHILE DRAGGING, THE 240ms TRANSITION MUST NOT RUN. It is declared for the pin
+   choreography; left on during a drag it lags the pointer by a full --ph-t and
+   the drawer feels elastic instead of attached. Both use sites are killed
+   together, because killing one and not the other is exactly the desync the
+   single --ph-w expression exists to prevent. These selectors are (0,2,1) and
+   sit after the (0,2,1) transition rule above, so they win at equal weight. */
+body[data-ph-resizing] .history-flyout,
+body[data-ph-resizing] .assistant-grid{ transition:none; }
 
 @media (prefers-reduced-motion: reduce){
   /* Must be re-declared here: motion.css's 1ms rule for `.history-flyout
@@ -4956,14 +5057,13 @@ body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ 
 }
 .message:has(> .pm-lens-mark[data-lens-state="muted"]):hover > .message-surface { opacity: .72; }
 
-/* Focused: protected and elevated. A soft field plus a ring, with negative
-   margins compensating the padding so neighbouring turns never shift. */
+/* Focused: protected and elevated without shifting neighbours. Outline and
+   tint only — padding/margin compensation previously over-shrunk user turns
+   and re-wrapped assistant turns (L1). */
 .message:has(> .pm-lens-mark[data-lens-state="focused"]) > .message-surface {
   background: color-mix(in srgb, var(--accent) 9%, var(--surface));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 34%, transparent);
   border-radius: 12px;
-  padding: 9px 11px;
-  margin: -9px -11px;
 }
 
 /* Rehydrated sources: visibly back from a summary rather than ordinary turns. */
@@ -6413,8 +6513,10 @@ div.qs-step-body{ cursor:default; }
 .qs-split-body{
   display:flex; align-items:stretch; min-height:0; flex:1 1 auto;
 }
-.qs-split-main{ flex:1 1 60%; min-width:0; display:flex; flex-direction:column; padding:11px 11px 0; }
-.qs-split-main .qs-actions{ padding-left:0; padding-right:0; margin-top:auto; }
+.qs-split-main{ flex:1 1 60%; min-width:0; min-height:0; display:flex; flex-direction:column; padding:11px 11px 0; }
+/* Scroll the prompt/answers; keep the primary action row pinned in the host. */
+.qs-split-main > .qs-split-main-scroll{ flex:1 1 auto; min-height:0; overflow:auto; overscroll-behavior:contain; }
+.qs-split-main .qs-actions{ padding-left:0; padding-right:0; margin-top:0; flex:0 0 auto; }
 /* Measured, not guessed: `.decision-host` is 238px…916px across the real
    viewport x editor-split matrix (10 widths x 3 splits, see qs_width.mjs), and
    916 is reached only with the editor dragged to 30%. A fixed 300px aside would
@@ -6439,9 +6541,16 @@ div.qs-step-body{ cursor:default; }
    cannot see.  Nothing here re-declares .decision-evidence / .qs-evidence.
    ========================================================================== */
 @container qsHost (max-width: 400px){
-  .qs-split-body{ flex-direction:column; }
-  .qs-split-aside{ flex:0 0 auto; border-left:0; border-top:1px solid var(--border); }
-  .qs-split-main{ padding-bottom:0; }
+  /* Main (question + pinned actions) keeps the host budget; aside becomes a
+     short scrollable peek so it cannot starve the question the way
+     flex:0 0 auto did (D2/D3). */
+  .qs-split-body{ flex-direction:column; min-height:0; flex:1 1 auto; }
+  .qs-split-main{ flex:1 1 auto; min-height:180px; padding-bottom:0; }
+  .qs-split-main > .qs-split-main-scroll{ flex:1 1 auto; min-height:100px; }
+  .qs-split-aside{
+    flex:0 0 auto; max-height:72px; min-height:0; overflow:auto;
+    border-left:0; border-top:1px solid var(--border);
+  }
   .qs-inspector{ width:100%; }
   .qs-summary-row{ grid-template-columns:1fr; gap:2px; }
   .qs-dl-row{ grid-template-columns:1fr; gap:1px; }
@@ -6468,7 +6577,8 @@ div.qs-step-body{ cursor:default; }
    ========================================================================== */
 @media (prefers-reduced-motion: reduce){
   .qs-progress-track.is-scan i{ animation:none; }
-  .qs-card, .qs-sheet, .qs-inspector, .qs-morph-field, .qs-fold, .qs-step-live, .qs-stack-live{
+  .qs-card, .qs-sheet, .qs-inspector, .qs-morph-field, .qs-fold, .qs-step-live, .qs-stack-live,
+  .decision-surface{
     animation-duration:1ms;
   }
   .qs-stack-peek:hover{ transform:none; }
@@ -9357,17 +9467,50 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
 
   /* Animate a container between its current height and whatever it
      becomes after `mutate` -- the expand/collapse the reference uses
-     when a past step is re-opened. */
+     when a past step is re-opened.
+
+     flipHeights() in app.js is the CANONICAL implementation and the one that
+     documents the defect this shares: `to` is read at t=0 of any CSS
+     transition `mutate` just started, and a transition still presents its OLD
+     value at t=0, so the target can be wrong by a whole grid track and in the
+     wrong direction (handoff/w6/flip/e1-collapse.json). No call site reaches
+     this copy today, but a divergent copy of a known bug is a trap for
+     whoever finds it first, so it gets the deferred clock and the
+     cancel-on-content-movement guard.
+
+     It deliberately does NOT carry app.js's pre-emptive hold: that needs
+     layoutTransitionPending(), which lives inside app.js's IIFE, and the hold
+     only earns its complexity on a subject that is re-entered 24 different
+     ways. If this function ever acquires a real caller, port the hold too --
+     without it, a cancel hands straight back to layout and can flinch. */
   function flipHeight(el, mutate, opts = {}) {
     if (!el) { mutate(); return; }
     const from = el.getBoundingClientRect().height;
     mutate();
     const to = el.getBoundingClientRect().height;
     if (Math.abs(from - to) < 1) return;
-    el.animate(
+    const a = el.animate(
       [{ height: `${from}px` }, { height: `${to}px` }],
       { duration: opts.duration ?? 320, easing: opts.easing ?? 'cubic-bezier(.22,.80,.28,1)' }
     );
+    /* Clock starts next frame: this one still has to paint whatever `mutate`
+       wrote, and a paused animation still applies its effect, so the box holds
+       at `from` instead of showing a third of the travel on its first frame. */
+    a.pause();
+    requestAnimationFrame(() => { if (el.isConnected) a.play(); else a.cancel(); });
+    /* Sum the children, not the parent: the parent's height is what this
+       animation is currently faking, the children are content-sized. */
+    const content = () => { let s = 0; for (const c of el.children) s += c.offsetHeight; return s; };
+    const at0 = content();
+    const tick = () => {
+      const st = a.playState;
+      if (st !== 'running' && st !== 'paused') return;
+      if (!el.isConnected) { a.cancel(); return; }
+      if (Math.abs(content() - at0) > 1) { a.cancel(); return; }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    return a;
   }
 
   const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -12128,8 +12271,12 @@ window.PM56_EXT = window.PM56_EXT || {
   var ui = { openPhase:null, editing:false, draft:null, confirmClear:false, showReplans:false,
              showHistory:false, showSubgoals:false, showBlocker:false, tab:'phases' };
   var settled = Object.create(null);   /* phase ids whose completion wipe has already played */
+  var arrived = Object.create(null);   /* phase ids that have already mounted once */
+  var arrivePending = null;
   function seedSettled(){
     settled = Object.create(null);
+    arrived = Object.create(null);
+    arrivePending = null;
     (D.goal && D.goal.phases || []).forEach(function(p){ if(p.status==='completed') settled[p.id]=true; });
   }
   seedSettled();
@@ -12309,8 +12456,36 @@ window.PM56_EXT = window.PM56_EXT || {
   var wipeTimers = Object.create(null);
   function wipeFlag(p){
     if(p.status!=='completed' || settled[p.id]) return '';
-    if(!wipeTimers[p.id]) wipeTimers[p.id]=setTimeout(function(){ settled[p.id]=true; delete wipeTimers[p.id]; },420);
+    /* 520ms, not 420: the row wash this flag also carries
+       (goal-phase-complete) is 520ms, so a render landing in the 100ms gap
+       used to tear the wash off ~85% of the way through and snap the
+       background back to rest. This is NOT what stops the row replaying its
+       entrance -- that guard is arriveFlag() below, and it is permanent.
+       Lengthening a finite guard only ever moves a defect later. */
+    if(!wipeTimers[p.id]) wipeTimers[p.id]=setTimeout(function(){ settled[p.id]=true; delete wipeTimers[p.id]; },520);
     return ' data-wipe="1"';
+  }
+
+  /* G1's actual guard. The entrance is emitted for the FIRST mount of a phase
+     id and never again, so nothing a later render does -- dropping data-wipe,
+     changing the row's status key, re-inserting the row during a reorder --
+     can hand a settled row a fresh entrance to play.
+     The commit is deferred to the end of the task rather than done inline
+     because ONE task can legitimately paint the same phase list twice (the
+     Activity panel and the goal editor both show it) and both copies must
+     get the entrance; marking inline would give it to whichever rendered
+     first and leave the other snapping in. */
+  function arriveFlag(p){
+    if(arrived[p.id]) return '';
+    if(!arrivePending){
+      arrivePending = [];
+      setTimeout(function(){
+        var list = arrivePending || []; arrivePending = null;
+        for(var i=0;i<list.length;i++) arrived[list[i]] = true;
+      },0);
+    }
+    arrivePending.push(p.id);
+    return ' data-arrive="1"';
   }
 
   /* =====================================================================
@@ -12413,7 +12588,8 @@ window.PM56_EXT = window.PM56_EXT || {
       var st=p.status;
       var pre = anchor[p.id] ? replanMarker(ctx,anchor[p.id]) : '';
       return pre + '<li class="goal-phase '+st.replace('_','-')+(isCur?' is-current':'')+(open?' is-open':'')+'"'
-        + wipeFlag(p)
+        + wipeFlag(p) + arriveFlag(p)
+        + ' data-flip-move'
         + ' data-k="ph:'+ctx.esc(p.id)+':'+ctx.esc(st)+':'+(isCur?'1':'0')+'">'
         + '<button class="goal-phase-row" data-action="goal-phase" data-id="'+ctx.esc(p.id)+'"'
         + ' aria-expanded="'+(open?'true':'false')+'"'
@@ -12797,8 +12973,13 @@ window.PM56_EXT = window.PM56_EXT || {
     syncProgress();
   }
 
+  function paint(ctx){
+    if(typeof ctx.renderGoals==='function') ctx.renderGoals();
+    else ctx.renderApp();
+  }
+
   var ACTIONS = {
-    'goal-phase': function(ctx,btn){ var id=btn.dataset.id; ui.openPhase = (ui.openPhase===id)?null:id; ctx.renderApp(); },
+    'goal-phase': function(ctx,btn){ var id=btn.dataset.id; ui.openPhase = (ui.openPhase===id)?null:id; paint(ctx); },
 
     'goal-toggle': function(ctx,btn){
       var v=btn.dataset.value;
@@ -12806,10 +12987,10 @@ window.PM56_EXT = window.PM56_EXT || {
       else if(v==='history') ui.showHistory=!ui.showHistory;
       else if(v==='subgoals') ui.showSubgoals=!ui.showSubgoals;
       else if(v==='blocker') ui.showBlocker=!ui.showBlocker;
-      ctx.renderApp();
+      paint(ctx);
     },
 
-    'goal-agent-step': function(ctx){ agentStep(ctx); ctx.renderApp(); },
+    'goal-agent-step': function(ctx){ agentStep(ctx); paint(ctx); },
 
     'goal-unblock': function(ctx){
       var g=goal(); if(!g) return;
@@ -12822,7 +13003,7 @@ window.PM56_EXT = window.PM56_EXT || {
       pushHistory('resumed','Blocker cleared','CHG-4471 approved by a schema owner.'+(ph?' The pointer moved back to '+ph.title+' — a goal pointer legitimately moves backward.':''));
       syncProgress();
       ctx.toast('Blocker cleared',(ph?ph.title+' resumed. ':'')+'The pointer moved back — do not drive a monotonic stepper off currentPhaseId.');
-      ctx.renderApp();
+      paint(ctx);
     },
 
     /* User authority: only a user may re-open, reorder or edit a phase. */
@@ -12833,7 +13014,7 @@ window.PM56_EXT = window.PM56_EXT || {
       setCurrent(p.id);
       pushHistory('phase',p.title+' re-opened','Re-opened by the user.'+(n?' '+n+' evidence item'+(n===1?'':'s')+' detached — evidence belongs only to a completed phase.':''));
       syncProgress(); ctx.toast('Phase re-opened',p.title+' is in progress again. Only a user can do this; the agent may only push a phase forward.');
-      ctx.renderApp();
+      paint(ctx);
     },
     'goal-move-phase': function(ctx,btn){
       var g=goal(); if(!g) return;
@@ -12843,7 +13024,7 @@ window.PM56_EXT = window.PM56_EXT || {
       if(i<0||j<0||j>=g.phases.length) return;
       var t=g.phases[i]; g.phases[i]=g.phases[j]; g.phases[j]=t;
       pushHistory('replan','Phases reordered','“'+t.title+'” moved '+(dir<0?'earlier':'later')+' by the user. Numbering is computed at render time, so the list never prints 3/1/2.');
-      ctx.renderApp();
+      paint(ctx);
     },
     'goal-raise-budget': function(ctx){
       var g=goal(); if(!g||!g.budget) return;
@@ -12851,7 +13032,7 @@ window.PM56_EXT = window.PM56_EXT || {
       if(g.status==='budget_limited'){ g.status='active'; g.statusSince=now(); }
       pushHistory('budget','Budget raised','Goal budget raised to 150K tokens by the user. One budget covers the whole goal, never a phase.');
       ctx.toast('Budget raised','150K tokens for the whole goal.');
-      ctx.renderApp();
+      paint(ctx);
     },
 
     'edit-goal': function(ctx){
@@ -13000,6 +13181,8 @@ window.PM56_EXT = window.PM56_EXT || {
   });
 
   window.PM56_GOAL.render = { section:renderSection, compact:renderCompact, editor:renderEditor };
+  window.PM56_GOAL.chip = headerChip;
+  window.PM56_GOAL.sidebar = sidebarSummary;
 })();
 
 /* context.js — feature module.  OWNER: Wave 3 — Context agent (item 6: u11 compact menu, drawer gaps, legible growth chart)
@@ -13836,13 +14019,61 @@ window.PM56_EXT = window.PM56_EXT || {
     s.setProperty('--ph-pane', r.width + 'px');
   }
 
+  /* ---- the pinned drawer's width ----------------------------------------
+     The JS clamp and history.css's min()/max() are deliberately the SAME two
+     clamps stated twice, in the two places that can each be reached without the
+     other: a pointer drag never touches CSS, and an editor-resizer drag or a
+     window resize never touches JS. 170/360 are app.js:1928's own numbers for
+     the deleted `.history-panel` column — kept identical so the restored handle
+     has the range the original had, not a new one. */
+  var W_MIN = 170, W_MAX = 360, W_PANE = 0.42;
+  function paneWidth(){
+    var pane = document.querySelector('.assistant-pane');
+    return pane ? pane.getBoundingClientRect().width : window.innerWidth;
+  }
+  function clampWidth(px){
+    var cap = Math.min(W_MAX, paneWidth() * W_PANE);
+    if(!(cap > W_MIN)) cap = W_MIN;          /* a very narrow pane: floor wins */
+    return Math.round(Math.max(W_MIN, Math.min(cap, Math.round(px))));
+  }
+  /* THE WIDTH IS MODULE STATE, exactly like `pinned` above, and for the same
+     reason. It is deliberately NOT app.js's `state.historyWidth`: that field
+     defaults to 224 (app.js:50) and is written to prefs on every savePrefs, so
+     there is no way to tell "the user dragged to 224" from "nobody has ever
+     touched it". Until someone actually drags, nothing is published and
+     history.css falls back to --ph-pin-w — so the shipped default stays exactly
+     the 200px this module declared, and only a deliberate drag changes it.
+     (`pm56-history-pin` already sets this precedent, including surviving Reset
+     all: see the note in normalise().) */
+  var W_KEY = 'pm56-history-w';
+  var userW = null;
+  function storeW(v){ try{ if(v==null) return window.localStorage.getItem(W_KEY); window.localStorage.setItem(W_KEY, String(v)); }catch(e){} return null; }
+  /* The fallback is read back from --ph-pin-w rather than repeated as a literal,
+     so history.css stays the single place the default pinned width is stated.
+     A custom-property read off documentElement is a style read, not a layout
+     read, so it is safe to call from inside a render. */
+  var pinDefault = null;
+  function pinDefaultW(){
+    if(pinDefault == null){
+      var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-pin-w'));
+      pinDefault = v > 0 ? Math.round(v) : 200;
+    }
+    return pinDefault;
+  }
+  function widthNow(){ return userW == null ? pinDefaultW() : userW; }
+  function setWidth(px){
+    userW = clampWidth(px);
+    document.documentElement.style.setProperty('--ph-user-w', userW + 'px');
+    storeW(userW);
+    return userW;
+  }
+
   /* Any code path that is not this module can still set historyMode to
      'pinned' — app.js does it in `show-archived` (overridden below) and in the
      "Archived threads" demo trigger, which is not an interceptable action.
      Rather than chase each one, every render normalises: 'pinned' is folded
      back into floating + pinned-drawer, which is the same thing on screen. */
-  function normalise(){
-    var st = api && S();
+  function normalise(st){
     if(!st || st.historyMode !== 'pinned') return false;
     st.historyMode = 'floating';
     pinned = true; store('1');
@@ -13857,7 +14088,8 @@ window.PM56_EXT = window.PM56_EXT || {
     syncQueued = true;
     requestAnimationFrame(function(){
       syncQueued = false;
-      if(normalise()){ api.renderApp(); return; }
+      var st = api && S();               /* read the state ONCE per heartbeat */
+      if(normalise(st)){ api.renderApp(); return; }
       sync();
     });
   }
@@ -13886,7 +14118,31 @@ window.PM56_EXT = window.PM56_EXT || {
          + ' title="' + (pinned ? 'Unpin — float the drawer over the chat again' : 'Pin left — reserve a gutter so the transcript stays usable') + '">'
          + ctx.icon(pinned ? 'unpin' : 'pin', 12)
          + '<span>' + (pinned ? 'Unpin' : 'Pin left') + '</span></button>'
-         + '</div>';
+         + '</div>'
+         /* THE RESIZE HANDLE the pinned grid column had and the drawer lost.
+            Emitted here because historyChrome is the only append slot inside
+            the flyout; it is position:absolute so it is not a flex item and
+            its place in the child order does not matter.
+
+            `data-ph-resize`, NOT app.js's `data-resize`: app.js:1903 would pick
+            a `[data-resize]` up and run its own drag, which writes
+            `--history-w` (dead here, see history.css) and, more to the point,
+            would leave the 240ms width transition running under the pointer.
+            The drag below is this module's, so it can suppress that and keep
+            width and gutter on the same frame.
+
+            data-k so pmPatch patches the same node across the 2s work tick
+            instead of remounting it — a remount mid-drag would drop the pointer
+            capture. role="separator" + aria-orientation + the three aria-value*
+            attributes are the window-splitter pattern; aria-valuenow is
+            re-emitted by the renderOverlays() at the end of each drag or key
+            press, since nothing renders during a drag. */
+         + '<div class="ph-resize" data-k="phresize" data-ph-resize'
+         + ' role="separator" aria-orientation="vertical" tabindex="0"'
+         + ' aria-valuemin="' + W_MIN + '" aria-valuemax="' + Math.round(Math.min(W_MAX, paneWidth() * W_PANE)) + '"'
+         + ' aria-valuenow="' + clampWidth(widthNow()) + '"'
+         + ' aria-label="Resize the pinned history drawer"'
+         + ' title="Drag to resize the pinned drawer"></div>';
   });
 
   /* ---- open / pin / close ------------------------------------------------ */
@@ -14013,12 +14269,81 @@ window.PM56_EXT = window.PM56_EXT || {
      (opacity 0, pointer-events none), so this cannot fire while pinned; the
      mode test is a second, explicit guard. */
   document.addEventListener('pointerdown', function(e){
+    /* The resize handle is checked FIRST, and in the capture phase, so the
+       stopPropagation() below also keeps app.js's own bubble-phase pointerdown
+       (app.js:1882) out of it. */
+    var h = e.target && e.target.closest && e.target.closest('[data-ph-resize]');
+    if(h){
+      if(mode() !== 'pinned') return;      /* the handle is display:none anyway */
+      var el = document.querySelector('.history-flyout');
+      /* Start from the PAINTED width, not from the stored number: if the 42%
+         pane cap is currently binding, those two differ, and starting from the
+         stored one would make the first pixel of the drag jump. */
+      resizing = { x0:e.clientX, w0: el ? el.getBoundingClientRect().width : widthNow() };
+      document.body.dataset.phResizing = '1';
+      try{ h.setPointerCapture(e.pointerId); }catch(err){}
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
     if(mode() !== 'open') return;
     var pane = document.querySelector('.assistant-pane');
     if(!pane || e.target !== pane) return;
     e.stopPropagation();
     e.preventDefault();
     closeDrawer(true);
+  }, true);
+
+  /* ---- the drag ----------------------------------------------------------
+     Nothing renders during the drag: the width and the gutter are both driven
+     by one custom property on documentElement, which is outside #pmRoot and
+     #pmOverlayRoot and therefore survives pmPatch. A renderOverlays() per
+     pointermove would be 4ms of work sixty times a second to change one number
+     that is not in the markup. */
+  var resizing = null;
+  document.addEventListener('pointermove', function(e){
+    if(!resizing) return;
+    setWidth(resizing.w0 + (e.clientX - resizing.x0));
+  }, true);
+  function endResize(){
+    if(!resizing) return;
+    resizing = null;
+    delete document.body.dataset.phResizing;
+    if(!api) return;
+    settleWidth();
+  }
+  document.addEventListener('pointerup', endResize, true);
+  document.addEventListener('pointercancel', endResize, true);
+
+  /* One render at the END of an interaction, never during it: renderOverlays
+     re-emits aria-valuenow from state. pmPatch matches the handle by data-k and
+     patches it in place, so focus normally survives — the re-focus is
+     belt-and-braces for the case where a sibling slot changes shape and the
+     node really is rebuilt. */
+  function settleWidth(){
+    var had = document.activeElement && document.activeElement.hasAttribute
+              && document.activeElement.hasAttribute('data-ph-resize');
+    api.renderOverlays();
+    if(!had) return;
+    var h = document.querySelector('[data-ph-resize]');
+    if(h && document.activeElement !== h) h.focus();
+  }
+  /* Keyboard: role="separator" with tabindex is the window-splitter pattern and
+     it is only honest if the arrows actually move it. */
+  document.addEventListener('keydown', function(e){
+    var h = e.target && e.target.closest && e.target.closest('[data-ph-resize]');
+    if(!h || mode() !== 'pinned') return;
+    var cap = Math.min(W_MAX, paneWidth() * W_PANE);
+    var step = e.shiftKey ? 40 : 12, cur = widthNow(), next = null;
+    if(e.key === 'ArrowLeft')  next = cur - step;
+    else if(e.key === 'ArrowRight') next = cur + step;
+    else if(e.key === 'Home')  next = W_MIN;
+    else if(e.key === 'End')   next = cap;
+    if(next === null) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setWidth(next);
+    if(api) settleWidth();
   }, true);
 
   window.addEventListener('resize', sync);
@@ -14101,6 +14426,8 @@ window.PM56_EXT = window.PM56_EXT || {
     }
     store(pinned ? '1' : '0');
     setMode(st.historyMode === 'floating' ? (pinned ? 'pinned' : 'open') : 'closed');
+    var savedW = storeW(null);
+    if(savedW != null && isFinite(parseFloat(savedW))) setWidth(parseFloat(savedW));
     sync();
     api.renderApp();
     requestAnimationFrame(sync);
@@ -18453,7 +18780,8 @@ window.PM56_EXT = window.PM56_EXT || {
     return '<section class="decision-surface qs qs-split" data-qs="7" data-k="qs:7">'
       + head(ctx, m, 'qs-split-head')
       + '<div class="qs-split-body">'
-      + '<div class="qs-split-main qs-scroll">'
+      + '<div class="qs-split-main">'
+      + '<div class="qs-split-main-scroll">'
       + progressBar(ctx, m)
       + promptHtml(ctx, m)
       + inputHtml(ctx, m, 'grid')
@@ -18464,6 +18792,7 @@ window.PM56_EXT = window.PM56_EXT || {
          queue of other flows is the thing waiting behind this one. */
       + (m.type === 'question' && m.queue.length
         ? '<div class="qs-queue qs-queue-split" data-k="qs-queue">' + queueRows(ctx, m, 'split') + '</div>' : '')
+      + '</div>'
       + actions(ctx, m, 'qs-actions-end')
       + '</div>'
       + '<aside class="qs-split-aside qs-scroll" data-k="qs-aside">' + evidenceHtml(ctx, m) + '</aside>'
@@ -18765,7 +19094,7 @@ window.PM56_EXT = window.PM56_EXT || {
       activeThread, selectedModel, statusLabel, activityDefs, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
       /* mutators -- each triggers the render the change actually needs */
-      renderApp, renderOverlays, toast, addReceipt, openEditor, closeEditor,
+      renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
       openDialog, closeDialog, copyText, savePrefs, extRender
     }, extra);
@@ -19531,8 +19860,52 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(id==='changes') return D.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" style="color:var(--positive)">+${c.add} <i style="color:var(--danger)">−${c.del}</i></span></button>`).join('');
     return D.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px;color:${a.status==='error'?'var(--danger)':a.status==='stale'?'var(--warning)':'var(--accent)'}">${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
   }
+  /* D1: .decision-host.empty transitions max-height, but only if children stay
+     mounted for the collapse. Snapshot the last surface, render it under .empty,
+     then clear after transitionend (or a 600ms fallback). */
+  let decisionExit=null;
+  function finishDecisionExit(){
+    if(!decisionExit) return;
+    if(decisionExit.timer) clearTimeout(decisionExit.timer);
+    decisionExit=null;
+    renderApp();
+  }
+  function armDecisionExitClear(){
+    requestAnimationFrame(()=>{
+      const host=document.querySelector('.decision-host.empty');
+      if(!host || !decisionExit){ finishDecisionExit(); return; }
+      const done=()=>{
+        host.removeEventListener('transitionend', onEnd);
+        finishDecisionExit();
+      };
+      const onEnd=(e)=>{
+        if(e.target!==host || e.propertyName!=='max-height') return;
+        done();
+      };
+      host.addEventListener('transitionend', onEnd);
+      if(decisionExit.timer) clearTimeout(decisionExit.timer);
+      decisionExit.timer=setTimeout(done, 600);
+    });
+  }
+  function closeDecision(thenRender=true){
+    const host=document.querySelector('.decision-host:not(.empty)');
+    const html=host?host.innerHTML:'';
+    if(decisionExit?.timer) clearTimeout(decisionExit.timer);
+    state.decision=null;
+    if(html){
+      decisionExit={html, timer:null};
+      if(thenRender){ renderApp(); armDecisionExitClear(); }
+      else armDecisionExitClear();
+    } else {
+      decisionExit=null;
+      if(thenRender) renderApp();
+    }
+  }
   function renderDecisionHost(){
-    if(!state.decision) return `<div class="decision-host empty" data-variant="${state.variants[6]}"></div>`;
+    if(decisionExit){
+      return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}">${decisionExit.html}</div>`;
+    }
+    if(!state.decision) return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}"></div>`;
     const type=state.decision.type;
     let body='';
     if(type==='question') body=renderQuestionDecision();
@@ -19542,7 +19915,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(type==='permission') body=renderPermissionDecision();
     else if(type==='conflict') body=renderConflictDecision();
     body=extReplace('questionSurface',{type,decision:state.decision,variant:state.variants[6]},body);
-    return `<div class="decision-host" data-variant="${state.variants[6]}">${body}</div>`;
+    return `<div class="decision-host" data-k="decision-host" data-variant="${state.variants[6]}">${body}</div>`;
   }
 
   function renderPreparingDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('sparkles',13)}</span><strong>Preparing questions…</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="work-progress"><i style="width:72%;animation:activity-scan 1.6s linear infinite"></i></div><p style="color:var(--muted);font-size:10px;margin:9px 0 0">Resolving what is already known so the assistant asks only material questions.</p></div></section>`; }
@@ -19704,6 +20077,63 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     renderOverlays();
   }
 
+  /* G2: goal mutations project into a handful of in-tree islands. Patch those
+     instead of regenerating the whole shell (bare renderApp ~69ms). Falls back
+     to a full render when an expected keyed host is missing. */
+  function renderGoalSurfaces(){
+    const G=window.PM56_GOAL;
+    if(!G||!G.render){ renderApp(); return; }
+    const ctx=extCtx();
+    const positions=captureScroll();
+    const moveTargets=[...document.querySelectorAll('[data-flip-move]')];
+    const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
+    let patched=0;
+    const patchKey=(html)=>{
+      if(!html||!String(html).trim()) return false;
+      const tpl=document.createElement('template');
+      tpl.innerHTML=String(html).trim();
+      const src=tpl.content.firstElementChild;
+      if(!src) return false;
+      const k=src.getAttribute('data-k');
+      if(!k) return false;
+      const live=document.querySelector(`[data-k="${CSS.escape(k)}"]`);
+      if(!live) return false;
+      pmPatchNode(live,src);
+      patched++;
+      return true;
+    };
+    const sectionHost=document.querySelector('[data-domain-section="goal"] .activity-section-body');
+    if(sectionHost){
+      const html=extReplace('goalSection',{},'');
+      if(html){ pmPatch(sectionHost, html); patched++; }
+      else { sectionHost.innerHTML=''; patched++; }
+    }
+    if(state.activeEditor==='goal-artifact'){
+      const ed=extReplace('goalEditor',{},'');
+      if(ed && !patchKey(ed)){ renderApp(); return; }
+    }
+    if(typeof G.chip==='function'){
+      const chip=G.chip(ctx);
+      if(chip){ if(!patchKey(chip) && document.querySelector('.chat-header')){ renderApp(); return; } }
+      else {
+        const dead=document.querySelector('[data-k="goalheadchip"]');
+        if(dead) dead.remove();
+      }
+    }
+    if(typeof G.sidebar==='function'){
+      const side=G.sidebar(ctx);
+      if(side){ if(!patchKey(side) && document.querySelector('.history-panel')){ renderApp(); return; } }
+      else {
+        const dead=document.querySelector('[data-k="goalsidebar"]');
+        if(dead) dead.remove();
+      }
+    }
+    if(patched===0){ renderApp(); return; }
+    flipMoves(moveTargets, moveBefore);
+    restoreScroll(positions);
+    renderOverlays();
+  }
+
   /* height:auto is not animatable, so a card that gains a receipt or an
      agent list used to snap open. Measure before the patch, animate the
      delta after it, and clip for the duration so growing content does not
@@ -19747,6 +20177,33 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
 
+  /* A FLIP is only honest if the target it measured is where the box actually
+     ends up, and here it often was not. flipHeights runs synchronously one line
+     after the pmPatch, so `h1` is read at t=0 of whatever CSS transitions that
+     patch just started -- and by spec a transition still presents its OLD value
+     at t=0. The Orbit take flips the panel track 0fr <-> 1fr over 420ms
+     (orbit.css:206-213, row-axis form at orbit.css:570-579), so the rect came
+     back WITHOUT the panel's 188-260px: on an expand h1 was 40px SMALLER than
+     h0 and on a collapse 40px LARGER (that residual is the .orbit-caption,
+     which exists only while collapsed). The card therefore travelled backwards
+     for 320ms and then handed the box back to layout in a single frame --
+     +231.4px on expand, -271.0px on collapse, measured at t=338ms.
+     Evidence: handoff/w6/flip/e1-expand.json, e1-collapse.json; killing just
+     `.orbit-layout`'s transition at runtime drops that frame to +29.9px and
+     makes h1 read the correct 384.06px (e4-orbit-transition-none.json), while
+     killing `.working-body`'s own min-height transition changes nothing
+     (e4-workingbody-transition-none.json) -- so this is the grid track, not
+     styles.css:192.
+
+     Deferring the measurement by a frame is not a fix: one rAF later the panel
+     has travelled ~1px of 200, so the reading is just as wrong. Instead, watch
+     the CONTENT while the FLIP plays. If the children's own heights move at all
+     after the patch, `h1` described a layout that no longer exists, and the
+     honest thing is to get out of the way: cancel, un-clip, and let the CSS
+     transition that is already running own the height. That is take-agnostic --
+     it keys off the FLIP subject's own children, not off any take's markup --
+     and it degrades to the motion Orbit already does well, since the panel
+     track grows smoothly on its own. */
   function flipHeights(targets, before){
     if(window.PM56_MOTION && window.PM56_MOTION.reduced()) return;
     for(const el of targets){
@@ -19758,14 +20215,192 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       el.style.overflow='hidden';
       const a=el.animate([{height:`${h0}px`},{height:`${h1}px`}],
         {duration:320, easing:'cubic-bezier(.22,.80,.28,1)'});
-      a.finished.then(()=>{el.style.overflow=prevOverflow;}, ()=>{el.style.overflow=prevOverflow;});
+      /* Start the clock on the NEXT frame, not this one. This frame still has
+         to lay out and paint everything pmPatch just wrote, and on a card that
+         gains the whole work history that costs 33-50ms -- during which the
+         animation clock was already running, so the FIRST frame the user
+         actually saw was 36-64% of the way through a 547px travel: a 282-349px
+         jump on every one of the 24 takes, measured identically before and
+         after the target fix above (handoff/w6/flip/measure-baseline.json vs
+         measure-fixed.json). A paused animation still applies its effect, so
+         holding at h0 for that one frame shows the old height rather than a
+         gap, and the travel afterwards is the plain 19%-per-frame first step
+         the easing is supposed to give. */
+      a.pause();
+      const release=()=>{el.style.overflow=prevOverflow;};
+      /* A CANCEL is the guard's business, not a release: it hands over to the
+         hold, which is still clipping. Only an honest finish releases here. */
+      a.finished.then(release, ()=>{});
+      guardFlip(el, a, h0, release, layoutTransitionPending(el));
     }
   }
 
-  function captureScroll(){
-    const out={}; document.querySelectorAll('[data-scroll-key]').forEach(el=>out[el.dataset.scrollKey]=el.scrollTop); return out;
+  /* Properties whose transition, anywhere in this subtree, could change this
+     box's height. The `spin 24s` ring, `orbit-pulse` and `.lane-pulse` are
+     infinite CSS ANIMATIONS, and they are excluded by the CSSTransition test
+     rather than by this list -- getAnimations({subtree:true}) returns them all
+     and a naive scan would treat every Orbit card as permanently suspect. */
+  const FLIP_LAYOUT_PROPS=new Set(['height','min-height','max-height','flex-basis',
+    'grid-template-rows','grid-template-columns','gap','row-gap','column-gap',
+    'padding-top','padding-bottom']);
+  function layoutTransitionPending(el){
+    let list; try{ list=el.getAnimations({subtree:true}); }catch(e){ return false; }
+    for(const an of list)
+      if(an.constructor.name==='CSSTransition' && an.playState==='running'
+         && FLIP_LAYOUT_PROPS.has(an.transitionProperty)) return true;
+    return false;
   }
-  function restoreScroll(pos){ requestAnimationFrame(()=>document.querySelectorAll('[data-scroll-key]').forEach(el=>{if(pos&&pos[el.dataset.scrollKey]!=null)el.scrollTop=pos[el.dataset.scrollKey]})); }
+
+  /* The guard for the above, and the part that keeps the correction itself
+     from being a second lurch.
+
+     It watches the CONTENT, summing the children's offsetHeight rather than
+     reading the parent's: the parent's height is exactly what the WAAPI
+     animation is currently faking, while the children are content-sized and
+     immune to it. Transform-immune too, so an entrance that slides or scales a
+     row does not register. The comparison is against the sum captured at FLIP
+     time, not the previous frame, so a slow 420ms grid track trips it within a
+     frame or two instead of creeping under a per-frame threshold.
+
+     Cancelling alone is not enough, twice over.
+
+     First, on an Orbit expand the caption disappears the instant the patch
+     lands while the panel needs 420ms to arrive, so the honest live height is
+     30px BELOW where the card started -- hand the box straight back to layout
+     and it visibly flinches downward before growing. So we HOLD it at h0 until
+     layout catches up, and only then let go. The hold is a second WAAPI
+     animation pinned at h0; to read the true live height underneath it we
+     cancel it, measure, and re-pin inside the SAME rAF callback, which is
+     before style and paint, so no unpinned frame is ever rendered and the
+     reading needs no arithmetic guess about padding.
+
+     Second, detecting the divergence only AFTER it appears always leaves one
+     frame of exposure, and measurement caught it: in 2 of 12 recorded expands
+     the grid transition's first content movement landed one frame later than
+     the FLIP's first moving frame, and the card rendered a single 7.5px dip
+     before the guard could react (handoff/w6/flip/blip-diagnosis.json). So when
+     a layout-affecting transition is already running at FLIP time we start
+     HELD rather than playing, which has zero exposure by construction. If the
+     content then never moves, the target was honest after all -- a descendant
+     transition that cannot reach this box, such as take 12's phase register
+     inside its fixed-height row (variants-b.css:99) -- and the real FLIP plays,
+     five frames late and none the worse. That grace is 5 rather than 3 because
+     the slow runs above only moved on the third frame. */
+  function guardFlip(el, a, h0, release, suspect){
+    const content=()=>{let s=0; for(const c of el.children) s+=c.offsetHeight; return s;};
+    const at0=content();
+    const t0=performance.now();
+    let hold=null, dir=0, grace=0;
+    const pin=()=>el.animate([{height:`${h0}px`},{height:`${h0}px`}],{duration:800});
+    /* A PAUSED animation still applies its effect, so `a` has to be cancelled
+       before the live height can be read -- otherwise every measurement comes
+       back as h0 and the guard concludes layout has caught up on its very
+       first frame. That mistake froze the Orbit card at 224.77px forever
+       (handoff/w6/flip/t1-orbit-repeat.json, before this line existed). */
+    const letGo=()=>{ if(hold){hold.cancel(); hold=null;} if(a.playState==='paused') a.cancel(); release(); };
+    if(suspect) hold=pin();                       // held before this frame paints
+    const tick=()=>{
+      if(!el.isConnected){ a.cancel(); letGo(); return; }
+      const moved=content()-at0;
+      if(hold){
+        if(dir===0 && Math.abs(moved)>1){ dir=moved; a.cancel(); }
+        if(dir!==0){
+          hold.cancel(); hold=null;               // read the truth underneath
+          const live=el.getBoundingClientRect().height;
+          /* 640ms is a hard stop: the longest layout transition the concept
+             runs is 520ms (--spring), so anything still moving past that is
+             not a handover this FLIP can wait out. */
+          if((dir>0 ? live>=h0-0.5 : live<=h0+0.5) || performance.now()-t0>640){ letGo(); return; }
+          hold=pin();
+        } else if(++grace>5){
+          hold.cancel(); hold=null; a.play();
+        }
+        requestAnimationFrame(tick); return;
+      }
+      const st=a.playState;
+      if(st==='finished'){ letGo(); return; }
+      if(st!=='running' && st!=='paused') return; // cancelled by someone else
+      if(Math.abs(moved)>1){ dir=moved; a.cancel(); hold=pin(); requestAnimationFrame(tick); return; }
+      if(st==='paused') a.play();                 // clock starts on the SECOND frame
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  /* --- scroll custody (T2) ---------------------------------------------
+     `.transcript` carries scroll-behavior:smooth (styles.css:153), so every
+     programmatic scrollTop write ANIMATES. captureScroll/restoreScroll run
+     around every patch, and a capture taken while such an animation is in
+     flight records a position the scroller is only passing THROUGH; writing
+     that back on the next frame cancels the animation and parks the scroller
+     there. Measured at boot: 0 -> 847 -> 116 of 2892 -- the transcript came up
+     near the top and stayed there permanently.
+     So a commanded scroll registers an INTENT, and capture reports the intent
+     instead of the live offset until the scroller arrives or the reader takes
+     over. 'end' is a sentinel rather than a number so it stays correct even
+     when the patch that ran in between grew the content.
+     This is deliberately robust to a scroll still in flight rather than being
+     a race the fast path happens to win: the same CSS property has now broken
+     two measuring instruments on this project as well as this feature. */
+  const scrollIntents=new Map();
+  /* A reader who scrolls owns the scroller. keydown is deliberately NOT in
+     this list: typing in the composer is not scrolling, and Ctrl+Enter would
+     cancel the very intent the send it triggered had just registered. */
+  for(const ev of ['wheel','touchstart'])
+    document.addEventListener(ev,()=>scrollIntents.clear(),{passive:true,capture:true});
+  function scrollKeyEl(key){ return document.querySelector(`[data-scroll-key="${key}"]`); }
+  function scrollToEnd(key,instant=false){
+    scrollIntents.set(key,{to:'end',at:performance.now()});
+    requestAnimationFrame(()=>{
+      const el=scrollKeyEl(key);
+      if(!el){ scrollIntents.delete(key); return; }
+      if(instant){
+        const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto';
+        el.scrollTop=el.scrollHeight; el.style.scrollBehavior=prev;
+      } else el.scrollTop=el.scrollHeight;
+      const settle=()=>{
+        const cur=scrollIntents.get(key); if(!cur||cur.to!=='end') return;   // reader took over
+        const e2=scrollKeyEl(key);
+        if(!e2){ scrollIntents.delete(key); return; }
+        /* Arrived, or out of time. 1600ms is past the longest smooth scroll
+           this transcript can run; an intent that outlived its own animation
+           would keep dragging the reader back to the bottom. */
+        if(e2.scrollHeight-e2.clientHeight-e2.scrollTop<=2 || performance.now()-cur.at>1600){
+          scrollIntents.delete(key); return;
+        }
+        requestAnimationFrame(settle);
+      };
+      requestAnimationFrame(settle);
+    });
+  }
+  function captureScroll(){
+    const out={};
+    document.querySelectorAll('[data-scroll-key]').forEach(el=>{
+      const k=el.dataset.scrollKey, intent=scrollIntents.get(k);
+      out[k]=intent?intent.to:el.scrollTop;
+    });
+    return out;
+  }
+  function restoreScroll(pos){
+    requestAnimationFrame(()=>document.querySelectorAll('[data-scroll-key]').forEach(el=>{
+      const v=pos?pos[el.dataset.scrollKey]:null;
+      if(v==null) return;
+      if(v==='end'){
+        /* A commanded scroll owns this scroller. Re-aim it at the bottom --
+           the patch may have grown the content out from under the animation --
+           and leave scroll-behavior alone so it keeps travelling smoothly
+           instead of being snapped there. */
+        el.scrollTop=el.scrollHeight; return;
+      }
+      /* A restore re-applies a position; it is never a journey to one. Left
+         smooth, the restore is itself an in-flight scroll for the NEXT render
+         to misread, which is how one stale capture became permanent. */
+      const prev=el.style.scrollBehavior;
+      el.style.scrollBehavior='auto';
+      el.scrollTop=v;
+      el.style.scrollBehavior=prev;
+    }));
+  }
   function renderOverlays(){
     const root=document.getElementById('pmOverlayRoot');
     const parts=[];
@@ -20025,18 +20660,46 @@ recommended path                  migration 0043 + rollback</div></div></section
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
-    state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;
+    state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;decisionExit=null;
+    /* Leaving the thread abandons its work sequence; abandoning it without
+       stopping the clock is the leak described above. state.work.running is
+       cleared with it so the two never disagree -- a card that says "running"
+       with no timer behind it is the next bug report. */
+    stopWorkTimer(); state.work.running=false;
     renderApp(false);
-  window.__PM56_BOOT_OK=true;requestAnimationFrame(()=>{const tr=document.querySelector('[data-scroll-key="transcript"]');if(tr)tr.scrollTop=tr.scrollHeight;});
+  window.__PM56_BOOT_OK=true;scrollTranscriptToEnd();
   }
   function mutateThread(id,fn){const t=state.threads.find(x=>x.id===id);if(t)fn(t);renderApp();}
-  function appendMessage(msg,thread=activeThread()){thread.messages.push(msg);thread.updated='now';renderApp();requestAnimationFrame(()=>{const tr=document.querySelector('[data-scroll-key="transcript"]');if(tr)tr.scrollTop=tr.scrollHeight;});}
+  /* T1. The scroll-to-bottom appendMessage has always done, given a name so
+     handleSend() can use the SAME mechanism rather than a second copy of it.
+     handleSend pushed the user's turn onto the thread and rendered without it,
+     so a sent message landed 2787px below the fold and stayed there --
+     inView:false for 3s and elementFromPoint over its box returning null. */
+  function scrollTranscriptToEnd(instant=false){ scrollToEnd('transcript',instant); }
+  function appendMessage(msg,thread=activeThread()){thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();}
 
   function startWorking(reset=false){
     if(reset||state.work.completed){state.work={step:0,running:false,expanded:false,started:true,completed:false,elapsed:0,openPhase:null};}
     state.work.started=true;state.work.running=true;clearInterval(workTimer);renderApp();
+    armWorkTimer();
+  }
+  /* The ONE place that installs the work sequence's interval, so a caller
+     that wants a live sequence gets a real timer instead of inheriting a
+     leaked one. switchThread() abandoned a running sequence WITHOUT clearing
+     it, while every other path that abandons it -- pauseWorking, stepWorking,
+     completeWorking, resetWorking, globalReset, inspect-work-step,
+     PM56_DEMO.setWorkStep -- already did. So the app re-rendered itself every
+     2s, unprompted, for ~28s in whatever thread the reader had switched to
+     (9 mutations/5s as booted, 0 after pauseWorking()).
+     That is not only noise: every one of those renders runs
+     captureScroll/restoreScroll across a scroller that may be mid
+     smooth-scroll, which is what turned T2 from "a render CAN land inside a
+     scroll" into "a render is GUARANTEED to, every two seconds". */
+  function armWorkTimer(){
+    clearInterval(workTimer);
     workTimer=setInterval(()=>{state.work.elapsed+=2;if(state.work.step<D.workSteps.length-1){state.work.step++;if(state.work.step===D.workSteps.length-1){state.work.completed=true;state.work.running=false;clearInterval(workTimer);}}else{state.work.completed=true;state.work.running=false;clearInterval(workTimer);}renderApp();},2000);
   }
+  function stopWorkTimer(){ clearInterval(workTimer); workTimer=null; }
   function pauseWorking(){state.work.running=false;clearInterval(workTimer);renderApp();}
   function stepWorking(){clearInterval(workTimer);state.work.running=false;state.work.started=true;state.work.elapsed+=3;state.work.step=clamp(state.work.step+1,0,D.workSteps.length-1);state.work.completed=state.work.step===D.workSteps.length-1;renderApp();}
   function completeWorking(){clearInterval(workTimer);state.work.running=false;state.work.started=true;state.work.step=D.workSteps.length-1;state.work.elapsed=Math.max(state.work.elapsed,134);state.work.completed=true;state.work.expanded=false;state.work.openPhase=null;renderApp();}
@@ -20064,6 +20727,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/web')){state.work.step=3;state.work.started=true;state.work.running=false;t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research'});}
     else{t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString()});}
     renderApp();
+    scrollTranscriptToEnd();
   }
 
   /* 15e: nineteen Demo Studio triggers used to funnel through one
@@ -20072,7 +20736,7 @@ recommended path                  migration 0043 + rollback</div></div></section
      timeout" all just selected the BSD thread and stopped. Every entry here
      lands on a state you can tell apart on screen. */
   const DEMO_EFFECTS={
-    'Live subagents':()=>{switchThread('subagents');state.work={step:7,running:true,expanded:false,started:true,completed:false,elapsed:47,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();},
+    'Live subagents':()=>{switchThread('subagents');state.work={step:7,running:true,expanded:false,started:true,completed:false,elapsed:47,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();armWorkTimer();},
     'Blocked subagent':()=>{switchThread('subagents');state.work={step:7,running:false,expanded:true,started:true,completed:false,elapsed:96,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();addReceipt('blocked','Schema Reviewer blocked','Production schema modification requires explicit approval. The other agents continued.');},
 
     'BSD intervention':()=>{switchThread('bsd');addReceipt('bsd-advice','Back Seat Driver intervened','Rewriting applied migration history would destroy rollback evidence, so a forward migration was substituted.');openDialog({type:'bsd'});},
@@ -20180,7 +20844,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');state.threads.unshift({...clone(src),id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
     if(a==='select-editor'){if(e.target.closest('[data-action="close-editor"]'))return;state.activeEditor=btn.dataset.id;renderApp();return;}
     if(a==='close-editor'){e.stopPropagation();closeEditor(btn.dataset.id);return;}
-    if(a==='open-artifact'){state.decision=null;openEditor(btn.dataset.id);return;}
+    if(a==='open-artifact'){decisionExit=null;state.decision=null;openEditor(btn.dataset.id);return;}
     if(a==='open-agent'){openEditor(`thread-${btn.dataset.id}`);return;}
     if(a==='open-change'){openEditor(`file:${btn.dataset.path}`);return;}
     if(a==='toggle-message'){state.messageExpanded[btn.dataset.id]=!state.messageExpanded[btn.dataset.id];renderApp();return;}
@@ -20220,25 +20884,25 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='set-context-cap'){state.capabilities.context=btn.dataset.value;if(btn.dataset.value==='Subcompact'){state.menu.sub='context-lens';renderOverlays();}else{closeMenu();addReceipt(btn.dataset.value==='Focus'?'context-focus':'context-mute',`Context Lens · ${btn.dataset.value}`,btn.dataset.value==='Focus'?'Current files and final references prioritized.':'Selected superseded sources omitted from the active projection.');}return;}
     if(a==='set-eli5-cap'){state.capabilities.eli5=btn.dataset.value==='On';closeMenu();renderApp();return;}
     if(a==='set-thought-cap'){state.capabilities.thought=btn.dataset.value;closeMenu();renderApp();return;}
-    if(a==='open-questionnaire'){state.decision={type:'question'};renderApp();return;}
+    if(a==='open-questionnaire'){decisionExit=null;state.decision={type:'question'};renderApp();return;}
     if(a==='prev-question'){state.questionIndex=Math.max(0,state.questionIndex-1);renderApp();return;}
     if(a==='next-question'){const q=state.questions[state.questionIndex];if(q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim())){toast('Answer required','Complete this question or use Skip to return later.');return;}state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);renderApp();return;}
     if(a==='answer-choice'){state.questions[state.questionIndex].answer=btn.dataset.value;renderApp();return;}
     if(a==='answer-multi'){const q=state.questions[state.questionIndex];q.answer=Array.isArray(q.answer)?q.answer:[];q.answer=q.answer.includes(btn.dataset.value)?q.answer.filter(x=>x!==btn.dataset.value):[...q.answer,btn.dataset.value];renderApp();return;}
     if(a==='skip-question'){state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);toast('Question skipped','It remains queued and can be answered later.');renderApp();return;}
-    if(a==='close-decision'){state.decision=null;renderApp();return;}
-    if(a==='cancel-questionnaire'){state.decision=null;addReceipt('question-receipt','Questionnaire cancelled','The explicit cancellation is recorded. Existing answers remain in thread history.');return;}
-    if(a==='submit-questionnaire'){const missing=state.questions.find(q=>q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim()));if(missing){toast('Required answers remain',missing.prompt);return;}state.decision={type:'question-submitting'};renderApp();setTimeout(()=>{state.decision=null;state.questionQueue=Math.max(0,state.questionQueue-1);addReceipt('question-receipt','Questionnaire submitted','5 answers attached to the deployment planning context.');},950);return;}
-    if(a==='revise-plan'){state.decision={type:'plan',mode:'revise',feedback:''};renderApp();return;}
-    if(a==='build-plan'){state.decision={type:'plan',mode:'review'};renderApp();return;}
-    if(a==='cancel-plan'){state.decision=null;state.planStatus='cancelled';toast('Plan decision closed','The durable plan card remains in the transcript with View, Revise, and Build.');renderApp();return;}
-    if(a==='submit-plan-revision'){state.planRevision++;state.decision={type:'plan',mode:'review'};toast('Plan revision created',`Revision ${state.planRevision} is open in the editor and ready for review.`);openEditor('plan-query');return;}
-    if(a==='approve-plan'){state.decision=null;state.planStatus='building';state.mode='Agent';addReceipt('goal-receipt','Plan approved · Build started','The assistant switched from planning to execution and preserved the Plan artifact.');startWorking(true);return;}
-    if(a==='open-permission'){state.decision={type:'permission'};renderApp();return;}
-    if(a==='deny-permission'){state.decision=null;addReceipt('permission','Permission denied','The checkpoint remains available; no action was replayed.');return;}
-    if(a==='approve-permission'){state.decision=null;state.work.step=5;startWorking();return;}
-    if(a==='resolve-conflict'){state.decision=null;addReceipt('route-change','Parent mediation resolved',btn.dataset.value==='indexes'?'Composite indexes approved as the reversible first step.':btn.dataset.value==='views'?'Materialized-view follow-up selected.':'Explicit schema-policy override recorded.');return;}
-    if(a==='trigger-work-recovery'){state.decision={type:'permission'};renderApp();return;}
+    if(a==='close-decision'){closeDecision();return;}
+    if(a==='cancel-questionnaire'){closeDecision(false);addReceipt('question-receipt','Questionnaire cancelled','The explicit cancellation is recorded. Existing answers remain in thread history.');return;}
+    if(a==='submit-questionnaire'){const missing=state.questions.find(q=>q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim()));if(missing){toast('Required answers remain',missing.prompt);return;}decisionExit=null;state.decision={type:'question-submitting'};renderApp();setTimeout(()=>{closeDecision(false);state.questionQueue=Math.max(0,state.questionQueue-1);addReceipt('question-receipt','Questionnaire submitted','5 answers attached to the deployment planning context.');},950);return;}
+    if(a==='revise-plan'){decisionExit=null;state.decision={type:'plan',mode:'revise',feedback:''};renderApp();return;}
+    if(a==='build-plan'){decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();return;}
+    if(a==='cancel-plan'){state.planStatus='cancelled';toast('Plan decision closed','The durable plan card remains in the transcript with View, Revise, and Build.');closeDecision();return;}
+    if(a==='submit-plan-revision'){state.planRevision++;decisionExit=null;state.decision={type:'plan',mode:'review'};toast('Plan revision created',`Revision ${state.planRevision} is open in the editor and ready for review.`);openEditor('plan-query');return;}
+    if(a==='approve-plan'){closeDecision(false);state.planStatus='building';state.mode='Agent';addReceipt('goal-receipt','Plan approved · Build started','The assistant switched from planning to execution and preserved the Plan artifact.');startWorking(true);return;}
+    if(a==='open-permission'){decisionExit=null;state.decision={type:'permission'};renderApp();return;}
+    if(a==='deny-permission'){closeDecision(false);addReceipt('permission','Permission denied','The checkpoint remains available; no action was replayed.');return;}
+    if(a==='approve-permission'){closeDecision(false);state.work.step=5;startWorking();return;}
+    if(a==='resolve-conflict'){closeDecision(false);addReceipt('route-change','Parent mediation resolved',btn.dataset.value==='indexes'?'Composite indexes approved as the reversible first step.':btn.dataset.value==='views'?'Materialized-view follow-up selected.':'Explicit schema-policy override recorded.');return;}
+    if(a==='trigger-work-recovery'){decisionExit=null;state.decision={type:'permission'};renderApp();return;}
     if(a==='open-goal'){openEditor('goal-artifact');return;}
     if(a==='edit-goal'){toast('Goal edited','A material edit created Revision 5 and moved the Goal into Replanning.');addReceipt('goal-receipt','Goal replanning','Revision 5 · material scope change detected.');return;}
     /* The four goal-lifecycle verbs stay honest stubs until there is a goal
@@ -20291,7 +20955,7 @@ recommended path                  migration 0043 + rollback</div></div></section
       if(state.dialog){if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
       if(state.context.details){state.context.details=false;renderOverlays();return;}
       if(state.historyMode==='floating'){state.historyMode='closed';renderApp();return;}
-      if(state.decision){state.decision=null;renderApp();}
+      if(state.decision||decisionExit){closeDecision();}
     }
   });
 
@@ -20386,9 +21050,9 @@ recommended path                  migration 0043 + rollback</div></div></section
     openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;renderApp();}},
     pinActivity:()=>{state.activity.open=true;state.activity.pinned=true;renderApp();},
     openContext:()=>{state.context.details=true;renderOverlays();},
-    openQuestionnaire:()=>{state.decision={type:'question'};renderApp();},
-    openPlan:()=>{state.decision={type:'plan',mode:'review'};renderApp();},
-    openPermission:()=>{state.decision={type:'permission'};renderApp();},
+    openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
+    openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
+    openPermission:()=>{decisionExit=null;state.decision={type:'permission'};renderApp();},
     startWorking:()=>startWorking(true),pauseWorking,stepWorking,completeWorking,resetWorking,
     setWorkStep:(i)=>{clearInterval(workTimer);state.work.step=clamp(Number(i),0,D.workSteps.length-1);state.work.started=true;state.work.running=false;state.work.completed=state.work.step===D.workSteps.length-1;renderApp();},
     trigger:runDemoTrigger,
@@ -20399,7 +21063,7 @@ recommended path                  migration 0043 + rollback</div></div></section
 
   // Initial full render and a real, one-shot working sequence so the first open is not static.
   renderApp(false);
-  requestAnimationFrame(()=>{const tr=document.querySelector('[data-scroll-key="transcript"]');if(tr)tr.scrollTop=tr.scrollHeight;});
+  scrollTranscriptToEnd(true);
   setTimeout(()=>{if(state.demoAutoStart&&!state.work.started&&state.selectedThread==='query')startWorking(true);},250);
 })();
 

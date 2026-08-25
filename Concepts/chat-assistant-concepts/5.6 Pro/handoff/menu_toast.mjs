@@ -62,6 +62,6 @@ for(let i=0;i<4;i++){
   await p.waitForTimeout(400);
 }
 R.errs=errs;
-fs.writeFileSync('/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/menu_toast.json',JSON.stringify(R,null,1));
+fs.writeFileSync('/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/menu_toast.json',JSON.stringify(R,null,1));
 console.log(JSON.stringify(R,null,1));
 await b.close();

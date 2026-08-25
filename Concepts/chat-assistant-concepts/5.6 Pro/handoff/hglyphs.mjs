@@ -1,6 +1,6 @@
 import {chromium} from 'playwright';import {pathToFileURL} from 'url';import fs from 'fs';
 const FILE="/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html";
-const DIR='/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/hfilm';
+const DIR='/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/hfilm';
 const NINE=['working','reviewing','waiting','idle','complete','blocked','failed','paused','recovering'];
 const b=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
 const tiles={};

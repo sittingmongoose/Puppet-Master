@@ -1,0 +1,150 @@
+{
+  "started": "2026-08-25T18:55:14.083Z",
+  "items": [
+    {
+      "id": "I6.census",
+      "what": "runtime slot parity (channel A sentinel / channel B proxy)",
+      "verdict": "MEASURED",
+      "detail": {
+        "declaredCount": 20,
+        "emittedCount_A": 19,
+        "declaredNotEmitted": [
+          "workingTake:N"
+        ],
+        "emittedNotDeclared": [
+          "workingTake:0",
+          "workingTake:1",
+          "workingTake:2",
+          "workingTake:3",
+          "workingTake:4",
+          "workingTake:5",
+          "workingTake:6",
+          "workingTake:7"
+        ],
+        "concreteInstancesSeen": [
+          "workingTake:0",
+          "workingTake:1",
+          "workingTake:2",
+          "workingTake:3",
+          "workingTake:4",
+          "workingTake:5",
+          "workingTake:6",
+          "workingTake:7"
+        ],
+        "channelDisagreement": {
+          "inBnotA": [],
+          "inAnotB": []
+        },
+        "totalLookups": 15531
+      }
+    },
+    {
+      "id": "I6.N1",
+      "what": "fabricated slot name must never fire",
+      "verdict": "PASS",
+      "detail": {
+        "fired": false
+      }
+    },
+    {
+      "id": "I6.N3",
+      "what": "boot-only census is a strict subset of driven census",
+      "verdict": "PASS",
+      "detail": {
+        "bootOnly": [],
+        "bootCount": 0,
+        "drivenCount": 27
+      }
+    },
+    {
+      "id": "I6.trigger",
+      "what": "per-step first-appearance (trigger control)",
+      "verdict": "MEASURED",
+      "detail": [
+        {
+          "label": "hover-collapsed-bar",
+          "newSlots": [
+            "activityHoverCard"
+          ]
+        },
+        {
+          "label": "openActivity",
+          "newSlots": [
+            "goalSection",
+            "activityPanelBody"
+          ]
+        },
+        {
+          "label": "openContext",
+          "newSlots": [
+            "contextDrawer"
+          ]
+        },
+        {
+          "label": "openQuestionnaire",
+          "newSlots": [
+            "questionSurface"
+          ]
+        },
+        {
+          "label": "workingTake-sweep",
+          "newSlots": [
+            "workingTake:1",
+            "workingTake:2",
+            "workingTake:3",
+            "workingTake:4",
+            "workingTake:5",
+            "workingTake:6",
+            "workingTake:7"
+          ]
+        },
+        {
+          "label": "thread-row-menu",
+          "newSlots": [
+            "threadMenu"
+          ]
+        },
+        {
+          "label": "goal-editor",
+          "newSlots": [
+            "goalEditor"
+          ]
+        },
+        {
+          "label": "destructive-dialog",
+          "newSlots": [
+            "dialog"
+          ]
+        },
+        {
+          "label": "click-menus",
+          "newSlots": [
+            "threadSearchMenu",
+            "contextLensMenu",
+            "contextCompactMenu"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I6.N2",
+      "what": "withhold sentinel \"headerExtras\" — must vanish from A, remain in B",
+      "verdict": "PASS",
+      "detail": {
+        "victim": "headerExtras",
+        "goneFromA": true,
+        "stillInB": true
+      }
+    },
+    {
+      "id": "I5.baseline",
+      "what": "shipped invariant collisions.length===0 at boot",
+      "verdict": "PASS",
+      "detail": {
+        "collisions": [],
+        "actionCount": 92,
+        "hasToggleHistory": true
+      }
+    }
+  ]
+}

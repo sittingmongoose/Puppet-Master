@@ -9,7 +9,7 @@ import fs from 'fs';
 import path from 'path';
 
 const ROOT = '/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro';
-const OUT  = '/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/shots2';
+const OUT  = '/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/shots2';
 fs.mkdirSync(OUT, { recursive: true });
 const URL = 'file://' + path.join(ROOT, 'PM_Chat_Assistant_5.6_Pro_Standalone.html');
 

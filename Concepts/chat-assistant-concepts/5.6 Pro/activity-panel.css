@@ -436,8 +436,8 @@
 @media (max-width: 1100px) {
   .pmap-kv { grid-template-columns: 62px minmax(0,1fr); }
 }
-.activity-panel { container-type: inline-size; }
-@container (max-width: 300px) {
+.activity-panel { container-type: inline-size; container-name: activityPanel; }
+@container activityPanel (max-width: 300px) {
   .activity-concept-board { grid-template-columns: 1fr; }
   .activity-ledger > button, .activity-ledger > .pmap-ledger-head {
     grid-template-columns: 44px minmax(0,1fr) minmax(0,62px); gap: 5px; padding: 5px 6px;

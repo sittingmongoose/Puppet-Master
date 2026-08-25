@@ -1,0 +1,240 @@
+{
+  "started": "2026-08-25T19:33:30.954Z",
+  "target": "/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/index.html",
+  "items": [
+    {
+      "id": "O12.N-forced-blank",
+      "what": "POSITIVE CONTROL: forced opacity:0 on label+icon must yield blank frames",
+      "verdict": "PASS (went red)",
+      "detail": {
+        "blankFrames": 13,
+        "longestBlank": {
+          "start": 48.6,
+          "end": 247.3,
+          "frames": 13,
+          "ms": 198.7
+        },
+        "minSop": 0,
+        "minIop": 0,
+        "frames": 15
+      }
+    },
+    {
+      "id": "O12.N-quiet",
+      "what": "NEGATIVE CONTROL: no phase advance → 0 blank frames",
+      "verdict": "PASS",
+      "detail": {
+        "blankFrames": 0,
+        "longestBlank": null,
+        "frames": 19,
+        "minSop": 1,
+        "minIop": 1
+      }
+    },
+    {
+      "id": "O12.trigger",
+      "what": "TRIGGER: stepWorking changes core label (phase really advanced)",
+      "verdict": "PASS",
+      "detail": {
+        "beforeLabel": "Web search",
+        "labels": [
+          "Web search",
+          "Web fetch"
+        ],
+        "frames": 29
+      }
+    },
+    {
+      "id": "O12.blank-core-handover",
+      "what": "~40ms blank core on phase handover (dense rAF)",
+      "verdict": "REFUTED",
+      "detail": {
+        "frames": 29,
+        "blankFrames": 0,
+        "longestBlank": null,
+        "blankMs": 0,
+        "minSop": 1,
+        "minIop": 0.35,
+        "labels": [
+          "Web search",
+          "Web fetch"
+        ],
+        "sample": [
+          {
+            "t": 14.5,
+            "label": "Web search",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 114.5,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 0.35,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 130.3,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 0.35,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 169.6,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 0.657,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 198.8,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 0.941,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 232.2,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 265.5,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 301.1,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 332.5,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 366.1,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 400.2,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 431.6,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 464.6,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 497.9,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          },
+          {
+            "t": 531.3,
+            "label": "Web fetch",
+            "sop": 1,
+            "iop": 1,
+            "inCore": true,
+            "topCls": "STRONG",
+            "blank": false,
+            "strongKey": "corelabel"
+          }
+        ],
+        "note": "Chromium rAF ~30fps here; sub-33ms claims are not meaningful. Blank = both label+icon opacity <0.05 or core not hit-tested while near-transparent."
+      }
+    }
+  ],
+  "quiet": {
+    "blankFrames": 0,
+    "frames": 19
+  },
+  "finished": "2026-08-25T19:33:41.834Z",
+  "summary": {
+    "blankCore": "REFUTED",
+    "controls": [
+      {
+        "id": "O12.N-forced-blank",
+        "verdict": "PASS (went red)"
+      },
+      {
+        "id": "O12.N-quiet",
+        "verdict": "PASS"
+      },
+      {
+        "id": "O12.trigger",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}

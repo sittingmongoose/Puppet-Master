@@ -66,6 +66,16 @@ function writeReport(extra={}){
 try{
   await page.goto(url,{waitUntil:'load',timeout:20000});
   await page.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO,{timeout:10000});
+  /* Control-run hook. A gate nobody has tried to make RED is worth nothing, and
+     an always-red gate is worth less than nothing. PM56_INJECT_CSS lets a
+     control run drive the real suite -- not a copy of it that can drift --
+     against a configuration where a defect cannot occur. Unset in normal runs. */
+  if(process.env.PM56_INJECT_CSS){
+    await page.addStyleTag({content:process.env.PM56_INJECT_CSS});
+    /* shaped like a cleanup entry: line 538 filters this list on h.stuck.length,
+       and a bare {injectedCss} threw a TypeError out of the whole suite. */
+    hygiene.push({after:'PM56_INJECT_CSS',injectedCss:process.env.PM56_INJECT_CSS,stuck:[],tries:0});
+  }
   check(true,'Boots from direct file URL');
 }catch(e){check(false,'Boots from direct file URL',String(e));}
 
@@ -305,6 +315,129 @@ await safe('Phase compact and expand across all 24 working takes',async()=>{
   }
   await page.evaluate(()=>PM56_DEMO.setVariant(2,0));
   if(broken.length)throw new Error(`takes whose phase disc does not toggle its rows: ${JSON.stringify(broken)}`);
+});
+
+/* The working card used to LURCH, and every take was a victim: [data-flip] sits
+   on `.working-body`, which app.js:664 emits identically for all 24.
+   flipHeights() reads its FLIP target with getBoundingClientRect() one line
+   after the pmPatch, and a CSS transition still presents its OLD value at t=0 --
+   so on an Orbit toggle, where the panel track runs 0fr <-> 1fr over 420ms, the
+   target came back short by the whole panel AND pointing the wrong way. The card
+   crept backwards for 320ms and then snapped 231-271px in a single frame.
+   Separately, the animation's clock started in the frame that still had to lay
+   out everything the patch wrote, so the first frame anyone SAW was already
+   36-64% through the travel: another 282-349px jump, on all 24.
+   Evidence: handoff/w6/flip/measure-baseline.json vs measure-fixed2.json.
+
+   This asserts the PROPERTY, not the mechanism, so it survives a rewrite of the
+   fix: whatever drives the height, the subject must travel forward, in humane
+   steps, and stop.
+
+   The per-frame budget is max(40px, 25% of travel) rather than a flat 40px, and
+   that number is measured rather than assumed: the FLIP's own easing,
+   cubic-bezier(.22,.80,.28,1) over 320ms, puts 17.9% of the travel into its
+   FIRST 16.7ms frame by construction, so a flat 40px would be a standing
+   failure for any travel past ~215px -- the work-history toggle alone travels
+   547px. The 40px floor still does the work on short travels, where a
+   percentage of a small number means nothing. Deltas are discounted by
+   min(1, 16.7/dt) so a DROPPED frame, which shows two frames of legitimate
+   travel in one sample, is not reported as a lurch; that discount can only
+   soften a reading, never invent one.
+
+   Stated plainly so nobody mistakes it for more than it is: the settle limb is
+   NOT what the old defect violated -- it snapped, but it snapped on time
+   (342ms). It is here for the opposite failure, a fix that leaves the box
+   drifting. On the reverted build the limbs that go red are the frame budget
+   and backwards (both on the Orbit toggle, which is cause (c)) and the
+   first-painted-frame limb (on every take, which is the clock defect). */
+await safe('Working-card FLIP travels forward, in steps, and stops',async()=>{
+  await page.evaluate(()=>{
+    /* Timing has to come from an in-page rAF loop: a Playwright click round
+       trip fabricates a phantom ~200ms and would swamp everything here. */
+    /* `now` is the rAF FRAME timestamp, not performance.now(). It has to be:
+       the frame clock is the clock the animations are driven by, and
+       performance.now() taken after a 30ms renderApp reports a gap the
+       animation did not actually experience -- which is exactly the reading
+       that would turn a dropped frame into a phantom lurch. */
+    window.__flipRec=(trigSrc,ms)=>new Promise(res=>{
+      const trig=eval('('+trigSrc+')');
+      const rows=[];let n=0,fired=false,t0=null,subj=null;
+      const h=()=>{if(!subj||!subj.isConnected)subj=document.querySelector('.working-card [data-flip]');
+        return subj?+subj.getBoundingClientRect().height.toFixed(2):null;};
+      const tick=(now)=>{
+        if(!fired&&n>=3){subj=document.querySelector('.working-card [data-flip]');trig();t0=now;fired=true;rows.push({t:0,mark:1,h:h()});}
+        else rows.push({t:t0===null?null:+(now-t0).toFixed(1),h:h()});
+        n++;
+        if(t0===null||now-t0<ms)requestAnimationFrame(tick);else res(rows);};
+      requestAnimationFrame(tick);});
+  });
+  const verdict=(rows,label)=>{
+    const f=rows.filter(r=>r.h!=null), i0=f.findIndex(r=>r.mark), out=[];
+    if(i0<1)return [`${label}: no trigger frame — this assertion measured nothing`];
+    const h0=f[i0-1].h, hEnd=f[f.length-1].h, travel=+(hEnd-h0).toFixed(2);
+    if(Math.abs(travel)<4)return [`${label}: the trigger moved nothing (${travel}px) — this assertion measured nothing`];
+    const budget=Math.max(40,0.25*Math.abs(travel));
+    let peak=0,peakT=null,peakRaw=0,backAt=null;
+    for(let i=i0;i<f.length;i++){
+      const dt=Math.max(1,(f[i].t||0)-(f[i-1].t||0));
+      const raw=f[i].h-f[i-1].h, norm=Math.abs(raw)*Math.min(1,16.7/dt);
+      if(norm>Math.abs(peak)){peak=raw<0?-norm:norm;peakT=f[i].t;peakRaw=+raw.toFixed(2);}
+      const rel=f[i].h-h0;                       // 4px dead-band = app.js's own early-out
+      if(backAt===null&&Math.abs(rel)>4&&(rel>0)!==(travel>0))backAt={t:f[i].t,h:f[i].h,rel:+rel.toFixed(2)};
+    }
+    let settle=null;
+    for(let j=i0;j<f.length-5;j++){let ok=true;
+      for(let k=j;k<j+5;k++)if(Math.abs(f[k].h-hEnd)>1){ok=false;break;}
+      if(ok){settle=f[j].t;break;}}
+    /* The motion must START at its start. The dt discount above deliberately
+       forgives a dropped frame MID-FLIGHT, but a dropped FIRST frame is a
+       defect in its own right and the discount would hide it: the animation
+       clock used to run through the 33-50ms the browser spent laying out what
+       pmPatch had just written, so the first frame anyone SAW was already
+       36-64% of the way through the travel. Undiscounted, and stable by
+       construction on a build that defers the clock -- the animation is at
+       currentTime 0 on that frame whatever the machine is doing, so this
+       reads 0% rather than merely "small". */
+    const second=f[i0+1];
+    if(second){
+      const started=Math.abs(second.h-h0);
+      if(started>budget)out.push(`${label}: the first painted frame after the trigger is already ${Math.round(100*started/Math.abs(travel))}% of the travel (${started.toFixed(1)}px) — budget ${budget.toFixed(1)}px`);
+    }
+    if(Math.abs(peak)>budget)out.push(`${label}: ${peak.toFixed(1)}px in one frame at ${peakT}ms (raw ${peakRaw}px) — budget ${budget.toFixed(1)}px for a ${travel}px travel`);
+    if(backAt)out.push(`${label}: travels BACKWARDS at ${backAt.t}ms (h=${backAt.h}, ${backAt.rel}px against a ${travel}px travel)`);
+    if(settle===null||settle>520)out.push(`${label}: settles at ${settle}ms, limit 520ms (travel ${travel}px)`);
+    return out;
+  };
+  const TOG='function(){document.querySelector(\'[data-action="toggle-work-history"]\').click();}';
+  const NODE='function(){document.querySelectorAll(".orbit-node")[9].click();}';
+  const SHUT='function(){document.querySelector(\'[data-action="orbit-collapse"]\').click();}';
+  const rec=(t,ms)=>page.evaluate(([a,b])=>window.__flipRec(a,b),[t,ms]);
+  const bad=[];
+  for(const v of [1,12,0,7]){
+    await page.evaluate(v=>{PM56_DEMO.setVariant(2,v);PM56_DEMO.setWorkStep(7);},v);
+    await page.waitForTimeout(700);
+    if(v===1){
+      /* Get to a CLOSED stage through the close button, never by toggling the
+         node we are about to measure — a toggle measured by toggling it is not
+         a fresh trigger. */
+      for(let i=0;i<3;i++){
+        if(await page.evaluate(()=>{const s=document.querySelector('.orbit-stage');return s&&s.dataset.orbitOpen;})!=='1')break;
+        await page.evaluate(()=>document.querySelector('[data-action="orbit-collapse"]').click());
+        await page.waitForTimeout(700);
+      }
+      bad.push(...verdict(await rec(NODE,1200),'take 1 orbit expand'));
+      await page.waitForTimeout(700);
+      bad.push(...verdict(await rec(SHUT,1200),'take 1 orbit collapse'));
+      await page.waitForTimeout(700);
+    }
+    bad.push(...verdict(await rec(TOG,1000),`take ${v} work-history open`));
+    await page.waitForTimeout(500);
+    bad.push(...verdict(await rec(TOG,1000),`take ${v} work-history close`));
+    await page.waitForTimeout(500);
+  }
+  await page.evaluate(()=>{PM56_DEMO.setVariant(2,0);PM56_DEMO.resetWorking();});
+  await page.waitForTimeout(300);
+  if(bad.length)throw new Error(bad.join(' || '));
 });
 
 await safe('Plan card has View, Revise, Build',async()=>{

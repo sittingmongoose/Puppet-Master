@@ -90,14 +90,13 @@
 }
 .message:has(> .pm-lens-mark[data-lens-state="muted"]):hover > .message-surface { opacity: .72; }
 
-/* Focused: protected and elevated. A soft field plus a ring, with negative
-   margins compensating the padding so neighbouring turns never shift. */
+/* Focused: protected and elevated without shifting neighbours. Outline and
+   tint only — padding/margin compensation previously over-shrunk user turns
+   and re-wrapped assistant turns (L1). */
 .message:has(> .pm-lens-mark[data-lens-state="focused"]) > .message-surface {
   background: color-mix(in srgb, var(--accent) 9%, var(--surface));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 34%, transparent);
   border-radius: 12px;
-  padding: 9px 11px;
-  margin: -9px -11px;
 }
 
 /* Rehydrated sources: visibly back from a summary rather than ordinary turns. */

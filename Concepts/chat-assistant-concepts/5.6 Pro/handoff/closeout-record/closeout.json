@@ -1,0 +1,112 @@
+{
+  "limbs": {
+    "D1-exit": {
+      "ok": true,
+      "distinct": 14,
+      "rampFrames": 17,
+      "firstEmptyKids": 1,
+      "sample": [
+        {
+          "t": 0,
+          "h": 309.8,
+          "empty": true,
+          "kids": 1
+        },
+        {
+          "t": 100,
+          "h": 309.8,
+          "empty": true,
+          "kids": 1
+        },
+        {
+          "t": 166.6,
+          "h": 140.8,
+          "empty": true,
+          "kids": 1
+        },
+        {
+          "t": 233.3,
+          "h": 36.9,
+          "empty": true,
+          "kids": 1
+        },
+        {
+          "t": 300,
+          "h": 4.2,
+          "empty": true,
+          "kids": 1
+        },
+        {
+          "t": 366.7,
+          "h": 1,
+          "empty": true,
+          "kids": 1
+        },
+        {
+          "t": 433.3,
+          "h": 1,
+          "empty": true,
+          "kids": 1
+        },
+        {
+          "t": 500,
+          "h": 1,
+          "empty": true,
+          "kids": 1
+        }
+      ]
+    },
+    "D2D3-take7": {
+      "wide": {
+        "ok": true,
+        "hit": "primary-button qs-action",
+        "top": 649.94677734375,
+        "hostH": 397
+      },
+      "narrow": {
+        "ok": true,
+        "mainH": 182.1,
+        "asideH": 72,
+        "promptVisible": true,
+        "ansReachable": true,
+        "nextVisible": true
+      },
+      "ok": true
+    },
+    "L1-focus": {
+      "ok": true,
+      "worst": 0,
+      "shifts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "RM-decision-surface": {
+      "ok": true,
+      "name": "qs-rise",
+      "duration": "0.001s",
+      "ms": 1
+    },
+    "T6-overflow-anchor": {
+      "ok": true,
+      "overflowAnchor": "none"
+    },
+    "G2-scoped": {
+      "ok": true,
+      "menuSync": 12,
+      "bare": 69.3,
+      "stepSync": 19,
+      "ratioToBare": 0.27,
+      "chip": "4/6 phases · 63.0K / 100K",
+      "badge": "In progress"
+    }
+  },
+  "errs": [],
+  "ok": true
+}

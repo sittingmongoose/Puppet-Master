@@ -1,6 +1,6 @@
 import {chromium} from 'playwright';import {pathToFileURL} from 'url';
 const b=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
-for (const [label,f] of [['NEGATIVE(no history module)','/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/nohistory.html'],
+for (const [label,f] of [['NEGATIVE(no history module)','/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/nohistory.html'],
                           ['CURRENT','/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html']]){
   const p=await b.newPage({viewport:{width:1440,height:900}});
   await p.goto(pathToFileURL(f).href,{waitUntil:'load'});

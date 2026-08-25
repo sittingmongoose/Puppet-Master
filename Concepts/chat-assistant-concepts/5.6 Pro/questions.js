@@ -812,7 +812,8 @@
     return '<section class="decision-surface qs qs-split" data-qs="7" data-k="qs:7">'
       + head(ctx, m, 'qs-split-head')
       + '<div class="qs-split-body">'
-      + '<div class="qs-split-main qs-scroll">'
+      + '<div class="qs-split-main">'
+      + '<div class="qs-split-main-scroll">'
       + progressBar(ctx, m)
       + promptHtml(ctx, m)
       + inputHtml(ctx, m, 'grid')
@@ -823,6 +824,7 @@
          queue of other flows is the thing waiting behind this one. */
       + (m.type === 'question' && m.queue.length
         ? '<div class="qs-queue qs-queue-split" data-k="qs-queue">' + queueRows(ctx, m, 'split') + '</div>' : '')
+      + '</div>'
       + actions(ctx, m, 'qs-actions-end')
       + '</div>'
       + '<aside class="qs-split-aside qs-scroll" data-k="qs-aside">' + evidenceHtml(ctx, m) + '</aside>'

@@ -206,7 +206,7 @@ await p.evaluate(()=>window.PM56_DEMO.setWorkStep(3)); await tick(300);
 R.stateAdvances2=await p.evaluate(()=>window.PM56_DEMO.getState().work.step);
 
 R.errs=errs; R.warns=warns.slice(0,10); R.warnCount=warns.length;
-const out=`/tmp/claude-1000/-mnt-Cursor-PuppetMaster/6b56d129-8eab-4a4f-bf02-133b45afc809/scratchpad/waves/verify1b${reduced?'_rm':''}.json`;
+const out=`/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/handoff/w6/waves/verify1b${reduced?'_rm':''}.json`;
 fs.writeFileSync(out,JSON.stringify(R,null,1));
 console.log('written',out,'errors',errs.length,'warnings',warns.length);
 await b.close();
