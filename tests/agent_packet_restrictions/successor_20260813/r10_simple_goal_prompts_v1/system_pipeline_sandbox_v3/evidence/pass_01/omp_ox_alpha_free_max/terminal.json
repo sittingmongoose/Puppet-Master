@@ -1,0 +1,60 @@
+{
+  "attempt_id": "storage-v3-pass_01-01-95b5d5d04d",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 517,
+      "path": "input_write.json",
+      "sha256": "59f7a3de49c7991aa3ddbe8344702d4d69d48b8c8f77f04b4004a5edd32307b4"
+    },
+    {
+      "bytes": 1321,
+      "path": "launch.json",
+      "sha256": "50f1dcc60b1a28f6d2ae7bf690536a47d64662a0be1e1deaeabb50c4de26f387"
+    },
+    {
+      "bytes": 3301,
+      "path": "omp_preflight.json",
+      "sha256": "2304ddb10bfc5a73824ff14a893edbdb4b2a5c64aec8e370f323f9ea15ecd00d"
+    },
+    {
+      "bytes": 336,
+      "path": "reservation.json",
+      "sha256": "627d1ab5bc10c6a7e8ea91c371bbca9abce7fa2782807934f8a13c9747bcfeab"
+    },
+    {
+      "bytes": 509,
+      "path": "runner_failure.json",
+      "sha256": "4144fd57e25aa45b9f7ee18f0c0bb55d78f307a6acff69b80f00d7a329774b3e"
+    },
+    {
+      "bytes": 3037,
+      "path": "stdin_submission.raw",
+      "sha256": "132263cf15399965f06e8c7b40cf72e68722820922af732d27013f909658a4cb"
+    },
+    {
+      "bytes": 111960,
+      "path": "transcript.raw",
+      "sha256": "fafdce12b7e047ee2b7e6c9c59e39873f52906d1862b54d6d4ee0a12fa386f7a"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-25T16:51:06.509Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/ox-alpha-free",
+  "no_retry": true,
+  "nonce": "95b5d5d04d4144d0e713d30d661c5728",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "max"
+}
