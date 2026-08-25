@@ -1,0 +1,64 @@
+{
+  "classification": "CHURN_RESET_AFTER_SUBJECT_SEMANTIC_AND_NATIVE_GOAL_SUCCESS_AND_FROZEN_VERIFIER_FAILURE",
+  "controller_termination": {
+    "action": "SIGTERM_EXACT_OWNED_OMP_PID",
+    "pid": 328663,
+    "reason": "The subject had been idle after exact native-Goal completion; waiting for the known-impossible V4 parser timeout no longer added product evidence.",
+    "terminated_at_utc": "2026-08-25T18:09:29.822520Z"
+  },
+  "failure_code": "FROZEN_VERIFIER_COMPATIBILITY_FAILURE",
+  "frozen_terminal": {
+    "bytes": 2859,
+    "path": "pass_01/omp_ox_alpha_free_max/terminal.json",
+    "sha256": "59aa119853ec873091348dcd1ba7c5c7bef3d7500ee6401f2736b9611ac8e6ff",
+    "status": "FAIL"
+  },
+  "launch_custody": {
+    "attempt_id": "storage-v4-pass_01-01-1e127da15a",
+    "launch_journal": {
+      "bytes": 468,
+      "path": "launch_journal.jsonl",
+      "sha256": "ee7baeb8637f4155ed75bf89702c0cabe7df0a31b72a48969d43701876e81aee"
+    },
+    "launched_row_count": 1,
+    "nonce": "1e127da15af84d605a5467ea10414c45",
+    "route_id": "omp_ox_alpha_free_max",
+    "unlaunched_suffix_row_count": 23
+  },
+  "model_speed_failure": false,
+  "postfailure_diagnostic": {
+    "assistant_message_count": 2,
+    "final_assistant_sha256": "881fa7b31dbdb08d494831151edd026cda033196a2f6e0dfd014aea4fe8236a8",
+    "final_nonempty_line": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+    "goal_context_count": 1,
+    "goal_id": "1565cc75f3f59dfa",
+    "native_continuation_count": 0,
+    "ordinary_tool_calls": 0,
+    "session_id": "01a039fc-8106-755c-bec2-fd58afa0bad5",
+    "session_parser_v5_require_exit_false": "PASS",
+    "session_parser_v5_require_exit_true": "FAIL_OMP_NORMAL_SESSION_EXIT_AFTER_CONTROLLER_SIGTERM"
+  },
+  "preserved_evidence": {
+    "postfailure_session": {
+      "bytes": 36453,
+      "path": "pass_01/omp_ox_alpha_free_max/postfailure_session.raw.jsonl",
+      "sha256": "6396fcfae7cb7cdc7b747629203f5b3d224c34150904b983de6813bd4143a34c"
+    },
+    "runner_failure": {
+      "bytes": 509,
+      "path": "pass_01/omp_ox_alpha_free_max/runner_failure.json",
+      "sha256": "641ad3b9174c1c0415fc803e21667e6931617652f86324bd3e611362b80878c5"
+    },
+    "transcript": {
+      "bytes": 1671432,
+      "path": "pass_01/omp_ox_alpha_free_max/transcript.raw",
+      "sha256": "aeaf7d58d2cbf4128e89ba2ea928cec1631fd9d00d3fa3ef80e0c471ec4d9b7d"
+    }
+  },
+  "qualification_credit": 0,
+  "reviewed_at_utc": "2026-08-25T18:11:05.956641Z",
+  "schema_id": "pm.r10.storage_pipeline.failure_review.v4",
+  "subject_diagnostic_observation": "PASS_EXACT_RESULT_AND_NATIVE_GOAL_UNCREDITED",
+  "v4_frozen_parser_error": "OmpSessionError: OMP bounded Goal assistant-turn count",
+  "warning": "The generic frozen terminal records activation/completion as false because its failure fallback does not interpret a rejected session. Those fields are not affirmative lifecycle observations. Raw session evidence proves activation and completion, but the row remains a permanent failure with zero credit and no retry."
+}

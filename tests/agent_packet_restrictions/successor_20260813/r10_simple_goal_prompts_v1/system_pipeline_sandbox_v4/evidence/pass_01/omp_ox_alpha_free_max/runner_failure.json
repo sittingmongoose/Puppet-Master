@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-v4-pass_01-01-1e127da15a",
+  "captured_at_utc": "2026-08-25T18:09:30.138Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 328663: RunnerError: OMP exited before verified terminal result",
+  "no_retry": true,
+  "nonce": "1e127da15af84d605a5467ea10414c45",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": 328663,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}
