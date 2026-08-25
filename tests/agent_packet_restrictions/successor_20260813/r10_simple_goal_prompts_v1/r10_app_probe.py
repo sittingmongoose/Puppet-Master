@@ -808,6 +808,13 @@ def response_user_texts(
     require(set(continuation_turns) == expected_continuations, "Goal continuation/task denominator")
 
 
+def validate_trace_envelopes(trace: list[dict[str, Any]]) -> None:
+    require(isinstance(trace, list) and trace, "child trace rows")
+    for row in trace:
+        require(isinstance(row, dict), "child record object")
+        require(isinstance(row.get("payload"), dict), "child record payload object")
+
+
 def validate_event_projection(
     trace: list[dict[str, Any]],
     intervals: dict[str, tuple[int, int]],
@@ -879,6 +886,7 @@ def verify_trace(
     thread_id: str,
     launch_head: str,
 ) -> dict[str, Any]:
+    validate_trace_envelopes(trace)
     sessions = [row["payload"] for row in trace if row.get("type") == "session_meta"]
     require(len(sessions) == 1, "session_meta count")
     session = sessions[0]
@@ -1207,7 +1215,7 @@ def main(argv: list[str] | None = None) -> int:
             sys.stdout.buffer.write(canonical(result) + b"\n")
             return 0
         raise AppProbeError("unknown command")
-    except (AppProbeError, contract.ContractError, shared.VerifyError, jsonschema.ValidationError, jsonschema.SchemaError, OSError) as exc:
+    except Exception as exc:
         if getattr(args, "command", None) == "capture":
             record_capture_failure(ROOT / EXPECTED_EVIDENCE, exc)
         result = {

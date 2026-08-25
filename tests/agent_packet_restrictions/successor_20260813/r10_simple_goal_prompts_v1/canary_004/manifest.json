@@ -52,12 +52,12 @@
   "oracle_path": "canary_004/oracle.json",
   "evidence_root": "canary_004/r10-codex-app-canary-004-evidence",
   "frozen_files": [
-    {"path": "ARCHITECTURE.md", "utf8_bytes": 20185, "sha256": "b3b45fc21681210c007ef4e8b6be37889b6e7bb00e08516b4b2e17e791584903"},
+    {"path": "ARCHITECTURE.md", "utf8_bytes": 20407, "sha256": "914168b49b17dedd46f9ac65a6fc6b4d0a6bdcadc79e28e3d32ecb9552aa4a89"},
     {"path": "prompt_capsule.schema.json", "utf8_bytes": 3703, "sha256": "dad312cf088d92770df68151ba85f2ef1321db703d66cdc974837a78d05987d4"},
     {"path": "r10_contract.py", "utf8_bytes": 13275, "sha256": "c11439505c925eeddd12a6f12fcc1bf3789bfb92114c815785f5bd722d918306"},
     {"path": "r10_verify.py", "utf8_bytes": 74190, "sha256": "87e7c0779eb93fceaa379da19fa783ceeb2d588bf99d255675a6fd67a0854f02"},
-    {"path": "r10_app_probe.py", "utf8_bytes": 63914, "sha256": "e770ff5609fadc76d99d496f02a480e5fe0b16e26369469d689a70cd728cb289"},
-    {"path": "r10_app_selftest.py", "utf8_bytes": 22173, "sha256": "da77c12f5d7439c385aae7c07f14d70e5a17cb7482bb0e0330b251c033a1affe"},
+    {"path": "r10_app_probe.py", "utf8_bytes": 64144, "sha256": "34b8ee1bbc099b5de9d1ba0c456309dca897d2dea15ec06a8650713cf9c346da"},
+    {"path": "r10_app_selftest.py", "utf8_bytes": 23411, "sha256": "f04a2f75c23023489fb7c60cf9682b199c5e1d202342c30b5c1c22f11eee6f00"},
     {"path": "canary_004/response.schema.json", "utf8_bytes": 550, "sha256": "18d79ecdc2c2ea1031572ad674ae6dffee84af64ce6db8d2de322b8ffcfcd618"},
     {"path": "canary_004/capsule.json", "utf8_bytes": 2286, "sha256": "a0af4d1487bd532fac6a55721224baef205b3827757696868ef200c0ce240f0f"},
     {"path": "canary_004/oracle.json", "utf8_bytes": 159, "sha256": "0a19a9c2e253abf9b3cf13ba7d9354e09fdc2e99d6830d54659698b5e914cbf7"}

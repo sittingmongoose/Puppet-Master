@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import copy
+import io
 import json
 import tempfile
 from pathlib import Path
@@ -419,6 +420,9 @@ def main() -> int:
     action_world = copy.deepcopy(one_turn_trace())
     action_world.insert(7, {"ordinal": 7, "type": "world_state", "payload": {"type": "command_execution", "command": "touch forbidden"}})
     rejected.append(expect_fail("child-action-world-state", lambda: verify(renumber(action_world))))
+    malformed_payload = copy.deepcopy(one_turn_trace())
+    malformed_payload.insert(7, {"ordinal": 7, "type": "response_item", "payload": []})
+    rejected.append(expect_fail("non-object-child-payload", lambda: verify(renumber(malformed_payload))))
 
     rows, bundle, reservation = parent_fixture()
     duplicate_id = copy.deepcopy(rows)
@@ -454,6 +458,24 @@ def main() -> int:
         evidence.mkdir(parents=True)
         (evidence / "verification.json").write_bytes(b"{}\n")
         rejected.append(expect_fail("terminal-verification-reuse", lambda: probe.verify_evidence(evidence)))
+    with tempfile.TemporaryDirectory() as temporary:
+        evidence = Path(temporary) / "canary_004" / Path(probe.EXPECTED_EVIDENCE).name
+        evidence.mkdir(parents=True)
+        output = mock.Mock(buffer=io.BytesIO())
+        with (
+            mock.patch.object(probe, "verify_evidence", side_effect=AttributeError("synthetic retained-row failure")),
+            mock.patch.object(probe.sys, "stdout", output),
+        ):
+            return_code = probe.main(["verify", "--evidence-root", str(evidence)])
+        probe.require(return_code == 1, "unexpected verifier exception exit")
+        failure = contract.load_json(evidence / "verification.json")
+        probe.require(
+            failure.get("status") == "FAIL_ZERO_CREDIT_NO_RETRY"
+            and failure.get("qualification_credit") == 0
+            and failure.get("error") == "AttributeError: synthetic retained-row failure",
+            "unexpected verifier exception receipt",
+        )
+        checks += 2
     with tempfile.TemporaryDirectory() as temporary:
         test_root = Path(temporary)
         evidence = test_root / "canary_004" / "capture-evidence"
