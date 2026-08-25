@@ -1,0 +1,58 @@
+{
+  "branch": "main",
+  "custody_subject_calls": 0,
+  "muse_failure_commit": "7142875e9e47d63ffb088932397979bfd2fe7b76",
+  "muse_failure_parent": "e04a616920a84f6fc8f8c27e2f4e71428604c1da",
+  "muse_failure_tree": "f441d9e7451d7a2d5e497ef162eb78f0f36c93df",
+  "owned_artifacts": {
+    "failure_review": {
+      "bytes": 6249,
+      "sha256": "140958b9d7513acd16123858e3f085576bb070fa4cae4b1913fad77a21d21e69"
+    },
+    "launch_journal": {
+      "bytes": 925,
+      "sha256": "c5a76667032c2603d4739692b9fa612d294ad824a0ae4f236076da96e122bbe3"
+    },
+    "postfailure_session": {
+      "bytes": 57568,
+      "sha256": "a2d3d822837407337b25e7030b7de35e95b1d067bd969fcc7d9f9432e1561fb5"
+    },
+    "progress": {
+      "bytes": 75077,
+      "sha256": "06b8a922797d9b4101f3a563d8afbb21b39077d40c1bc3e30ed16c33e6440513"
+    },
+    "terminal": {
+      "bytes": 3189,
+      "sha256": "eef3a840aee2b7c2703edf8186377180afe193c80c5eba5893c625dd096b8cd6"
+    }
+  },
+  "probe_source_commit": "0c49fbdf2a3fbd8653d8ae36e68b493bf1052b27",
+  "pushed_at_utc": "2026-08-25T23:39:18Z",
+  "qualification_credit": 0,
+  "remote_heads": {
+    "github_main": {
+      "head": "7142875e9e47d63ffb088932397979bfd2fe7b76",
+      "status": "CONFIRMED_BY_LIVE_LS_REMOTE",
+      "url": "https://github.com/sittingmongoose/Puppet-Master.git"
+    },
+    "truenas_main": {
+      "head": "7142875e9e47d63ffb088932397979bfd2fe7b76",
+      "status": "CONFIRMED_BY_LIVE_LS_REMOTE",
+      "url": "ssh://192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git"
+    }
+  },
+  "schema_id": "pm.r10.storage_pipeline.xml_probe_failure_push_custody.v1",
+  "terminal_disposition": {
+    "classification": "HARD_CAPABILITY_BLOCKER_AFTER_NATIVE_AND_OWNED_XML_TOOL_SELECTION_FAILURE",
+    "matrix_suffix_authorized": false,
+    "no_retry": true,
+    "qualification_credit": 0,
+    "scope_correction_required": true
+  },
+  "zero_subject_audits": {
+    "causal": "PASS_HARD_CAPABILITY_BLOCKER",
+    "custody": "PASS_FAILURE_CUSTODY",
+    "failure_review_mechanical": "PASS_FAILURE_REVIEW",
+    "failure_review_scope": "PASS_TO_COMMIT"
+  }
+}
