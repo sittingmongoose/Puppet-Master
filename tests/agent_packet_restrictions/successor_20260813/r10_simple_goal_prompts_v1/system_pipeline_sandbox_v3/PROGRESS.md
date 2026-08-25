@@ -49,3 +49,15 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: tightened only the v3 session verifier, its zero-subject mutations, and explanatory sandbox docs. No prompt, capsule, oracle, scorer, route, canonical Plan, ledger, governance artifact, WorkNode, retry, or answer repair changed.
 - Next disconfirming test: finish independent xhigh falsification, refreeze unchanged candidate bytes, obtain independent medium mechanical PASS, then launch exactly one fresh free Ox max row. Any session-shape, lifecycle, semantic, or custody mismatch permanently fails that row and freezes Cursor and the paid suffix.
 - Classification: **PROGRESS**. Product-relevant evidence advanced while the subject contract stayed unchanged; no additional subject launch or transport choreography was introduced.
+
+## 2026-08-25T16:44:14Z — pushed candidate and Ox launch alignment
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Current hypothesis: the unchanged 3,036-byte OMP prompt is sufficient for Ox Alpha/free max to assemble the exact typed Storage pre-WorkNode result, and the persistent OMP session will prove either direct Goal completion or one exact platform-native hidden continuation without controller intervention.
+- Smallest changed invariant: no subject or scorer byte changed. The 27-file candidate is now anchored at commit `c7559ab138faf857c7807adbdaca5a5326e19d61`; both GitHub main and TrueNAS main independently report that exact head.
+- New evidence: xhigh adversarial review returned PASS_TO_REFREEZE; medium mechanical review returned PASS_LOCAL_FREEZE; the refrozen manifest is 4,443 bytes with SHA-256 `88db06004322456cf649835d2ec7d047e2dae9558ebeeb297460882d4584e6bd`; normal and optimized suites each pass 62 zero-subject checks.
+- Deepest valid product-relevant point: the large canonical plan has already been processed by the deterministic host; the model-facing experiment is now only bounded typed-receipt assembly plus native Goal lifecycle, with raw persistent-session evidence replacing terminal-layout inference.
+- Files/surface added or removed: committed and pushed only the owned v3 sandbox. Canonical Plans, ledgers, governance artifacts, WorkNodes, implementation surfaces, unrelated dirty files, prompts, capsule, oracle, and scorer remain unchanged.
+- Next disconfirming test: launch exactly the fresh pass_01 Ox Alpha/free max row. Any runtime-preflight, session-shape, lifecycle, output, identity, or evidence mismatch permanently fails that row and leaves Cursor and all paid/Codex/Qwen rows unlaunched.
+- Classification: **PROGRESS**. This is a pushed candidate entering empirical testing, not qualification credit or readiness evidence.

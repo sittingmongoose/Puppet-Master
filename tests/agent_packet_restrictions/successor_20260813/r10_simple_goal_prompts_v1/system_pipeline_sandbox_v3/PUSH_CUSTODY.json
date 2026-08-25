@@ -1,0 +1,41 @@
+{
+  "branch": "main",
+  "candidate_commit": "c7559ab138faf857c7807adbdaca5a5326e19d61",
+  "candidate_parent": "abc72fee27aa40f26457c5143f3efdabb986657e",
+  "candidate_tree": "8b281a6da66207b80c9810280bd7bc04bb6d38f1",
+  "frozen_candidate": {
+    "codex_prompt": {
+      "bytes": 3050,
+      "sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38"
+    },
+    "file_count": 27,
+    "freeze_manifest": {
+      "bytes": 4443,
+      "sha256": "88db06004322456cf649835d2ec7d047e2dae9558ebeeb297460882d4584e6bd"
+    },
+    "omp_prompt": {
+      "bytes": 3036,
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    }
+  },
+  "pushed_at_utc": "2026-08-25T16:44:14.322948Z",
+  "qualification_credit": 0,
+  "remote_heads": {
+    "github_main": {
+      "head": "c7559ab138faf857c7807adbdaca5a5326e19d61",
+      "status": "CONFIRMED",
+      "url": "https://github.com/sittingmongoose/Puppet-Master.git"
+    },
+    "truenas_main": {
+      "head": "c7559ab138faf857c7807adbdaca5a5326e19d61",
+      "status": "CONFIRMED",
+      "url": "ssh://sittingmongoose@192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git"
+    }
+  },
+  "schema_id": "pm.r10.storage_pipeline.push_custody.v3",
+  "subject_calls": 0,
+  "zero_subject_audits": {
+    "mechanical": "PASS_LOCAL_FREEZE",
+    "xhigh_falsifier": "PASS_TO_REFREEZE"
+  }
+}
