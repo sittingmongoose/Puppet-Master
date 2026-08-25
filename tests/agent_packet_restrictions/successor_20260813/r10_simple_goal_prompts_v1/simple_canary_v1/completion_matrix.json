@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.r10.required_completion_matrix.v1",
+  "max_prompt_utf8_bytes": 1200,
+  "max_admitted_context_utf8_bytes": 300,
+  "max_final_assistant_utf8_bytes": 2048,
+  "prescribed_routes": {
+    "codex_app": [
+      {"model": "gpt-5.4-mini", "thinking": "medium"},
+      {"model": "gpt-5.4-mini", "thinking": "xhigh"},
+      {"model": "gpt-5.4", "thinking": "medium"},
+      {"model": "gpt-5.4", "thinking": "xhigh"},
+      {"model": "gpt-5.6-luna", "thinking": "medium"},
+      {"model": "gpt-5.6-luna", "thinking": "max"}
+    ],
+    "omp_tui": [
+      {"model": "cursor/default", "thinking": "auto"},
+      {"model": "alibaba-token-plan/qwen3.8-max", "thinking": "xhigh"}
+    ]
+  },
+  "cases": [
+    {
+      "id": "codex_5_4_mini_medium",
+      "workflow_class": "bounded_specialist",
+      "surface": "codex_app",
+      "prompt_file": "cases/worker_codex.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {"model": "gpt-5.4-mini", "thinking": "medium"}
+    },
+    {
+      "id": "codex_5_4_mini_xhigh",
+      "workflow_class": "bounded_specialist",
+      "surface": "codex_app",
+      "prompt_file": "cases/worker_codex.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {"model": "gpt-5.4-mini", "thinking": "xhigh"}
+    },
+    {
+      "id": "codex_5_4_medium",
+      "workflow_class": "bounded_specialist",
+      "surface": "codex_app",
+      "prompt_file": "cases/worker_codex.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {"model": "gpt-5.4", "thinking": "medium"}
+    },
+    {
+      "id": "codex_5_4_xhigh",
+      "workflow_class": "bounded_specialist",
+      "surface": "codex_app",
+      "prompt_file": "cases/worker_codex.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {"model": "gpt-5.4", "thinking": "xhigh"}
+    },
+    {
+      "id": "codex_luna_medium",
+      "workflow_class": "bounded_specialist",
+      "surface": "codex_app",
+      "prompt_file": "cases/worker_codex.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {"model": "gpt-5.6-luna", "thinking": "medium"}
+    },
+    {
+      "id": "codex_luna_max",
+      "workflow_class": "bounded_specialist",
+      "surface": "codex_app",
+      "prompt_file": "cases/worker_codex.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {"model": "gpt-5.6-luna", "thinking": "max"}
+    },
+    {
+      "id": "omp_cursor_default_auto",
+      "workflow_class": "bounded_specialist",
+      "surface": "omp_tui",
+      "prompt_file": "cases/worker_omp.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {
+        "model": "cursor/default",
+        "thinking": "auto",
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "advisor_enabled": false,
+        "task_agent_advisor": {"task": "off"},
+        "memory_backend": "off",
+        "autolearn_enabled": false,
+        "mcp_project_config_enabled": false,
+        "approval_mode": "yolo",
+        "tools_enabled": false,
+        "skills_enabled": false,
+        "rules_enabled": false
+      }
+    },
+    {
+      "id": "omp_qwen3_8_max_xhigh",
+      "workflow_class": "bounded_specialist",
+      "surface": "omp_tui",
+      "prompt_file": "cases/worker_omp.prompt.txt",
+      "oracle_file": "cases/worker_omp.oracle.json",
+      "requested_runtime": {
+        "model": "alibaba-token-plan/qwen3.8-max",
+        "thinking": "xhigh",
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "advisor_enabled": false,
+        "task_agent_advisor": {"task": "off"},
+        "memory_backend": "off",
+        "autolearn_enabled": false,
+        "mcp_project_config_enabled": false,
+        "approval_mode": "yolo",
+        "tools_enabled": false,
+        "skills_enabled": false,
+        "rules_enabled": false
+      }
+    }
+  ]
+}
