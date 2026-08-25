@@ -66,3 +66,10 @@ any source edit; never hand-edit `index.html` or the standalone.
 Superseded evidence directories listed in the prior handoff §6 are deleted in this
 closeout. **Deleting them does NOT shrink `.git`.** Blobs remain until an explicit
 `git filter-repo`/BFG + force-push the user previously declined.
+
+## 6. Post-closeout re-film (2026-08-25 evening)
+
+Targeted CDP contact-sheet re-film of D1, D2/D3, RM, L1, G1, G10, T1, T6, G2:
+**OVERALL GREEN** (see `handoff/closeout-record/refilm-verdict.json`).
+Film PNGs and temporary `handoff/refilm/film/` + `handoff/w5/` tooling were deleted
+after the green pass per owner request. Deleting evidence does not shrink `.git`.
