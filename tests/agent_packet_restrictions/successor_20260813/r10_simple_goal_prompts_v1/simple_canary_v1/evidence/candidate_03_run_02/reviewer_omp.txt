@@ -1,0 +1,36 @@
+status: PASS
+surface: omp_interactive_linux_tui
+omp_version: 18.0.4
+pty_session_id: 63341
+fresh_cwd: /tmp/r10-simple-canary-c03r02-reviewer-qwen38-rLuJz6
+prompt_utf8_bytes: 1471
+prompt_sha256: badddea8619dd9711335f78d54ac0bc5c03833ac3da70154a5defdf55d23499d
+effective_model: alibaba-token-plan/qwen3.8-max
+effective_thinking: xhigh
+effective_advisor_enabled: false
+effective_task_agent_advisor: {"task":"off"}
+effective_memory_backend: off
+effective_autolearn_enabled: false
+effective_mcp_project_config_enabled: false
+effective_approval_mode: yolo
+tools_enabled: false
+skills_enabled: false
+rules_enabled: false
+external_prompt_count: 1
+goal_status: complete
+goal_activation_observed: true
+goal_terminal_transition_observed: true
+goal_tokens_displayed: 1.9K
+goal_elapsed_seconds: 30
+observed_non_goal_tool_calls: 0
+fresh_cwd_entries_after_exit: 0
+process_exit_code: 0
+
+Launch argv:
+PI_CODING_AGENT_DIR=/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1 /home/sittingmongoose/.local/bin/omp --no-session --no-title --no-tools --no-skills --no-rules --cwd /tmp/r10-simple-canary-c03r02-reviewer-qwen38-rLuJz6 --model alibaba-token-plan/qwen3.8-max --thinking xhigh
+
+The controller submitted the exact prompt once through bracketed paste followed by one Return. The retained PTY stream showed Qwen3.8 Max / alibaba-token-plan / xhigh, native `🎯 Goal 0` activation, uninterrupted `Working`, the native `Goal: complete ⟦complete⟧` panel at 1.9K tokens and 30 seconds, the completed post-receipt assistant answer, and the idle TUI. The full CommandExecution evidence is retained at ordinal 13092 of the controller raw rollout `/home/sittingmongoose/.codex/sessions/2026/08/24/rollout-2026-08-24T17-02-55-01a034b9-a1c8-7a80-937f-4e45e3f2ae45.jsonl`; the shorter response projection had truncated the middle of that same PTY chunk. The rendered final answer ended with the terminal typed result:
+
+PM_RESULT {"verdict":"pass","checked_source_ids":["S1","S2"],"worker_decision":"reject"}
+
+No Escape, follow-up prompt, approval, or cleanup command was sent. No non-Goal model tool call was displayed. Startup still connected context7 and context7-local and reported the preserved wirekitty HTTP 404 despite `--no-tools`; this is retained as an environment residual, not hidden. After the assistant became idle, Ctrl-D closed the session with exit code 0. The fresh cwd remained empty. Immediate post-exit config readback reconfirmed both advisor controls off and all other recorded profile controls unchanged.

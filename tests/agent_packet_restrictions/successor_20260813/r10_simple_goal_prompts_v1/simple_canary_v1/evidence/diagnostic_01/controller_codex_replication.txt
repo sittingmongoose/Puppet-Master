@@ -1,0 +1,15 @@
+status: PASS_DIAGNOSTIC_NOT_MATRIX_CREDIT
+thread_id: 01a0370b-926b-7ee2-b6a8-6cb4c58d52aa
+host_id: local
+raw_rollout_copy: /tmp/rollout-01a0370b.jsonl
+raw_rollout_utf8_bytes: 116187
+raw_rollout_sha256: 3cecc002b147bc7ac6acb981d8a37f734cde5df61a05ada4fd16e32625254111
+prompt_utf8_bytes: 1357
+prompt_sha256: f5f127fd72b811aa2f66f7bc250837965186b3704981f5b7a2ec3dfb5970e81c
+effective_model: gpt-5.6-sol
+effective_thinking: high
+Goal active receipt: ordinal 13
+Goal complete receipt: ordinal 18, tokensUsed=576, timeUsedSeconds=3
+exact final: ordinal 23
+
+This fresh replication confirms the method but is not Run 2 because the three-row Run 1 matrix was not yet complete and the host differs from the official controller row.

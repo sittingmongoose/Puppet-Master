@@ -1,0 +1,23 @@
+status: FAIL_ZERO_CREDIT_ROUTE_REJECTED
+surface: omp interactive Linux PTY/TUI
+omp_version: 18.0.4
+unified_exec_session_id: 36783
+prompt_utf8_bytes: 852
+prompt_sha256: f8a4b1fbb437df75395ac4901309e2503458aebd79a92a97dcbfec25091cf919
+effective_model: alibaba-token-plan/qwen3.6-flash
+effective_thinking: low
+advisor_enabled: false
+memory_backend: off
+autolearn_enabled: false
+skills_enabled: false
+rules_enabled: false
+cwd: /tmp/r10-simple-canary-v1/run_01/worker_omp
+cwd_files_after: 0
+omp_processes_after: 0
+process_exit_after_host_close: 0
+
+Observed native state: the sole bracketed-paste submission was accepted as `/goal`, and the TUI displayed `🎯 Goal 0`, later `🎯 Goal 19K`, and finally `🎯 Goal 39K`.
+Observed semantic output: {"decision":"reject","reason_code":"AUTHORITY_WIDENING","source_ids":["S2"]}
+Observed failure: after producing the answer, the model reasoned that the goal persisted and returned the same JSON again. It returned to the interactive prompt with the status bar still showing `🎯 Goal 39K`. No `Goal achieved`, `Goal: complete`, or `Goal complete` receipt appeared. The controller sent Ctrl-D only after the model was idle, preserving this as an active-at-exit failure.
+
+Startup additionally reported MCP connections for `context7` and `context7-local` plus a failed `wirekitty` endpoint from `~/.cursor/mcp.json`. No MCP or other subject tool call was observed, but the unnecessary projection contradicts the intended closed weak-worker context and is removed from the successor route.

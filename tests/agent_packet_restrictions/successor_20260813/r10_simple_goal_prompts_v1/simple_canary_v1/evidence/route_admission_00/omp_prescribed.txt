@@ -1,0 +1,26 @@
+status: ROUTE_ADMISSION_DIAGNOSTIC_ZERO_QUALIFICATION_CREDIT
+source_thread_id: 01a036f2-08ea-7860-83df-1c8edd7124a5
+surface: omp interactive Linux PTY/TUI
+omp_version: 18.0.4
+profile_dir: /home/sittingmongoose/.omp/pmdev-goal-probe-01a036f2
+advisor_enabled_prelaunch: false
+task_agent_advisor_prelaunch: {"task":"off"}
+
+PASS smoke route:
+model: alibaba-token-plan/qwen3.8-max
+thinking: xhigh
+ordinary_tools: disabled
+prompt: /goal Reply with exactly OMP_MATRIX_NOTOOLS_OK and complete the goal.
+observed_goal_terminal: Goal: complete
+goal_tokens: 6.4K
+elapsed_seconds: 7
+final_output: OMP_MATRIX_NOTOOLS_OK
+
+Important ordering: OMP displayed the Goal completion receipt before the final payload finished streaming. A scorer must wait for and separately verify the post-receipt final answer.
+
+Preserved prescribed failure:
+model: opencode-go/muse-spark-1.2-contributor
+thinking: xhigh
+result: entered Goal but ignored the trivial exact-output objective, consumed about 54K Goal tokens, and issued unrelated read-only discovery commands outside the fresh cwd before the controller paused and dropped it. No writes were observed. Zero credit.
+
+Catalog residual: opencode-go/deepseek-v4-flash advertises low/high/max rather than xhigh. OMP accepted an empirical `--thinking xhigh` direct call and returned exact output, but whether the provider applies rather than coerces xhigh remains unproven.

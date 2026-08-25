@@ -1,0 +1,40 @@
+status: FAIL_NATIVE_GOAL_NOT_TERMINAL
+surface: omp_interactive_linux_tui
+omp_version: 18.0.4
+pty_session_id: 88046
+fresh_cwd: /tmp/r10-full-matrix-r01-omp-muse-spark-xhigh-r7IGNs
+prompt_utf8_bytes: 995
+prompt_sha256: 6d78f098e66f97c89d3761b5667283673c018f20205f540cc3ed2e2258395aa4
+effective_model: opencode-go/muse-spark-1.2-contributor
+displayed_model: Muse Spark 1.2 Contributor
+effective_thinking: xhigh
+effective_advisor_enabled: false
+effective_task_agent_advisor: {"task":"off"}
+effective_memory_backend: off
+effective_autolearn_enabled: false
+effective_mcp_project_config_enabled: false
+effective_approval_mode: yolo
+tools_enabled: false
+skills_enabled: false
+rules_enabled: false
+external_prompt_count: 1
+goal_status_at_idle: active
+goal_tokens_displayed_at_idle: 8.6K
+goal_complete_receipt_observed: false
+post_idle_observation_seconds: 30
+semantic_result_exact: true
+observed_non_goal_tool_calls: 0
+fresh_cwd_entries_after_exit: 0
+controller_cleanup: Ctrl-D after terminal failure observation
+process_exit_code: 0
+
+Launch argv:
+PI_CODING_AGENT_DIR=/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1 /home/sittingmongoose/.local/bin/omp --no-session --no-title --no-tools --no-skills --no-rules --cwd /tmp/r10-full-matrix-r01-omp-muse-spark-xhigh-r7IGNs --model opencode-go/muse-spark-1.2-contributor --thinking xhigh
+
+The controller submitted the exact worker prompt once through bracketed paste followed by one Return. The TUI showed Muse Spark 1.2 Contributor / opencode-go / xhigh and entered native Goal. The model produced a final answer ending with the exact oracle:
+
+PM_RESULT {"decision":"reject","reason_code":"AUTHORITY_WIDENING","source_ids":["S2"]}
+
+However, after the assistant became idle the TUI still displayed `🎯 Goal 8.6K`; it never displayed `Goal: complete` or any terminal Goal receipt. A further 30-second no-input observation produced no output or resumed work. This is not a timeout or slowness classification: the subject turn had ended and the input prompt was ready while Goal remained active. The row therefore fails the preregistered native-Goal lifecycle contract despite the exact semantic result.
+
+No Escape, follow-up prompt, approval, Goal-drop command, or retry was sent. After recording the terminal failure observation, Ctrl-D closed the session with exit code 0. The fresh cwd remained empty. Immediate post-exit config readback reconfirmed both advisor controls off and all other recorded profile controls unchanged. No later matrix row was launched.

@@ -1,0 +1,135 @@
+{
+  "run_id": "candidate_03_run_02",
+  "cases": [
+    {
+      "id": "controller_codex",
+      "prompt_sha256": "7223896bf9ee08bf8dc7f89898ed3481e80ffebe78ebce6fe8636d60ac1d781b",
+      "prompt_utf8_bytes": 1500,
+      "admitted_context_utf8_bytes": 484,
+      "requested_runtime": {
+        "model": "gpt-5.6-luna",
+        "thinking": "max",
+        "note": "Prescribed native-Codex canary route; the Sol-max root controller remains outside the subject matrix"
+      },
+      "external_prompt_count": 1,
+      "goal_status": "complete",
+      "goal_evidence": {
+        "activation_observed": true,
+        "terminal_observed": true
+      },
+      "observed_non_goal_tool_calls": 0,
+      "filesystem_changes": 0,
+      "final_assistant_text": "PM_RESULT {\"unit_order\":[\"authority_check\",\"receipt_check\"],\"contexts\":{\"authority_check\":[\"S2\"],\"receipt_check\":[\"S1\"]}}",
+      "typed_result": {
+        "unit_order": ["authority_check", "receipt_check"],
+        "contexts": {
+          "authority_check": ["S2"],
+          "receipt_check": ["S1"]
+        }
+      },
+      "effective_runtime": {
+        "model": "gpt-5.6-luna",
+        "thinking": "max"
+      },
+      "evidence_refs": ["controller_codex.txt"]
+    },
+    {
+      "id": "worker_omp",
+      "prompt_sha256": "6d78f098e66f97c89d3761b5667283673c018f20205f540cc3ed2e2258395aa4",
+      "prompt_utf8_bytes": 995,
+      "admitted_context_utf8_bytes": 185,
+      "requested_runtime": {
+        "model": "alibaba-token-plan/qwen3.8-max",
+        "thinking": "xhigh",
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "advisor_enabled": false,
+        "task_agent_advisor": {"task": "off"},
+        "memory_backend": "off",
+        "autolearn_enabled": false,
+        "mcp_project_config_enabled": false,
+        "approval_mode": "yolo",
+        "tools_enabled": false,
+        "skills_enabled": false,
+        "rules_enabled": false
+      },
+      "external_prompt_count": 1,
+      "goal_status": "complete",
+      "goal_evidence": {
+        "activation_observed": true,
+        "terminal_observed": true
+      },
+      "observed_non_goal_tool_calls": 0,
+      "filesystem_changes": 0,
+      "final_assistant_text_capture": "reconstructed_from_rendered_tui",
+      "final_assistant_text": "The parent's write scope is `read_only`. The child is requesting `write_project`. Per S2, the write scope of the parent is the upper bound for the child. The child is allowed to narrow it, but must not expand it. `write_project` is broader than `read_only` (it grants write access, exceeding read-only). Therefore this is an authority expansion → reject.\n\nS2 sets the parent's write scope as a hard upper bound; a child may narrow but not widen. `write_project` exceeds `read_only` (write permission > read-only), so the dispatch is an authority widening and is inadmissible.\n\nPM_RESULT {\"decision\":\"reject\",\"reason_code\":\"AUTHORITY_WIDENING\",\"source_ids\":[\"S2\"]}",
+      "typed_result": {
+        "decision": "reject",
+        "reason_code": "AUTHORITY_WIDENING",
+        "source_ids": ["S2"]
+      },
+      "effective_runtime": {
+        "model": "alibaba-token-plan/qwen3.8-max",
+        "thinking": "xhigh",
+        "advisor_enabled": false,
+        "task_agent_advisor": {"task": "off"},
+        "memory_backend": "off",
+        "autolearn_enabled": false,
+        "mcp_project_config_enabled": false,
+        "approval_mode": "yolo",
+        "tools_enabled": false,
+        "skills_enabled": false,
+        "rules_enabled": false
+      },
+      "evidence_refs": ["worker_omp.txt"]
+    },
+    {
+      "id": "reviewer_omp",
+      "prompt_sha256": "badddea8619dd9711335f78d54ac0bc5c03833ac3da70154a5defdf55d23499d",
+      "prompt_utf8_bytes": 1471,
+      "admitted_context_utf8_bytes": 484,
+      "requested_runtime": {
+        "model": "alibaba-token-plan/qwen3.8-max",
+        "thinking": "xhigh",
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "advisor_enabled": false,
+        "task_agent_advisor": {"task": "off"},
+        "memory_backend": "off",
+        "autolearn_enabled": false,
+        "mcp_project_config_enabled": false,
+        "approval_mode": "yolo",
+        "tools_enabled": false,
+        "skills_enabled": false,
+        "rules_enabled": false
+      },
+      "external_prompt_count": 1,
+      "goal_status": "complete",
+      "goal_evidence": {
+        "activation_observed": true,
+        "terminal_observed": true
+      },
+      "observed_non_goal_tool_calls": 0,
+      "filesystem_changes": 0,
+      "final_assistant_text_capture": "reconstructed_from_rendered_tui",
+      "final_assistant_text": "Review against admitted context:\n\n- Authority decision (S2): Parent ceiling is `read_only`; child requests `write_project`. S2 makes the parent ceiling a hard upper bound — child may narrow, must not widen. `write_project` > `read_only` is widening. Reject is the only correct decision; reason code `AUTHORITY_WIDENING` matches.\n- Claimed ContextReceipt effect (S1): Child cites a ContextReceipt as permission. S1 states a ContextReceipt is not execution authority and cannot replace permission checks. The claimed grant effect is invalid; it cannot cure the widening.\n\nWorker result is correct on both axes. Verdict: pass; both sources checked in admitted order; worker decision reject.\n\nPM_RESULT {\"verdict\":\"pass\",\"checked_source_ids\":[\"S1\",\"S2\"],\"worker_decision\":\"reject\"}",
+      "typed_result": {
+        "verdict": "pass",
+        "checked_source_ids": ["S1", "S2"],
+        "worker_decision": "reject"
+      },
+      "effective_runtime": {
+        "model": "alibaba-token-plan/qwen3.8-max",
+        "thinking": "xhigh",
+        "advisor_enabled": false,
+        "task_agent_advisor": {"task": "off"},
+        "memory_backend": "off",
+        "autolearn_enabled": false,
+        "mcp_project_config_enabled": false,
+        "approval_mode": "yolo",
+        "tools_enabled": false,
+        "skills_enabled": false,
+        "rules_enabled": false
+      },
+      "evidence_refs": ["reviewer_omp.txt"]
+    }
+  ]
+}

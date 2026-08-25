@@ -1,0 +1,22 @@
+status: PASS
+thread_id: 01a03727-4731-75f2-bb83-e3cb829f69f5
+host_id: remote-ssh-discovered:pm-dev
+turn_id: 01a03727-4b25-70d2-9935-a5f74f9b850a
+raw_rollout: /home/sittingmongoose/.codex/sessions/2026/08/25/rollout-2026-08-25T04-21-56-01a03727-4731-75f2-bb83-e3cb829f69f5.jsonl
+raw_rollout_utf8_bytes: 121515
+raw_rollout_sha256: d59ef6f650533ade838e7ea2028d786f283d279e94f24355d4aab611c6d3e342
+prompt_utf8_bytes: 1357
+prompt_sha256: f5f127fd72b811aa2f66f7bc250837965186b3704981f5b7a2ec3dfb5970e81c
+effective_model: gpt-5.6-luna
+effective_thinking: max
+external_prompt_count: 1
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+
+ordinal 10 create_goal call
+ordinal 11 Goal receipt: status=active, threadId=01a03727-4731-75f2-bb83-e3cb829f69f5
+ordinal 15 update_goal request: status=complete
+ordinal 16 Goal receipt: status=complete, tokensUsed=1075, timeUsedSeconds=5
+ordinal 21 assistant final: {"unit_order":["authority_check","receipt_check"],"contexts":{"authority_check":["S2"],"receipt_check":["S1"]}}
+
+The authoritative raw trace contains exactly one completed external UserMessage whose delegated input is the exact unchanged prompt, exactly two custom exec calls whose projections are create_goal and update_goal, native active and complete receipts, and the exact oracle final.

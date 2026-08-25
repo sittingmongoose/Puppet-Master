@@ -1,0 +1,23 @@
+status: ABORTED_BY_CONTROLLER_INDETERMINATE_ZERO_CREDIT_NO_REUSE
+surface: omp_interactive_linux_tui
+omp_version: 18.0.4
+prompt_utf8_bytes: 852
+prompt_sha256: f8a4b1fbb437df75395ac4901309e2503458aebd79a92a97dcbfec25091cf919
+effective_model: alibaba-token-plan/qwen3.8-max
+effective_thinking: xhigh
+effective_advisor_enabled: false
+effective_task_agent_advisor: {"task":"off"}
+launch_approval_override: always-ask
+controller_imposed_max_time_flag: 5m
+observed_process_elapsed_before_controller_interrupt_seconds: 305
+observed_goal_tokens_at_cleanup: 5.7K
+external_prompt_count: 1
+successful_goal_terminal_observed: false
+exact_final_observed: false
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+process_exit_code_after_cleanup: 0
+
+The fresh interactive TUI accepted the exact prompt once and displayed native Goal. It produced the correct semantic decision as prose but remained `Working` past a controller-imposed five-minute threshold. The controller then sent Escape. That exposed a red `Goal: complete` panel whose body was exactly `Tool call denied by user: goal`; the controller therefore interfered with a pending approval-gated lifecycle action. No valid terminal result or exact final can be inferred. Ctrl-D then closed the idle TUI. The fresh cwd remained empty, no matching OMP process remained, and immediate post-exit reads still showed `advisor.enabled=false` and `task.agentAdvisor={"task":"off"}`.
+
+Root cause supported by the direct contrast with the separate passing Qwen smoke: this run added `--approval-mode always-ask`, while the smoke used the isolated profile default and terminalized without human choreography. The five-minute threshold was not a user-owned performance requirement, and slowness alone is not scored as failure. Candidate 02 may remove only the host override; this controller-interfered attempt is never reused or credited.

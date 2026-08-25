@@ -1,0 +1,35 @@
+status: PASS
+surface: omp_interactive_linux_tui
+omp_version: 18.0.4
+pty_session_id: 65283
+fresh_cwd: /tmp/r10-full-matrix-r01-omp-deepseek-v4-flash-max-GuiaUk
+prompt_utf8_bytes: 995
+prompt_sha256: 6d78f098e66f97c89d3761b5667283673c018f20205f540cc3ed2e2258395aa4
+effective_model: opencode-go/deepseek-v4-flash
+displayed_model: DeepSeek V4 Flash
+effective_thinking: max
+effective_advisor_enabled: false
+effective_task_agent_advisor: {"task":"off"}
+effective_memory_backend: off
+effective_autolearn_enabled: false
+effective_mcp_project_config_enabled: false
+effective_approval_mode: yolo
+tools_enabled: false
+skills_enabled: false
+rules_enabled: false
+external_prompt_count: 1
+goal_status: complete
+goal_tokens_displayed: 5.3K
+goal_elapsed_seconds: 5
+observed_non_goal_tool_calls: 0
+fresh_cwd_entries_after_exit: 0
+process_exit_code: 0
+
+Launch argv:
+PI_CODING_AGENT_DIR=/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1 /home/sittingmongoose/.local/bin/omp --no-session --no-title --no-tools --no-skills --no-rules --cwd /tmp/r10-full-matrix-r01-omp-deepseek-v4-flash-max-GuiaUk --model opencode-go/deepseek-v4-flash --thinking max
+
+The controller submitted the exact worker prompt once through bracketed paste followed by one Return. The TUI showed DeepSeek V4 Flash / opencode-go / max, entered native Goal, displayed `Goal: complete ⟦complete⟧` with 5.3K tokens and 5 seconds elapsed, and completed the post-receipt assistant answer. The final answer ended with:
+
+PM_RESULT {"decision":"reject","reason_code":"AUTHORITY_WIDENING","source_ids":["S2"]}
+
+No Escape, follow-up prompt, approval, or cleanup command was sent. No non-Goal model tool call was displayed. Startup still connected context7 and context7-local and reported the preserved wirekitty HTTP 404 despite `--no-tools`; this remains an environment residual. After the assistant became idle, Ctrl-D closed the session with exit code 0. The fresh cwd remained empty. Immediate post-exit config readback reconfirmed both advisor controls off and all other recorded profile controls unchanged.

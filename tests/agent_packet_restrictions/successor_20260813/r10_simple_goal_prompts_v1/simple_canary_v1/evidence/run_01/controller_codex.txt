@@ -1,0 +1,22 @@
+status: PASS
+thread_id: 01a0371d-f396-75f1-8100-e6dcdab58a42
+host_id: remote-ssh-discovered:pm-dev
+turn_id: 01a0371d-f902-7363-8cc8-d7f4f92a95a1
+raw_rollout: /home/sittingmongoose/.codex/sessions/2026/08/25/rollout-2026-08-25T04-11-44-01a0371d-f396-75f1-8100-e6dcdab58a42.jsonl
+raw_rollout_utf8_bytes: 121009
+raw_rollout_sha256: 9751ffe9209f342af349b6eda86e0214d5dffdab955ef8c0c5d52215d5dd2aec
+prompt_utf8_bytes: 1357
+prompt_sha256: f5f127fd72b811aa2f66f7bc250837965186b3704981f5b7a2ec3dfb5970e81c
+effective_model: gpt-5.6-luna
+effective_thinking: max
+external_prompt_count: 1
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+
+ordinal 10 create_goal call
+ordinal 11 Goal receipt: status=active, threadId=01a0371d-f396-75f1-8100-e6dcdab58a42
+ordinal 15 update_goal request: status=complete
+ordinal 16 Goal receipt: status=complete, tokensUsed=973, timeUsedSeconds=4
+ordinal 21 assistant final: {"unit_order":["authority_check","receipt_check"],"contexts":{"authority_check":["S2"],"receipt_check":["S1"]}}
+
+The authoritative raw trace contains exactly one completed external UserMessage carrying the exact prompt and exactly two custom exec calls, whose projections are create_goal and update_goal. The compact task view showed the exact final but was not used as Goal evidence.

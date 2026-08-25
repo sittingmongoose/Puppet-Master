@@ -1,0 +1,9 @@
+status: FAIL_STOPPED
+failed_case_id: omp_muse_spark_xhigh
+failure: native Goal remained active after the assistant returned an exact semantic result and became idle
+passed_case_ids: omp_ox_alpha_free_max, omp_deepseek_v4_flash_max, omp_gemini_3_7_flash_high
+unlaunched_case_ids: codex_luna_max, codex_luna_medium, codex_5_4_xhigh, codex_5_4_medium, codex_5_4_mini_xhigh, codex_5_4_mini_medium, omp_cursor_default_auto, omp_qwen3_8_max_xhigh
+retry_count: 0
+qualification_credit: 0
+
+This consumed matrix run is permanently nonclean. The controller did not launch any paid Codex, Cursor, or Qwen suffix row after the failure.

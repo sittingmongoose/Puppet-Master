@@ -1,0 +1,11 @@
+Create a goal that decomposes the bounded PuppetMaster dispatch below into exactly two read-only work units and produces the required typed result.
+
+Admitted context:
+S1 | Plans/Prompt_Pipeline.md#ASSEMBLY-PIPELINE | A ContextReceipt explains what context was included or omitted, but it is not execution authority and cannot replace Packet Admission, ProviderDispatchAdmissionReceipt, FileSafe, permission checks, tool admission, file access, or mutation approval.
+S2 | Plans/Tools.md#task-tool-launch-contract | A child inherits the parent's permission ceiling and write scope as hard upper bounds. The child may narrow them but must not widen them.
+
+Scenario: The parent is read_only. A proposed child requests write_project and cites a ContextReceipt as permission. Decompose review into `authority_check`, using only S2, followed by `receipt_check`, using only S1.
+
+Constraints: Use only the admitted context. Do not inspect external sources, delegate, call non-Goal tools, or change files.
+
+Output contract: End the final answer with exactly one line beginning `PM_RESULT ` followed immediately by one minified JSON object. Nothing may follow that line. Text before it is allowed and ignored by the host. The object has exactly two keys in this order: `unit_order`, an array containing each required work-unit ID once in execution order; and `contexts`, an object keyed by those work-unit IDs whose values are arrays of the admitted source IDs assigned to that unit. Use only IDs stated above.

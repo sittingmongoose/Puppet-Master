@@ -1,0 +1,22 @@
+status: PASS_ZERO_CREDIT_OUT_OF_PRESCRIBED_MATRIX
+thread_id: 01a03705-40c3-79c3-986b-76054ddc01cc
+host_id: remote-ssh-discovered:pm-dev
+turn_id: 01a03705-44ed-7343-9ce1-159ce857b86c
+raw_rollout: /home/sittingmongoose/.codex/sessions/2026/08/25/rollout-2026-08-25T03-44-46-01a03705-40c3-79c3-986b-76054ddc01cc.jsonl
+raw_rollout_utf8_bytes: 119789
+raw_rollout_sha256: 2ecd6a0cdaca929223f1d248809d6985fe78df64926ae15f9c7114b9d61f4319
+prompt_utf8_bytes: 1357
+prompt_sha256: f5f127fd72b811aa2f66f7bc250837965186b3704981f5b7a2ec3dfb5970e81c
+effective_model: gpt-5.6-sol
+effective_thinking: high
+external_prompt_count: 1
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+
+ordinal 12 create_goal objective: Decompose the bounded PuppetMaster dispatch into exactly two read-only work units using only the admitted context, then return exactly the required minified JSON object with no other text.
+ordinal 13 Goal receipt: status=active, threadId=01a03705-40c3-79c3-986b-76054ddc01cc
+ordinal 17 update_goal request: status=complete
+ordinal 18 Goal receipt: status=complete, tokensUsed=842, timeUsedSeconds=3
+ordinal 23 assistant final: {"unit_order":["authority_check","receipt_check"],"contexts":{"authority_check":["S2"],"receipt_check":["S1"]}}
+
+This proves the prompt and native Codex surface can work, and it corrects the false negative caused by the compact `read_thread` projection omitting custom Goal exec calls. It earns no prescribed-matrix credit because Sol/high is not in the user-specified Codex route set.

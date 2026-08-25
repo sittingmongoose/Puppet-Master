@@ -1,0 +1,28 @@
+status: PASS
+surface: codex_app
+thread_id: 01a03737-a9b8-7b10-8e8a-80322ee5a537
+host_id: remote-ssh-discovered:pm-dev
+turn_id: 01a03737-ada3-73f1-8d6f-ddc47b7f9278
+raw_rollout: /home/sittingmongoose/.codex/sessions/2026/08/25/rollout-2026-08-25T04-39-49-01a03737-a9b8-7b10-8e8a-80322ee5a537.jsonl
+raw_rollout_utf8_bytes: 127067
+raw_rollout_sha256: 3afe29efc63a713a8d51089656716957a3fccb35926b057e393074e2410c101c
+prompt_utf8_bytes: 1500
+prompt_sha256: 7223896bf9ee08bf8dc7f89898ed3481e80ffebe78ebce6fe8636d60ac1d781b
+effective_model: gpt-5.6-luna
+effective_thinking: max
+external_prompt_count: 1
+goal_status: complete
+goal_tokens: 1766
+goal_elapsed_seconds: 7
+observed_non_goal_tool_calls: 0
+filesystem_changes: 0
+task_duration_ms: 29106
+
+ordinal 7 completed external UserMessage containing the exact submitted prompt
+ordinal 12 create_goal call
+ordinal 13 Goal receipt: status=active, threadId=01a03737-a9b8-7b10-8e8a-80322ee5a537
+ordinal 17 update_goal request: status=complete
+ordinal 18 Goal receipt: status=complete, tokensUsed=1766, timeUsedSeconds=7
+ordinal 23 assistant final: PM_RESULT {"unit_order":["authority_check","receipt_check"],"contexts":{"authority_check":["S2"],"receipt_check":["S1"]}}
+
+The authoritative raw trace has one completed external task UserMessage, one create_goal and one terminal update_goal call with native active/complete receipts, no other custom tool calls, and the exact oracle as its sole terminal PM_RESULT line. The platform bootstrap recommended_plugins user-role row is not an external task submission.
