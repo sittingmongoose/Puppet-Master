@@ -1,0 +1,14 @@
+{
+  "attempt_id": "ox-glm-v3-04-3095317c70",
+  "captured_at_utc": "2026-08-26T07:12:44.471Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 813950: RunnerError: row time budget expired before exact Goal terminal result",
+  "no_retry": true,
+  "nonce": "3095317c7041168d1ec776dc647a7792",
+  "ordinal": 4,
+  "pass_id": "reliability_04",
+  "pid": 813950,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

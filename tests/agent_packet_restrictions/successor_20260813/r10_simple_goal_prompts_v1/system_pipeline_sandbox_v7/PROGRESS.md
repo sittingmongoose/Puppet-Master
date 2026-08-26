@@ -493,3 +493,15 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: row-3 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or row-4/suffix path changed.
 - Next disconfirming test: fixed row 4 on unchanged bytes must independently PASS or permanently fail-stop the denominator. No retry, replacement, or skipped row is permitted.
 - Classification: **PROGRESS — 3/5, ZERO QUALIFICATION CREDIT**. This remains an incomplete development denominator, not a reliability or matrix claim.
+
+## 2026-08-26T07:18:18Z — owned-GLM reliability fixed-denominator stop
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Current hypothesis: the explicit five-of-five Ox/GLM reliability hypothesis is unsupported. Frozen rows 1–3 independently verify `PASS`; frozen row 4 is permanently `FAIL`; fail-stop freezes row 5 unlaunched.
+- Smallest changed invariant: none in the experiment. Row 4 used the same frozen source, 3,036-byte prompt, route, max effort, GLM overlay, advisor-off runtime, 3,600-second allowance, scorer, and evidence bar. This turn adds only a late custody review and this alignment entry.
+- New evidence: row 4 accepted one submission, used one native continuation, emitted one canonical 82-byte GLM Goal call, completed Goal successfully, and produced two earlier assistant texts that independently satisfy the unchanged scorer. Its required distinct final assistant omitted `PM_RESULT`, so the frozen final-result scorer never passed; the runner exhausted 3,600 seconds, terminated by SIGTERM, and recorded zero-credit `FAIL`. The fixed observed denominator is three PASS and one FAIL; row 5 remains absent.
+- Deepest valid product-relevant point: the unchanged five-row test advanced product evidence by showing repeated bounded Goal and exact typed-result behavior across three identities, then exposed a weak-route reliability boundary that Goal completion alone does not close: the distinct post-Goal final must still preserve the exact typed result.
+- Files/surface added or removed: row-4 runtime evidence plus one late `failure_review.json` and this append-only entry; none removed. No source, config, prompt, scorer, frozen V7 byte, or row-5 path changed.
+- Next disconfirming test: launches are frozen. Row 5, retries, replacements, and retro-credit are prohibited. The next disconfirming pivot is TBD and requires a separately bounded decision before any new architecture or subject execution.
+- Classification: **PROGRESS — RELIABILITY HYPOTHESIS UNSUPPORTED; FIXED 3 PASS / 1 FAIL; ZERO QUALIFICATION CREDIT**. This is product-relevant failure evidence, not an Ox/GLM reliability, matrix, readiness, or completion claim.

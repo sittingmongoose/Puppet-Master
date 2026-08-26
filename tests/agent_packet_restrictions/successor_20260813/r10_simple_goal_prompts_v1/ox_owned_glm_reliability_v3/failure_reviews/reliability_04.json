@@ -1,0 +1,198 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.owned_glm_reliability_failure_review.v3",
+  "reviewed_at_utc": "2026-08-26T07:18:18Z",
+  "classification": "PERMANENT_V3_ROW4_FINAL_ASSISTANT_EXACT_RESULT_FAILURE_AFTER_NATIVE_GOAL_COMPLETION",
+  "frozen_identity": {
+    "ordinal": 4,
+    "pass_id": "reliability_04",
+    "route_id": "omp_ox_alpha_free_max",
+    "attempt_id": "ox-glm-v3-04-3095317c70",
+    "nonce": "3095317c7041168d1ec776dc647a7792",
+    "model": "opencode-go/ox-alpha-free",
+    "thinking": "max",
+    "pid": 813950,
+    "session_id": "01a03cb3-199e-7630-ab58-3f157e4f77e5",
+    "goal_id": "15667a1c2833723f"
+  },
+  "fixed_denominator": {
+    "required_passes": 5,
+    "required_rows": 5,
+    "verified_rows": [
+      {
+        "ordinal": 1,
+        "status": "PASS",
+        "terminal_sha256": "36a7931e616c132618f9df6f2a1deb92f21dbf9fe5a7efdf464b09e9d0969680",
+        "raw_session_sha256": "0e46e4d154bc2446d026922e42febcf81e750784e20ffba3e39d7ecd59728e33"
+      },
+      {
+        "ordinal": 2,
+        "status": "PASS",
+        "terminal_sha256": "92b5418efc87b3d1effa3928de20c9f535be03b6fbba8e2b248f019c76d81e7d",
+        "raw_session_sha256": "bc147c7692cd149cd7dc3ae4078f82a79accaa8d9fae8771f54c8ece5adc41b2"
+      },
+      {
+        "ordinal": 3,
+        "status": "PASS",
+        "terminal_sha256": "3f1ea2346823f9f46459eed894a9b946fd47da8d53c2830468094e73f5f9f5f1",
+        "raw_session_sha256": "31f967ada57045bcd841caab1e5409b8c7418e4108dbac6be813ccbff9e0a971"
+      },
+      {
+        "ordinal": 4,
+        "status": "FAIL",
+        "terminal_sha256": "b0f8fe5a4b7b09734996a2ee5cda6945f2e10289dd0a04e24f8f260f6bd77bf8",
+        "postfailure_session_sha256": "40ae3edddc9f7335d55321e75f996684b7d9a1540d6cc30382585c9ca7237564"
+      }
+    ],
+    "observed_pass_count": 3,
+    "observed_fail_count": 1,
+    "row_5_launched": false,
+    "reliability_hypothesis_supported": false,
+    "qualification_credit": 0
+  },
+  "key_evidence": {
+    "launch_journal": {
+      "bytes": 1864,
+      "sha256": "85cb20625f92f75ae060ab93b6f9a674f05666c60e35867034a7e21f0fcf7415"
+    },
+    "launch": {
+      "bytes": 1672,
+      "sha256": "e88d93fec3006cefac650e59360535d4be914ba47bcf15ef5acd1870b3cc6216"
+    },
+    "omp_preflight": {
+      "bytes": 10497,
+      "sha256": "40dafc4a02bc9fd3e551203c97c164d4180a4db3d43bb3ac1298041a1a9a1058"
+    },
+    "stdin_prompt": {
+      "bytes": 3036,
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    "session_prefix": {
+      "bytes": 25501,
+      "sha256": "1d69942a4d84de18e363e610c67c87e5e44d9dcb488d8adabf1ea4ff048b0bdf"
+    },
+    "postfailure_session": {
+      "bytes": 63099,
+      "sha256": "40ae3edddc9f7335d55321e75f996684b7d9a1540d6cc30382585c9ca7237564"
+    },
+    "runner_failure": {
+      "bytes": 522,
+      "sha256": "1527eb8febc2da9266ff32cd90b0f7701e45561ceb2fdbcdc1cfecf11907de66"
+    },
+    "terminal": {
+      "bytes": 3023,
+      "sha256": "b0f8fe5a4b7b09734996a2ee5cda6945f2e10289dd0a04e24f8f260f6bd77bf8"
+    },
+    "transcript": {
+      "bytes": 5471398,
+      "sha256": "0cecab26b4f9fe2e8584bffb8d2fbe62ad78139a7a60a7dd76cb81fbd525097c"
+    }
+  },
+  "observed_postfailure_facts": {
+    "exact_external_submission_count": 1,
+    "assistant_count": 3,
+    "native_continuation_count": 1,
+    "goal_context_count": 2,
+    "goal_tool_call_count": 1,
+    "ordinary_tool_call_count": 0,
+    "owned_glm_goal_raw_block_bytes": 82,
+    "owned_glm_goal_raw_block_sha256": "d6897df63bd35ea8e7b3eb5e036068814b6ed65712b7876879d5f19afdc8e013",
+    "owned_glm_post_call_framing": "none",
+    "goal_complete_state_count": 1,
+    "goal_tool_result_count": 1,
+    "goal_completed_event_count": 1,
+    "first_assistant": {
+      "entry_id": "9ce57f89",
+      "timestamp_utc": "2026-08-26T06:13:41.619Z",
+      "text_utf8_bytes": 1506,
+      "text_sha256": "4e61e3d43cbb917979aa9df8022b83c2e47e845c4cf322af2d7071b6d6b92255",
+      "unchanged_scorer_pass": true,
+      "position": "before_native_continuation_and_goal_call"
+    },
+    "goal_call_assistant": {
+      "entry_id": "e6e17d7a",
+      "timestamp_utc": "2026-08-26T06:14:15.423Z",
+      "pre_call_text_utf8_bytes": 1846,
+      "pre_call_text_sha256": "69ab7a27c8494d3c49e975f6f5b08a6277b0ec75d4f87507e59588aea676ef8c",
+      "unchanged_scorer_pass": true,
+      "stop_reason": "toolUse"
+    },
+    "final_assistant": {
+      "entry_id": "ef1e7569",
+      "timestamp_utc": "2026-08-26T06:14:28.409Z",
+      "text_utf8_bytes": 468,
+      "text_sha256": "fd4609e9bf2a90bb7fcc7d1edad2ea11e19e30946274fbfe3ad1d5f18b733ac2",
+      "pm_result_marker_count": 0,
+      "unchanged_scorer_pass": false,
+      "scorer_error": "RunnerError: exactly one PM_RESULT line"
+    },
+    "goal_completed_at_utc": "2026-08-26T06:14:28.416Z",
+    "session_exit_at_utc": "2026-08-26T07:12:44.302Z",
+    "session_exit_kind": "signal",
+    "session_exit_reason": "sigterm",
+    "normal_exit_observed": false,
+    "terminal_process_exit_code": null,
+    "pid_absent_after_terminal": true
+  },
+  "reproduced_projection_boundary": {
+    "require_exit_false_projection": "PASS_STANDARD_TOOL_CYCLE",
+    "projected_final_text_sha256": "fd4609e9bf2a90bb7fcc7d1edad2ea11e19e30946274fbfe3ad1d5f18b733ac2",
+    "projected_final_scorer": "REJECTED_RUNNER_ERROR_EXACTLY_ONE_PM_RESULT_LINE",
+    "require_exit_true_projection": "REJECTED_OMP_NORMAL_SESSION_EXIT",
+    "runner_poll_catches_scorer_failure": true,
+    "runner_timeout_reproduced_from_frozen_receipts": true,
+    "conclusion": "Native Goal completion and two earlier exact semantic results were present, but the required distinct final assistant after the Goal result omitted PM_RESULT. The frozen projection therefore never passed the unchanged final-result scorer; the runner continued polling until the fixed deadline and then terminated the process."
+  },
+  "failure": {
+    "terminal_status": "FAIL",
+    "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 813950: RunnerError: row time budget expired before exact Goal terminal result",
+    "row_budget_seconds": 3600,
+    "launched_at_utc": "2026-08-26T06:12:44.265Z",
+    "failure_captured_at_utc": "2026-08-26T07:12:44.471Z",
+    "seconds_from_launch_to_failure": 3600.206,
+    "seconds_from_launch_to_signal": 3600.037,
+    "no_retry": true,
+    "qualification_credit": 0
+  },
+  "sequencing_custody": {
+    "journal_ordinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "journal_identity_and_launch_preflight_joins_verified": true,
+    "all_four_pids_absent": true,
+    "completed_row_cwds_present_and_empty": true,
+    "completed_row_session_dirs_have_one_persistent_session_each": true,
+    "row_5_evidence_absent": true,
+    "row_5_cwd_absent": true,
+    "row_5_session_dir_absent": true,
+    "row_5_launch_authorized": false,
+    "retry_or_replacement_authorized": false
+  },
+  "terminal_custody": {
+    "terminal_evidence_count": 15,
+    "terminal_evidence_joins_verified": true,
+    "terminal_receipt_unchanged": true,
+    "failure_review_is_late_and_outside_terminal_roster": true
+  },
+  "terminal_disposition": {
+    "consumed_row_reclassification_authorized": false,
+    "explicit_glm_reliability_supported": false,
+    "remaining_launches_frozen": true,
+    "next_disconfirming_pivot": "TBD",
+    "matrix_qualification_credit": 0
+  },
+  "claims_excluded": [
+    "V3 row 4 pass",
+    "V3 five-of-five reliability support",
+    "normal process exit",
+    "authorization to launch row 5",
+    "authorization to retry, replace, or retro-credit row 4",
+    "matrix qualification",
+    "production readiness",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ]
+}
