@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.ox_native_reliability.study_summary.v1",
+  "created_at_utc": "2026-08-26T08:49:26Z",
+  "status": "PASS_NATIVE_RELIABILITY_5_OF_5_ZERO_CREDIT",
+  "study_root": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1",
+  "hypothesis_supported_for_fixed_development_denominator": true,
+  "independent_verification": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B controller.py verify-prefix",
+    "status": "PASS_NATIVE_RELIABILITY_5_OF_5_ZERO_CREDIT",
+    "row_count": 5,
+    "required_rows": 5,
+    "subject_calls": 0,
+    "qualification_credit": 0
+  },
+  "source_custody": {
+    "frozen_contract_source_candidate_commit": "708308068d276702019234ce7774ffab7c3b9e9d",
+    "final_execution_head": "f908529b8bb9d01e98f6f5157e2709a24ce14928",
+    "owned_sources_identical_at_all_five_execution_heads": true,
+    "owned_sources": [
+      {"path": "README.md", "bytes": 2747, "sha256": "756968ba9321757260e1338d0f7809a42976902054172f9ea59e6b45727979fe"},
+      {"path": "reliability_contract.json", "bytes": 12121, "sha256": "500d26a3214917f46c6817bc53dbc3581130d7e4cbda94e1801568b28745228d"},
+      {"path": "controller.py", "bytes": 20356, "sha256": "7d7e1b82b9a2622f92c93f44a3f630f89a87ab2b9b7a9832c33b64cb10746834"},
+      {"path": "selftest.py", "bytes": 13033, "sha256": "9aa0e331e7f1a79eed619451779c639d2dd44d7f573d6611ff9bd996166fb9fe"}
+    ]
+  },
+  "runtime_contract": {
+    "host": "linux_isolated_profile_only",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "protocol_adapter": "native_default",
+    "config_overlay": null,
+    "config_flag_present": false,
+    "model": "opencode-go/ox-alpha-free",
+    "thinking": "max",
+    "prompt_utf8_bytes": 3036,
+    "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "advisor_enabled": false,
+    "task_agent_advisor": {"task": "off"},
+    "ordinary_tools_enabled": false,
+    "row_time_budget_seconds": 3600,
+    "normal_exit_required": true,
+    "foreign_windows_omp_terminal_boundary": "DO_NOT_INSPECT_FOCUS_INJECT_SIGNAL_REUSE_CLOSE_OR_CLEANUP",
+    "foreign_windows_boundary_observed_untouched": true
+  },
+  "standing_authority": {
+    "source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+    "recorded_at_utc": "2026-08-26T01:09:54Z",
+    "user_text_utf8": "You can run as many free Ox runs as you want.  Dont ask going forward",
+    "user_text_utf8_bytes": 69,
+    "user_text_sha256": "99df1f43d62da6ae6314c385f43208ac159374deed46c8b16382d3c9909d54e8",
+    "all_five_fixed_rows_authorized": true,
+    "retry_or_replacement_authorized": false,
+    "retroactive_credit_authorized": false,
+    "non_ox_or_paid_route_authorized": false
+  },
+  "rows": [
+    {"ordinal": 1, "pass_id": "native_01", "route_id": "omp_ox_alpha_free_max", "attempt_id": "ox-native-v1-01-a682856a5c", "nonce": "a682856a5caa26d34cae21f4fd90048c", "cwd": "/tmp/pm-r10-storage-v7-ox-native-reliability-v1-01-a682856a5c", "session_dir": "/tmp/pm-r10-storage-v7-session-ox-native-reliability-v1-01-a682856a5c", "evidence_path": "evidence/native_01/omp_ox_alpha_free_max", "execution_head": "f2579f84da4846854eae2fec097dfb5862d3a458", "session_id": "01a03d22-4140-72a7-adb3-8204fbc0cdc6", "goal_id": "156695e622122b83", "status": "PASS", "process_exit_code": 0, "ordinary_tool_calls": 0, "native_continuation_count": 0, "no_retry": true, "qualification_credit": 0, "final_text_sha256": "f7a667b1202d25704ee489319dc824758106d9f908481fddd405e764c13ffde9", "terminal_sha256": "efb440fe3469d08ba3dceff8b4daeca25311089f0c2976a6a68a1362e5bb865b"},
+    {"ordinal": 2, "pass_id": "native_02", "route_id": "omp_ox_alpha_free_max", "attempt_id": "ox-native-v1-02-fe0f1a80e1", "nonce": "fe0f1a80e1502a4e948be4971f000a09", "cwd": "/tmp/pm-r10-storage-v7-ox-native-reliability-v1-02-fe0f1a80e1", "session_dir": "/tmp/pm-r10-storage-v7-session-ox-native-reliability-v1-02-fe0f1a80e1", "evidence_path": "evidence/native_02/omp_ox_alpha_free_max", "execution_head": "6a624d92cffaecd9da56553ff84abc594832506e", "session_id": "01a03d2a-2ef2-7192-9961-9054a8938715", "goal_id": "156697e181ffba47", "status": "PASS", "process_exit_code": 0, "ordinary_tool_calls": 0, "native_continuation_count": 0, "no_retry": true, "qualification_credit": 0, "final_text_sha256": "0825053649efe043cb2358a51233307c3a242e4868871e2331b07b35c81f4a44", "terminal_sha256": "767fe45683e31aef9b03b9a9cec3f67adc1d214e544682f6b9d255674bc2e182"},
+    {"ordinal": 3, "pass_id": "native_03", "route_id": "omp_ox_alpha_free_max", "attempt_id": "ox-native-v1-03-a56ce28265", "nonce": "a56ce28265b82b66025e284eaf92c79f", "cwd": "/tmp/pm-r10-storage-v7-ox-native-reliability-v1-03-a56ce28265", "session_dir": "/tmp/pm-r10-storage-v7-session-ox-native-reliability-v1-03-a56ce28265", "evidence_path": "evidence/native_03/omp_ox_alpha_free_max", "execution_head": "9688b535965c91bd781b9c80605ad933642d5106", "session_id": "01a03d30-7974-7791-a680-7874cf3b80e8", "goal_id": "156699742b4c2566", "status": "PASS", "process_exit_code": 0, "ordinary_tool_calls": 0, "native_continuation_count": 0, "no_retry": true, "qualification_credit": 0, "final_text_sha256": "8ea322c3b15284312ac7ffbce609ed89277cb435b13dcde0284872fb53cd21fe", "terminal_sha256": "a0376653fe5f7773fb4464829ccf6a5a7572f5ee3c84b2e9b485345767a59418"},
+    {"ordinal": 4, "pass_id": "native_04", "route_id": "omp_ox_alpha_free_max", "attempt_id": "ox-native-v1-04-a103b3b198", "nonce": "a103b3b198924f001c470def56d744f9", "cwd": "/tmp/pm-r10-storage-v7-ox-native-reliability-v1-04-a103b3b198", "session_dir": "/tmp/pm-r10-storage-v7-session-ox-native-reliability-v1-04-a103b3b198", "evidence_path": "evidence/native_04/omp_ox_alpha_free_max", "execution_head": "8008387b47bd45956289768bc25ca6e7bd125fb6", "session_id": "01a03d37-23c7-7668-9857-7054ea088534", "goal_id": "15669b1ecbf9212b", "status": "PASS", "process_exit_code": 0, "ordinary_tool_calls": 0, "native_continuation_count": 0, "no_retry": true, "qualification_credit": 0, "final_text_sha256": "277add223f8957b2daf971e06d14984316b420f20bef452ad2fd2e699bca5b86", "terminal_sha256": "4a0255e4a833a8504a04932c028cab1121e0800cd16cab8ce66f5fd68f900320"},
+    {"ordinal": 5, "pass_id": "native_05", "route_id": "omp_ox_alpha_free_max", "attempt_id": "ox-native-v1-05-d75fe93a42", "nonce": "d75fe93a42c64382ae99f52ae953f6c5", "cwd": "/tmp/pm-r10-storage-v7-ox-native-reliability-v1-05-d75fe93a42", "session_dir": "/tmp/pm-r10-storage-v7-session-ox-native-reliability-v1-05-d75fe93a42", "evidence_path": "evidence/native_05/omp_ox_alpha_free_max", "execution_head": "f908529b8bb9d01e98f6f5157e2709a24ce14928", "session_id": "01a03d3c-0f92-70ec-b866-392be18289be", "goal_id": "15669c59a5e716e8", "status": "PASS", "process_exit_code": 0, "ordinary_tool_calls": 0, "native_continuation_count": 0, "no_retry": true, "qualification_credit": 0, "final_text_sha256": "02b843cf0e60d5f5998c256b8b9a7ccf1d853be2fc0936c7b79d23c135647f91", "terminal_sha256": "863c6eae8092418ea8cae144d0b263cc3386a1f480908f2f415a99a083aa28df"}
+  ],
+  "aggregate_custody": {
+    "journal": {"path": "evidence/launch_journal.jsonl", "bytes": 2320, "sha256": "1a02c7853ccba53e90f3bda4a7e190f84169c82e293f4dc8095ef9777ebd8755", "row_count": 5},
+    "pass_count": 5,
+    "fail_count": 0,
+    "normal_exit_count": 5,
+    "ordinary_tool_call_count": 0,
+    "retry_count": 0,
+    "replacement_count": 0,
+    "matrix_credit": 0,
+    "qualification_credit": 0,
+    "production_credit": 0
+  },
+  "interpretation": "The fixed native/default Ox development denominator independently verifies 5/5. This supports only the preregistered bounded Storage-capsule repeatability hypothesis.",
+  "nonclaims": [
+    "This study grants zero matrix, qualification, production, readiness, certification, canonical Plan, WorkNode, or completion credit.",
+    "This study does not authorize retries, replacements, retro-credit, non-Ox routes, paid routes, or interaction with foreign Windows OMP or Windows Terminal surfaces."
+  ]
+}

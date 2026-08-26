@@ -565,3 +565,15 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: row-4 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or row-5 path changed. Every Windows OMP and Windows Terminal process/window remained foreign and untouched.
 - Next disconfirming test: the fixed final row 5 on the same unchanged native/default bytes must independently `PASS` or the preregistered five-row denominator fails. No retry, replacement, skipped row, or retro-credit is permitted.
 - Classification: **PROGRESS — NATIVE/DEFAULT 4/5; ZERO QUALIFICATION CREDIT**. This remains an incomplete development denominator, not a repeatability, reliability, matrix, readiness, or completion claim.
+
+## 2026-08-26T08:49:26Z — native/default Ox reliability final study alignment
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Current hypothesis: supported for the exact preregistered development denominator. The unchanged native/default Ox architecture independently verified 5/5 bounded native Goal and typed-result rows.
+- Smallest changed invariant: none since frozen native V1. All five rows used identical source, the exact 3,036-byte prompt, Ox/max route, isolated Linux profile, advisor-off/no-ordinary-tools runtime, native/default argv, 3,600-second allowance, scorer, and evidence bar.
+- New evidence: final row 5 independently verifies `PASS`, completing an independently verified 5/5 prefix. Every row used provider-native Goal transport with no `--config` or dialect adapter, completed one Goal, produced the exact typed result, used zero ordinary tools and retries, and exited normally; qualification and matrix credit remain zero.
+- Deepest valid product-relevant point: the native/default Ox route is repeatable for this bounded Storage capsule across five fresh identities without custom Goal choreography or a protocol-dialect adapter.
+- Files/surface added or removed: row-5 runtime evidence plus root-level `ox_native_reliability_v1/study_summary.json`; none removed. This turn adds only the late summary and this alignment entry and does not alter source, config, or closed evidence. Every Windows OMP and Windows Terminal process/window remained foreign and untouched.
+- Next disconfirming test: a fresh full 12-route × 2-pass matrix on separately frozen identities and unchanged scoring, beginning with Ox, then Cursor, and retaining Qwen last. It must preserve per-row fail-stop custody and count every fixed row; this study supplies no matrix credit in advance.
+- Classification: **PROGRESS — NATIVE/DEFAULT OX 5/5 DEVELOPMENT HYPOTHESIS SUPPORTED; ZERO MATRIX/QUALIFICATION/PRODUCTION CREDIT**. This is strong bounded-route evidence, not product completion, readiness, certification, or full-matrix qualification.

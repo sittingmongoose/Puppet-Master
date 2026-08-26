@@ -1,0 +1,309 @@
+{
+  "attempt_id": "ox-native-v1-05-d75fe93a42",
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 179881160,
+  "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+  "config_commands": [
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "advisor.enabled"
+      ],
+      "exit_code": 0,
+      "key": "advisor.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "task.agentAdvisor"
+      ],
+      "exit_code": 0,
+      "key": "task.agentAdvisor",
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "memory.backend"
+      ],
+      "exit_code": 0,
+      "key": "memory.backend",
+      "stdout": "off"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "autolearn.enabled"
+      ],
+      "exit_code": 0,
+      "key": "autolearn.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "mcp.enableProjectConfig"
+      ],
+      "exit_code": 0,
+      "key": "mcp.enableProjectConfig",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "tools.approvalMode"
+      ],
+      "exit_code": 0,
+      "key": "tools.approvalMode",
+      "stdout": "yolo"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.enabled"
+      ],
+      "exit_code": 0,
+      "key": "goal.enabled",
+      "stdout": "true"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.continuationModes"
+      ],
+      "exit_code": 0,
+      "key": "goal.continuationModes",
+      "stdout": "[\"interactive\"]"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "plan.defaultOnStartup"
+      ],
+      "exit_code": 0,
+      "key": "plan.defaultOnStartup",
+      "stdout": "false"
+    }
+  ],
+  "config_overlay": null,
+  "dependencies": [
+    {
+      "bytes": 41009,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+      "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+    },
+    {
+      "bytes": 37909,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_session.py",
+      "sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+    },
+    {
+      "bytes": 35041,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+      "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+    },
+    {
+      "bytes": 29419,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/pipeline.py",
+      "sha256": "e240db07e8de31f7fa7294c5f722b9a63b90f634a86d00fe976deee63a8e1708"
+    },
+    {
+      "bytes": 1788,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_check.py",
+      "sha256": "170680502462ac6066077dcd43ab69b1838e986cc268590d9784bea3520a452e"
+    },
+    {
+      "bytes": 4443,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_manifest.json",
+      "sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3"
+    },
+    {
+      "bytes": 2370,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/matrix.json",
+      "sha256": "70adc74155e652808d1c9ede781698c3f5675a58e094e8b3a0d93ce9e827957e"
+    },
+    {
+      "bytes": 1335,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/runtime_manifest.json",
+      "sha256": "56943ce8625c6ce7e3d621323d382d8db8f10f2b8f2c0970193ca97f89d726ba"
+    },
+    {
+      "bytes": 407,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/oracle.json",
+      "sha256": "f11f136b271d739e8b1108cce38ab52dbd0258357f9a591da1c5c1ba69e36bdf"
+    },
+    {
+      "bytes": 3036,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 58033,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/selftest.py",
+      "sha256": "fb47411b2db6db849c54290604ab28ae6076d9b5b99cb3003fb33839c1e23b5a"
+    }
+  ],
+  "effective_config": {
+    "advisor.enabled": false,
+    "autolearn.enabled": false,
+    "goal.continuationModes": [
+      "interactive"
+    ],
+    "goal.enabled": true,
+    "mcp.enableProjectConfig": false,
+    "memory.backend": "off",
+    "plan.defaultOnStartup": false,
+    "task.agentAdvisor": {
+      "task": "off"
+    },
+    "tools.approvalMode": "yolo"
+  },
+  "expected_argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--session-dir",
+    "/tmp/pm-r10-storage-v7-session-ox-native-reliability-v1-05-d75fe93a42",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--cwd",
+    "/tmp/pm-r10-storage-v7-ox-native-reliability-v1-05-d75fe93a42",
+    "--model",
+    "opencode-go/ox-alpha-free",
+    "--thinking",
+    "max"
+  ],
+  "git_custody": {
+    "head": "f908529b8bb9d01e98f6f5157e2709a24ce14928",
+    "origin_main": "f908529b8bb9d01e98f6f5157e2709a24ce14928",
+    "sources": [
+      {
+        "bytes": 2747,
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/README.md",
+        "sha256": "756968ba9321757260e1338d0f7809a42976902054172f9ea59e6b45727979fe"
+      },
+      {
+        "bytes": 12121,
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/reliability_contract.json",
+        "sha256": "500d26a3214917f46c6817bc53dbc3581130d7e4cbda94e1801568b28745228d"
+      },
+      {
+        "bytes": 20356,
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/controller.py",
+        "sha256": "7d7e1b82b9a2622f92c93f44a3f630f89a87ab2b9b7a9832c33b64cb10746834"
+      },
+      {
+        "bytes": 13033,
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/selftest.py",
+        "sha256": "9aa0e331e7f1a79eed619451779c639d2dd44d7f573d6611ff9bd996166fb9fe"
+      }
+    ],
+    "truenas_backup_main": "f908529b8bb9d01e98f6f5157e2709a24ce14928"
+  },
+  "model": "opencode-go/ox-alpha-free",
+  "nonce": "d75fe93a42c64382ae99f52ae953f6c5",
+  "observed_at_utc": "2026-08-26T08:42:19.669Z",
+  "ordinal": 5,
+  "owned_sources": [
+    {
+      "bytes": 2747,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/README.md",
+      "sha256": "756968ba9321757260e1338d0f7809a42976902054172f9ea59e6b45727979fe"
+    },
+    {
+      "bytes": 12121,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/reliability_contract.json",
+      "sha256": "500d26a3214917f46c6817bc53dbc3581130d7e4cbda94e1801568b28745228d"
+    },
+    {
+      "bytes": 20356,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/controller.py",
+      "sha256": "7d7e1b82b9a2622f92c93f44a3f630f89a87ab2b9b7a9832c33b64cb10746834"
+    },
+    {
+      "bytes": 13033,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/selftest.py",
+      "sha256": "9aa0e331e7f1a79eed619451779c639d2dd44d7f573d6611ff9bd996166fb9fe"
+    }
+  ],
+  "pass_id": "native_05",
+  "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+  "protocol_adapter": "native_default",
+  "qualification_credit": 0,
+  "reliability_contract": {
+    "bytes": 12121,
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_native_reliability_v1/reliability_contract.json",
+    "sha256": "500d26a3214917f46c6817bc53dbc3581130d7e4cbda94e1801568b28745228d"
+  },
+  "replay_sources": [
+    {
+      "bytes": 1442,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/evidence/pass_01/omp_ox_alpha_free_max/launch.json",
+      "sha256": "157b582453d5878f7719546b0d36dd4da22faa62d931292eb334fea8cba842ee"
+    },
+    {
+      "bytes": 38353,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/evidence/pass_01/omp_ox_alpha_free_max/session.raw.jsonl",
+      "sha256": "472f2f99e46a04d8ad62ee054f115a8c166f1abaeeeaaf14238d7bdd0ad0f304"
+    },
+    {
+      "bytes": 5602,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/evidence/pass_01/omp_ox_alpha_free_max/terminal.json",
+      "sha256": "59c55ab6e23fda9d52703926dbef60ccd41da0adbdfb9b72b87f97a03298fd12"
+    },
+    {
+      "bytes": 1672,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_owned_glm_reliability_v3/evidence/reliability_04/omp_ox_alpha_free_max/launch.json",
+      "sha256": "e88d93fec3006cefac650e59360535d4be914ba47bcf15ef5acd1870b3cc6216"
+    },
+    {
+      "bytes": 25501,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_owned_glm_reliability_v3/evidence/reliability_04/omp_ox_alpha_free_max/session_prefix.raw.jsonl",
+      "sha256": "1d69942a4d84de18e363e610c67c87e5e44d9dcb488d8adabf1ea4ff048b0bdf"
+    },
+    {
+      "bytes": 63099,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_owned_glm_reliability_v3/evidence/reliability_04/omp_ox_alpha_free_max/postfailure_session.raw.jsonl",
+      "sha256": "40ae3edddc9f7335d55321e75f996684b7d9a1540d6cc30382585c9ca7237564"
+    },
+    {
+      "bytes": 3023,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_owned_glm_reliability_v3/evidence/reliability_04/omp_ox_alpha_free_max/terminal.json",
+      "sha256": "b0f8fe5a4b7b09734996a2ee5cda6945f2e10289dd0a04e24f8f260f6bd77bf8"
+    }
+  ],
+  "route_id": "omp_ox_alpha_free_max",
+  "row_time_budget_seconds": 3600,
+  "schema_id": "pm.r10.storage_pipeline.omp_preflight.v2",
+  "subject_calls": 0,
+  "surface": "omp_tui",
+  "thinking": "max",
+  "version_command": {
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "omp/18.0.4"
+  },
+  "version_stdout": "omp/18.0.4"
+}
