@@ -1,0 +1,37 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.muse_protocol_adapter_correction_push_custody.v1",
+  "recorded_at_utc": "2026-08-26T00:05:57Z",
+  "branch": "main",
+  "prior_head": "8ce62210445b22f81825f500992b444b99d158b2",
+  "correction_commit": "6ea72e8d926c362f3056173896d6ef09c84372b3",
+  "commit_subject": "tests: narrow Muse protocol blocker to untested GLM",
+  "pushed_refs_at_verification": {
+    "HEAD": "6ea72e8d926c362f3056173896d6ef09c84372b3",
+    "origin/main": "6ea72e8d926c362f3056173896d6ef09c84372b3",
+    "truenas-backup/main": "6ea72e8d926c362f3056173896d6ef09c84372b3"
+  },
+  "committed_paths": [
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_xml_probe_v1/PROTOCOL_ADAPTER_CORRECTION.json",
+      "git_status": "A",
+      "bytes": 8091,
+      "sha256": "c7ee070b8669ee116f7cd0a73820e47059125a3d005e3948f3075a84a154a63d"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/PROGRESS.md",
+      "git_status": "M",
+      "bytes": 78381,
+      "sha256": "8b6af5c3f3254c36a0c3da33d1e82b2fccbcfc7d0ecf572702662995b7449554"
+    }
+  ],
+  "scope": {
+    "canonical_plans_changed": false,
+    "planning_ledger_changed": false,
+    "worknodes_created": false,
+    "subject_calls": 0,
+    "qualification_credit": 0,
+    "native_or_xml_failure_relabelled": false,
+    "glm_subject_authorized_or_launched": false
+  },
+  "status": "PUSHED_CORRECTION_CUSTODY_ONLY"
+}
