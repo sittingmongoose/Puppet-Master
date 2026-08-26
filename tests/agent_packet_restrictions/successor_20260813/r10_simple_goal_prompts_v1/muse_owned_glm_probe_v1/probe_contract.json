@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.muse_owned_glm_probe.v1",
+  "status": "PREREGISTERED_ZERO_CREDIT",
+  "created_at_utc": "2026-08-26T00:14:57Z",
+  "source_candidate_commit": "fe7a9de5af2e2cc28eb5e97a44c088174cca5afa",
+  "source_freeze_manifest_sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3",
+  "hypothesis": "OMP's built-in owned GLM tool wire will preserve the unchanged one-prompt native Goal contract while making the sole Goal tool selectable on the Muse/OpenCode-Go route that returned exact semantic text but no tool call under both provider-native Responses and explicit generic XML.",
+  "smallest_changed_invariant": "Only tools.format changes to explicit glm through one frozen OMP config overlay. The subject prompt, capsule, oracle, scorer, model selectors, thinking levels, advisor controls, no-ordinary-tools restriction, native Goal runtime, and terminal acceptance bar remain unchanged.",
+  "source_prompt": {
+    "path": "../system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+    "utf8_bytes": 3036,
+    "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "required_prefix": "/goal ",
+    "external_submission_count": 1
+  },
+  "runtime": {
+    "binary": "/home/sittingmongoose/.local/bin/omp",
+    "binary_bytes": 179881160,
+    "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+    "version": "omp/18.0.4",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "profile_config_bytes": 472,
+    "profile_config_sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc",
+    "overlay_path": "tools_glm.config.yml",
+    "overlay_bytes": 21,
+    "overlay_sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9",
+    "tools_format": "glm",
+    "row_time_budget_seconds": 3600,
+    "advisor_enabled": false,
+    "task_agent_advisor": {
+      "task": "off"
+    },
+    "ordinary_tools_enabled": false
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "pass_id": "probe_01",
+      "route_id": "omp_ox_alpha_free_max",
+      "surface": "omp_tui",
+      "model": "opencode-go/ox-alpha-free",
+      "thinking": "max",
+      "attempt_id": "glm-probe-v1-01-a58a224856",
+      "nonce": "a58a224856c44dbfaa4bcbb05799b0f0",
+      "cwd": "/tmp/pm-r10-storage-v7-glm-probe-01-a58a224856",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-glm-probe-01-a58a224856",
+      "evidence_path": "evidence/probe_01/omp_ox_alpha_free_max"
+    },
+    {
+      "ordinal": 2,
+      "pass_id": "probe_01",
+      "route_id": "omp_muse_spark_xhigh",
+      "surface": "omp_tui",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "thinking": "xhigh",
+      "attempt_id": "glm-probe-v1-02-36cee22a34",
+      "nonce": "36cee22a348c00804cb302bf7cd012de",
+      "cwd": "/tmp/pm-r10-storage-v7-glm-probe-02-36cee22a34",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-glm-probe-02-36cee22a34",
+      "evidence_path": "evidence/probe_01/omp_muse_spark_xhigh"
+    }
+  ],
+  "sequencing": {
+    "exact_order": [
+      "omp_ox_alpha_free_max",
+      "omp_muse_spark_xhigh"
+    ],
+    "fail_stop": true,
+    "retry_count": 0,
+    "replacement_count": 0,
+    "best_of": false,
+    "qualification_credit": 0
+  },
+  "row_acceptance": {
+    "goal_activation_required": true,
+    "goal_completion_required": true,
+    "successful_goal_result_required": true,
+    "exact_v7_oracle_required": true,
+    "ordinary_tool_calls": 0,
+    "normal_process_exit_required": true,
+    "unchanged_v7_session_parser": true,
+    "unchanged_v7_terminal_scorer": true
+  },
+  "terminal_interpretation": {
+    "ox_fail": "Stop permanently. The explicit GLM wire is not an admissible common control and Muse is not launched.",
+    "ox_pass_muse_fail": "Preserve Muse as a route capability blocker across provider-native, explicit generic XML, and explicit GLM. Do not try another dialect, retry, or advance the matrix.",
+    "both_pass": "The GLM tool-wire hypothesis is supported only as zero-credit diagnostic evidence. Stop and report; any fresh full denominator requires separate explicit user authority. Do not retro-credit V7, native Muse, XML Muse, or this diagnostic."
+  },
+  "nonclaims": [
+    "No row in this diagnostic earns matrix qualification credit.",
+    "A diagnostic pass does not repair or replace either consumed Muse failure.",
+    "GLM rawBlock evidence proves OMP's owned scanner produced a canonical Goal call; it is not raw HTTP-wire capture.",
+    "This diagnostic does not establish production readiness, safety certification, canonical Plan completion, or WorkNode readiness."
+  ],
+  "authority": {
+    "status": "AUTHORIZED_FREE_OX_NO_FUTURE_PERMISSION_PROMPT",
+    "source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+    "recorded_at_utc": "2026-08-26T01:09:54Z",
+    "user_text_utf8": "You can run as many free Ox runs as you want.  Dont ask going forward",
+    "user_text_utf8_bytes": 69,
+    "user_text_sha256": "99df1f43d62da6ae6314c385f43208ac159374deed46c8b16382d3c9909d54e8",
+    "preparation_authorizes_subject_call": false,
+    "existing_xml_probe_authorizes_glm": false,
+    "current_glm_ox_row_authorized": true,
+    "current_glm_ox_row_one_use": true,
+    "unlimited_fresh_free_ox_development_probes_authorized": true,
+    "fresh_identity_required_for_each_additional_free_ox_run": true,
+    "future_free_ox_permission_prompt_required": false,
+    "muse_row_authorized_by_this_free_ox_grant": false,
+    "muse_prelaunch_gate_before_custody_and_reservation": true,
+    "consumed_scored_or_qualification_row_retry_authorized": false,
+    "consumed_scored_or_qualification_row_retro_credit_authorized": false,
+    "no_further_dialect_after_glm_failure": true
+  }
+}
