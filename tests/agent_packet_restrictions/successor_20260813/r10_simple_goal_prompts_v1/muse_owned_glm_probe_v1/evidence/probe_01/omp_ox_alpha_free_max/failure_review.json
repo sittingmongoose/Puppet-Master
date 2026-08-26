@@ -1,0 +1,144 @@
+{
+  "classification": "PERMANENT_GLM_OX_VERIFIER_COMPATIBILITY_FAILURE_AFTER_OWNED_GLM_NATIVE_GOAL_AND_EXACT_SEMANTIC_SUCCESS",
+  "claims_excluded": [
+    "consumed GLM Ox row pass",
+    "normal process exit",
+    "authorization to retry or retro-credit the consumed row",
+    "authorization to launch Muse or any suffix route",
+    "matrix qualification",
+    "production readiness",
+    "safety certification",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ],
+  "failure": {
+    "frozen_parser_error": "OmpSessionError: OMP standard Goal call is final assistant block",
+    "no_retry": true,
+    "process_exit": {
+      "kind": "signal",
+      "normal_exit_observed": false,
+      "reason": "sigterm",
+      "terminal_process_exit_code": null
+    },
+    "qualification_credit": 0,
+    "row_budget_seconds": 3600,
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 654400: RunnerError: row time budget expired before exact Goal terminal result",
+    "seconds_from_launch_to_failure_terminal": 3600.288,
+    "seconds_from_launch_to_signal": 3600.162,
+    "terminal_status": "FAIL"
+  },
+  "frozen_identity": {
+    "attempt_id": "glm-probe-v1-01-a58a224856",
+    "goal_id": "1566384b5744b504",
+    "model": "opencode-go/ox-alpha-free",
+    "nonce": "a58a224856c44dbfaa4bcbb05799b0f0",
+    "ordinal": 1,
+    "pass_id": "probe_01",
+    "pid": 654400,
+    "route_id": "omp_ox_alpha_free_max",
+    "session_id": "01a03bab-d5e0-77b6-ad12-8a3e50b0e247",
+    "thinking": "max"
+  },
+  "key_evidence": {
+    "launch": {
+      "bytes": 1616,
+      "sha256": "d0b758f4aedf91717a5e8f8b90ee0cda83450e35857a0cb42b40b2ffcac46e10"
+    },
+    "launch_journal": {
+      "bytes": 463,
+      "sha256": "dce27139d22f2b7a5af80e1a1cec32c6dd9fec3c6f09478fd40d85616a118d07"
+    },
+    "omp_preflight": {
+      "bytes": 5954,
+      "sha256": "32b0f3fc45ed1cf0f61b69ed8004708b0f8a6dcd80ac094dccda2e258b914d25"
+    },
+    "postfailure_session": {
+      "bytes": 34948,
+      "sha256": "1695208e98a3fd9b141110e0baadaa36eb783f76a13fbef8141a22a9893d0f9d"
+    },
+    "runner_failure": {
+      "bytes": 519,
+      "sha256": "58a716b1a62f8838e144856a8820e115cc970ddc7a4ab0cb4f46dae6b1a5a7ac"
+    },
+    "session_prefix": {
+      "bytes": 28975,
+      "sha256": "dfdb30003642c1fe7496d4fc851bf0d2d0a4d5b62da6040e2f2383603c8cfefe"
+    },
+    "stdin_prompt": {
+      "bytes": 3036,
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    "terminal": {
+      "bytes": 3177,
+      "sha256": "fb8ea1456eda8c2783be4db5fe272657b86905e209d8adbc3d687578c4bb3c0f"
+    },
+    "transcript": {
+      "bytes": 1790579,
+      "sha256": "b86a8ec2b628c01efdc54a9efbf78c51bfca099eb8c480cdd18264a6cab2e3f1"
+    }
+  },
+  "observed_postfailure_facts": {
+    "assistant_count": 2,
+    "assistant_tool_cycle_content_types": [
+      "thinking",
+      "text",
+      "toolCall",
+      "text"
+    ],
+    "exact_external_submission_count": 1,
+    "final_assistant_text_bytes": 557,
+    "final_assistant_text_sha256": "efc1b02a88fb5ddc3177f3a28d95e05cb065b591c97b322e1da4dd568f811296",
+    "goal_active_at_utc": "2026-08-26T01:25:14.206Z",
+    "goal_complete_state_count": 1,
+    "goal_completed_event_at_utc": "2026-08-26T01:25:50.095Z",
+    "goal_status_at_last_model_activity": "complete",
+    "goal_tool_call_at_utc": "2026-08-26T01:25:39.747Z",
+    "goal_tool_call_count": 1,
+    "goal_tool_result_count": 1,
+    "goal_tool_result_is_error": false,
+    "native_continuation_count": 0,
+    "ordinary_tool_call_count": 0,
+    "owned_glm_goal_raw_block": "<tool_call>goal\n<arg_key>op</arg_key>\n<arg_value>complete</arg_value>\n</tool_call>",
+    "owned_glm_goal_raw_block_bytes": 82,
+    "owned_glm_goal_raw_block_sha256": "d6897df63bd35ea8e7b3eb5e036068814b6ed65712b7876879d5f19afdc8e013",
+    "post_call_framing": "\n\n<observation>\n",
+    "post_call_framing_bytes": 16,
+    "post_call_framing_sha256": "5883e677b1d882f0376d9aa1ea1d87cd67d6b5e9180e790535c40ee2efa23278",
+    "session_exit_at_utc": "2026-08-26T02:25:11.136Z",
+    "subject_semantic_result_exact": true,
+    "unchanged_v7_scorer_pass": true
+  },
+  "reviewed_at_utc": "2026-08-26T02:38:34Z",
+  "schema_id": "pm.r10.storage_pipeline.glm_probe_failure_review.v1",
+  "sequencing_custody": {
+    "journal_ordinals": [
+      1
+    ],
+    "journal_routes": [
+      "omp_ox_alpha_free_max"
+    ],
+    "muse_evidence_absent": true,
+    "muse_runtime_paths_absent": true,
+    "rows_beyond_ordinal_1_launched": false,
+    "suffix_launch_authorized": false
+  },
+  "terminal_custody": {
+    "failure_review_is_late_and_outside_terminal_roster": true,
+    "terminal_evidence_count": 16,
+    "terminal_evidence_joins_verified": true,
+    "terminal_receipt_unchanged": true
+  },
+  "terminal_disposition": {
+    "consumed_row_reclassification_authorized": false,
+    "fresh_successor_required_for_any_compatibility_test": true,
+    "muse_launch_authorized": false,
+    "prompt_or_scorer_weakening_authorized": false,
+    "retry_or_replacement_authorized": false
+  },
+  "verifier_compatibility_boundary": {
+    "conclusion": "OMP-owned GLM transport produced the canonical native Goal call/result and the unchanged exact semantic result, but the frozen V7 parser rejected one trailing owned-dialect observation-frame prefix and prevented the runner from requesting normal exit.",
+    "next_falsifiable_boundary": "A separately authorized fresh successor must either recognize only source-justified owned-GLM post-call framing while keeping it outside final-result scoring, or preserve this compatibility failure; the consumed row remains permanently failed.",
+    "owned_glm_transport_succeeded": true,
+    "verifier_compatibility_succeeded": false
+  }
+}

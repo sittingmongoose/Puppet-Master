@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.owned_glm_ox_compat_probe.v2",
+  "status": "PREREGISTERED_ZERO_CREDIT",
+  "created_at_utc": "2026-08-26T02:42:22Z",
+  "source_candidate_commit": "4cbe165ee61f56dc9cca788efe249c47fb89384e",
+  "source_freeze_manifest_sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3",
+  "hypothesis": "The consumed V1 Ox trace failed only because the frozen V7 parser required the canonical Goal ToolCall to be the final content block. A closed explicit-GLM adapter can recognize source-justified post-call observation framing without admitting prose or changing the distinct final result, scorer, Goal lifecycle, or normal-exit bar.",
+  "smallest_changed_invariant": "One fresh Ox-only successor adds a closed pre-parser compatibility projection for explicit owned GLM post-call framing. The prompt, scorer, underlying V7 parser, OMP runtime/profile, GLM overlay, route/model/effort, advisor controls, no-ordinary-tools restriction, native Goal runtime, and terminal acceptance remain unchanged.",
+  "source_prompt": {
+    "path": "../system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+    "utf8_bytes": 3036,
+    "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "required_prefix": "/goal ",
+    "external_submission_count": 1
+  },
+  "source_verifier": {
+    "v7_session_parser_path": "../system_pipeline_sandbox_v7/omp_session.py",
+    "v7_session_parser_bytes": 37909,
+    "v7_session_parser_sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e",
+    "v7_runner_scorer_path": "../system_pipeline_sandbox_v7/omp_row_runner.py",
+    "v7_runner_scorer_bytes": 41009,
+    "v7_runner_scorer_sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+  },
+  "diagnostic_replay": {
+    "path": "../muse_owned_glm_probe_v1/evidence/probe_01/omp_ox_alpha_free_max/postfailure_session.raw.jsonl",
+    "bytes": 34948,
+    "sha256": "1695208e98a3fd9b141110e0baadaa36eb783f76a13fbef8141a22a9893d0f9d",
+    "consumed_attempt_id": "glm-probe-v1-01-a58a224856",
+    "consumed_terminal_status": "FAIL",
+    "consumed_no_retry": true,
+    "consumed_qualification_credit": 0
+  },
+  "runtime": {
+    "binary": "/home/sittingmongoose/.local/bin/omp",
+    "binary_bytes": 179881160,
+    "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+    "version": "omp/18.0.4",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "profile_config_bytes": 472,
+    "profile_config_sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc",
+    "overlay_path": "tools_glm.config.yml",
+    "overlay_bytes": 21,
+    "overlay_sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9",
+    "tools_format": "glm",
+    "row_time_budget_seconds": 3600,
+    "advisor_enabled": false,
+    "task_agent_advisor": {
+      "task": "off"
+    },
+    "ordinary_tools_enabled": false
+  },
+  "compatibility_adapter": {
+    "enabled_only_for_explicit_glm_probe": true,
+    "underlying_v7_default_behavior_unchanged": true,
+    "canonical_tool_name": "goal",
+    "canonical_arguments": {
+      "op": "complete"
+    },
+    "canonical_tool_call_count": 1,
+    "valid_owned_glm_raw_block_required": true,
+    "allowed_post_call_block_counts": [
+      0,
+      1
+    ],
+    "one_block_must_be_final": true,
+    "one_block_must_be_nonempty_text": true,
+    "source_defined_ascii_whitespace_codepoints": [
+      9,
+      10,
+      13,
+      32
+    ],
+    "optional_literal": "<observation>",
+    "optional_literal_exact_count": 1,
+    "post_call_byte_ceiling": null,
+    "unicode_whitespace_allowed": false,
+    "closing_observation_marker_allowed": false,
+    "tool_response_marker_allowed": false,
+    "arbitrary_prose_allowed": false,
+    "pm_result_allowed": false,
+    "multiple_or_following_blocks_allowed": false,
+    "framing_in_pre_call_text": false,
+    "framing_in_final_text": false,
+    "framing_in_scoring": false,
+    "framing_in_goal_lifecycle": false,
+    "preserved_source_session_bytes_and_sha_required": true
+  },
+  "prefix_custody": {
+    "allowed_journal_row_counts": [
+      0,
+      1
+    ],
+    "zero_rows_require_absent_evidence_root_and_leaf": true,
+    "one_row_requires_exact_root_pass_row_layout": true,
+    "one_row_requires_exact_planned_identity": true,
+    "one_row_requires_launch_and_preflight_hash_joins": true,
+    "one_row_requires_popen_observed_true": true,
+    "one_row_requires_positive_launch_joined_pid": true,
+    "one_row_requires_exact_terminal_evidence_roster": true,
+    "extra_or_symlinked_root_pass_row_entries_allowed": false
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "pass_id": "probe_01",
+      "route_id": "omp_ox_alpha_free_max",
+      "surface": "omp_tui",
+      "model": "opencode-go/ox-alpha-free",
+      "thinking": "max",
+      "attempt_id": "glm-probe-v2-01-276503ab6c",
+      "nonce": "276503ab6cd7013b59ca948b922dcb03",
+      "cwd": "/tmp/pm-r10-storage-v7-glm-probe-v2-01-276503ab6c",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-glm-probe-v2-01-276503ab6c",
+      "evidence_path": "evidence/probe_01/omp_ox_alpha_free_max"
+    }
+  ],
+  "sequencing": {
+    "exact_order": [
+      "omp_ox_alpha_free_max"
+    ],
+    "fail_stop": true,
+    "retry_count": 0,
+    "replacement_count": 0,
+    "best_of": false,
+    "qualification_credit": 0,
+    "muse_or_suffix_route_count": 0
+  },
+  "row_acceptance": {
+    "goal_activation_required": true,
+    "goal_completion_required": true,
+    "successful_goal_result_required": true,
+    "exact_v7_oracle_required": true,
+    "distinct_final_assistant_required": true,
+    "ordinary_tool_calls": 0,
+    "normal_process_exit_required": true,
+    "underlying_v7_session_parser_unchanged": true,
+    "unchanged_v7_terminal_scorer": true
+  },
+  "terminal_interpretation": {
+    "ox_fail": "Stop permanently. Preserve the fresh row as zero-credit failure; do not retry, retro-credit, launch Muse, or try another dialect.",
+    "ox_pass": "The closed verifier-compatibility hypothesis is supported only as fresh zero-credit development evidence. Stop and report; any Muse or matrix action requires separate explicit authority and a separate fresh contract."
+  },
+  "nonclaims": [
+    "The consumed V1 Ox row remains permanent FAIL, no-retry, and zero-credit.",
+    "No V2 row earns matrix qualification credit.",
+    "V2 contains no mechanically launchable Muse or suffix route.",
+    "Framing acceptance does not score framing or relax the distinct final result.",
+    "This probe does not establish production readiness, safety certification, canonical Plan completion, or WorkNode readiness."
+  ],
+  "authority": {
+    "status": "AUTHORIZED_FREE_OX_NO_FUTURE_PERMISSION_PROMPT",
+    "source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+    "recorded_at_utc": "2026-08-26T01:09:54Z",
+    "user_text_utf8": "You can run as many free Ox runs as you want.  Dont ask going forward",
+    "user_text_utf8_bytes": 69,
+    "user_text_sha256": "99df1f43d62da6ae6314c385f43208ac159374deed46c8b16382d3c9909d54e8",
+    "preparation_authorizes_subject_call": false,
+    "current_v2_ox_row_authorized": true,
+    "current_v2_ox_row_one_use": true,
+    "unlimited_fresh_free_ox_development_probes_authorized": true,
+    "fresh_identity_required_for_each_additional_free_ox_run": true,
+    "future_free_ox_permission_prompt_required": false,
+    "consumed_v1_row_retry_authorized": false,
+    "consumed_v1_row_retro_credit_authorized": false,
+    "muse_or_non_ox_route_authorized": false,
+    "further_dialect_authorized": false
+  }
+}

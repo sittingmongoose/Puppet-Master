@@ -1,0 +1,25 @@
+{
+  "attempt_id": "glm-probe-v1-01-a58a224856",
+  "captured_at_utc": "2026-08-26T02:25:11.240Z",
+  "no_retry": true,
+  "nonce": "a58a224856c44dbfaa4bcbb05799b0f0",
+  "ordinal": 1,
+  "pass_id": "probe_01",
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.glm_probe_postfailure.v1",
+  "session_dir": "/tmp/pm-r10-storage-v7-session-glm-probe-01-a58a224856",
+  "session_dir_roster": [
+    {
+      "bytes": 34948,
+      "kind": "file",
+      "name": "2026-08-26T01-25-12-288Z_01a03bab-d5e0-77b6-ad12-8a3e50b0e247.jsonl",
+      "sha256": "1695208e98a3fd9b141110e0baadaa36eb783f76a13fbef8141a22a9893d0f9d"
+    }
+  ],
+  "session_snapshot": {
+    "bytes": 34948,
+    "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v1/evidence/probe_01/omp_ox_alpha_free_max/postfailure_session.raw.jsonl",
+    "sha256": "1695208e98a3fd9b141110e0baadaa36eb783f76a13fbef8141a22a9893d0f9d"
+  }
+}
