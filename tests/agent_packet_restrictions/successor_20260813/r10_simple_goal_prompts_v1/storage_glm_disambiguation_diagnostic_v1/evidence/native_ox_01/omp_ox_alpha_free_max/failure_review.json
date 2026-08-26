@@ -1,0 +1,345 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.glm_disambiguation_failure_review.v1",
+  "reviewed_at_utc": "2026-08-26T17:00:06.515Z",
+  "disposition": {
+    "status": "FAIL_DIAGNOSTIC_ROW_CONSUMED_STOP_ALL_REMAINING",
+    "classification": "CURRENT_OMP_CATALOG_SELECTOR_ABSENCE_CORROBORATES_ROUTE_MODEL_SUPPORT_REJECTION",
+    "no_retry": true,
+    "qualification_credit": 0,
+    "matrix_credit": 0,
+    "production_credit": 0,
+    "suffix_authorized_after_failure": false
+  },
+  "row_identity": {
+    "pass_id": "native_ox_01",
+    "ordinal": 1,
+    "route_id": "omp_ox_alpha_free_max",
+    "protocol_adapter": "native_default",
+    "attempt_id": "storage-glm-disamb-v1-01-97fd146264",
+    "nonce": "97fd146264df28c18856e3c60c457dd8",
+    "model": "opencode-go/ox-alpha-free",
+    "thinking": "max",
+    "pid": 1218939,
+    "session_id": "01a03ec2-baa0-76b2-9aef-11f511dfcb60",
+    "goal_id": "1566fe0485b6bc91"
+  },
+  "timeline": {
+    "reserved_at_utc": "2026-08-26T15:48:46.959Z",
+    "preflight_observed_at_utc": "2026-08-26T15:49:02.849Z",
+    "popen_started_at_utc": "2026-08-26T15:49:02.872Z",
+    "session_started_at_utc": "2026-08-26T15:49:04.288Z",
+    "goal_active_at_utc": "2026-08-26T15:49:06.199Z",
+    "first_goal_context_at_utc": "2026-08-26T15:49:06.353Z",
+    "external_user_message_at_utc": "2026-08-26T15:49:06.354Z",
+    "first_assistant_error_at_utc": "2026-08-26T15:49:06.467Z",
+    "persisted_acceptance_captured_at_utc": "2026-08-26T15:49:06.484Z",
+    "second_goal_context_at_utc": "2026-08-26T15:49:07.358Z",
+    "native_continuation_at_utc": "2026-08-26T15:49:07.360Z",
+    "second_assistant_error_at_utc": "2026-08-26T15:49:07.459Z",
+    "session_sigterm_at_utc": "2026-08-26T16:49:02.981Z",
+    "runner_failure_captured_at_utc": "2026-08-26T16:49:03.147Z",
+    "terminal_finished_at_utc": "2026-08-26T16:49:03.155Z",
+    "popen_to_terminal_milliseconds": 3600283,
+    "first_to_second_assistant_error_milliseconds": 992,
+    "second_assistant_error_to_sigterm_milliseconds": 3595522
+  },
+  "failure_observation": {
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 1218939: RunnerError: row time budget expired before exact Goal terminal result",
+    "provider_error_status": 401,
+    "provider_error_message": "401 Model ox-alpha-free is not supported\nModel ox-alpha-free is not supported (type=ModelError)",
+    "assistant_error_record_count": 2,
+    "each_assistant_stop_reason": "error",
+    "each_assistant_content_item_count": 0,
+    "each_assistant_total_tokens": 0,
+    "raw_native_goal_activation_observed": true,
+    "terminal_projection_goal_activation_observed": false,
+    "goal_active_snapshot_count": 1,
+    "goal_context_count": 2,
+    "external_user_message_count": 1,
+    "native_continuation_count": 1,
+    "goal_tool_call_count": 0,
+    "goal_tool_result_count": 0,
+    "goal_complete_state_count": 0,
+    "ordinary_tool_call_count": 0,
+    "typed_result_count": 0,
+    "final_assistant_text_count": 0,
+    "normal_exit_observed": false,
+    "session_exit_reason": "sigterm",
+    "session_exit_kind": "signal",
+    "terminal_process_exit_code": null,
+    "pid_absent_at_review": true,
+    "causal_limit": "The raw row proves two contemporaneous route/model-support rejections and no model output or native Goal tool lifecycle. The late metadata receipts prove only that the exact selector is absent from the current OMP opencode-go catalog; they do not identify why or exactly when availability changed."
+  },
+  "launch_and_preflight_custody": {
+    "candidate_commit": "55043263b66ee92688b8882092ec240725f108db",
+    "head_origin_and_truenas_equal_at_preflight": true,
+    "omp_version": "omp/18.0.4",
+    "omp_binary": "/home/sittingmongoose/.local/bin/omp",
+    "omp_binary_bytes": 179881160,
+    "omp_binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "protocol_adapter": "native_default",
+    "config_overlay": null,
+    "prompt_utf8_bytes": 3036,
+    "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "advisor_enabled": false,
+    "task_agent_advisor": {
+      "task": "off"
+    },
+    "no_config_argv": true,
+    "no_ordinary_tools_argv": true,
+    "row_time_budget_seconds": 3600,
+    "external_prompt_count": 1,
+    "low_level_input_write_count": 2,
+    "cwd": "/tmp/pm-r10-storage-v7-glm-disamb-v1-01-97fd146264",
+    "cwd_entry_count_at_review": 0,
+    "session_dir": "/tmp/pm-r10-storage-v7-session-glm-disamb-v1-01-97fd146264",
+    "persistent_session_path": "/tmp/pm-r10-storage-v7-session-glm-disamb-v1-01-97fd146264/2026-08-26T15-49-04-288Z_01a03ec2-baa0-76b2-9aef-11f511dfcb60.jsonl",
+    "persistent_session_bytes": 22422,
+    "persistent_session_sha256": "caa0dede475a1b4e070f67c1659c84dc5714e25b4ddd7d7332dd886ac9b34efb",
+    "preserved_session_bytes": 22422,
+    "preserved_session_sha256": "caa0dede475a1b4e070f67c1659c84dc5714e25b4ddd7d7332dd886ac9b34efb",
+    "persistent_and_preserved_sessions_byte_identical": true
+  },
+  "immutable_terminal_custody": {
+    "terminal_path": "terminal.json",
+    "terminal_bytes": 3033,
+    "terminal_sha256": "385b4747336eeaa69c4ac4d0c9ddbe0dd677b6d6d2d1988fa2a9ab019bdaa6ec",
+    "terminal_evidence_entry_count": 15,
+    "terminal_bound_row_file_count_including_terminal": 16,
+    "all_terminal_evidence_size_and_sha256_joins_verified": true,
+    "failure_review_is_late_and_outside_terminal_roster": true,
+    "postfailure_session_path": "postfailure_session.raw.jsonl",
+    "postfailure_session_bytes": 22422,
+    "postfailure_session_sha256": "caa0dede475a1b4e070f67c1659c84dc5714e25b4ddd7d7332dd886ac9b34efb",
+    "transcript_path": "transcript.raw",
+    "transcript_bytes": 223060,
+    "transcript_sha256": "282db09be557e12b4d21226d75c2233f9f18562af38938275b47da7f13471422",
+    "launch_path": "launch.json",
+    "launch_bytes": 1476,
+    "launch_sha256": "81aa0e3ee4e4c2dd6ebffc1696fc936fad49fff88762c494145289a8f2ffa3f5",
+    "omp_preflight_path": "omp_preflight.json",
+    "omp_preflight_bytes": 10993,
+    "omp_preflight_sha256": "55a6b081e366c0ab0d1d1af751f58036a7beab4bdce1eaee44a46f322857f5bc",
+    "runner_failure_path": "runner_failure.json",
+    "runner_failure_bytes": 534,
+    "runner_failure_sha256": "da5dc5fb31920a894337a0b501c01e812c3f1ceb86682649ec514a4dcabf8d32",
+    "launch_journal_path": "../../launch_journal.jsonl",
+    "launch_journal_bytes": 477,
+    "launch_journal_sha256": "3074899fa0b3856ac41bb38bbf8166e2f422ac83539231c452b2e452722e5892",
+    "launch_journal_ordinals": [
+      1
+    ]
+  },
+  "suffix_custody": {
+    "glm_ox_evidence_path": "../../glm_ox_01/omp_ox_alpha_free_max",
+    "glm_ox_evidence_absent": true,
+    "glm_ox_cwd": "/tmp/pm-r10-storage-v7-glm-disamb-v1-02-de2ecd2f83",
+    "glm_ox_cwd_absent": true,
+    "glm_ox_session_dir": "/tmp/pm-r10-storage-v7-session-glm-disamb-v1-02-de2ecd2f83",
+    "glm_ox_session_dir_absent": true,
+    "glm_muse_evidence_path": "../../glm_muse_01/omp_muse_spark_xhigh",
+    "glm_muse_evidence_absent": true,
+    "glm_muse_cwd": "/tmp/pm-r10-storage-v7-glm-disamb-v1-03-2eae4c59eb",
+    "glm_muse_cwd_absent": true,
+    "glm_muse_session_dir": "/tmp/pm-r10-storage-v7-session-glm-disamb-v1-03-2eae4c59eb",
+    "glm_muse_session_dir_absent": true,
+    "suffix_launch_count": 0
+  },
+  "mechanical_comparison": {
+    "consumed_glm_401_row": {
+      "path": "../../../../storage_glm_adapter_diagnostic_v1/evidence/diagnostic_01/omp_ox_alpha_free_max",
+      "terminal_bytes": 3031,
+      "terminal_sha256": "ccd65cc01d49abb057ce19a9c4141eb3471b4075df14c961e40d4efe8191358c",
+      "postfailure_session_bytes": 12630,
+      "postfailure_session_sha256": "17111aa01f196b937f351ff3b5a426e7cb8ef58c7c822c083fee6c4f70b65454",
+      "assistant_error_record_count": 1,
+      "same_error_status_and_message": true,
+      "deterministic_transport_difference": "The GLM row added exactly --config plus the frozen 21-byte tools.format: glm overlay and closed projection. Its projection terminalized 55 milliseconds after the first 401 instead of allowing a native continuation and the full row budget."
+    },
+    "earlier_successful_native_v2_ox_row": {
+      "path": "../../../../storage_native_matrix_v2/evidence/pass_01/omp_ox_alpha_free_max",
+      "terminal_bytes": 5467,
+      "terminal_sha256": "30f2d8e9247502c5cf37b72ed79643f6740341b64842b74adc54c92455b1d30f",
+      "launch_bytes": 1525,
+      "launch_sha256": "5966ff5d16ea38d061a6df4db34c470200280839684386cd77e546ec3b67c997",
+      "omp_preflight_bytes": 7929,
+      "omp_preflight_sha256": "ac8b4aa48d5595f773bc4f9fd6dd7141d3dbc9335ed7126965fe2d7163060d9a",
+      "session_bytes": 38827,
+      "session_sha256": "4bba878103b01549ab141b74ebe9725022bbf0595dafe62b6b71b7751cb2cbc8",
+      "status": "PASS",
+      "goal_complete_observed": true,
+      "exact_typed_result_observed": true,
+      "ordinary_tool_call_count": 0,
+      "process_exit_code": 0
+    },
+    "exact_equal_selected_native_preflight_fields": [
+      "OMP executable path, bytes, SHA-256, and version",
+      "isolated profile path",
+      "all nine effective-config values",
+      "3036-byte prompt and SHA-256",
+      "model opencode-go/ox-alpha-free and max thinking",
+      "native/default no-config protocol",
+      "no-tools argv and 3600-second budget"
+    ],
+    "conclusion": "The same native selector and selected runtime fields passed earlier in V2 but are rejected now in both native and explicit-GLM rows. Current catalog absence is a route-availability boundary, not evidence about prompt quality, model reasoning quality, or GLM Goal-call compatibility. The receipts do not establish the external cause or exact onset of the availability drift."
+  },
+  "late_zero_subject_metadata_receipt": {
+    "outside_terminal_roster": true,
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "metadata_cli_invocation_count": 5,
+    "subject_controller_run_invocation_count": 0,
+    "subject_popen_count": 0,
+    "model_inference_call_count": 0,
+    "goal_activation_count": 0,
+    "config_mutation_count": 0,
+    "windows_process_or_window_interaction_count": 0,
+    "parsed_facts": {
+      "omp_version": "omp/18.0.4",
+      "exact_selector": "opencode-go/ox-alpha-free",
+      "selector_find_count": 0,
+      "provider_catalog_model_count": 31,
+      "provider_catalog_exact_selector_count": 0,
+      "exact_selector_advertised": false,
+      "muse_selector": "opencode-go/muse-spark-1.2-contributor",
+      "provider_catalog_muse_selector_count": 1,
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      }
+    },
+    "receipts": [
+      {
+        "name": "version",
+        "started_at_utc": "2026-08-26T16:57:39.688Z",
+        "finished_at_utc": "2026-08-26T16:57:40.507Z",
+        "argv": [
+          "/home/sittingmongoose/.local/bin/omp",
+          "--version"
+        ],
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "exit_code": 0,
+        "stdout": {
+          "encoding": "base64",
+          "bytes": 11,
+          "sha256": "18aecc281d51bdf8cc309f41b69cfcf75db83b363160cd3d12d10c2e738c5a83",
+          "data": "b21wLzE4LjAuNAo="
+        },
+        "stderr": {
+          "encoding": "base64",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "data": ""
+        }
+      },
+      {
+        "name": "selector_find",
+        "started_at_utc": "2026-08-26T16:57:40.515Z",
+        "finished_at_utc": "2026-08-26T16:57:42.000Z",
+        "argv": [
+          "/home/sittingmongoose/.local/bin/omp",
+          "models",
+          "find",
+          "ox-alpha-free",
+          "--json",
+          "--no-extensions"
+        ],
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "exit_code": 0,
+        "stdout": {
+          "encoding": "base64",
+          "bytes": 14,
+          "sha256": "4abe89aeeba35292092f9a84ec24400ab935b691836eab44e86f8ab230b8a980",
+          "data": "eyJtb2RlbHMiOltdfQo="
+        },
+        "stderr": {
+          "encoding": "base64",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "data": ""
+        }
+      },
+      {
+        "name": "provider_catalog",
+        "started_at_utc": "2026-08-26T16:57:42.010Z",
+        "finished_at_utc": "2026-08-26T16:57:43.498Z",
+        "argv": [
+          "/home/sittingmongoose/.local/bin/omp",
+          "models",
+          "opencode-go",
+          "--json",
+          "--no-extensions"
+        ],
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "exit_code": 0,
+        "stdout": {
+          "encoding": "base64",
+          "bytes": 9205,
+          "sha256": "8a6100e6e2594cfa33e3c31cc18557b9853972170d7ac74e221e05c877644a86",
+          "data": "eyJtb2RlbHMiOlt7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6ImRlZXBzZWVrLXY0LWZsYXNoIiwic2VsZWN0b3IiOiJvcGVuY29kZS1nby9kZWVwc2Vlay12NC1mbGFzaCIsIm5hbWUiOiJEZWVwU2VlayBWNCBGbGFzaCIsImNvbnRleHRXaW5kb3ciOjEwMDAwMDAsIm1heFRva2VucyI6Mzg0MDAwLCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbImxvdyIsImhpZ2giLCJtYXgiXSwiaW5wdXQiOlsidGV4dCJdLCJjb3N0Ijp7ImlucHV0IjowLjIyLCJvdXRwdXQiOjAuNjYsImNhY2hlUmVhZCI6MC4wMDcsImNhY2hlV3JpdGUiOjB9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6ImRlZXBzZWVrLXY0LWZsYXNoLXZpc2lvbi1leHAiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2RlZXBzZWVrLXY0LWZsYXNoLXZpc2lvbi1leHAiLCJuYW1lIjoiRGVlcFNlZWsgVjQgRmxhc2ggVmlzaW9uIEV4cCIsImNvbnRleHRXaW5kb3ciOjEwMDAwMDAsIm1heFRva2VucyI6Mzg0MDAwLCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbImxvdyIsImhpZ2giLCJtYXgiXSwiaW5wdXQiOlsidGV4dCIsImltYWdlIl0sImNvc3QiOnsiaW5wdXQiOjAuMjIsIm91dHB1dCI6MC42NiwiY2FjaGVSZWFkIjowLjAwNywiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoiZGVlcHNlZWstdjQtcHJvIiwic2VsZWN0b3IiOiJvcGVuY29kZS1nby9kZWVwc2Vlay12NC1wcm8iLCJuYW1lIjoiRGVlcFNlZWsgVjQgUHJvIChOZXcpIiwiY29udGV4dFdpbmRvdyI6MTAwMDAwMCwibWF4VG9rZW5zIjozODQwMDAsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibG93IiwiaGlnaCIsIm1heCJdLCJpbnB1dCI6WyJ0ZXh0Il0sImNvc3QiOnsiaW5wdXQiOjAuNjYsIm91dHB1dCI6MS45OCwiY2FjaGVSZWFkIjowLjAyMiwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoiZ2xtLTUiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2dsbS01IiwibmFtZSI6IkdMTS01IiwiY29udGV4dFdpbmRvdyI6MjAyNzUyLCJtYXhUb2tlbnMiOjMyNzY4LCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbIm1pbmltYWwiLCJsb3ciLCJtZWRpdW0iLCJoaWdoIiwieGhpZ2giXSwiaW5wdXQiOlsidGV4dCJdLCJjb3N0Ijp7ImlucHV0IjoxLCJvdXRwdXQiOjMuMiwiY2FjaGVSZWFkIjowLjIsImNhY2hlV3JpdGUiOjB9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6ImdsbS01LjEiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2dsbS01LjEiLCJuYW1lIjoiR0xNLTUuMSIsImNvbnRleHRXaW5kb3ciOjIwMjc1MiwibWF4VG9rZW5zIjozMjc2OCwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJtaW5pbWFsIiwibG93IiwibWVkaXVtIiwiaGlnaCIsInhoaWdoIl0sImlucHV0IjpbInRleHQiXSwiY29zdCI6eyJpbnB1dCI6MS40LCJvdXRwdXQiOjQuNCwiY2FjaGVSZWFkIjowLjI2LCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJnbG0tNS4yIiwic2VsZWN0b3IiOiJvcGVuY29kZS1nby9nbG0tNS4yIiwibmFtZSI6IkdMTS01LjIiLCJjb250ZXh0V2luZG93IjoxMDAwMDAwLCJtYXhUb2tlbnMiOjEzMTA3MiwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJtaW5pbWFsIiwibG93IiwibWVkaXVtIiwiaGlnaCIsIm1heCJdLCJpbnB1dCI6WyJ0ZXh0Il0sImNvc3QiOnsiaW5wdXQiOjEuNCwib3V0cHV0Ijo0LjQsImNhY2hlUmVhZCI6MC4yNiwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoiZ2xtLTUuMyIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vZ2xtLTUuMyIsIm5hbWUiOiJHTE0tNS4zIiwiY29udGV4dFdpbmRvdyI6MTAwMDAwMCwibWF4VG9rZW5zIjoxMzEwNzIsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibG93IiwiaGlnaCIsIm1heCJdLCJpbnB1dCI6WyJ0ZXh0Il0sImNvc3QiOnsiaW5wdXQiOjEuNCwib3V0cHV0Ijo0LjQsImNhY2hlUmVhZCI6MC4yNiwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoiZ2xtLTUuMy1mbGFzaCIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vZ2xtLTUuMy1mbGFzaCIsIm5hbWUiOiJHTE0tNS4zLUZsYXNoICgyeCB1c2FnZSkiLCJjb250ZXh0V2luZG93IjoxMDAwMDAwLCJtYXhUb2tlbnMiOjEzMTA3MiwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJtaW5pbWFsIiwibG93IiwibWVkaXVtIiwiaGlnaCIsInhoaWdoIl0sImlucHV0IjpbInRleHQiLCJpbWFnZSJdLCJjb3N0Ijp7ImlucHV0IjowLjA3NSwib3V0cHV0IjowLjI1LCJjYWNoZVJlYWQiOjAuMDE1LCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJncHQtNS42LWx1bmEiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2dwdC01LjYtbHVuYSIsIm5hbWUiOiJHUFQtNS42IEx1bmEiLCJjb250ZXh0V2luZG93IjoxMDUwMDAwLCJtYXhUb2tlbnMiOjEyODAwMCwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJsb3ciLCJtZWRpdW0iLCJoaWdoIiwieGhpZ2giLCJtYXgiXSwiaW5wdXQiOlsidGV4dCIsImltYWdlIl0sImNvc3QiOnsiaW5wdXQiOjAuMiwib3V0cHV0IjoxLjIsImNhY2hlUmVhZCI6MC4wMiwiY2FjaGVXcml0ZSI6MC4yNX19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoiZ3Jvay00LjUiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2dyb2stNC41IiwibmFtZSI6Ikdyb2sgNC41IiwiY29udGV4dFdpbmRvdyI6NTAwMDAwLCJtYXhUb2tlbnMiOjUwMDAwMCwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJtaW5pbWFsIiwibG93IiwibWVkaXVtIiwiaGlnaCIsInhoaWdoIl0sImlucHV0IjpbInRleHQiLCJpbWFnZSJdLCJjb3N0Ijp7ImlucHV0IjoyLCJvdXRwdXQiOjYsImNhY2hlUmVhZCI6MC41LCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJncm9rLTQuNiIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vZ3Jvay00LjYiLCJuYW1lIjoiR3JvayA0LjYiLCJjb250ZXh0V2luZG93Ijo1MDAwMDAsIm1heFRva2VucyI6NTAwMDAwLCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbIm1pbmltYWwiLCJsb3ciLCJtZWRpdW0iLCJoaWdoIiwieGhpZ2giXSwiaW5wdXQiOlsidGV4dCIsImltYWdlIl0sImNvc3QiOnsiaW5wdXQiOjIsIm91dHB1dCI6NiwiY2FjaGVSZWFkIjowLjUsImNhY2hlV3JpdGUiOjB9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6Imh5MyIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vaHkzIiwibmFtZSI6Ikh5MyAoOHggdXNhZ2UpIiwiY29udGV4dFdpbmRvdyI6MjU2MDAwLCJtYXhUb2tlbnMiOjY0MDAwLCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbIm1pbmltYWwiLCJsb3ciLCJtZWRpdW0iLCJoaWdoIiwieGhpZ2giXSwiaW5wdXQiOlsidGV4dCJdLCJjb3N0Ijp7ImlucHV0IjowLjAxNzUsIm91dHB1dCI6MC4wNzI1LCJjYWNoZVJlYWQiOjAuMDA0Mzc1LCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJoeTMtcHJldmlldyIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vaHkzLXByZXZpZXciLCJuYW1lIjoiaHkzLXByZXZpZXciLCJjb250ZXh0V2luZG93IjpudWxsLCJtYXhUb2tlbnMiOm51bGwsInJlYXNvbmluZyI6ZmFsc2UsInRoaW5raW5nIjpudWxsLCJpbnB1dCI6WyJ0ZXh0Il0sImNvc3QiOnsiaW5wdXQiOjAsIm91dHB1dCI6MCwiY2FjaGVSZWFkIjowLCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJraW1pLWsyLjUiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2tpbWktazIuNSIsIm5hbWUiOiJLaW1pIEsyLjUiLCJjb250ZXh0V2luZG93IjoyNjIxNDQsIm1heFRva2VucyI6NjU1MzYsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibWluaW1hbCIsImxvdyIsIm1lZGl1bSIsImhpZ2giLCJ4aGlnaCJdLCJpbnB1dCI6WyJ0ZXh0IiwiaW1hZ2UiXSwiY29zdCI6eyJpbnB1dCI6MC42LCJvdXRwdXQiOjMsImNhY2hlUmVhZCI6MC4xLCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJraW1pLWsyLjYiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2tpbWktazIuNiIsIm5hbWUiOiJLaW1pIEsyLjYiLCJjb250ZXh0V2luZG93IjoyNjIxNDQsIm1heFRva2VucyI6NjU1MzYsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibWluaW1hbCIsImxvdyIsIm1lZGl1bSIsImhpZ2giLCJ4aGlnaCJdLCJpbnB1dCI6WyJ0ZXh0IiwiaW1hZ2UiXSwiY29zdCI6eyJpbnB1dCI6MC45NSwib3V0cHV0Ijo0LCJjYWNoZVJlYWQiOjAuMTYsImNhY2hlV3JpdGUiOjB9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6ImtpbWktazIuNy1jb2RlIiwic2VsZWN0b3IiOiJvcGVuY29kZS1nby9raW1pLWsyLjctY29kZSIsIm5hbWUiOiJLaW1pIEsyLjcgQ29kZSIsImNvbnRleHRXaW5kb3ciOjI2MjE0NCwibWF4VG9rZW5zIjoyNjIxNDQsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibWluaW1hbCIsImxvdyIsIm1lZGl1bSIsImhpZ2giLCJ4aGlnaCJdLCJpbnB1dCI6WyJ0ZXh0IiwiaW1hZ2UiXSwiY29zdCI6eyJpbnB1dCI6MC45NSwib3V0cHV0Ijo0LCJjYWNoZVJlYWQiOjAuMTksImNhY2hlV3JpdGUiOjB9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6ImtpbWktazMiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL2tpbWktazMiLCJuYW1lIjoiS2ltaSBLMyIsImNvbnRleHRXaW5kb3ciOjEwNDg1NzYsIm1heFRva2VucyI6MTMxMDcyLCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbImxvdyIsImhpZ2giLCJtYXgiXSwiaW5wdXQiOlsidGV4dCIsImltYWdlIl0sImNvc3QiOnsiaW5wdXQiOjMsIm91dHB1dCI6MTUsImNhY2hlUmVhZCI6MC4zLCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJsb25nY2F0LTIuMCIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vbG9uZ2NhdC0yLjAiLCJuYW1lIjoiTG9uZ0NhdC0yLjAiLCJjb250ZXh0V2luZG93IjoxMDAwMDAwLCJtYXhUb2tlbnMiOjEzMTA3MiwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJtaW5pbWFsIiwibG93IiwibWVkaXVtIiwiaGlnaCIsInhoaWdoIl0sImlucHV0IjpbInRleHQiXSwiY29zdCI6eyJpbnB1dCI6MC4zLCJvdXRwdXQiOjEuMiwiY2FjaGVSZWFkIjowLjAwNiwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoibWltby12Mi1vbW5pIiwic2VsZWN0b3IiOiJvcGVuY29kZS1nby9taW1vLXYyLW9tbmkiLCJuYW1lIjoiTWlNby1WMi1PbW5pIiwiY29udGV4dFdpbmRvdyI6MjYyMTQ0LCJtYXhUb2tlbnMiOjEyODAwMCwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJsb3ciLCJtZWRpdW0iLCJoaWdoIl0sImlucHV0IjpbInRleHQiLCJpbWFnZSJdLCJjb3N0Ijp7ImlucHV0IjowLjQsIm91dHB1dCI6MiwiY2FjaGVSZWFkIjowLjA4LCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJtaW1vLXYyLXBybyIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vbWltby12Mi1wcm8iLCJuYW1lIjoiTWlNby1WMi1Qcm8iLCJjb250ZXh0V2luZG93IjoxMDQ4NTc2LCJtYXhUb2tlbnMiOjEyODAwMCwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJsb3ciLCJtZWRpdW0iLCJoaWdoIl0sImlucHV0IjpbInRleHQiXSwiY29zdCI6eyJpbnB1dCI6MSwib3V0cHV0IjozLCJjYWNoZVJlYWQiOjAuMiwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoibWltby12Mi41Iiwic2VsZWN0b3IiOiJvcGVuY29kZS1nby9taW1vLXYyLjUiLCJuYW1lIjoiTWlNbyBWMi41IiwiY29udGV4dFdpbmRvdyI6MTAwMDAwMCwibWF4VG9rZW5zIjoxMjgwMDAsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibG93IiwibWVkaXVtIiwiaGlnaCJdLCJpbnB1dCI6WyJ0ZXh0IiwiaW1hZ2UiXSwiY29zdCI6eyJpbnB1dCI6MC4xNCwib3V0cHV0IjowLjI4LCJjYWNoZVJlYWQiOjAuMDAyOCwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoibWltby12Mi41LXBybyIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vbWltby12Mi41LXBybyIsIm5hbWUiOiJNaU1vIFYyLjUgUHJvIiwiY29udGV4dFdpbmRvdyI6MTA0ODU3NiwibWF4VG9rZW5zIjoxMjgwMDAsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibG93IiwibWVkaXVtIiwiaGlnaCJdLCJpbnB1dCI6WyJ0ZXh0Il0sImNvc3QiOnsiaW5wdXQiOjAuNDM1LCJvdXRwdXQiOjAuODcsImNhY2hlUmVhZCI6MC4wMDM2MjUsImNhY2hlV3JpdGUiOjB9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6Im1pbmltYXgtbTIuNSIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vbWluaW1heC1tMi41IiwibmFtZSI6Ik1pbmlNYXgtTTIuNSIsImNvbnRleHRXaW5kb3ciOjIwNDgwMCwibWF4VG9rZW5zIjo2NTUzNiwicmVhc29uaW5nIjp0cnVlLCJ0aGlua2luZyI6WyJsb3ciLCJtZWRpdW0iLCJoaWdoIl0sImlucHV0IjpbInRleHQiXSwiY29zdCI6eyJpbnB1dCI6MC4zLCJvdXRwdXQiOjEuMiwiY2FjaGVSZWFkIjowLjAzLCJjYWNoZVdyaXRlIjowfX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJtaW5pbWF4LW0yLjciLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL21pbmltYXgtbTIuNyIsIm5hbWUiOiJNaW5pTWF4LU0yLjciLCJjb250ZXh0V2luZG93IjoyMDQ4MDAsIm1heFRva2VucyI6MTMxMDcyLCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbImxvdyIsIm1lZGl1bSIsImhpZ2giXSwiaW5wdXQiOlsidGV4dCJdLCJjb3N0Ijp7ImlucHV0IjowLjMsIm91dHB1dCI6MS4yLCJjYWNoZVJlYWQiOjAuMDYsImNhY2hlV3JpdGUiOjB9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6Im1pbmltYXgtbTMiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL21pbmltYXgtbTMiLCJuYW1lIjoiTWluaU1heC1NMyIsImNvbnRleHRXaW5kb3ciOjEwMDAwMDAsIm1heFRva2VucyI6MTMxMDcyLCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbIm1pbmltYWwiLCJsb3ciLCJtZWRpdW0iLCJoaWdoIiwieGhpZ2giXSwiaW5wdXQiOlsidGV4dCIsImltYWdlIl0sImNvc3QiOnsiaW5wdXQiOjAuMywib3V0cHV0IjoxLjIsImNhY2hlUmVhZCI6MC4wNiwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoibXVzZS1zcGFyay0xLjItY29udHJpYnV0b3IiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL211c2Utc3BhcmstMS4yLWNvbnRyaWJ1dG9yIiwibmFtZSI6Ik11c2UgU3BhcmsgMS4yIENvbnRyaWJ1dG9yIiwiY29udGV4dFdpbmRvdyI6MTA0ODU3NiwibWF4VG9rZW5zIjoxMzEwNzIsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibWluaW1hbCIsImxvdyIsIm1lZGl1bSIsImhpZ2giLCJ4aGlnaCJdLCJpbnB1dCI6WyJ0ZXh0IiwiaW1hZ2UiXSwiY29zdCI6eyJpbnB1dCI6MC4xLCJvdXRwdXQiOjAuMiwiY2FjaGVSZWFkIjowLjAwMiwiY2FjaGVXcml0ZSI6MH19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoicXdlbjMuNS1wbHVzIiwic2VsZWN0b3IiOiJvcGVuY29kZS1nby9xd2VuMy41LXBsdXMiLCJuYW1lIjoiUXdlbjMuNSBQbHVzIiwiY29udGV4dFdpbmRvdyI6MjYyMTQ0LCJtYXhUb2tlbnMiOjY1NTM2LCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbIm1pbmltYWwiLCJsb3ciLCJtZWRpdW0iLCJoaWdoIl0sImlucHV0IjpbInRleHQiLCJpbWFnZSJdLCJjb3N0Ijp7ImlucHV0IjowLjIsIm91dHB1dCI6MS4yLCJjYWNoZVJlYWQiOjAuMDIsImNhY2hlV3JpdGUiOjAuMjV9fSx7InByb3ZpZGVyIjoib3BlbmNvZGUtZ28iLCJpZCI6InF3ZW4zLjYtcGx1cyIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vcXdlbjMuNi1wbHVzIiwibmFtZSI6IlF3ZW4zLjYgUGx1cyIsImNvbnRleHRXaW5kb3ciOjEwMDAwMDAsIm1heFRva2VucyI6NjU1MzYsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibWluaW1hbCIsImxvdyIsIm1lZGl1bSIsImhpZ2giXSwiaW5wdXQiOlsidGV4dCIsImltYWdlIl0sImNvc3QiOnsiaW5wdXQiOjAuNSwib3V0cHV0IjozLCJjYWNoZVJlYWQiOjAuMDUsImNhY2hlV3JpdGUiOjAuNjI1fX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJxd2VuMy43LW1heCIsInNlbGVjdG9yIjoib3BlbmNvZGUtZ28vcXdlbjMuNy1tYXgiLCJuYW1lIjoiUXdlbjMuNyBNYXgiLCJjb250ZXh0V2luZG93IjoxMDAwMDAwLCJtYXhUb2tlbnMiOjY1NTM2LCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbIm1pbmltYWwiLCJsb3ciLCJtZWRpdW0iLCJoaWdoIl0sImlucHV0IjpbInRleHQiXSwiY29zdCI6eyJpbnB1dCI6Mi41LCJvdXRwdXQiOjcuNSwiY2FjaGVSZWFkIjowLjUsImNhY2hlV3JpdGUiOjMuMTI1fX0seyJwcm92aWRlciI6Im9wZW5jb2RlLWdvIiwiaWQiOiJxd2VuMy43LXBsdXMiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL3F3ZW4zLjctcGx1cyIsIm5hbWUiOiJRd2VuMy43IFBsdXMiLCJjb250ZXh0V2luZG93IjoxMDAwMDAwLCJtYXhUb2tlbnMiOjY1NTM2LCJyZWFzb25pbmciOnRydWUsInRoaW5raW5nIjpbIm1pbmltYWwiLCJsb3ciLCJtZWRpdW0iLCJoaWdoIl0sImlucHV0IjpbInRleHQiLCJpbWFnZSJdLCJjb3N0Ijp7ImlucHV0IjowLjQsIm91dHB1dCI6MS42LCJjYWNoZVJlYWQiOjAuMDQsImNhY2hlV3JpdGUiOjAuNX19LHsicHJvdmlkZXIiOiJvcGVuY29kZS1nbyIsImlkIjoicXdlbjMuOC1tYXgiLCJzZWxlY3RvciI6Im9wZW5jb2RlLWdvL3F3ZW4zLjgtbWF4IiwibmFtZSI6IlF3ZW4zLjggTWF4IiwiY29udGV4dFdpbmRvdyI6MTAwMDAwMCwibWF4VG9rZW5zIjoxMzEwNzIsInJlYXNvbmluZyI6dHJ1ZSwidGhpbmtpbmciOlsibWluaW1hbCIsImxvdyIsIm1lZGl1bSIsImhpZ2giXSwiaW5wdXQiOlsidGV4dCIsImltYWdlIl0sImNvc3QiOnsiaW5wdXQiOjIsIm91dHB1dCI6NiwiY2FjaGVSZWFkIjowLjI1LCJjYWNoZVdyaXRlIjoyLjV9fV19Cg=="
+        },
+        "stderr": {
+          "encoding": "base64",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "data": ""
+        }
+      },
+      {
+        "name": "advisor_enabled",
+        "started_at_utc": "2026-08-26T16:57:43.506Z",
+        "finished_at_utc": "2026-08-26T16:57:44.765Z",
+        "argv": [
+          "/home/sittingmongoose/.local/bin/omp",
+          "config",
+          "get",
+          "advisor.enabled"
+        ],
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "exit_code": 0,
+        "stdout": {
+          "encoding": "base64",
+          "bytes": 6,
+          "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0",
+          "data": "ZmFsc2UK"
+        },
+        "stderr": {
+          "encoding": "base64",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "data": ""
+        }
+      },
+      {
+        "name": "task_agent_advisor",
+        "started_at_utc": "2026-08-26T16:57:44.773Z",
+        "finished_at_utc": "2026-08-26T16:57:46.018Z",
+        "argv": [
+          "/home/sittingmongoose/.local/bin/omp",
+          "config",
+          "get",
+          "task.agentAdvisor"
+        ],
+        "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+        "exit_code": 0,
+        "stdout": {
+          "encoding": "base64",
+          "bytes": 15,
+          "sha256": "ceb1a83dbd3c5eeb176b58796c85dfe87d1d0ea675384dc6edb467a46b6d9a2a",
+          "data": "eyJ0YXNrIjoib2ZmIn0K"
+        },
+        "stderr": {
+          "encoding": "base64",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "data": ""
+        }
+      }
+    ]
+  },
+  "excluded_claims": [
+    "The consumed row remains FAIL with no retry, replacement, reuse, retro-credit, or suffix launch.",
+    "No prompt-quality, model-quality, GLM-compatibility, Muse-compatibility, matrix, qualification, readiness, certification, production, or completion claim is supported.",
+    "The current catalog receipt does not authorize config changes, selector substitution, a successor, or any new subject launch."
+  ]
+}
