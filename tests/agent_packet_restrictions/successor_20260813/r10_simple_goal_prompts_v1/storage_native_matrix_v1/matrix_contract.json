@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.r10.storage_pipeline.storage_native_matrix.v1",
-  "status": "FROZEN_ZERO_SUBJECT_AUTHORIZED_AWAITING_PUSHED_CUSTODY",
+  "status": "FROZEN_ZERO_SUBJECT_AUTHORIZED_LIVE_PUSHED_CUSTODY_GATE",
   "owned_file_roster": [
     "README.md",
     "matrix_contract.json",
@@ -29,7 +29,7 @@
     "non_ox_provider_calls_authorized": true,
     "consumed_row_retry_authorized": false,
     "retroactive_credit_authorized": false,
-    "source_candidate_commit": null,
+    "pushed_source_custody": "LIVE_RAW_GIT_5_PATH_V1",
     "matrix_launch_grant": {
       "status": "AUTHORIZED_EXACT_FROZEN_24_ROWS_ONLY",
       "source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
