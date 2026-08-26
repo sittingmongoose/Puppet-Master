@@ -517,3 +517,15 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: candidate architecture is exactly four new files under `ox_native_reliability_v1`; relative to V3 it removes `glm_projection.py` and the GLM config overlay and copies no V7 runner, verifier, parser, or scorer body. No runtime evidence or prior source/evidence byte is changed.
 - Next disconfirming test: keep subjects frozen through zero-subject normal/optimized tests, independent review, and dual-pushed custody. If admitted on those exact bytes, only fresh ordinal 1 may launch; any row failure permanently stops the suffix, and only 5/5 supports the zero-credit native/default reliability hypothesis.
 - Classification: **PROGRESS — NATIVE/DEFAULT PIVOT PRELAUNCH; GLM 3/4 END-TO-END FAILED; ZERO QUALIFICATION CREDIT**. This is a bounded architecture pivot, not reliability evidence, matrix qualification, readiness, or completion.
+
+## 2026-08-26T08:20:31Z — native/default Ox reliability row-1 checkpoint
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Current hypothesis: the unchanged native/default Ox architecture can repeat its exact bounded native Goal and typed-result behavior across the five preregistered fresh identities.
+- Smallest changed invariant: none since frozen native V1. Row 1 used the exact pushed source, 3,036-byte prompt, Ox/max route, isolated Linux profile, advisor-off/no-ordinary-tools runtime, native/default argv, 3,600-second allowance, scorer, and evidence bar.
+- New evidence: row 1 independently verifies `PASS` through provider-native Goal transport with no `--config` or dialect adapter, no native continuation, one canonical Goal completion, the exact typed scorer result, zero ordinary tools, and normal process exit 0. The verified prefix is 1/5 with zero qualification credit.
+- Deepest valid product-relevant point: the bounded prompt works through the platform's native/default Goal path without a custom tool-dialect adapter or extra subject choreography.
+- Files/surface added or removed: row-1 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or row-2/suffix path changed. Every Windows OMP and Windows Terminal process/window remained foreign and untouched.
+- Next disconfirming test: fixed row 2 on the same unchanged native/default bytes must independently `PASS` or permanently fail-stop the denominator. No retry, replacement, skipped row, or retro-credit is permitted.
+- Classification: **PROGRESS — NATIVE/DEFAULT 1/5; ZERO QUALIFICATION CREDIT**. This is one development-row success, not a repeatability, reliability, matrix, readiness, or completion claim.
