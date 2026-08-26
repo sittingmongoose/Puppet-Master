@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.muse_protocol_adapter_correction.v1",
+  "recorded_at_utc": "2026-08-25T23:54:54Z",
+  "status": "CORRECTION_PRESERVED_ZERO_SUBJECT",
+  "subject_calls": 0,
+  "qualification_credit": 0,
+  "prior_review": {
+    "path": "evidence/probe_01/omp_muse_spark_xhigh/failure_review.json",
+    "bytes": 6249,
+    "sha256": "140958b9d7513acd16123858e3f085576bb070fa4cae4b1913fad77a21d21e69",
+    "preservation": "The prior review remains immutable historical evidence. This artifact supersedes only the breadth of its hard-blocker and no-local-repair interpretation; it does not relabel either consumed row or alter any raw evidence."
+  },
+  "retained_findings": {
+    "native_v7_muse_row": "Permanent FAIL, no retry, zero credit: exact semantic result twice, no Goal call/result/complete, Goal remained active.",
+    "owned_xml_muse_row": "Permanent FAIL, no retry, zero credit: exact semantic result twice, no XML invoke or canonical Goal call/result/complete, Goal remained active.",
+    "owned_xml_ox_control": "PASS only as a zero-credit diagnostic control proving that the explicit generic XML adapter was active and could produce a canonical Goal lifecycle on Ox.",
+    "matrix_state": "No matrix qualification, suffix authority, production-readiness claim, safety claim, canonical Plan completion, or WorkNode authority exists."
+  },
+  "superseded_interpretations": [
+    {
+      "json_pointer": "/classification",
+      "prior_value": "HARD_CAPABILITY_BLOCKER_AFTER_NATIVE_AND_OWNED_XML_TOOL_SELECTION_FAILURE",
+      "corrected_scope": "NATIVE_AND_EXPLICIT_GENERIC_XML_EXHAUSTED_GLM_ADAPTER_UNTESTED"
+    },
+    {
+      "json_pointer": "/route_capability_boundary/no_safe_local_repair_remaining_under_current_authority",
+      "prior_value": true,
+      "corrected_facts": {
+        "deterministic_local_adapter_candidate_remaining": true,
+        "authorized_under_existing_probe_contract": false
+      },
+      "reason": "OMP 18.0.4 exposes one deterministic built-in GLM owned-tool adapter that the native and explicit XML rows did not test, but the consumed XML probe contract does not authorize launching it."
+    },
+    {
+      "json_pointer": "/terminal_disposition/scope_correction_required",
+      "corrected_scope": "External upstream change or denominator relaxation is not yet the only remaining path. A fresh explicit-GLM diagnostic is technically falsifiable, but it is outside the consumed XML probe contract and requires a new identity plus explicit authority before any subject launch."
+    }
+  ],
+  "adapter_finding": {
+    "candidate": "tools.format: glm",
+    "candidate_overlay_utf8": "tools:\n  format: glm\n",
+    "candidate_overlay_bytes": 21,
+    "candidate_overlay_sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9",
+    "current_muse_auto_behavior": "The current Muse gateway row has no capability metadata, so supportsTools is undefined rather than explicit false. OMP treats every value other than explicit false as provider-native in auto mode. This correction does not claim that the failed native row used GLM.",
+    "unknown_family_fallback_behavior": "When auto mode is used with a model explicitly lacking native-tool support, OMP maps an unclassified-family preferredDialect XML sentinel to GLM. Explicit tools.format=glm also passes through directly.",
+    "parser_availability": "GLM is registered as an owned in-band dialect with a canonical scanner, renderer, prompt, and raw tool-call grammar.",
+    "empirical_status": "UNTESTED_NO_LAUNCH_AUTHORIZED"
+  },
+  "source_custody": {
+    "repository": "/home/sittingmongoose/OMP-G3-SOURCE",
+    "omp_version": "18.0.4",
+    "commit": "4854db856c20e000a3760d793c56d78065dcf83f",
+    "repository_describe": "v18.0.4-dirty",
+    "relevant_files_clean_at_commit": true,
+    "relevant_files": [
+      {
+        "path": "packages/coding-agent/src/sdk.ts",
+        "bytes": 183634,
+        "sha256": "4c3524e68b9109623d4b28031c4d054a179481ff04796dc7ae5255494b3dea4a",
+        "lines": "637-648",
+        "supports": "auto fallback and explicit-dialect pass-through"
+      },
+      {
+        "path": "packages/coding-agent/test/sdk-dialect.test.ts",
+        "bytes": 1090,
+        "sha256": "d335ddad065e489cdeab9bf768a12ac7706259ae30dd5d648add0e258f2954a9",
+        "lines": "5-18",
+        "supports": "unclassified no-native-tools auto route resolves to GLM; explicit owned dialects pass through"
+      },
+      {
+        "path": "docs/settings.md",
+        "bytes": 101241,
+        "sha256": "eb6b6fa9f52eab9daa288515d1e8be845e58d1a701794ec75c7729b59b923010",
+        "lines": "485-500",
+        "supports": "documented tools.format values and unknown-family GLM fallback"
+      },
+      {
+        "path": "packages/catalog/src/identity/dialect.ts",
+        "bytes": 740,
+        "sha256": "7981b7db93a0c6c98d52847c13e8d3974625ea2ddda1e74cc2b6e224b56dc1b1",
+        "lines": "16-40",
+        "supports": "unclassified preferredDialect sentinel is XML"
+      },
+      {
+        "path": "packages/catalog/src/identity/family.ts",
+        "bytes": 20710,
+        "sha256": "75c5f3ff601f65cf26775c2795d06049c3b559c380704d5037b274d4043488ff",
+        "lines": "351-366",
+        "supports": "Muse has no classified dialect-family token"
+      },
+      {
+        "path": "packages/catalog/src/provider-models/openai-compat.ts",
+        "bytes": 232794,
+        "sha256": "ce1e40444aac2fd916b288cd7b72e88e8ff0e8c03c178d6a83ca66bf4ead0527",
+        "lines": "2696-2723",
+        "supports": "Muse gateway discovery has no capability metadata, leaving supportsTools undefined rather than explicit false"
+      },
+      {
+        "path": "packages/ai/src/dialect/factory.ts",
+        "bytes": 1191,
+        "sha256": "a4f8a2c15d36f3a568c2a7efbefce6706f76aec0cac5c7001fe01550ddcb14d3",
+        "lines": "1-29",
+        "supports": "GLM dialect registration"
+      },
+      {
+        "path": "packages/ai/src/dialect/glm.ts",
+        "bytes": 18580,
+        "sha256": "41c55979f5ad46cb80ef297b29c977f619412e18cee898706b3383c2eb890390",
+        "lines": "28-37,515-576",
+        "supports": "GLM call grammar, renderer, scanner, and definition"
+      },
+      {
+        "path": "packages/ai/src/dialect/glm.md",
+        "bytes": 1495,
+        "sha256": "45f97d69460425f3876c5cc0c9eb4537bfad4c1e482af6bfb8f698f345b4f7fa",
+        "lines": "1-32",
+        "supports": "model-facing GLM owned-tool grammar"
+      }
+    ],
+    "source_execution": "Static source inspection only. Bun was unavailable on this host, so no OMP source test suite was executed and no runtime claim is made."
+  },
+  "authoritative_references": {
+    "omp_issue_two_layer_dialect_routing": "https://github.com/can1357/oh-my-pi/issues/7954",
+    "omp_forced_tool_choice_gateway_limit": "https://github.com/can1357/oh-my-pi/pull/9060",
+    "omp_responses_route_fix": "https://github.com/can1357/oh-my-pi/pull/8980",
+    "meta_muse_announcement": "https://research.meta.ai/blog/introducing-muse-code-and-muse-spark-1-2"
+  },
+  "authority_and_next_step": {
+    "existing_xml_probe_authorizes_glm": false,
+    "new_subject_launched": false,
+    "new_profile_or_runtime_path_created": false,
+    "next_disconfirming_test": "After explicit user authority, create one fresh zero-credit GLM successor with new package, row, nonce, cwd, session, and evidence identities. Keep the exact 3036-byte prompt, scorer, advisor-off controls, no ordinary tools, and 3600-second allowance. Run a free Ox max GLM control first; only an exact clean control may authorize one fresh Muse xhigh GLM row. No further dialect follows a GLM failure.",
+    "retro_credit_for_native_or_xml_rows": false
+  },
+  "claims_excluded": [
+    "GLM will make Muse call Goal",
+    "the failed native row used GLM",
+    "the failed XML row tested GLM",
+    "Muse has a documented model-specific GLM affinity",
+    "qualification credit",
+    "retry or replacement authority",
+    "matrix completion",
+    "production readiness",
+    "safety certification",
+    "canonical Plan completion",
+    "WorkNode creation authority"
+  ]
+}
