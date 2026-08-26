@@ -1,0 +1,195 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.glm_adapter_diagnostic_failure_review.v1",
+  "reviewed_at_utc": "2026-08-26T15:16:25Z",
+  "disposition": {
+    "status": "FAIL_DIAGNOSTIC_ROW_CONSUMED_STOP_ALL_REMAINING",
+    "classification": "PROVIDER_ROUTE_MODEL_SUPPORT_REJECTION_BEFORE_MODEL_OUTPUT_OR_GOAL_TOOL_CALL",
+    "no_retry": true,
+    "qualification_credit": 0,
+    "matrix_credit": 0,
+    "production_credit": 0,
+    "muse_authorized_after_failure": false
+  },
+  "row_identity": {
+    "pass_id": "diagnostic_01",
+    "ordinal": 1,
+    "route_id": "omp_ox_alpha_free_max",
+    "attempt_id": "storage-glm-diag-v1-01-c1ebf0d60d",
+    "nonce": "c1ebf0d60d2dd71b2d8f987b426efdca",
+    "model": "opencode-go/ox-alpha-free",
+    "thinking": "max",
+    "pid": 1190117,
+    "session_id": "01a03e8f-7fd9-7616-9989-e5f6732cb237",
+    "goal_id": "1566f135ac9f3ee0"
+  },
+  "timeline": {
+    "reserved_at_utc": "2026-08-26T14:52:50.311Z",
+    "preflight_observed_at_utc": "2026-08-26T14:53:05.414Z",
+    "popen_started_at_utc": "2026-08-26T14:53:05.433Z",
+    "session_started_at_utc": "2026-08-26T14:53:06.905Z",
+    "model_and_thinking_selected_at_utc": "2026-08-26T14:53:07.108Z",
+    "goal_active_at_utc": "2026-08-26T14:53:08.659Z",
+    "goal_context_at_utc": "2026-08-26T14:53:08.804Z",
+    "external_user_message_at_utc": "2026-08-26T14:53:08.806Z",
+    "assistant_error_at_utc": "2026-08-26T14:53:08.930Z",
+    "persisted_acceptance_captured_at_utc": "2026-08-26T14:53:08.945Z",
+    "session_sigterm_at_utc": "2026-08-26T14:53:08.985Z",
+    "runner_failure_captured_at_utc": "2026-08-26T14:53:09.126Z",
+    "terminal_finished_at_utc": "2026-08-26T14:53:09.131Z",
+    "popen_to_terminal_milliseconds": 3698,
+    "assistant_error_to_session_sigterm_milliseconds": 55
+  },
+  "failure_observation": {
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 1190117: ProjectionError: zero-call assistant identity",
+    "provider_error_status": 401,
+    "provider_error_message": "401 Model ox-alpha-free is not supported\nModel ox-alpha-free is not supported (type=ModelError)",
+    "assistant_stop_reason": "error",
+    "assistant_content_item_count": 0,
+    "assistant_total_tokens": 0,
+    "raw_native_goal_activation_observed": true,
+    "terminal_projection_goal_activation_observed": false,
+    "goal_active_snapshot_count": 1,
+    "goal_context_count": 1,
+    "external_user_message_count": 1,
+    "assistant_message_count": 1,
+    "goal_tool_call_count": 0,
+    "goal_tool_result_count": 0,
+    "goal_complete_state_count": 0,
+    "ordinary_tool_call_count": 0,
+    "glm_raw_block_count": 0,
+    "typed_result_count": 0,
+    "final_assistant_text_count": 0,
+    "normal_exit_observed": false,
+    "session_exit_reason": "sigterm",
+    "session_exit_kind": "signal",
+    "terminal_process_exit_code": null,
+    "pid_absent_at_review": true,
+    "causal_limit": "The persisted and visible error proves that this invocation rejected the selected route/model as unsupported. The frozen evidence does not distinguish catalog, adapter, or provider availability drift and does not support a model-quality conclusion."
+  },
+  "launch_and_preflight_custody": {
+    "candidate_commit": "0cad6c92ea87fe858099cf28871a0aea4e224d2e",
+    "head_origin_and_truenas_equal_at_preflight": true,
+    "omp_version": "omp/18.0.4",
+    "omp_binary": "/home/sittingmongoose/.local/bin/omp",
+    "omp_binary_bytes": 179881160,
+    "omp_binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "prompt_utf8_bytes": 3036,
+    "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "config_overlay_utf8_bytes": 21,
+    "config_overlay_sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9",
+    "glm_projection_bytes": 9004,
+    "glm_projection_sha256": "32912b97875c83b9237f04ab0193710a85727c5fbb351d883c5333ef6b4fa0ec",
+    "advisor_enabled": false,
+    "task_agent_advisor": {
+      "task": "off"
+    },
+    "no_ordinary_tools_argv": true,
+    "row_time_budget_seconds": 3600,
+    "external_prompt_count": 1,
+    "low_level_input_write_count": 2,
+    "cwd": "/tmp/pm-r10-storage-v7-glm-adapter-diagnostic-v1-01-c1ebf0d60d",
+    "cwd_entry_count_at_review": 0,
+    "session_dir": "/tmp/pm-r10-storage-v7-session-glm-adapter-diagnostic-v1-01-c1ebf0d60d",
+    "persistent_session_path": "/tmp/pm-r10-storage-v7-session-glm-adapter-diagnostic-v1-01-c1ebf0d60d/2026-08-26T14-53-06-905Z_01a03e8f-7fd9-7616-9989-e5f6732cb237.jsonl",
+    "persistent_session_bytes": 12630,
+    "persistent_session_sha256": "17111aa01f196b937f351ff3b5a426e7cb8ef58c7c822c083fee6c4f70b65454",
+    "preserved_session_bytes": 12630,
+    "preserved_session_sha256": "17111aa01f196b937f351ff3b5a426e7cb8ef58c7c822c083fee6c4f70b65454",
+    "persistent_and_preserved_sessions_byte_identical": true
+  },
+  "immutable_terminal_custody": {
+    "terminal_path": "terminal.json",
+    "terminal_bytes": 3031,
+    "terminal_sha256": "ccd65cc01d49abb057ce19a9c4141eb3471b4075df14c961e40d4efe8191358c",
+    "terminal_evidence_entry_count": 15,
+    "terminal_bound_row_file_count_including_terminal": 16,
+    "all_terminal_evidence_size_and_sha256_joins_verified": true,
+    "failure_review_is_late_and_outside_terminal_roster": true,
+    "postfailure_session_path": "postfailure_session.raw.jsonl",
+    "postfailure_session_bytes": 12630,
+    "postfailure_session_sha256": "17111aa01f196b937f351ff3b5a426e7cb8ef58c7c822c083fee6c4f70b65454",
+    "transcript_path": "transcript.raw",
+    "transcript_bytes": 158357,
+    "transcript_sha256": "67c5220cec0fce418e124ce9db0eef02ab2a3cc09be703546bd2320464c210d3",
+    "launch_journal_path": "../../launch_journal.jsonl",
+    "launch_journal_bytes": 476,
+    "launch_journal_sha256": "fad5a7540de1a528e1e0680e44fb20d9240bae48ea06c3e23a2edb45e93f4973",
+    "launch_journal_ordinals": [
+      1
+    ]
+  },
+  "suffix_custody": {
+    "muse_evidence_path": "../omp_muse_spark_xhigh",
+    "muse_evidence_absent": true,
+    "muse_cwd": "/tmp/pm-r10-storage-v7-glm-adapter-diagnostic-v1-02-69bd21ddc6",
+    "muse_cwd_absent": true,
+    "muse_session_dir": "/tmp/pm-r10-storage-v7-session-glm-adapter-diagnostic-v1-02-69bd21ddc6",
+    "muse_session_dir_absent": true,
+    "suffix_launch_count": 0
+  },
+  "mechanical_comparison": {
+    "prior_successful_glm_ox_rows": [
+      {
+        "path": "../../../../ox_owned_glm_reliability_v3/evidence/reliability_01/omp_ox_alpha_free_max",
+        "terminal_sha256": "36a7931e616c132618f9df6f2a1deb92f21dbf9fe5a7efdf464b09e9d0969680"
+      },
+      {
+        "path": "../../../../ox_owned_glm_reliability_v3/evidence/reliability_02/omp_ox_alpha_free_max",
+        "terminal_sha256": "92b5418efc87b3d1effa3928de20c9f535be03b6fbba8e2b248f019c76d81e7d"
+      },
+      {
+        "path": "../../../../ox_owned_glm_reliability_v3/evidence/reliability_03/omp_ox_alpha_free_max",
+        "terminal_sha256": "3f1ea2346823f9f46459eed894a9b946fd47da8d53c2830468094e73f5f9f5f1"
+      }
+    ],
+    "successful_native_v2_ox_row": {
+      "path": "../../../../storage_native_matrix_v2/evidence/pass_01/omp_ox_alpha_free_max",
+      "terminal_sha256": "30f2d8e9247502c5cf37b72ed79643f6740341b64842b74adc54c92455b1d30f"
+    },
+    "same_as_prior_successful_glm_rows": [
+      "omp executable path, bytes, SHA-256, and version",
+      "isolated profile path and all nine effective-config values",
+      "3036-byte prompt and SHA-256",
+      "21-byte tools.format: glm overlay path and SHA-256",
+      "9004-byte closed GLM projection and SHA-256",
+      "model opencode-go/ox-alpha-free and max thinking",
+      "all argv tokens after replacing the fresh cwd and session-dir values"
+    ],
+    "deterministic_differences_from_prior_successful_glm_rows": [
+      "fresh attempt, nonce, cwd, session, PID, timestamps, evidence, package-source, and pushed-custody identities",
+      "new preflight receipt names config_overlay, glm_projection, and protocol_adapter explicitly; prior V3 receipts encoded the same launch overlay under older receipt fields"
+    ],
+    "deterministic_transport_difference_from_successful_native_v2_ox": "The GLM row adds exactly --config plus the frozen 21-byte tools.format: glm overlay and applies the closed route-local GLM projection; native V2 has no --config, overlay, or projection. Prompt, model, thinking, executable, profile, effective config, advisor controls, no-tools argv, and time budget match.",
+    "static_byte_conclusion": "No deterministic prompt, route selector, model, thinking, executable, profile, advisor, effective-config, GLM-overlay, projection, or normalized-argv difference explains the 401 relative to the three prior successful GLM Ox rows."
+  },
+  "conditional_fresh_free_diagnostic_inventory": {
+    "authorization_required": "independent xhigh admission before any successor or launch",
+    "shape": "one fresh free-Ox-only zero-credit control row in a new exclusive root and schema",
+    "fresh_values": [
+      "attempt_id",
+      "nonce",
+      "cwd",
+      "session_dir",
+      "evidence_path"
+    ],
+    "unchanged_values": [
+      "3036-byte prompt and scorer",
+      "opencode-go/ox-alpha-free at max",
+      "OMP 18.0.4 isolated profile and both advisor controls off",
+      "21-byte tools.format: glm overlay",
+      "closed 9004-byte GLM projection",
+      "one native Goal submission, no ordinary tools, 3600-second budget, exact evidence verifier, and normal-exit requirement"
+    ],
+    "mechanically_launchable_routes": [
+      "omp_ox_alpha_free_max"
+    ],
+    "muse_or_other_route_mechanically_launchable": false,
+    "purpose": "Disconfirm a transient route/model-support rejection on unchanged transport bytes. Only a fresh exact PASS could motivate separately authorized reconstruction of an Ox-then-Muse diagnostic.",
+    "no_retry_replacement_reuse_or_retro_credit": true
+  },
+  "excluded_claims": [
+    "No model-quality, prompt-quality, GLM-compatibility, Muse-compatibility, matrix, qualification, readiness, certification, production, or completion claim is supported.",
+    "This late review does not change the immutable FAIL terminal or authorize a successor, retry, replacement, or Muse launch."
+  ]
+}
