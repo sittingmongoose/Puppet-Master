@@ -469,3 +469,15 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: row-1 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or later-row path changed.
 - Next disconfirming test: fixed row 2 on unchanged bytes must independently PASS or permanently fail-stop the five-row denominator. No retry, replacement, or skipped row is permitted.
 - Classification: **PROGRESS — 1/5, ZERO QUALIFICATION CREDIT**. This is one verified denominator row, not a reliability or matrix claim.
+
+## 2026-08-26T05:47:00Z — owned-GLM reliability row-2 checkpoint
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Current hypothesis: unchanged. The simplified GLM controller can repeat exact native Goal behavior across the frozen five-row Ox denominator.
+- Smallest changed invariant: none since frozen V3. Row 2 reused the exact row-1 source, prompt, route, effort, overlay, runtime, scorer, and evidence bar under its preregistered fresh identity.
+- New evidence: row 2 independently verifies `PASS` through the direct standard Goal tool cycle with one canonical 82-byte GLM Goal call, no native continuation, the exact typed scorer result, zero ordinary tools, and normal exit 0. The fixed verified prefix is 2/5 with zero qualification credit.
+- Deepest valid product-relevant point: the same bounded prompt satisfies exact native Goal and scorer authority both with row 1's native continuation and without continuation in row 2; no extra subject choreography was needed in either path.
+- Files/surface added or removed: row-2 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or row-3/suffix path changed.
+- Next disconfirming test: fixed row 3 on unchanged bytes must independently PASS or permanently fail-stop the denominator. No retry, replacement, or skipped row is permitted.
+- Classification: **PROGRESS — 2/5, ZERO QUALIFICATION CREDIT**. This remains an incomplete development denominator, not a reliability or matrix claim.
