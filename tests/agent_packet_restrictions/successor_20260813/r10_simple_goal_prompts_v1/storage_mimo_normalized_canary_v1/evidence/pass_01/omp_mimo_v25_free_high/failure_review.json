@@ -1,0 +1,596 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.storage_mimo_normalized_canary.failure_review.v1",
+  "reviewed_at_utc": "2026-08-26T23:41:09Z",
+  "source_candidate_commit": "7f034e2bad5d82fe7f58a7a5cac7272bab3fa659",
+  "terminal_roster_closed_before_review": true,
+  "review_outside_terminal_roster": true,
+  "immutable_row_identity": {
+    "ordinal": 1,
+    "pass_id": "pass_01",
+    "route_id": "omp_mimo_v25_free_high",
+    "attempt_id": "storage-mimo-normalized-canary-v1-01-037879864a",
+    "nonce": "037879864ab2206b98ad398c523642cb",
+    "surface": "omp_tui",
+    "model": "opencode-zen/mimo-v2.5-free",
+    "thinking": "high",
+    "pid": 1399741,
+    "session_id": "01a0402e-c34e-77d6-a462-02c1d9b1bea2",
+    "goal_id": "15675906855b6bb4",
+    "cwd": "/tmp/pm-r10-storage-v7-mimo-normalized-canary-v1-01-037879864a",
+    "session_dir": "/tmp/pm-r10-storage-v7-session-mimo-normalized-canary-v1-01-037879864a"
+  },
+  "source_custody": {
+    "head": "7f034e2bad5d82fe7f58a7a5cac7272bab3fa659",
+    "origin_main": "7f034e2bad5d82fe7f58a7a5cac7272bab3fa659",
+    "truenas_backup_main": "7f034e2bad5d82fe7f58a7a5cac7272bab3fa659",
+    "sources": [
+      {
+        "path": "README.md",
+        "bytes": 2633,
+        "sha256": "983d72a8d280d2be089d3e97ca5c3e2a79e04ee87c89ede4d2d56ee26a763699",
+        "git_mode": "100644",
+        "git_oid": "41366606c71dbfb623673a49f5b5ba3a40531a12"
+      },
+      {
+        "path": "canary_contract.json",
+        "bytes": 21758,
+        "sha256": "ded1932b46d260bc8b8e3fc9f093c4e9be60c3ecc51b2952b7e13202386fc1ab",
+        "git_mode": "100644",
+        "git_oid": "7787657deb2dc29cfd2173ef1b959cc3ec0bfd70"
+      },
+      {
+        "path": "controller.py",
+        "bytes": 27938,
+        "sha256": "933a168741a10578da0dade26e7248bcfb6e8ccd0b343b323c92e47790634aac",
+        "git_mode": "100644",
+        "git_oid": "7fe70a235efa8e13d5f774320cf4068d71dc71e9"
+      },
+      {
+        "path": "result_normalizer.py",
+        "bytes": 7024,
+        "sha256": "382cb5bb0b357bc223010a813dbef7e9c8daf8f952568db0ce4d5e1620129a43",
+        "git_mode": "100644",
+        "git_oid": "dabf6afcbbccc7d3fb76b750aaecbf8bf3301162"
+      },
+      {
+        "path": "selftest.py",
+        "bytes": 24188,
+        "sha256": "3fa89e17e2424b8a6094ad77395ea4346ab5857588c5d0e799c80696e25c6122",
+        "git_mode": "100644",
+        "git_oid": "bfdf71fe566a33cbed01b0ea4e11522a079c3f44"
+      }
+    ]
+  },
+  "launch_catalog_gate": {
+    "preflight_path": "omp_preflight.json",
+    "preflight_bytes": 50244,
+    "preflight_sha256": "f19c5b88c9de06915a74becf2717bddd25971f29e06ba7bf1ddf9bce7c2dce1a",
+    "catalog_receipt_sha256": "c9bebbdea8955de6561ce9c9d55fbcc8f8b079f889ab1a273b9083e701944d2c",
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "models",
+      "refresh",
+      "opencode-zen",
+      "--json",
+      "--no-extensions"
+    ],
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "started_at_utc": "2026-08-26T22:26:32.288Z",
+    "finished_at_utc": "2026-08-26T22:26:39.205Z",
+    "duration_ms": 6917,
+    "exit_code": 0,
+    "forced_online": true,
+    "extensions_disabled": true,
+    "stdout_bytes": 19262,
+    "stdout_sha256": "6a1f2bdcb98d3038d9360175268e934a9b99ff8bef39acb71ea191c21c545021",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "model_count": 63,
+    "exact_selector_count": 1,
+    "exact_model": {
+      "provider": "opencode-zen",
+      "id": "mimo-v2.5-free",
+      "selector": "opencode-zen/mimo-v2.5-free",
+      "name": "MiMo V2.5 Free",
+      "contextWindow": 200000,
+      "maxTokens": 32000,
+      "reasoning": true,
+      "thinking": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "input": [
+        "text",
+        "image"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      }
+    },
+    "launch_after_catalog_finish_seconds": 1.097,
+    "catalog_chain_reverified": true,
+    "effective_config": {
+      "advisor.enabled": false,
+      "task.agentAdvisor": {
+        "task": "off"
+      }
+    }
+  },
+  "transport": {
+    "protocol_adapter": "native_default_with_host_result_normalization",
+    "config_overlay": null,
+    "argv_has_config": false,
+    "argv_has_no_tools": true,
+    "argv_has_no_skills": true,
+    "argv_has_no_rules": true,
+    "prompt_path": "stdin_prompt.raw",
+    "prompt_utf8_bytes": 3036,
+    "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "prompt_terminator_included": false,
+    "enter_path": "stdin_enter.raw",
+    "enter_bytes": 1,
+    "enter_sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4",
+    "enter_hex": "0d",
+    "external_submission_count": 1,
+    "submission_accepted_at_utc": "2026-08-26T22:27:22.222Z",
+    "session_prefix_bytes": 19834,
+    "session_prefix_sha256": "f04ba9e474c45861b8d918b5bf53384f1a898a5287d6b2f33341ade280c9e42d"
+  },
+  "postfailure_session": {
+    "path": "postfailure_session.raw.jsonl",
+    "bytes": 38028,
+    "sha256": "715cf5d56a93f7ccdfa14b5cbc1f40bc10ad7d6edd7e5f30c6f8314727a5341b",
+    "live_session_copy_byte_identical": true,
+    "physical_rows": 23,
+    "logical_entries": 21,
+    "fresh_parent_session": true,
+    "linear_entry_chain": true,
+    "session_started_at_utc": "2026-08-26T22:26:41.614Z",
+    "provider": "opencode-zen",
+    "model": "mimo-v2.5-free",
+    "selector": "opencode-zen/mimo-v2.5-free",
+    "thinking": "high",
+    "assistant_api": "openai-completions",
+    "assistant_api_message_count": 12,
+    "assistant_message_count": 12,
+    "assistant_stop_count": 1,
+    "assistant_error_count": 11,
+    "goal_context_count": 2,
+    "native_continuation_count": 1,
+    "canonical_goal_call_count": 0,
+    "goal_tool_start_count": 0,
+    "successful_goal_result_count": 0,
+    "goal_active_state_count": 2,
+    "goal_complete_state_count": 0,
+    "goal_completed_event_count": 0,
+    "ordinary_tool_call_count": 0,
+    "session_exit_count": 1,
+    "session_exit_kind": "signal",
+    "session_exit_reason": "sigterm",
+    "require_exit_false_structural_verdict": "OmpSessionError: OMP exactly one complete Goal state",
+    "normalizer_invoked_after_structural_verification": false
+  },
+  "semantic_candidate": {
+    "assistant_entry_id": "c09a6e33",
+    "assistant_timestamp": "2026-08-26T22:27:22.132Z",
+    "assistant_stop_reason": "stop",
+    "assistant_text_block_index": 1,
+    "assistant_text_utf8_bytes": 690,
+    "assistant_text_sha256": "d0a0a80a82a8856f4e606e49501445303d2480f4655f7e5ecaf93c2ccc21f909",
+    "line_start_pm_result_candidate_count": 1,
+    "exact_pm_result_line": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+    "exact_pm_result_line_utf8_bytes": 416,
+    "exact_pm_result_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "frozen_exact_result_scorer": "PASS",
+    "result_authority_status": "NONCREDIT_SEMANTIC_CANDIDATE_ONLY_BECAUSE_STRUCTURAL_GOAL_TERMINALITY_FAILED"
+  },
+  "goal_lifecycle": {
+    "goal_id": "15675906855b6bb4",
+    "active_snapshots": [
+      {
+        "entry_id": "65633d30",
+        "timestamp": "2026-08-26T22:26:43.350Z",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1787783203349,
+        "updatedAt": 1787783203349
+      },
+      {
+        "entry_id": "1c2caa1a",
+        "timestamp": "2026-08-26T22:27:22.144Z",
+        "status": "active",
+        "tokensUsed": 6579,
+        "timeUsedSeconds": 38,
+        "createdAt": 1787783203349,
+        "updatedAt": 1787783242144
+      }
+    ],
+    "latest_status": "active",
+    "canonical_goal_call_count": 0,
+    "successful_goal_result_count": 0,
+    "complete_state_count": 0,
+    "completed_event_count": 0,
+    "structural_terminal_result_observed": false
+  },
+  "omp_retry_recovery": {
+    "row_launch_count": 1,
+    "controller_retry_count": 0,
+    "controller_replacement_count": 0,
+    "provider_429_assistant_count": 11,
+    "retryRecovery_nonnull_count": 10,
+    "retryRecovery_attempts": [
+      {
+        "attempt": 1,
+        "entry_id": "6282ce05",
+        "timestamp": "2026-08-26T22:27:39.733Z"
+      },
+      {
+        "attempt": 2,
+        "entry_id": "d7760814",
+        "timestamp": "2026-08-26T22:28:28.017Z"
+      },
+      {
+        "attempt": 3,
+        "entry_id": "07d73198",
+        "timestamp": "2026-08-26T22:29:15.625Z"
+      },
+      {
+        "attempt": 4,
+        "entry_id": "c488faf1",
+        "timestamp": "2026-08-26T22:30:02.468Z"
+      },
+      {
+        "attempt": 5,
+        "entry_id": "bc537780",
+        "timestamp": "2026-08-26T22:30:49.141Z"
+      },
+      {
+        "attempt": 6,
+        "entry_id": "17a7c464",
+        "timestamp": "2026-08-26T22:31:35.837Z"
+      },
+      {
+        "attempt": 7,
+        "entry_id": "079c0456",
+        "timestamp": "2026-08-26T22:32:22.635Z"
+      },
+      {
+        "attempt": 8,
+        "entry_id": "ab0d0cb6",
+        "timestamp": "2026-08-26T22:33:09.693Z"
+      },
+      {
+        "attempt": 9,
+        "entry_id": "f51487e8",
+        "timestamp": "2026-08-26T22:33:56.654Z"
+      },
+      {
+        "attempt": 10,
+        "entry_id": "fa451cb6",
+        "timestamp": "2026-08-26T22:34:43.443Z"
+      }
+    ],
+    "retryRecovery_common_shape": {
+      "kind": "auto-retry",
+      "status": "superseded",
+      "recovery": "wait",
+      "note": "rate-limited; waited; retried"
+    },
+    "retry_budget_exhausted": {
+      "count": 1,
+      "entry_id": "5ec43305",
+      "timestamp": "2026-08-26T22:35:30.329Z",
+      "retryRecovery": null,
+      "error_prefix": "Retry budget exhausted after 10 retries: 429 Error from provider (Console): Rate limit exceeded. Please try again later."
+    },
+    "acceptance_zero_retry_bar_passed": false
+  },
+  "chronology": {
+    "launch_started_at_utc": "2026-08-26T22:26:40.302Z",
+    "goal_active_at_utc": "2026-08-26T22:26:43.350Z",
+    "submission_accepted_at_utc": "2026-08-26T22:27:22.222Z",
+    "semantic_candidate_at_utc": "2026-08-26T22:27:22.132Z",
+    "first_429_at_utc": "2026-08-26T22:27:39.733Z",
+    "retry_budget_exhausted_at_utc": "2026-08-26T22:35:30.329Z",
+    "session_exit_at_utc": "2026-08-26T23:26:40.485Z",
+    "runner_failure_at_utc": "2026-08-26T23:26:40.653Z",
+    "terminal_finished_at_utc": "2026-08-26T23:26:40.661Z",
+    "launch_to_goal_active_seconds": 3.048,
+    "launch_to_semantic_candidate_seconds": 41.83,
+    "semantic_candidate_to_first_429_seconds": 17.601,
+    "launch_to_retry_budget_exhausted_seconds": 530.027,
+    "retry_budget_exhausted_to_sigterm_seconds": 3070.156,
+    "launch_to_sigterm_seconds": 3600.183,
+    "launch_to_runner_failure_seconds": 3600.351,
+    "launch_to_terminal_seconds": 3600.359,
+    "frozen_row_budget_seconds": 3600,
+    "full_budget_honored": true
+  },
+  "terminal_custody": {
+    "terminal_path": "terminal.json",
+    "terminal_bytes": 3045,
+    "terminal_sha256": "ef627191255eb9a505b7e8a299b793ec72cf3a1e84f57eb31880e18e951aa452",
+    "status": "FAIL",
+    "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+    "no_retry": true,
+    "process_exit_code": null,
+    "qualification_credit": 0,
+    "matrix_credit": 0,
+    "runner_failure_path": "runner_failure.json",
+    "runner_failure_bytes": 542,
+    "runner_failure_sha256": "fd23bcd96083ceeb7e23db45f8c9f28a9902af8e4d77316cbd66122324aa9d59",
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 1399741: RunnerError: row time budget expired before exact Goal terminal result",
+    "terminal_evidence_record_count": 15,
+    "row_file_count_before_review": 16,
+    "terminal_evidence_records_reverified": true,
+    "launch_journal_path": "evidence/launch_journal.jsonl",
+    "launch_journal_bytes": 485,
+    "launch_journal_sha256": "b0e31c9d21a413beeaaaff49ef90481657594c1ba839b1fb002df581773a44aa",
+    "launch_journal_row_count": 1,
+    "launch_sha256": "20f04fdcec7cae4be28fb483f37179723f767ca2834a87a3f273f6b5516ecc64",
+    "omp_preflight_sha256": "f19c5b88c9de06915a74becf2717bddd25971f29e06ba7bf1ddf9bce7c2dce1a",
+    "pid_absent": true,
+    "cwd_exists_empty": true,
+    "session_dir_file_count": 1,
+    "session_dir_raw_matches_preserved_copy": true,
+    "suffix_evidence_count": 0,
+    "cache_residue_count": 0,
+    "terminal_evidence": [
+      {
+        "path": "composer_ack.json",
+        "bytes": 727,
+        "sha256": "25aff483544a586f82b154de8d33765ecbd5c7526c2564881c2d5d715ad53a87"
+      },
+      {
+        "path": "composer_ack.raw",
+        "bytes": 102135,
+        "sha256": "bb3213d5ab4cf633133140015c128db6e1bcb3cb4d0efeca819ecd378b9dcd61"
+      },
+      {
+        "path": "enter_write.json",
+        "bytes": 748,
+        "sha256": "d0f907144c81eb29925ec971a434e267eec41fa0a97dc8ef7121283b8c38f5c4"
+      },
+      {
+        "path": "launch.json",
+        "bytes": 1538,
+        "sha256": "20f04fdcec7cae4be28fb483f37179723f767ca2834a87a3f273f6b5516ecc64"
+      },
+      {
+        "path": "omp_preflight.json",
+        "bytes": 50244,
+        "sha256": "f19c5b88c9de06915a74becf2717bddd25971f29e06ba7bf1ddf9bce7c2dce1a"
+      },
+      {
+        "path": "postfailure_session.raw.jsonl",
+        "bytes": 38028,
+        "sha256": "715cf5d56a93f7ccdfa14b5cbc1f40bc10ad7d6edd7e5f30c6f8314727a5341b"
+      },
+      {
+        "path": "pre_prompt.raw",
+        "bytes": 91470,
+        "sha256": "473f31c714f51c8bf5038621d276ec7a016ca36b3e06bf2ded8b220aa34ce494"
+      },
+      {
+        "path": "prompt_write.json",
+        "bytes": 696,
+        "sha256": "df4fb3c370af2e0dbb28b41b91efbdf71cf82ed7c528162aec42e6a0570e05ee"
+      },
+      {
+        "path": "reservation.json",
+        "bytes": 352,
+        "sha256": "8b2f715363faad93d92f77b4c715ef0cfa43af0d52fc93cb8319bdf8cfdef492"
+      },
+      {
+        "path": "runner_failure.json",
+        "bytes": 542,
+        "sha256": "fd23bcd96083ceeb7e23db45f8c9f28a9902af8e4d77316cbd66122324aa9d59"
+      },
+      {
+        "path": "session_prefix.raw.jsonl",
+        "bytes": 19834,
+        "sha256": "f04ba9e474c45861b8d918b5bf53384f1a898a5287d6b2f33341ade280c9e42d"
+      },
+      {
+        "path": "stdin_enter.raw",
+        "bytes": 1,
+        "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+      },
+      {
+        "path": "stdin_prompt.raw",
+        "bytes": 3036,
+        "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+      },
+      {
+        "path": "submission_acceptance.json",
+        "bytes": 1340,
+        "sha256": "8bcbfbc69abaad9d53550c908b41726b0db2c7dd2a3cba8274c6c37b8098ae70"
+      },
+      {
+        "path": "transcript.raw",
+        "bytes": 6646820,
+        "sha256": "7b709ca3468e6a7f4904502baa89e27953657de52e3b3ca91093f584efe8c09d"
+      }
+    ]
+  },
+  "failure_classification": {
+    "subject_semantic_candidate_observed": true,
+    "candidate_matches_frozen_oracle_and_scorer": true,
+    "native_goal_activation_observed_in_preserved_session": true,
+    "native_goal_completion_observed": false,
+    "ordinary_tools_observed": false,
+    "omp_internal_retryRecovery_observed": true,
+    "normal_exit_observed": false,
+    "host_normalization_executed": false,
+    "row_passed": false,
+    "permanent_fail": true,
+    "no_row_retry_or_replacement": true,
+    "qualification_credit": 0,
+    "matrix_credit": 0,
+    "production_credit": 0,
+    "reason": "The first MiMo assistant emitted one exact scorer-valid typed candidate, but the next native Goal continuation encountered eleven persisted provider 429 error assistants: ten OMP auto-retry recovery attempts followed by retry-budget exhaustion. The Goal remained active with zero canonical Goal calls/results/complete states, so the structural-first verifier rejected before normalization. The controller then honored the frozen full-hour budget and recorded SIGTERM rather than a normal exit. Semantic text cannot repair Goal, retry, or exit defects."
+  },
+  "glm_5_3_flash_zero_subject_inventory": {
+    "status": "CURRENT_METADATA_ONLY_NONZERO_PRICED_HOLD_NO_LAUNCH",
+    "observed_at_utc": "2026-08-26T23:31:53.809Z",
+    "forced_online_catalog": {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "models",
+        "refresh",
+        "opencode-go",
+        "--json",
+        "--no-extensions"
+      ],
+      "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+      "started_at_utc": "2026-08-26T23:31:46.676Z",
+      "finished_at_utc": "2026-08-26T23:31:53.809Z",
+      "exit_code": 0,
+      "stdout_bytes": 9205,
+      "stdout_sha256": "8a6100e6e2594cfa33e3c31cc18557b9853972170d7ac74e221e05c877644a86",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "model_count": 31,
+      "exact_selector_count": 1,
+      "forced_online_semantics_source": "OMP v18.0.4 packages/coding-agent/src/cli/models-cli.ts lines 1-12"
+    },
+    "cli_projection": {
+      "provider": "opencode-go",
+      "id": "glm-5.3-flash",
+      "selector": "opencode-go/glm-5.3-flash",
+      "name": "GLM-5.3-Flash (2x usage)",
+      "contextWindow": 1000000,
+      "maxTokens": 131072,
+      "reasoning": true,
+      "thinking": [
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "input": [
+        "text",
+        "image"
+      ],
+      "cost": {
+        "input": 0.075,
+        "output": 0.25,
+        "cacheRead": 0.015,
+        "cacheWrite": 0
+      },
+      "zero_priced": false
+    },
+    "authoritative_current_model_cache": {
+      "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/models.db",
+      "bytes": 552960,
+      "sha256": "5a1f3ad8a4f34a7fba4bc4dfc3426e206860bfd07bb6072b8520a719ce308596",
+      "provider_cache_id": "opencode-go:models-v3:28yuismr4vijq",
+      "cache_schema_version": 12,
+      "updated_at_utc": "2026-08-26T23:31:49.754Z",
+      "authoritative": true,
+      "model_array_utf8_bytes": 64740,
+      "model_array_sha256": "adc03324452efb49d5de01851f2227281694e50379121843d1dd1bb0e5493f32",
+      "canonical_exact_model_utf8_bytes": 3593,
+      "canonical_exact_model_sha256": "b7e47808c4031e222503e2c5e1ed4163f56350ba2ad46893018a755661c67cce",
+      "api": "openai-completions",
+      "baseUrl": "https://opencode.ai/zen/go/v1",
+      "supportsTools_field_present": false,
+      "compat": {
+        "supportsToolChoice": true,
+        "supportsForcedToolChoice": true,
+        "supportsNamedToolChoice": true,
+        "supportsReasoningEffort": true,
+        "supportsReasoningParams": true,
+        "thinkingFormat": "openai",
+        "whenThinking.requiresReasoningContentForToolCalls": true,
+        "wireModelIdMode": "raw"
+      }
+    },
+    "omp_v18_0_4_source": {
+      "commit": "4854db856c20e000a3760d793c56d78065dcf83f",
+      "tag": "v18.0.4",
+      "files": [
+        {
+          "path": "packages/coding-agent/src/cli/models-cli.ts",
+          "bytes": 12506,
+          "sha256": "d69f9ad785cb09e46b1589bcdc3e6cc0c6d05d0144d1f4e88445f5ce4e6ed2da",
+          "claim": "lines 1-12 define refresh as forced online and lines 66-118 show that CLI JSON omits api and supportsTools"
+        },
+        {
+          "path": "packages/coding-agent/src/sdk.ts",
+          "bytes": 183634,
+          "sha256": "4c3524e68b9109623d4b28031c4d054a179481ff04796dc7ae5255494b3dea4a",
+          "claim": "lines 635-648 keep native dialect when tools.format is auto and supportsTools is not exactly false"
+        },
+        {
+          "path": "packages/coding-agent/src/config/model-registry.ts",
+          "bytes": 102497,
+          "sha256": "8147709850b202e2e2771c5261821810ff9af1a942bc6764b6bc9f854f9208c5",
+          "claim": "lines 1630-1717 resolve authenticated provider descriptors and preserve the authoritative dynamic model result"
+        },
+        {
+          "path": "packages/ai/src/registry/opencode-go.ts",
+          "bytes": 464,
+          "sha256": "c4943469e2aa09dd13a2306a22bc1aeaa2a79f611b8d1ebd42f178c0245886a2",
+          "claim": "lines 4-11 bind the opencode-go provider identity and OpenCode login"
+        }
+      ]
+    },
+    "effective_profile_config": {
+      "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/config.yml",
+      "bytes": 472,
+      "sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc",
+      "advisor.enabled": false,
+      "task.agentAdvisor": {
+        "task": "off"
+      },
+      "goal.enabled": true,
+      "goal.continuationModes": [
+        "interactive"
+      ],
+      "mcp.enableProjectConfig": false,
+      "memory.backend": "off"
+    },
+    "compatibility_disposition": {
+      "selector_currently_advertised": true,
+      "reasoning_and_xhigh_advertised": true,
+      "api_resolved_from_authoritative_cache": "openai-completions",
+      "native_default_dialect_selected_mechanically": true,
+      "config_overlay_required": false,
+      "native_goal_empirically_proved_for_this_exact_selector": false,
+      "price_gate": "HOLD_NONZERO_INPUT_OUTPUT_AND_CACHE_READ_PRICES",
+      "authority_and_design_gate": "HOLD_PENDING_XHIGH_ADJUDICATION_AND_FRESH_SUCCESSOR_FREEZE",
+      "subject_calls": 0,
+      "goal_calls": 0,
+      "model_inference_calls": 0,
+      "config_mutations": 0,
+      "windows_interactions": 0
+    }
+  },
+  "conditional_shared_normalized_canary_reuse_delta": {
+    "status": "INVENTORY_ONLY_NOT_AUTHORITY_TO_BUILD_OR_LAUNCH",
+    "byte_identical_reuse": [
+      "V7 3036-byte OMP prompt, capsule, oracle, response schema, exact-result scorer, native Goal parser/runner/full verifier, and 3600-second budget",
+      "storage_mimo_normalized_canary_v1/result_normalizer.py at 7024 bytes and SHA-256 382cb5bb0b357bc223010a813dbef7e9c8daf8f952568db0ce4d5e1620129a43",
+      "structural-first normalization order, raw-session preservation, candidate locations/hashes, distinct permanent normalization failure, full evidence custody, fail-stop, no retry/retro-credit, and Windows exclusion",
+      "isolated profile and exact advisor-off/no-tools/no-skills/no-rules/native-default argv shape; expected assistant API remains openai-completions"
+    ],
+    "required_fresh_changes": [
+      "Create a new sibling root/schema with one fresh attempt_id, nonce, cwd, session_dir, and evidence path disjoint from every consumed identity, and include the consumed normalized MiMo contract in historical uniqueness.",
+      "Change route/provider/model/effort from opencode-zen/mimo-v2.5-free|high to opencode-go/glm-5.3-flash|xhigh and change the forced catalog provider from opencode-zen to opencode-go.",
+      "Replace the zero-price MiMo catalog constants with the exact current GLM projection and explicit nonzero cost; freeze and join the authoritative cached API/compatibility evidence or an equivalent fresh pre-Popen receipt because CLI JSON alone omits api and supportsTools.",
+      "Do not reuse the MiMo-specific catalog validator unchanged: it hard-requires the MiMo selector, provider, limits, effort set, and zero price. Keep the result normalizer unchanged and make only a route-local catalog/API adapter around shared V7 mechanics.",
+      "Bind fresh explicit spending/route authority that resolves the active objective's cheap-fallback clause against its independent prohibition on paid tokens before a free first-route PASS; xhigh must approve the design before any build or launch.",
+      "Add zero-subject mutations for wrong selector/provider/xhigh/API, absent or false supportsTools semantics, price drift, cache/refresh disagreement, non-native config overlay, and retained MiMo authority/identity widening."
+    ],
+    "mimo_row_remains_permanent_fail": true,
+    "no_retry_or_retro_credit": true,
+    "no_fallback_launched": true
+  }
+}
