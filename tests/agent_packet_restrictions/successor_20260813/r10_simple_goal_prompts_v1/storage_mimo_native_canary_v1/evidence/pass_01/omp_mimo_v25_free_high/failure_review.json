@@ -1,0 +1,330 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.storage_mimo_native_canary.failure_review.v1",
+  "reviewed_at_utc": "2026-08-26T21:25:36Z",
+  "source_candidate_commit": "25015e31d7124082ba4608c5ceb62d75bc93cf6c",
+  "terminal_roster_closed_before_review": true,
+  "review_outside_terminal_roster": true,
+  "immutable_row_identity": {
+    "ordinal": 1,
+    "pass_id": "pass_01",
+    "route_id": "omp_mimo_v25_free_high",
+    "attempt_id": "storage-mimo-native-canary-v1-01-307a26af6a",
+    "nonce": "307a26af6a2f4e417dddc8507b5247bb",
+    "surface": "omp_tui",
+    "model": "opencode-zen/mimo-v2.5-free",
+    "thinking": "high",
+    "pid": 1337602,
+    "session_id": "01a03fb9-4765-744b-bba4-ac44fb8d8462",
+    "goal_id": "15673ba79b528c7f",
+    "goal_tool_call_id": "call_2e17ef8b178e4817a0ce245e",
+    "cwd": "/tmp/pm-r10-storage-v7-mimo-native-canary-v1-01-307a26af6a",
+    "session_dir": "/tmp/pm-r10-storage-v7-session-mimo-native-canary-v1-01-307a26af6a"
+  },
+  "source_custody": {
+    "head": "25015e31d7124082ba4608c5ceb62d75bc93cf6c",
+    "origin_main": "25015e31d7124082ba4608c5ceb62d75bc93cf6c",
+    "truenas_backup_main": "25015e31d7124082ba4608c5ceb62d75bc93cf6c",
+    "sources": [
+      {
+        "path": "README.md",
+        "bytes": 3311,
+        "sha256": "0be6097e542a94ed31527bbd8df974fb39d44b94af4a9d4677333f07277ccb7b",
+        "git_mode": "100644",
+        "git_oid": "fd36863f06f57c2becabdc1c1cdc6cfea98c7fe1"
+      },
+      {
+        "path": "canary_contract.json",
+        "bytes": 13856,
+        "sha256": "91e537ae27cd725e61eadd2f2abdbb2711f921ee4c50ad3c7b8f62c9dc49fa2f",
+        "git_mode": "100644",
+        "git_oid": "e95b4c60ba7ba034184f49a58ecd2592ec1a6735"
+      },
+      {
+        "path": "controller.py",
+        "bytes": 39685,
+        "sha256": "a542eed1a81f9ba6b245661d7d0d97685f362cf25666a8bed0c083fffc1f9dd1",
+        "git_mode": "100644",
+        "git_oid": "4ede9d9f2be7175ef2f7b582ea226a08f5b79717"
+      },
+      {
+        "path": "selftest.py",
+        "bytes": 24975,
+        "sha256": "db2819c5a8a69b3c7ce7aa36742edd36d5a5dd80bfbe5a7dfea64212f1556413",
+        "git_mode": "100644",
+        "git_oid": "28639ffec380d7b3837d0bf2884c96eb71cc48f8"
+      }
+    ]
+  },
+  "catalog_gate": {
+    "preflight_path": "omp_preflight.json",
+    "preflight_bytes": 41733,
+    "preflight_sha256": "716e7de1cf0aa86997229885b1fa931b5677d88404e7f8a9f26a8fe79c09b44d",
+    "receipt_digest": "d2945a0381529a78cc7255fa7f1a7d6141e6a4d759e3bd4b0a68fa321db254a3",
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "models",
+      "refresh",
+      "opencode-zen",
+      "--json",
+      "--no-extensions"
+    ],
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "started_at_utc": "2026-08-26T20:18:12.990Z",
+    "finished_at_utc": "2026-08-26T20:18:20.105Z",
+    "duration_ms": 7115,
+    "exit_code": 0,
+    "forced_online": true,
+    "extensions_disabled": true,
+    "stdout_bytes": 19262,
+    "stdout_sha256": "6a1f2bdcb98d3038d9360175268e934a9b99ff8bef39acb71ea191c21c545021",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "model_count": 63,
+    "exact_selector_count": 1,
+    "exact_model": {
+      "provider": "opencode-zen",
+      "id": "mimo-v2.5-free",
+      "selector": "opencode-zen/mimo-v2.5-free",
+      "name": "MiMo V2.5 Free",
+      "contextWindow": 200000,
+      "maxTokens": 32000,
+      "reasoning": true,
+      "thinking": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "input": [
+        "text",
+        "image"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      }
+    },
+    "launch_after_catalog_finish_seconds": 0.456,
+    "catalog_chain_reverified": true,
+    "effective_config": {
+      "advisor.enabled": false,
+      "task.agentAdvisor": {
+        "task": "off"
+      }
+    }
+  },
+  "transport": {
+    "protocol_adapter": "native_default",
+    "config_overlay": null,
+    "argv_has_config": false,
+    "argv_has_no_tools": true,
+    "argv_has_no_skills": true,
+    "argv_has_no_rules": true,
+    "prompt_path": "stdin_prompt.raw",
+    "prompt_utf8_bytes": 3036,
+    "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+    "prompt_terminator_included": false,
+    "enter_path": "stdin_enter.raw",
+    "enter_bytes": 1,
+    "enter_sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4",
+    "enter_hex": "0d",
+    "external_submission_count": 1,
+    "submission_accepted_at_utc": "2026-08-26T20:18:37.778Z",
+    "session_prefix_bytes": 16464,
+    "session_prefix_sha256": "3f7e26b4b8196e1f1f0cb4177fa12678066cd65178c02742e7ed4e7e70d5b513"
+  },
+  "postfailure_session": {
+    "path": "postfailure_session.raw.jsonl",
+    "bytes": 51501,
+    "sha256": "16260db38f0998ddbb7c18a65724dfff954dc9655d3b62cffa9bcc00c72badf1",
+    "live_session_copy_byte_identical": true,
+    "physical_rows": 20,
+    "logical_entries": 19,
+    "fresh_parent_session": true,
+    "linear_entry_chain": true,
+    "session_started_at_utc": "2026-08-26T20:18:22.181Z",
+    "provider": "opencode-zen",
+    "model": "mimo-v2.5-free",
+    "selector": "opencode-zen/mimo-v2.5-free",
+    "thinking": "high",
+    "assistant_api": "openai-completions",
+    "assistant_api_message_count": 3,
+    "assistant_message_count": 3,
+    "goal_context_count": 2,
+    "native_continuation_count": 1,
+    "assistant_lifecycle_shape": "standard_tool_cycle",
+    "canonical_goal_call_count": 1,
+    "goal_tool_start_count": 1,
+    "successful_goal_result_count": 1,
+    "goal_complete_state_count": 1,
+    "goal_completed_event_count": 1,
+    "ordinary_tool_call_count": 0,
+    "require_exit_false_structural_verdict": "PASS",
+    "require_exit_true_structural_verdict": "OmpSessionError: OMP normal session exit"
+  },
+  "assistant_results": {
+    "exact_pm_result_line": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+    "exact_pm_result_line_utf8_bytes": 416,
+    "exact_pm_result_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "pm_result_occurrence_count": 2,
+    "messages": [
+      {
+        "entry_id": "533d638e",
+        "stop_reason": "stop",
+        "text_utf8_bytes": 837,
+        "text_sha256": "3715adcf1e00ec1c8ab3a52be342e830217efdd075800442ef096de25b6698db",
+        "frozen_exact_result_scorer": "PASS"
+      },
+      {
+        "entry_id": "29f6fa40",
+        "stop_reason": "toolUse",
+        "text_utf8_bytes": 704,
+        "text_sha256": "ddf64349c5f8d20204193ebcfb08ee8dc2dbe34b2384973d2e964e2eacde48e5",
+        "frozen_exact_result_scorer": "PASS",
+        "canonical_goal_call_is_final_content_block": true
+      },
+      {
+        "entry_id": "3e8f8fe0",
+        "stop_reason": "stop",
+        "text_utf8_bytes": 262,
+        "text_sha256": "d8cd08ac0d622ffe26801a76b5d94d7f84a9bf6c408aeabd6688130eaa8f51ab",
+        "text": "Gate audit complete. Disposition: **blocked**. Two active blockers (stale canonical artifact + PNC-019 incomplete runtime certification) prevent WorkNode advancement. Structural extraction and dependency resolution all passed cleanly—no worknodes were created.",
+        "pm_result_occurrence_count": 0,
+        "frozen_exact_result_scorer": "RunnerError: exactly one PM_RESULT line"
+      }
+    ]
+  },
+  "chronology": {
+    "launch_started_at_utc": "2026-08-26T20:18:20.561Z",
+    "submission_accepted_at_utc": "2026-08-26T20:18:37.778Z",
+    "goal_complete_at_utc": "2026-08-26T20:19:01.095Z",
+    "final_assistant_at_utc": "2026-08-26T20:19:06.248Z",
+    "session_exit_at_utc": "2026-08-26T21:18:20.613Z",
+    "runner_failure_at_utc": "2026-08-26T21:18:20.777Z",
+    "terminal_finished_at_utc": "2026-08-26T21:18:20.785Z",
+    "launch_to_submission_acceptance_seconds": 17.217,
+    "launch_to_goal_complete_seconds": 40.534,
+    "launch_to_final_assistant_seconds": 45.687,
+    "launch_to_sigterm_seconds": 3600.052,
+    "goal_complete_to_sigterm_seconds": 3559.518,
+    "final_assistant_to_sigterm_seconds": 3554.365,
+    "launch_to_runner_failure_seconds": 3600.216,
+    "launch_to_terminal_seconds": 3600.224,
+    "session_exit_kind": "signal",
+    "session_exit_reason": "sigterm"
+  },
+  "terminal_custody": {
+    "terminal_path": "terminal.json",
+    "terminal_bytes": 3041,
+    "terminal_sha256": "46bafbde749108249b075cc4d4e58d4e4a65c81e463c58fdff004775856f0c7c",
+    "status": "FAIL",
+    "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+    "no_retry": true,
+    "process_exit_code": null,
+    "qualification_credit": 0,
+    "matrix_credit": 0,
+    "runner_failure_path": "runner_failure.json",
+    "runner_failure_bytes": 538,
+    "runner_failure_sha256": "8cbf2a9c422bfc317aa20de1433eaa5a9ffdcb8daa715df560101e13bfdb2f00",
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 1337602: RunnerError: row time budget expired before exact Goal terminal result",
+    "terminal_evidence_record_count": 15,
+    "row_file_count_before_review": 16,
+    "terminal_evidence_records_reverified": true,
+    "launch_journal_path": "evidence/launch_journal.jsonl",
+    "launch_journal_bytes": 481,
+    "launch_journal_sha256": "44f8055ac0faf59f194ea167b71e205841bf86e6fc55a138912728d7aad46a68",
+    "launch_journal_row_count": 1,
+    "launch_sha256": "38467ae8f97bfefc6836db2f8ff94948da53011feb5e9c0abc0cbd628c05fc3c",
+    "omp_preflight_sha256": "716e7de1cf0aa86997229885b1fa931b5677d88404e7f8a9f26a8fe79c09b44d",
+    "pid_absent": true,
+    "cwd_exists_empty": true,
+    "session_dir_file_count": 1,
+    "session_dir_raw_matches_preserved_copy": true,
+    "retry_count": 0,
+    "replacement_count": 0,
+    "suffix_evidence_count": 0,
+    "cache_residue_count": 0
+  },
+  "failure_classification": {
+    "subject_semantic_result_observed": true,
+    "native_goal_completion_observed": true,
+    "ordinary_tools_observed": false,
+    "distinct_final_exact_result_passed": false,
+    "normal_exit_observed": false,
+    "row_passed": false,
+    "permanent_fail": true,
+    "no_retry": true,
+    "qualification_credit": 0,
+    "matrix_credit": 0,
+    "production_credit": 0,
+    "reason": "The model completed the native Goal and emitted the exact typed result twice before the Goal call, but the required distinct final assistant omitted PM_RESULT; the runner therefore kept polling to the frozen 3600-second budget and terminated the process by SIGTERM without a normal exit. Native Goal success does not satisfy the row's distinct-final, exact-scorer, and normal-exit bars."
+  },
+  "hy3_zero_subject_inventory": {
+    "status": "CURRENT_METADATA_ONLY_FOR_CONDITIONAL_SUCCESSOR_DESIGN",
+    "observed_at_utc": "2026-08-26T21:25:00.104Z",
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "models",
+      "refresh",
+      "opencode-zen",
+      "--json",
+      "--no-extensions"
+    ],
+    "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "duration_ms": 6962,
+    "exit_code": 0,
+    "stdout_bytes": 19262,
+    "stdout_sha256": "6a1f2bdcb98d3038d9360175268e934a9b99ff8bef39acb71ea191c21c545021",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "model_count": 63,
+    "exact_selector_count": 1,
+    "exact_model": {
+      "provider": "opencode-zen",
+      "id": "hy3-free",
+      "selector": "opencode-zen/hy3-free",
+      "name": "Hy3 Free",
+      "contextWindow": 190000,
+      "maxTokens": 64000,
+      "reasoning": true,
+      "thinking": [
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "input": [
+        "text"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      }
+    },
+    "byte_identical_to_launch_time_zen_catalog": true,
+    "assistant_api_not_exposed_by_catalog": true,
+    "subject_calls": 0,
+    "goal_calls": 0,
+    "model_inference_calls": 0,
+    "config_mutations": 0,
+    "windows_interactions": 0
+  },
+  "conditional_minimal_successor_delta": {
+    "authority_required": "Fresh explicit user authority is required for opencode-zen/hy3-free|xhigh; the consumed MiMo authority does not authorize Hy3.",
+    "new_identity_required": true,
+    "changes": [
+      "Create a fresh one-row zero-credit canary root/schema with a fresh attempt_id, nonce, cwd, session_dir, and evidence path disjoint from every consumed identity.",
+      "Change only the provider/model/effort/data-processing substitution from opencode-zen/mimo-v2.5-free|high to opencode-zen/hy3-free|xhigh and freeze the exact current Hy3 catalog object.",
+      "Change the catalog gate to require the exact Hy3 selector once, zero price, reasoning=true, xhigh support, contextWindow=190000, maxTokens=64000, and input=[text].",
+      "Resolve and freeze Hy3's exact assistant API before launch, then require that API on every persisted assistant; the catalog output does not expose it.",
+      "Keep the 3036-byte prompt, capsule, oracle, schema, frozen exact-result scorer, V7 native/default parser/verifier, advisor-off controls, no config overlay, no ordinary tools, one native Goal prompt, 3600-second budget, distinct final assistant, normal exit, pushed custody, fail-stop, Windows exclusion, no retry, and zero credit unchanged."
+    ],
+    "mimo_failure_remains_failure": true,
+    "no_retry_or_retro_credit": true,
+    "no_automatic_successor_or_matrix_authority": true
+  }
+}
