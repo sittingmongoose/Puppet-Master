@@ -1,0 +1,21 @@
+{
+  "attempt_id": "ox-native-v1-03-a56ce28265",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "a56ce28265b82b66025e284eaf92c79f",
+  "ordinal": 3,
+  "pass_id": "native_03",
+  "path": "stdin_prompt.raw",
+  "pid": 889662,
+  "pre_prompt": {
+    "bytes": 90538,
+    "path": "pre_prompt.raw",
+    "sha256": "8f78949daadc476c64bd017f4e04ae7ae27a5953373e2374a0ca03b311ade4e3"
+  },
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-26T08:29:43.816Z"
+}

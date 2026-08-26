@@ -541,3 +541,15 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: row-2 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or row-3/suffix path changed. Every Windows OMP and Windows Terminal process/window remained foreign and untouched.
 - Next disconfirming test: fixed row 3 on the same unchanged native/default bytes must independently `PASS` or permanently fail-stop the denominator. No retry, replacement, skipped row, or retro-credit is permitted.
 - Classification: **PROGRESS — NATIVE/DEFAULT 2/5; ZERO QUALIFICATION CREDIT**. This remains an incomplete development denominator, not a repeatability, reliability, matrix, readiness, or completion claim.
+
+## 2026-08-26T08:34:38Z — native/default Ox reliability row-3 checkpoint
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Current hypothesis: unchanged. The native/default Ox architecture can repeat its exact bounded native Goal and typed-result behavior across the five preregistered fresh identities.
+- Smallest changed invariant: none since frozen native V1. Row 3 used the same exact pushed source, 3,036-byte prompt, Ox/max route, isolated Linux profile, advisor-off/no-ordinary-tools runtime, native/default argv, 3,600-second allowance, scorer, and evidence bar.
+- New evidence: row 3 independently verifies `PASS` through provider-native Goal transport with no `--config` or dialect adapter, no native continuation, one canonical Goal completion, the exact typed scorer result, zero ordinary tools, and normal process exit 0. The fixed verified prefix is 3/5 with zero qualification credit.
+- Deepest valid product-relevant point: the provider-native path produced the exact authoritative post-Goal result with zero pre-Goal-call prose, showing the bounded prompt can reach the required typed projection directly without a dialect adapter or provisional result text.
+- Files/surface added or removed: row-3 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or row-4/suffix path changed. Every Windows OMP and Windows Terminal process/window remained foreign and untouched.
+- Next disconfirming test: fixed row 4 on the same unchanged native/default bytes must independently `PASS` or permanently fail-stop the denominator. No retry, replacement, skipped row, or retro-credit is permitted.
+- Classification: **PROGRESS — NATIVE/DEFAULT 3/5; ZERO QUALIFICATION CREDIT**. This remains an incomplete development denominator, not a repeatability, reliability, matrix, readiness, or completion claim.
