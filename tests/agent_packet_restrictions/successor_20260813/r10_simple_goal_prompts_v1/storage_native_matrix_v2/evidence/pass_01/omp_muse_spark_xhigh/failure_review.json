@@ -1,0 +1,221 @@
+{
+  "attempt_id": "storage-native-matrix-v2-pass_01-03-a5a1305592",
+  "claims_excluded": [
+    "V2 Muse row pass",
+    "pass 1 completion",
+    "full-matrix qualification",
+    "normal process exit",
+    "GLM Muse capability or incapability",
+    "production readiness",
+    "safety certification",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ],
+  "classification": "PERMANENT_V2_PRESCRIBED_MUSE_NATIVE_GOAL_TERMINALIZATION_FAILURE_AFTER_TWO_EXACT_SEMANTIC_RESULTS",
+  "comparison_inventory": {
+    "glm_muse_empirical_evidence": {
+      "bounded_roots_checked": [
+        {
+          "contract": {
+            "bytes": 5743,
+            "path": "muse_owned_glm_probe_v1/probe_contract.json",
+            "sha256": "f8c30bbd87530b8dff0f5a959bcc8807e744e2834dba335ffb30ae8191570a66"
+          },
+          "launch_journal": {
+            "bytes": 463,
+            "path": "muse_owned_glm_probe_v1/evidence/launch_journal.jsonl",
+            "routes": [
+              "omp_ox_alpha_free_max"
+            ],
+            "sha256": "dce27139d22f2b7a5af80e1a1cec32c6dd9fec3c6f09478fd40d85616a118d07"
+          },
+          "muse_evidence_leaf_exists": false,
+          "planned_muse_attempt": "glm-probe-v1-02-36cee22a34"
+        },
+        {
+          "contract": {
+            "bytes": 7601,
+            "path": "muse_owned_glm_probe_v2/probe_contract.json",
+            "sha256": "d72c10d32d80c80c4bbe5f4444819e17a56da92f82243292b7bef273e7f2d45a"
+          },
+          "launch_journal": {
+            "bytes": 463,
+            "path": "muse_owned_glm_probe_v2/evidence/launch_journal.jsonl",
+            "routes": [
+              "omp_ox_alpha_free_max"
+            ],
+            "sha256": "c6d4b5083e56d7b628367ff66d9125d14644ca6ea51f781a0b690ed3d5281c44"
+          },
+          "muse_evidence_leaf_exists": false,
+          "planned_muse_attempt": null
+        },
+        {
+          "contract": {
+            "bytes": 10226,
+            "path": "ox_owned_glm_reliability_v3/reliability_contract.json",
+            "sha256": "3060f030233c007df16b7544ba2ee82492eb98316d3839f3fe4eb2d585a43a5d"
+          },
+          "launch_journal": {
+            "bytes": 1864,
+            "path": "ox_owned_glm_reliability_v3/evidence/launch_journal.jsonl",
+            "routes": [
+              "omp_ox_alpha_free_max",
+              "omp_ox_alpha_free_max",
+              "omp_ox_alpha_free_max",
+              "omp_ox_alpha_free_max"
+            ],
+            "sha256": "85cb20625f92f75ae060ab93b6f9a674f05666c60e35867034a7e21f0fcf7415"
+          },
+          "muse_evidence_leaf_exists": false,
+          "planned_muse_attempt": null
+        }
+      ],
+      "conclusion": "No GLM Muse launch or evidence leaf exists in the bounded GLM packages checked; no GLM Muse behavior is inferred.",
+      "status": "ABSENT"
+    },
+    "owned_xml_muse": {
+      "assistant_count": 2,
+      "exact_typed_pm_result_assistant_count": 2,
+      "goal_complete_state_count": 0,
+      "goal_tool_call_count": 0,
+      "native_continuation_count": 1,
+      "postfailure_session_bytes": 57568,
+      "postfailure_session_sha256": "a2d3d822837407337b25e7030b7de35e95b1d067bd969fcc7d9f9432e1561fb5",
+      "review_sha256": "140958b9d7513acd16123858e3f085576bb070fa4cae4b1913fad77a21d21e69"
+    },
+    "v7_native_muse": {
+      "assistant_count": 2,
+      "exact_typed_pm_result_assistant_count": 2,
+      "goal_complete_state_count": 0,
+      "goal_tool_call_count": 0,
+      "native_continuation_count": 1,
+      "postfailure_session_bytes": 57037,
+      "postfailure_session_sha256": "a8e1252614bf5dd4bd829958233f0b9d30eedeead0ee40ef01451db5423c9892",
+      "review_sha256": "e974d52c79fb35230b94e11f8a1d7a1498bf139ac426f54ce2d9c86b4c4ba239"
+    }
+  },
+  "failure": {
+    "no_retry": true,
+    "process_exit": {
+      "kind": "normal_exit_absent",
+      "pid_absent_after_failure": true,
+      "terminal_process_exit_code": null
+    },
+    "qualification_credit": 0,
+    "row_budget_seconds": 3600,
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 1118761: RunnerError: row time budget expired before exact Goal terminal result",
+    "seconds_from_launch_to_failure_terminal": 3600.239,
+    "terminal_status": "FAIL"
+  },
+  "fresh_glm_pivot_inventory_if_separately_authorized": {
+    "candidate_reference_only": {
+      "closed_projection_adapter": {
+        "bytes": 9004,
+        "path": "ox_owned_glm_reliability_v3/glm_projection.py",
+        "sha256": "32912b97875c83b9237f04ab0193710a85727c5fbb351d883c5333ef6b4fa0ec"
+      },
+      "overlay": {
+        "bytes": 21,
+        "contents": "tools:\n  format: glm\n",
+        "path": "tools_glm.config.yml",
+        "sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9"
+      }
+    },
+    "minimal_deltas": [
+      "create a fresh exclusive successor root and schema with 24 fresh disjoint identities; never alter or retry V2",
+      "copy the five V2 package roles, keeping codex_app_lane.py and every prompt, capsule, oracle, scorer, route, model, effort, budget, authority ceiling, and fail-stop rule unchanged",
+      "add the exact 21-byte tools.format glm overlay and one closed GLM session-projection module",
+      "change only the Muse OMP route to insert the explicit overlay and temporary closed projection binding; every other OMP route remains native/default without config",
+      "extend source custody, preflight, verifier joins, and zero-subject mutations to the added overlay/projection bytes",
+      "retain Ox then Cursor then Muse gate order and require fresh empirical Muse evidence before any suffix launch"
+    ],
+    "residual_limit": "The projection and overlay have Ox evidence only. They provide no empirical Muse support and cannot be launched without separate explicit authorization and fresh frozen custody."
+  },
+  "frozen_identity": {
+    "goal_id": "1566d61add459be6",
+    "model": "opencode-go/muse-spark-1.2-contributor",
+    "nonce": "a5a1305592df0bb757c708f238416819",
+    "ordinal": 3,
+    "pass_id": "pass_01",
+    "pid": 1118761,
+    "route_id": "omp_muse_spark_xhigh",
+    "session_id": "01a03e23-1421-7200-8d1a-c30d3a7f2126",
+    "source_commit": "b96e80d45a624425110c20a2a1bb1e4ba6e068b2",
+    "thinking": "xhigh"
+  },
+  "key_evidence": {
+    "launch_journal": {
+      "bytes": 1450,
+      "sha256": "a6d01cee871a0d000ed94373d267aec99dbb8f99f5257a325dd7f319f04fb98f"
+    },
+    "postfailure_session": {
+      "bytes": 68612,
+      "late_outside_terminal_roster": true,
+      "sha256": "641907b626f870d7133e7081e1700e2e41efb33363ff737dd76fd8698c1d5405"
+    },
+    "prompt": {
+      "bytes": 3036,
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    "runner_failure": {
+      "bytes": 539,
+      "sha256": "068c40081e2224865fccafaa961fd24d95f3efa57744cc2723ff507544151b28"
+    },
+    "session_prefix": {
+      "bytes": 41078,
+      "sha256": "14b0b7203a51c717a82a93ee9bff8120292d7ea3a91432d798db5eaecc66168d"
+    },
+    "terminal": {
+      "bytes": 2887,
+      "sha256": "b2d2841661f5cc75d78c6361486ac59f2ebe9b812fbe820e9e2af3bd0f11cea8"
+    },
+    "transcript": {
+      "bytes": 628429,
+      "sha256": "40b65fc3fe336de471a7a3d30fa10e5e60cc7cb86a52598d41d67f75bc986216"
+    }
+  },
+  "observed_postfailure_facts": {
+    "assistant_count": 2,
+    "exact_external_submission_count": 1,
+    "exact_typed_pm_result_assistant_count": 2,
+    "first_exact_result_at_utc": "2026-08-26T12:54:59.164Z",
+    "goal_active_snapshot_count": 3,
+    "goal_complete_state_count": 0,
+    "goal_context_count": 2,
+    "goal_status_at_last_model_activity": "active",
+    "goal_time_used_seconds": 29,
+    "goal_tool_call_count": 0,
+    "goal_tool_result_count": 0,
+    "goal_tokens_used": 13767,
+    "native_continuation_count": 1,
+    "ordinary_tool_call_count": 0,
+    "result_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "second_exact_result_at_utc": "2026-08-26T12:55:13.284Z",
+    "seconds_from_last_persisted_goal_assistant_to_session_exit": 3566.738,
+    "session_exit_at_utc": "2026-08-26T13:54:40.022Z",
+    "subject_semantic_result_exact": true
+  },
+  "reviewed_at_utc": "2026-08-26T14:02:46Z",
+  "schema_id": "pm.r10.storage_pipeline.failure_review.v2",
+  "sequencing_custody": {
+    "journal_ordinals": [
+      1,
+      2,
+      3
+    ],
+    "row_1_status": "PASS",
+    "row_2_status": "PASS",
+    "row_3_status": "FAIL",
+    "rows_4_through_24_launched": false,
+    "suffix_evidence_absent": true,
+    "suffix_runtime_paths_absent": true
+  },
+  "terminal_disposition": {
+    "advance_to_ordinal_4_authorized": false,
+    "glm_muse_claim_available": false,
+    "longer_wait_would_test_new_goal_task_activity": false,
+    "prompt_or_scorer_weakening_authorized": false,
+    "retry_or_replacement_authorized": false,
+    "scope_correction_required": "V2 is permanently stopped at Muse after the fixed full-hour allowance. A GLM Muse pivot would be a fresh dialect and fresh denominator with no current Muse empirical evidence; it requires separate explicit authorization and cannot rescue, retry, or retro-credit V2."
+  }
+}
