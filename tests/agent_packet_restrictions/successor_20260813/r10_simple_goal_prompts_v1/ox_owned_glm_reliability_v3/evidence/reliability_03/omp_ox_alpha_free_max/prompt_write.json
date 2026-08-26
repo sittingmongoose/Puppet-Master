@@ -1,0 +1,21 @@
+{
+  "attempt_id": "ox-glm-v3-03-882d064911",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "882d064911f6c750c33e9129e5dba184",
+  "ordinal": 3,
+  "pass_id": "reliability_03",
+  "path": "stdin_prompt.raw",
+  "pid": 803292,
+  "pre_prompt": {
+    "bytes": 86514,
+    "path": "pre_prompt.raw",
+    "sha256": "a6fdac496dee769a318988793db140e2a4efa7ba9fabb4cc1b6e4227d870954c"
+  },
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-26T05:50:16.531Z"
+}

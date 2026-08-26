@@ -1,0 +1,37 @@
+{
+  "accepted_at_utc": "2026-08-26T05:50:53.972Z",
+  "attempt_id": "ox-glm-v3-03-882d064911",
+  "enter_write_sha256": "45d81c2987e6e0248c025c0b665508ca0bd8d650810ea45bbbf794708e42d2f7",
+  "external_submission_count": 1,
+  "low_level_input_write_count": 2,
+  "nonce": "882d064911f6c750c33e9129e5dba184",
+  "ordinal": 3,
+  "pass_id": "reliability_03",
+  "pid": 803292,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.submission_acceptance.v7",
+  "session_prefix": {
+    "bytes": 34030,
+    "path": "session_prefix.raw.jsonl",
+    "sha256": "6d747c2a2cc68d3a91727acd831f009fa60240c9a5e78779f65df2728ff89af5"
+  },
+  "session_projection": {
+    "external_user_message_count": 1,
+    "goal_active_entry_id": "6a6b2367",
+    "goal_context_count": 1,
+    "goal_context_entry_ids": [
+      "174b06a1"
+    ],
+    "goal_id": "156674f521f43acd",
+    "logical_entry_count": 11,
+    "native_continuation_count": 0,
+    "selector": "opencode-go/ox-alpha-free",
+    "session_id": "01a03c9e-7d44-70e9-99c6-de9d51d2fc18",
+    "session_prefix_bytes": 34030,
+    "session_prefix_sha256": "6d747c2a2cc68d3a91727acd831f009fa60240c9a5e78779f65df2728ff89af5",
+    "session_started_at_utc": "2026-08-26T05:50:14.852Z",
+    "thinking": "max",
+    "thinking_receipt_count": 1,
+    "user_entry_id": "546eb341"
+  }
+}
