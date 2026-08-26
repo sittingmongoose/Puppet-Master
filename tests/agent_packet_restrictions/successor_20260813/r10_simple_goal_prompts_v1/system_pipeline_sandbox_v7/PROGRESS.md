@@ -457,3 +457,15 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: changed only the existing V3 projection, contract, selftest, and this append-only progress entry. The six-file roster, exactly 11 temporary bindings, five fresh identities, unchanged controller/README/21-byte overlay, evidence absence, ten runtime-path absences, and all consumed failures remain intact. No subject, OMP/provider call, profile/config change, retry, stage, commit, or push occurred.
 - Next disconfirming test: keep launches frozen through independent review and dual-pushed custody. If admitted later, ordinal 1 remains the only next subject; any accounting drift, row failure, or custody mismatch permanently stops the suffix, and only 5/5 still supports the zero-credit narrow reliability hypothesis.
 - Classification: **PROGRESS / PRELAUNCH ACCOUNTING FIX**. This closes one false-pending path without widening accepted output, relaxing terminal authority, or generating empirical credit.
+
+## 2026-08-26T05:24:00Z — owned-GLM reliability row-1 checkpoint
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Current hypothesis: the unchanged simplified GLM controller can repeat the exact native Goal behavior across the frozen five-row Ox denominator.
+- Smallest changed invariant: none since frozen V3. Row 1 used the preregistered prompt, model/effort, GLM overlay, advisor-off runtime, 3,600-second allowance, scorer, evidence bar, and source bytes.
+- New evidence: row 1 independently verifies `PASS` with one native Goal continuation, one canonical 82-byte GLM Goal call, the exact typed scorer result, zero ordinary tools, and normal process exit 0. The verified prefix is 1/5 and carries zero qualification credit.
+- Deepest valid product-relevant point: the bounded prompt survived a weak-route native continuation without extra subject choreography while retaining exact Goal and scorer authority.
+- Files/surface added or removed: row-1 runtime evidence only; none removed. No source, config, prompt, scorer, frozen V7 byte, or later-row path changed.
+- Next disconfirming test: fixed row 2 on unchanged bytes must independently PASS or permanently fail-stop the five-row denominator. No retry, replacement, or skipped row is permitted.
+- Classification: **PROGRESS — 1/5, ZERO QUALIFICATION CREDIT**. This is one verified denominator row, not a reliability or matrix claim.

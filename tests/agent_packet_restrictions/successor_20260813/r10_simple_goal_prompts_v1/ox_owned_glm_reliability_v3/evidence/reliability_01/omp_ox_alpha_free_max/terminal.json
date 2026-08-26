@@ -1,0 +1,160 @@
+{
+  "attempt_id": "ox-glm-v3-01-a901d707a3",
+  "composer_acknowledged": true,
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 334,
+      "path": "reservation.json",
+      "sha256": "0e9b3c214104ba4add9bc4c6ecc66bf16fab147d255ac9c52f7fb6e5c5228261"
+    },
+    {
+      "bytes": 10497,
+      "path": "omp_preflight.json",
+      "sha256": "6945231049ec5d2c964fb32ef8f3f547e302cb8f304e5b8219c98f46282b7987"
+    },
+    {
+      "bytes": 1672,
+      "path": "launch.json",
+      "sha256": "df729e9afb39210045d342af1869040d6e84a63a21f37642e924c09bad16d402"
+    },
+    {
+      "bytes": 87781,
+      "path": "pre_prompt.raw",
+      "sha256": "6bb4b01fa507bed0088011ded85c94be941575a3b365e9d0c26a033d6188ecaa"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 677,
+      "path": "prompt_write.json",
+      "sha256": "0ab6b0b7283cd61f28a5045efa16a9ca7d8e24655768feeb534eaaf0f5e67652"
+    },
+    {
+      "bytes": 98061,
+      "path": "composer_ack.raw",
+      "sha256": "c9b58818376712f15e406b13a35cd4bfcee3e64a2d563fa7cc2c325413744380"
+    },
+    {
+      "bytes": 707,
+      "path": "composer_ack.json",
+      "sha256": "90519b3a06b8f3694e8eacfadc887b15f8e3be73226222ff7bd9b8b55107e934"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 729,
+      "path": "enter_write.json",
+      "sha256": "dc416973c39a868e809c3b3b9f0b311d4b644c1284d65b6e3b087dbaf42dbd16"
+    },
+    {
+      "bytes": 19095,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "d583e80a9d3076766303cf477b3032da11d67080ec015eb75d0fc7f506733889"
+    },
+    {
+      "bytes": 1318,
+      "path": "submission_acceptance.json",
+      "sha256": "46da6ffb65b9e7dcf86fd7e8616629fbb699e0ea2121d84735e2caec801ff42b"
+    },
+    {
+      "bytes": 3187341,
+      "path": "transcript.raw",
+      "sha256": "8606be576b7252e274d137a9142d59fa60f80d5283adc3a456b8dfc36d82302d"
+    },
+    {
+      "bytes": 1,
+      "path": "control.raw",
+      "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+    },
+    {
+      "bytes": 53071,
+      "path": "session.raw.jsonl",
+      "sha256": "0e46e4d154bc2446d026922e42febcf81e750784e20ffba3e39d7ecd59728e33"
+    }
+  ],
+  "external_submission_count": 1,
+  "failure_code": null,
+  "final_assistant_text": "Goal complete. Budget: 12058 tokens, 35 seconds.\n\nDisposition rationale: structural layer fully clean (source hash match; 248 plan units / 811 acceptance units extracted with zero errors or duplicates; dependency registry resolved — 1047 edges, 0 missing targets, 0 cycles; migration coverage pass). Gate layer independently fails twice: canonical currentness function executed and failed globally (`stale_generated_index_artifact` at `Plans/.plan_index/node_readiness_report.json`; recomputed `c1125b67…` ≠ stored `c32a34b0…`), and runtime certification incomplete per PNC-019. Either blocker alone mandates blocked; both present. Structural success does not imply readiness. No WorkNodes, NodeSeeds, queues, implementation work, or Plan edits created or proposed.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "finished_at_utc": "2026-08-26T05:02:47.372Z",
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "low_level_input_write_count": 2,
+  "model": "opencode-go/ox-alpha-free",
+  "no_retry": true,
+  "nonce": "a901d707a3500e144d2398b4254c5d2e",
+  "observed_identity": "01a03c72-2a2f-76d7-a075-2ce370e3f5e4",
+  "observed_non_goal_tool_calls": 0,
+  "ordinal": 1,
+  "pass_id": "reliability_01",
+  "persisted_submission_accepted": true,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "session_projection": {
+    "assistant_lifecycle_shape": "standard_tool_cycle",
+    "assistant_message_count": 3,
+    "entry_ids": {
+      "final_assistant": "7531cd48",
+      "goal_active": "6469471e",
+      "goal_call_assistant": "223dc1f0",
+      "goal_complete_mode": "901070bc",
+      "goal_completed": "87d8b097",
+      "goal_contexts": [
+        "6073ba6f",
+        "15779cd2"
+      ],
+      "goal_exit": "0faa1c61",
+      "goal_result": "0f1ecf01",
+      "goal_tool_start": "486d124a",
+      "native_continuation": "55d71b3a",
+      "session_exit": "68302cf8",
+      "user": "9399cd67"
+    },
+    "final_text_sha256": "025eb364fe5a35a0fce09d3a273c9b25d108832470ec3225f20552e1a9854129",
+    "goal_context_count": 2,
+    "goal_id": "156669e0594c3a51",
+    "goal_tool_call_id": "ptc_mt9mnmru_1",
+    "leaf_id": "68302cf8",
+    "logical_entry_count": 19,
+    "model": "ox-alpha-free",
+    "native_continuation_count": 1,
+    "ordinary_tool_calls": 0,
+    "owned_glm_goal_call": {
+      "bytes": 82,
+      "present": true,
+      "sha256": "d6897df63bd35ea8e7b3eb5e036068814b6ed65712b7876879d5f19afdc8e013"
+    },
+    "owned_glm_post_call_framing": {
+      "bytes": 0,
+      "kind": "none",
+      "present": false
+    },
+    "pre_goal_call_text_utf8_bytes": 0,
+    "provider": "opencode-go",
+    "selector": "opencode-go/ox-alpha-free",
+    "session_file_bytes": 53071,
+    "session_file_sha256": "0e46e4d154bc2446d026922e42febcf81e750784e20ffba3e39d7ecd59728e33",
+    "session_id": "01a03c72-2a2f-76d7-a075-2ce370e3f5e4",
+    "session_started_at_utc": "2026-08-26T05:01:49.999Z",
+    "thinking": "max",
+    "thinking_receipt_count": 1,
+    "title_slot_bytes": 256
+  },
+  "status": "PASS",
+  "surface": "omp_tui",
+  "terminal_control_sent_once": true,
+  "thinking": "max",
+  "tui_corroboration": {
+    "goal_activation": true,
+    "goal_complete": true,
+    "pm_result_marker": true
+  }
+}
