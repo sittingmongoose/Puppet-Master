@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.storage_native_matrix.failure_review.v1",
+  "reviewed_at_utc": "2026-08-26T12:12:46Z",
+  "classification": "CHURN_RESET_PERMANENT_PRE_POPEN_CONTROLLER_ADVISOR_KEY_MISMATCH",
+  "frozen_identity": {
+    "ordinal": 1,
+    "pass_id": "pass_01",
+    "route_id": "omp_ox_alpha_free_max",
+    "attempt_id": "storage-native-matrix-v1-pass_01-01-4c485b90c6",
+    "nonce": "4c485b90c6394e9815257489fece9efc",
+    "model": "opencode-go/ox-alpha-free",
+    "thinking": "max"
+  },
+  "source_custody": {
+    "package_candidate_commit": "c6ba7e9f344ddc1118897d418c1eff20eececf9e",
+    "runtime_head": "c29c67bdf540a6ce33ab2559582069347ab425d7",
+    "head_origin_truenas_equal": true,
+    "owned_sources": [
+      {"path": "README.md", "bytes": 4616, "sha256": "f597daf6e36c4d04a41256509c5417fb459d942d7dbfad2dad378b51a9f4c29c"},
+      {"path": "matrix_contract.json", "bytes": 26644, "sha256": "d2f81a30f1df1048eabc4eada5aac1e5499e0c96c967478de347125b6f5d6663"},
+      {"path": "controller.py", "bytes": 34702, "sha256": "58f493e614cd3eb24fd9baebd99110d594de5db7ae3a9f9d41a8660944237dd5"},
+      {"path": "codex_app_lane.py", "bytes": 18014, "sha256": "7f53764158feb6c6cfa529ad9c36b23e5637e1d692c1268e91583c81c768fc7d"},
+      {"path": "selftest.py", "bytes": 29161, "sha256": "853dd84a36d95cdf069c1745109239f1b1c3433a4ce1e9986b15846448931347"}
+    ]
+  },
+  "key_evidence": {
+    "reservation": {"bytes": 350, "sha256": "a5982b5d243e2d24c28107fd637396e02478ec9ddad5815da8b2b7ccbb55f502"},
+    "omp_preflight": {"bytes": 3315, "sha256": "58c8b80f70a08e58acaa49d76570c2a94a858351d84ffb1ea46a55152d8fb33b"},
+    "runner_failure": {"bytes": 438, "sha256": "0f8db2639f487fd5b2ba7d176f2674bb4fb8fddbfd8454261c78af57cbc94de2"},
+    "terminal": {"bytes": 1202, "sha256": "4184bcd77368818eb68af76377b561f36f8561fd0fe107e8bbf579a7a6ac3378"}
+  },
+  "causal_boundary": {
+    "controller_required_key": "task.agent.advisor",
+    "omp_preflight_observed_key": "task.agentAdvisor",
+    "omp_preflight_observed_value": {"task": "off"},
+    "advisor_enabled_observed": false,
+    "advisor_controls_observed_off": true,
+    "failure_stage": "wrapper check after base OMP version/config preflight and before subject Popen",
+    "runner_error": "ControllerError: advisor off",
+    "model_or_provider_failure": false,
+    "prompt_submission_attempted": false,
+    "subject_popen_observed": false,
+    "provider_or_model_inference_observed": false,
+    "native_goal_activation_observed": false
+  },
+  "failure": {
+    "terminal_status": "FAIL",
+    "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+    "reserved_at_utc": "2026-08-26T12:08:35.062Z",
+    "failure_captured_at_utc": "2026-08-26T12:08:50.880Z",
+    "terminal_finished_at_utc": "2026-08-26T12:08:50.885Z",
+    "pid": null,
+    "process_exit_code": null,
+    "qualification_credit": 0,
+    "no_retry": true
+  },
+  "terminal_custody": {
+    "terminal_evidence_count": 3,
+    "terminal_evidence_joins_verified": true,
+    "terminal_receipt_unchanged": true,
+    "failure_review_is_late_and_outside_terminal_roster": true,
+    "launch_receipt_absent": true,
+    "launch_journal_absent": true,
+    "stdin_prompt_receipt_absent": true,
+    "stdin_enter_receipt_absent": true,
+    "transcript_absent": true,
+    "session_receipt_absent": true
+  },
+  "suffix_custody": {
+    "row_1_cwd": "/tmp/pm-r10-storage-v7-native-matrix-v1-pass_01-01-4c485b90c6",
+    "row_1_cwd_present_and_empty": true,
+    "row_1_session_dir": "/tmp/pm-r10-storage-v7-session-native-matrix-v1-pass_01-01-4c485b90c6",
+    "row_1_session_dir_absent": true,
+    "rows_2_through_24_launched": false,
+    "suffix_evidence_absent": true,
+    "suffix_runtime_paths_absent": true
+  },
+  "successor_boundary": {
+    "v1_retry_or_replacement_authorized": false,
+    "v1_retro_credit": false,
+    "fresh_successor_required": true,
+    "implementation_waits_for_independent_causal_adjudication": true
+  },
+  "claims_excluded": [
+    "subject launch",
+    "model or provider failure",
+    "native Goal activation",
+    "row pass",
+    "pass 1 progress",
+    "matrix qualification",
+    "production readiness",
+    "safety certification",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ]
+}

@@ -643,3 +643,14 @@ Reminder reread: "Original goal: prove that automated PuppetMaster work can be d
 - Files/surface added or removed: this append-only V7 `PROGRESS.md` entry only; none removed. No package source, frozen V7 byte, prompt, scorer, configuration, evidence, or runtime path changed, and every Windows OMP/Terminal process or window remains foreign and untouched.
 - Next disconfirming test: launch only fixed pass-01 ordinal 1, `opencode-go/ox-alpha-free` at max, through the isolated Linux native/default path. It must independently PASS exact lifecycle, scorer, evidence, custody, and normal-exit verification or permanently fail-stop all suffix rows; no retry or replacement is permitted.
 - Classification: **PRELAUNCH — FINAL DUAL-PUSHED NATIVE STORAGE MATRIX CANDIDATE; ZERO SUBJECT CALLS AND ZERO MATRIX/QUALIFICATION/PRODUCTION CREDIT**. This is launch admission, not empirical evidence, readiness, certification, or completion.
+
+## 2026-08-26T12:12:46Z — native Storage matrix v1 ordinal-1 pre-Popen failure alignment
+
+Reminder reread: "Original goal: prove that automated PuppetMaster work can be decomposed into bounded, weak-model-safe prompts, each launched through the platform's native one-prompt Goal interface, without giant context or custom Goal choreography."
+
+- Outcome: fixed pass-01 ordinal 1 is permanently consumed `FAIL` before subject Popen. The base OMP version/config preflight observed `advisor.enabled=false` and `task.agentAdvisor={"task":"off"}`, but the v1 wrapper looked up the nonexistent key `task.agent.advisor` and raised `ControllerError: advisor off`.
+- Causal classification: controller compatibility-key mismatch, not an Ox, provider, prompt, semantic, native-Goal, timeout, or normal-exit failure. No prompt was submitted, no provider/model inference or Goal activation occurred, PID and process exit are null, and the launch journal is absent.
+- Custody: the immutable terminal still exactly joins the reservation, partial OMP preflight, and runner-failure hashes. The late `failure_review.json` is explicitly outside that terminal roster. Row 1 remains zero credit/no retry; rows 2–24, their evidence, and their runtime paths remain absent.
+- Files/surface added or removed: one late v1 failure review plus this append-only alignment; none removed. No v1 source/config/terminal byte changed, no successor was built or launched, and every Windows OMP/Terminal process or window remained foreign and untouched.
+- Next disconfirming step: wait for independent causal adjudication, then—only if admitted—freeze a fresh v2 with the exact `task.agentAdvisor` lookup and wholly fresh identities. V1 cannot be retried, repaired in place, or retro-credited.
+- Classification: **FAIL / CHURN_RESET — V1 PERMANENT PRE-POPEN CONTROLLER KEY MISMATCH; ZERO SUBJECT, MATRIX, QUALIFICATION, AND PRODUCTION CREDIT; SUFFIX FROZEN**.
