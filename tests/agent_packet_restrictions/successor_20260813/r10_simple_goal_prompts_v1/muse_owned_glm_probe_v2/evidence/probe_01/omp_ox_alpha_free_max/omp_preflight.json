@@ -1,0 +1,232 @@
+{
+  "attempt_id": "glm-probe-v2-01-276503ab6c",
+  "baseline_config_commands": [
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "advisor.enabled"
+      ],
+      "exit_code": 0,
+      "key": "advisor.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "task.agentAdvisor"
+      ],
+      "exit_code": 0,
+      "key": "task.agentAdvisor",
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "memory.backend"
+      ],
+      "exit_code": 0,
+      "key": "memory.backend",
+      "stdout": "off"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "autolearn.enabled"
+      ],
+      "exit_code": 0,
+      "key": "autolearn.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "mcp.enableProjectConfig"
+      ],
+      "exit_code": 0,
+      "key": "mcp.enableProjectConfig",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "tools.approvalMode"
+      ],
+      "exit_code": 0,
+      "key": "tools.approvalMode",
+      "stdout": "yolo"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.enabled"
+      ],
+      "exit_code": 0,
+      "key": "goal.enabled",
+      "stdout": "true"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.continuationModes"
+      ],
+      "exit_code": 0,
+      "key": "goal.continuationModes",
+      "stdout": "[\"interactive\"]"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "plan.defaultOnStartup"
+      ],
+      "exit_code": 0,
+      "key": "plan.defaultOnStartup",
+      "stdout": "false"
+    }
+  ],
+  "baseline_effective_config": {
+    "advisor.enabled": false,
+    "autolearn.enabled": false,
+    "goal.continuationModes": [
+      "interactive"
+    ],
+    "goal.enabled": true,
+    "mcp.enableProjectConfig": false,
+    "memory.backend": "off",
+    "plan.defaultOnStartup": false,
+    "task.agentAdvisor": {
+      "task": "off"
+    },
+    "tools.approvalMode": "yolo"
+  },
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 179881160,
+  "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+  "compatibility_adapter": {
+    "allowed_post_call_block_counts": [
+      0,
+      1
+    ],
+    "arbitrary_prose_allowed": false,
+    "canonical_arguments": {
+      "op": "complete"
+    },
+    "canonical_tool_call_count": 1,
+    "canonical_tool_name": "goal",
+    "closing_observation_marker_allowed": false,
+    "enabled_only_for_explicit_glm_probe": true,
+    "framing_in_final_text": false,
+    "framing_in_goal_lifecycle": false,
+    "framing_in_pre_call_text": false,
+    "framing_in_scoring": false,
+    "multiple_or_following_blocks_allowed": false,
+    "one_block_must_be_final": true,
+    "one_block_must_be_nonempty_text": true,
+    "optional_literal": "<observation>",
+    "optional_literal_exact_count": 1,
+    "pm_result_allowed": false,
+    "post_call_byte_ceiling": null,
+    "preserved_source_session_bytes_and_sha_required": true,
+    "source_defined_ascii_whitespace_codepoints": [
+      9,
+      10,
+      13,
+      32
+    ],
+    "tool_response_marker_allowed": false,
+    "underlying_v7_default_behavior_unchanged": true,
+    "unicode_whitespace_allowed": false,
+    "valid_owned_glm_raw_block_required": true
+  },
+  "expected_argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--config",
+    "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v2/tools_glm.config.yml",
+    "--session-dir",
+    "/tmp/pm-r10-storage-v7-session-glm-probe-v2-01-276503ab6c",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--cwd",
+    "/tmp/pm-r10-storage-v7-glm-probe-v2-01-276503ab6c",
+    "--model",
+    "opencode-go/ox-alpha-free",
+    "--thinking",
+    "max"
+  ],
+  "git_custody": {
+    "head": "b28cca8be01080fb43746f614df24fd8e3b18a55",
+    "origin_main": "b28cca8be01080fb43746f614df24fd8e3b18a55",
+    "sources": [
+      {
+        "bytes": 3055,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v2/README.md",
+        "sha256": "5c802fb7e8f9abfe7342df2835a09dc858421de0ac2f4a0c5f3cd92a6700b474"
+      },
+      {
+        "bytes": 7601,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v2/probe_contract.json",
+        "sha256": "d72c10d32d80c80c4bbe5f4444819e17a56da92f82243292b7bef273e7f2d45a"
+      },
+      {
+        "bytes": 61324,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v2/probe_runner.py",
+        "sha256": "94331fe49c63f8715db9e68e76764f52d53df3d350d9bdf54d5ad4c38c1e0c0b"
+      },
+      {
+        "bytes": 21,
+        "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v2/tools_glm.config.yml",
+        "sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9"
+      }
+    ],
+    "truenas_backup_main": "b28cca8be01080fb43746f614df24fd8e3b18a55"
+  },
+  "model": "opencode-go/ox-alpha-free",
+  "nonce": "276503ab6cd7013b59ca948b922dcb03",
+  "observed_at_utc": "2026-08-26T03:21:08.507Z",
+  "ordinal": 1,
+  "overlay": {
+    "bytes": 21,
+    "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v2/tools_glm.config.yml",
+    "sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9"
+  },
+  "pass_id": "probe_01",
+  "probe_contract": {
+    "bytes": 7601,
+    "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/muse_owned_glm_probe_v2/probe_contract.json",
+    "sha256": "d72c10d32d80c80c4bbe5f4444819e17a56da92f82243292b7bef273e7f2d45a"
+  },
+  "profile_config": {
+    "bytes": 472,
+    "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/config.yml",
+    "sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc"
+  },
+  "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "row_time_budget_seconds": 3600,
+  "schema_id": "pm.r10.storage_pipeline.glm_ox_compat_preflight.v2",
+  "subject_calls": 0,
+  "surface": "omp_tui",
+  "thinking": "max",
+  "tools_format_requested": "glm",
+  "version": "omp/18.0.4"
+}

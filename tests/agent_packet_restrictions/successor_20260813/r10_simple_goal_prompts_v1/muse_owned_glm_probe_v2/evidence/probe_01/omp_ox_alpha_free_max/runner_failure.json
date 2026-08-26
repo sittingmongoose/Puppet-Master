@@ -1,0 +1,14 @@
+{
+  "attempt_id": "glm-probe-v2-01-276503ab6c",
+  "captured_at_utc": "2026-08-26T03:21:57.439Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 709522: ProbeError: owned GLM exactly one sole tool call",
+  "no_retry": true,
+  "nonce": "276503ab6cd7013b59ca948b922dcb03",
+  "ordinal": 1,
+  "pass_id": "probe_01",
+  "pid": 709522,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

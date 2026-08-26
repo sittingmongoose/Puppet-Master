@@ -1,0 +1,202 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.glm_probe_failure_review.v2",
+  "reviewed_at_utc": "2026-08-26T03:31:11Z",
+  "classification": "PERMANENT_GLM_V2_OX_NATIVE_GOAL_NONCOMPLETION_WITH_WRAPPER_EARLY_SIGTERM",
+  "frozen_identity": {
+    "pass_id": "probe_01",
+    "route_id": "omp_ox_alpha_free_max",
+    "ordinal": 1,
+    "attempt_id": "glm-probe-v2-01-276503ab6c",
+    "nonce": "276503ab6cd7013b59ca948b922dcb03",
+    "model": "opencode-go/ox-alpha-free",
+    "thinking": "max",
+    "pid": 709522,
+    "session_id": "01a03c16-0082-703f-8edf-0891622eefd2",
+    "goal_id": "156652d5e87fec1a"
+  },
+  "key_evidence": {
+    "launch_journal": {
+      "bytes": 463,
+      "sha256": "c6d4b5083e56d7b628367ff66d9125d14644ca6ea51f781a0b690ed3d5281c44"
+    },
+    "launch": {
+      "bytes": 1628,
+      "sha256": "92c875e503b95996f836ef1b768ee14fe556685a3a62e774e86cbdd6d28c7148"
+    },
+    "omp_preflight": {
+      "bytes": 7100,
+      "sha256": "9bf7801cd11cb79743a8ce83c6ee0d14f1ef306a2788cf6657f787c616d93985"
+    },
+    "stdin_prompt": {
+      "bytes": 3036,
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    "session_prefix": {
+      "bytes": 22176,
+      "sha256": "a9b949762db9859db4f80bb4f4466178337c34f6250dc2d7f41b35a1f2a688af"
+    },
+    "postfailure_session": {
+      "bytes": 22383,
+      "sha256": "f3d3323a57a4fdcfff220659e45c9c241e3b2a1480de567449eb5162da87ba95"
+    },
+    "runner_failure": {
+      "bytes": 497,
+      "sha256": "399aea569dfcaef3ced6c6221421b060b80037760988df8dc92a242ba17d7b69"
+    },
+    "terminal": {
+      "bytes": 3176,
+      "sha256": "3c0c6e104d7fc308205e4c1bdd0b089338633c566df911a750305762d43ce84b"
+    },
+    "transcript": {
+      "bytes": 1706636,
+      "sha256": "6cec54270e2524658fd4ad8b8041dcb06a95877c2b058e2864facf2687a2f48c"
+    }
+  },
+  "observed_postfailure_facts": {
+    "exact_external_submission_count": 1,
+    "assistant_count": 1,
+    "assistant_content_types": [
+      "thinking",
+      "text"
+    ],
+    "assistant_stop_reason": "stop",
+    "first_turn_text_only_semantic_result": true,
+    "final_text_bytes": 1017,
+    "final_text_sha256": "efd1819559d72dc0dd22785d4206454a26bd4339b1b2ccf6b7445ec3b0a8e3eb",
+    "pm_result_marker_count": 1,
+    "unchanged_v7_scorer_pass": true,
+    "goal_tool_call_count": 0,
+    "ordinary_tool_call_count": 0,
+    "owned_glm_raw_block_count": 0,
+    "owned_glm_observation_marker_count": 0,
+    "goal_tool_result_count": 0,
+    "goal_complete_state_count": 0,
+    "goal_completed_event_count": 0,
+    "native_continuation_count": 0,
+    "latest_goal_status": "active",
+    "latest_goal_tokens_used": 9737,
+    "latest_goal_time_used_seconds": 45,
+    "latest_goal_active_at_utc": "2026-08-26T03:21:57.215Z",
+    "session_exit_at_utc": "2026-08-26T03:21:57.324Z",
+    "session_exit_kind": "signal",
+    "session_exit_reason": "sigterm",
+    "normal_exit_observed": false,
+    "terminal_process_exit_code": null,
+    "pid_absent_after_terminal": true
+  },
+  "causal_boundary": {
+    "conclusion": "Ox produced the exact semantic result in its first text-only Goal turn but did not emit a Goal call. The V2 wrapper raised ProbeError on zero calls while the latest persisted Goal remained active. ProbeError is a sibling RuntimeError, not OmpSessionError or RunnerError, so it escaped the inherited polling catch and entered the outer process-termination handler.",
+    "configured_row_budget_seconds": 3600,
+    "seconds_from_launch_to_failure_terminal": 48.923,
+    "seconds_from_latest_active_goal_to_sigterm": 0.109,
+    "full_row_budget_tested": false,
+    "native_continuation_tested": false,
+    "failure_is_not_post_call_framing_rejection": true,
+    "code_locations": {
+      "v2_wrapper_exception_type": {
+        "path": "probe_runner.py",
+        "line": 81,
+        "sha256": "94331fe49c63f8715db9e68e76764f52d53df3d350d9bdf54d5ad4c38c1e0c0b"
+      },
+      "v2_zero_call_rejection": {
+        "path": "probe_runner.py",
+        "line": 290,
+        "sha256": "94331fe49c63f8715db9e68e76764f52d53df3d350d9bdf54d5ad4c38c1e0c0b"
+      },
+      "inherited_pending_parse_catch": {
+        "path": "../system_pipeline_sandbox_v7/omp_row_runner.py",
+        "lines": [
+          703,
+          731
+        ],
+        "catch_line": 728,
+        "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+      },
+      "inherited_outer_termination": {
+        "path": "../system_pipeline_sandbox_v7/omp_row_runner.py",
+        "lines": [
+          750,
+          756
+        ],
+        "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+      }
+    }
+  },
+  "failure": {
+    "terminal_status": "FAIL",
+    "qualification_credit": 0,
+    "no_retry": true,
+    "runner_error": "PostPopenRunnerError: post-Popen failure for pid 709522: ProbeError: owned GLM exactly one sole tool call",
+    "semantic_result_exact_but_not_terminally_authoritative": true,
+    "native_goal_success": false
+  },
+  "sequencing_custody": {
+    "journal_ordinals": [
+      1
+    ],
+    "journal_routes": [
+      "omp_ox_alpha_free_max"
+    ],
+    "rows_beyond_ordinal_1_launched": false,
+    "muse_evidence_absent": true,
+    "suffix_evidence_absent": true,
+    "retry_or_replacement_authorized": false
+  },
+  "terminal_custody": {
+    "terminal_evidence_count": 16,
+    "terminal_evidence_joins_verified": true,
+    "terminal_receipt_unchanged": true,
+    "failure_review_is_late_and_outside_terminal_roster": true
+  },
+  "preregistered_successor_hypothesis": {
+    "status": "DESIGN_NOTE_ONLY_V3_NOT_BUILT",
+    "sole_exception_mapping_change": "In a fresh successor wrapper, map only the exact zero-tool-call plus latest-persisted-Goal-active incomplete shape to a pending OmpSessionError before call indexing. This keeps the inherited poll alive but never returns a projection, scorer pass, Goal success, or row PASS for that state.",
+    "mechanical_code_location": "A fresh successor's counterpart of V2 compatibility_projection at the call-cardinality check now located at probe_runner.py:290; leave the inherited V7 polling loop unchanged.",
+    "all_other_zero_call_or_malformed_shapes_fail_closed": true,
+    "multiple_calls_remain_rejected": true,
+    "pending_text_is_never_scored_or_terminally_accepted": true,
+    "fresh_rows_frozen_upfront": 5,
+    "route_order": [
+      "omp_ox_alpha_free_max",
+      "omp_ox_alpha_free_max",
+      "omp_ox_alpha_free_max",
+      "omp_ox_alpha_free_max",
+      "omp_ox_alpha_free_max"
+    ],
+    "fresh_disjoint_identity_required_per_row": true,
+    "sequential_launch_only": true,
+    "fail_stop_on_first_failure": true,
+    "retry_count": 0,
+    "replacement_count": 0,
+    "required_passes": 5,
+    "required_rows": 5,
+    "unchanged_invariants": [
+      "3036-byte OMP prompt",
+      "unchanged V7 exact scorer",
+      "21-byte tools.format: glm overlay",
+      "OMP 18.0.4 binary and isolated profile",
+      "advisor.enabled=false and task.agentAdvisor={task:off}",
+      "no ordinary tools",
+      "native Goal completion and successful Goal result",
+      "distinct exact final assistant result",
+      "3600-second row allowance",
+      "normal process exit",
+      "zero qualification credit"
+    ],
+    "launch_authorized_by_this_review": false
+  },
+  "claims_excluded": [
+    "consumed V2 Ox row pass",
+    "native Goal completion",
+    "normal process exit",
+    "the 3600-second allowance was exercised",
+    "native continuation was tested",
+    "authorization to retry or retro-credit the consumed row",
+    "authorization to launch Muse or any suffix route",
+    "V3 exists or is launchable",
+    "matrix qualification",
+    "production readiness",
+    "canonical Plan completion",
+    "authority to create WorkNodes"
+  ]
+}

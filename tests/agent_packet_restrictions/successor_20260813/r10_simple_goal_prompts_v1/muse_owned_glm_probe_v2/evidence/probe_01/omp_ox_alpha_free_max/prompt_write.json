@@ -1,0 +1,21 @@
+{
+  "attempt_id": "glm-probe-v2-01-276503ab6c",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "276503ab6cd7013b59ca948b922dcb03",
+  "ordinal": 1,
+  "pass_id": "probe_01",
+  "path": "stdin_prompt.raw",
+  "pid": 709522,
+  "pre_prompt": {
+    "bytes": 87031,
+    "path": "pre_prompt.raw",
+    "sha256": "d0406324ad9c233ac1b0793e2152b0aca3e2f7cfaeb87e89e9eaf47519114777"
+  },
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-26T03:21:11.669Z"
+}
