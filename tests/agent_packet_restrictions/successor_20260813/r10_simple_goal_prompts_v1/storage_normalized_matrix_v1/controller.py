@@ -24,7 +24,6 @@ NORMALIZER = R10 / "storage_glm53_normalized_canary_v2/result_normalizer.py"
 for _path in (V2, V7):
     sys.path.insert(0, str(_path))
 
-
 def _load(name: str, path: Path) -> Any:
     spec = importlib.util.spec_from_file_location(name, path)
     if spec is None or spec.loader is None:
@@ -33,7 +32,6 @@ def _load(name: str, path: Path) -> Any:
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
-
 
 M = _load("storage_native_matrix_v2_base", V2 / "controller.py")
 G = _load("storage_glm53_max_canary_v5_base", V5 / "controller.py")
@@ -48,71 +46,48 @@ ENV_FIELDS = tuple(G.ENV_PATHS.values())
 ORIGINAL_CODEX_RAW = V.verify_codex_raw
 ORIGINAL_APP_WRITE = M.app.write_terminal
 ORIGINAL_APP_DIRECT = M.app.verify_direct_evidence
+ORIGINAL_APP_APPEND = M.append_app_journal
+ISSUED = "create_request_issued.json"
 CURRENT_ROW: dict[str, Any] | None = None
 DISPATCH_CUSTODY: dict[str, Any] | None = None
-
-
 class MatrixError(RuntimeError):
     pass
-
-
 class PermanentMatrixError(RuntimeError):
     pass
-
-
+class AlreadyIssuedNoMutation(RuntimeError): pass
 def require(value: bool, message: str) -> None:
     if not value:
         raise MatrixError(message)
-
-
 def permanent(value: bool, message: str) -> None:
     if not value:
         raise PermanentMatrixError(message)
-
-
 def spec() -> dict[str, Any]:
     value = P.load_json(CONTRACT)
     require(isinstance(value, dict), "contract object")
     return value
-
-
 def rows() -> list[dict[str, Any]]:
     value = spec().get("rows")
     require(isinstance(value, list) and len(value) == 24, "24 frozen rows")
     return value
-
-
 def route_map() -> dict[str, dict[str, Any]]:
     routes = spec().get("routes")
     require(isinstance(routes, list) and len(routes) == 12, "12 routes")
     return {route["id"]: route for route in routes}
-
-
 def launch_plan_map() -> dict[tuple[str, str], dict[str, Any]]:
     return {(row["pass_id"], row["route_id"]): row for row in rows()}
-
-
 def planned_row(pass_id: str, route_id: str) -> dict[str, Any]:
     matches = [row for row in rows() if row["pass_id"] == pass_id and row["route_id"] == route_id]
     require(len(matches) == 1, "one planned row")
     return matches[0]
-
-
 def selected_row() -> dict[str, Any]:
     require(CURRENT_ROW is not None, "selected row")
     return CURRENT_ROW
-
-
 def row_dir(row: dict[str, Any] | None = None) -> Path:
     item = row or selected_row()
     return EVIDENCE / item["pass_id"] / item["route_id"]
-
-
 def file_record(path: Path, root: Path = REPO) -> dict[str, Any]:
     require(path.is_file() and not path.is_symlink(), f"regular file: {path}")
     return {"path": path.relative_to(root).as_posix(), "bytes": path.stat().st_size, "sha256": P.sha256_file(path)}
-
-
 def expected_records(field: str, root: Path = REPO) -> list[dict[str, Any]]:
     result = []
     for expected in spec()[field]:
@@ -121,12 +96,8 @@ def expected_records(field: str, root: Path = REPO) -> list[dict[str, Any]]:
         require(actual == expected, f"{field} drift: {expected['path']}")
         result.append(actual)
     return result
-
-
 def run_git(*args: str, binary: bool = False) -> subprocess.CompletedProcess[Any]:
     return subprocess.run(["git", "-C", str(REPO), *args], check=False, capture_output=True, text=not binary)
-
-
 def git_entry(relative: str, *, index: bool) -> tuple[str, str]:
     result = run_git(*( ("ls-files", "--stage", "--", relative) if index else ("ls-tree", "HEAD", "--", relative) ))
     lines = result.stdout.splitlines()
@@ -139,7 +110,6 @@ def git_entry(relative: str, *, index: bool) -> tuple[str, str]:
         return fields[0], fields[1]
     require(fields[1] == "blob", f"HEAD blob: {relative}")
     return fields[0], fields[2]
-
 
 def git_file(relative: str) -> dict[str, Any]:
     path = REPO / relative
@@ -158,7 +128,6 @@ def git_file(relative: str) -> dict[str, Any]:
     record.update(git_mode=head[0], git_oid=head[1])
     return record
 
-
 def git_custody() -> dict[str, Any]:
     refs = [run_git("rev-parse", ref) for ref in ("HEAD", "origin/main", "truenas-backup/main")]
     values = [result.stdout.strip() for result in refs]
@@ -169,11 +138,9 @@ def git_custody() -> dict[str, Any]:
     require([{key: item[key] for key in ("path", "bytes", "sha256")} for item in dependencies] == spec()["dependencies"], "dependency custody")
     return {"candidate_commit": values[0], "head": values[0], "origin_main": values[1], "truenas_backup_main": values[2], "sources": owned, "dependencies": dependencies}
 
-
 def runtime_paths(row: dict[str, Any]) -> list[str]:
     fields = ("cwd", "session_dir", "profile_dir", "private_capture_dir", *ENV_FIELDS)
     return [row[field] for field in fields if row.get(field)]
-
 
 def historical_identity_clean(frozen: list[dict[str, Any]]) -> None:
     needles = []
@@ -186,10 +153,67 @@ def historical_identity_clean(frozen: list[dict[str, Any]]) -> None:
         raw = path.read_bytes()
         require(not any(needle in raw for needle in needles), f"historical identity reuse: {path}")
 
-
 def metric(path: Path) -> dict[str, int]:
     return {"lines": len(path.read_bytes().splitlines()), "bytes": path.stat().st_size}
 
+def verified_authority() -> dict[str, Any]:
+    authority, frozen = spec()["authority"], rows()
+    require(P.sha256_bytes(P.canonical_json(authority).encode()) == "d85ef64da68aed67ec403263f04c0b1d6f471707271215b0fb2a9d37b1dd368f", "closed post-canary authority")
+    require(authority["authorized_attempt_ids"] == [row["attempt_id"] for row in frozen] and authority["authorized_passes"] == ["pass_01", "pass_02"] and authority["authorized_row_count"] == 24, "exact authorized rows")
+    require(P.sha256_bytes(P.canonical_json(frozen).encode()) == authority["authorized_rows_canonical_sha256"] and P.sha256_bytes(P.canonical_json(authority["authorized_attempt_ids"]).encode()) == authority["authorized_attempt_ids_canonical_sha256"], "authorized identity digests")
+    canary = authority["v5_canary_pass"]; keys = ("terminal", "launch_journal", "session", "session_prefix", "submission_acceptance", "omp_preflight", "launch", "http_final_receipt", "structural_projection", "normalized_projection")
+    require(all(file_record(REPO / canary[key]["path"]) == canary[key] for key in keys), "V5 authority receipts")
+    terminal = P.load_json(REPO / canary["terminal"]["path"]); leaf = (REPO / canary["terminal"]["path"]).parent
+    require(all(terminal[key] == value for key, value in {"status": "PASS", "attempt_id": canary["attempt_id"], "nonce": canary["nonce"], "model": canary["model"], "thinking": canary["thinking"], "goal_activation_observed": True, "goal_complete_observed": True, "process_exit_code": 0, "no_retry": True, "qualification_credit": 0}.items()), "V5 terminal PASS")
+    require(len(terminal["evidence"]) == canary["terminal_evidence_join_count"] == 18 and all(file_record(leaf / item["path"], leaf) == item for item in terminal["evidence"]), "V5 terminal evidence joins")
+    journal = P.load_jsonl(REPO / canary["launch_journal"]["path"]); require(len(journal) == 1 and all(journal[0][key] == value for key, value in {"ordinal": 1, "pass_id": "pass_01", "route_id": "omp_glm53_flash_max", "attempt_id": canary["attempt_id"], "nonce": canary["nonce"], "popen_observed": True, "omp_preflight_sha256": canary["omp_preflight"]["sha256"], "launch_sha256": canary["launch"]["sha256"]}.items()) and type(journal[0]["pid"]) is int, "V5 journal join")
+    prefix = P.canonical_json(canary["prefix_verification"]).encode(); require((len(prefix), P.sha256_bytes(prefix)) == (canary["prefix_verification_utf8_bytes"], canary["prefix_verification_sha256"]), "V5 prefix PASS")
+    return authority
+
+class AppEvidencePath(type(Path())):
+    def iterdir(self) -> Iterator[Path]:
+        return (path for path in super().iterdir() if path.name != ISSUED)
+
+def verify_issued(directory: Path, row: dict[str, Any], custody: dict[str, Any]) -> dict[str, Any]:
+    path = directory / ISSUED; require(path.is_file() and not path.is_symlink(), "immutable create issuance marker")
+    value, request = P.load_json(path), M.app.create_request(row, (V7 / "prompts/codex.prompt.txt").read_text()); raw = (P.canonical_json(request) + "\n").encode()
+    require(set(value) == {"schema_id", *IDENTITY, "issued_at_utc", "request", "request_utf8_bytes", "request_sha256", "git_custody"} and value["schema_id"] == "pm.r10.storage_pipeline.codex_create_request_issued.v1", "issuance marker shape")
+    require(all(value[key] == row[key] for key in IDENTITY) and value["request"] == request and (value["request_utf8_bytes"], value["request_sha256"]) == (len(raw), P.sha256_bytes(raw)) and value["git_custody"] == custody, "issuance marker joins")
+    launch = P.load_json(directory / "launch.json"); record = file_record(path, directory)
+    require(launch.get("create_request_issued") == record and launch.get("git_custody") == custody and V.parse_utc(launch["started_at_utc"]) <= V.parse_utc(value["issued_at_utc"]), "issuance launch/time join")
+    return {"record": record, "request": request, "value": value}
+
+def atomic_issue(path: Path, raw: bytes) -> None:
+    if os.path.lexists(path): raise AlreadyIssuedNoMutation("ALREADY_ISSUED_NO_MUTATION")
+    temporary = path.with_name(f".{ISSUED}.{os.getpid()}.{id(raw)}.tmp"); require(not os.path.lexists(temporary), "fresh issuance temporary")
+    P.atomic_write(temporary, raw)
+    try:
+        try: os.link(temporary, path, follow_symlinks=False)
+        except FileExistsError as exc: raise AlreadyIssuedNoMutation("ALREADY_ISSUED_NO_MUTATION") from exc
+    finally:
+        if os.path.lexists(temporary): os.unlink(temporary)
+
+def issue_create(directory: Path, row: dict[str, Any], custody: dict[str, Any]) -> dict[str, Any]:
+    path = directory / ISSUED
+    require(git_custody() == custody, "custody at create issuance"); request = M.app.create_request(row, (V7 / "prompts/codex.prompt.txt").read_text()); raw = (P.canonical_json(request) + "\n").encode()
+    value = {"schema_id": "pm.r10.storage_pipeline.codex_create_request_issued.v1", **{key: row[key] for key in IDENTITY}, "issued_at_utc": base.utc_now(), "request": request, "request_utf8_bytes": len(raw), "request_sha256": P.sha256_bytes(raw), "git_custody": custody}
+    atomic_issue(path, P.pretty_json(value)); launch = P.load_json(directory / "launch.json"); require("create_request_issued" not in launch, "one launch issuance join")
+    launch["create_request_issued"] = file_record(path, directory); P.atomic_write(directory / "launch.json", P.pretty_json(launch)); verify_issued(directory, row, custody)
+    return request
+
+def emittable_create(directory: Path, row: dict[str, Any], custody: dict[str, Any]) -> str:
+    closed = (directory / "terminal.json", directory / "runner_failure.json")
+    if any(os.path.lexists(path) for path in closed): raise AlreadyIssuedNoMutation("ALREADY_TERMINAL_NO_MUTATION")
+    issued = verify_issued(directory, row, custody); payload = P.canonical_json(issued["request"]) + "\n"
+    if any(os.path.lexists(path) for path in closed): raise AlreadyIssuedNoMutation("ALREADY_TERMINAL_NO_MUTATION")
+    return payload
+
+def app_append_journal(row: dict[str, Any], directory: Path) -> None:
+    ORIGINAL_APP_APPEND(row, directory); journal = P.load_jsonl(EVIDENCE / "launch_journal.jsonl"); issued = verify_issued(directory, row, P.load_json(directory / "launch.json")["git_custody"])
+    journal[-1]["create_request_issued"] = issued["record"]; P.atomic_write(EVIDENCE / "launch_journal.jsonl", P.jsonl_bytes(journal))
+
+def verify_issued_journal(journal: list[dict[str, Any]], row: dict[str, Any], issued: dict[str, Any]) -> None:
+    require(len(journal) >= row["ordinal"] and journal[row["ordinal"] - 1].get("create_request_issued") == issued["record"], "issuance journal join")
 
 def validate_static(*, unused: bool = True) -> dict[str, Any]:
     contract, frozen, routes = spec(), rows(), list(route_map().values())
@@ -242,12 +266,12 @@ def validate_static(*, unused: bool = True) -> dict[str, Any]:
     for field in ("attempt_id", "nonce", "evidence_path"):
         require(len({row[field] for row in frozen}) == 24, f"unique {field}")
     historical_identity_clean(frozen)
-    authority = contract["authority"]
-    require(authority == {"source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45", "static_implementation_authorized": True, "runtime_launch_authorized": False, "codex_app_creation_authorized": False, "provider_calls_authorized": False, "retry_replacement_or_reuse_authorized": False, "retro_credit_authorized": False, "qualification_credit_requires_exact_24_of_24": True}, "closed authority")
+    verified_authority()
     runtime = contract["runtime"]
     require(runtime["row_time_budget_seconds"] == 3600 and runtime["advisor_enabled"] is False and runtime["task_agent_advisor"] == {"task": "off"}, "OMP runtime")
     require(runtime["ordinary_tools_enabled"] is runtime["skills_enabled"] is runtime["rules_enabled"] is runtime["extensions_enabled"] is False, "OMP exclusions")
     require(runtime["codex_parent_allowed_calls"] == ["create_thread", "wait_threads", "read_thread"] and runtime["normalizer_sha256"] == "382cb5bb0b357bc223010a813dbef7e9c8daf8f952568db0ce4d5e1620129a43", "App/normalizer")
+    require(runtime["codex_create_request_issue_marker"] == "atomic_row_bound_immutable_before_stdout" and runtime["codex_create_request_reemit_allowed"] is False and contract["codex_tool_contracts"]["create_request_issued"] == ["schema_id", "pass_id", "route_id", "ordinal", "attempt_id", "nonce", "issued_at_utc", "request", "request_utf8_bytes", "request_sha256", "git_custody"] and contract["sequencing"]["codex_create_request_issued_once_before_create"] is True, "immutable App issuance contract")
     require(runtime["normalization_scope"] == "all_verified_assistant_text_candidates" and runtime["codex_normalization"] == "structural_raw_first_then_all_admitted_assistant_text_normalizer" and runtime["codex_terminal_final_rule"] == "exactly_one_final_answer_last_assistant_terminal_after_goal_complete", "Codex assistant-history contract")
     require(P.preflight_inputs()["status"] == "PASS" and P.omp_runtime_preflight()["status"] == "PASS_OMP_RUNTIME", "pipeline preflights")
     require(P.verify()["status"] == "PASS_VERIFIED_NO_WORKNODES" and freeze_check.verify_freeze()["status"] == "PASS_FROZEN_ZERO_SUBJECT", "V7 freeze/verify")
@@ -259,7 +283,6 @@ def validate_static(*, unused: bool = True) -> dict[str, Any]:
     require(not list(HERE.rglob("*.pyc")) and not list(HERE.rglob("__pycache__")), "cache absent")
     return {"status": "PASS_LOCAL_NORMALIZED_MATRIX_PRELAUNCH", "rows": 24, "subject_calls": 0, "qualification_credit": 0, "metrics": metrics}
 
-
 @contextlib.contextmanager
 def selected(row: dict[str, Any]) -> Iterator[None]:
     global CURRENT_ROW
@@ -270,18 +293,14 @@ def selected(row: dict[str, Any]) -> Iterator[None]:
     finally:
         CURRENT_ROW = prior
 
-
 def glm_rows() -> list[dict[str, Any]]:
     return [selected_row()]
-
 
 def expected_argv(route: dict[str, Any], row: dict[str, Any]) -> list[str]:
     return G.with_no_extensions(G.ORIGINAL_EXPECTED_ARGV(route, row))
 
-
 def verify_expected_argv(route: dict[str, Any], cwd: str, session_dir: str) -> list[str]:
     return G.with_no_extensions(G.ORIGINAL_VERIFY_ARGV(route, cwd, session_dir))
-
 
 class SubprocessProxy:
     def __getattr__(self, name: str) -> Any:
@@ -308,9 +327,7 @@ class SubprocessProxy:
             kwargs["env"] = env
         return G.ORIGINAL_POPEN(argv, *args, **kwargs)
 
-
 SPROXY = SubprocessProxy()
-
 
 def row_preflight(path: Path, row: dict[str, Any], route: dict[str, Any]) -> dict[str, Any]:
     seed = G.prepare_profile()
@@ -321,7 +338,6 @@ def row_preflight(path: Path, row: dict[str, Any], route: dict[str, Any]) -> dic
     receipt.update({"matrix_contract": file_record(CONTRACT), "owned_sources": DISPATCH_CUSTODY["sources"], "dependency_custody": DISPATCH_CUSTODY["dependencies"], "git_custody": DISPATCH_CUSTODY, "models_override": file_record(V5 / "models.yml"), "profile_seed": seed, "protocol_adapter": adapter, "config_overlay": None, "private_http_capture": row["route_id"] == GLM_ROUTE, "raw_http_copied_to_evidence": False, "row_time_budget_seconds": 3600, "expected_argv": expected_argv(route, row), "qualification_credit": 0})
     G.ORIGINAL_ATOMIC(path / "omp_preflight.json", receipt)
     return receipt
-
 
 def composer_transition(before: bytes, after: bytes) -> dict[str, Any]:
     permanent(isinstance(before, bytes) and isinstance(after, bytes) and before and after.startswith(before), "composer snapshot")
@@ -337,7 +353,6 @@ def composer_transition(before: bytes, after: bytes) -> dict[str, Any]:
         raise base.RunnerError("prompt-specific composer transition pending")
     return {"mcp_startup_finished": False, "mcp_finished_banner_observed": False, "prompt_ready_observed": True, "prompt_ready_glyph": "❯", "prompt_card": "📄 #1", "prompt_preview": "/goal Audit", "composer_state": "❯ 📄 #1", "pre_prompt_bytes": len(before), "pre_prompt_sha256": P.sha256_bytes(before), "new_raw_bytes": len(after) - len(before)}
 
-
 def verify_session(path: Path, **expected: Any) -> dict[str, Any]:
     if selected_row()["route_id"] == GLM_ROUTE:
         return G.verify_session(path, **expected)
@@ -350,17 +365,14 @@ def verify_session(path: Path, **expected: Any) -> dict[str, Any]:
         raise
     return N.normalize_verified_session(path, structural, oracle_path=V7 / "oracle.json", schema_path=V7 / "response.schema.json", max_text_block_utf8_bytes=P.load_json(V7 / "matrix.json")["max_final_assistant_utf8_bytes"])
 
-
 def verify_omp_raw(path: Path, route: dict[str, Any], launch: dict[str, Any], terminal: dict[str, Any]) -> str:
     return G.verify_omp_raw(path, route, launch, terminal)
-
 
 def atomic_json(path: Path, value: Any) -> None:
     if selected_row()["route_id"] == GLM_ROUTE:
         G.atomic_json(path, value)
     else:
         G.ORIGINAL_ATOMIC(path, value)
-
 
 def normalize_codex(path: Path, raw_final: str) -> dict[str, Any]:
     raw_rows = P.load_jsonl(path)
@@ -407,7 +419,6 @@ def normalize_codex(path: Path, raw_final: str) -> dict[str, Any]:
     finally:
         N.omp_session.load_physical_session = original
 
-
 def verify_codex_raw(path: Path, route: dict[str, Any], launch: dict[str, Any], terminal: dict[str, Any]) -> str:
     raw_terminal = copy.deepcopy(terminal)
     raw_terminal["final_assistant_text"] = terminal.get("raw_final_assistant_text", terminal.get("final_assistant_text"))
@@ -416,7 +427,6 @@ def verify_codex_raw(path: Path, route: dict[str, Any], launch: dict[str, Any], 
     if "result_normalization" in terminal:
         require(all(terminal.get(key) == normalized[key] for key in ("assistant_message_count", "verified_assistant_text_blocks", "verified_assistant_text_utf8_bytes", "result_normalization")), "Codex raw/history normalization join")
     return session_id
-
 
 def verify_codex_candidate(directory: Path, row: dict[str, Any], create: dict[str, Any], prompt: str, final: str) -> dict[str, Any]:
     launch = P.load_json(directory / "launch.json")
@@ -427,25 +437,26 @@ def verify_codex_candidate(directory: Path, row: dict[str, Any], create: dict[st
     projection.update({"raw_final_assistant_sha256": P.sha256_bytes(final.encode()), **{key: normalized[key] for key in ("assistant_message_count", "verified_assistant_text_blocks", "verified_assistant_text_utf8_bytes", "result_normalization", "final_text", "final_text_sha256")}})
     return projection
 
-
 def app_write_terminal(directory: Path, row: dict[str, Any], route: dict[str, Any], pipeline: Any, *, status: str, final: str = "", identity: Any = None, failure: Any = None, external_submissions: int = 1) -> dict[str, Any]:
-    if status != "PASS":
-        return ORIGINAL_APP_WRITE(directory, row, route, pipeline, status=status, final=final, identity=identity, failure=failure, external_submissions=external_submissions)
-    normalized = normalize_codex(directory / "rollout.raw.jsonl", final)
-    terminal = ORIGINAL_APP_WRITE(directory, row, route, pipeline, status=status, final=normalized["final_text"], identity=identity, failure=failure, external_submissions=external_submissions)
-    terminal.update({"raw_final_assistant_text": final, "raw_final_assistant_sha256": P.sha256_bytes(final.encode()), **{key: normalized[key] for key in ("assistant_message_count", "verified_assistant_text_blocks", "verified_assistant_text_utf8_bytes", "result_normalization")}})
+    issued = verify_issued(directory, row, P.load_json(directory / "launch.json")["git_custody"]) if status == "PASS" else None
+    normalized = normalize_codex(directory / "rollout.raw.jsonl", final) if status == "PASS" else None
+    terminal = ORIGINAL_APP_WRITE(directory, row, route, pipeline, status=status, final=normalized["final_text"] if normalized else final, identity=identity, failure=failure, external_submissions=external_submissions)
+    if normalized:
+        terminal.update({"raw_final_assistant_text": final, "raw_final_assistant_sha256": P.sha256_bytes(final.encode()), **{key: normalized[key] for key in ("assistant_message_count", "verified_assistant_text_blocks", "verified_assistant_text_utf8_bytes", "result_normalization")}})
+    marker = directory / ISSUED
+    if marker.is_file() and not marker.is_symlink(): terminal["create_request_issued"] = issued["record"] if issued else file_record(marker, directory)
     P.atomic_write(directory / "terminal.json", P.pretty_json(terminal))
     return terminal
 
-
 def app_verify_direct(directory: Path, row: dict[str, Any], prompt: str, contract: dict[str, Any], pipeline: Any, verify: Any, launch: dict[str, Any], terminal: dict[str, Any]) -> dict[str, Any]:
+    issued = verify_issued(directory, row, launch["git_custody"])
     raw_terminal = copy.deepcopy(terminal)
     raw_terminal["final_assistant_text"] = terminal.get("raw_final_assistant_text")
-    projection = ORIGINAL_APP_DIRECT(directory, row, prompt, contract, pipeline, verify, launch, raw_terminal)
+    projection = ORIGINAL_APP_DIRECT(AppEvidencePath(directory), row, prompt, contract, pipeline, verify, launch, raw_terminal)
     normalized = normalize_codex(directory / "rollout.raw.jsonl", raw_terminal["final_assistant_text"])
-    require(terminal.get("final_assistant_text") == normalized["final_text"] and all(terminal.get(key) == normalized[key] for key in ("assistant_message_count", "verified_assistant_text_blocks", "verified_assistant_text_utf8_bytes", "result_normalization")), "Codex normalization join")
+    raw_time = P.load_json(directory / "raw_copy_1.receipt.json")["source"]["observedAtUtc"]
+    require(terminal.get("create_request_issued") == issued["record"] and issued["record"] in terminal["evidence"] and V.parse_utc(issued["value"]["issued_at_utc"]) <= V.parse_utc(raw_time) <= V.parse_utc(terminal["finished_at_utc"]) and terminal.get("final_assistant_text") == normalized["final_text"] and all(terminal.get(key) == normalized[key] for key in ("assistant_message_count", "verified_assistant_text_blocks", "verified_assistant_text_utf8_bytes", "result_normalization")), "Codex issuance/normalization join")
     return projection
-
 
 def bindings() -> tuple[tuple[Any, str, Any], ...]:
     return (
@@ -457,11 +468,10 @@ def bindings() -> tuple[tuple[Any, str, Any], ...]:
         (V, "verify_omp_raw", verify_omp_raw), (V, "verify_codex_raw", verify_codex_raw), (V, "pipeline", G.PROXY),
         (M, "HERE", HERE), (M, "CONTRACT", CONTRACT), (M, "EVIDENCE", EVIDENCE), (M, "SOURCES", SOURCES),
         (M, "spec", spec), (M, "rows", rows), (M, "route_map", route_map), (M, "launch_plan_map", launch_plan_map), (M, "git_custody", git_custody),
-        (M, "verify_codex_candidate", verify_codex_candidate),
+        (M, "verify_codex_candidate", verify_codex_candidate), (M, "append_app_journal", app_append_journal),
         (M.app, "write_terminal", app_write_terminal), (M.app, "verify_direct_evidence", app_verify_direct),
         (G, "EVIDENCE", EVIDENCE), (G, "CONTRACT", CONTRACT), (G, "rows", glm_rows), (G, "row_dir", row_dir), (G, "git_custody", git_custody),
     )
-
 
 @contextlib.contextmanager
 def installed() -> Iterator[None]:
@@ -475,7 +485,6 @@ def installed() -> Iterator[None]:
         for module, name, value in reversed(saved):
             setattr(module, name, value)
 
-
 def verify_omp_receipt(row: dict[str, Any], custody: dict[str, Any]) -> None:
     directory = row_dir(row)
     receipt = P.load_json(directory / "omp_preflight.json")
@@ -486,7 +495,6 @@ def verify_omp_receipt(row: dict[str, Any], custody: dict[str, Any]) -> None:
     require(receipt.get("profile_seed", {}).get("seed_roster") == ["agent.db", "config.yml", "models.db", "models.yml"] and receipt.get("models_override") == file_record(V5 / "models.yml"), "OMP isolated profile")
     if row["route_id"] == GLM_ROUTE:
         G.verify_formal(row, custody)
-
 
 def verify_prefix() -> dict[str, Any]:
     journal_path = EVIDENCE / "launch_journal.jsonl"
@@ -508,6 +516,7 @@ def verify_prefix() -> dict[str, Any]:
                     else:
                         directory = row_dir(row)
                         launch = M.verify_app_launch(row, custody)
+                        issued = verify_issued(directory, row, custody); verify_issued_journal(journal, row, issued)
                         M.app.verify_direct_evidence(directory, row, (V7 / "prompts/codex.prompt.txt").read_text(), spec(), P, V, launch, P.load_json(directory / "terminal.json"))
                     reports.append(report)
             M.mixed_journal(journal, reports)
@@ -522,23 +531,19 @@ def verify_prefix() -> dict[str, Any]:
     complete = len(journal) == 24
     return {"status": "PASS_TWO_CLEAN_NORMALIZED_PASSES" if complete else "PASS_EXACT_PREFIX_ZERO_CREDIT", "row_count": len(journal), "required_rows": 24, "qualification_credit": 1 if complete else 0, "subject_calls": 0}
 
-
 def require_launch_authority(row: dict[str, Any]) -> None:
-    authority = spec()["authority"]
-    require(authority.get("runtime_launch_authorized") is True and authority.get("provider_calls_authorized") is True, "runtime/provider authority not frozen")
+    authority = verified_authority()
+    require(authority["runtime_launch_authorized"] is True and authority["provider_calls_authorized"] is True and authority["exact_ordinal_prefix_fail_stop_required"] is True, "runtime/provider authority not frozen")
     if row["surface"] == "codex_app":
-        require(authority.get("codex_app_creation_authorized") is True, "Codex App authority not frozen")
-    require(len([item for item in rows() if all(item[key] == row[key] for key in (*IDENTITY, "surface", "model", "thinking"))]) == 1, "one exact authorized row")
-
+        require(authority["codex_app_creation_authorized"] is True, "Codex App authority not frozen")
+    require(row["attempt_id"] in authority["authorized_attempt_ids"] and len([item for item in rows() if all(item[key] == row[key] for key in (*IDENTITY, "surface", "model", "thinking"))]) == 1, "one exact authorized row")
 
 def next_row(ordinal: int, prefix_count: int) -> dict[str, Any]:
     require(ordinal == prefix_count + 1 and 1 <= ordinal <= 24, "exact next ordinal")
     return rows()[ordinal - 1]
 
-
 ERRORS = (MatrixError, PermanentMatrixError, G.CanaryError, G.PermanentCanaryError, N.NormalizationError, M.ControllerError, M.PermanentTerminalResultFailure, M.app.LaneError, base.RunnerError, omp_session.OmpSessionError, V.VerifyError, P.PipelineError, subprocess.SubprocessError, OSError, ValueError, KeyError, TypeError, AssertionError)
 COMMANDS = ("lint", "verify-prefix", "run-omp", "codex-reserve", "codex-create-request", "codex-wait-request", "codex-read-request", "codex-raw-request", "codex-ingest-create", "codex-ingest-wait", "codex-ingest-read", "codex-ingest-raw1", "codex-ingest-raw2")
-
 
 def dispatch(argv: list[str] | None = None) -> int:
     global DISPATCH_CUSTODY
@@ -585,29 +590,35 @@ def dispatch(argv: list[str] | None = None) -> int:
                     require(row["surface"] == "codex_app", "Codex command requires App row")
                     if args.command == "codex-reserve":
                         launch = M.reserve_app(directory, row, custody)
-                        output = {"status": "RESERVED_CONSUMED_AWAIT_CREATE", "launch": launch, "qualification_credit": 0}
+                        output = {"status": "RESERVED_CONSUMED_AWAIT_CREATE", **{key: row[key] for key in IDENTITY}, "reservation": file_record(directory / "reservation.json", directory), "launch": file_record(directory / "launch.json", directory), "qualification_credit": 0}
                     else:
                         require(M.exact_reservation(row) and not (directory / "terminal.json").exists(), "exact unterminated App reservation")
-                        M.verify_app_launch(row, custody)
+                        launch = M.verify_app_launch(row, custody)
                         M.app_budget(directory)
                         if args.command == "codex-create-request":
                             require(not (directory / "create_receipt.raw.json").exists(), "create receipt absent")
-                            output = P.load_json(directory / "create_request.json")
+                            output = issue_create(directory, row, custody)
                         elif args.command == "codex-wait-request":
+                            verify_issued(directory, row, custody)
                             create = M.app_created(directory, row); prior = M.app_waits(directory, create)
                             require(len(prior) < spec()["runtime"]["codex_wait_max_receipts"] and (not prior or not M.app.validate_wait(prior[-1]["result"], create)), "wait open")
                             output = M.app.wait_request(create, prior, spec()["runtime"]["codex_wait_timeout_ms"])
                         elif args.command == "codex-read-request":
+                            verify_issued(directory, row, custody)
                             create = M.app_created(directory, row); prior = M.app_waits(directory, create)
                             require(prior and M.app.validate_wait(prior[-1]["result"], create) and not (directory / "read_receipt.raw.json").exists(), "read ready")
                             output = M.app.read_request(create, spec())
                         elif args.command == "codex-raw-request":
+                            verify_issued(directory, row, custody)
                             create = M.app_created(directory, row); output = M.app.raw_request(row, create)
                             require(P.load_json(directory / "raw_copy_request.json") == output, "raw request join")
                         else:
+                            verify_issued(directory, row, custody)
                             output = M.ingest(row, args.command.removeprefix("codex-ingest-"), sys.stdin.buffer.read())
                             if args.command == "codex-ingest-raw2":
                                 post = verify_prefix(); require(post["row_count"] == row["ordinal"], "post-App prefix"); output["prefix"] = post
+    except AlreadyIssuedNoMutation:
+        return 2
     except base.ReservationConflict as exc:
         output, rc = {"status": "FAIL_ALREADY_CONSUMED_NO_MUTATION", "error": f"{type(exc).__name__}: {exc}", "qualification_credit": 0}, 1
     except ERRORS as exc:
@@ -625,11 +636,15 @@ def dispatch(argv: list[str] | None = None) -> int:
         DISPATCH_CUSTODY = None
         G.DISPATCH_CUSTODY = None
     try:
-        print(P.canonical_json(output))
-    except BrokenPipeError:
-        return rc
+        if row is not None and args.command == "codex-create-request" and rc == 0: sys.stdout.write(emittable_create(row_dir(row), row, git_custody()))
+        else: print(P.canonical_json(output))
+    except AlreadyIssuedNoMutation:
+        return 2
+    except Exception as exc:
+        if row is not None and row.get("surface") == "codex_app" and os.path.lexists(row_dir(row) / ISSUED) and not (row_dir(row) / "terminal.json").exists():
+            with installed(), selected(row): M.fail_app(row, exc)
+        return 1
     return rc
-
 
 if __name__ == "__main__":
     raise SystemExit(dispatch())
