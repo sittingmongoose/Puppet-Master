@@ -1,0 +1,386 @@
+{
+  "authority_record": {
+    "blob": "7cb80945d9f925873a66721cabda854f1a93ca4b",
+    "bytes": 17188,
+    "mode": "100644",
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/STORAGE_MIMO_NORMALIZED_CANARY_V3_AUTHORITY.json",
+    "sha256": "cef8a00fd00760d3bb296f146855f20aba043e63f37c50ebcb051538a70848bc"
+  },
+  "authorization": {
+    "authorizes_future_subject_or_provider_call": false,
+    "authorizes_matrix": false,
+    "authorizes_replacement": false,
+    "authorizes_retry": false,
+    "matrix_credit": 0,
+    "production_credit": 0,
+    "qualification_credit": 0,
+    "scope": "detached_durable_custody_only",
+    "self_authorizing": false
+  },
+  "commit_delta": {
+    "base": "fccf63c813e185c715293005f7f7390d28a850ae",
+    "path_count": 20,
+    "records": [
+      {
+        "blob": "7cb80945d9f925873a66721cabda854f1a93ca4b",
+        "bytes": 17188,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/STORAGE_MIMO_NORMALIZED_CANARY_V3_AUTHORITY.json",
+        "sha256": "cef8a00fd00760d3bb296f146855f20aba043e63f37c50ebcb051538a70848bc",
+        "status": "A"
+      },
+      {
+        "blob": "17bb70a531b1b363c83e5fa924096af007c9622d",
+        "bytes": 484,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/launch_journal.jsonl",
+        "sha256": "81aeb91ee9c46800b07201436437b0cd7e4df668d8b98b5620bfa7c45152fc0d",
+        "status": "A"
+      },
+      {
+        "blob": "8e7a840404e5a7d95b15f35e71a2f23338a81eac",
+        "bytes": 996,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/composer_ack.json",
+        "sha256": "9315ff06d26c60d9a687b6c3ace69a16a9bd93f8c40160c09a7fc1f61c4fe238",
+        "status": "A"
+      },
+      {
+        "blob": "cf3f59ac0486fe3f010009e6ddc2cdad4950bd94",
+        "bytes": 24365,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/composer_ack.raw",
+        "sha256": "d7b3603e31ffef98e2e8b2eb2b3833ffc3dd555b500d1c9532eea86d7c5e6305",
+        "status": "A"
+      },
+      {
+        "blob": "45a8ca02bfc82ca6f053c14f35bc90a6382b2612",
+        "bytes": 1,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/control.raw",
+        "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71",
+        "status": "A"
+      },
+      {
+        "blob": "f0bfcc9269a13db867e2999c2dec39d5a5a3e492",
+        "bytes": 747,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/enter_write.json",
+        "sha256": "35167bd24f9a8247b14d1d155242078855ebe62e875ccad12aea04444e81ce0d",
+        "status": "A"
+      },
+      {
+        "blob": "ceae7e5c78b1f3ef6e5ba8028ccef8db3b6f07f4",
+        "bytes": 1722,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/launch.json",
+        "sha256": "b828d184cbc24179a95638aeccb86c32fa9d31280d3db74b6a647c21832dd45a",
+        "status": "A"
+      },
+      {
+        "blob": "3e05d548920c3a887e50abd5a61e7e336b9d516d",
+        "bytes": 5586,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/normalized_projection.json",
+        "sha256": "5f87f3521e9a12490dbdf7b1eb0ba4fb137a70e8e26cc8b5afbd53e9c317e93b",
+        "status": "A"
+      },
+      {
+        "blob": "5539c3381736428995db79d0f866ce55566cd0a9",
+        "bytes": 53803,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/omp_preflight.json",
+        "sha256": "e51dd818d31bc73f39c3d8ffc591b138e4cffe7e9f7a90ca19b96243230a0db9",
+        "status": "A"
+      },
+      {
+        "blob": "64aa7efc44f70aee7096712edd865e9bb25f99ad",
+        "bytes": 14081,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/pre_prompt.raw",
+        "sha256": "788d070e9b1fe2d961a6cca36debd8ed0262548466957ae6f3ad9e9fb9be509e",
+        "status": "A"
+      },
+      {
+        "blob": "0a63f30223d04c5f896383e22e78c0f1ec826221",
+        "bytes": 695,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/prompt_write.json",
+        "sha256": "cc70bc2aa78bc5844f36cab45a38f1afe3c8d5152f2baa4e22d2474f1e3d3d41",
+        "status": "A"
+      },
+      {
+        "blob": "231962e88d2bc954424d619f7a6f5ef3db6c6dff",
+        "bytes": 352,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/reservation.json",
+        "sha256": "39c7e07d441e876887303527bb84baa72382e8123b4180bc7e7e50434824f4f6",
+        "status": "A"
+      },
+      {
+        "blob": "dc65b351443eed6a8f1d8f3732c1e408e87e20db",
+        "bytes": 48859,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/session.raw.jsonl",
+        "sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799",
+        "status": "A"
+      },
+      {
+        "blob": "1ad6a3bee7ca2c9964b76943ef124fef5916482c",
+        "bytes": 18224,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/session_prefix.raw.jsonl",
+        "sha256": "c0e69feb5784583dbd38749e5bbdd603c5f9af450b4fddf613f6db70a5e16228",
+        "status": "A"
+      },
+      {
+        "blob": "67c3297611451bb352bbda488b0cd7cb2528a0d3",
+        "bytes": 1,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/stdin_enter.raw",
+        "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4",
+        "status": "A"
+      },
+      {
+        "blob": "bdb6707283dc2f88f18cdf1adf88152d94a33f24",
+        "bytes": 3036,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/stdin_prompt.raw",
+        "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+        "status": "A"
+      },
+      {
+        "blob": "c7395d13f391d52783d291b2aefb0e369fee6906",
+        "bytes": 1540,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/structural_projection.json",
+        "sha256": "a8617082bbf0464b8726e7d0401da2b0cea67f35321998ab14175f5fdec4580e",
+        "status": "A"
+      },
+      {
+        "blob": "e8fd0fb000dbf056ffafc61f347de119cdcae685",
+        "bytes": 1339,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/submission_acceptance.json",
+        "sha256": "cc09cef3b3ec66e11a4cdf891073bd39ac61f6d2124ca84f1f5e26246bd146a9",
+        "status": "A"
+      },
+      {
+        "blob": "c83103b10be7bc7eaad2bb1c6dc6fc941d1a0f76",
+        "bytes": 11304,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/terminal.json",
+        "sha256": "e0d6e135dfc779b29432cc8b2fe7fa0afaf799a7fa9cfd3a2ef6568d773cde47",
+        "status": "A"
+      },
+      {
+        "blob": "12f918a35894caed178137ca38663e3abd1446ea",
+        "bytes": 1441338,
+        "mode": "100644",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/transcript.raw",
+        "sha256": "f518740292952b9e6e1fd1068c96093a559d0aa39f000446556633de28e012e0",
+        "status": "A"
+      }
+    ],
+    "sort": "path_bytewise_ascending",
+    "tip": "7c017517c48ce678eea580a1639ef16d7d6bd408"
+  },
+  "created_at_utc": "2026-08-27T22:22:59Z",
+  "detached_anchors": {
+    "evidence_commit": "7c017517c48ce678eea580a1639ef16d7d6bd408",
+    "evidence_commit_parent_count": 1,
+    "evidence_commit_parents": [
+      "fccf63c813e185c715293005f7f7390d28a850ae"
+    ],
+    "evidence_tree": "aa8b07dc87ce77dbb5543691686fa617b05bfc2c",
+    "pinned_commits_only": [
+      "fccf63c813e185c715293005f7f7390d28a850ae",
+      "7c017517c48ce678eea580a1639ef16d7d6bd408"
+    ],
+    "receipt_commit_id_embedded": false,
+    "source_commit": "fccf63c813e185c715293005f7f7390d28a850ae",
+    "source_tree": "9f5f878f42bee9bc889a84eee2addb9fd78e6190"
+  },
+  "evidence_custody": {
+    "file_count": 19,
+    "journal_record": {
+      "bytes": 484,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/launch_journal.jsonl",
+      "sha256": "81aeb91ee9c46800b07201436437b0cd7e4df668d8b98b5620bfa7c45152fc0d"
+    },
+    "normalized_record": {
+      "bytes": 5586,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/normalized_projection.json",
+      "sha256": "5f87f3521e9a12490dbdf7b1eb0ba4fb137a70e8e26cc8b5afbd53e9c317e93b"
+    },
+    "records_are_commit_delta_records_excluding_authority": true,
+    "session_record": {
+      "bytes": 48859,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/session.raw.jsonl",
+      "sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799"
+    },
+    "terminal_formal_chain": {
+      "ordered_paths": [
+        "reservation.json",
+        "omp_preflight.json",
+        "launch.json",
+        "submission_acceptance.json",
+        "session.raw.jsonl",
+        "structural_projection.json",
+        "normalized_projection.json"
+      ],
+      "records": {
+        "launch.json": {
+          "bytes": 1722,
+          "path": "launch.json",
+          "sha256": "b828d184cbc24179a95638aeccb86c32fa9d31280d3db74b6a647c21832dd45a"
+        },
+        "normalized_projection.json": {
+          "bytes": 5586,
+          "path": "normalized_projection.json",
+          "sha256": "5f87f3521e9a12490dbdf7b1eb0ba4fb137a70e8e26cc8b5afbd53e9c317e93b"
+        },
+        "omp_preflight.json": {
+          "bytes": 53803,
+          "path": "omp_preflight.json",
+          "sha256": "e51dd818d31bc73f39c3d8ffc591b138e4cffe7e9f7a90ca19b96243230a0db9"
+        },
+        "reservation.json": {
+          "bytes": 352,
+          "path": "reservation.json",
+          "sha256": "39c7e07d441e876887303527bb84baa72382e8123b4180bc7e7e50434824f4f6"
+        },
+        "session.raw.jsonl": {
+          "bytes": 48859,
+          "path": "session.raw.jsonl",
+          "sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799"
+        },
+        "structural_projection.json": {
+          "bytes": 1540,
+          "path": "structural_projection.json",
+          "sha256": "a8617082bbf0464b8726e7d0401da2b0cea67f35321998ab14175f5fdec4580e"
+        },
+        "submission_acceptance.json": {
+          "bytes": 1339,
+          "path": "submission_acceptance.json",
+          "sha256": "cc09cef3b3ec66e11a4cdf891073bd39ac61f6d2124ca84f1f5e26246bd146a9"
+        }
+      },
+      "schema_id": "pm.r10.storage_pipeline.mimo_normalized_formal_chain.v3"
+    },
+    "terminal_record": {
+      "bytes": 11304,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/evidence/pass_01/omp_mimo_v25_free_high/terminal.json",
+      "sha256": "e0d6e135dfc779b29432cc8b2fe7fa0afaf799a7fa9cfd3a2ef6568d773cde47"
+    }
+  },
+  "historical_verify_prefix": {
+    "canonical_json": "{\"qualification_credit\":0,\"required_rows\":1,\"row_count\":1,\"status\":\"PASS_MIMO_NORMALIZED_CANARY_V3_ZERO_CREDIT\",\"subject_calls\":0}",
+    "canonical_json_sha256": "dccbeb944005e31768c464d436894edcf7ab5fb7635776f28838d5ece751a653",
+    "canonical_json_utf8_bytes": 130,
+    "command": [
+      "PYTHONDONTWRITEBYTECODE=1",
+      "python3",
+      "-B",
+      "controller.py",
+      "verify-prefix"
+    ],
+    "future_invocation_forbidden": true,
+    "non_reproducibility_reason": "The one-use row is consumed, evidence commit 7c017517c48ce678eea580a1639ef16d7d6bd408 advances HEAD and both remotes beyond source commit fccf63c813e185c715293005f7f7390d28a850ae, and the historical source-bound verifier depends on preserved private runtime roots. A future invocation cannot reproduce or replace the captured source-bound output.",
+    "observed_before_detached_evidence_commit": true,
+    "stdout_sha256": "3ded82743c9dc0edc7618bfa06243d4db196a271c9378910fae14c2415bcaa05",
+    "stdout_trailing_lf": true,
+    "stdout_utf8_bytes": 131
+  },
+  "identity": {
+    "attempt_id": "storage-mimo-normalized-canary-v3-01-c24b7c1ae9",
+    "goal_id": "15689cf8b6e61b82",
+    "goal_tool_call_id": "call_3c0a3276fe8a4ad5a8c4c037",
+    "nonce": "c24b7c1ae9859f47dcb07aa75ca93c8d",
+    "ordinal": 1,
+    "pass_id": "pass_01",
+    "pid": 486476,
+    "route_id": "omp_mimo_v25_free_high",
+    "session_id": "01a0453e-9039-7562-a305-d557b457effb"
+  },
+  "outcome": {
+    "canonical_result_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "external_submission_count": 1,
+    "finished_at_utc": "2026-08-27T22:02:46.720Z",
+    "future_runtime_authorized": false,
+    "goal_activation_observed": true,
+    "goal_complete_observed": true,
+    "matrix_authorization_claim": false,
+    "no_retry": true,
+    "no_self_authorization": true,
+    "normalization_candidate_count": 2,
+    "observed_non_goal_tool_calls": 0,
+    "ordinary_tool_calls": 0,
+    "process_exit_code": 0,
+    "qualification_credit": 0,
+    "receipt_credit": 0,
+    "retry_count": 0,
+    "retry_or_replacement_authorized": false,
+    "status": "PASS",
+    "stdin_enter_hex": "0d",
+    "terminal_control_hex": "04",
+    "terminal_control_name": "CTRL_D",
+    "terminal_control_sent_once": true
+  },
+  "remote_observations": [
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "origin",
+        "refs/heads/main"
+      ],
+      "command_shell": "git ls-remote origin refs/heads/main",
+      "command_shell_sha256": "4afc8b7bf0532c485decb795ab5b5dbb1ec0eb90d776033eef6284d1621c73a7",
+      "command_shell_utf8_bytes": 36,
+      "exit_code": 0,
+      "observed_at_utc": "2026-08-27T22:22:25Z",
+      "remote": "origin",
+      "stdout": "7c017517c48ce678eea580a1639ef16d7d6bd408\trefs/heads/main\n",
+      "stdout_sha256": "e6b1ba302546c03a7d5b2b750250b3e9bbccb0c440e463f9b23e7e4aaacf91e4",
+      "stdout_utf8_bytes": 57
+    },
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "truenas-backup",
+        "refs/heads/main"
+      ],
+      "command_shell": "git ls-remote truenas-backup refs/heads/main",
+      "command_shell_sha256": "200f975c41402b6895b439d64033b9cf68ce84fc2141c135aaeed95d77d9c1ad",
+      "command_shell_utf8_bytes": 44,
+      "exit_code": 0,
+      "observed_at_utc": "2026-08-27T22:22:25Z",
+      "remote": "truenas-backup",
+      "stdout": "7c017517c48ce678eea580a1639ef16d7d6bd408\trefs/heads/main\n",
+      "stdout_sha256": "e6b1ba302546c03a7d5b2b750250b3e9bbccb0c440e463f9b23e7e4aaacf91e4",
+      "stdout_utf8_bytes": 57
+    }
+  ],
+  "runtime_residual": {
+    "authority_record_contains_exact_root_roster": true,
+    "committed": false,
+    "cwd_empty": true,
+    "hash_only_custody": true,
+    "historical_verifier_dependency": true,
+    "live_session": {
+      "bytes": 48859,
+      "evidence_sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799",
+      "mode": "0600",
+      "path": "/tmp/pm-r10-storage-v7-session-mimo-normalized-canary-v3-c24b7c1ae9/2026-08-27T22-02-03-193Z_01a0453e-9039-7562-a305-d557b457effb.jsonl",
+      "sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799"
+    },
+    "owned_pid_absent": true,
+    "persisted_root_count": 9,
+    "preserve_without_cleanup": true,
+    "snapshot_path_absent": true,
+    "statement": "Nine mode-0700 runtime roots remain private and uncommitted. They are deliberately preserved; no cleanup is authorized by this detached receipt."
+  },
+  "schema_id": "pm.r10.storage_pipeline.mimo_normalized_canary_v3_push_custody.v1"
+}
