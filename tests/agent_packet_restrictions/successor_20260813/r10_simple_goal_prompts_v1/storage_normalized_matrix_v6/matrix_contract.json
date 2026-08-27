@@ -1,0 +1,899 @@
+{
+  "schema_id": "pm.r10.storage_normalized_matrix.v6",
+  "status": "FROZEN_PRELAUNCH_ZERO_CREDIT",
+  "architecture_limits": {
+    "controller_max_lines": 900,
+    "selftest_max_lines": 550,
+    "package_max_lines": 3000,
+    "package_max_bytes": 220000
+  },
+  "route_order": [
+    "omp_mimo_v25_free_high",
+    "omp_cursor_default_auto",
+    "omp_muse_spark_xhigh",
+    "omp_deepseek_v4_flash_max",
+    "omp_gemini_37_flash_high",
+    "codex_luna_max",
+    "codex_luna_medium",
+    "codex_gpt54_xhigh",
+    "codex_gpt54_medium",
+    "codex_gpt54mini_xhigh",
+    "codex_gpt54mini_medium",
+    "omp_qwen38_max_xhigh"
+  ],
+  "routes": [
+    {
+      "id": "omp_mimo_v25_free_high",
+      "model": "opencode-zen/mimo-v2.5-free",
+      "surface": "omp_tui",
+      "thinking": "high"
+    },
+    {
+      "id": "omp_cursor_default_auto",
+      "model": "cursor/default",
+      "surface": "omp_tui",
+      "thinking": "auto"
+    },
+    {
+      "id": "omp_muse_spark_xhigh",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "surface": "omp_tui",
+      "thinking": "xhigh"
+    },
+    {
+      "id": "omp_deepseek_v4_flash_max",
+      "model": "opencode-go/deepseek-v4-flash",
+      "surface": "omp_tui",
+      "thinking": "max"
+    },
+    {
+      "id": "omp_gemini_37_flash_high",
+      "model": "google-antigravity/gemini-3.7-flash",
+      "surface": "omp_tui",
+      "thinking": "high"
+    },
+    {
+      "id": "codex_luna_max",
+      "model": "gpt-5.6-luna",
+      "surface": "codex_app",
+      "thinking": "max"
+    },
+    {
+      "id": "codex_luna_medium",
+      "model": "gpt-5.6-luna",
+      "surface": "codex_app",
+      "thinking": "medium"
+    },
+    {
+      "id": "codex_gpt54_xhigh",
+      "model": "gpt-5.4",
+      "surface": "codex_app",
+      "thinking": "xhigh"
+    },
+    {
+      "id": "codex_gpt54_medium",
+      "model": "gpt-5.4",
+      "surface": "codex_app",
+      "thinking": "medium"
+    },
+    {
+      "id": "codex_gpt54mini_xhigh",
+      "model": "gpt-5.4-mini",
+      "surface": "codex_app",
+      "thinking": "xhigh"
+    },
+    {
+      "id": "codex_gpt54mini_medium",
+      "model": "gpt-5.4-mini",
+      "surface": "codex_app",
+      "thinking": "medium"
+    },
+    {
+      "id": "omp_qwen38_max_xhigh",
+      "model": "alibaba-token-plan/qwen3.8-max",
+      "surface": "omp_tui",
+      "thinking": "xhigh"
+    }
+  ],
+  "rows": [
+    {
+      "ordinal": 1,
+      "pass_id": "pass_01",
+      "route_id": "omp_mimo_v25_free_high",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-01-306ec0de42",
+      "nonce": "306ec0de426272d2f2cdccadb868d13a",
+      "surface": "omp_tui",
+      "model": "opencode-zen/mimo-v2.5-free",
+      "thinking": "high",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-306ec0de426272d2f2cdccadb868d13a",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_01/omp_mimo_v25_free_high"
+    },
+    {
+      "ordinal": 2,
+      "pass_id": "pass_01",
+      "route_id": "omp_cursor_default_auto",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-02-75531cd45a",
+      "nonce": "75531cd45a744344d5c0d89dcf81dd0c",
+      "surface": "omp_tui",
+      "model": "cursor/default",
+      "thinking": "auto",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-75531cd45a744344d5c0d89dcf81dd0c",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-75531cd45a744344d5c0d89dcf81dd0c",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_01/omp_cursor_default_auto"
+    },
+    {
+      "ordinal": 3,
+      "pass_id": "pass_01",
+      "route_id": "omp_muse_spark_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-03-47bfef1f87",
+      "nonce": "47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "surface": "omp_tui",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-47bfef1f870a0b2e9f12d3b4f36ce0fa",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_01/omp_muse_spark_xhigh"
+    },
+    {
+      "ordinal": 4,
+      "pass_id": "pass_01",
+      "route_id": "omp_deepseek_v4_flash_max",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-04-2a3253ab93",
+      "nonce": "2a3253ab935f9319fa3dac3926ebc697",
+      "surface": "omp_tui",
+      "model": "opencode-go/deepseek-v4-flash",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-2a3253ab935f9319fa3dac3926ebc697",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-2a3253ab935f9319fa3dac3926ebc697",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_01/omp_deepseek_v4_flash_max"
+    },
+    {
+      "ordinal": 5,
+      "pass_id": "pass_01",
+      "route_id": "omp_gemini_37_flash_high",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-05-cbbc1e32a2",
+      "nonce": "cbbc1e32a249284386136f41dac7d4fc",
+      "surface": "omp_tui",
+      "model": "google-antigravity/gemini-3.7-flash",
+      "thinking": "high",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-cbbc1e32a249284386136f41dac7d4fc",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-cbbc1e32a249284386136f41dac7d4fc",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_01/omp_gemini_37_flash_high"
+    },
+    {
+      "ordinal": 6,
+      "pass_id": "pass_01",
+      "route_id": "codex_luna_max",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-06-f7156ed24b",
+      "nonce": "f7156ed24b72f083b6ab099694fcedfc",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-06-f7156ed24b72f083b6ab099694fcedfc",
+      "title": "R10 Storage V6 06 codex_luna_max f7156ed2",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_01/codex_luna_max"
+    },
+    {
+      "ordinal": 7,
+      "pass_id": "pass_01",
+      "route_id": "codex_luna_medium",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-07-a88c8a43d3",
+      "nonce": "a88c8a43d360a970bcb0a0ba19fb2911",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-07-a88c8a43d360a970bcb0a0ba19fb2911",
+      "title": "R10 Storage V6 07 codex_luna_medium a88c8a43",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_01/codex_luna_medium"
+    },
+    {
+      "ordinal": 8,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-08-848efb9208",
+      "nonce": "848efb92089b5037f89f5f6f8bd62af2",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-08-848efb92089b5037f89f5f6f8bd62af2",
+      "title": "R10 Storage V6 08 codex_gpt54_xhigh 848efb92",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_01/codex_gpt54_xhigh"
+    },
+    {
+      "ordinal": 9,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54_medium",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-09-ec1a381ed8",
+      "nonce": "ec1a381ed81ae374c1217b676de06270",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-09-ec1a381ed81ae374c1217b676de06270",
+      "title": "R10 Storage V6 09 codex_gpt54_medium ec1a381e",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_01/codex_gpt54_medium"
+    },
+    {
+      "ordinal": 10,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54mini_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-10-35802ab43e",
+      "nonce": "35802ab43ed040ab402d38e21c27663b",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-10-35802ab43ed040ab402d38e21c27663b",
+      "title": "R10 Storage V6 10 codex_gpt54mini_xhigh 35802ab4",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_01/codex_gpt54mini_xhigh"
+    },
+    {
+      "ordinal": 11,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54mini_medium",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-11-e9cb470e7b",
+      "nonce": "e9cb470e7b0fdedb65143401dae8d9b0",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-11-e9cb470e7b0fdedb65143401dae8d9b0",
+      "title": "R10 Storage V6 11 codex_gpt54mini_medium e9cb470e",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_01/codex_gpt54mini_medium"
+    },
+    {
+      "ordinal": 12,
+      "pass_id": "pass_01",
+      "route_id": "omp_qwen38_max_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_01-12-64cba09b99",
+      "nonce": "64cba09b992ab51187357253eb9c3f9e",
+      "surface": "omp_tui",
+      "model": "alibaba-token-plan/qwen3.8-max",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-64cba09b992ab51187357253eb9c3f9e",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-64cba09b992ab51187357253eb9c3f9e",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_01/omp_qwen38_max_xhigh"
+    },
+    {
+      "ordinal": 13,
+      "pass_id": "pass_02",
+      "route_id": "omp_mimo_v25_free_high",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-13-ba2f4cafda",
+      "nonce": "ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "surface": "omp_tui",
+      "model": "opencode-zen/mimo-v2.5-free",
+      "thinking": "high",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-ba2f4cafdaf8473a2a1e8a8c14b9832d",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_02/omp_mimo_v25_free_high"
+    },
+    {
+      "ordinal": 14,
+      "pass_id": "pass_02",
+      "route_id": "omp_cursor_default_auto",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-14-7330d80bcf",
+      "nonce": "7330d80bcfa5861ad86721659d4aec60",
+      "surface": "omp_tui",
+      "model": "cursor/default",
+      "thinking": "auto",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-7330d80bcfa5861ad86721659d4aec60",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-7330d80bcfa5861ad86721659d4aec60",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_02/omp_cursor_default_auto"
+    },
+    {
+      "ordinal": 15,
+      "pass_id": "pass_02",
+      "route_id": "omp_muse_spark_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-15-fcf26f8268",
+      "nonce": "fcf26f82680a237a454f8372cee6a284",
+      "surface": "omp_tui",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-fcf26f82680a237a454f8372cee6a284",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-fcf26f82680a237a454f8372cee6a284",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_02/omp_muse_spark_xhigh"
+    },
+    {
+      "ordinal": 16,
+      "pass_id": "pass_02",
+      "route_id": "omp_deepseek_v4_flash_max",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-16-a08967477c",
+      "nonce": "a08967477c2f20cd21b4f0443c650b08",
+      "surface": "omp_tui",
+      "model": "opencode-go/deepseek-v4-flash",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-a08967477c2f20cd21b4f0443c650b08",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-a08967477c2f20cd21b4f0443c650b08",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_02/omp_deepseek_v4_flash_max"
+    },
+    {
+      "ordinal": 17,
+      "pass_id": "pass_02",
+      "route_id": "omp_gemini_37_flash_high",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-17-80a95ba0db",
+      "nonce": "80a95ba0dbab5b96a4959f4c8a740333",
+      "surface": "omp_tui",
+      "model": "google-antigravity/gemini-3.7-flash",
+      "thinking": "high",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-80a95ba0dbab5b96a4959f4c8a740333",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-80a95ba0dbab5b96a4959f4c8a740333",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_02/omp_gemini_37_flash_high"
+    },
+    {
+      "ordinal": 18,
+      "pass_id": "pass_02",
+      "route_id": "codex_luna_max",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-18-9b09541125",
+      "nonce": "9b09541125aa43b4e09f71ca8c912e52",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-18-9b09541125aa43b4e09f71ca8c912e52",
+      "title": "R10 Storage V6 18 codex_luna_max 9b095411",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_02/codex_luna_max"
+    },
+    {
+      "ordinal": 19,
+      "pass_id": "pass_02",
+      "route_id": "codex_luna_medium",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-19-81e960d8fb",
+      "nonce": "81e960d8fbab4da07d27094e57b1c13b",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-19-81e960d8fbab4da07d27094e57b1c13b",
+      "title": "R10 Storage V6 19 codex_luna_medium 81e960d8",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_02/codex_luna_medium"
+    },
+    {
+      "ordinal": 20,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-20-5d5b7b4548",
+      "nonce": "5d5b7b4548c50186f0c8c04a5baf4aff",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-20-5d5b7b4548c50186f0c8c04a5baf4aff",
+      "title": "R10 Storage V6 20 codex_gpt54_xhigh 5d5b7b45",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_02/codex_gpt54_xhigh"
+    },
+    {
+      "ordinal": 21,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54_medium",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-21-d5442577db",
+      "nonce": "d5442577db099a7fcef88afe662f28f9",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-21-d5442577db099a7fcef88afe662f28f9",
+      "title": "R10 Storage V6 21 codex_gpt54_medium d5442577",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_02/codex_gpt54_medium"
+    },
+    {
+      "ordinal": 22,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54mini_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-22-bf212eef0c",
+      "nonce": "bf212eef0c5e856a618d62bfbd1d13e3",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-22-bf212eef0c5e856a618d62bfbd1d13e3",
+      "title": "R10 Storage V6 22 codex_gpt54mini_xhigh bf212eef",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_02/codex_gpt54mini_xhigh"
+    },
+    {
+      "ordinal": 23,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54mini_medium",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-23-246b1905d0",
+      "nonce": "246b1905d0c56b46dc4f757099452aad",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-normalized-matrix-v6-23-246b1905d0c56b46dc4f757099452aad",
+      "title": "R10 Storage V6 23 codex_gpt54mini_medium 246b1905",
+      "prompt_utf8_bytes": 3050,
+      "prompt_sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38",
+      "evidence_path": "evidence/pass_02/codex_gpt54mini_medium"
+    },
+    {
+      "ordinal": 24,
+      "pass_id": "pass_02",
+      "route_id": "omp_qwen38_max_xhigh",
+      "attempt_id": "storage-normalized-matrix-v6-pass_02-24-cdeaacca0c",
+      "nonce": "cdeaacca0cf6031b810af5ad6cfa2500",
+      "surface": "omp_tui",
+      "model": "alibaba-token-plan/qwen3.8-max",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-cdeaacca0cf6031b810af5ad6cfa2500",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "snapshot_dir": "/tmp/pm-r10-storage-v7-snapshot-normalized-matrix-v6-cdeaacca0cf6031b810af5ad6cfa2500",
+      "prompt_utf8_bytes": 3036,
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "evidence_path": "evidence/pass_02/omp_qwen38_max_xhigh"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+      "bytes": 41009,
+      "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_session.py",
+      "bytes": 37909,
+      "sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+      "bytes": 35041,
+      "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/pipeline.py",
+      "bytes": 29419,
+      "sha256": "e240db07e8de31f7fa7294c5f722b9a63b90f634a86d00fe976deee63a8e1708"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_check.py",
+      "bytes": 1788,
+      "sha256": "170680502462ac6066077dcd43ab69b1838e986cc268590d9784bea3520a452e"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_manifest.json",
+      "bytes": 4443,
+      "sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/matrix.json",
+      "bytes": 2370,
+      "sha256": "70adc74155e652808d1c9ede781698c3f5675a58e094e8b3a0d93ce9e827957e"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/runtime_manifest.json",
+      "bytes": 1335,
+      "sha256": "56943ce8625c6ce7e3d621323d382d8db8f10f2b8f2c0970193ca97f89d726ba"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/oracle.json",
+      "bytes": 407,
+      "sha256": "f11f136b271d739e8b1108cce38ab52dbd0258357f9a591da1c5c1ba69e36bdf"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/response.schema.json",
+      "bytes": 1142,
+      "sha256": "64484356c062ddda98385c35dfa51328744a8a5b36320df4bb24e9852a6aca97"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+      "bytes": 3036,
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/codex.prompt.txt",
+      "bytes": 3050,
+      "sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/codex_app_lane.py",
+      "bytes": 18014,
+      "sha256": "7f53764158feb6c6cfa529ad9c36b23e5637e1d692c1268e91583c81c768fc7d"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/controller.py",
+      "bytes": 34781,
+      "sha256": "3785d21d4999943a9a55dbc8c42d6197bc12e8e7d495d7ed7cb01d0ca5fa901a"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/canary_contract.json",
+      "bytes": 29371,
+      "sha256": "ad22aca95d042ba22d19389201e050b71c55278f70bc89482cac7c7798f9e7b3"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_native_canary_v1/controller.py",
+      "bytes": 39685,
+      "sha256": "a542eed1a81f9ba6b245661d7d0d97685f362cf25666a8bed0c083fffc1f9dd1"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_native_canary_v1/canary_contract.json",
+      "bytes": 13856,
+      "sha256": "91e537ae27cd725e61eadd2f2abdbb2711f921ee4c50ad3c7b8f62c9dc49fa2f"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/controller.py",
+      "bytes": 71010,
+      "sha256": "415d25b6e5dd708af62109c0c7589a3f0d3f6df2143e3df9397b223c03a27293"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v3/result_normalizer.py",
+      "bytes": 7183,
+      "sha256": "0832c205a2b62917ffb874838c84159d358c78f79bbad6c9f4ec8fccbd637c9f"
+    }
+  ],
+  "snapshot": {
+    "commit": "9a9f3068a01652071933582266244cce726a2dd5",
+    "entry_count": 6097,
+    "complete_tree_roots": [
+      "Plans",
+      "scripts"
+    ],
+    "live_plans_reads": 0,
+    "read_only": true
+  },
+  "detached_v3_custody": {
+    "source_commit": "fccf63c813e185c715293005f7f7390d28a850ae",
+    "evidence_commit": "7c017517c48ce678eea580a1639ef16d7d6bd408",
+    "closure_commit": "bd2da304e75d4a551f80f5ddba969f4531f7a385",
+    "authority": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/STORAGE_MIMO_NORMALIZED_CANARY_V3_AUTHORITY.json",
+      "mode": "100644",
+      "blob": "7cb80945d9f925873a66721cabda854f1a93ca4b",
+      "bytes": 17188,
+      "sha256": "cef8a00fd00760d3bb296f146855f20aba043e63f37c50ebcb051538a70848bc"
+    },
+    "push_custody": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/STORAGE_MIMO_NORMALIZED_CANARY_V3_PUSH_CUSTODY.json",
+      "mode": "100644",
+      "blob": "1141664ca66e099675c5db5d20f801b2b946d9d6",
+      "bytes": 17742,
+      "sha256": "5d1091cbba6e23b89c2efb397e289494d52311d324f2166f4408cacd6657a372"
+    },
+    "verification": "git_objects_only_no_historical_verifier_no_residual_runtime_roots",
+    "matrix_authority": false,
+    "source_tree": "9f5f878f42bee9bc889a84eee2addb9fd78e6190",
+    "evidence_tree": "aa8b07dc87ce77dbb5543691686fa617b05bfc2c",
+    "closure_tree": "6c20013c261bd970fd21cb17481e3f6d8f8799fc"
+  },
+  "runtime": {
+    "native_goal": true,
+    "ordinary_omp_prompt_count": 1,
+    "ordinary_codex_prompt_count": 1,
+    "codex_prompt_prefix": "Create a goal that",
+    "config_overlay": null,
+    "models_yml_forbidden": true,
+    "pi_req_debug_forbidden": true,
+    "private_http_forbidden": true,
+    "advisor_enabled": false,
+    "task_agent_advisor": {
+      "task": "off"
+    },
+    "mimo_catalog_gate_only": true,
+    "generic_omp_adapter": true,
+    "retry_count": 0,
+    "pass2_requires_pass1_12_of_12": true,
+    "row_time_budget_seconds": 3600,
+    "codex_wait_max_receipts": 30,
+    "codex_wait_timeout_ms": 120000,
+    "codex_read_turn_limit": 8,
+    "codex_read_max_output_chars_per_item": 8192,
+    "codex_raw_stable_read_count": 2,
+    "codex_parent_allowed_calls": [
+      "create_thread",
+      "wait_threads",
+      "read_thread"
+    ],
+    "codex_parent_forbidden_calls": [
+      "send_message_to_thread",
+      "fork_thread",
+      "handoff_thread",
+      "follow_up"
+    ],
+    "source_profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "omp_version": "omp/18.0.7",
+    "normal_exit_required": true
+  },
+  "normalization": {
+    "schema_id": "pm.r10.storage_pipeline.matrix_semantic_normalizer.v2",
+    "source": "storage_normalized_matrix_v6/controller.py",
+    "function": "semantic_normalize",
+    "source_sha256": "aae3acd897184b909e1f21c30ca4b698a4d6f13bd9628290205aab59fe1f0f9f",
+    "v3_helper_role": "strict_load_typed_equal_schema_only_and_historical_lineage",
+    "benign": [
+      "object_key_order",
+      "json_whitespace",
+      "surrounding_prose",
+      "candidate_location"
+    ],
+    "strict": [
+      "schema",
+      "types",
+      "values",
+      "list_order",
+      "duplicate_keys",
+      "nonfinite",
+      "malformed",
+      "conflicts",
+      "zero_candidates"
+    ],
+    "cursor_location_exception": [
+      "omp_session.require:OMP Cursor aggregate result absent before Goal call",
+      "omp_session.require:OMP Cursor aggregate result follows Goal call"
+    ],
+    "restore_in_finally": true,
+    "cursor_exception_source": "system_pipeline_sandbox_v7/omp_session.py",
+    "cursor_exception_source_sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+  },
+  "authority": {
+    "authority_source": "explicit_current_active_goal_and_user_matrix_direction_separate_from_v3_custody",
+    "active_goal": {
+      "thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+      "call_id": "call_Rklj1ZlFk4yF18PFKEOaeCrm",
+      "objective_sha256": "560a6b2e6852f351fd5d95e1ed44ec0f5044dab367318b20458c3cd76139c406",
+      "status": "active"
+    },
+    "authorized_attempt_ids": [
+      "storage-normalized-matrix-v6-pass_01-01-306ec0de42",
+      "storage-normalized-matrix-v6-pass_01-02-75531cd45a",
+      "storage-normalized-matrix-v6-pass_01-03-47bfef1f87",
+      "storage-normalized-matrix-v6-pass_01-04-2a3253ab93",
+      "storage-normalized-matrix-v6-pass_01-05-cbbc1e32a2",
+      "storage-normalized-matrix-v6-pass_01-06-f7156ed24b",
+      "storage-normalized-matrix-v6-pass_01-07-a88c8a43d3",
+      "storage-normalized-matrix-v6-pass_01-08-848efb9208",
+      "storage-normalized-matrix-v6-pass_01-09-ec1a381ed8",
+      "storage-normalized-matrix-v6-pass_01-10-35802ab43e",
+      "storage-normalized-matrix-v6-pass_01-11-e9cb470e7b",
+      "storage-normalized-matrix-v6-pass_01-12-64cba09b99",
+      "storage-normalized-matrix-v6-pass_02-13-ba2f4cafda",
+      "storage-normalized-matrix-v6-pass_02-14-7330d80bcf",
+      "storage-normalized-matrix-v6-pass_02-15-fcf26f8268",
+      "storage-normalized-matrix-v6-pass_02-16-a08967477c",
+      "storage-normalized-matrix-v6-pass_02-17-80a95ba0db",
+      "storage-normalized-matrix-v6-pass_02-18-9b09541125",
+      "storage-normalized-matrix-v6-pass_02-19-81e960d8fb",
+      "storage-normalized-matrix-v6-pass_02-20-5d5b7b4548",
+      "storage-normalized-matrix-v6-pass_02-21-d5442577db",
+      "storage-normalized-matrix-v6-pass_02-22-bf212eef0c",
+      "storage-normalized-matrix-v6-pass_02-23-246b1905d0",
+      "storage-normalized-matrix-v6-pass_02-24-cdeaacca0c"
+    ],
+    "authorized_row_count": 24,
+    "authorized_rows_canonical_sha256": "adbb770fc4e8b5e8153098c77e6c71645693ad9401cebc08af1930d10f4b1eda",
+    "runtime_launch_authorized": true,
+    "provider_calls_authorized": true,
+    "codex_app_creation_authorized": true,
+    "exact_ordinal_prefix_fail_stop_required": true,
+    "qualification_credit_requires_exact_24_of_24": true,
+    "retry_replacement_reuse_or_retro_credit_authorized": false,
+    "plans_or_ledgers_authorized": false,
+    "windows_interaction_authorized": false,
+    "worknodes_authorized": false
+  },
+  "dependency_count": 19
+}
