@@ -1,0 +1,37 @@
+{
+  "accepted_at_utc": "2026-08-27T22:02:18.044Z",
+  "attempt_id": "storage-mimo-normalized-canary-v3-01-c24b7c1ae9",
+  "enter_write_sha256": "35167bd24f9a8247b14d1d155242078855ebe62e875ccad12aea04444e81ce0d",
+  "external_submission_count": 1,
+  "low_level_input_write_count": 2,
+  "nonce": "c24b7c1ae9859f47dcb07aa75ca93c8d",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": 486476,
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.submission_acceptance.v7",
+  "session_prefix": {
+    "bytes": 18224,
+    "path": "session_prefix.raw.jsonl",
+    "sha256": "c0e69feb5784583dbd38749e5bbdd603c5f9af450b4fddf613f6db70a5e16228"
+  },
+  "session_projection": {
+    "external_user_message_count": 1,
+    "goal_active_entry_id": "b68857a2",
+    "goal_context_count": 1,
+    "goal_context_entry_ids": [
+      "88d3eed2"
+    ],
+    "goal_id": "15689cf8b6e61b82",
+    "logical_entry_count": 8,
+    "native_continuation_count": 0,
+    "selector": "opencode-zen/mimo-v2.5-free",
+    "session_id": "01a0453e-9039-7562-a305-d557b457effb",
+    "session_prefix_bytes": 18224,
+    "session_prefix_sha256": "c0e69feb5784583dbd38749e5bbdd603c5f9af450b4fddf613f6db70a5e16228",
+    "session_started_at_utc": "2026-08-27T22:02:03.193Z",
+    "thinking": "high",
+    "thinking_receipt_count": 1,
+    "user_entry_id": "43f66405"
+  }
+}

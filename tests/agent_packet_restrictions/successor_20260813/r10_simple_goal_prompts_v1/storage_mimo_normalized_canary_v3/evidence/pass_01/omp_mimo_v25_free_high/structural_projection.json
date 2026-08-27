@@ -1,0 +1,43 @@
+{
+  "assistant_api": "openai-completions",
+  "assistant_api_message_count": 3,
+  "assistant_lifecycle_shape": "standard_tool_cycle",
+  "assistant_message_count": 3,
+  "entry_ids": {
+    "final_assistant": "3d89b849",
+    "goal_active": "b68857a2",
+    "goal_call_assistant": "b03f8292",
+    "goal_complete_mode": "3bfdfa3d",
+    "goal_completed": "e31628fc",
+    "goal_contexts": [
+      "88d3eed2",
+      "48fe6e13"
+    ],
+    "goal_exit": "aece1bda",
+    "goal_result": "82a44ec7",
+    "goal_tool_start": "ad236454",
+    "native_continuation": "f22bddf3",
+    "session_exit": "3d4b935e",
+    "user": "43f66405"
+  },
+  "final_text": "Goal complete. Final PM_RESULT delivered; disposition is **blocked** per two gate-enforced blockers. Time: 25 seconds.",
+  "final_text_sha256": "70c05d6784c5947cab818a8f5cf489ed62da31b62596ba3fbd425bb71462fb18",
+  "goal_context_count": 2,
+  "goal_id": "15689cf8b6e61b82",
+  "goal_tool_call_id": "call_3c0a3276fe8a4ad5a8c4c037",
+  "leaf_id": "3d4b935e",
+  "logical_entry_count": 19,
+  "model": "mimo-v2.5-free",
+  "native_continuation_count": 1,
+  "ordinary_tool_calls": 0,
+  "pre_goal_call_text_utf8_bytes": 764,
+  "provider": "opencode-zen",
+  "selector": "opencode-zen/mimo-v2.5-free",
+  "session_file_bytes": 48859,
+  "session_file_sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799",
+  "session_id": "01a0453e-9039-7562-a305-d557b457effb",
+  "session_started_at_utc": "2026-08-27T22:02:03.193Z",
+  "thinking": "high",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256
+}

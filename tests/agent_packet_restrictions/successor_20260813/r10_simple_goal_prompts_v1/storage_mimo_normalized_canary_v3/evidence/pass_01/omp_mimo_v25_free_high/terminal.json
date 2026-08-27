@@ -1,0 +1,281 @@
+{
+  "attempt_id": "storage-mimo-normalized-canary-v3-01-c24b7c1ae9",
+  "composer_acknowledged": true,
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 352,
+      "path": "reservation.json",
+      "sha256": "39c7e07d441e876887303527bb84baa72382e8123b4180bc7e7e50434824f4f6"
+    },
+    {
+      "bytes": 53803,
+      "path": "omp_preflight.json",
+      "sha256": "e51dd818d31bc73f39c3d8ffc591b138e4cffe7e9f7a90ca19b96243230a0db9"
+    },
+    {
+      "bytes": 1722,
+      "path": "launch.json",
+      "sha256": "b828d184cbc24179a95638aeccb86c32fa9d31280d3db74b6a647c21832dd45a"
+    },
+    {
+      "bytes": 14081,
+      "path": "pre_prompt.raw",
+      "sha256": "788d070e9b1fe2d961a6cca36debd8ed0262548466957ae6f3ad9e9fb9be509e"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 695,
+      "path": "prompt_write.json",
+      "sha256": "cc70bc2aa78bc5844f36cab45a38f1afe3c8d5152f2baa4e22d2474f1e3d3d41"
+    },
+    {
+      "bytes": 24365,
+      "path": "composer_ack.raw",
+      "sha256": "d7b3603e31ffef98e2e8b2eb2b3833ffc3dd555b500d1c9532eea86d7c5e6305"
+    },
+    {
+      "bytes": 996,
+      "path": "composer_ack.json",
+      "sha256": "9315ff06d26c60d9a687b6c3ace69a16a9bd93f8c40160c09a7fc1f61c4fe238"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 747,
+      "path": "enter_write.json",
+      "sha256": "35167bd24f9a8247b14d1d155242078855ebe62e875ccad12aea04444e81ce0d"
+    },
+    {
+      "bytes": 18224,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "c0e69feb5784583dbd38749e5bbdd603c5f9af450b4fddf613f6db70a5e16228"
+    },
+    {
+      "bytes": 1339,
+      "path": "submission_acceptance.json",
+      "sha256": "cc09cef3b3ec66e11a4cdf891073bd39ac61f6d2124ca84f1f5e26246bd146a9"
+    },
+    {
+      "bytes": 1441338,
+      "path": "transcript.raw",
+      "sha256": "f518740292952b9e6e1fd1068c96093a559d0aa39f000446556633de28e012e0"
+    },
+    {
+      "bytes": 1,
+      "path": "control.raw",
+      "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+    },
+    {
+      "bytes": 48859,
+      "path": "session.raw.jsonl",
+      "sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799"
+    },
+    {
+      "bytes": 1540,
+      "path": "structural_projection.json",
+      "sha256": "a8617082bbf0464b8726e7d0401da2b0cea67f35321998ab14175f5fdec4580e"
+    },
+    {
+      "bytes": 5586,
+      "path": "normalized_projection.json",
+      "sha256": "5f87f3521e9a12490dbdf7b1eb0ba4fb137a70e8e26cc8b5afbd53e9c317e93b"
+    }
+  ],
+  "external_submission_count": 1,
+  "failure_code": null,
+  "final_assistant_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "finished_at_utc": "2026-08-27T22:02:46.720Z",
+  "formal_chain": {
+    "ordered_paths": [
+      "reservation.json",
+      "omp_preflight.json",
+      "launch.json",
+      "submission_acceptance.json",
+      "session.raw.jsonl",
+      "structural_projection.json",
+      "normalized_projection.json"
+    ],
+    "records": {
+      "launch.json": {
+        "bytes": 1722,
+        "path": "launch.json",
+        "sha256": "b828d184cbc24179a95638aeccb86c32fa9d31280d3db74b6a647c21832dd45a"
+      },
+      "normalized_projection.json": {
+        "bytes": 5586,
+        "path": "normalized_projection.json",
+        "sha256": "5f87f3521e9a12490dbdf7b1eb0ba4fb137a70e8e26cc8b5afbd53e9c317e93b"
+      },
+      "omp_preflight.json": {
+        "bytes": 53803,
+        "path": "omp_preflight.json",
+        "sha256": "e51dd818d31bc73f39c3d8ffc591b138e4cffe7e9f7a90ca19b96243230a0db9"
+      },
+      "reservation.json": {
+        "bytes": 352,
+        "path": "reservation.json",
+        "sha256": "39c7e07d441e876887303527bb84baa72382e8123b4180bc7e7e50434824f4f6"
+      },
+      "session.raw.jsonl": {
+        "bytes": 48859,
+        "path": "session.raw.jsonl",
+        "sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799"
+      },
+      "structural_projection.json": {
+        "bytes": 1540,
+        "path": "structural_projection.json",
+        "sha256": "a8617082bbf0464b8726e7d0401da2b0cea67f35321998ab14175f5fdec4580e"
+      },
+      "submission_acceptance.json": {
+        "bytes": 1339,
+        "path": "submission_acceptance.json",
+        "sha256": "cc09cef3b3ec66e11a4cdf891073bd39ac61f6d2124ca84f1f5e26246bd146a9"
+      }
+    },
+    "schema_id": "pm.r10.storage_pipeline.mimo_normalized_formal_chain.v3"
+  },
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "input_snapshot_commit": "9a9f3068a01652071933582266244cce726a2dd5",
+  "input_snapshot_sha256": "2bee49c288fa9e9c65bcd4538efac77145d36774fc70a6f60af86d08587fb874",
+  "low_level_input_write_count": 2,
+  "model": "opencode-zen/mimo-v2.5-free",
+  "no_retry": true,
+  "nonce": "c24b7c1ae9859f47dcb07aa75ca93c8d",
+  "observed_identity": "01a0453e-9039-7562-a305-d557b457effb",
+  "observed_non_goal_tool_calls": 0,
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "persisted_submission_accepted": true,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "session_projection": {
+    "assistant_api": "openai-completions",
+    "assistant_api_message_count": 3,
+    "assistant_lifecycle_shape": "standard_tool_cycle",
+    "assistant_message_count": 3,
+    "entry_ids": {
+      "final_assistant": "3d89b849",
+      "goal_active": "b68857a2",
+      "goal_call_assistant": "b03f8292",
+      "goal_complete_mode": "3bfdfa3d",
+      "goal_completed": "e31628fc",
+      "goal_contexts": [
+        "88d3eed2",
+        "48fe6e13"
+      ],
+      "goal_exit": "aece1bda",
+      "goal_result": "82a44ec7",
+      "goal_tool_start": "ad236454",
+      "native_continuation": "f22bddf3",
+      "session_exit": "3d4b935e",
+      "user": "43f66405"
+    },
+    "final_text_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "goal_context_count": 2,
+    "goal_id": "15689cf8b6e61b82",
+    "goal_tool_call_id": "call_3c0a3276fe8a4ad5a8c4c037",
+    "leaf_id": "3d4b935e",
+    "logical_entry_count": 19,
+    "model": "mimo-v2.5-free",
+    "native_continuation_count": 1,
+    "ordinary_tool_calls": 0,
+    "pre_goal_call_text_utf8_bytes": 764,
+    "provider": "opencode-zen",
+    "raw_last_assistant_sha256": "70c05d6784c5947cab818a8f5cf489ed62da31b62596ba3fbd425bb71462fb18",
+    "raw_last_assistant_text": "Goal complete. Final PM_RESULT delivered; disposition is **blocked** per two gate-enforced blockers. Time: 25 seconds.",
+    "raw_last_assistant_utf8_bytes": 118,
+    "result_normalization": {
+      "candidate_count": 2,
+      "candidates": [
+        {
+          "assistant_ordinal": 1,
+          "block_index": 1,
+          "entry_id": "e257eb10",
+          "entry_index": 5,
+          "line_index": 7,
+          "message_id": null,
+          "raw_line": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+          "raw_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+          "raw_line_utf8_bytes": 416
+        },
+        {
+          "assistant_ordinal": 2,
+          "block_index": 1,
+          "entry_id": "b03f8292",
+          "entry_index": 10,
+          "line_index": 3,
+          "message_id": null,
+          "raw_line": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+          "raw_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+          "raw_line_utf8_bytes": 416
+        }
+      ],
+      "canonical_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+      "canonical_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+      "canonical_utf8_bytes": 416,
+      "location_indexing": "entry_and_block_zero_based_line_one_based",
+      "raw_session_preserved": true,
+      "result_authority": "deterministic_host_program_over_verified_assistant_text",
+      "schema_id": "pm.r10.storage_pipeline.result_normalization.v1",
+      "surrounding_prose_authoritative": false
+    },
+    "selector": "opencode-zen/mimo-v2.5-free",
+    "session_file_bytes": 48859,
+    "session_file_sha256": "a2f37f9059afbaa2497dc71647c444d466decc090e4e316276fc711a9d32c799",
+    "session_id": "01a0453e-9039-7562-a305-d557b457effb",
+    "session_started_at_utc": "2026-08-27T22:02:03.193Z",
+    "thinking": "high",
+    "thinking_receipt_count": 1,
+    "title_slot_bytes": 256,
+    "verified_assistant_text_blocks": [
+      {
+        "assistant_ordinal": 1,
+        "block_index": 1,
+        "entry_id": "e257eb10",
+        "entry_index": 5,
+        "message_id": null,
+        "sha256": "815c5912a30649f245a1f6e9be465a7e23169f438c719d1fafe118d738bc8e50",
+        "utf8_bytes": 1066
+      },
+      {
+        "assistant_ordinal": 2,
+        "block_index": 1,
+        "entry_id": "b03f8292",
+        "entry_index": 10,
+        "message_id": null,
+        "sha256": "00545b4e8b57b6ededd4f1e92f665ded8e14647c0feda8975820189e292dec4d",
+        "utf8_bytes": 764
+      },
+      {
+        "assistant_ordinal": 3,
+        "block_index": 1,
+        "entry_id": "3d89b849",
+        "entry_index": 14,
+        "message_id": null,
+        "sha256": "70c05d6784c5947cab818a8f5cf489ed62da31b62596ba3fbd425bb71462fb18",
+        "utf8_bytes": 118
+      }
+    ],
+    "verified_assistant_text_utf8_bytes": 1948
+  },
+  "status": "PASS",
+  "surface": "omp_tui",
+  "terminal_control_sent_once": true,
+  "thinking": "high",
+  "tui_corroboration": {
+    "goal_activation": true,
+    "goal_complete": true,
+    "pm_result_marker": true
+  }
+}

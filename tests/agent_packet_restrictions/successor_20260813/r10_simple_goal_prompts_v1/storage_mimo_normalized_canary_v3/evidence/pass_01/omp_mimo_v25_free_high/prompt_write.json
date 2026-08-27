@@ -1,0 +1,21 @@
+{
+  "attempt_id": "storage-mimo-normalized-canary-v3-01-c24b7c1ae9",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "c24b7c1ae9859f47dcb07aa75ca93c8d",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "path": "stdin_prompt.raw",
+  "pid": 486476,
+  "pre_prompt": {
+    "bytes": 14081,
+    "path": "pre_prompt.raw",
+    "sha256": "788d070e9b1fe2d961a6cca36debd8ed0262548466957ae6f3ad9e9fb9be509e"
+  },
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-27T22:02:03.686Z"
+}
