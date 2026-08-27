@@ -2,9 +2,81 @@
 
 ## What this file is
 
-`Concepts/PMConcept7.html` is the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. It is functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that now lives upstream in parts.
+`Concepts/PMConcept7.html` began as the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. Through T20 it was functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that lives upstream in parts.
 
-## Current Home Workspace implementation — 2026-08-15 (rev 21, Wave 8: kebabs above-centre, floating-chat Dock back, snap-while-dragging, real home scroll kill)
+That visual-identity contract no longer holds. PMConcept7 has since taken deliberate product-surface evolution of its own -- the T20 model-first Home Workspace and, from 2026-08-20, the Prism Usage workspace and the retro-dark palette retune. Read the re-baseline section below first: as of 2026-08-27 PMConcept7 is also its own pipeline base.
+
+## Re-baseline onto the hand-edited Prism Usage build — 2026-08-27
+
+`Concepts/PMConcept7.html` is now the 2026-08-20 version
+(sha256 `9dcde2a8862de0cdd28a0d540cb4976396ea0556e6ff15a5c9c8fc14bd121090`,
+4,101,102 bytes, up from 3,619,880). It replaced the previous artifact
+(`213a3ee9…`) and simultaneously became the pipeline's pinned base.
+
+**Why the base moved.** That version was hand-edited directly into the HTML
+rather than generated. No `build_pm7.py` produced it and no transform source
+for it has ever existed — not in this repo, not in any codex worktree, not
+anywhere on disk. Its own header still claims "T01-T23" while its CSS carries
+wave comments through T21-T24 and T29-T32.2 and style blocks
+`pm7-t23-adjustments`, `pm7-t24-usage-readability-and-fit`,
+`pm7-t29-usage-final`, `pm7-t31-usage-final`, `pm7-t32-final`. Since that work
+cannot be re-derived, it was frozen into `base/PM7-base.html` and `TRANSFORMS`
+was emptied; T01-T20 are retired-into-base. See `pm7-tools/README.md`
+("Re-baseline") for the full rationale.
+
+Leaving the pipeline as it was would have been actively dangerous: `BASE_SHA`
+still pointed at PMConcept6 and `TRANSFORMS` still ended at T20, so the next
+build would have regenerated the old artifact and destroyed every hand-authored
+wave.
+
+**What the new version actually changes** (vs the previous PMConcept7):
+
+1. **Prism Usage workspace.** Document sections 14 and 15 change from
+   `usage-grid-css` / `usage-page-js` to `usage-prism-css` / `usage-prism-js`.
+   The whole `pm7u-*` component family (~1,085 references) is new: a rail +
+   board shell, 12 instrument/summary/list/chart cards with
+   `data-kind`/`data-shape`/`data-density`/`data-rows` axes, meters, stat
+   stacks, and mini bar charts. Card content follows panel size.
+2. **Retro-dark palette retune** — `--background`/`--surface` move from
+   `#1A1A1A` to `#10120e`, with the rest of the ramp adjusted to match.
+3. **Font additions** — IBM Plex Mono and Poppins join the preload/noscript
+   Google Fonts stylesheet.
+4. Block census grows from 32/13/19 to 43/22/21 (total/style/script).
+
+**`--h` is dead CSS, not a defect.** The `var(--x)-used-implies-defined` gate
+flags `--h` as used-but-never-defined in rules like
+`.pm7u-mini-bars i { height: max(18px, var(--h)) !important }`. Those rules are
+vestigial: they target `i` children, and the live renderer emits
+`<span class="pm7u-barcol" style="--pm7u-bar-height:NN%">` wrapping
+`<span class="pm7u-barfill">`, whose height comes from
+`max(5px, var(--pm7u-bar-height, 0%))` — a defined variable with a fallback.
+Measured in the browser: 0 `<i>` elements inside `.pm7u-mini-bars`, 120
+`.pm7u-barcol` elements. Left in place deliberately; removing it is a base
+edit for a future transform.
+
+**Charts are row-gated by design.** On the default board no mini chart is
+visible, and that is intended, not a regression. The winning rule is
+`.pm7u-card[data-kind="instrument"]:is([data-rows="1"],[data-rows="2"],[data-rows="3"]) .pm7u-mini-signal { display:none !important }`
+("At three rows an instrument cannot show four facts, two meters, a footer,
+and a complete chart"), and summary cards at `data-density="compact"` hide
+their `pm7u-tier-standard` subtree by the density ladder. Every default card
+sits at 2-3 rows. Grow one to 5 rows and the chart appears correctly: the
+mini-signal computes to `display:grid` at 94px, and all 12 bars take real
+heights (13.0px-46.8px) tracking their `--pm7u-bar-height` values
+(25%, 36%, 32%, 51%, ...), each with its value label.
+
+**Verification.** Identity build reproduces the artifact byte-for-byte (`cmp`
+clean, `base_pin_ok: true`, block census 43/22/21) with all four static gates
+PASS. Browser pass over `file://` (Chromium via playwright-core; headless
+Chromium hangs on http in this sandbox): zero console and page errors on boot,
+on the Usage page, on Home, and across all eight themes
+(friendly/retro/basic/glass x dark/light); Prism shell renders at 1611x999
+with 12/12 cards laid out and a 55-item rail; the T20 Home Workspace is intact
+(split editors, tabs, terminal, dashboard widgets). The PM6-vs-PM7 pixel-parity
+matrix was deliberately NOT run — the new version abandons the "visually
+identical to PM6" contract by design.
+
+## Previous Home Workspace implementation — 2026-08-15 (rev 21, Wave 8: kebabs above-centre, floating-chat Dock back, snap-while-dragging, real home scroll kill)
 
 The user rejected all four wave-7 items; each re-diagnosis found the wave-7
 fix had missed the real mechanism.
