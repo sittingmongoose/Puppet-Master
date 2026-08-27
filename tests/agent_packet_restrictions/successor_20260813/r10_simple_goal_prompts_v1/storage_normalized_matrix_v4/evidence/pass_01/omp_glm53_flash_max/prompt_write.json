@@ -1,0 +1,21 @@
+{
+  "attempt_id": "storage-normalized-matrix-v4-pass_01-01-1182588730",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "1182588730b26f1e29b5fd5ab8abed24",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "path": "stdin_prompt.raw",
+  "pid": 139274,
+  "pre_prompt": {
+    "bytes": 13040,
+    "path": "pre_prompt.raw",
+    "sha256": "90247d9248fe789fd70f684a080b564d69ad8151e408d123cb67c07895d0169d"
+  },
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-27T16:40:37.721Z"
+}

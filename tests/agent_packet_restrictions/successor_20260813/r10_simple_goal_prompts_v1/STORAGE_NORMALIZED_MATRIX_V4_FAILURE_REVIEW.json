@@ -1,0 +1,242 @@
+{
+  "schema_id": "pm.r10.storage_normalized_matrix_v4.failure_review.v1",
+  "reviewed_at_utc": "2026-08-27T17:28:45Z",
+  "source_commit": "3a5709e0d0c55db42d8fd362cd55595bb7fef512",
+  "source_records": [
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v4/controller.py",
+      "sha256": "e4f5365c76a60be3aa9d8634bcab3db800f7bdeae61ac819f2959532dd79c653"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v4/matrix_contract.json",
+      "sha256": "1b6e26449aaf0471cf6e1a3a89b48337211fb8969e74c78260541cf3118e8dc4"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/controller.py",
+      "sha256": "3ad042ceb8c8e55f63704043de956c4316ed8db4e7acbf91f4edc0c3b1a0f410"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+      "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+      "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+    }
+  ],
+  "matrix": {
+    "root": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v4",
+    "required_rows": 24,
+    "verified_prefix_rows": 1,
+    "status": "FAIL_STOPPED_AT_ORDINAL_2_PRELAUNCH",
+    "qualification_credit": 0,
+    "production_credit": 0,
+    "no_retry": true,
+    "no_replacement": true,
+    "no_suffix_launch": true,
+    "no_retro_credit": true,
+    "verification_custody": {
+      "historical_pre_review_prefix_output_utf8": "{\"qualification_credit\":0,\"required_rows\":24,\"row_count\":1,\"status\":\"PASS_EXACT_PREFIX_ZERO_CREDIT\",\"subject_calls\":0}\n",
+      "historical_pre_review_prefix_output_bytes": 119,
+      "historical_pre_review_prefix_output_sha256": "0eef6394da9839c114ce3763e9221856380a3468a6f64e9aaf7a382f29dedd9c",
+      "post_review_prefix_reproducible": false,
+      "post_review_prefix_output_utf8": "{\"error\":\"MatrixError: historical identity reuse: /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/STORAGE_NORMALIZED_MATRIX_V4_FAILURE_REVIEW.json\",\"qualification_credit\":0,\"status\":\"FAIL_PRELAUNCH_NO_MUTATION\"}\n",
+      "post_review_prefix_output_bytes": 267,
+      "post_review_prefix_output_sha256": "91c28ca37bd5c83b33313a6a36bfadc7799d7632758a9027cadf007232b151ed",
+      "non_reproducibility_reason": "The required sibling review contains exact frozen identities and is therefore intentionally detected by the unchanged broad historical-identity scan.",
+      "future_live_prefix_or_runtime_invocation_forbidden": true
+    }
+  },
+  "row_1": {
+    "identity": {
+      "pass_id": "pass_01",
+      "route_id": "omp_glm53_flash_max",
+      "ordinal": 1,
+      "attempt_id": "storage-normalized-matrix-v4-pass_01-01-1182588730",
+      "nonce": "1182588730b26f1e29b5fd5ab8abed24",
+      "pid": 139274,
+      "session_id": "01a04418-48b0-7020-aee8-74002623febc",
+      "goal_id": "15685366bd1df178",
+      "goal_tool_call_id": "call_83dc0bbb9fc5406d8ccae8bf",
+      "model": "opencode-go/glm-5.3-flash",
+      "thinking": "max",
+      "started_at_utc": "2026-08-27T16:40:33.319Z",
+      "finished_at_utc": "2026-08-27T16:41:37.467Z"
+    },
+    "outcome": {
+      "status": "PASS",
+      "subject_semantic_success": true,
+      "native_goal_activation_observed": true,
+      "native_goal_complete_observed": true,
+      "process_exit_code": 0,
+      "external_submission_count": 1,
+      "low_level_input_write_count": 2,
+      "terminal_control_sent_once": true,
+      "assistant_message_count": 2,
+      "native_continuation_count": 0,
+      "retry_count": 0,
+      "ordinary_tool_call_count": 0,
+      "normalization_candidate_count": 1,
+      "canonical_result_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+      "qualification_credit": 0,
+      "matrix_credit": 0,
+      "no_retry": true
+    },
+    "primary_records": {
+      "journal": {
+        "path": "launch_journal.jsonl",
+        "bytes": 484,
+        "sha256": "cea545229f30a2c5b402609566d75e5b4a04234b3c685ccbdb06eb0b05716aab"
+      },
+      "terminal": {
+        "path": "pass_01/omp_glm53_flash_max/terminal.json",
+        "bytes": 11321,
+        "sha256": "a7cc5cbcc9e4ea37a28094b5590c1661d8bcb15f99508b2355e9aac072f0a6ab"
+      },
+      "session": {
+        "path": "pass_01/omp_glm53_flash_max/session.raw.jsonl",
+        "bytes": 39405,
+        "sha256": "76e1485a82ff28860137aae9b3e5d017badb8550de267a276672f0c2ab663cd5"
+      },
+      "transcript": {
+        "path": "pass_01/omp_glm53_flash_max/transcript.raw",
+        "bytes": 2289535,
+        "sha256": "34317f21c2b937f8ba549ca978f92968e8f5e95edd5d8ab64899836074e35060"
+      },
+      "http_final_receipt": {
+        "path": "pass_01/omp_glm53_flash_max/http_final_receipt.json",
+        "bytes": 4800,
+        "sha256": "13fc03197f41e5c05002d884a370d904bd22f8057c0b690e59c4e10785da4b0e"
+      },
+      "normalized_projection": {
+        "path": "pass_01/omp_glm53_flash_max/normalized_projection.json",
+        "bytes": 5438,
+        "sha256": "088a23faf5054031c48ba78fbc6a0934f6987f558f5c835528d2f8170fb30621"
+      }
+    },
+    "evidence_tree": {
+      "root": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v4/evidence",
+      "record_count": 20,
+      "records": [
+        {"path": "launch_journal.jsonl", "bytes": 484, "sha256": "cea545229f30a2c5b402609566d75e5b4a04234b3c685ccbdb06eb0b05716aab"},
+        {"path": "pass_01/omp_glm53_flash_max/composer_ack.json", "bytes": 1004, "sha256": "88d39a8b0cb316a40bea55bab866893fd47486512a0678715d1716293fc80afc"},
+        {"path": "pass_01/omp_glm53_flash_max/composer_ack.raw", "bytes": 21668, "sha256": "2d1425d5c1a7850f4f3e98eefb59dd2c062a59e5605b6d9802bcb84c98e023b1"},
+        {"path": "pass_01/omp_glm53_flash_max/control.raw", "bytes": 1, "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"},
+        {"path": "pass_01/omp_glm53_flash_max/enter_write.json", "bytes": 747, "sha256": "71d3782e26016888f3070006bbb536ad54d020379c5a9519e1152135d3a3ec36"},
+        {"path": "pass_01/omp_glm53_flash_max/http_final_receipt.json", "bytes": 4800, "sha256": "13fc03197f41e5c05002d884a370d904bd22f8057c0b690e59c4e10785da4b0e"},
+        {"path": "pass_01/omp_glm53_flash_max/launch.json", "bytes": 1618, "sha256": "b3156c2e903a735bb2c0d87d1b8bca011b827578f19db7d2d971e74052d83105"},
+        {"path": "pass_01/omp_glm53_flash_max/normalized_projection.json", "bytes": 5438, "sha256": "088a23faf5054031c48ba78fbc6a0934f6987f558f5c835528d2f8170fb30621"},
+        {"path": "pass_01/omp_glm53_flash_max/omp_preflight.json", "bytes": 24869, "sha256": "83a95e56735e5d76f4115902dcc1bd025d88f0ab789206b2b7c6216759ca10d1"},
+        {"path": "pass_01/omp_glm53_flash_max/pre_prompt.raw", "bytes": 13040, "sha256": "90247d9248fe789fd70f684a080b564d69ad8151e408d123cb67c07895d0169d"},
+        {"path": "pass_01/omp_glm53_flash_max/prompt_write.json", "bytes": 695, "sha256": "89eafca87b26c75ea18719c70f3ca1afac715db5c388656e289c17212e6a33d2"},
+        {"path": "pass_01/omp_glm53_flash_max/reservation.json", "bytes": 352, "sha256": "45ce21bafe4478937727a3b412abe38750d24b2486b7700c63c8244bbf79014d"},
+        {"path": "pass_01/omp_glm53_flash_max/session.raw.jsonl", "bytes": 39405, "sha256": "76e1485a82ff28860137aae9b3e5d017badb8550de267a276672f0c2ab663cd5"},
+        {"path": "pass_01/omp_glm53_flash_max/session_prefix.raw.jsonl", "bytes": 33296, "sha256": "3aa60685024e9fffec05b19aaa98516b125b1579bef125a1cbd81d64869bb403"},
+        {"path": "pass_01/omp_glm53_flash_max/stdin_enter.raw", "bytes": 1, "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"},
+        {"path": "pass_01/omp_glm53_flash_max/stdin_prompt.raw", "bytes": 3036, "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"},
+        {"path": "pass_01/omp_glm53_flash_max/structural_projection.json", "bytes": 2437, "sha256": "e9c7182ca4e151f6c3635494ce9ed81824d3e683c67bd7cbb0a040e2e04adb8a"},
+        {"path": "pass_01/omp_glm53_flash_max/submission_acceptance.json", "bytes": 1337, "sha256": "76908c3b17e63b990bd790bb05abe8bd882cedc415dafdf39dbdefff9d185cf5"},
+        {"path": "pass_01/omp_glm53_flash_max/terminal.json", "bytes": 11321, "sha256": "a7cc5cbcc9e4ea37a28094b5590c1661d8bcb15f99508b2355e9aac072f0a6ab"},
+        {"path": "pass_01/omp_glm53_flash_max/transcript.raw", "bytes": 2289535, "sha256": "34317f21c2b937f8ba549ca978f92968e8f5e95edd5d8ab64899836074e35060"}
+      ]
+    },
+    "terminal_evidence_roster": [
+      {"path": "reservation.json", "bytes": 352, "sha256": "45ce21bafe4478937727a3b412abe38750d24b2486b7700c63c8244bbf79014d"},
+      {"path": "omp_preflight.json", "bytes": 24869, "sha256": "83a95e56735e5d76f4115902dcc1bd025d88f0ab789206b2b7c6216759ca10d1"},
+      {"path": "launch.json", "bytes": 1618, "sha256": "b3156c2e903a735bb2c0d87d1b8bca011b827578f19db7d2d971e74052d83105"},
+      {"path": "pre_prompt.raw", "bytes": 13040, "sha256": "90247d9248fe789fd70f684a080b564d69ad8151e408d123cb67c07895d0169d"},
+      {"path": "stdin_prompt.raw", "bytes": 3036, "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"},
+      {"path": "prompt_write.json", "bytes": 695, "sha256": "89eafca87b26c75ea18719c70f3ca1afac715db5c388656e289c17212e6a33d2"},
+      {"path": "composer_ack.raw", "bytes": 21668, "sha256": "2d1425d5c1a7850f4f3e98eefb59dd2c062a59e5605b6d9802bcb84c98e023b1"},
+      {"path": "composer_ack.json", "bytes": 1004, "sha256": "88d39a8b0cb316a40bea55bab866893fd47486512a0678715d1716293fc80afc"},
+      {"path": "stdin_enter.raw", "bytes": 1, "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"},
+      {"path": "enter_write.json", "bytes": 747, "sha256": "71d3782e26016888f3070006bbb536ad54d020379c5a9519e1152135d3a3ec36"},
+      {"path": "session_prefix.raw.jsonl", "bytes": 33296, "sha256": "3aa60685024e9fffec05b19aaa98516b125b1579bef125a1cbd81d64869bb403"},
+      {"path": "submission_acceptance.json", "bytes": 1337, "sha256": "76908c3b17e63b990bd790bb05abe8bd882cedc415dafdf39dbdefff9d185cf5"},
+      {"path": "transcript.raw", "bytes": 2289535, "sha256": "34317f21c2b937f8ba549ca978f92968e8f5e95edd5d8ab64899836074e35060"},
+      {"path": "control.raw", "bytes": 1, "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"},
+      {"path": "session.raw.jsonl", "bytes": 39405, "sha256": "76e1485a82ff28860137aae9b3e5d017badb8550de267a276672f0c2ab663cd5"},
+      {"path": "http_final_receipt.json", "bytes": 4800, "sha256": "13fc03197f41e5c05002d884a370d904bd22f8057c0b690e59c4e10785da4b0e"},
+      {"path": "structural_projection.json", "bytes": 2437, "sha256": "e9c7182ca4e151f6c3635494ce9ed81824d3e683c67bd7cbb0a040e2e04adb8a"},
+      {"path": "normalized_projection.json", "bytes": 5438, "sha256": "088a23faf5054031c48ba78fbc6a0934f6987f558f5c835528d2f8170fb30621"}
+    ],
+    "private_http_hash_only_custody": {
+      "committed": false,
+      "sensitive_material_copied_to_repo": false,
+      "parent_path": "/tmp/pm-r10-storage-v7-http-normalized-matrix-v4-1182588730b26f1e29b5fd5ab8abed24",
+      "parent_mode": "0700",
+      "record_count": 4,
+      "records": [
+        {"path": "rr-session-1.json", "mode": "0600", "bytes": 18634, "sha256": "e08603a4a10159a3bc8e9776a3f67fa99bcfaf8361811816a4167357d19ab2de"},
+        {"path": "rr-session-1.res.log", "mode": "0600", "bytes": 263178, "sha256": "b729d61876e6a8dd24ad5864c96ce3a421a4da2d9047ef1c12de535b27741bbf"},
+        {"path": "rr-session-2.json", "mode": "0600", "bytes": 28684, "sha256": "fd05c022357e2eeefc83b09c21618fe1e1a441094942b9eb1936464a1ee734ab"},
+        {"path": "rr-session-2.res.log", "mode": "0600", "bytes": 66126, "sha256": "8f7cdbca40ae294ccedba996aa3400e676c221bf376c11d62b043f515f1d1f82"}
+      ]
+    }
+  },
+  "row_2": {
+    "identity": {
+      "pass_id": "pass_01",
+      "route_id": "omp_cursor_default_auto",
+      "ordinal": 2,
+      "attempt_id": "storage-normalized-matrix-v4-pass_01-02-24160d57ea",
+      "nonce": "24160d57eaca1b2bbb922ce8dcb75de8",
+      "model": "cursor/default",
+      "thinking": "auto"
+    },
+    "outcome": {
+      "status": "FAIL_PRELAUNCH_NO_MUTATION",
+      "error": "VerifyError: OMP preflight profile",
+      "failure_consumed": false,
+      "subject_started": false,
+      "reservation_created": false,
+      "evidence_created": false,
+      "popen_observed": false,
+      "pid": null,
+      "session_id": null,
+      "goal_id": null,
+      "provider_call_observed": false,
+      "qualification_credit": 0,
+      "no_retry": true
+    },
+    "controller_output": {
+      "utf8": "{\"error\":\"VerifyError: OMP preflight profile\",\"qualification_credit\":0,\"status\":\"FAIL_PRELAUNCH_NO_MUTATION\"}\n",
+      "bytes": 110,
+      "sha256": "7834a417c4580e84cf5b99835ac051d7fce0642b365d63ebb4979437a33c84d9"
+    },
+    "observed_absences": {
+      "evidence_path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v4/evidence/pass_01/omp_cursor_default_auto",
+      "cwd": "/tmp/pm-r10-storage-v7-normalized-matrix-v4-cwd-24160d57eaca1b2bbb922ce8dcb75de8",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8"
+    },
+    "causal_chain": {
+      "classification": "MATRIX_WRAPPER_PROFILE_PROJECTION_DEFECT_NOT_CURSOR_OR_MODEL_FAILURE",
+      "pre_reservation": true,
+      "facts": [
+        "system_pipeline_sandbox_v7/omp_row_runner.py:410 calls verify_next_row before row evidence creation at lines 412-420",
+        "verify_next_row independently verifies the persisted row-1 OMP receipt",
+        "storage_normalized_matrix_v4/controller.py binds verify_matrix.pipeline to the V6 PipelineProxy and binds V6 rows to the currently selected matrix row",
+        "the selected row-2 projection therefore exposes row-2 profile_dir while verifying row-1",
+        "row-1 omp_preflight.json correctly records its own row-1 profile_dir",
+        "system_pipeline_sandbox_v7/verify_matrix.py:484 rejects the unequal profile_dir values"
+      ],
+      "row_1_receipt_profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v4-1182588730b26f1e29b5fd5ab8abed24",
+      "row_2_selected_proxy_profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v4-24160d57eaca1b2bbb922ce8dcb75de8"
+    }
+  },
+  "successor_seam": {
+    "description": "A fresh successor may make prior-row verification project each persisted row's own planned profile while retaining the selected current row for current preflight and Popen. It must preserve exact prefix verification before reservation, current-runtime checks, fail-stop, fresh identities, and all existing evidence joins.",
+    "design_note_only": true,
+    "successor_authority_granted": false,
+    "runtime_authority_granted": false,
+    "retry_authority_granted": false,
+    "matrix_v4_reopen_authorized": false
+  }
+}
