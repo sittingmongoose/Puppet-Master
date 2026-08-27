@@ -50,7 +50,7 @@
   "failure": {
     "status": "FAIL_PRELAUNCH_NO_MUTATION",
     "error": "PipelineError: frozen input byte drift: Plans/storage-plan.md",
-    "stage": "validate_static_frozen_pipeline_input_before_reservation_runtime_catalog_and_popen",
+    "stage": "base_run_row_opening_pipeline_verify_after_controller_validate_static_and_current_runtime_preflight_before_reservation_profile_forced_catalog_and_subject_popen",
     "source_manifest": {
       "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/source_manifest.json",
       "bytes": 3171,
@@ -64,7 +64,7 @@
     },
     "source_commit_plan_blob": {
       "path": "Plans/storage-plan.md",
-      "mode": "100644",
+      "mode": "100755",
       "blob_oid": "5cf703a31fbadfcc520ce3b7d123fe5b4dd03f87",
       "bytes": 974842,
       "sha256": "d18a405bd34411252183166a84ff12b48b6d9c9953cb37319a0503d39f60d506"
