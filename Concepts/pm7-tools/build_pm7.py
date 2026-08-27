@@ -1,23 +1,31 @@
 #!/usr/bin/env python3
-"""build_pm7.py -- PM7 refactor pipeline (Phases A-E: transforms T01-T19).
+"""build_pm7.py -- PM7 build pipeline (re-baselined 2026-08-27; identity build).
 
-PMConcept7 is ALWAYS a build artifact derived from the pinned base
-(base/PM7-base.html, byte-identical to the shipped Jul 15 PMConcept6.html).
+PMConcept7 is ALWAYS a build artifact. As of the 2026-08-27 re-baseline the
+pinned base IS the shipped document: base/PM7-base.html is byte-identical to
+Concepts/PMConcept7.html, the transform list is empty, and a build reproduces
+the base verbatim and then gates it. See README.md ("Re-baseline") for why.
+
 Never hand-edit the output. Never write anything under Concepts/pm6-build/
 (read-only; its emoji checker is invoked read-only as a gate).
 
 Pipeline shape:
   1. Load base, assert sha256 == BASE_SHA (escape hatch: --allow-new-base).
   2. Segment the document into style/script blocks by tag scan (census
-     asserted: 29 blocks = 12 style + 17 script; the original design memo
-     said 28 -- ground truth on the pinned base is 29 and is recorded here).
+     asserted: 43 blocks = 22 style + 21 script on the re-baselined base).
   3. Run ordered content-anchored transforms. Every transform carries
-     mandatory pre/post assertions; any failure aborts the build.
+     mandatory pre/post assertions; any failure aborts the build. TRANSFORMS
+     is currently empty, so this step is a no-op and the output equals the
+     base; future PM7 work lands here as T33+.
   4. Write output + JSON build report; run final static gates:
        - per-style-block brace balance
        - var(--x)-used-implies-defined (baseline-relative vs the base)
        - per-script extraction + `node --check`
        - Concepts/pm6-build/checks/check_no_emoji.py on the output (read-only)
+
+Note that gate 2 is baseline-relative, so while TRANSFORMS is empty it is
+structurally a no-op (output == base). It regains its meaning as soon as a
+real transform is added.
 
 Flags: --until N, --skip NAME (repeatable), --report, --out FILE,
        --outdir DIR (report/tmp destination; use the session scratchpad),
@@ -43,13 +51,15 @@ import dead_selectors  # noqa: E402  (frozen human-reviewed dead list)
 import home_workspace_source as home_source  # noqa: E402  (authored T20 source)
 
 BASE_DEFAULT = HERE / "base" / "PM7-base.html"
-BASE_SHA = "3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3"
+# Re-baselined 2026-08-27. Previous pin (the Jul 15 PMConcept6 assembly) was
+# 3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3.
+BASE_SHA = "9dcde2a8862de0cdd28a0d540cb4976396ea0556e6ff15a5c9c8fc14bd121090"
 
-# Segmentation census measured on the pinned base (design memo said 28
-# blocks; actual scan of the pinned base finds 29 -- recorded adaptation).
-EXPECTED_BLOCKS = 31
-EXPECTED_STYLE_BLOCKS = 13
-EXPECTED_SCRIPT_BLOCKS = 18
+# Segmentation census measured on the re-baselined base with
+# css_audit.segment_blocks (was 31 = 13 style + 18 script on the PM6 pin).
+EXPECTED_BLOCKS = 43
+EXPECTED_STYLE_BLOCKS = 22
+EXPECTED_SCRIPT_BLOCKS = 21
 
 # T01 removal band. Design memo band was 40-60KB assuming family-level
 # approval including wt-*; the harvester proved wt- is a real dynamic prefix
@@ -2015,28 +2025,26 @@ def t20_home_workspace(doc, notes):
     return doc
 
 
-TRANSFORMS = [
-    ("T01_dead_css_selectors", t01_dead_css_selectors),
-    ("T02_shimmer_guard", t02_shimmer_guard),
-    ("T03_pm_sheen_killer", t03_pm_sheen_killer),
-    ("T04_breadcrumb_stub", t04_breadcrumb_stub),
-    ("T05_chat_suggestions_field", t05_chat_suggestions_field),
-    ("T06_terminal_dead_interval", t06_terminal_dead_interval),
-    ("T07_merge_pointermove", t07_merge_pointermove),
-    ("T08_cooldown_dom_gating", t08_cooldown_dom_gating),
-    ("T09_terminal_feed_gating", t09_terminal_feed_gating),
-    ("T10_snapshot_handler_gating", t10_snapshot_handler_gating),
-    ("T11_settings_data_defer", t11_settings_data_defer),
-    ("T12_chat_data_defer", t12_chat_data_defer),
-    ("T13_demo_files_defer", t13_demo_files_defer),
-    ("T14_page_init_defer", t14_page_init_defer),
-    ("T15_static_colormix_precompute", t15_static_colormix_precompute),
-    ("T16_glass_wallpaper_prebake", t16_glass_wallpaper_prebake),
-    ("T17_slint_clarity_layer", t17_slint_clarity_layer),
-    ("T18_pm7_visual_cleanup", t18_pm7_visual_cleanup),
-    ("T19_pm7_preview_fit", t19_pm7_preview_fit),
-    ("T20_home_workspace", t20_home_workspace),
-]
+# --------------------------------------------------------------------------
+# Transform census -- EMPTY since the 2026-08-27 re-baseline.
+#
+# T01-T20 were genuine pipeline transforms. They are RETIRED-INTO-BASE: their
+# output is already present in base/PM7-base.html, so re-running them would
+# abort on their own pre-assertions (the anchors they look for are gone).
+# The t01_*..t20_* functions above, dead_selectors.py and
+# home_workspace_source.py are kept as the historical record of how the
+# current base was derived -- they are no longer executed.
+#
+# The base ALSO contains hand-authored work labelled T21-T24 and T29-T32.2
+# (the Prism Usage workspace, the retro-dark palette retune, the added font
+# families). That work was edited directly into the HTML on 2026-08-20 --
+# in violation of the never-hand-edit rule -- and NO generator for it has
+# ever existed. It cannot be re-derived, which is precisely why the base was
+# re-pinned onto the shipped document instead.
+#
+# New PM7 work belongs here as T33+, restoring a real derivation chain from
+# this base forward.
+TRANSFORMS = []
 
 
 # --------------------------------------------------------------------------
