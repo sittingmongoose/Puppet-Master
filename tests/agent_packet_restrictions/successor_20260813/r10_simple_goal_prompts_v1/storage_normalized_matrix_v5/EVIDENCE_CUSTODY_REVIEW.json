@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.evidence_custody_review.v1",
+  "reviewed_at_utc": "2026-08-27T19:55:07Z",
+  "review_mode": "read_only_no_launch_no_signal_no_retry",
+  "evidence_file_count": 52,
+  "evidence_tree_sha256": "2e4c02921d719c9ca49b2000ee3e2728a6c15d700ff6012a41662e72416acd07",
+  "evidence_tree_hash_algorithm": "sha256 of sorted lines '<file_sha256>  <evidence-relative-path>\\n' for all regular evidence files",
+  "launch_journal_sha256": "2657e9a4e6cc4b095576ee28784c6a14ea764ec79d64014c470597d93a335648",
+  "terminal_sha256": {
+    "omp_glm53_flash_max": "826f99101f23f5f743d70b2a97087a45c993dca3bd7cfa496bb0e4afdc13a991",
+    "omp_cursor_default_auto": "0aab8b08dbf588dfac3d88dc76f6ac8dcab7198a0a7551fac656b99b9fd15466",
+    "omp_muse_spark_xhigh": "57779ecad6fd7201563369df5374f48a6f12deaff56103da225bd6b96b1ff20f"
+  },
+  "runner_failure_sha256": "7a88b0b336c9db0b296a628f587271dcd499bddd59250350e407f3056ce1c36f",
+  "verified_terminal_listed_records": 48,
+  "verified_rows": [
+    {"ordinal": 1, "route_id": "omp_glm53_flash_max", "status": "PASS", "qualification_credit": 0},
+    {"ordinal": 2, "route_id": "omp_cursor_default_auto", "status": "PASS", "qualification_credit": 0},
+    {"ordinal": 3, "route_id": "omp_muse_spark_xhigh", "status": "FAIL", "failure": "3600-second row budget expired before exact Goal terminal result", "no_retry": true, "qualification_credit": 0}
+  ],
+  "recorded_launch_pids_absent": [231116, 242690, 252630],
+  "absent_ordinals": {"first": 4, "last": 24, "count": 21},
+  "fail_stop_verified": true,
+  "matrix_qualification_credit": 0,
+  "residual_risks": [
+    "This is custody and static consistency review, not a rerun, readiness finding, or certification.",
+    "Muse row 3 remains a permanent failure; rows 4-24 remain unexecuted and receive no credit.",
+    "PID absence was observed at review time and is not a historical process-lifecycle proof."
+  ]
+}

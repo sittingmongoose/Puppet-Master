@@ -1,0 +1,591 @@
+{
+  "attempt_id": "storage-normalized-matrix-v5-pass_01-03-b9081e354c",
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 183686344,
+  "binary_sha256": "4e2468ad6974e6a2edea621da82abca8c95ec62a8354630381c353dc08c7769b",
+  "config_commands": [
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "advisor.enabled"
+      ],
+      "exit_code": 0,
+      "key": "advisor.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "task.agentAdvisor"
+      ],
+      "exit_code": 0,
+      "key": "task.agentAdvisor",
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "memory.backend"
+      ],
+      "exit_code": 0,
+      "key": "memory.backend",
+      "stdout": "off"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "autolearn.enabled"
+      ],
+      "exit_code": 0,
+      "key": "autolearn.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "mcp.enableProjectConfig"
+      ],
+      "exit_code": 0,
+      "key": "mcp.enableProjectConfig",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "tools.approvalMode"
+      ],
+      "exit_code": 0,
+      "key": "tools.approvalMode",
+      "stdout": "yolo"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.enabled"
+      ],
+      "exit_code": 0,
+      "key": "goal.enabled",
+      "stdout": "true"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.continuationModes"
+      ],
+      "exit_code": 0,
+      "key": "goal.continuationModes",
+      "stdout": "[\"interactive\"]"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "plan.defaultOnStartup"
+      ],
+      "exit_code": 0,
+      "key": "plan.defaultOnStartup",
+      "stdout": "false"
+    }
+  ],
+  "config_overlay": null,
+  "dependency_custody": [
+    {
+      "bytes": 34781,
+      "git_mode": "100644",
+      "git_oid": "aad99c9a021cecdf3977aa60fc9cd961a7618604",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/controller.py",
+      "sha256": "3785d21d4999943a9a55dbc8c42d6197bc12e8e7d495d7ed7cb01d0ca5fa901a"
+    },
+    {
+      "bytes": 18014,
+      "git_mode": "100644",
+      "git_oid": "85dd2f07fe2e4b1cd7423a4e44a58f8bab647e77",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/codex_app_lane.py",
+      "sha256": "7f53764158feb6c6cfa529ad9c36b23e5637e1d692c1268e91583c81c768fc7d"
+    },
+    {
+      "bytes": 26644,
+      "git_mode": "100644",
+      "git_oid": "99ece6e7e3c06ef87fc1109dfb67e4b87673d352",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/matrix_contract.json",
+      "sha256": "4ebdb9ad3a37d784fd328bdf17c0e4d115646af497c90a384f8ca04e0012a55b"
+    },
+    {
+      "bytes": 53310,
+      "git_mode": "100644",
+      "git_oid": "a5e40267444bee22ff0d9cb09fd8805c18c70ba4",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/controller.py",
+      "sha256": "3ad042ceb8c8e55f63704043de956c4316ed8db4e7acbf91f4edc0c3b1a0f410"
+    },
+    {
+      "bytes": 28036,
+      "git_mode": "100644",
+      "git_oid": "3f9108f43c838bf31deeda1d2437d10cf6d0ba98",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/canary_contract.json",
+      "sha256": "82fc65efa45e35fb216565e94eb237b9ca7d3968776e755566d76cbdc9d4ce27"
+    },
+    {
+      "bytes": 144,
+      "git_mode": "100644",
+      "git_oid": "f71494ecbb66cbed545bdfa72bd09de0b65cf971",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/models.yml",
+      "sha256": "f1a585a1ec9c1a89f2d7533322bad3b7897117cd5fe3e1899bf6bf1139969a69"
+    },
+    {
+      "bytes": 7028,
+      "git_mode": "100644",
+      "git_oid": "0432c94d2b8e854ea0a7745f08bce537ec1f040e",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/result_normalizer.py",
+      "sha256": "47945d59cfcf4eb5defdc38736c29e661bdcfb843352cc7a32e5d69ce56adedd"
+    },
+    {
+      "bytes": 41009,
+      "git_mode": "100644",
+      "git_oid": "f8ded70b04acc9497bfb983023cb15182b278010",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+      "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+    },
+    {
+      "bytes": 37909,
+      "git_mode": "100644",
+      "git_oid": "a51947c83e0bfdc2b231819e6a9a0fba2510218c",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_session.py",
+      "sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+    },
+    {
+      "bytes": 35041,
+      "git_mode": "100644",
+      "git_oid": "0ba24c93bcefa1889fb59cbbd70461c8f4c05448",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+      "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+    },
+    {
+      "bytes": 29419,
+      "git_mode": "100644",
+      "git_oid": "525c11585b6042289a17287d100e7a3f60dc2c9e",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/pipeline.py",
+      "sha256": "e240db07e8de31f7fa7294c5f722b9a63b90f634a86d00fe976deee63a8e1708"
+    },
+    {
+      "bytes": 1788,
+      "git_mode": "100644",
+      "git_oid": "641c45759bf276e2589abe7a57b49ebeff0efc28",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_check.py",
+      "sha256": "170680502462ac6066077dcd43ab69b1838e986cc268590d9784bea3520a452e"
+    },
+    {
+      "bytes": 4443,
+      "git_mode": "100644",
+      "git_oid": "beb93118f2393985d5d0ccea420e384a602c2e44",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_manifest.json",
+      "sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3"
+    },
+    {
+      "bytes": 2370,
+      "git_mode": "100644",
+      "git_oid": "47a2b63df965fae5c826c4aba0ee40c7a8881d9d",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/matrix.json",
+      "sha256": "70adc74155e652808d1c9ede781698c3f5675a58e094e8b3a0d93ce9e827957e"
+    },
+    {
+      "bytes": 1335,
+      "git_mode": "100644",
+      "git_oid": "da183fc8fb1016feeddc32a06850dcc9558a976e",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/runtime_manifest.json",
+      "sha256": "56943ce8625c6ce7e3d621323d382d8db8f10f2b8f2c0970193ca97f89d726ba"
+    },
+    {
+      "bytes": 3036,
+      "git_mode": "100644",
+      "git_oid": "bdb6707283dc2f88f18cdf1adf88152d94a33f24",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 3050,
+      "git_mode": "100644",
+      "git_oid": "ce2210ce95713a4aafd04a09701c682cd09291a5",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/codex.prompt.txt",
+      "sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38"
+    },
+    {
+      "bytes": 2909,
+      "git_mode": "100644",
+      "git_oid": "e5b8fc1493a1386db0aabf15996d1e762627faa3",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/capsule.json",
+      "sha256": "1d384296b6b8e648915281b2ffdeb1bdfdfb991e3525ff10809badc1ebd003ca"
+    },
+    {
+      "bytes": 407,
+      "git_mode": "100644",
+      "git_oid": "4fdb09a66be20e26640905ecc3d6e985fa6c607e",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/oracle.json",
+      "sha256": "f11f136b271d739e8b1108cce38ab52dbd0258357f9a591da1c5c1ba69e36bdf"
+    },
+    {
+      "bytes": 1142,
+      "git_mode": "100644",
+      "git_oid": "f8b9c6211d9c8692b73a2d91949cf195f566b0cb",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/response.schema.json",
+      "sha256": "64484356c062ddda98385c35dfa51328744a8a5b36320df4bb24e9852a6aca97"
+    }
+  ],
+  "effective_config": {
+    "advisor.enabled": false,
+    "autolearn.enabled": false,
+    "goal.continuationModes": [
+      "interactive"
+    ],
+    "goal.enabled": true,
+    "mcp.enableProjectConfig": false,
+    "memory.backend": "off",
+    "plan.defaultOnStartup": false,
+    "task.agentAdvisor": {
+      "task": "off"
+    },
+    "tools.approvalMode": "yolo"
+  },
+  "expected_argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--session-dir",
+    "/tmp/pm-r10-storage-v7-session-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--no-extensions",
+    "--cwd",
+    "/tmp/pm-r10-storage-v7-normalized-matrix-v5-cwd-b9081e354c28e120afc4971b62f5f52a",
+    "--model",
+    "opencode-go/muse-spark-1.2-contributor",
+    "--thinking",
+    "xhigh"
+  ],
+  "git_custody": {
+    "candidate_commit": "b2da041b3f746f3073eb017535cb09c6c36c8b4c",
+    "dependencies": [
+      {
+        "bytes": 34781,
+        "git_mode": "100644",
+        "git_oid": "aad99c9a021cecdf3977aa60fc9cd961a7618604",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/controller.py",
+        "sha256": "3785d21d4999943a9a55dbc8c42d6197bc12e8e7d495d7ed7cb01d0ca5fa901a"
+      },
+      {
+        "bytes": 18014,
+        "git_mode": "100644",
+        "git_oid": "85dd2f07fe2e4b1cd7423a4e44a58f8bab647e77",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/codex_app_lane.py",
+        "sha256": "7f53764158feb6c6cfa529ad9c36b23e5637e1d692c1268e91583c81c768fc7d"
+      },
+      {
+        "bytes": 26644,
+        "git_mode": "100644",
+        "git_oid": "99ece6e7e3c06ef87fc1109dfb67e4b87673d352",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/matrix_contract.json",
+        "sha256": "4ebdb9ad3a37d784fd328bdf17c0e4d115646af497c90a384f8ca04e0012a55b"
+      },
+      {
+        "bytes": 53310,
+        "git_mode": "100644",
+        "git_oid": "a5e40267444bee22ff0d9cb09fd8805c18c70ba4",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/controller.py",
+        "sha256": "3ad042ceb8c8e55f63704043de956c4316ed8db4e7acbf91f4edc0c3b1a0f410"
+      },
+      {
+        "bytes": 28036,
+        "git_mode": "100644",
+        "git_oid": "3f9108f43c838bf31deeda1d2437d10cf6d0ba98",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/canary_contract.json",
+        "sha256": "82fc65efa45e35fb216565e94eb237b9ca7d3968776e755566d76cbdc9d4ce27"
+      },
+      {
+        "bytes": 144,
+        "git_mode": "100644",
+        "git_oid": "f71494ecbb66cbed545bdfa72bd09de0b65cf971",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/models.yml",
+        "sha256": "f1a585a1ec9c1a89f2d7533322bad3b7897117cd5fe3e1899bf6bf1139969a69"
+      },
+      {
+        "bytes": 7028,
+        "git_mode": "100644",
+        "git_oid": "0432c94d2b8e854ea0a7745f08bce537ec1f040e",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/result_normalizer.py",
+        "sha256": "47945d59cfcf4eb5defdc38736c29e661bdcfb843352cc7a32e5d69ce56adedd"
+      },
+      {
+        "bytes": 41009,
+        "git_mode": "100644",
+        "git_oid": "f8ded70b04acc9497bfb983023cb15182b278010",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+        "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+      },
+      {
+        "bytes": 37909,
+        "git_mode": "100644",
+        "git_oid": "a51947c83e0bfdc2b231819e6a9a0fba2510218c",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_session.py",
+        "sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+      },
+      {
+        "bytes": 35041,
+        "git_mode": "100644",
+        "git_oid": "0ba24c93bcefa1889fb59cbbd70461c8f4c05448",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+        "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+      },
+      {
+        "bytes": 29419,
+        "git_mode": "100644",
+        "git_oid": "525c11585b6042289a17287d100e7a3f60dc2c9e",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/pipeline.py",
+        "sha256": "e240db07e8de31f7fa7294c5f722b9a63b90f634a86d00fe976deee63a8e1708"
+      },
+      {
+        "bytes": 1788,
+        "git_mode": "100644",
+        "git_oid": "641c45759bf276e2589abe7a57b49ebeff0efc28",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_check.py",
+        "sha256": "170680502462ac6066077dcd43ab69b1838e986cc268590d9784bea3520a452e"
+      },
+      {
+        "bytes": 4443,
+        "git_mode": "100644",
+        "git_oid": "beb93118f2393985d5d0ccea420e384a602c2e44",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_manifest.json",
+        "sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3"
+      },
+      {
+        "bytes": 2370,
+        "git_mode": "100644",
+        "git_oid": "47a2b63df965fae5c826c4aba0ee40c7a8881d9d",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/matrix.json",
+        "sha256": "70adc74155e652808d1c9ede781698c3f5675a58e094e8b3a0d93ce9e827957e"
+      },
+      {
+        "bytes": 1335,
+        "git_mode": "100644",
+        "git_oid": "da183fc8fb1016feeddc32a06850dcc9558a976e",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/runtime_manifest.json",
+        "sha256": "56943ce8625c6ce7e3d621323d382d8db8f10f2b8f2c0970193ca97f89d726ba"
+      },
+      {
+        "bytes": 3036,
+        "git_mode": "100644",
+        "git_oid": "bdb6707283dc2f88f18cdf1adf88152d94a33f24",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+        "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+      },
+      {
+        "bytes": 3050,
+        "git_mode": "100644",
+        "git_oid": "ce2210ce95713a4aafd04a09701c682cd09291a5",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/codex.prompt.txt",
+        "sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38"
+      },
+      {
+        "bytes": 2909,
+        "git_mode": "100644",
+        "git_oid": "e5b8fc1493a1386db0aabf15996d1e762627faa3",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/capsule.json",
+        "sha256": "1d384296b6b8e648915281b2ffdeb1bdfdfb991e3525ff10809badc1ebd003ca"
+      },
+      {
+        "bytes": 407,
+        "git_mode": "100644",
+        "git_oid": "4fdb09a66be20e26640905ecc3d6e985fa6c607e",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/oracle.json",
+        "sha256": "f11f136b271d739e8b1108cce38ab52dbd0258357f9a591da1c5c1ba69e36bdf"
+      },
+      {
+        "bytes": 1142,
+        "git_mode": "100644",
+        "git_oid": "f8b9c6211d9c8692b73a2d91949cf195f566b0cb",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/response.schema.json",
+        "sha256": "64484356c062ddda98385c35dfa51328744a8a5b36320df4bb24e9852a6aca97"
+      }
+    ],
+    "head": "b2da041b3f746f3073eb017535cb09c6c36c8b4c",
+    "origin_main": "b2da041b3f746f3073eb017535cb09c6c36c8b4c",
+    "sources": [
+      {
+        "bytes": 5065,
+        "git_mode": "100644",
+        "git_oid": "7efe035b43a12051d80ee268e984de179a9e9f1e",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/README.md",
+        "sha256": "3aa80953676a0470f6229191cae67769e3cdc29012b886c9530a6db4abad65a0"
+      },
+      {
+        "bytes": 64779,
+        "git_mode": "100644",
+        "git_oid": "d9c136f479440ec003125a95fcca0a5a24bbc01a",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/matrix_contract.json",
+        "sha256": "9eaea020d0a2baab23b2ee0c62bf491e2c5530191ab965f3304c75438e1fd368"
+      },
+      {
+        "bytes": 69448,
+        "git_mode": "100644",
+        "git_oid": "065d49093ae1a6b3b29809d1de19be6d35c62eb1",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/controller.py",
+        "sha256": "908a532c78116289906921bfac2f7ad207e281d04f8eedd41f4f0c2dedf491bb"
+      },
+      {
+        "bytes": 54847,
+        "git_mode": "100644",
+        "git_oid": "822e6fb7d3481db4a5cc62dbe783c2c169cd7feb",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/selftest.py",
+        "sha256": "984a1fddf6284a5b7237c114297561fcd78e6376de9c38b689d2bcfa6472d1fa"
+      }
+    ],
+    "truenas_backup_main": "b2da041b3f746f3073eb017535cb09c6c36c8b4c"
+  },
+  "matrix_contract": {
+    "bytes": 64779,
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/matrix_contract.json",
+    "sha256": "9eaea020d0a2baab23b2ee0c62bf491e2c5530191ab965f3304c75438e1fd368"
+  },
+  "model": "opencode-go/muse-spark-1.2-contributor",
+  "models_override": {
+    "bytes": 144,
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm53_max_normalized_canary_v6/models.yml",
+    "sha256": "f1a585a1ec9c1a89f2d7533322bad3b7897117cd5fe3e1899bf6bf1139969a69"
+  },
+  "nonce": "b9081e354c28e120afc4971b62f5f52a",
+  "observed_at_utc": "2026-08-27T18:40:26.753Z",
+  "ordinal": 3,
+  "owned_sources": [
+    {
+      "bytes": 5065,
+      "git_mode": "100644",
+      "git_oid": "7efe035b43a12051d80ee268e984de179a9e9f1e",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/README.md",
+      "sha256": "3aa80953676a0470f6229191cae67769e3cdc29012b886c9530a6db4abad65a0"
+    },
+    {
+      "bytes": 64779,
+      "git_mode": "100644",
+      "git_oid": "d9c136f479440ec003125a95fcca0a5a24bbc01a",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/matrix_contract.json",
+      "sha256": "9eaea020d0a2baab23b2ee0c62bf491e2c5530191ab965f3304c75438e1fd368"
+    },
+    {
+      "bytes": 69448,
+      "git_mode": "100644",
+      "git_oid": "065d49093ae1a6b3b29809d1de19be6d35c62eb1",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/controller.py",
+      "sha256": "908a532c78116289906921bfac2f7ad207e281d04f8eedd41f4f0c2dedf491bb"
+    },
+    {
+      "bytes": 54847,
+      "git_mode": "100644",
+      "git_oid": "822e6fb7d3481db4a5cc62dbe783c2c169cd7feb",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_normalized_matrix_v5/selftest.py",
+      "sha256": "984a1fddf6284a5b7237c114297561fcd78e6376de9c38b689d2bcfa6472d1fa"
+    }
+  ],
+  "pass_id": "pass_01",
+  "private_http_capture": false,
+  "profile_dir": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a",
+  "profile_seed": {
+    "environment_roots": {
+      "CLAUDE_CONFIG_DIR": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a",
+      "COPILOT_HOME": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a",
+      "HOME": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a",
+      "XDG_CACHE_HOME": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a",
+      "XDG_CONFIG_HOME": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a",
+      "XDG_DATA_HOME": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a"
+    },
+    "environment_roots_initially_empty": true,
+    "mcp_tool_extension_seed_files": 0,
+    "omp_profile": "default",
+    "pi_profile": "default",
+    "seed_records": [
+      {
+        "bytes": 472,
+        "mode": "0o600",
+        "path": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a/config.yml",
+        "sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc"
+      },
+      {
+        "bytes": 2109440,
+        "mode": "0o600",
+        "path": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a/agent.db",
+        "sha256": "f40d70fba6587f28d1e67fca5b9e5ff4be26db3af292e79431911069dfaeb000"
+      },
+      {
+        "bytes": 552960,
+        "mode": "0o600",
+        "path": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a/models.db",
+        "sha256": "3a0428eaa3b8220efd4d9c3d35d9ea03e370f931cf1ad6cf9482a093a9f29926"
+      },
+      {
+        "bytes": 144,
+        "mode": "0o600",
+        "path": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v5-b9081e354c28e120afc4971b62f5f52a/models.yml",
+        "sha256": "f1a585a1ec9c1a89f2d7533322bad3b7897117cd5fe3e1899bf6bf1139969a69"
+      }
+    ],
+    "seed_roster": [
+      "agent.db",
+      "config.yml",
+      "models.db",
+      "models.yml"
+    ],
+    "source_profile": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "source_records": [
+      {
+        "bytes": 472,
+        "mode": "0o600",
+        "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/config.yml",
+        "sha256": "c6643056e64bb8b93677ba665a6031f0d6d5c8819f677ac5d3b00a6867c79dfc"
+      },
+      {
+        "bytes": 2109440,
+        "mode": "0o600",
+        "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/agent.db",
+        "sha256": "f40d70fba6587f28d1e67fca5b9e5ff4be26db3af292e79431911069dfaeb000"
+      },
+      {
+        "bytes": 552960,
+        "mode": "0o600",
+        "path": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1/models.db",
+        "sha256": "3a0428eaa3b8220efd4d9c3d35d9ea03e370f931cf1ad6cf9482a093a9f29926"
+      }
+    ]
+  },
+  "protocol_adapter": "native_default_empty_mcp_v6_ordered_normalized_v1",
+  "qualification_credit": 0,
+  "raw_http_copied_to_evidence": false,
+  "route_id": "omp_muse_spark_xhigh",
+  "row_time_budget_seconds": 3600,
+  "schema_id": "pm.r10.storage_pipeline.omp_preflight.v2",
+  "subject_calls": 0,
+  "surface": "omp_tui",
+  "thinking": "xhigh",
+  "version_command": {
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "omp/18.0.7"
+  },
+  "version_stdout": "omp/18.0.7"
+}

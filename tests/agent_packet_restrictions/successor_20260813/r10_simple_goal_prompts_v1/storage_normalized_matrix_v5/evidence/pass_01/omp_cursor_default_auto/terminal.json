@@ -1,0 +1,197 @@
+{
+  "attempt_id": "storage-normalized-matrix-v5-pass_01-02-5ae804cc57",
+  "composer_acknowledged": true,
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 356,
+      "path": "reservation.json",
+      "sha256": "07b9856356129a9c67b78f8a91ad601b487d85f86c178f5d2896fda4c37cf6b1"
+    },
+    {
+      "bytes": 24873,
+      "path": "omp_preflight.json",
+      "sha256": "a444ba3f8e095162a28b2c08b050a7e09ebe956942a8826ca8de814324decf9d"
+    },
+    {
+      "bytes": 1602,
+      "path": "launch.json",
+      "sha256": "f03181336fa4fe07a5c4f4bef42814835a7cc84f38ca911ffd1aa8fcfe176986"
+    },
+    {
+      "bytes": 11403,
+      "path": "pre_prompt.raw",
+      "sha256": "a4aead86c3c5705f6fcfa835b543918a79dee0be51215c27cb308673b7c24574"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 699,
+      "path": "prompt_write.json",
+      "sha256": "88b96b6c4a585e2eb948bb7214508ea28ef802b796e80df430f31357899317ac"
+    },
+    {
+      "bytes": 30280,
+      "path": "composer_ack.raw",
+      "sha256": "b7eaa18d547109c10aa4fdd0b2478d5c716bbb0d4f837b6ec7b79617ac30b02b"
+    },
+    {
+      "bytes": 835,
+      "path": "composer_ack.json",
+      "sha256": "fa76150df27c097ada7beae6861b0b889e902a1e9f38b7e8700f82e1c3e6d853"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 751,
+      "path": "enter_write.json",
+      "sha256": "e10bb763bac8b37f1f7ea774839a5f046badbb860024555146c0f6577a282dba"
+    },
+    {
+      "bytes": 28975,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "dc7de6fcfc189c401a6e1e6b065737537b1d23e85da6efd45727fda6469f3dc3"
+    },
+    {
+      "bytes": 1331,
+      "path": "submission_acceptance.json",
+      "sha256": "23db27db32c7e807df2a9bc2136b3f119542c316eb92ee2571d2e512bb329453"
+    },
+    {
+      "bytes": 509006,
+      "path": "transcript.raw",
+      "sha256": "ff7be54132712fdde75aedf817b3fe0183f36f6ab339a235f6b2148372a81fb6"
+    },
+    {
+      "bytes": 1,
+      "path": "control.raw",
+      "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+    },
+    {
+      "bytes": 29182,
+      "path": "session.raw.jsonl",
+      "sha256": "8f1c9f5619ce7437cc7b2a6bbaffbb44d0b6c8b9319203dd7f7ac4711e248f87"
+    }
+  ],
+  "external_submission_count": 1,
+  "failure_code": null,
+  "final_assistant_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "finished_at_utc": "2026-08-27T18:30:07.758Z",
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "low_level_input_write_count": 2,
+  "model": "cursor/default",
+  "no_retry": true,
+  "nonce": "5ae804cc57a1848bf2b96b998f4b1de6",
+  "observed_identity": "01a0447c-42b3-7240-96f3-c77a02d93d3d",
+  "observed_non_goal_tool_calls": 0,
+  "ordinal": 2,
+  "pass_id": "pass_01",
+  "persisted_submission_accepted": true,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "route_id": "omp_cursor_default_auto",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "session_projection": {
+    "assistant_lifecycle_shape": "cursor_aggregate",
+    "assistant_message_count": 1,
+    "entry_ids": {
+      "final_assistant": "a0c7c0e1",
+      "goal_active": "7c07ad47",
+      "goal_call_assistant": "a0c7c0e1",
+      "goal_complete_mode": "54bb5e71",
+      "goal_completed": "3028fb2e",
+      "goal_contexts": [
+        "9bae06ad"
+      ],
+      "goal_exit": "ba859add",
+      "goal_result": "6f17a0f6",
+      "goal_tool_start": "45ee51ad",
+      "native_continuation": null,
+      "session_exit": "c13ff6a6",
+      "user": "94d9a71f"
+    },
+    "final_text_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "goal_context_count": 1,
+    "goal_id": "15686c6540ddf20d",
+    "goal_tool_call_id": "call-07f164eb-05e7-4620-bc94-728bb0113041-0\nfc_8f0944e7-540c-9ef1-a8cb-ad1efecce254_0",
+    "leaf_id": "c13ff6a6",
+    "logical_entry_count": 12,
+    "model": "default",
+    "native_continuation_count": 0,
+    "ordinary_tool_calls": 0,
+    "pre_goal_call_text_utf8_bytes": 343,
+    "provider": "cursor",
+    "raw_last_assistant_sha256": "4b0ffc3a32e678f47ffb9ef42c1750a7e715e0d5d735d37690cab9cf91ba9f51",
+    "raw_last_assistant_text": "Structural extraction and comparison match (248 plan units, 811 acceptance units, dependency registry resolved, migration coverage pass, canonical comparison pass). Canonical currentness still fails on a stale node-readiness artifact, and PNC-019 runtime certification is incomplete, so the only authorized pre-WorkNode disposition is blocked.Structural receipts pass (exact plan/acceptance/dependency matches; registry resolved; migration coverage pass; canonical comparison pass). Gate blockers remain: stale canonical node-readiness artifact and incomplete PNC-019 runtime certification → disposition blocked; no WorkNodes created.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+    "raw_last_assistant_utf8_bytes": 1054,
+    "result_normalization": {
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "assistant_ordinal": 1,
+          "block_index": 4,
+          "entry_id": "a0c7c0e1",
+          "entry_index": 6,
+          "line_index": 3,
+          "message_id": null,
+          "raw_line": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+          "raw_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+          "raw_line_utf8_bytes": 416
+        }
+      ],
+      "canonical_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+      "canonical_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+      "canonical_utf8_bytes": 416,
+      "location_indexing": "entry_and_block_zero_based_line_one_based",
+      "raw_session_preserved": true,
+      "result_authority": "deterministic_host_program_over_verified_assistant_text",
+      "schema_id": "pm.r10.storage_pipeline.result_normalization.v1",
+      "surrounding_prose_authoritative": false
+    },
+    "selector": "cursor/default",
+    "session_file_bytes": 29182,
+    "session_file_sha256": "8f1c9f5619ce7437cc7b2a6bbaffbb44d0b6c8b9319203dd7f7ac4711e248f87",
+    "session_id": "01a0447c-42b3-7240-96f3-c77a02d93d3d",
+    "session_started_at_utc": "2026-08-27T18:29:49.363Z",
+    "thinking": "auto",
+    "thinking_receipt_count": 0,
+    "title_slot_bytes": 256,
+    "verified_assistant_text_blocks": [
+      {
+        "assistant_ordinal": 1,
+        "block_index": 1,
+        "entry_id": "a0c7c0e1",
+        "entry_index": 6,
+        "message_id": null,
+        "sha256": "2f18e1ed3aaf3132484a171655863f08de55f17cfce8346b6ff680035b750b6e",
+        "utf8_bytes": 343
+      },
+      {
+        "assistant_ordinal": 1,
+        "block_index": 4,
+        "entry_id": "a0c7c0e1",
+        "entry_index": 6,
+        "message_id": null,
+        "sha256": "b9e7ab603b78a82275a3d9ef11ca942cf3184692f175ad07543e7023023eac05",
+        "utf8_bytes": 711
+      }
+    ],
+    "verified_assistant_text_utf8_bytes": 1054
+  },
+  "status": "PASS",
+  "surface": "omp_tui",
+  "terminal_control_sent_once": true,
+  "thinking": "auto",
+  "tui_corroboration": {
+    "goal_activation": true,
+    "goal_complete": true,
+    "pm_result_marker": true
+  }
+}

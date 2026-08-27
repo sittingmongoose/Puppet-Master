@@ -1,0 +1,40 @@
+{
+  "assistant_lifecycle_shape": "standard_tool_cycle",
+  "assistant_message_count": 2,
+  "entry_ids": {
+    "final_assistant": "f1fbc0ad",
+    "goal_active": "8dd0f290",
+    "goal_call_assistant": "9341c1c9",
+    "goal_complete_mode": "39c17ffd",
+    "goal_completed": "b7aa3c14",
+    "goal_contexts": [
+      "03fb87cb"
+    ],
+    "goal_exit": "21b6cc29",
+    "goal_result": "2dcdc152",
+    "goal_tool_start": "109bf417",
+    "native_continuation": null,
+    "session_exit": "501bddfc",
+    "user": "39cc9a74"
+  },
+  "final_text": "Structural extraction and comparison succeeded cleanly (248 plan units, 811 acceptance units, exact matches, dependency registry resolved, migration coverage pass), but the canonical currentness check failed globally — the generated node-readiness artifact is stale (`c32a34b0…` stored ≠ `c1125b67…` recomputed) — and PNC-019 runtime certification is incomplete. Either condition alone mandates `blocked`; both hold, so structural success is preserved but does not confer readiness. No WorkNodes were created.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "final_text_sha256": "664982774abf09208e4d9b84e43fe32d676bbee0a2d503ed1e797b75e8c5c395",
+  "goal_context_count": 1,
+  "goal_id": "156869f7fb50b2a9",
+  "goal_tool_call_id": "call_3b656fb5822149af933936af",
+  "leaf_id": "501bddfc",
+  "logical_entry_count": 15,
+  "model": "glm-5.3-flash",
+  "native_continuation_count": 0,
+  "ordinary_tool_calls": 0,
+  "pre_goal_call_text_utf8_bytes": 1314,
+  "provider": "opencode-go",
+  "selector": "opencode-go/glm-5.3-flash",
+  "session_file_bytes": 38771,
+  "session_file_sha256": "79c7e5baa18423c7366e49cfb21aa0137a82db81512e73c8ec8a94c38b515406",
+  "session_id": "01a04472-8dc4-7770-a2e2-b5b68c533ecb",
+  "session_started_at_utc": "2026-08-27T18:19:13.220Z",
+  "thinking": "max",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256
+}

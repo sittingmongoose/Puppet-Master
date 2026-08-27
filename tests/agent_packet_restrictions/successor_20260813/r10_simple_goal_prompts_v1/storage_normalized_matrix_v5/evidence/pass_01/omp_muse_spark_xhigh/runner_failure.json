@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-normalized-matrix-v5-pass_01-03-b9081e354c",
+  "captured_at_utc": "2026-08-27T19:40:29.621Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 252630: RunnerError: row time budget expired before exact Goal terminal result",
+  "no_retry": true,
+  "nonce": "b9081e354c28e120afc4971b62f5f52a",
+  "ordinal": 3,
+  "pass_id": "pass_01",
+  "pid": 252630,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_muse_spark_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

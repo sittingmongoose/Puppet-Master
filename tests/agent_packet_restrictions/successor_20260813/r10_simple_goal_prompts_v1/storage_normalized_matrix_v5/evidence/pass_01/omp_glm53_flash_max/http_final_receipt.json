@@ -1,0 +1,157 @@
+{
+  "pairs": [
+    {
+      "assistant": {
+        "assistant_ordinal": 1,
+        "entry_id": "9341c1c9",
+        "entry_index": 6,
+        "stopReason": "toolUse",
+        "text_sha256": "fb551fc81c817c1b245fec09f30f64eeb0a2b5e05c3225f931aac5a3baca4792",
+        "text_utf8_bytes": 1314,
+        "usage": {
+          "cacheRead": 0,
+          "input": 4004,
+          "output": 1304,
+          "reasoningTokens": 1011,
+          "totalTokens": 5308
+        }
+      },
+      "pair_index": 1,
+      "request": {
+        "bytes": 18634,
+        "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
+        "message_roles": [
+          "system",
+          "user",
+          "user"
+        ],
+        "method": "POST",
+        "model": "glm-5.3-flash",
+        "name": "rr-session-1.json",
+        "prior_assistant_text_sha256": [],
+        "prior_goal_call_ids": [],
+        "prior_goal_calls": [],
+        "prior_goal_result_ids": [],
+        "reasoning_effort": "max",
+        "sha256": "fa372bb18cd864fec56598798b78daa52a31b44703dcd959ceea3b550f42e7c6",
+        "tool_names": [
+          "goal"
+        ]
+      },
+      "response": {
+        "assistant_text_sha256": "fb551fc81c817c1b245fec09f30f64eeb0a2b5e05c3225f931aac5a3baca4792",
+        "assistant_text_utf8_bytes": 1314,
+        "bytes": 265374,
+        "done_count": 1,
+        "finish_reason": "tool_calls",
+        "goal_call_arguments": "{\"op\":\"complete\"}",
+        "goal_call_ids": [
+          "call_3b656fb5822149af933936af"
+        ],
+        "goal_call_names": [
+          "goal"
+        ],
+        "model": "glm-5.3-flash",
+        "name": "rr-session-1.res.log",
+        "sha256": "edf668193c348a0c319677efa03831a3d957fd44727ce66f2cf77d6d81756d89",
+        "sse_chunk_count": 1300,
+        "status_line": "HTTP 200 OK",
+        "terminal_json_index": 1300,
+        "termination_basis": "done_sentinel",
+        "usage": {
+          "cached_tokens": 0,
+          "completion_tokens": 1304,
+          "prompt_tokens": 4004,
+          "reasoning_tokens": 1011,
+          "total_tokens": 5308
+        },
+        "usage_json_index": 1300
+      }
+    },
+    {
+      "assistant": {
+        "assistant_ordinal": 2,
+        "entry_id": "f1fbc0ad",
+        "entry_index": 10,
+        "stopReason": "stop",
+        "text_sha256": "664982774abf09208e4d9b84e43fe32d676bbee0a2d503ed1e797b75e8c5c395",
+        "text_utf8_bytes": 937,
+        "usage": {
+          "cacheRead": 3968,
+          "input": 2091,
+          "output": 223,
+          "reasoningTokens": 21,
+          "totalTokens": 6282
+        }
+      },
+      "pair_index": 2,
+      "request": {
+        "bytes": 28625,
+        "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
+        "message_roles": [
+          "system",
+          "user",
+          "user",
+          "assistant",
+          "tool"
+        ],
+        "method": "POST",
+        "model": "glm-5.3-flash",
+        "name": "rr-session-2.json",
+        "prior_assistant_text_sha256": [
+          "fb551fc81c817c1b245fec09f30f64eeb0a2b5e05c3225f931aac5a3baca4792"
+        ],
+        "prior_goal_call_ids": [
+          "call_3b656fb5822149af933936af"
+        ],
+        "prior_goal_calls": [
+          {
+            "arguments": {
+              "op": "complete"
+            },
+            "id": "call_3b656fb5822149af933936af",
+            "name": "goal"
+          }
+        ],
+        "prior_goal_result_ids": [
+          "call_3b656fb5822149af933936af"
+        ],
+        "reasoning_effort": "max",
+        "sha256": "874b0be11bec1c8a5dabdafb43dd660b5b7ede82279520b755c5e39e6ab7b6f4",
+        "tool_names": [
+          "goal"
+        ]
+      },
+      "response": {
+        "assistant_text_sha256": "664982774abf09208e4d9b84e43fe32d676bbee0a2d503ed1e797b75e8c5c395",
+        "assistant_text_utf8_bytes": 937,
+        "bytes": 43372,
+        "done_count": 1,
+        "finish_reason": "stop",
+        "goal_call_arguments": "",
+        "goal_call_ids": [],
+        "goal_call_names": [],
+        "model": "glm-5.3-flash",
+        "name": "rr-session-2.res.log",
+        "sha256": "0edbbb3a5e9737c5ddc49cafb41cf23eba2e99c76b48d021b545d2bb0ecd924e",
+        "sse_chunk_count": 218,
+        "status_line": "HTTP 200 OK",
+        "terminal_json_index": 218,
+        "termination_basis": "done_sentinel",
+        "usage": {
+          "cached_tokens": 3968,
+          "completion_tokens": 223,
+          "prompt_tokens": 6059,
+          "reasoning_tokens": 21,
+          "total_tokens": 6282
+        },
+        "usage_json_index": 218
+      }
+    }
+  ],
+  "phase": "post_structural_order_sensitive_normalized_normal_exit_complete_pairs",
+  "request_pair_count": 2,
+  "schema_id": "pm.r10.storage_pipeline.http_final_receipt.v6",
+  "sensitive_material_copied": false,
+  "verified_assistant_turn_count": 2
+}
