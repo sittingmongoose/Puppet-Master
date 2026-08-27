@@ -28,6 +28,9 @@ target/
 dist/
 coverage/
 node_modules/
+# Compiled binaries: the R9 staged Windows builds are ~94MB each and are
+# reproducible build output, not source. No .exe has ever been tracked here.
+*.exe
 
 # Local env/secrets
 .env

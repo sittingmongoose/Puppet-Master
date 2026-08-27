@@ -150,6 +150,14 @@ body[data-theme="retro-light"] {
 @keyframes ctx-meter-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .ctx-morelim { margin-top: 1px; }
+.ctx-morelim-row {
+  display: flex; align-items: center; gap: 8px; min-width: 0;
+}
+.ctx-morelim-row .ctx-threadnote {
+  flex: 1 1 auto; min-width: 0;
+  font-size: 8px; color: var(--subtle); line-height: 1.25;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 .ctx-morelim-b { display: flex; flex-direction: column; gap: 5px; margin-top: 5px; }
 .ctx-morebtn .ctx-chev { display: inline-flex; transition: transform 160ms var(--ease); }
 .ctx-morebtn.on .ctx-chev { transform: rotate(180deg); }
@@ -179,7 +187,7 @@ body[data-theme="retro-light"] {
    sits on this row is that it can be read at a glance.  Wrapping grows the row
    a few pixels and leaves the two buttons exactly where they were. */
 .ctx-cache {
-  flex: 1 1 auto; min-width: 0; font-size: 9px; color: var(--subtle);
+  flex: 1 1 auto; min-width: 0; font-size: 10px; color: var(--subtle);
   white-space: normal; line-height: 1.25; overflow-wrap: anywhere;
 }
 .ctx-cache b { color: var(--text); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
@@ -210,8 +218,6 @@ body[data-theme="retro-light"] {
   animation: ctx-spin 900ms linear infinite;
 }
 @keyframes ctx-spin { to { transform: rotate(360deg); } }
-
-.ctx-threadnote { font-size: 8px; color: var(--subtle); line-height: 1.4; }
 
 /* =====================================================================
    B. THE DRAWER  (slot contextDrawer)

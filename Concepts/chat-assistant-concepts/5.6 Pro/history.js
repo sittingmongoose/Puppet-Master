@@ -266,25 +266,103 @@
      renderOverlays (measured: 4ms) rather than renderApp (measured: 25-49ms on
      the 24-thread / 374-message fixture).  On a click path that is about to
      start a 240ms transition, a 25-49ms block is a visible late start. */
+  function clearSettled(){ document.body.removeAttribute('data-ph-settled'); }
+  function markSettled(){ document.body.dataset.phSettled = '1'; }
+  /* Clip #pmOverlayRoot to the assistant pane so a leftward close cannot
+     paint over the editor.  Open stays unclipped (user-approved).  inset()
+     is relative to the overlay root's viewport-sized box. */
+  function applyPaneClip(){
+    var pane = document.querySelector('.assistant-pane');
+    var root = document.getElementById('pmOverlayRoot');
+    if(!pane || !root) return;
+    sync();
+    var r = pane.getBoundingClientRect();
+    root.style.clipPath = 'inset('
+      + Math.max(0, r.top) + 'px '
+      + Math.max(0, window.innerWidth - r.right) + 'px '
+      + Math.max(0, window.innerHeight - r.bottom) + 'px '
+      + Math.max(0, r.left) + 'px)';
+  }
+  function clearPaneClip(){
+    var root = document.getElementById('pmOverlayRoot');
+    if(root) root.style.clipPath = '';
+  }
+  /* Prefer the transform transition duration (Details-panel contract).  Fall
+     back across comma-separated lists if an older sheet reordered properties. */
+  function readMotionMs(el, closing){
+    if(!el) return 0;
+    if(reduced()) return 0;
+    var cs = window.getComputedStyle(el);
+    var props = String(cs.transitionProperty || '').split(',');
+    var durs = String(cs.transitionDuration || '').split(',');
+    var ms = 0;
+    for(var i = 0; i < props.length; i++){
+      if(String(props[i]).trim() !== 'transform') continue;
+      ms = parseFloat(durs[Math.min(i, durs.length - 1)]) * 1000;
+      break;
+    }
+    if(!(ms > 0)) ms = parseFloat(durs[0]) * 1000;
+    if(!(ms > 0)) ms = closing ? 240 : 320;
+    return ms;
+  }
+
   function openDrawer(){
     if(!api) return;
     clearTimeout(closeTimer); closing = false;
     S().historyMode = 'floating';
+    clearSettled();
+    clearPaneClip();
+    document.body.removeAttribute('data-ph-closing');
+    /* Opening into pinned must already be at pin width (see history.css
+       [data-ph-want-pin]) so the spring slide does not also narrow mid-flight. */
+    if(pinned) document.body.dataset.phWantPin = '1';
+    else document.body.removeAttribute('data-ph-want-pin');
     /* The resting state must be painted BEFORE the open class, or the browser
        has no start value to transition from and the drawer simply appears.
-       This is the reference's `display:''` -> rAF -> add class idiom, with the
-       render standing in for the display flip; the forced reflow is belt and
-       braces for the case where the rAF is coalesced with the style flush. */
+       Details-panel idiom: display on -> force reflow -> double rAF -> is-open. */
     setMode('shut');
+    sync(); /* publish --ph-pane before width calc so pin width is correct on frame 0 */
     api.renderOverlays();
     var el = document.querySelector('.history-flyout');
-    if(el) void el.offsetWidth;
+    if(el){
+      el.classList.remove('pm-leaving');
+      el.removeEventListener('transitionend', onOpenSettled);
+      /* Hard-lock the enter width so a late cascade cannot morph it under the spring. */
+      if(pinned) el.style.width = clampWidth(widthNow()) + 'px';
+      else el.style.width = '';
+      void el.offsetWidth;
+    }
     requestAnimationFrame(function(){
-      if(mode() !== 'shut') return;
-      setMode(pinned ? 'pinned' : 'open');
-      sync();
+      requestAnimationFrame(function(){
+        if(mode() !== 'shut') return;
+        setMode(pinned ? 'pinned' : 'open');
+        /* Keep want-pin through the open when pinned; clearing it here let width
+           transition from open-w → pin-w mid-spring. Drop it after settle. */
+        if(!pinned) document.body.removeAttribute('data-ph-want-pin');
+        sync();
+        if(el){
+          if(reduced()){
+            markSettled();
+            el.style.width = '';
+            document.body.removeAttribute('data-ph-want-pin');
+          } else {
+            el.addEventListener('transitionend', onOpenSettled);
+          }
+        }
+      });
     });
     api.savePrefs();
+  }
+
+  function onOpenSettled(e){
+    if(e.propertyName !== 'transform') return;
+    var el = e.target;
+    if(!el || !el.classList || !el.classList.contains('history-flyout')) return;
+    el.removeEventListener('transitionend', onOpenSettled);
+    if(!isOpen()) return;
+    markSettled();
+    el.style.width = '';
+    document.body.removeAttribute('data-ph-want-pin');
   }
 
   /* `implicit` is true for Esc and scrim-click.  THIS is the guard the
@@ -295,20 +373,33 @@
     if(implicit && pinned) return;
     var el = document.querySelector('.history-flyout');
     /* The toggle closes a pinned drawer, and unpins on the way out so the
-       reserved gutter collapses with it rather than being left behind. */
+       reserved gutter collapses with it rather than being left behind.
+       Keep pin WIDTH locked for the exit (want-pin) — otherwise the drawer
+       grows toward open-w while sliding out, which reads as jank. */
+    var wasPinned = pinned;
     if(pinned){ pinned = false; store('0'); }
+    if(wasPinned) document.body.dataset.phWantPin = '1';
+    else document.body.removeAttribute('data-ph-want-pin');
     if(!el){ finishClose(); return; }
     closing = true;
+    /* Exact Details close sequence (kimi.js closeDetailInspector):
+         1. drop settled  → restore translate3d(0) while still open/pinned
+         2. mark closing timing while still at rest
+         3. reflow
+         4. leave open/pinned so the off-screen transform transitions out
+       Do NOT use .pm-leaving — motion.css attaches pm-overlay-out keyframes
+       to that class and fights the transform transition. */
+    clearSettled();
+    el.removeEventListener('transitionend', onOpenSettled);
+    if(wasPinned) el.style.width = clampWidth(widthNow()) + 'px';
+    el.classList.remove('pm-leaving');
+    document.body.dataset.phClosing = '1';
+    /* Keep the slide inside the assistant pane — without this, translate
+       -102% paints the drawer across the editor on the way out. */
+    applyPaneClip();
+    void el.offsetWidth;
     setMode('closing');
-    /* Wave 1B's exit contract: mark the node, then read the wait back off the
-       computed style rather than hard-coding it — under prefers-reduced-motion
-       history.css collapses this to 1ms and a hard-coded 240 would stall the
-       close.  The class is applied for the contract's sake; the animation is
-       actually selected by `body[data-ph-drawer="closing"]`, because pmPatch
-       would strip the class from the node on the next work tick. */
-    el.classList.add('pm-leaving');
-    var ms = parseFloat(window.getComputedStyle(el).animationDuration) * 1000;
-    if(!(ms > 0)) ms = 0;
+    var ms = readMotionMs(el, true);
     clearTimeout(closeTimer);
     /* pmPatch cannot drop the node early because state.historyMode is still
        'floating' for the whole exit — renderOverlays keeps emitting the flyout,
@@ -319,6 +410,10 @@
 
   function finishClose(){
     closing = false;
+    clearSettled();
+    clearPaneClip();
+    document.body.removeAttribute('data-ph-want-pin');
+    document.body.removeAttribute('data-ph-closing');
     setMode('closed');
     if(!api) return;
     S().historyMode = 'closed';
@@ -330,9 +425,15 @@
     pinned = !!v;
     store(pinned ? '1' : '0');
     if(!isOpen()) return;
+    /* Mark pinning so width may transition; cleared after the pin duration. */
+    document.body.dataset.phPinning = '1';
     setMode(pinned ? 'pinned' : 'open');
     sync();
     if(api) api.renderOverlays();   // repaint the chrome strip's label / icon
+    clearTimeout(setPinned._t);
+    setPinned._t = setTimeout(function(){
+      document.body.removeAttribute('data-ph-pinning');
+    }, reduced() ? 0 : 260);
   }
 
   EXT.action('toggle-history', function(){

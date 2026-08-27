@@ -188,6 +188,27 @@ await openRing();
   /* the reading must be READABLE, not ellipsised away by the two buttons */
   const clipped = await page.locator('.ctx-cache').first().evaluate(el => ({ sw: el.scrollWidth, cw: el.clientWidth, t: el.textContent }));
   ok(clipped.sw <= clipped.cw + 1, 'Cache reading is not truncated by the action row', JSON.stringify(clipped));
+  const noteGeom = await page.evaluate(()=>{
+    const note=document.querySelector('.ctx-morelim-row .ctx-threadnote, .ctx-limits .ctx-threadnote');
+    const more=document.querySelector('[data-action="ctx-more-limits"]');
+    const acts=document.querySelector('.ctx-acts');
+    if(!note) return {missing:true};
+    const nr=note.getBoundingClientRect();
+    const ar=acts&&acts.getBoundingClientRect();
+    const cs=getComputedStyle(document.querySelector('.ctx-cache'));
+    let beside=null;
+    if(more){
+      const mr=more.getBoundingClientRect();
+      beside=nr.left>=mr.right-1 && Math.abs(nr.top-mr.top)<10;
+    }
+    return {besideMoreLimits:beside, aboveActs:!!(ar && nr.bottom<=ar.top+2),
+            cachePx:parseFloat(cs.fontSize), inActs:!!note.closest('.ctx-acts')};
+  });
+  ok(!noteGeom.inActs && noteGeom.aboveActs,
+     'Thread note sits above Compact now / More details (not on that row)', noteGeom);
+  ok(noteGeom.besideMoreLimits!==false,
+     'Thread note sits to the right of More limits when that button is present', noteGeom);
+  ok(noteGeom.cachePx >= 10, 'Cache-hit reading is slightly larger (≥10px)', noteGeom);
 }
 
 /* =====================================================================

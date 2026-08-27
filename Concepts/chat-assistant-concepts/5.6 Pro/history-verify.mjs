@@ -288,20 +288,23 @@ await sec('item3: drawer rows do not overlap at any child count', async()=>{
   check(r.children>=4 && r.worstOverlap<=0 && r.searchH>10 && r.scrollFits<=1,
         'Drawer rows stack without overlap even with a second module in historyChrome', r);
 });
-/* Take 6 relaxes .thread-sub to white-space:normal for the two-line summary;
-   only the summary may wrap. */
+/* Timestamp sits left of the title; only the summary may wrap. */
 await sec('item3: only the summary wraps', async()=>{
   const r = await page.evaluate(()=>{
-    const sub=document.querySelector('.history-flyout .thread-row .thread-sub');
-    const first=sub.querySelector('span:not(.summary)');
-    const cs=getComputedStyle(first);
-    /* The span is a flex item and stretches to the row height, so its box height
-       says nothing about wrapping.  A Range over its contents returns one client
-       rect per LINE BOX, which is the actual question. */
-    const rng=document.createRange(); rng.selectNodeContents(first);
-    return {white:cs.whiteSpace, text:first.textContent, lineBoxes:rng.getClientRects().length};
+    const row=document.querySelector('.history-flyout .thread-row');
+    const time=row&&row.querySelector('.thread-time');
+    const title=row&&row.querySelector('.thread-name');
+    const sub=row&&row.querySelector('.thread-sub');
+    if(!time||!title) return {missing:true};
+    const cs=getComputedStyle(time);
+    const rng=document.createRange(); rng.selectNodeContents(time);
+    const tr=time.getBoundingClientRect(), nr=title.getBoundingClientRect();
+    return {white:cs.whiteSpace, text:time.textContent, lineBoxes:rng.getClientRects().length,
+            timeLeftOfTitle:tr.right<=nr.left+0.5,
+            subHasTime:!!(sub&&[...sub.querySelectorAll('span')].some(s=>/^\d+[smhdw]$/i.test(s.textContent.trim())))};
   });
   check(r.white==='nowrap' && r.lineBoxes===1, 'The timestamp stays on one line', r);
+  check(r.timeLeftOfTitle && !r.subHasTime, 'Timestamp sits left of the title (not in the subtitle)', r);
 });
 await shot(`item3-take6${REDUCED?'-reduced':''}.png`);
 
@@ -352,16 +355,9 @@ const sampleTransform = async (ms, step=16)=>{
       const pane=document.querySelector('.assistant-pane');
       if(!f) return null;
       const r=f.getBoundingClientRect();
-      const cp=getComputedStyle(f).clipPath;
-      /* Chromium reports the 4th inset as px OR as % depending on where the
-         interpolation is, so both are handled and % is resolved against the
-         element's own current width (which is what inset() resolves against). */
-      const m=/inset\([^)]*?([-0-9.]+)(px|%)\s*\)/.exec(cp);
       return {t:performance.now(), x:Math.round(r.left*100)/100, w:Math.round(r.width*100)/100,
               g:Math.round(parseFloat(getComputedStyle(grid).paddingLeft)*100)/100,
               s:Math.round(Number(getComputedStyle(pane,'::after').opacity)*1000)/1000,
-              c:m?Math.round((m[2]==='%'?parseFloat(m[1])*r.width/100:parseFloat(m[1]))*100)/100:null,
-              cp:cp,
               pl:Math.round(pane.getBoundingClientRect().left*100)/100};
     }));
     await page.waitForTimeout(step);
@@ -369,10 +365,10 @@ const sampleTransform = async (ms, step=16)=>{
   return out.filter(Boolean);
 };
 
-const openPromise = sampleTransform(420,14);
+const openPromise = sampleTransform(520,14);
 await click('[data-action="toggle-history"]');
 const openTrace = await openPromise;
-await page.waitForTimeout(400);
+await page.waitForTimeout(450);
 g = await drawerGeom();
 await sec('item4: open interpolates', async()=>{
   const xs=[...new Set(openTrace.map(s=>s.x))];
@@ -387,49 +383,35 @@ await sec('item4: open interpolates', async()=>{
           'OPEN interpolates from the left (transform is sampled mid-flight, not snapped)',
           {distinctX:xs.length,inflight,first:xs[0],last:xs[xs.length-1],paneLeft:g.paneLeft});
     check(scr.length>=3, 'Scrim opacity ramps in step with the slide', {distinctScrim:scr.length,scr});
-    /* The clip that keeps the drawer inside the pane must stay in LOCKSTEP with
-       the transform: at every in-flight frame the amount hanging left of the
-       pane edge must equal the clip's left inset.  Drift here would show as the
-       drawer bleeding over the editor mid-slide, which is what the contact
-       sheet caught before the clip existed. */
-    const flying = openTrace.filter(s=>s.c!=null && s.c>1 && s.x<s.pl-1);
-    const drift = flying.map(s=>Math.round(Math.abs((s.pl-s.x)-s.c)*10)/10);
-    check(flying.length>=2 && drift.every(d=>d<=3),
-          'The pane clip stays in lockstep with the slide (drawer never bleeds over the editor)',
-          {frames:flying.length, drift});
+    /* Whole-panel slide (no animated clip-path): title text must stay readable
+       mid-flight instead of wiping in as a truncated strip. */
+    const readable = await page.evaluate(()=>{
+      const fly=document.querySelector('.history-flyout');
+      if(!fly) return {missing:true};
+      document.body.dataset.phDrawer='shut';
+      void fly.offsetWidth;
+      document.body.dataset.phDrawer='open';
+      return new Promise(resolve=>{
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          const title=fly.querySelector('.thread-name, .thread-title');
+          const r=title&&title.getBoundingClientRect();
+          resolve({
+            clip:getComputedStyle(fly).clipPath,
+            titleW:r?Math.round(r.width):0,
+            titleText:(title&&title.textContent||'').trim().slice(0,20),
+          });
+        }));
+      });
+    });
+    check(readable.clip==='none' && readable.titleW>40 && /[A-Za-z]/.test(readable.titleText),
+          'Mid-open shows a whole panel (no clip-path wipe of truncated titles)', readable);
   }
 });
 check(g.mode==='open' && Math.abs(g.x-g.paneLeft)<2 && g.scrim.op>0.9 && g.scrim.pe==='auto',
       'Opens LEFT with a live scrim', g);
 
-/* THE PANE CLIP MUST NOT EAT THE FLOAT SHADOW — and this guard now toggles the
-   CLIP, which is the thing its name is about.
-   ---------------------------------------------------------------------------
-   It used to A/B `box-shadow:none` only.  That is not vacuous — it still went
-   red, delta 4.03 -> 0.00 against a `>1` threshold with an A/A floor of 0.00 —
-   but it proves "a shadow is painted here", not "the shadow survives the clip",
-   and the comment above it claimed the second thing.  A guard whose stated
-   purpose and actual behaviour differ is worse than no guard, because the next
-   agent reads the name.
-
-   Three arms now, all painted-pixel reads just outside the drawer's right edge:
-     A  as shipped                      -> clip inset(-90px -90px -90px 0), shadow on
-     B  clip-path forced to inset(0)    -> the clip hugs the box; if the -90px
-                                           insets are what let the shadow out,
-                                           this must go dark
-     C  box-shadow forced to none       -> the original arm, kept
-   The claim is A > B and A > C.  The extra statement worth having is B ~= C:
-   clipping the shadow away is indistinguishable from deleting it, which is what
-   makes `inset(0)` the wrong declaration and `-90px` the load-bearing one.
-   Independently confirmed last wave by a different method at -0.007 delta.
-
-   Every override goes through an injected <style> in <head>, NEVER an inline
-   style on the node: pmSyncAttrs deletes attributes the render did not emit, so
-   an inline `style` is wiped by whichever 2s work tick lands inside the sample
-   window.  That made this assertion flaky exactly once, under reduced motion,
-   before it was moved into <head>.  The waits are 320ms because clip-path is on
-   the 240ms transition and a 160ms sample would read it mid-flight. */
-await sec('item4: the clip keeps the float shadow', async()=>{
+/* Float shadow paints to the right of the left-docked drawer. */
+await sec('item4: float shadow paints', async()=>{
   const e = await page.evaluate(()=>{const r=document.querySelector('.history-flyout').getBoundingClientRect();
     return {right:Math.round(r.right), y:Math.round(r.top+r.height/2)};});
   const lum = async ()=>{
@@ -450,24 +432,14 @@ await sec('item4: the clip keeps the float shadow', async()=>{
   };
   const A  = await lum();
   await page.waitForTimeout(320);
-  const A2 = await lum();                      /* A/A floor: no change, no delta */
-  await force('body[data-ph-drawer] .history-flyout{clip-path:inset(0) !important}');
-  const B  = await lum();
+  const A2 = await lum();
   await force('.history-flyout{box-shadow:none !important}');
   const C  = await lum();
   await force(null);
-  /* A shadow DARKENS the strip outside the drawer, so the shipped reading is the
-     LOW one; both ways of removing the shadow must make it brighter. */
   check(Math.abs(A-A2) <= 0.5, 'A/A floor: two reads of the same pixels agree', {A, A2});
-  check(A < B - 1,
-        'The float shadow paints THROUGH the pane clip (forcing clip-path:inset(0) clips it away)',
-        {shipped:A, clippedToBox:B, delta:+(B-A).toFixed(3)});
   check(A < C - 1,
-        'That reading really is the shadow (forcing box-shadow:none removes it too)',
+        'The float shadow paints beside the drawer (forcing box-shadow:none removes it)',
         {shipped:A, noShadow:C, delta:+(C-A).toFixed(3)});
-  check(Math.abs(B-C) <= 0.5,
-        'Clipping the shadow away is INDISTINGUISHABLE from deleting it — which is why the insets are -90px and not 0',
-        {clippedToBox:B, noShadow:C, delta:+(B-C).toFixed(3)});
 });
 await shot(`item4-open${REDUCED?'-reduced':''}.png`);
 
@@ -479,6 +451,7 @@ await click('[data-action="toggle-history"]');
 await page.waitForTimeout(450);
 await sec('item4: scrim click dismisses when unpinned', async()=>{
   const pane=await page.locator('.assistant-pane').boundingBox();
+  /* Floating docks LEFT — click the RIGHT of the pane (live scrim), not the drawer. */
   await page.mouse.click(pane.x+pane.width-40, pane.y+pane.height/2);
   await page.waitForTimeout(500);
   check((await drawerGeom()).mode==='closed','Scrim click dismisses an UNPINNED drawer',await drawerGeom());
@@ -520,6 +493,7 @@ await page.waitForTimeout(400);
 check((await drawerGeom()).mode==='pinned','Esc does NOT dismiss a pinned drawer (guarded)',await drawerGeom());
 await sec('item4: esc guarded while pinned', async()=>{
   const pane=await page.locator('.assistant-pane').boundingBox();
+  /* Pinned docks LEFT — click the RIGHT of the pane (transcript), not the drawer. */
   await page.mouse.click(pane.x+pane.width-40, pane.y+pane.height/2);
   await page.waitForTimeout(400);
   check((await drawerGeom()).mode==='pinned','Scrim area click does NOT dismiss a pinned drawer (guarded)',await drawerGeom());
@@ -556,22 +530,68 @@ await sec('item4: toggle closes a pinned drawer', async()=>{
         {distinctX:xs.length,samples:exitSamples.length});
 });
 
-/* The exit honours Wave 1B's published contract. */
+/* Close must not paint over the editor — clip to the assistant pane. */
+await click('[data-action="toggle-history"]');
+await page.waitForTimeout(450);
+await sec('item4: close stays inside the pane', async()=>{
+  if(REDUCED){
+    check(true, 'Reduced motion: close clip not sampled');
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(200);
+    return;
+  }
+  const mid = await page.evaluate(()=>new Promise(resolve=>{
+    const pane=document.querySelector('.assistant-pane');
+    const toggle=document.querySelector('[data-action="toggle-history"]');
+    if(!pane||!toggle){ resolve({missing:true}); return; }
+    const pr=pane.getBoundingClientRect();
+    toggle.click();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const root=document.getElementById('pmOverlayRoot');
+      const fly=document.querySelector('.history-flyout');
+      const y=pr.top+Math.min(120, pr.height/3);
+      const leftOfPane=document.elementFromPoint(Math.max(0, pr.left-12), y);
+      resolve({
+        mode:document.body.dataset.phDrawer,
+        clip:root?root.style.clipPath:'',
+        hitEditor:!!(leftOfPane && fly && fly.contains(leftOfPane)),
+        paneLeft:Math.round(pr.left),
+      });
+    }));
+  }));
+  await page.waitForTimeout(400);
+  check(mid.mode==='closing' && /^inset\(/.test(mid.clip) && !mid.hitEditor,
+        'Close clips to the assistant pane (does not paint over the editor)', mid);
+});
+
+/* The exit honours the Details-panel contract: closing yields a
+   readable transform transitionDuration (not a competing @keyframes). */
 await click('[data-action="toggle-history"]');
 await page.waitForTimeout(450);
 await sec('item4: exit contract', async()=>{
   const contract = await page.evaluate(()=>{
     const f=document.querySelector('.history-flyout');
+    document.body.removeAttribute('data-ph-settled');
+    document.body.dataset.phClosing='1';
     document.body.dataset.phDrawer='closing';
-    f.classList.add('pm-leaving');
     const cs=getComputedStyle(f);
-    const r={name:cs.animationName,dur:cs.animationDuration,
-             ms:parseFloat(cs.animationDuration)*1000, pe:cs.pointerEvents};
-    f.classList.remove('pm-leaving'); document.body.dataset.phDrawer='open';
+    const props=String(cs.transitionProperty||'').split(',');
+    const durs=String(cs.transitionDuration||'').split(',');
+    let ms=0;
+    for(let i=0;i<props.length;i++){
+      if(String(props[i]).trim()!=='transform') continue;
+      ms=parseFloat(durs[Math.min(i,durs.length-1)])*1000;
+      break;
+    }
+    if(!(ms>0)) ms=parseFloat(durs[0])*1000;
+    const r={prop:cs.transitionProperty,dur:cs.transitionDuration,
+             ms, pe:cs.pointerEvents, anim:cs.animationName};
+    document.body.removeAttribute('data-ph-closing');
+    document.body.dataset.phDrawer='open';
     return r;
   });
-  check(contract.name!=='none' && contract.ms>0 && contract.pe==='none',
-        'Exit contract: pm-leaving yields a readable animationDuration and kills pointer events',
+  check(contract.ms>0 && contract.pe==='none' && (!contract.anim || contract.anim==='none'),
+        'Exit contract: closing uses a transform transition (no keyframes) and kills pointer events',
         contract);
   check(REDUCED ? contract.ms<=2 : Math.abs(contract.ms-240)<5,
         `Exit duration is ${REDUCED?'1ms under reduced motion':'240ms'}`, contract);
