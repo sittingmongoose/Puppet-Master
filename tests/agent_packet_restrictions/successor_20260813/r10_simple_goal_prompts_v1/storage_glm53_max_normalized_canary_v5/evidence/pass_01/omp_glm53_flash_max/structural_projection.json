@@ -1,0 +1,41 @@
+{
+  "assistant_lifecycle_shape": "standard_tool_cycle",
+  "assistant_message_count": 3,
+  "entry_ids": {
+    "final_assistant": "52bcd340",
+    "goal_active": "c44a4250",
+    "goal_call_assistant": "4f0c9b50",
+    "goal_complete_mode": "d523c0ac",
+    "goal_completed": "c99dbf9f",
+    "goal_contexts": [
+      "c0c7be8b",
+      "d8c0410c"
+    ],
+    "goal_exit": "3b525927",
+    "goal_result": "8931f9c6",
+    "goal_tool_start": "d28e58f8",
+    "native_continuation": "dc66de19",
+    "session_exit": "f872f6c8",
+    "user": "c77cd44a"
+  },
+  "final_text": "Done. Disposition: `blocked` — structural layer fully clean, gate layer fails independently on stale canonical node-readiness artifact (`Plans/.plan_index/node_readiness_report.json`, SHA `c32a34b0…` ≠ recomputed `c1125b67…`) and incomplete runtime certification (PNC-019); both blockers recorded separately from structural success; no WorkNodes created or proposed. Budget: 8320 tokens, 48 seconds.",
+  "final_text_sha256": "58036c4e5a696100e5b167f7e47883719508191fed0b0a7b86560fb9557224fe",
+  "goal_context_count": 2,
+  "goal_id": "1567ddcb46ee542b",
+  "goal_tool_call_id": "call_d46b0cb76dda4b1ea23ad575",
+  "leaf_id": "f872f6c8",
+  "logical_entry_count": 19,
+  "model": "glm-5.3-flash",
+  "native_continuation_count": 1,
+  "ordinary_tool_calls": 0,
+  "pre_goal_call_text_utf8_bytes": 956,
+  "provider": "opencode-go",
+  "selector": "opencode-go/glm-5.3-flash",
+  "session_file_bytes": 52440,
+  "session_file_sha256": "e4d3d9f0039433b90f807f88e377eab388e44e9ab31a6aa79254f3e114aa804a",
+  "session_id": "01a04241-dad8-70ec-a7b3-6cd82fa2e0ca",
+  "session_started_at_utc": "2026-08-27T08:06:47.256Z",
+  "thinking": "max",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256
+}

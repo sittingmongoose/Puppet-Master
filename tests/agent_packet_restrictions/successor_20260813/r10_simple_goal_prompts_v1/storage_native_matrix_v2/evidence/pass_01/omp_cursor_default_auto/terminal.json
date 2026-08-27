@@ -1,0 +1,149 @@
+{
+  "attempt_id": "storage-native-matrix-v2-pass_01-02-c6ac6d0998",
+  "composer_acknowledged": true,
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 352,
+      "path": "reservation.json",
+      "sha256": "e355391363385e0b2a6a1719971af036578471bba0c9bfa8c904a38b76393a53"
+    },
+    {
+      "bytes": 7911,
+      "path": "omp_preflight.json",
+      "sha256": "6dc0f34bfb002b8de066bf21c6d44fb06780ded664600e1d06bb27f3776dcd73"
+    },
+    {
+      "bytes": 1507,
+      "path": "launch.json",
+      "sha256": "752d2ac3ca8ba093778efd922c78ac9bd1fb1175f10a83f189397a37b567d6bf"
+    },
+    {
+      "bytes": 93000,
+      "path": "pre_prompt.raw",
+      "sha256": "ae010a24485d346f39e3e69e5998bcf83ec2bdb087a7817c16565b50ccdeddf2"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 696,
+      "path": "prompt_write.json",
+      "sha256": "9bb08a0acb17bcfb6045eb1a762b8e9340f2a9288447d407152c69d2c4cc120f"
+    },
+    {
+      "bytes": 101659,
+      "path": "composer_ack.raw",
+      "sha256": "c9e6fa96a7827433f8aa35b5d4a63647b8da446a7ee413463351e1310d820213"
+    },
+    {
+      "bytes": 726,
+      "path": "composer_ack.json",
+      "sha256": "e0cbbdc9b1245a9fcf5edb614edaa4f74b306e7d2aaa84681889eaf53996cb52"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 748,
+      "path": "enter_write.json",
+      "sha256": "5ae81bfc2373e12d6c82386ed17231c84177e90aff6278bf38c7d9feee758284"
+    },
+    {
+      "bytes": 28326,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "801d90b5a7eafd58a24faaa262a51c977f718153a0b809370aad45e695014134"
+    },
+    {
+      "bytes": 1328,
+      "path": "submission_acceptance.json",
+      "sha256": "af7aa986dbb93e2a5234abf8afaac670cb425b2d0e863ae9f5b9a358c388d970"
+    },
+    {
+      "bytes": 393545,
+      "path": "transcript.raw",
+      "sha256": "552eaeaf7f5ed863cd721317994a988705784b1b42219a4497b8f65b0484babe"
+    },
+    {
+      "bytes": 1,
+      "path": "control.raw",
+      "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+    },
+    {
+      "bytes": 28533,
+      "path": "session.raw.jsonl",
+      "sha256": "02da586929687793967078caa63968187c91e53e37ef541590100b56046cdecf"
+    }
+  ],
+  "external_submission_count": 1,
+  "failure_code": null,
+  "final_assistant_text": "Structural extraction and comparison succeeded (248 plan units, 811 acceptance units, dependency registry resolved, migration coverage pass, canonical comparison pass). Canonical currentness failed (stale node-readiness artifact) and PNC-019 runtime certification is incomplete, so the authorized pre-WorkNode disposition is blocked.Structural extraction/comparison passed; blockers remain (stale readiness artifact + PNC-019 incomplete), so disposition is blocked.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "finished_at_utc": "2026-08-26T12:48:19.632Z",
+  "goal_activation_observed": true,
+  "goal_complete_observed": true,
+  "low_level_input_write_count": 2,
+  "model": "cursor/default",
+  "no_retry": true,
+  "nonce": "c6ac6d0998d14013fc119b5fa82691a0",
+  "observed_identity": "01a03e1d-077b-7336-82cc-9e8547aa1a8e",
+  "observed_non_goal_tool_calls": 0,
+  "ordinal": 2,
+  "pass_id": "pass_01",
+  "persisted_submission_accepted": true,
+  "process_exit_code": 0,
+  "qualification_credit": 0,
+  "route_id": "omp_cursor_default_auto",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "session_projection": {
+    "assistant_lifecycle_shape": "cursor_aggregate",
+    "assistant_message_count": 1,
+    "entry_ids": {
+      "final_assistant": "13837ca9",
+      "goal_active": "835b9928",
+      "goal_call_assistant": "13837ca9",
+      "goal_complete_mode": "866faea7",
+      "goal_completed": "1c9bafea",
+      "goal_contexts": [
+        "917f0fc4"
+      ],
+      "goal_exit": "b0d4720e",
+      "goal_result": "303a449f",
+      "goal_tool_start": "07196b7c",
+      "native_continuation": null,
+      "session_exit": "caf141ea",
+      "user": "b5881cad"
+    },
+    "final_text_sha256": "dbeb30a17a3e0467fa4994d83f3ce26bea9b2f2ebc15d03daf7e3f4f5bc999b1",
+    "goal_context_count": 1,
+    "goal_id": "1566d497a8777fd0",
+    "goal_tool_call_id": "call-1ef630d8-b80a-4b47-a0da-802878581f2d-0\nfc_0903a341-74ae-92d3-ac46-ca2c7f3801cf_0",
+    "leaf_id": "caf141ea",
+    "logical_entry_count": 12,
+    "model": "default",
+    "native_continuation_count": 0,
+    "ordinary_tool_calls": 0,
+    "pre_goal_call_text_utf8_bytes": 333,
+    "provider": "cursor",
+    "selector": "cursor/default",
+    "session_file_bytes": 28533,
+    "session_file_sha256": "02da586929687793967078caa63968187c91e53e37ef541590100b56046cdecf",
+    "session_id": "01a03e1d-077b-7336-82cc-9e8547aa1a8e",
+    "session_started_at_utc": "2026-08-26T12:48:04.987Z",
+    "thinking": "auto",
+    "thinking_receipt_count": 0,
+    "title_slot_bytes": 256
+  },
+  "status": "PASS",
+  "surface": "omp_tui",
+  "terminal_control_sent_once": true,
+  "thinking": "auto",
+  "tui_corroboration": {
+    "goal_activation": true,
+    "goal_complete": true,
+    "pm_result_marker": true
+  }
+}

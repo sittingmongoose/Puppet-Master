@@ -1,0 +1,67 @@
+diff --git a/packages/natives/scripts/embed-native.ts b/packages/natives/scripts/embed-native.ts
+index 40d7e779d..7d64efef1 100644
+--- a/packages/natives/scripts/embed-native.ts
++++ b/packages/natives/scripts/embed-native.ts
+@@ -7,6 +7,39 @@ const packageJsonPath = path.join(import.meta.dir, "../package.json");
+ const nativeDir = path.join(import.meta.dir, "../native");
+ const archivePrefix = "embedded-addons.";
+ const archiveSuffix = ".tar.gz";
++const tarBlockBytes = 512;
++const tarHeaderMtimeOffset = 136;
++const tarHeaderChecksumOffset = 148;
++const textDecoder = new TextDecoder();
++const textEncoder = new TextEncoder();
++
++function deterministicArchive(bytes: Uint8Array<ArrayBuffer>, expectedMembers: number): Uint8Array {
++	const tar = Bun.gunzipSync(bytes);
++	let offset = 0;
++	let members = 0;
++	while (offset + tarBlockBytes <= tar.length) {
++		const header = tar.subarray(offset, offset + tarBlockBytes);
++		if (!header.some(byte => byte !== 0)) break;
++		const sizeText = textDecoder.decode(header.subarray(124, 136)).replace(/\0.*$/s, "").trim() || "0";
++		if (!/^[0-7]+$/.test(sizeText)) throw new Error(`Invalid tar size at block ${offset / tarBlockBytes}`);
++		const size = Number.parseInt(sizeText, 8);
++		const nextOffset = offset + tarBlockBytes + Math.ceil(size / tarBlockBytes) * tarBlockBytes;
++		if (!Number.isSafeInteger(size) || size < 0 || nextOffset > tar.length) {
++			throw new Error(`Invalid tar member boundary at block ${offset / tarBlockBytes}`);
++		}
++		header.set(textEncoder.encode("00000000000\0"), tarHeaderMtimeOffset);
++		header.fill(0x20, tarHeaderChecksumOffset, tarHeaderChecksumOffset + 8);
++		let checksum = 0;
++		for (const byte of header) checksum += byte;
++		const checksumText = checksum.toString(8);
++		if (checksumText.length > 6) throw new Error(`Tar checksum overflow at block ${offset / tarBlockBytes}`);
++		header.set(textEncoder.encode(`${checksumText.padStart(6, "0")}\0 `), tarHeaderChecksumOffset);
++		offset = nextOffset;
++		members += 1;
++	}
++	if (members !== expectedMembers) throw new Error(`Expected ${expectedMembers} archive members, found ${members}`);
++	return Bun.gzipSync(tar, { level: 9 });
++}
+ 
+ const embeddedAddonTypedefs = `/** @typedef {"modern" | "baseline" | "default"} EmbeddedAddonVariant */
+ 
+@@ -101,7 +134,8 @@ const archiveEntries: Record<string, Uint8Array> = {};
+ for (const addon of available) {
+ 	archiveEntries[addon.filename] = await fs.readFile(addon.path);
+ }
+-await Bun.write(archivePath, await new Bun.Archive(archiveEntries, { compress: "gzip", level: 9 }).bytes());
++const archiveBytes = await new Bun.Archive(archiveEntries, { compress: "gzip", level: 9 }).bytes();
++await Bun.write(archivePath, deterministicArchive(archiveBytes, available.length));
+ 
+ const files = available
+ 	.map(
+diff --git a/scripts/ci-release-build-binaries.ts b/scripts/ci-release-build-binaries.ts
+index 1356e36fa..c19abb71f 100644
+--- a/scripts/ci-release-build-binaries.ts
++++ b/scripts/ci-release-build-binaries.ts
+@@ -145,7 +145,7 @@ async function buildBinary(target: BinaryTarget): Promise<void> {
+ 		outfile: path.join(repoRoot, target.outfile),
+ 		transformersVersion,
+ 		target: target.target,
+-		minifyIdentifiers: true,
++		minifyIdentifiers: target.id !== "win32-x64",
+ 		skipBuiltinCodesign: shouldAdhocSignDarwinBinary(target),
+ 	});
+ 	// Bun 1.3.12 emits a truncated Mach-O signature on darwin builds.

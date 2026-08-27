@@ -1,0 +1,21 @@
+{
+  "attempt_id": "storage-native-matrix-v2-pass_01-03-a5a1305592",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "a5a1305592df0bb757c708f238416819",
+  "ordinal": 3,
+  "pass_id": "pass_01",
+  "path": "stdin_prompt.raw",
+  "pid": 1118761,
+  "pre_prompt": {
+    "bytes": 90324,
+    "path": "pre_prompt.raw",
+    "sha256": "d2a0fdb2595acc7ebc5d49087d0d9ba3c09fffc6004cc192d087146894d0e5df"
+  },
+  "route_id": "omp_muse_spark_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-26T12:54:43.153Z"
+}

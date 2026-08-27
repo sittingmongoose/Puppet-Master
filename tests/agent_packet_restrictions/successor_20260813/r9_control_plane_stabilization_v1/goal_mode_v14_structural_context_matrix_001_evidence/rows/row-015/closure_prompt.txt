@@ -1,0 +1,17 @@
+R9 NATIVE GOAL MODE SAME-TASK TERMINAL CLOSURE — NO SCORED SUBJECT IS PRESENT.
+
+This is the documented continuation of the same fresh test-taker task after its scored answer was durably captured. Do not repeat, revise, explain, replace, or re-answer the scored subject. The same native Goal must already be active. The scored-phase receipt commitment is sha256=a765a5f66a831c2fb9ba8f4adf536934c9eb293e20abb29fdab75d08ae171cf3; bytes=1476.
+
+Before any other action, invoke exactly these three native Goal actions as separate calls. If the Goal tools are exposed directly, call them directly with exact arguments. Otherwise use the exact code-mode forms below.
+
+1. const r = await tools.get_goal({});
+text(r);
+Require the exact same Goal, objective, and status active.
+2. const r = await tools.update_goal({status:"complete"});
+text(r);
+Require the exact same Goal and status complete.
+3. const r = await tools.get_goal({});
+text(r);
+Require the exact same Goal, objective, and status complete.
+
+Invoke no file, command, web, collaboration, memory, delegation, subject, or other tool. Perform no scored-subject reasoning. After call 3, emit exactly GOAL_TERMINAL_CLOSURE_COMPLETE_NO_SUBJECT_REPLAY as the terminal assistant message with no decoration.

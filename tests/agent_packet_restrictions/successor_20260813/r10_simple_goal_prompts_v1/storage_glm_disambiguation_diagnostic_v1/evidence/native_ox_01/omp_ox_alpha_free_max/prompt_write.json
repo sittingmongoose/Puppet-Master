@@ -1,0 +1,21 @@
+{
+  "attempt_id": "storage-glm-disamb-v1-01-97fd146264",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "97fd146264df28c18856e3c60c457dd8",
+  "ordinal": 1,
+  "pass_id": "native_ox_01",
+  "path": "stdin_prompt.raw",
+  "pid": 1218939,
+  "pre_prompt": {
+    "bytes": 95180,
+    "path": "pre_prompt.raw",
+    "sha256": "3c3404ff1006bf086b298c84e074df18a393aa1be7b0a4a1e4252437694a9b76"
+  },
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-26T15:49:06.028Z"
+}

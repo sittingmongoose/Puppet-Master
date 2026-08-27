@@ -1,0 +1,53 @@
+{
+  "schema": "puppetmaster.r10.omp_tui_zero_model_probe.v2",
+  "probe_id": "r10-omp-tui-zero-model-001",
+  "nonce": "64b55fe75fe02651",
+  "windows": {
+    "host": "JAREDGAMINGPC",
+    "user": "sitti",
+    "user_sid": "S-1-5-21-2726046746-5803018-3664408702-1001",
+    "required_session_id": 4,
+    "stage_root": "C:\\Users\\sitti\\AppData\\Local\\PuppetMaster\\R10\\omp_tui_probe_001_64b55fe75fe02651",
+    "evidence_root": "C:\\Users\\sitti\\AppData\\Local\\PuppetMaster\\R10\\omp_tui_probe_001_64b55fe75fe02651\\evidence",
+    "pwsh_path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+    "wt_path": "C:\\Users\\sitti\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe",
+    "window_id": "PM-R10-ZM-WIN-64b55fe75fe02651",
+    "title": "PM-R10-ZM-64b55fe75fe02651"
+  },
+  "runtime": {
+    "ps_version": "7.6.5",
+    "ps_edition": "Core",
+    "clr_version": "10.0.11",
+    "native_argument_passing": "Windows",
+    "input_struct_bytes": 40
+  },
+  "schedule": {
+    "task_name": "PM-R10-ZM-64b55fe75fe02651",
+    "multiple_instances": "IgnoreNew",
+    "restart_count": 0,
+    "execution_time_limit_ms": 120000
+  },
+  "fake_native_argv": [
+    "--cwd=P:\\",
+    "--profile=r10-zero-model-64b55fe75fe02651",
+    "--model=r10-zero-model",
+    "--thinking=xhigh",
+    "--session-dir=C:\\Users\\sitti\\AppData\\Local\\PuppetMaster\\R10\\omp_tui_probe_001_64b55fe75fe02651\\sessions",
+    "--no-title"
+  ],
+  "inert_input": "R10_ZERO_MODEL_64b55fe75fe02651",
+  "ceilings": {
+    "reviewed_script_direct_omp_invocations": 0,
+    "reviewed_script_direct_provider_invocations": 0,
+    "reviewed_script_direct_subject_invocations": 0,
+    "omp_endpoint_count_before": 0,
+    "omp_endpoint_count_after": 0,
+    "sendinput_calls_in_driver": 1,
+    "receiver_readline_calls": 1,
+    "retry_count": 0,
+    "receiver_timeout_ms": 30000,
+    "driver_internal_work_deadline_ms": 110000,
+    "scheduled_task_execution_limit_ms": 120000
+  },
+  "qualification_credit": 0
+}

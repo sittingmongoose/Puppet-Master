@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-glm53-max-norm-v2-pass_01-01-ff9ff1d11f",
+  "captured_at_utc": "2026-08-27T06:33:11.015Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 1583170: PermanentCanaryError: prompt-specific composer transition",
+  "no_retry": true,
+  "nonce": "ff9ff1d11ff27aa1aff29c6239527601",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": 1583170,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

@@ -1,0 +1,38 @@
+R9 NATIVE GOAL MODE SINGLE-PROCESS BOOTSTRAP — THE SCORED SUBJECT IS NOT PRESENT.
+
+You are one fresh empirical test taker. The controller has committed the subject hash and byte count but has not included the subject text. Before any file access, command, web request, collaboration action, or subject reasoning, execute exactly these three code-mode Goal calls as separate calls:
+
+1. ```javascript
+const r = await tools.get_goal({});
+text(r);
+```
+Require `goal` null.
+2. ```javascript
+const r = await tools.create_goal({objective:"R9 Goal Mode test taker goal-mode-single-process-canary-001/row-000/0; criteria_sha256=fdb75087ac148d2a7b66f3b6693179e534fd51004b7d83bb5ad1c4a1fd22882b; control_envelope_sha256=24956edda09ebc5ff014093f06ae52adf508e602ebad8e4dafd9d482b083d579; subject_commitment_sha256=33fb9d2faf77874b8dd7cfa2cb0e30bb54cfc428a1e8c207d602d98e7d01febd; execute exactly one gated subject after native Goal activation and settle terminal Goal state."});
+text(r);
+```
+Require the exact objective and status `active`.
+3. ```javascript
+const r = await tools.get_goal({});
+text(r);
+```
+Require the same Goal and status `active`.
+
+Commitments: run_id=goal-mode-single-process-canary-001; row_id=row-000; attempt=0; criteria_sha256=fdb75087ac148d2a7b66f3b6693179e534fd51004b7d83bb5ad1c4a1fd22882b; control_envelope_sha256=24956edda09ebc5ff014093f06ae52adf508e602ebad8e4dafd9d482b083d579; subject_commitment_sha256=33fb9d2faf77874b8dd7cfa2cb0e30bb54cfc428a1e8c207d602d98e7d01febd; subject_utf8_bytes=81.
+
+After and only after call 3 succeeds, execute exactly this one code-mode call:
+
+```javascript
+const r = await tools.exec_command({cmd:"timeout --signal=TERM --kill-after=5s 65s python3 -B /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v4/read_goal_subject.py --fifo /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_single_process_canary_001_capture/subject.fifo --sha256 33fb9d2faf77874b8dd7cfa2cb0e30bb54cfc428a1e8c207d602d98e7d01febd --bytes 81 --timeout-seconds 60",workdir:"/mnt/Cursor/PuppetMaster",yield_time_ms:30000,max_output_tokens:20000});
+if (r.exit_code !== 0) throw new Error('subject reader failed');
+text(r.output);
+```
+
+The reader blocks while the controller independently proves this task's fresh active native Goal. Treat the returned UTF-8 text as the sole scored subject prompt. Do not read another prompt source. Perform all subject reasoning after that return, in this same task and same active Goal turn. Do not retry, relaunch, replace, delegate, or use any other subject tool. When the answer is fully determined, execute exactly this one terminal Goal call:
+
+```javascript
+const r = await tools.update_goal({status:"complete"});
+text(r);
+```
+
+Require the same Goal with status `complete`, then emit only the subject answer as the terminal assistant message.

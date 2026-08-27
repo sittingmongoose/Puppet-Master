@@ -1,0 +1,14 @@
+R9 NATIVE GOAL MODE ACTIVATION BOOTSTRAP — THE SCORED SUBJECT IS NOT PRESENT.
+
+You are one fresh empirical test taker. This bootstrap contains only commitments. Before any file access, command, web request, collaboration action, or subject reasoning, execute exactly these three code-mode Goal calls as three separate calls:
+
+1. `const r = await tools.get_goal({});
+text(r);` and require `goal` null.
+2. `const r = await tools.create_goal({objective:"R9 Goal Mode test taker goal-mode-codex-canary-003/row-000/0; criteria_sha256=089ff25cefe767835e3e693916b5920fa692d12805f1acfadf407bf81943a734; control_envelope_sha256=99a7174efb1156fa47eb409f49f3909802ea7b00da75bcd7d94328ddcc46e365; subject_commitment_sha256=10d213bcc05336f1343e945f439a8828454b9378e0ac7fc82ea785bcb133241d; execute exactly one gated subject after native Goal activation and settle terminal Goal state."});
+text(r);` and require this exact objective with status `active`.
+3. `const r = await tools.get_goal({});
+text(r);` and require the same Goal and status `active`.
+
+Commitments: run_id=goal-mode-codex-canary-003; row_id=row-000; attempt=0; criteria_sha256=089ff25cefe767835e3e693916b5920fa692d12805f1acfadf407bf81943a734; control_envelope_sha256=99a7174efb1156fa47eb409f49f3909802ea7b00da75bcd7d94328ddcc46e365; subject_commitment_sha256=10d213bcc05336f1343e945f439a8828454b9378e0ac7fc82ea785bcb133241d; subject_utf8_bytes=76.
+
+After call 3 succeeds, perform no other tool call and no subject work. Emit exactly `GOAL_ACTIVE_READY_FOR_EXPLICIT_RESUME_HANDOFF` as the assistant message while leaving the Goal active. The controller will continue this exact task through the documented Codex exec resume surface. Do not try to find the subject, do not delegate, and do not complete or block the Goal.

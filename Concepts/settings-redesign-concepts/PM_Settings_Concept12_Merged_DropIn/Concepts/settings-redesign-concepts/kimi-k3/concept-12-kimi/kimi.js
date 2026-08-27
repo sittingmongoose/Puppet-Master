@@ -3,7 +3,7 @@
 
   const D = window.PM12_DATA;
   const root = document.getElementById('pm-settings-root');
-  const STORAGE_KEY = 'pm-settings-kimi-concept12-v3';
+  const STORAGE_KEY = 'pm-settings-kimi-concept12-v4';
   const actionCallbacks = new Map();
   let actionSeq = 0;
   let scrollCleanup = null;
@@ -11,6 +11,7 @@
   let tooltipEl = null;
   let soundTimer = null;
   let searchEl = null;
+  let searchInputEl = null;
   let embedMode = false;
   let domainSectionMap = {};
   let pendingScroll = null;
@@ -119,6 +120,7 @@
   let state = loadState();
 
   function saveState() {
+    searchIndexDirty = true;
     const copy = clone(state);
     delete copy.home;
     delete copy.railOpen;
@@ -262,6 +264,7 @@
     clearTimeout(detailHideTimer);
     detailInspectorVisible = false;
     closeSearch();
+    document.querySelectorAll('.popover').forEach(el => el.remove());
     softRemount = !!options.soft && !state.home;
     if (softRemount) {
       const scroller = document.getElementById('settings-document');
@@ -744,6 +747,30 @@
     });
   }
 
+  let revealObserver = null;
+  function armSectionReveal() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const nodes = document.querySelectorAll('.section-block, .settings-section, .manager-section');
+    if (!nodes.length) return;
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-revealed');
+          entry.target.classList.remove('will-reveal');
+          revealObserver.unobserve(entry.target);
+        }
+      }, { threshold: 0.08 });
+    } else {
+      revealObserver.disconnect();
+    }
+    for (const node of nodes) {
+      if (node.classList.contains('is-revealed')) continue;
+      node.classList.add('section-block', 'will-reveal');
+      revealObserver.observe(node);
+    }
+  }
+
   function afterRender() {
     diagnostics.renderCount += 1;
     const restoreTop = softRemount ? preservedScrollTop : null;
@@ -795,6 +822,7 @@
       try { focusTarget.focus({ preventScroll: true }); }
       catch { focusTarget.focus(); }
     }
+    armSectionReveal();
   }
 
   function syncWorkspaceChrome(wsId) {
@@ -924,6 +952,10 @@
   }
 
   function closeSearch() {
+    if (searchInputEl) {
+      searchInputEl.removeEventListener('keydown', onSearchInputKey);
+      searchInputEl = null;
+    }
     if (searchEl) {
       searchEl.remove();
       searchEl = null;
@@ -932,7 +964,85 @@
 
   function closeOverlay() {
     closeSearch();
-    document.querySelectorAll('.overlay,.drawer-wrap,.popover').forEach(el => el.remove());
+    document.querySelectorAll('.popover').forEach(el => el.remove());
+    document.querySelectorAll('.overlay').forEach(el => el.remove());
+    const drawers = [...document.querySelectorAll('.drawer-wrap')];
+    if (!drawers.length) return;
+    drawers.forEach(wrap => closeDrawerWrap(wrap));
+  }
+
+  function closeDrawerWrap(wrap, onDone) {
+    if (!wrap || !wrap.isConnected) {
+      onDone?.();
+      return;
+    }
+    if (wrap.dataset.closing === '1') return;
+    wrap.dataset.closing = '1';
+    const drawer = wrap.querySelector('.drawer');
+    wrap.classList.remove('is-settled');
+    wrap.classList.add('is-closing');
+    void wrap.offsetWidth;
+    wrap.classList.remove('is-open');
+    const finish = () => {
+      wrap.removeEventListener('transitionend', onEnd);
+      wrap.remove();
+      onDone?.();
+    };
+    const onEnd = (e) => {
+      if (e.target !== drawer && e.target !== wrap) return;
+      if (e.propertyName !== 'transform' && e.propertyName !== 'opacity') return;
+      finish();
+    };
+    if (motionReduced()) {
+      finish();
+      return;
+    }
+    wrap.addEventListener('transitionend', onEnd);
+    setTimeout(finish, 280);
+  }
+
+  function openDrawer({ title, subtitle = '', body = '', primaryLabel = '', onPrimary = null }) {
+    closeOverlay();
+    const wrap = document.createElement('div');
+    wrap.className = 'drawer-wrap';
+    wrap.innerHTML = `<aside class="drawer" role="dialog" aria-modal="true" aria-label="${escAttr(title)}">
+      <div class="dialog-head"><div class="dialog-head-copy"><div class="dialog-title">${escapeHtml(title)}</div>${subtitle ? `<div class="dialog-sub">${escapeHtml(subtitle)}</div>` : ''}</div><button class="icon-btn" data-action="close-overlay" aria-label="Close">${icon('close')}</button></div>
+      <div class="drawer-body">${body}</div>
+      <div class="drawer-footer"><button class="btn" data-action="close-overlay">Close</button>${onPrimary ? `<button class="btn primary" data-callback="${registerAction(() => { const result = onPrimary(wrap); if (result !== false && wrap.isConnected) closeDrawerWrap(wrap); })}">${escapeHtml(primaryLabel || 'Apply')}</button>` : ''}</div>
+    </aside>`;
+    const drawer = wrap.querySelector('.drawer');
+    const onEsc = (e) => {
+      if (e.key !== 'Escape') return;
+      e.stopPropagation();
+      closeDrawerWrap(wrap);
+    };
+    wrap.addEventListener('mousedown', e => { if (e.target === wrap) closeDrawerWrap(wrap); });
+    document.body.append(wrap);
+    void wrap.offsetWidth;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!wrap.isConnected) return;
+        wrap.classList.add('is-open');
+        if (motionReduced()) wrap.classList.add('is-settled');
+        else {
+          const onSettled = (e) => {
+            if (e.target !== drawer || e.propertyName !== 'transform') return;
+            drawer.removeEventListener('transitionend', onSettled);
+            if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled');
+          };
+          drawer.addEventListener('transitionend', onSettled);
+        }
+        wrap.querySelector('button')?.focus();
+      });
+    });
+    document.addEventListener('keydown', onEsc, true);
+    const obs = new MutationObserver(() => {
+      if (wrap.isConnected) return;
+      document.removeEventListener('keydown', onEsc, true);
+      obs.disconnect();
+    });
+    obs.observe(document.body, { childList: true });
+    return wrap;
   }
 
   function focusSettingsSearch() {
@@ -943,99 +1053,525 @@
     return input;
   }
 
+  const SEARCH_MAX_RESULTS = 40;
+  const BEST_MATCH_MIN_HIT = 6;
+  let searchIndexCache = null;
+  let searchIndexDirty = true;
+
+  function scalarValueText(value) {
+    if (value === null || value === undefined || typeof value === 'object') return '';
+    return String(value);
+  }
+
+  function stringValuesOf(obj) {
+    return Object.entries(obj || {}).flatMap(([key, value]) => {
+      if (typeof value === 'string') return [value];
+      if (Array.isArray(value)) return value.filter(item => typeof item === 'string');
+      if (value && typeof value === 'object') return stringValuesOf(value);
+      void key;
+      return [];
+    });
+  }
+
   function buildSearchIndex() {
+    if (!searchIndexDirty && searchIndexCache) return searchIndexCache;
     const results = [];
+    const push = entry => {
+      entry.hay = `${entry.title} ${entry.description || ''} ${entry.path} ${(entry.extraTerms || []).join(' ')} ${entry.hayExtra || ''}`.toLowerCase();
+      delete entry.hayExtra;
+      results.push(entry);
+    };
+    const resource = o => push({
+      type: o.kind,
+      group: o.group || 'managers',
+      payload: Object.assign({ kind: o.kind }, o.payload),
+      id: o.id,
+      title: o.title,
+      description: o.description || '',
+      path: o.path,
+      extraTerms: o.terms || [],
+      hayExtra: o.hayExtra || ''
+    });
+
+    // Generic pass: every domain › workspace › section › setting, plain and reference-backed.
     for (const domain of D.domains) {
       for (const workspace of domain.workspaces) {
-        results.push({
+        push({
           type: 'workspace',
+          group: 'managers',
+          payload: { kind: 'workspace', domain: domain.id, workspace: workspace.id },
           id: `${domain.id}|${workspace.id}`,
           title: workspace.label,
           description: workspace.type === 'settings' ? (workspaceMeta(workspace, domain).description) : (domain.summary || ''),
           path: domain.label,
-          domain: domain.id,
-          workspace: workspace.id,
-          keywords: `${workspace.type || ''} ${domain.summary || ''}`
+          extraTerms: [workspace.type || '', workspace.id, domain.summary || '']
         });
-        if (workspace.type === 'settings') {
-          for (const section of workspace.sections || []) {
-            for (const s of section.settings || []) {
-              const d = s.detail || {};
-              results.push({
-                type: 'setting',
-                id: s.id,
-                title: s.label,
-                description: s.description || '',
-                path: `${domain.label} › ${workspace.label}`,
-                domain: domain.id,
-                workspace: workspace.id,
-                section: section.id,
-                keywords: [s.id, s.description, d.what || '', d.why || '', (d.related || []).join(' ')].join(' ')
-              });
-            }
+        if (workspace.type !== 'settings') continue;
+        for (const section of workspace.sections || []) {
+          for (const s of section.settings || []) {
+            const d = s.detail || {};
+            push({
+              type: 'setting',
+              group: 'settings',
+              payload: { kind: 'setting', domain: domain.id, workspace: workspace.id, section: section.id, id: s.id },
+              id: s.id,
+              title: s.label,
+              description: s.description || '',
+              path: `${domain.label} › ${workspace.label} › ${section.label}`,
+              extraTerms: [...(s.searchTerms || []), s.id],
+              hayExtra: `${domain.id}.${workspace.id}.${section.id}.${s.label} ${s.id} ${s.control || ''} ${scalarValueText(settingValue(s))} ${(s.options || []).join(' ')} ${d.what || ''} ${d.why || ''} ${(d.related || []).join(' ')}`
+            });
           }
         }
       }
     }
-    for (const provider of state.providers) {
-      results.push({
-        type: 'provider',
+
+    // Providers & accounts
+    for (const provider of state.providers || []) {
+      resource({
+        kind: 'provider',
+        payload: { id: provider.id },
         id: provider.id,
         title: provider.name,
-        description: `${provider.statusLabel} · ${provider.product || provider.kind || ''}`,
+        description: `${provider.statusLabel || ''} · ${provider.product || provider.kind || ''}`,
         path: 'AI & Providers › Providers & Accounts',
-        domain: 'ai',
-        workspace: 'providers',
-        keywords: [provider.kind, provider.product, provider.statusLabel, ...(provider.accounts || []).map(a => a.nickname)].join(' ')
+        terms: [provider.kind, provider.product, provider.statusLabel, ...(provider.accounts || []).map(a => a.nickname)].filter(Boolean),
+        hayExtra: provider.name
       });
     }
+
+    // Provider model endpoints
+    for (const provider of state.providers || []) {
+      for (const model of provider.models || []) {
+        resource({
+          kind: 'provider-model',
+          payload: { providerId: provider.id, id: model.id },
+          id: `${provider.id}:${model.id}`,
+          title: model.name,
+          description: `${model.plan || ''} · ${model.context || ''} · ${provider.name}`,
+          path: `AI & Providers › Providers & Accounts › ${provider.name} models`,
+          terms: [...(model.caps || []), model.plan, model.health].filter(Boolean)
+        });
+      }
+    }
+    // Free routes — real fields only: provider, signIn, models, limit, terms
     for (const route of state.freeRoutes || []) {
-      results.push({
-        type: 'free-route',
+      resource({
+        kind: 'free-route',
+        payload: { id: route.id },
         id: route.id,
         title: route.name,
         description: `${route.enabled ? 'Enabled' : 'Available to enable'} · ${(route.models || []).length || route.modelCount || ''} models`,
         path: 'AI & Providers › Free Models › Routes',
-        domain: 'ai',
-        workspace: 'providers',
-        keywords: [route.account, route.auth, ...(route.capabilities || [])].join(' ')
+        terms: [route.provider, route.signIn, ...(route.models || []), route.limit, route.terms].filter(Boolean)
       });
     }
+
+    // Web routes
     for (const route of state.webRoutes || []) {
-      results.push({
-        type: 'workspace',
-        id: `web|${route.id}`,
+      resource({
+        kind: 'web-route',
+        payload: { id: route.id },
+        id: route.id,
         title: `${route.name} route`,
         description: route.description || '',
         path: 'AI & Providers › Web & Research',
-        domain: 'ai',
-        workspace: 'web',
-        keywords: `${route.description || ''} ${route.primary?.provider || ''} ${route.primary?.model || ''}`,
-        webRoute: route.id
+        terms: [route.description, route.primary?.provider, route.primary?.model].filter(Boolean),
+        hayExtra: stringValuesOf(route).join(' ')
       });
     }
+
+    // Media routes
+    for (const route of state.mediaRoutes || []) {
+      resource({
+        kind: 'media-route',
+        payload: { id: route.id },
+        id: route.id,
+        title: `${route.name} route`,
+        description: `Output endpoint · ${route.primary?.provider || 'Not configured'} · ${route.primary?.model || ''}`,
+        path: 'AI & Providers › Media & Output',
+        terms: [route.primary?.provider, route.primary?.model].filter(Boolean),
+        hayExtra: stringValuesOf(route.output).join(' ')
+      });
+    }
+
+    // Toolchain resources: lsps, formatters, mcps, commands, skills, plugins, agentTools
+    for (const toolKind of ['lsps', 'formatters', 'mcps', 'commands', 'skills', 'plugins', 'agentTools']) {
+      for (const item of state.toolchain?.[toolKind] || []) {
+        resource({
+          kind: 'tool',
+          payload: { toolKind, id: item.id },
+          id: item.id,
+          title: item.name,
+          description: cap(toolKind),
+          path: 'Code & Tools › Toolchain & Extensions',
+          terms: [item.language, item.source, item.category, item.transport, item.owner, ...(item.languages || [])].filter(Boolean),
+          hayExtra: stringValuesOf(item).join(' ')
+        });
+      }
+    }
+
+    // Testing & debug profiles
+    for (const profile of state.testProfiles || []) {
+      resource({
+        kind: 'test-profile',
+        payload: { id: profile.id },
+        id: profile.id,
+        title: profile.name,
+        description: profile.description || '',
+        path: 'Code & Tools › Testing & Debug',
+        terms: [profile.trigger, ...(profile.stages || [])].filter(Boolean)
+      });
+    }
+    for (const profile of state.debugProfiles || []) {
+      resource({
+        kind: 'debug-profile',
+        payload: { id: profile.id },
+        id: profile.id,
+        title: profile.name,
+        description: profile.description || '',
+        path: 'Code & Tools › Testing & Debug · Debug Profiles',
+        terms: stringValuesOf(profile).slice(0, 8)
+      });
+    }
+
+    // Memories
+    for (const memory of state.memories || []) {
+      resource({
+        kind: 'memory',
+        payload: { id: memory.id },
+        id: memory.id,
+        title: memory.title,
+        description: memory.text || '',
+        path: 'Memory & Automation › Context & Memory',
+        terms: [memory.store, memory.type, memory.source, memory.confidence].filter(Boolean)
+      });
+    }
+
+    // Goals: templates + active goals
+    for (const template of state.goalTemplates || []) {
+      resource({
+        kind: 'goal-template',
+        payload: { id: template.id },
+        id: template.id,
+        title: template.name,
+        description: template.description || '',
+        path: 'Memory & Automation › Goals & Automation',
+        terms: [template.persona, template.route, ...(template.phases || [])].filter(Boolean)
+      });
+    }
+    for (const goal of state.activeGoals || []) {
+      resource({
+        kind: 'active-goal',
+        payload: { id: goal.id },
+        id: goal.id,
+        title: goal.name,
+        description: `${goal.state || ''} · phase ${goal.phase || ''} · ${goal.progress ?? ''}%`,
+        path: 'Memory & Automation › Goals & Automation · Active',
+        terms: [goal.state, goal.phase, goal.route, goal.persona].filter(Boolean)
+      });
+    }
+
+    // Personas & crews
+    for (const persona of state.personas || []) {
+      resource({
+        kind: 'persona',
+        payload: { id: persona.id },
+        id: persona.id,
+        title: persona.name,
+        description: persona.description || '',
+        path: 'Memory & Automation › Personas & Crews',
+        terms: [persona.group, persona.tone, persona.route, ...(persona.tools || [])].filter(Boolean)
+      });
+    }
+    for (const crew of state.crews || []) {
+      resource({
+        kind: 'crew',
+        payload: { id: crew.id },
+        id: crew.id,
+        title: crew.name,
+        description: `${(crew.members || []).length} members · Lead ${crew.lead || ''}`,
+        path: 'Memory & Automation › Personas & Crews · Crews',
+        terms: [...(crew.members || []), crew.lead, crew.route].filter(Boolean)
+      });
+    }
+
+    // Source control: tools, forges, repositories, worktrees, actions
+    for (const tool of state.sourceControl?.tools || []) {
+      resource({
+        kind: 'source-tool',
+        payload: { id: tool.id },
+        id: tool.id,
+        title: tool.name,
+        description: `${tool.kind || 'Local tool'} · ${tool.version || ''}`,
+        path: 'Source Control › Git & Jujutsu',
+        terms: [tool.host, tool.source, tool.status].filter(Boolean)
+      });
+    }
+    for (const forge of state.sourceControl?.forges || []) {
+      resource({
+        kind: 'forge',
+        payload: { id: forge.id },
+        id: forge.id,
+        title: forge.name,
+        description: forge.status === 'not-connected' ? 'Not connected' : `${forge.accounts || 0} account(s) · ${forge.defaultAccount || ''}`,
+        path: 'Source Control › Hosted Forges',
+        terms: [...(forge.scopes || []), forge.ssh].filter(Boolean),
+        hayExtra: forge.name
+      });
+    }
+    for (const repo of state.sourceControl?.repositories || []) {
+      resource({
+        kind: 'repository',
+        payload: { id: repo.name },
+        id: slug(repo.name),
+        title: repo.name,
+        description: `${repo.forge || ''} · ${repo.branch || ''} · ${repo.state || ''}`,
+        path: 'Source Control › Repositories',
+        terms: [repo.remote, repo.protection].filter(Boolean),
+        hayExtra: repo.name
+      });
+    }
+    for (const tree of state.sourceControl?.worktrees || []) {
+      resource({
+        kind: 'worktree',
+        payload: { id: tree.name },
+        id: slug(tree.name),
+        title: tree.name,
+        description: `${tree.branch || ''} · ${tree.state || ''} · ${tree.owner || ''}`,
+        path: 'Source Control › Worktrees',
+        terms: [tree.path, tree.lease].filter(Boolean),
+        hayExtra: tree.name
+      });
+    }
+    for (const actionItem of state.sourceControl?.actions || []) {
+      resource({
+        kind: 'workflow-action',
+        payload: { id: slug(actionItem.name) },
+        id: slug(actionItem.name),
+        title: actionItem.name,
+        description: `${actionItem.workflow || ''} · ${actionItem.trigger || ''} · ${cap(actionItem.status || '')}`,
+        path: 'Source Control › GitHub Actions',
+        terms: [actionItem.workflow, actionItem.trigger].filter(Boolean),
+        hayExtra: actionItem.name
+      });
+    }
+
+    // Permissions: profiles, ordered rules, FileSafe paths
+    for (const profile of state.permissionProfiles || []) {
+      resource({
+        kind: 'permission-profile',
+        payload: { id: profile.id },
+        id: profile.id,
+        title: profile.name,
+        description: profile.description || '',
+        path: 'Safety & Permissions › Profiles',
+        terms: [profile.scope, profile.status].filter(Boolean)
+      });
+    }
+    for (const rule of state.permissionRules || []) {
+      resource({
+        kind: 'permission-rule',
+        payload: { id: slug(rule.action) },
+        id: slug(rule.action),
+        title: rule.action,
+        description: rule.condition || '',
+        path: 'Safety & Permissions › Ordered Rules',
+        terms: [rule.decision, rule.source].filter(Boolean),
+        hayExtra: rule.action
+      });
+    }
+    for (const safePath of state.fileSafePaths || []) {
+      resource({
+        kind: 'filesafe-path',
+        payload: { id: slug(safePath.path) },
+        id: slug(safePath.path),
+        title: safePath.path,
+        description: `${safePath.access || ''} · ${safePath.inheritance || ''}`,
+        path: 'Safety & Permissions › FileSafe',
+        terms: [safePath.access, safePath.inheritance, safePath.status].filter(Boolean),
+        hayExtra: safePath.path
+      });
+    }
+
+    // Backup destinations & schedules
+    for (const destination of state.backup?.destinations || []) {
+      resource({
+        kind: 'backup-destination',
+        group: 'destinations',
+        payload: { id: destination.id },
+        id: destination.id,
+        title: destination.name,
+        description: `${destination.type || ''} · verified ${destination.lastVerified || 'never'}`,
+        path: 'System › Data, Backup & Retention',
+        terms: [destination.type, destination.path, destination.encryption].filter(Boolean)
+      });
+    }
+    for (const schedule of state.backup?.schedules || []) {
+      resource({
+        kind: 'backup-schedule',
+        payload: { id: schedule.id },
+        id: schedule.id,
+        title: schedule.name,
+        description: `${schedule.when || ''} · ${schedule.retention || ''}`,
+        path: 'System › Data, Backup & Retention · Schedules',
+        terms: [schedule.when, schedule.destination, schedule.retention].filter(Boolean)
+      });
+    }
+
+    // Notifications: destinations, agents, events, sounds
+    for (const destination of state.notifications?.destinations || []) {
+      resource({
+        kind: 'notification-destination',
+        group: 'destinations',
+        payload: { id: destination.id },
+        id: destination.id,
+        title: destination.name,
+        description: `${destination.type || ''} · ${destination.address || ''}`,
+        path: 'General › Notifications & Sounds',
+        terms: [destination.type, destination.address, destination.status].filter(Boolean)
+      });
+    }
+    for (const agent of state.notifications?.agents || []) {
+      resource({
+        kind: 'notification-agent',
+        payload: { id: agent.id },
+        id: agent.id,
+        title: agent.name,
+        description: `Escalation: ${agent.escalation || 'None'}`,
+        path: 'General › Notifications & Sounds · Agents',
+        terms: [...(agent.events || []), ...(agent.destinations || [])].filter(Boolean)
+      });
+    }
+    for (const eventItem of state.notifications?.events || []) {
+      resource({
+        kind: 'notification-event',
+        payload: { id: slug(eventItem.name) },
+        id: slug(eventItem.name),
+        title: eventItem.name,
+        description: `${eventItem.enabled ? 'Enabled' : 'Muted'} · sound ${eventItem.sound || 'None'}`,
+        path: 'General › Notifications & Sounds · Events & Routing',
+        terms: [eventItem.sound, eventItem.priority, ...(eventItem.destinations || [])].filter(Boolean),
+        hayExtra: eventItem.name
+      });
+    }
+    for (const sound of state.notifications?.sounds || []) {
+      resource({
+        kind: 'sound',
+        payload: { id: sound.id },
+        id: sound.id,
+        title: sound.name,
+        description: `${sound.format || ''} · ${sound.duration || ''} · volume ${sound.volume ?? '?'}%`,
+        path: 'General › Notifications & Sounds · Sounds',
+        terms: [sound.source, sound.format].filter(Boolean),
+        hayExtra: sound.name
+      });
+    }
+
+    // Project sync & history
+    for (const client of state.projectSync?.clients || []) {
+      resource({
+        kind: 'sync-client',
+        payload: { id: client.id },
+        id: client.id,
+        title: client.name,
+        description: `${client.platform || ''} · ${client.role || ''} · ${client.lastSync || ''}`,
+        path: 'Projects & Sync › Clients & Continuity',
+        terms: [client.platform, client.status, client.role].filter(Boolean)
+      });
+    }
+    for (const remote of state.projectSync?.remotes || []) {
+      resource({
+        kind: 'sync-location',
+        payload: { id: remote.id },
+        id: remote.id,
+        title: remote.name,
+        description: `${remote.type || ''} · ${remote.address || ''}`,
+        path: 'Projects & Sync › Remote Projects',
+        terms: [remote.type, remote.address, remote.status].filter(Boolean)
+      });
+    }
+    for (const session of state.projectHistory?.sessions || []) {
+      resource({
+        kind: 'history-session',
+        payload: { id: session.id },
+        id: session.id,
+        title: session.title,
+        description: `${session.device || ''} · ${session.state || ''} · ${session.artifacts ?? 0} artifacts`,
+        path: 'Projects & Sync › History & Artifacts',
+        terms: [session.device, session.state].filter(Boolean)
+      });
+    }
+    for (const artifact of state.projectHistory?.artifacts || []) {
+      resource({
+        kind: 'artifact',
+        payload: { id: artifact.id },
+        id: artifact.id,
+        title: artifact.name,
+        description: `${artifact.type || ''} · ${artifact.size || ''} · ${artifact.retention || ''}`,
+        path: 'Projects & Sync › History & Artifacts · Artifacts',
+        terms: [artifact.type, artifact.owner].filter(Boolean)
+      });
+    }
+
+    // Quick actions (curated shortcuts)
     [
-      ['Set up Claude Code', 'Open provider installation and account setup', 'ai', 'providers', 'claude-code', 'provider'],
-      ['Change completion sound', 'Open event sound mappings and the sound library', 'general', 'notifications', '', 'action'],
-      ['Restore home layout', 'Open structured desktop and window settings', 'general', 'app-input', 'restore-defaults', 'action'],
-      ['Connect GitHub', 'Open hosted forge connections in Source Control', 'source', 'source-manager', '', 'action'],
-      ['Configure web search priority', 'Open Web & Research capability routing', 'ai', 'web', '', 'action'],
-      ['Back up Puppet Master', 'Open project and settings backup setup', 'system', 'backup', '', 'action']
-    ].forEach(([title, description, domain, workspace, id, type]) => {
+      ['Set up Claude Code', 'Open provider installation and account setup', 'ai', 'providers', 'claude-code'],
+      ['Change completion sound', 'Open event sound mappings and the sound library', 'general', 'notifications', ''],
+      ['Restore home layout', 'Open structured desktop and window settings', 'general', 'app-input', 'restore-defaults'],
+      ['Connect GitHub', 'Open hosted forge connections in Source Control', 'source', 'source-manager', ''],
+      ['Configure web search priority', 'Open Web & Research capability routing', 'ai', 'web', ''],
+      ['Back up Puppet Master', 'Open project and settings backup setup', 'system', 'backup', '']
+    ].forEach(([title, description, domain, workspace, id]) => {
       const d = getDomain(domain);
       const w = d.workspaces.find(x => x.id === workspace);
-      results.push({
-        type: type || 'action',
+      resource({
+        kind: 'quick-action',
+        payload: { id, domain, workspace },
         id,
         title,
         description,
         path: `${d.label} › ${w?.label || workspace}`,
-        domain,
-        workspace,
-        keywords: [title, description, domain, workspace, id].join(' ')
+        terms: [domain, workspace]
       });
     });
+
+    searchIndexCache = results;
+    searchIndexDirty = false;
     return results;
+  }
+
+  function scoreSearchEntry(item, terms) {
+    let score = 0;
+    let minHit = Infinity;
+    const title = item.title.toLowerCase();
+    const path = item.path.toLowerCase();
+    const extraTerms = item.extraTerms || [];
+    for (const term of terms) {
+      const inTitle = title.includes(term);
+      const inExtra = extraTerms.some(value => String(value || '').toLowerCase().includes(term));
+      const inPath = path.includes(term);
+      const inHay = item.hay.includes(term);
+      score += (inTitle ? 8 : 0) + (inExtra ? 6 : 0) + (inPath ? 3 : 0) + (inHay ? 1 : -20);
+      const hit = inTitle ? 8 : inExtra ? 6 : inPath ? 3 : inHay ? 1 : -20;
+      if (hit > 0) minHit = Math.min(minHit, hit);
+    }
+    return { score, best: terms.length > 0 && Number.isFinite(minHit) && minHit >= BEST_MATCH_MIN_HIT };
+  }
+
+  function highlightSearchText(text, terms) {
+    const raw = String(text ?? '');
+    if (!terms.length) return escapeHtml(raw);
+    const pattern = terms.map(term => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+    if (!pattern) return escapeHtml(raw);
+    const re = new RegExp(`(${pattern})`, 'gi');
+    let out = '';
+    let last = 0;
+    for (const match of raw.matchAll(re)) {
+      out += escapeHtml(raw.slice(last, match.index)) + '<mark>' + escapeHtml(match[0]) + '</mark>';
+      last = match.index + match[0].length;
+    }
+    return out + escapeHtml(raw.slice(last));
   }
 
   function openSearch(input) {
@@ -1045,17 +1581,31 @@
     const query = String(input.value || '').trim().toLowerCase();
     const terms = query.split(/\s+/).filter(Boolean);
     const index = buildSearchIndex();
-    const matches = index.map(item => {
-      const hay = `${item.title} ${item.description || ''} ${item.path} ${item.keywords || ''}`.toLowerCase();
-      const score = terms.reduce((n, t) => n
-        + (item.title.toLowerCase().includes(t) ? 8 : 0)
-        + (item.path.toLowerCase().includes(t) ? 3 : 0)
-        + (hay.includes(t) ? 1 : -20), 0);
-      return { item, score };
-    }).filter(x => !terms.length || x.score >= terms.length)
-      .sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title))
-      .slice(0, 24);
+    const scored = index
+      .map(item => ({ item, ...scoreSearchEntry(item, terms) }))
+      .filter(entry => !terms.length || entry.score >= terms.length)
+      .sort((a, b) => b.score - a.score || (b.best ? 1 : 0) - (a.best ? 1 : 0) || a.item.title.localeCompare(b.item.title))
+      .slice(0, SEARCH_MAX_RESULTS);
 
+    const groups = [
+      ['best', 'Best matches'],
+      ['settings', 'Settings'],
+      ['managers', 'Managers & resources'],
+      ['destinations', 'Destinations']
+    ];
+    const renderRow = ({ item, best }) => {
+      const payload = escAttr(JSON.stringify(item.payload || { kind: 'workspace', domain: item.domain, workspace: item.workspace }));
+      return `<button type="button" class="search-result" data-search-result="${escAttr(item.type)}" data-search-payload="${payload}">` +
+        `<span class="search-result-main"><span class="search-result-title">${highlightSearchText(item.title, terms)}</span><span>${highlightSearchText(item.description || '', terms)}</span></span>` +
+        `<span class="search-result-path">${escapeHtml(item.path)}${best ? ' · top match' : ''}</span></button>`;
+    };
+    const body = groups
+      .map(([key, label]) => {
+        const rows = scored.filter(entry => key === 'best' ? entry.best : (!entry.best && entry.item.group === key));
+        if (!rows.length) return '';
+        return `<div class="search-group">${query ? label : (key === 'best' ? 'Common destinations' : label)}</div>${rows.map(renderRow).join('')}`;
+      })
+      .join('');
     const rect = (input.closest('.rail-search, .hero-search, .pm3-search, .pm3-hero-search') || input).getBoundingClientRect();
     searchEl = document.createElement('div');
     searchEl.className = 'search-results';
@@ -1064,58 +1614,227 @@
     searchEl.style.top = `${rect.bottom + 6}px`;
     searchEl.style.width = `${Math.min(Math.max(rect.width, 420), window.innerWidth - 24)}px`;
     searchEl.style.zIndex = '240';
-    searchEl.innerHTML = matches.length
-      ? `<div class="search-group">${query ? 'Best matches' : 'Common destinations'}</div>${matches.map(({ item: i }) =>
-        `<button type="button" class="search-result" data-search-result="${escAttr(i.type)}" data-search-id="${escAttr(i.id || '')}" data-search-domain="${escAttr(i.domain)}" data-search-workspace="${escAttr(i.workspace)}" ${i.section ? `data-search-section="${escAttr(i.section)}"` : ''} ${i.webRoute ? `data-search-web-route="${escAttr(i.webRoute)}"` : ''}>` +
-        `<span class="search-result-main"><span class="search-result-title">${escapeHtml(i.title)}</span><span>${escapeHtml(i.description || '')}</span></span>` +
-        `<span class="search-result-path">${escapeHtml(i.path)}</span></button>`).join('')}`
-      : `<div class="search-empty"><strong>No matching setting yet</strong><span>Try a task such as “connect GitHub,” “completion sound,” “web priority,” or an exact setting ID.</span></div>`;
+    searchEl.innerHTML = body ||
+      `<div class="search-empty"><strong>No matching setting yet</strong><span>Try a task such as “connect GitHub,” “completion sound,” “web priority,” or an exact setting ID.</span></div>`;
     document.body.append(searchEl);
+    searchInputEl = input;
+    input.addEventListener('keydown', onSearchInputKey);
   }
+
+  function onSearchInputKey(event) {
+    if (!searchEl) return;
+    if (event.key === 'Escape') { closeSearch(); return; }
+    const rows = [...searchEl.querySelectorAll('.search-result')];
+    if (!rows.length) return;
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      const current = rows.findIndex(row => row.classList.contains('is-active'));
+      const next = event.key === 'ArrowDown'
+        ? (current < 0 ? 0 : (current + 1) % rows.length)
+        : (current < 0 ? rows.length - 1 : (current - 1 + rows.length) % rows.length);
+      setActiveSearchRow(rows, next);
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      const target = rows.find(row => row.classList.contains('is-active')) || rows[0];
+      target.click();
+    }
+  }
+
+  function setActiveSearchRow(rows, index) {
+    rows.forEach((row, i) => row.classList.toggle('is-active', i === index));
+    rows[index]?.scrollIntoView({ block: 'nearest' });
+  }
+
 
   function selectSearchResult(buttonEl) {
-    const type = buttonEl.getAttribute('data-search-result');
-    const id = buttonEl.getAttribute('data-search-id') || '';
-    const domain = buttonEl.getAttribute('data-search-domain');
-    const workspace = buttonEl.getAttribute('data-search-workspace');
-    const section = buttonEl.getAttribute('data-search-section') || null;
-    const webRoute = buttonEl.getAttribute('data-search-web-route');
+    let p = {};
+    try { p = JSON.parse(buttonEl.getAttribute('data-search-payload') || '{}'); } catch (_) { p = {}; }
     closeSearch();
-    if (type === 'setting') {
-      navigate(domain, workspace, { section, detailSetting: id || null });
-      return;
-    }
-    if (type === 'provider') {
-      state.selectedProvider = id || 'claude-code';
-      state.providerTab = 'overview';
-      navigate('ai', 'providers');
-      return;
-    }
-    if (type === 'free-route') {
-      state.selectedProvider = 'free-models';
-      state.selectedFreeRoute = id;
-      state.providerTab = 'routes';
-      navigate('ai', 'providers');
-      return;
-    }
-    if (webRoute) {
-      state.selectedWebRoute = webRoute;
-      navigate('ai', 'web');
-      return;
-    }
-    if (type === 'action' && id) {
-      if (state.providers.some(p => p.id === id)) {
-        state.selectedProvider = id;
-        state.providerTab = 'overview';
-        navigate(domain, workspace);
-        return;
-      }
-      navigate(domain, workspace, { detailSetting: id.includes('.') || id.includes('-') ? id : null, section });
-      return;
-    }
-    navigate(domain, workspace, { section });
+    applySearchSelection(p);
   }
 
+  function applySearchSelection(p) {
+    switch (p.kind) {
+      case 'setting':
+        navigate(p.domain, p.workspace, { section: p.section || null, detailSetting: p.id || null });
+        flashSearchHit(p.id);
+        return;
+      case 'provider':
+        state.selectedProvider = p.id || 'claude-code';
+        state.providerTab = 'overview';
+        navigate('ai', 'providers');
+        return;
+      case 'free-route':
+        state.selectedProvider = 'free-models';
+        state.selectedFreeRoute = p.id;
+        state.providerTab = 'routes';
+        navigate('ai', 'providers');
+        return;
+      case 'provider-model':
+        state.selectedProvider = p.providerId || 'claude-code';
+        state.providerTab = 'models';
+        navigate('ai', 'providers');
+        return;
+      case 'web-route':
+        state.selectedWebRoute = p.id;
+        state.webRouteTab = 'route';
+        navigate('ai', 'web');
+        return;
+      case 'media-route':
+        state.selectedMediaRoute = p.id;
+        state.mediaRouteTab = 'route';
+        navigate('ai', 'media');
+        return;
+      case 'tool':
+        state.toolTab = p.toolKind;
+        if (state.selectedTool && typeof state.selectedTool === 'object') state.selectedTool[p.toolKind] = p.id;
+        else state.selectedTool = { [p.toolKind]: p.id };
+        navigate('code', 'toolchain');
+        return;
+      case 'test-profile':
+        state.testingTab = 'profiles';
+        state.selectedTestProfile = p.id;
+        navigate('code', 'testing');
+        return;
+      case 'debug-profile':
+        state.testingTab = 'debug';
+        state.selectedDebugProfile = p.id;
+        navigate('code', 'testing');
+        return;
+      case 'memory':
+        state.memoryTab = 'memories';
+        state.memoryFilter = 'All';
+        state.selectedMemory = p.id;
+        navigate('memory', 'context-memory');
+        return;
+      case 'goal-template':
+        state.goalTab = 'templates';
+        state.selectedGoalTemplate = p.id;
+        navigate('memory', 'goals');
+        return;
+      case 'active-goal':
+        state.goalTab = 'active';
+        state.selectedGoal = p.id;
+        navigate('memory', 'goals');
+        return;
+      case 'persona':
+        state.personaTab = 'personas';
+        state.personaFilter = 'All';
+        state.personaQuery = '';
+        state.selectedPersona = p.id;
+        navigate('memory', 'personas');
+        return;
+      case 'crew':
+        state.personaTab = 'crews';
+        state.selectedCrew = p.id;
+        navigate('memory', 'personas');
+        return;
+      case 'source-tool':
+        state.sourceTab = 'tools';
+        state.selectedSourceTool = p.id;
+        navigate('source', 'source-manager');
+        return;
+      case 'forge':
+        state.sourceTab = 'connections';
+        state.selectedForge = p.id;
+        navigate('source', 'source-manager');
+        return;
+      case 'repository':
+        state.sourceTab = 'repositories';
+        state.selectedRepository = p.id;
+        navigate('source', 'source-manager');
+        return;
+      case 'worktree':
+        state.sourceTab = 'worktrees';
+        state.selectedWorktree = p.id;
+        navigate('source', 'source-manager');
+        return;
+      case 'workflow-action':
+        state.sourceTab = 'actions';
+        navigate('source', 'source-manager');
+        return;
+      case 'permission-profile':
+        state.permissionTab = 'profiles';
+        state.selectedPermissionProfile = p.id;
+        navigate('safety', 'permissions');
+        return;
+      case 'permission-rule':
+        state.permissionTab = 'rules';
+        navigate('safety', 'permissions');
+        return;
+      case 'filesafe-path':
+        state.permissionTab = 'filesafe';
+        navigate('safety', 'permissions');
+        return;
+      case 'backup-destination':
+        state.backupTab = 'destinations';
+        navigate('system', 'backup');
+        return;
+      case 'backup-schedule':
+        state.backupTab = 'schedules';
+        navigate('system', 'backup');
+        return;
+      case 'notification-destination':
+        state.notificationTab = 'destinations';
+        state.selectedDestination = p.id;
+        navigate('general', 'notifications');
+        return;
+      case 'notification-agent':
+        state.notificationTab = 'agents';
+        state.selectedNotificationAgent = p.id;
+        navigate('general', 'notifications');
+        return;
+      case 'notification-event':
+        state.notificationTab = 'events';
+        navigate('general', 'notifications');
+        return;
+      case 'sound':
+        state.notificationTab = 'sounds';
+        state.selectedSound = p.id;
+        navigate('general', 'notifications');
+        return;
+      case 'sync-client':
+        state.projectSyncTab = 'clients';
+        navigate('projects', 'project-sync');
+        return;
+      case 'sync-location':
+        state.projectSyncTab = 'remote';
+        navigate('projects', 'project-sync');
+        return;
+      case 'history-session':
+        state.projectHistoryTab = 'sessions';
+        navigate('projects', 'project-history');
+        return;
+      case 'artifact':
+        state.projectHistoryTab = 'artifacts';
+        navigate('projects', 'project-history');
+        return;
+      case 'quick-action': {
+        const id = p.id || '';
+        if (id && state.providers.some(provider => provider.id === id)) {
+          state.selectedProvider = id;
+          state.providerTab = 'overview';
+          navigate(p.domain, p.workspace);
+          return;
+        }
+        navigate(p.domain, p.workspace, { detailSetting: id.includes('.') || id.includes('-') ? id : null });
+        return;
+      }
+      default:
+        navigate(p.domain, p.workspace, { section: p.section || undefined });
+    }
+  }
+
+  function flashSearchHit(settingId) {
+    window.setTimeout(() => {
+      const targets = [document.getElementById(`setting-${settingId}`), root.querySelector('.detail-inspector')];
+      for (const target of targets) {
+        if (!target) continue;
+        target.classList.add('is-flash');
+        window.setTimeout(() => target.classList.remove('is-flash'), 1000);
+      }
+    }, 0);
+  }
   function openDialog({ title, subtitle = '', body = '', saveLabel = 'Save changes', cancelLabel = 'Cancel', wide = false, onSave = null, onOpen = null }) {
     closeOverlay();
     const overlay = document.createElement('div');
@@ -1130,19 +1849,6 @@
     if (onSave) form.addEventListener('submit', e => { e.preventDefault(); const data = Object.fromEntries(new FormData(form).entries()); const result = onSave(data, form); if (result !== false && overlay.isConnected) overlay.remove(); });
     requestAnimationFrame(() => { const target = overlay.querySelector('[data-autofocus], input, select, textarea, button'); if (target) target.focus(); if (onOpen) onOpen(overlay); });
     return overlay;
-  }
-
-  function openDrawer({ title, subtitle = '', body = '', primaryLabel = '', onPrimary = null }) {
-    closeOverlay();
-    const wrap = document.createElement('div'); wrap.className = 'drawer-wrap';
-    wrap.innerHTML = `<aside class="drawer" role="dialog" aria-modal="true" aria-label="${escAttr(title)}">
-      <div class="dialog-head"><div class="dialog-head-copy"><div class="dialog-title">${escapeHtml(title)}</div>${subtitle ? `<div class="dialog-sub">${escapeHtml(subtitle)}</div>` : ''}</div><button class="icon-btn" data-action="close-overlay">${icon('close')}</button></div>
-      <div class="drawer-body">${body}</div>
-      <div class="drawer-footer"><button class="btn" data-action="close-overlay">Close</button>${onPrimary ? `<button class="btn primary" data-callback="${registerAction(() => { const result = onPrimary(wrap); if (result !== false && wrap.isConnected) wrap.remove(); })}">${escapeHtml(primaryLabel || 'Apply')}</button>` : ''}</div>
-    </aside>`;
-    wrap.addEventListener('mousedown', e => { if (e.target === wrap) closeOverlay(); });
-    document.body.append(wrap);
-    requestAnimationFrame(() => wrap.querySelector('button')?.focus());
   }
 
   function formField(label, name, value = '', options = {}) {
@@ -1804,7 +2510,17 @@
       updates:{automatic:true,channel:'Stable',source:'GitHub Releases',checkInterval:'On open and hourly',currentVersion:'0.8.0-dev',availableVersion:'0.8.1',lastCheck:'7 minutes ago',history:[{version:'0.8.0-dev',installed:'Aug 23',result:'Current',notes:'Settings concept integration'},{version:'0.7.9',installed:'Aug 18',result:'Rolled forward',notes:'Provider detection improvements'},{version:'0.7.8',installed:'Aug 12',result:'Available for rollback',notes:'Project continuity baseline'}]}
     };
     for(const [k,v] of Object.entries(defaults))if(state[k]===undefined||state[k]===null)state[k]=clone(v);
-    if(!state.toolDetailTab||typeof state.toolDetailTab!=='object')state.toolDetailTab={};if(!Array.isArray(state.testProfiles))state.testProfiles=clone(D.testProfiles);if(!Array.isArray(state.debugProfiles))state.debugProfiles=clone(D.debugProfiles);
+    if(!state.settings||typeof state.settings!=='object'||Array.isArray(state.settings))state.settings={};
+    if(!state.changed||typeof state.changed!=='object'||Array.isArray(state.changed))state.changed={};
+    if(!state.activeSection||typeof state.activeSection!=='object'||Array.isArray(state.activeSection))state.activeSection={};
+    for(const domain of D.domains)for(const workspace of domain.workspaces){
+      if(workspace.type!=='settings'||!workspace.reference)continue;
+      for(const section of workspace.sections||[])for(const s of section.settings||[]){
+        if(state.settings[s.id]===undefined&&s.value!==undefined){
+          state.settings[s.id]=typeof s.value==='object'&&s.value!==null?clone(s.value):s.value;
+        }
+      }
+    }
     if(!Array.isArray(state.providers))state.providers=clone(D.providers);if(!Array.isArray(state.freeRoutes))state.freeRoutes=clone(D.freeRoutes);if(!Array.isArray(state.webRoutes))state.webRoutes=clone(D.webRoutes);if(!Array.isArray(state.mediaRoutes))state.mediaRoutes=clone(D.mediaRoutes);
     if(!state.notifications?.destinations)state.notifications=clone(D.notifications);if(!state.sourceControl?.tools)state.sourceControl=clone(D.sourceControl);if(!state.backup?.destinations)state.backup=clone(D.backupState);
   }
@@ -2075,7 +2791,7 @@
     pop.className = 'popover';
     pop.setAttribute('role', 'menu');
     pop.innerHTML = `${title ? `<div class="popover-title">${escapeHtml(title)}</div>` : ''}${items.map(item => {
-      if (item.separator) return '<div class="menu-separator"></div>';
+      if (item.separator) return '<div class="menu-sep"></div>';
       const callback = registerAction(() => { pop.remove(); item.onClick?.(); });
       return `<button class="menu-item ${item.danger ? 'danger' : ''}" role="menuitem" data-callback="${callback}" ${item.disabled ? 'disabled' : ''}>${icon(item.icon || 'settings')}<span>${escapeHtml(item.label)}</span>${item.meta ? `<span class="menu-meta">${escapeHtml(item.meta)}</span>` : ''}</button>`;
     }).join('')}`;
@@ -2984,11 +3700,14 @@
       case 'play-sound': {
         const s=state.notifications.sounds.find(x=>x.id===ds(el,'id'));
         if(!s)return;
-        if(soundTimer)clearTimeout(soundTimer);
+        clearTimeout(soundTimer);
+        const stopRow=row=>{row.classList.remove('is-playing');const b=row.querySelector('.sound-play.is-playing');if(b){b.classList.remove('is-playing');b.innerHTML=icon('play');}};
+        document.querySelectorAll('.sound-row.is-playing').forEach(stopRow);
         state.soundPlaying=s.id;
-        rerender();
+        const row=el.closest('.sound-row');
+        if(row){row.classList.add('is-playing');el.classList.add('is-playing');el.innerHTML=icon('volume');}
         showToast(`Playing ${s.name}`,`Preview volume ${s.volume||70}% · ${s.duration||'short clip'}`,'info',1800);
-        soundTimer=setTimeout(()=>{state.soundPlaying=null;rerender();},1200);
+        soundTimer=setTimeout(()=>{state.soundPlaying=null;document.querySelectorAll('.sound-row.is-playing').forEach(stopRow);},1200);
         return;
       }
       case 'toggle-event-matrix': {

@@ -1,0 +1,29 @@
+ATOM_ID: R9_V5_VERIFIER_GATE_REVIEW_002
+COMPONENT: verify.py sha256=3fce6da7a66cf9b8dc4a19978738f09965958c41cc5d9466f2c38410c728e8fc bytes=57468 mode=0644
+RECIPE: closed_recipe.json sha256=85328ffd1c599aca2ee5c28eb222daf74ac99fd6540d63874e417020a8692498 bytes=7860 mode=0644
+RECEIPT: r9_codex_native_goal_jit_post_goal_delivery_v5_implementation_receipt_v2.json sha256=3422ac0eef2dcef343e7be8eb5b3660fb21c064188b47f0c4f63a9f8b3e9b6b9 bytes=4651 mode=0644
+QUESTION: Does this gate keep the private scorer unopened until all required current evidence and predecessor evidence pass, keep canary scorer reads at zero, write nothing, and return qualification credit zero even for a clean full matrix?
+PREBOUND_FACTS: load_sources excludes private_scorer. acquire_run_set holds shared locks for all expected runs. read_run, validate_terminal_surface, exact schedule checks, verify_rows, and merge_freshness fail closed. The data-only AST check found zero verifier filesystem mutation calls. Inventory is projected before and after verification and must match.
+FAILURE_RULE: Return VERIFY_V2_FAIL_<UPPERCASE_FAMILY> for any hard mismatch. Return VERIFY_V2_PASS_NONE only if this atom has no hard mismatch.
+NONCLAIMS: Do not infer runtime success, canary admission, matrix authority, qualification, or validity of review cycle 001.
+CODE_BEGIN
+for prior_code in run_codes(matrix_code)[:-1]:
+    prior_run = read_run(recipe, prior_code, roots[prior_code])
+    validate_terminal_surface(recipe, prior_code, roots[prior_code], prior_run)
+    merge_freshness(cumulative, index_prior(recipe, prior_code, roots[prior_code]))
+
+run = read_run(recipe, matrix_code, root)
+require(read_bound(root + "/schedule.jsonl", 0o444, schedule_limit, len(schedule_raw), sha(schedule_raw)) == schedule_raw, "schedule-exact")
+require(read_bound(root + "/schedule_offsets.json", 0o444, offsets_limit, len(offsets_raw), sha(offsets_raw)) == offsets_raw, "schedule-offsets-exact")
+validate_terminal_surface(recipe, matrix_code, root, run)
+freshness, node_results = verify_rows(recipe, matrix_code, root, records, cells)
+merge_freshness(cumulative, freshness)
+if matrix_code == "C01":
+    route_outcomes = 0
+    scorer_reads = 0
+else:
+    route_outcomes = score_full_matrix(recipe, cells, node_results)
+    scorer_reads = 1
+require(after_inventory == before_inventory, "verification-inventory-drift")
+report = {"external_adjudication_required": True, "private_scorer_reads": scorer_reads, "qualification_credit": 0, "route_outcomes_exact_pass": route_outcomes}
+CODE_END

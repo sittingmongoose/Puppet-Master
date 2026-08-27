@@ -1,0 +1,17 @@
+ATOM V6R1_SUBJECT_LINE_DELTA_002
+Addendum: r9_codex_native_goal_single_turn_blocking_mailbox_architecture_v6r1_subject_line_correction_v1.json sha256=4c31a9c966747fe80632d734db68fc6e56d0d73d0d95d32bec90891dd61fbc45 bytes=2837 mode=0644
+Failed prior review: r9_codex_native_goal_single_turn_blocking_mailbox_v6r1_subject_line_delta_review_001_protocol_failure_receipt_v1.json sha256=0b78069f3693da01e31c017b71372117309f5c163b079bca219fff1b0c1ad168 bytes=2373 mode=0644
+
+The prior review has zero semantic authority because it read an extra file before Goal activation and stripped this atom's terminal LF while hashing. Review this new atom independently.
+
+One question: Is it internally correct and still bite-size to retain 170 bytes as the canonical nested p payload ceiling while using the already source-owned 512-byte ceiling for the complete one-line c,p,q,r,v,z subject envelope?
+
+Bound facts: the exact source corpus contains 15612 nodes; exhaustive longest-allowed-result rendering observed a maximum complete envelope of 345 bytes. The correction changes no prompt count, Goal lifecycle, tool/event sequence, publication, roster, failure rule, canary credit, matrix sequence, or qualification bar. Each test taker still receives exactly one subject line in its own active Goal. No large prompt or multi-part subject is introduced.
+
+PASS only if the two ceilings have distinct scopes and the 512-byte complete-line bound preserves the intended bite-size contract. FAIL on the first hard gap. Grant no canary, matrix, qualification, or release authority.
+
+Return exactly one token:
+V6R1D2_PASS_NONE
+V6R1D2_FAIL_LIMIT
+V6R1D2_FAIL_SCOPE
+V6R1D2_FAIL_OTHER

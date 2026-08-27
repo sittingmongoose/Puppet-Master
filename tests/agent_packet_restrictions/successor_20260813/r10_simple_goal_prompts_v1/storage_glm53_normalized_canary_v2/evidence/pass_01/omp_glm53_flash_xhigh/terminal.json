@@ -1,0 +1,100 @@
+{
+  "attempt_id": "storage-glm53-normalized-canary-v2-01-a7effb05a0",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 726,
+      "path": "composer_ack.json",
+      "sha256": "b990b4292a88e9b57b55ca1593051cfac0b323fcedff3d547f2db133c5a512ce"
+    },
+    {
+      "bytes": 94454,
+      "path": "composer_ack.raw",
+      "sha256": "990cb47391f597ed8acbb55da10beec8330f937b565477b97eda735c2a6ba3e7"
+    },
+    {
+      "bytes": 748,
+      "path": "enter_write.json",
+      "sha256": "541d1ec5cc20fc3d5281d8c9125d84c3ae7b1a2d6d0281059b7305016abe0da7"
+    },
+    {
+      "bytes": 1541,
+      "path": "launch.json",
+      "sha256": "c1388defca1474183b928232cfd43dfbcd5bee1ad77ddbf393f3c86500ac2e1e"
+    },
+    {
+      "bytes": 461705,
+      "path": "omp_preflight.json",
+      "sha256": "de538116941cbad733050825df5a21542bec70278ed2b482fa36d08627f74f14"
+    },
+    {
+      "bytes": 23461,
+      "path": "postfailure_session.raw.jsonl",
+      "sha256": "7b3b3d532b73ad4f6453438d6cde43f9ead54ca0ccedd2f19ed92bccccc25926"
+    },
+    {
+      "bytes": 83778,
+      "path": "pre_prompt.raw",
+      "sha256": "0885672318ce2ec4946c796887a9f9f3624f677ab5cd026c2bc922a81ac23f40"
+    },
+    {
+      "bytes": 696,
+      "path": "prompt_write.json",
+      "sha256": "d725d2a4277c3d98db7005106f4ecbc025bce754892f477a6ed2b0c39b0c067f"
+    },
+    {
+      "bytes": 352,
+      "path": "reservation.json",
+      "sha256": "6871f1a1bb40c27994555f493976adcd4fe0afdd1456407581ad79d7580e97b5"
+    },
+    {
+      "bytes": 2543,
+      "path": "runner_failure.json",
+      "sha256": "9dd9980968f25feef064a4aaabcd877899ab1ed076905a33a7814e355b2e01d0"
+    },
+    {
+      "bytes": 12768,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "ffd87c7130f0e8aecd0176616a75ed8f321d1683821a65203d86dd481cdd57ae"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 1339,
+      "path": "submission_acceptance.json",
+      "sha256": "6834f837f36cb5c21a05cc12dce9f6ff7c63b8dae63f4271d0a6a3f89fb9989a"
+    },
+    {
+      "bytes": 861295,
+      "path": "transcript.raw",
+      "sha256": "076178669b29279a9c418cac8a6de130f15d1f183e8b026ed6975c1a2089ff93"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-27T02:52:54.579Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/glm-5.3-flash",
+  "no_retry": true,
+  "nonce": "a7effb05a08ce0995658dcea7244b5ff",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "xhigh"
+}

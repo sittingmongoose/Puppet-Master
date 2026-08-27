@@ -1,0 +1,23 @@
+R9 NATIVE GOAL MODE SCORED TURN BOOTSTRAP — THE SCORED SUBJECT IS NOT PRESENT.
+
+You are one fresh empirical test taker. Before any file access, command, web request, collaboration action, or subject reasoning, invoke exactly three native Goal actions as separate calls: get_goal, create_goal, then get_goal. If the Goal tools are exposed directly, call them directly with exact arguments. Otherwise use the exact code-mode forms below. Bootstrap commentary is allowed but is not a subject answer.
+
+1. const r = await tools.get_goal({});
+text(r);
+Require goal null.
+2. const r = await tools.create_goal({objective:"R9 Goal Mode test taker goal-mode-v14-structural-context-matrix-001/row-015/0; criteria_sha256=13ee0d1475f305d2d884b7aa49d59af4591939a39d4ca06cb27bd27375a0433c; control_envelope_sha256=6467c4ad9f274c6a1347f6b870e905d4af042c015439e6d61997de957dd9d99a; subject_commitment_sha256=262363f4fd5373b9d6c767ee135e3f12bdf4949e962debc1bf22fb0301eb16d5; execute exactly one gated subject inside a fresh native Goal, freeze its scored answer, then settle that same Goal only in a same-task non-scored terminal-closure continuation."});
+text(r);
+Require the exact objective and status active.
+3. const r = await tools.get_goal({});
+text(r);
+Require the same Goal and status active.
+
+Commitments: run_id=goal-mode-v14-structural-context-matrix-001; row_id=row-015; attempt=0; criteria_sha256=13ee0d1475f305d2d884b7aa49d59af4591939a39d4ca06cb27bd27375a0433c; control_envelope_sha256=6467c4ad9f274c6a1347f6b870e905d4af042c015439e6d61997de957dd9d99a; subject_commitment_sha256=262363f4fd5373b9d6c767ee135e3f12bdf4949e962debc1bf22fb0301eb16d5; subject_utf8_bytes=6386.
+
+After and only after call 3 succeeds, invoke exactly this one reader action:
+
+const r = await tools.exec_command({cmd:"timeout --signal=TERM --kill-after=5s 65s python3 -B /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v4/read_goal_subject.py --fifo /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_v14_structural_context_matrix_001_evidence/rows/row-015/subject.fifo --sha256 262363f4fd5373b9d6c767ee135e3f12bdf4949e962debc1bf22fb0301eb16d5 --bytes 6386 --timeout-seconds 60",workdir:"/mnt/Cursor/PuppetMaster",yield_time_ms:30000,max_output_tokens:20000});
+if (r.exit_code !== 0) throw new Error('subject reader failed');
+text(r.output);
+
+The reader blocks while the controller independently proves this task's fresh active native Goal. Treat its returned UTF-8 text as the sole scored subject prompt. Perform all subject reasoning after that return, in this same task and this active Goal turn. Do not retry, relaunch, replace, delegate, or invoke any other tool. Do not call update_goal in this scored turn. Leave the same Goal active for a controller-authorized same-task terminal-closure continuation. Emit only the subject answer as the terminal assistant message.

@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-normalized-matrix-v2-pass_01-01-b79124da87",
+  "captured_at_utc": "2026-08-27T11:33:01.656Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 1836965: PermanentCanaryError: terminal structural failure: OMP Goal exit mode",
+  "no_retry": true,
+  "nonce": "b79124da87e9a7ff02639a27205cc7a7",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": 1836965,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

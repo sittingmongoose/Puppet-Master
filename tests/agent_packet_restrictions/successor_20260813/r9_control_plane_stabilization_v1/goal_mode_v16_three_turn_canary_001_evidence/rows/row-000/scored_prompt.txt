@@ -1,0 +1,11 @@
+R9 NATIVE GOAL MODE SCORED SAME-TASK RESUME — THE SUBJECT IS STILL CONTROLLER-GATED.
+
+This is the documented continuation of the exact fresh task and native Goal created in the completed subject-free activation turn. The activation attestation is sha256=5af49fa8081ad3de38f00ac4a4251a6c21ce6751cb0f64d434b88fb4c1f16429; bytes=853. The native Goal context injected by the runtime must carry the exact active objective before this prompt.
+
+Do not invoke get_goal, create_goal, update_goal, a file action, web request, collaboration action, memory action, delegation, or any other action before the subject reader. Your first and only action in this turn must be exactly:
+
+const r = await tools.exec_command({cmd:"timeout --signal=TERM --kill-after=5s 65s python3 -B /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v4/read_goal_subject.py --fifo /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_v16_three_turn_canary_001_evidence/rows/row-000/subject.fifo --sha256 7a2591bf8686545b877476153a27aced7075bc540fb40a1cc55a365ef3f1de4c --bytes 120 --timeout-seconds 60",workdir:"/mnt/Cursor/PuppetMaster",yield_time_ms:30000,max_output_tokens:20000});
+if (r.exit_code !== 0) throw new Error('subject reader failed');
+text(r.output);
+
+The reader blocks while the controller independently reopens the completed activation receipt and the active native Goal. Treat its returned UTF-8 text as the sole scored subject prompt. Perform every subject-reasoning step only after that return, in this same task and active Goal. Do not retry, relaunch, replace, delegate, or invoke another action. Leave the Goal active for the separate subject-free closure turn. Emit only the exact subject answer as the terminal assistant message.

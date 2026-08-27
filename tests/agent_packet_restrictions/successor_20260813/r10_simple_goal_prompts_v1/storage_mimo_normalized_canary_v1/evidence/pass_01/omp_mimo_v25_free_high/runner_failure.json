@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-mimo-normalized-canary-v1-01-037879864a",
+  "captured_at_utc": "2026-08-26T23:26:40.653Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 1399741: RunnerError: row time budget expired before exact Goal terminal result",
+  "no_retry": true,
+  "nonce": "037879864ab2206b98ad398c523642cb",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": 1399741,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

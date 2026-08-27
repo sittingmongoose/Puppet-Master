@@ -1,0 +1,88 @@
+{
+  "assistant_lifecycle_shape": "standard_tool_cycle",
+  "assistant_message_count": 2,
+  "entry_ids": {
+    "final_assistant": "0af5b0ad",
+    "goal_active": "fb7f8517",
+    "goal_call_assistant": "add28c4d",
+    "goal_complete_mode": "4f2aed83",
+    "goal_completed": "7faff543",
+    "goal_contexts": [
+      "106a87b5"
+    ],
+    "goal_exit": "d1050d21",
+    "goal_result": "0206050d",
+    "goal_tool_start": "5a938766",
+    "native_continuation": null,
+    "session_exit": "3d1543b7",
+    "user": "13b9f350"
+  },
+  "final_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "final_text_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+  "goal_context_count": 1,
+  "goal_id": "1567d6f447eb5456",
+  "goal_tool_call_id": "call_400c4629f73440b9bbaa9d43",
+  "leaf_id": "3d1543b7",
+  "logical_entry_count": 15,
+  "model": "glm-5.3-flash",
+  "native_continuation_count": 0,
+  "ordinary_tool_calls": 0,
+  "pre_goal_call_text_utf8_bytes": 661,
+  "provider": "opencode-go",
+  "raw_last_assistant_sha256": "a87cebb2f6cb6053fe80167b5b6e40c53825b7d1664f692a8c4d22589360271a",
+  "raw_last_assistant_text": "Structural checks all pass, but they don't confer readiness: canonical currentness failed (`stale_generated_index_artifact`, `Plans/.plan_index/node_readiness_report.json`; recomputed vs stored stable sha256 mismatch) and runtime certification is incomplete (PNC-019). Either condition mandates `blocked`. No WorkNodes/Plan edits proposed.\n\nTime used: 58 seconds.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "raw_last_assistant_utf8_bytes": 781,
+  "result_normalization": {
+    "candidate_count": 1,
+    "candidates": [
+      {
+        "assistant_ordinal": 2,
+        "block_index": 1,
+        "entry_id": "0af5b0ad",
+        "entry_index": 10,
+        "line_index": 5,
+        "message_id": null,
+        "raw_line": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+        "raw_line_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+        "raw_line_utf8_bytes": 416
+      }
+    ],
+    "canonical_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "canonical_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+    "canonical_utf8_bytes": 416,
+    "location_indexing": "entry_and_block_zero_based_line_one_based",
+    "raw_session_preserved": true,
+    "result_authority": "deterministic_host_program_over_verified_assistant_text",
+    "schema_id": "pm.r10.storage_pipeline.result_normalization.v1",
+    "surrounding_prose_authoritative": false
+  },
+  "selector": "opencode-go/glm-5.3-flash",
+  "session_file_bytes": 40297,
+  "session_file_sha256": "c2bd8c0dd60443533252224a1b90b7c9c4264368d8a0702c85d0a19beafd185a",
+  "session_id": "01a04226-7f0e-7649-bac4-cea10610bef9",
+  "session_started_at_utc": "2026-08-27T07:36:54.286Z",
+  "thinking": "max",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256,
+  "verified_assistant_text_blocks": [
+    {
+      "assistant_ordinal": 1,
+      "block_index": 1,
+      "entry_id": "add28c4d",
+      "entry_index": 6,
+      "message_id": null,
+      "sha256": "6c556c5a4d218391667bbb702ef809192b6923f62757ca63a4cd1fde4f487b71",
+      "utf8_bytes": 661
+    },
+    {
+      "assistant_ordinal": 2,
+      "block_index": 1,
+      "entry_id": "0af5b0ad",
+      "entry_index": 10,
+      "message_id": null,
+      "sha256": "a87cebb2f6cb6053fe80167b5b6e40c53825b7d1664f692a8c4d22589360271a",
+      "utf8_bytes": 781
+    }
+  ],
+  "verified_assistant_text_utf8_bytes": 1442
+}

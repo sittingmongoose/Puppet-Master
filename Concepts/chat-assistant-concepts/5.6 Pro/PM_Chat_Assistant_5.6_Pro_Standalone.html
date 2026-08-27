@@ -125,8 +125,9 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .thread-row.active { background:color-mix(in srgb,var(--accent) 12%,var(--surface-3));color:var(--text); }
 
 .thread-copy { min-width:0; }
-.thread-title { display:flex;align-items:center;gap:5px;font-weight:620;font-size:12px;white-space:nowrap; }
-.thread-title span:first-child { overflow:hidden;text-overflow:ellipsis; }
+.thread-title { display:flex;align-items:center;gap:5px;font-weight:620;font-size:12px;white-space:nowrap; min-width:0; }
+.thread-time { flex:0 0 auto; white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--subtle); font-weight:500; font-size:11px; }
+.thread-name { min-width:0; overflow:hidden; text-overflow:ellipsis; }
 .thread-sub { display:flex;gap:5px;min-width:0;margin-top:2px;font-size:10px;color:var(--subtle); }
 .thread-sub .summary { overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .thread-unread { min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-size:9px;font-weight:700; }
@@ -3697,6 +3698,14 @@ body[data-theme="retro-light"] {
 @keyframes ctx-meter-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .ctx-morelim { margin-top: 1px; }
+.ctx-morelim-row {
+  display: flex; align-items: center; gap: 8px; min-width: 0;
+}
+.ctx-morelim-row .ctx-threadnote {
+  flex: 1 1 auto; min-width: 0;
+  font-size: 8px; color: var(--subtle); line-height: 1.25;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 .ctx-morelim-b { display: flex; flex-direction: column; gap: 5px; margin-top: 5px; }
 .ctx-morebtn .ctx-chev { display: inline-flex; transition: transform 160ms var(--ease); }
 .ctx-morebtn.on .ctx-chev { transform: rotate(180deg); }
@@ -3726,7 +3735,7 @@ body[data-theme="retro-light"] {
    sits on this row is that it can be read at a glance.  Wrapping grows the row
    a few pixels and leaves the two buttons exactly where they were. */
 .ctx-cache {
-  flex: 1 1 auto; min-width: 0; font-size: 9px; color: var(--subtle);
+  flex: 1 1 auto; min-width: 0; font-size: 10px; color: var(--subtle);
   white-space: normal; line-height: 1.25; overflow-wrap: anywhere;
 }
 .ctx-cache b { color: var(--text); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
@@ -3757,8 +3766,6 @@ body[data-theme="retro-light"] {
   animation: ctx-spin 900ms linear infinite;
 }
 @keyframes ctx-spin { to { transform: rotate(360deg); } }
-
-.ctx-threadnote { font-size: 8px; color: var(--subtle); line-height: 1.4; }
 
 /* =====================================================================
    B. THE DRAWER  (slot contextDrawer)
@@ -4126,6 +4133,10 @@ body[data-theme="retro-light"] {
        closing — the exit; see the Wave 1B contract note further down
    ===================================================================== */
 :root{
+  /* Open matches the Concept-12 Details inspector: kimi spring overshoot. */
+  --ph-t-open: 320ms;
+  --ph-ease-open: cubic-bezier(.34, 1.56, .64, 1);
+  /* Close / pin / width stay on material ease (no bounce while exiting). */
   --ph-t: 240ms;
   --ph-ease: cubic-bezier(.4,0,.2,1);
   --ph-open-w: 300px;   /* reference: min(300px, 85%) */
@@ -4168,17 +4179,22 @@ body[data-theme="retro-light"] {
    taken against it. The safety clamp is applied LAST so it always wins: a
    clamp() would let the 170px floor beat the 42% cap on a narrow pane.
    --------------------------------------------------------------------------- */
-body[data-ph-drawer="pinned"]{
+body[data-ph-drawer="pinned"],
+body[data-ph-want-pin]{
   --ph-w: min( max(var(--ph-user-w, var(--ph-pin-w)), var(--ph-min-w)),
                calc(var(--ph-pane, 100vw) * .42) );
 }
 body[data-ph-drawer] .history-flyout{ width:min(var(--ph-open-w), calc(var(--ph-pane, 100vw) * .85)); }
-body[data-ph-drawer="pinned"] .history-flyout{ width:var(--ph-w); }
+body[data-ph-drawer][data-ph-want-pin] .history-flyout,
+body[data-ph-drawer="pinned"] .history-flyout,
+body[data-ph-drawer="closing"][data-ph-want-pin] .history-flyout{ width:var(--ph-w); }
 body[data-ph-drawer="pinned"] .assistant-grid{ padding-left:var(--ph-w); }
 
+/* ---- Details-panel motion (transform only) ------------------------------
+   Same spring open / material close / settled contract as the Concept-12
+   Details inspector, but docked to the LEFT of the assistant pane (W1 /
+   Pin left).  Transform alone — no animated clip-path (that wiped titles). */
 body[data-ph-drawer] .history-flyout{
-  /* OPEN LEFT.  styles.css:298 pins the flyout to `right:6px` and animates it
-     in from the right with `history-in`; both are replaced here. */
   left:var(--ph-x, 0px);
   right:auto;
   top:var(--ph-y, calc(var(--header-h) + 6px));
@@ -4191,45 +4207,32 @@ body[data-ph-drawer] .history-flyout{
   background:var(--surface-2);
   backdrop-filter:none;
   box-shadow:var(--shadow-float);
-  transform:translateX(-102%);
-  /* CLIPPED TO THE PANE.  In the reference the drawer is position:absolute
-     inside an overflow:hidden root, so it is never visible outside the column
-     it belongs to.  Here it is position:fixed inside #pmOverlayRoot, so without
-     this it slides in ACROSS THE EDITOR PANE and reads as a panel flying in
-     rather than a drawer emerging — caught by looking at the contact sheet, not
-     by any metric.  clip-path cannot be expressed against a fixed screen x, but
-     it does not need to be: at progress p the element sits at
-     translateX(-102%*(1-p)), so the part hanging left of the pane edge is
-     exactly 102%*(1-p) OF ITS OWN WIDTH.  Driving the left inset on the same
-     duration and easing keeps the two in exact lockstep — including while the
-     width itself is animating on close, because both are relative to the same
-     current width.
-
-     Only the LEFT inset does any clipping: the other three are -90px so the
-     float shadow (0 18px 65px) still paints on the three sides that are inside
-     the pane.  A plain inset(0) would have clipped the shadow away on all four,
-     which no metric here would have noticed — it is measured by an A/B pixel
-     read in history-verify.mjs instead. */
-  clip-path:inset(-90px -90px -90px 102%);
-  animation:none;
-  transition:transform var(--ph-t) var(--ph-ease),
-             clip-path var(--ph-t) var(--ph-ease),
-             width var(--ph-t) var(--ph-ease),
+  animation:none !important;
+  backface-visibility:hidden;
+  clip-path:none;
+  transform:translate3d(-102%, 0, 0);
+  transition:transform var(--ph-t-open) var(--ph-ease-open),
              box-shadow var(--ph-t) var(--ph-ease),
              border-color var(--ph-t) var(--ph-ease);
 }
 body[data-ph-drawer="open"] .history-flyout,
-body[data-ph-drawer="pinned"] .history-flyout{ transform:translateX(0); clip-path:inset(-90px -90px -90px 0); }
-/* PINNED: it does not move — the heavy overlay shadow becomes a quiet border. */
+body[data-ph-drawer="pinned"] .history-flyout{
+  transform:translate3d(0, 0, 0);
+}
+body[data-ph-drawer="open"][data-ph-settled] .history-flyout,
+body[data-ph-drawer="pinned"][data-ph-settled] .history-flyout,
+body[data-ph-pinning] .history-flyout{
+  transition:transform var(--ph-t-open) var(--ph-ease-open),
+             width var(--ph-t) var(--ph-ease),
+             box-shadow var(--ph-t) var(--ph-ease),
+             border-color var(--ph-t) var(--ph-ease);
+}
+body[data-ph-drawer="open"][data-ph-settled] .history-flyout,
+body[data-ph-drawer="pinned"][data-ph-settled] .history-flyout{ transform:none; }
 body[data-ph-drawer="pinned"] .history-flyout{ box-shadow:none; border-right-color:var(--border); }
 
 .assistant-grid{ transition:padding-left var(--ph-t) var(--ph-ease); }
 
-/* ---- scrim -------------------------------------------------------------
-   `.assistant-pane::after` rather than a node, because a node would have to be
-   emitted from app.js.  It is declarative, so the reference's sibling defect —
-   paintPin() hides the scrim on pin and never restores display on unpin — is
-   structurally impossible here: unpinning restores it with no JS. */
 .assistant-pane{ position:relative; }
 .assistant-pane::after{
   content:"";
@@ -4240,24 +4243,20 @@ body[data-ph-drawer="pinned"] .history-flyout{ box-shadow:none; border-right-col
 }
 body[data-ph-drawer="open"] .assistant-pane::after{ opacity:1; pointer-events:auto; }
 
-/* ---- exit --------------------------------------------------------------
-   Wave 1B published `.pm-leaving` + a duration read back from the computed
-   style.  Its `pm-overlay-out` collapses toward the trigger, which is right
-   for a menu and wrong for a drawer, so the keyframes are drawer-specific
-   while the CONTRACT is kept exactly: the class is applied, the wait is read
-   back with getComputedStyle().animationDuration, and reduced motion collapses
-   it to 1ms so a caller never stalls.  The selector is doubled onto the body
-   attribute because pmPatch strips the class from the node on the next work
-   tick; the body attribute is what actually survives the exit. */
-@keyframes ph-drawer-out{
-  from{ transform:translateX(0); clip-path:inset(-90px -90px -90px 0) }
-  to{ transform:translateX(-102%); clip-path:inset(-90px -90px -90px 102%) }
-}
-body[data-ph-drawer="closing"] .history-flyout,
-.history-flyout.pm-leaving{
-  animation:ph-drawer-out var(--ph-t) var(--ph-ease) both;
+/* Closing: material ease, no bounce.  Timing may also be applied one frame
+   earlier via data-ph-closing while still open/pinned (Details is-closing). */
+body[data-ph-closing] .history-flyout,
+body[data-ph-drawer="closing"] .history-flyout{
+  transition-property:transform, box-shadow, border-color;
+  transition-duration:var(--ph-t);
+  transition-timing-function:var(--ph-ease);
   pointer-events:none;
+  animation:none !important;
+  transform:translate3d(-102%, 0, 0);
 }
+
+/* Hide leftover clip host from earlier experiments */
+.ph-clip-host{ display:none !important; }
 
 /* ---- the drawer's pin strip -------------------------------------------- */
 body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ display:none; }
@@ -4328,17 +4327,23 @@ body[data-ph-resizing] .ph-resize::after{ background:var(--accent); }
    sit after the (0,2,1) transition rule above, so they win at equal weight. */
 body[data-ph-resizing] .history-flyout,
 body[data-ph-resizing] .assistant-grid{ transition:none; }
+/* Settled/pinning rules above are (0,3,1); without this the drag kept a 240ms
+   width transition and the pointer lagged (history-verify coupling/seam/lag). */
+body[data-ph-drawer][data-ph-resizing] .history-flyout,
+body[data-ph-drawer="pinned"][data-ph-settled][data-ph-resizing] .history-flyout,
+body[data-ph-drawer="open"][data-ph-settled][data-ph-resizing] .history-flyout,
+body[data-ph-pinning][data-ph-resizing] .history-flyout,
+body[data-ph-resizing] .assistant-grid{ transition:none; }
 
 @media (prefers-reduced-motion: reduce){
-  /* Must be re-declared here: motion.css's 1ms rule for `.history-flyout
-     .pm-leaving` is earlier in the cascade and would lose to the override
-     above at equal specificity.  Reduced motion still reaches the same end
-     state — the drawer is gone, the gutter is collapsed — just not decorated. */
-  body[data-ph-drawer="closing"] .history-flyout,
-  .history-flyout.pm-leaving{ animation-duration:1ms; }
+  /* Reduced motion still reaches the same end state — the drawer is gone, the
+     gutter is collapsed — just not decorated.  Close is a transition now (no
+     keyframes), so only transition-duration collapses. */
   body[data-ph-drawer] .history-flyout,
+  body[data-ph-drawer="closing"] .history-flyout,
+  body[data-ph-closing] .history-flyout,
   .assistant-grid,
-  .assistant-pane::after{ transition-duration:1ms; }
+  .assistant-pane::after{ transition-duration:1ms !important; }
 }
 
 /* =====================================================================
@@ -4359,10 +4364,9 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
 .history-flyout > *, .history-panel > *{ flex:0 0 auto; }
 .history-flyout > .history-scroll, .history-panel > .history-scroll{ flex:1 1 auto; min-height:0; }
 
-/* 2. Take 6 relaxes `.thread-sub` to `white-space:normal` so the summary can
-      clamp to two lines — but `.thread-sub` is a flex row, so the relaxation
-      also let the timestamp shrink to one character and wrap "2m" onto two
-      lines next to a hyphen-less separator.  Only the summary should wrap. */
+/* 2. Timestamp lives on the title row (`.thread-time`) and must never wrap.
+      Take 6 still relaxes `.thread-sub` for a two-line summary clamp. */
+.thread-time{ flex:0 0 auto; white-space:nowrap; }
 .history-panel[data-history-variant="5"] .thread-sub > span:not(.summary),
 .history-flyout[data-history-variant="5"] .thread-sub > span:not(.summary){ flex:0 0 auto; white-space:nowrap; }
 
@@ -13436,25 +13440,33 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function limitsBlock(esc, icon, rec) {
     var w = rec.window || {}, lims = rec.limits || [];
+    var note = '<div class="ctx-threadnote" data-k="ctxnote">' + esc(w.model || 'No configured model') + ' · ' +
+      esc(w.account || '—') + '</div>';
     var head = '<div class="ctx-limhead">' + esc(w.product || 'Current plan') +
       (w.connection && w.connection !== 'none' ? ' · ' + esc(w.connection) : ' · no connection') + '</div>';
     if (!lims.length) {
       /* The sanctioned honest-gap pattern: say what is not exposed rather
          than drawing an empty meter that reads as zero usage. */
       return '<div class="ctx-limits" data-k="ctxlimits">' + head +
-        '<div class="ctx-limnone">No plan limits are exposed for this connection.</div></div>';
+        '<div class="ctx-limnone">No plan limits are exposed for this connection.</div>' +
+        '<div class="ctx-morelim-row">' + note + '</div></div>';
     }
     var shown = lims.slice(0, 2), rest = lims.slice(2);
     var html = '<div class="ctx-limits" data-k="ctxlimits">' + head +
       shown.map(function (m) { return limitRow(esc, m); }).join('');
+    /* Model/account sits beside More limits (above Compact now / More details). */
+    html += '<div class="ctx-morelim">';
+    html += '<div class="ctx-morelim-row">';
     if (rest.length) {
-      html += '<div class="ctx-morelim">' +
-        '<button class="ctx-minibtn ctx-morebtn' + (CS.moreLimits ? ' on' : '') + '" data-action="ctx-more-limits" aria-expanded="' + (CS.moreLimits ? 'true' : 'false') + '">' +
+      html += '<button class="ctx-minibtn ctx-morebtn' + (CS.moreLimits ? ' on' : '') + '" data-action="ctx-more-limits" aria-expanded="' + (CS.moreLimits ? 'true' : 'false') + '">' +
         '<span class="ctx-chev">' + icon('down', 10) + '</span>' +
-        '<span>' + (CS.moreLimits ? 'Hide' : 'More') + ' limits (' + rest.length + ')</span></button>' +
-        (CS.moreLimits ? '<div class="ctx-morelim-b">' + rest.map(function (m) { return limitRow(esc, m); }).join('') + '</div>' : '') +
-        '</div>';
+        '<span>' + (CS.moreLimits ? 'Hide' : 'More') + ' limits (' + rest.length + ')</span></button>';
     }
+    html += note + '</div>';
+    if (rest.length && CS.moreLimits) {
+      html += '<div class="ctx-morelim-b">' + rest.map(function (m) { return limitRow(esc, m); }).join('') + '</div>';
+    }
+    html += '</div>';
     return html + '</div>';
   }
 
@@ -13566,9 +13578,6 @@ window.PM56_EXT = window.PM56_EXT || {
       '</div>';
 
     html += statusLine(esc, rec, tid);
-
-    html += '<div class="ctx-threadnote" data-k="ctxnote">' + esc(w.model || 'No configured model') + ' · ' +
-      esc(w.account || '—') + '</div>';
 
     return html + '</div>';
   }
@@ -14153,25 +14162,103 @@ window.PM56_EXT = window.PM56_EXT || {
      renderOverlays (measured: 4ms) rather than renderApp (measured: 25-49ms on
      the 24-thread / 374-message fixture).  On a click path that is about to
      start a 240ms transition, a 25-49ms block is a visible late start. */
+  function clearSettled(){ document.body.removeAttribute('data-ph-settled'); }
+  function markSettled(){ document.body.dataset.phSettled = '1'; }
+  /* Clip #pmOverlayRoot to the assistant pane so a leftward close cannot
+     paint over the editor.  Open stays unclipped (user-approved).  inset()
+     is relative to the overlay root's viewport-sized box. */
+  function applyPaneClip(){
+    var pane = document.querySelector('.assistant-pane');
+    var root = document.getElementById('pmOverlayRoot');
+    if(!pane || !root) return;
+    sync();
+    var r = pane.getBoundingClientRect();
+    root.style.clipPath = 'inset('
+      + Math.max(0, r.top) + 'px '
+      + Math.max(0, window.innerWidth - r.right) + 'px '
+      + Math.max(0, window.innerHeight - r.bottom) + 'px '
+      + Math.max(0, r.left) + 'px)';
+  }
+  function clearPaneClip(){
+    var root = document.getElementById('pmOverlayRoot');
+    if(root) root.style.clipPath = '';
+  }
+  /* Prefer the transform transition duration (Details-panel contract).  Fall
+     back across comma-separated lists if an older sheet reordered properties. */
+  function readMotionMs(el, closing){
+    if(!el) return 0;
+    if(reduced()) return 0;
+    var cs = window.getComputedStyle(el);
+    var props = String(cs.transitionProperty || '').split(',');
+    var durs = String(cs.transitionDuration || '').split(',');
+    var ms = 0;
+    for(var i = 0; i < props.length; i++){
+      if(String(props[i]).trim() !== 'transform') continue;
+      ms = parseFloat(durs[Math.min(i, durs.length - 1)]) * 1000;
+      break;
+    }
+    if(!(ms > 0)) ms = parseFloat(durs[0]) * 1000;
+    if(!(ms > 0)) ms = closing ? 240 : 320;
+    return ms;
+  }
+
   function openDrawer(){
     if(!api) return;
     clearTimeout(closeTimer); closing = false;
     S().historyMode = 'floating';
+    clearSettled();
+    clearPaneClip();
+    document.body.removeAttribute('data-ph-closing');
+    /* Opening into pinned must already be at pin width (see history.css
+       [data-ph-want-pin]) so the spring slide does not also narrow mid-flight. */
+    if(pinned) document.body.dataset.phWantPin = '1';
+    else document.body.removeAttribute('data-ph-want-pin');
     /* The resting state must be painted BEFORE the open class, or the browser
        has no start value to transition from and the drawer simply appears.
-       This is the reference's `display:''` -> rAF -> add class idiom, with the
-       render standing in for the display flip; the forced reflow is belt and
-       braces for the case where the rAF is coalesced with the style flush. */
+       Details-panel idiom: display on -> force reflow -> double rAF -> is-open. */
     setMode('shut');
+    sync(); /* publish --ph-pane before width calc so pin width is correct on frame 0 */
     api.renderOverlays();
     var el = document.querySelector('.history-flyout');
-    if(el) void el.offsetWidth;
+    if(el){
+      el.classList.remove('pm-leaving');
+      el.removeEventListener('transitionend', onOpenSettled);
+      /* Hard-lock the enter width so a late cascade cannot morph it under the spring. */
+      if(pinned) el.style.width = clampWidth(widthNow()) + 'px';
+      else el.style.width = '';
+      void el.offsetWidth;
+    }
     requestAnimationFrame(function(){
-      if(mode() !== 'shut') return;
-      setMode(pinned ? 'pinned' : 'open');
-      sync();
+      requestAnimationFrame(function(){
+        if(mode() !== 'shut') return;
+        setMode(pinned ? 'pinned' : 'open');
+        /* Keep want-pin through the open when pinned; clearing it here let width
+           transition from open-w → pin-w mid-spring. Drop it after settle. */
+        if(!pinned) document.body.removeAttribute('data-ph-want-pin');
+        sync();
+        if(el){
+          if(reduced()){
+            markSettled();
+            el.style.width = '';
+            document.body.removeAttribute('data-ph-want-pin');
+          } else {
+            el.addEventListener('transitionend', onOpenSettled);
+          }
+        }
+      });
     });
     api.savePrefs();
+  }
+
+  function onOpenSettled(e){
+    if(e.propertyName !== 'transform') return;
+    var el = e.target;
+    if(!el || !el.classList || !el.classList.contains('history-flyout')) return;
+    el.removeEventListener('transitionend', onOpenSettled);
+    if(!isOpen()) return;
+    markSettled();
+    el.style.width = '';
+    document.body.removeAttribute('data-ph-want-pin');
   }
 
   /* `implicit` is true for Esc and scrim-click.  THIS is the guard the
@@ -14182,20 +14269,33 @@ window.PM56_EXT = window.PM56_EXT || {
     if(implicit && pinned) return;
     var el = document.querySelector('.history-flyout');
     /* The toggle closes a pinned drawer, and unpins on the way out so the
-       reserved gutter collapses with it rather than being left behind. */
+       reserved gutter collapses with it rather than being left behind.
+       Keep pin WIDTH locked for the exit (want-pin) — otherwise the drawer
+       grows toward open-w while sliding out, which reads as jank. */
+    var wasPinned = pinned;
     if(pinned){ pinned = false; store('0'); }
+    if(wasPinned) document.body.dataset.phWantPin = '1';
+    else document.body.removeAttribute('data-ph-want-pin');
     if(!el){ finishClose(); return; }
     closing = true;
+    /* Exact Details close sequence (kimi.js closeDetailInspector):
+         1. drop settled  → restore translate3d(0) while still open/pinned
+         2. mark closing timing while still at rest
+         3. reflow
+         4. leave open/pinned so the off-screen transform transitions out
+       Do NOT use .pm-leaving — motion.css attaches pm-overlay-out keyframes
+       to that class and fights the transform transition. */
+    clearSettled();
+    el.removeEventListener('transitionend', onOpenSettled);
+    if(wasPinned) el.style.width = clampWidth(widthNow()) + 'px';
+    el.classList.remove('pm-leaving');
+    document.body.dataset.phClosing = '1';
+    /* Keep the slide inside the assistant pane — without this, translate
+       -102% paints the drawer across the editor on the way out. */
+    applyPaneClip();
+    void el.offsetWidth;
     setMode('closing');
-    /* Wave 1B's exit contract: mark the node, then read the wait back off the
-       computed style rather than hard-coding it — under prefers-reduced-motion
-       history.css collapses this to 1ms and a hard-coded 240 would stall the
-       close.  The class is applied for the contract's sake; the animation is
-       actually selected by `body[data-ph-drawer="closing"]`, because pmPatch
-       would strip the class from the node on the next work tick. */
-    el.classList.add('pm-leaving');
-    var ms = parseFloat(window.getComputedStyle(el).animationDuration) * 1000;
-    if(!(ms > 0)) ms = 0;
+    var ms = readMotionMs(el, true);
     clearTimeout(closeTimer);
     /* pmPatch cannot drop the node early because state.historyMode is still
        'floating' for the whole exit — renderOverlays keeps emitting the flyout,
@@ -14206,6 +14306,10 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function finishClose(){
     closing = false;
+    clearSettled();
+    clearPaneClip();
+    document.body.removeAttribute('data-ph-want-pin');
+    document.body.removeAttribute('data-ph-closing');
     setMode('closed');
     if(!api) return;
     S().historyMode = 'closed';
@@ -14217,9 +14321,15 @@ window.PM56_EXT = window.PM56_EXT || {
     pinned = !!v;
     store(pinned ? '1' : '0');
     if(!isOpen()) return;
+    /* Mark pinning so width may transition; cleared after the pin duration. */
+    document.body.dataset.phPinning = '1';
     setMode(pinned ? 'pinned' : 'open');
     sync();
     if(api) api.renderOverlays();   // repaint the chrome strip's label / icon
+    clearTimeout(setPinned._t);
+    setPinned._t = setTimeout(function(){
+      document.body.removeAttribute('data-ph-pinning');
+    }, reduced() ? 0 : 260);
   }
 
   EXT.action('toggle-history', function(){
@@ -19382,7 +19492,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderThreadRow(t){
-    return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span><div class="thread-copy"><div class="thread-title"><span>${esc(t.title)}</span>${t.unread?`<span class="thread-unread">${t.unread}</span>`:''}</div><div class="thread-sub"><span>${esc(t.updated)}</span><span>·</span><span class="summary">${esc(t.summary)}</span></div></div><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}" title="Thread options">${icon('more',14)}</button></div>`;
+    return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span>${t.unread?`<span class="thread-unread">${t.unread}</span>`:''}</div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}" title="Thread options">${icon('more',14)}</button></div>`;
   }
 
   function renderHistory(){ return `<aside class="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }

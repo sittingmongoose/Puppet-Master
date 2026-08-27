@@ -1,0 +1,39 @@
+$ bun --cwd=packages/stats run gen:stats
+$ bun scripts/generate-client-bundle.ts --generate
+$ bun run build.ts
+$ bun scripts/build-tool-views.ts
+$ bun --cwd=packages/natives run gen:native
+$ bun scripts/embed-native.ts
+89 | 	}
+90 | }
+91 | 
+92 | if (available.length === 0) {
+93 | 	const expected = candidates.map(candidate => `  - ${candidate.filename}`).join("\n");
+94 | 	throw new Error(`No native addons found for ${platformTag}. Expected one of:\n${expected}`);
+                ^
+error: No native addons found for win32-x64. Expected one of:
+  - pi_natives.win32-x64-modern.node
+  - pi_natives.win32-x64-baseline.node
+      at /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/scripts/embed-native.ts:94:12
+
+Bun v1.4.0 (Linux x64)
+error: script "gen:native" exited with code 1
+error: script "gen:native" exited with code 1
+$ bun --cwd=packages/natives run gen:native:reset
+$ bun scripts/embed-native.ts --reset
+$ bun --cwd=packages/stats run gen:stats:reset
+$ bun scripts/generate-client-bundle.ts --reset
+110 | 		stdout: "inherit",
+111 | 		stderr: "inherit",
+112 | 	});
+113 | 	const exitCode = await proc.exited;
+114 | 	if (exitCode !== 0) {
+115 | 		throw new Error(`Command failed with exit code ${exitCode}: ${command.join(" ")}`);
+                  ^
+error: Command failed with exit code 1: bun run gen:native
+      at runCommand (/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/scripts/ci-release-build-binaries.ts:115:13)
+      at async embedNative (/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/scripts/ci-release-build-binaries.ts:125:8)
+      at async buildBinary (/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/scripts/ci-release-build-binaries.ts:134:8)
+      at async main (/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/scripts/ci-release-build-binaries.ts:200:10)
+
+Bun v1.4.0 (Linux x64)

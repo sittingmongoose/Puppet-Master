@@ -1,0 +1,19 @@
+{
+  "attempt_id": "storage-glm53-max-norm-v1-pass_01-01-ca6cb04dd7",
+  "bytes": 1,
+  "composer_ack_sha256": "797ccb8dc6c825555d2a2627105e2afbb8e16ad2c804a454eece23d269f04d89",
+  "external_submission_count": 1,
+  "low_level_write_ordinal": 2,
+  "nonce": "ca6cb04dd7898a5134541486c8bba957",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "path": "stdin_enter.raw",
+  "pid": 1551413,
+  "prompt_write_sha256": "34707facec1367d9ca87c1fc400413f04a6534c2b01066d56404f4b67a35d718",
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.enter_write.v7",
+  "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4",
+  "terminator_hex": "0d",
+  "write_return_bytes": 1,
+  "written_at_utc": "2026-08-27T05:17:42.463Z"
+}

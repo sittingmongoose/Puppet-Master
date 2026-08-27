@@ -1,0 +1,23 @@
+{
+  "attempt_id": "storage-glm53-max-norm-v1-pass_01-01-ca6cb04dd7",
+  "bytes": 100303,
+  "composer_state": "❯ 📄 #1",
+  "mcp_startup_finished": true,
+  "new_raw_bytes": 9371,
+  "nonce": "ca6cb04dd7898a5134541486c8bba957",
+  "observed_at_utc": "2026-08-27T05:17:42.458Z",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "path": "composer_ack.raw",
+  "pid": 1551413,
+  "pre_prompt_bytes": 90932,
+  "pre_prompt_sha256": "a0742305ecce65db8e94dc8223bd89fb3ff33ab25c9e266bc81bf7323058c949",
+  "prompt_card": "📄 #1",
+  "prompt_preview": "/goal Audit",
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.composer_ack.v7",
+  "sha256": "fbe7921e710f21a88498ad392e39a5487955e75b250f76179a076798f130ee8a",
+  "visible_model": "GLM-5.3-Flash (2x usage)",
+  "visible_selection_sha256": "07d00ce5a58630404899f48fedc8dda170b8ba94a17264926175f0e3bdda3e59",
+  "visible_thinking": "max"
+}

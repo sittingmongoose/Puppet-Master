@@ -249,25 +249,33 @@
 
   function limitsBlock(esc, icon, rec) {
     var w = rec.window || {}, lims = rec.limits || [];
+    var note = '<div class="ctx-threadnote" data-k="ctxnote">' + esc(w.model || 'No configured model') + ' · ' +
+      esc(w.account || '—') + '</div>';
     var head = '<div class="ctx-limhead">' + esc(w.product || 'Current plan') +
       (w.connection && w.connection !== 'none' ? ' · ' + esc(w.connection) : ' · no connection') + '</div>';
     if (!lims.length) {
       /* The sanctioned honest-gap pattern: say what is not exposed rather
          than drawing an empty meter that reads as zero usage. */
       return '<div class="ctx-limits" data-k="ctxlimits">' + head +
-        '<div class="ctx-limnone">No plan limits are exposed for this connection.</div></div>';
+        '<div class="ctx-limnone">No plan limits are exposed for this connection.</div>' +
+        '<div class="ctx-morelim-row">' + note + '</div></div>';
     }
     var shown = lims.slice(0, 2), rest = lims.slice(2);
     var html = '<div class="ctx-limits" data-k="ctxlimits">' + head +
       shown.map(function (m) { return limitRow(esc, m); }).join('');
+    /* Model/account sits beside More limits (above Compact now / More details). */
+    html += '<div class="ctx-morelim">';
+    html += '<div class="ctx-morelim-row">';
     if (rest.length) {
-      html += '<div class="ctx-morelim">' +
-        '<button class="ctx-minibtn ctx-morebtn' + (CS.moreLimits ? ' on' : '') + '" data-action="ctx-more-limits" aria-expanded="' + (CS.moreLimits ? 'true' : 'false') + '">' +
+      html += '<button class="ctx-minibtn ctx-morebtn' + (CS.moreLimits ? ' on' : '') + '" data-action="ctx-more-limits" aria-expanded="' + (CS.moreLimits ? 'true' : 'false') + '">' +
         '<span class="ctx-chev">' + icon('down', 10) + '</span>' +
-        '<span>' + (CS.moreLimits ? 'Hide' : 'More') + ' limits (' + rest.length + ')</span></button>' +
-        (CS.moreLimits ? '<div class="ctx-morelim-b">' + rest.map(function (m) { return limitRow(esc, m); }).join('') + '</div>' : '') +
-        '</div>';
+        '<span>' + (CS.moreLimits ? 'Hide' : 'More') + ' limits (' + rest.length + ')</span></button>';
     }
+    html += note + '</div>';
+    if (rest.length && CS.moreLimits) {
+      html += '<div class="ctx-morelim-b">' + rest.map(function (m) { return limitRow(esc, m); }).join('') + '</div>';
+    }
+    html += '</div>';
     return html + '</div>';
   }
 
@@ -379,9 +387,6 @@
       '</div>';
 
     html += statusLine(esc, rec, tid);
-
-    html += '<div class="ctx-threadnote" data-k="ctxnote">' + esc(w.model || 'No configured model') + ' · ' +
-      esc(w.account || '—') + '</div>';
 
     return html + '</div>';
   }

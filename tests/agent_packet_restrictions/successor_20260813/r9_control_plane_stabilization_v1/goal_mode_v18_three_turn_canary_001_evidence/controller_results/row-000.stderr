@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v18/goal_mode_harness.py", line 272, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v15/goal_mode_harness.py", line 510, in main
+    result = run_codex_row(args)
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v15/goal_mode_harness.py", line 254, in run_codex_row
+    v10._write_json(args.capture_root / "prelaunch_snapshot.json", v10._snapshot(args.codex_home))
+                                                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v10/goal_mode_harness.py", line 156, in _snapshot
+    "schema_id": ga.SNAPSHOT_SCHEMA,
+                 ^^^^^^^^^^^^^^^^^^
+AttributeError: module 'goal_mode_three_turn_attestor' has no attribute 'SNAPSHOT_SCHEMA'

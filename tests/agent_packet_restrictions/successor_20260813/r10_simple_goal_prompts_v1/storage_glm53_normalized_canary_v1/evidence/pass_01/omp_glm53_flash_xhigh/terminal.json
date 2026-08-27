@@ -1,0 +1,40 @@
+{
+  "attempt_id": "storage-glm53-normalized-canary-v1-01-96b1d9decb",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 17661,
+      "path": "omp_preflight.json",
+      "sha256": "8a84d1ae83e5662e093ae15ac902300af18c3f79bdc89e08b439e519d2dfca23"
+    },
+    {
+      "bytes": 352,
+      "path": "reservation.json",
+      "sha256": "e285b7d7361c7dde9b5605271cd7f330ed5256368a47fb9125447988d6aa11e0"
+    },
+    {
+      "bytes": 478,
+      "path": "runner_failure.json",
+      "sha256": "15701e0c455bf7a57b16aac7ce2d824d641e313fda0a81de6cc0d2a1ea441f15"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-27T01:01:00.598Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/glm-5.3-flash",
+  "no_retry": true,
+  "nonce": "96b1d9decbe85f0fcb7344cb4bb1004d",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "xhigh"
+}

@@ -1,0 +1,40 @@
+{
+  "assistant_lifecycle_shape": "standard_tool_cycle",
+  "assistant_message_count": 2,
+  "entry_ids": {
+    "final_assistant": "63565cc8",
+    "goal_active": "349f336d",
+    "goal_call_assistant": "d95d1cf8",
+    "goal_complete_mode": "aab69383",
+    "goal_completed": "08b4f82b",
+    "goal_contexts": [
+      "17e711ce"
+    ],
+    "goal_exit": "c21e9a65",
+    "goal_result": "a4548dd6",
+    "goal_tool_start": "0e6c889f",
+    "native_continuation": null,
+    "session_exit": "d58a763c",
+    "user": "ac57e18b"
+  },
+  "final_text": "Done — goal marked complete from receipt evidence alone (no files touched). Time used: 31 seconds.",
+  "final_text_sha256": "1fa733b10c9fbdc7a4b9692bad299961feda98f7835a24b59b2aa27be6a5197e",
+  "goal_context_count": 1,
+  "goal_id": "1567cd800aa1e076",
+  "goal_tool_call_id": "call_64214574fc7a48e7a5e30c05",
+  "leaf_id": "d58a763c",
+  "logical_entry_count": 15,
+  "model": "glm-5.3-flash",
+  "native_continuation_count": 0,
+  "ordinary_tool_calls": 0,
+  "pre_goal_call_text_utf8_bytes": 1312,
+  "provider": "opencode-go",
+  "selector": "opencode-go/glm-5.3-flash",
+  "session_file_bytes": 39196,
+  "session_file_sha256": "524c3ddd209426b5f4b315ba1e38203e2a33a2a06e7a18855256e4891344a78d",
+  "session_id": "01a04200-adb0-72f0-ba6e-47006c9382bf",
+  "session_started_at_utc": "2026-08-27T06:55:35.856Z",
+  "thinking": "max",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256
+}

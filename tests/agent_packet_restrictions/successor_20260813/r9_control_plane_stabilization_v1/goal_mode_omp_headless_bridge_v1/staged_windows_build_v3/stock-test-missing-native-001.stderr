@@ -1,0 +1,46 @@
+
+../../../tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/coding-agent/test/acp-agent.test.ts:
+
+# Unhandled error between tests
+-------------------------------
+860 | 				`Supported platforms: ${SUPPORTED_PLATFORMS.join(", ")}\n` +
+861 | 				"If you need support for this platform, please open an issue.",
+862 | 		);
+863 | 	}
+864 | 	const details = errors.map(error => `- ${error}`).join("\n");
+865 | 	throw new Error(
+                 ^
+error: Failed to load pi_natives native addon for linux-x64 (modern).
+
+Tried:
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/pi_natives.linux-x64-modern.node: Cannot find module '/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/pi_natives.linux-x64-modern.node'
+Require stack:
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/loader-state.js
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/tools/bun-linux-x64/pi_natives.linux-x64-modern.node: Cannot find module '/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/tools/bun-linux-x64/pi_natives.linux-x64-modern.node'
+Require stack:
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/loader-state.js
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/pi_natives.linux-x64-baseline.node: Cannot find module '/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/pi_natives.linux-x64-baseline.node'
+Require stack:
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/loader-state.js
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/tools/bun-linux-x64/pi_natives.linux-x64-baseline.node: Cannot find module '/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/tools/bun-linux-x64/pi_natives.linux-x64-baseline.node'
+Require stack:
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/loader-state.js
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/pi_natives.linux-x64.node: Cannot find module '/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/pi_natives.linux-x64.node'
+Require stack:
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/loader-state.js
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/tools/bun-linux-x64/pi_natives.linux-x64.node: Cannot find module '/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/tools/bun-linux-x64/pi_natives.linux-x64.node'
+Require stack:
+- /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/loader-state.js
+
+If installed via npm/bun, try reinstalling: bun install @oh-my-pi/pi-natives
+If developing locally, build with: bun --cwd=packages/natives run build
+Explicit targets: bun scripts/bazel-natives.ts <target> --dest packages/natives/native
+      at loadNative (/tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/loader-state.js:865:12)
+      at /tmp/pm-r9-omp-goal-bridge-v3-build-VXwcFs/repo/packages/natives/native/index.js:16:24
+-------------------------------
+
+
+ 0 pass
+ 1 fail
+ 1 error
+Ran 1 test across 1 file. [1201.00ms]

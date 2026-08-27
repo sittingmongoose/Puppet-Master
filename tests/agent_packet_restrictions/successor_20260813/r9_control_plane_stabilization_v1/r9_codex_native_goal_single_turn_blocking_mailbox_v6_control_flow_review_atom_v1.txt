@@ -1,0 +1,29 @@
+ATOM V6_CONTROL_FLOW_REVIEW_001
+Architecture: r9_codex_native_goal_single_turn_blocking_mailbox_architecture_v6.json
+Architecture identity: sha256=7ab9523f729b6d2bf07b5c96399a468d3361a32d890232d2ac7403171340814e bytes=11969 mode=0644
+Current failure: r9_codex_native_goal_jit_mailbox_canary_001_runtime_failure_receipt_v1.json sha256=a465f0d921c721a25594a40271dd9f40c21f1d08e580aed88b89b2cd36626f80 bytes=5869 mode=0644
+Prior capability: r9_codex_native_goal_blocking_mailbox_capability_001_mechanical_success_receipt_v1.json sha256=1a59cc7c53738cbbd95b250ec246338b3b15e770e8763dd3ccc265b1b983bc95 bytes=2449 mode=0644
+
+Review exactly one question: Does the following closed V6 control flow structurally avoid the C01 pre-subject Goal auto-completion boundary without reusing, retrying, recovering, or relabeling a consumed task?
+
+Closed facts:
+1. C01 and every prior failure stay permanently consumed at zero credit. V6 uses fresh identities C02, Matrix013, and Matrix014.
+2. Each scored row creates one fresh collaboration task with fork_turns=none and a control-only initial prompt of at most 512 UTF-8 bytes. It contains the exact Goal objective and wait command but no subject or scorer bytes.
+3. In the first and only task turn, the child semantically calls create_goal with that exact objective. The matching raw tool result must be ACTIVE before any subject is published.
+4. Without ending that turn, the child makes exactly one exec_command that starts a bound waiter and blocks. The waiter creates ready.json, then waits for an absent subject.txt. It has a 25-second hard deadline; the exec call yields at 30 seconds; a session yield is failure.
+5. The parent publishes subject.txt exactly once only after ready.json and a stable raw trace prefix prove: one turn_context; matching model, effort, task, Goal thread, and objective; ACTIVE create_goal followed by the pending exact waiter call; and no subject, scorer, update_goal, task final, task_complete, second turn, followup, retry, reuse, or replacement.
+6. Publication is absent-name same-directory hardlink publication from a fully fsynced/reopened stage, followed by directory fsync, exact final reopen/inode check, stage unlink, and another directory fsync.
+7. The waiter validates exact metadata, byte count, and SHA-256, writes the sole bite-size subject line once to stdout, and exits. The child solves only that stdout, calls update_goal complete for the same Goal, emits the bounded result token, and ends the same task turn.
+8. The offline verifier independently reparses the complete stable trace and accepts exactly three ordered semantic tools. It has two closed carrier profiles: direct native tool events or exec-wrapped events whose code matches a closed anchored grammar. Mixed profiles, get_goal, extra tools, unknown events, a second turn, or any mismatch consume the row.
+9. No followup_task, send_message, child poll, retry, resend, relaunch, replacement, recovery, public resume, or task reuse exists. One consumed row fails its canary or matrix.
+10. C02 has zero qualification credit. Qualification remains 0/2 until Matrix013 and Matrix014 both pass consecutively. The exact roster remains mini/xhigh, mini/medium, luna/medium. OMP remains frozen and separate.
+
+PASS only if the flow is structurally distinct and closes the stated C01 boundary with no listed hard gap. FAIL on the first hard gap. Do not grant implementation, canary, matrix, qualification, or release authority.
+
+Return exactly one result token:
+V6_PASS_NONE
+V6_FAIL_TURN
+V6_FAIL_EVENTS
+V6_FAIL_RETRY
+V6_FAIL_DISTINCT
+V6_FAIL_OTHER

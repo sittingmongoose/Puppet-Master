@@ -1,0 +1,305 @@
+{
+  "attempt_id": "storage-glm-disamb-v1-01-97fd146264",
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 179881160,
+  "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+  "config_commands": [
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "advisor.enabled"
+      ],
+      "exit_code": 0,
+      "key": "advisor.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "task.agentAdvisor"
+      ],
+      "exit_code": 0,
+      "key": "task.agentAdvisor",
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "memory.backend"
+      ],
+      "exit_code": 0,
+      "key": "memory.backend",
+      "stdout": "off"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "autolearn.enabled"
+      ],
+      "exit_code": 0,
+      "key": "autolearn.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "mcp.enableProjectConfig"
+      ],
+      "exit_code": 0,
+      "key": "mcp.enableProjectConfig",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "tools.approvalMode"
+      ],
+      "exit_code": 0,
+      "key": "tools.approvalMode",
+      "stdout": "yolo"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.enabled"
+      ],
+      "exit_code": 0,
+      "key": "goal.enabled",
+      "stdout": "true"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.continuationModes"
+      ],
+      "exit_code": 0,
+      "key": "goal.continuationModes",
+      "stdout": "[\"interactive\"]"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "plan.defaultOnStartup"
+      ],
+      "exit_code": 0,
+      "key": "plan.defaultOnStartup",
+      "stdout": "false"
+    }
+  ],
+  "config_overlay": null,
+  "dependencies": [
+    {
+      "bytes": 41009,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+      "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+    },
+    {
+      "bytes": 37909,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_session.py",
+      "sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+    },
+    {
+      "bytes": 35041,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+      "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+    },
+    {
+      "bytes": 29419,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/pipeline.py",
+      "sha256": "e240db07e8de31f7fa7294c5f722b9a63b90f634a86d00fe976deee63a8e1708"
+    },
+    {
+      "bytes": 1788,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_check.py",
+      "sha256": "170680502462ac6066077dcd43ab69b1838e986cc268590d9784bea3520a452e"
+    },
+    {
+      "bytes": 4443,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_manifest.json",
+      "sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3"
+    },
+    {
+      "bytes": 2370,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/matrix.json",
+      "sha256": "70adc74155e652808d1c9ede781698c3f5675a58e094e8b3a0d93ce9e827957e"
+    },
+    {
+      "bytes": 1335,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/runtime_manifest.json",
+      "sha256": "56943ce8625c6ce7e3d621323d382d8db8f10f2b8f2c0970193ca97f89d726ba"
+    },
+    {
+      "bytes": 407,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/oracle.json",
+      "sha256": "f11f136b271d739e8b1108cce38ab52dbd0258357f9a591da1c5c1ba69e36bdf"
+    },
+    {
+      "bytes": 3036,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 9004,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_owned_glm_reliability_v3/glm_projection.py",
+      "sha256": "32912b97875c83b9237f04ab0193710a85727c5fbb351d883c5333ef6b4fa0ec"
+    },
+    {
+      "bytes": 21,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/ox_owned_glm_reliability_v3/tools_glm.config.yml",
+      "sha256": "f1dfc8269d8f9e495d944f5319fbc6737339a27afe6445b64a50d1e5556995f9"
+    },
+    {
+      "bytes": 34781,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/controller.py",
+      "sha256": "3785d21d4999943a9a55dbc8c42d6197bc12e8e7d495d7ed7cb01d0ca5fa901a"
+    },
+    {
+      "bytes": 18014,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/codex_app_lane.py",
+      "sha256": "7f53764158feb6c6cfa529ad9c36b23e5637e1d692c1268e91583c81c768fc7d"
+    }
+  ],
+  "diagnostic_contract": {
+    "bytes": 11803,
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/diagnostic_contract.json",
+    "sha256": "b212fd79dc1da1331ea92e7825c5ec78953e4bf548d243e737c7a5997669b66f"
+  },
+  "effective_config": {
+    "advisor.enabled": false,
+    "autolearn.enabled": false,
+    "goal.continuationModes": [
+      "interactive"
+    ],
+    "goal.enabled": true,
+    "mcp.enableProjectConfig": false,
+    "memory.backend": "off",
+    "plan.defaultOnStartup": false,
+    "task.agentAdvisor": {
+      "task": "off"
+    },
+    "tools.approvalMode": "yolo"
+  },
+  "expected_argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--session-dir",
+    "/tmp/pm-r10-storage-v7-session-glm-disamb-v1-01-97fd146264",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--cwd",
+    "/tmp/pm-r10-storage-v7-glm-disamb-v1-01-97fd146264",
+    "--model",
+    "opencode-go/ox-alpha-free",
+    "--thinking",
+    "max"
+  ],
+  "git_custody": {
+    "candidate_commit": "55043263b66ee92688b8882092ec240725f108db",
+    "head": "55043263b66ee92688b8882092ec240725f108db",
+    "origin_main": "55043263b66ee92688b8882092ec240725f108db",
+    "sources": [
+      {
+        "bytes": 1683,
+        "git_mode": "100644",
+        "git_oid": "8c8875a1db526f142301cf187c1830a442181f5b",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/README.md",
+        "sha256": "e67dfce610972c9c20e4eeacff69d98841f9d480f0ccf402a27bfa422a0d1c1d"
+      },
+      {
+        "bytes": 11803,
+        "git_mode": "100644",
+        "git_oid": "5a5c8cf52b9bc4cdefe05e128aef9e669814ec61",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/diagnostic_contract.json",
+        "sha256": "b212fd79dc1da1331ea92e7825c5ec78953e4bf548d243e737c7a5997669b66f"
+      },
+      {
+        "bytes": 26055,
+        "git_mode": "100644",
+        "git_oid": "63a3727d3b26e6f8479e70301a5a50b45c8646e7",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/controller.py",
+        "sha256": "5399c491d454e6c20ce8ef89fd4caf2eb8e7509c4e3140900e219bff8f98f2b5"
+      },
+      {
+        "bytes": 15060,
+        "git_mode": "100644",
+        "git_oid": "869fed325d58b03416bf1f4904245bafc1005658",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/selftest.py",
+        "sha256": "2b92b69d8e2a73633b41ab3b78a88a27ad2d08b7940cf887a232ca61e4e46c41"
+      }
+    ],
+    "truenas_backup_main": "55043263b66ee92688b8882092ec240725f108db"
+  },
+  "glm_projection": null,
+  "model": "opencode-go/ox-alpha-free",
+  "nonce": "97fd146264df28c18856e3c60c457dd8",
+  "observed_at_utc": "2026-08-26T15:49:02.849Z",
+  "ordinal": 1,
+  "owned_sources": [
+    {
+      "bytes": 1683,
+      "git_mode": "100644",
+      "git_oid": "8c8875a1db526f142301cf187c1830a442181f5b",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/README.md",
+      "sha256": "e67dfce610972c9c20e4eeacff69d98841f9d480f0ccf402a27bfa422a0d1c1d"
+    },
+    {
+      "bytes": 11803,
+      "git_mode": "100644",
+      "git_oid": "5a5c8cf52b9bc4cdefe05e128aef9e669814ec61",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/diagnostic_contract.json",
+      "sha256": "b212fd79dc1da1331ea92e7825c5ec78953e4bf548d243e737c7a5997669b66f"
+    },
+    {
+      "bytes": 26055,
+      "git_mode": "100644",
+      "git_oid": "63a3727d3b26e6f8479e70301a5a50b45c8646e7",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/controller.py",
+      "sha256": "5399c491d454e6c20ce8ef89fd4caf2eb8e7509c4e3140900e219bff8f98f2b5"
+    },
+    {
+      "bytes": 15060,
+      "git_mode": "100644",
+      "git_oid": "869fed325d58b03416bf1f4904245bafc1005658",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_glm_disambiguation_diagnostic_v1/selftest.py",
+      "sha256": "2b92b69d8e2a73633b41ab3b78a88a27ad2d08b7940cf887a232ca61e4e46c41"
+    }
+  ],
+  "pass_id": "native_ox_01",
+  "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+  "protocol_adapter": "native_default",
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "row_time_budget_seconds": 3600,
+  "schema_id": "pm.r10.storage_pipeline.omp_preflight.v2",
+  "subject_calls": 0,
+  "surface": "omp_tui",
+  "thinking": "max",
+  "version_command": {
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "omp/18.0.4"
+  },
+  "version_stdout": "omp/18.0.4"
+}

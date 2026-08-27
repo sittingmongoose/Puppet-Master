@@ -1,0 +1,40 @@
+{
+  "attempt_id": "storage-native-matrix-v1-pass_01-01-4c485b90c6",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 3315,
+      "path": "omp_preflight.json",
+      "sha256": "58c8b80f70a08e58acaa49d76570c2a94a858351d84ffb1ea46a55152d8fb33b"
+    },
+    {
+      "bytes": 350,
+      "path": "reservation.json",
+      "sha256": "a5982b5d243e2d24c28107fd637396e02478ec9ddad5815da8b2b7ccbb55f502"
+    },
+    {
+      "bytes": 438,
+      "path": "runner_failure.json",
+      "sha256": "0f8db2639f487fd5b2ba7d176f2674bb4fb8fddbfd8454261c78af57cbc94de2"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-26T12:08:50.885Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/ox-alpha-free",
+  "no_retry": true,
+  "nonce": "4c485b90c6394e9815257489fece9efc",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "max"
+}

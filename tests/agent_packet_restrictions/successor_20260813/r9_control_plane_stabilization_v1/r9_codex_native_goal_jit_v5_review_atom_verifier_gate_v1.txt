@@ -1,0 +1,97 @@
+ATOM_ID: R9_V5_VERIFIER_GATE_REVIEW_001
+COMPONENT: verify.py sha256=a72f148c5dffdd28a800ca1094394fe007544fd72b97fac05b8038df990729fb bytes=57198 mode=0644
+QUESTION: Does this slice keep the private scorer unreachable until sealed current evidence, exact schedules, terminal surfaces, every row, and cross-run freshness pass; keep canary scoring at zero; and preserve zero qualification pending independent adjudication?
+PREBOUND_FACTS: load_sources excludes private_scorer; verifier AST has zero filesystem mutation calls; acquire_run_set holds all expected run shared locks; verify_rows independently rederives each admission/case/trace/result/receipt; inventory before/after must match.
+FAILURE_RULE: Any hard mismatch means VERIFY_FAIL_<UPPERCASE_FAMILY>. If no hard mismatch, VERIFY_PASS_NONE.
+Do not infer runtime success, canary authority, matrix authority, or qualification. Judge only this atom.
+CODE_BEGIN
+def load_private_scorer(recipe):
+    binding = recipe["bindings"]["private_scorer"]
+    raw = read_bound(binding["path"], int(binding["mode"], 8), binding["bytes"], binding["bytes"], binding["sha256"])
+    value = parse(raw)
+    require(raw == canon(value) + b"\n" and value.get("schema_id") == "pw-r9-codex-native-goal-atomic-scorer-v1", "scorer-canonical")
+    require(value.get("cell_count") == 97 and value.get("route_outcome_count") == 291 and value.get("qualification_credit") == 0, "scorer-count")
+    require(isinstance(value.get("cells"), list) and len(value["cells"]) == 97, "scorer-cells")
+    return value
+
+
+def score_full_matrix(recipe, cells, node_results):
+    scorer = load_private_scorer(recipe)
+    expected = {entry["cell_index"]: entry for entry in scorer["cells"]}
+    require(set(expected) == set(range(97)), "scorer-cell-index")
+    outcomes = 0
+    for route in ROUTE_ORDER:
+        require(set(node_results[route]) == set(range(97)), "score-route-cells")
+        for cell_index in range(97):
+            cell = cells[(route, cell_index)]
+            actual_nodes = node_results[route][cell_index]
+            require(set(actual_nodes) == {node["atom_id"] for node in cell["nodes"]}, "score-node-set")
+            actual = assemble(cell["assembly_recipe"], actual_nodes)
+            item = expected[cell_index]
+            require(item["cell"] == cell["cell"], "score-cell")
+            require(len(actual) == item["expected_output_bytes"] and sha(actual) == item["expected_output_sha256"] and actual.decode("utf-8") == item["expected_output_utf8"], "score-mismatch:{}:{}".format(route, cell["cell"]))
+            outcomes += 1
+    require(outcomes == 291, "score-outcome-count")
+    return outcomes
+
+
+def verify_matrix(matrix_code):
+    recipe, public = load_sources()
+    roots, locks = acquire_run_set(recipe, matrix_code)
+    try:
+        before = {code: inventory_projection(root, set()) for code, root in roots.items()}
+        cumulative = {key: set() for key in ("attempt_ids", "goal_threads", "nonces", "task_paths", "terminal_trace_hashes", "turn_ids")}
+        for prior_code in run_codes(matrix_code)[:-1]:
+            prior_root = roots[prior_code]
+            prior_run = read_run(recipe, prior_code, prior_root)
+            validate_terminal_surface(recipe, prior_code, prior_root, prior_run)
+            merge_freshness(cumulative, index_prior(recipe, prior_code, prior_root))
+        root = roots[matrix_code]
+        run = read_run(recipe, matrix_code, root)
+        records, cells = build_schedule(recipe, public, matrix_code)
+        schedule_raw, offsets_raw = schedule_bytes(records)
+        require(read_bound(root + "/schedule.jsonl", 0o444, 30000000, len(schedule_raw), sha(schedule_raw)) == schedule_raw, "schedule-exact")
+        require(read_bound(root + "/schedule_offsets.json", 0o444, 500000, len(offsets_raw), sha(offsets_raw)) == offsets_raw, "schedule-offsets-exact")
+        require(run["schedule"] == {"bytes": len(schedule_raw), "records": len(records), "sha256": sha(schedule_raw)}, "run-schedule")
+        require(run["schedule_offsets"] == {"bytes": len(offsets_raw), "sha256": sha(offsets_raw)}, "run-schedule-offsets")
+        validate_terminal_surface(recipe, matrix_code, root, run)
+        freshness, node_results = verify_rows(recipe, matrix_code, root, records, cells)
+        merge_freshness(cumulative, freshness)
+        spec = matrix_spec(recipe, matrix_code)
+        if matrix_code == "C01":
+            route_outcomes = 0
+            status = "PASS_THREE_ROUTE_CANARY_ZERO_CREDIT_PENDING_INDEPENDENT_ADJUDICATION"
+            clean_full = False
+            clean_canary = True
+            scorer_reads = 0
+        else:
+            route_outcomes = score_full_matrix(recipe, cells, node_results)
+            status = "PASS_CLEAN_FULL_MATRIX_ZERO_CREDIT_PENDING_INDEPENDENT_ADJUDICATION"
+            clean_full = True
+            clean_canary = False
+            scorer_reads = 1
+        after = {code: inventory_projection(root_value, set()) for code, root_value in roots.items()}
+        require(after == before, "verification-inventory-drift")
+        report = {
+            "clean_full_matrix": clean_full,
+            "clean_three_route_canary": clean_canary,
+            "external_adjudication_required": True,
+            "fresh_goal_threads": len(freshness["goal_threads"]),
+            "fresh_task_paths": len(freshness["task_paths"]),
+            "fresh_terminal_trace_hashes": len(freshness["terminal_trace_hashes"]),
+            "matrix_code": matrix_code,
+            "matrix_id": spec["matrix_id"],
+            "nonclaims": ["VERIFIER WRITES NOTHING", "CANARY EARNS ZERO CREDIT", "FULL MATRIX PASS REQUIRES FRESH INDEPENDENT GOAL REVIEW", "QUALIFICATION REMAINS ZERO OF TWO UNTIL TWO CONSECUTIVE CLEAN FULL MATRICES"],
+            "private_scorer_reads": scorer_reads,
+            "qualification_credit": 0,
+            "route_outcomes_exact_pass": route_outcomes,
+            "schema_id": "pw-r9-codex-native-goal-jit-post-goal-delivery-offline-verification-v1",
+            "status": status,
+            "subject_task_count": spec["subject_task_count"],
+            "wave_count": spec["wave_count"],
+        }
+        sys.stdout.buffer.write(canon(report) + b"\n")
+    finally:
+        release_locks(locks)
+CODE_END
+

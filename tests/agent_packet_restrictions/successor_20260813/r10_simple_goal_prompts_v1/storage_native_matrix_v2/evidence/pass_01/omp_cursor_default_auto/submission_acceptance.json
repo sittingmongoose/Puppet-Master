@@ -1,0 +1,37 @@
+{
+  "accepted_at_utc": "2026-08-26T12:48:16.341Z",
+  "attempt_id": "storage-native-matrix-v2-pass_01-02-c6ac6d0998",
+  "enter_write_sha256": "5ae81bfc2373e12d6c82386ed17231c84177e90aff6278bf38c7d9feee758284",
+  "external_submission_count": 1,
+  "low_level_input_write_count": 2,
+  "nonce": "c6ac6d0998d14013fc119b5fa82691a0",
+  "ordinal": 2,
+  "pass_id": "pass_01",
+  "pid": 1110565,
+  "route_id": "omp_cursor_default_auto",
+  "schema_id": "pm.r10.storage_pipeline.submission_acceptance.v7",
+  "session_prefix": {
+    "bytes": 28326,
+    "path": "session_prefix.raw.jsonl",
+    "sha256": "801d90b5a7eafd58a24faaa262a51c977f718153a0b809370aad45e695014134"
+  },
+  "session_projection": {
+    "external_user_message_count": 1,
+    "goal_active_entry_id": "835b9928",
+    "goal_context_count": 1,
+    "goal_context_entry_ids": [
+      "917f0fc4"
+    ],
+    "goal_id": "1566d497a8777fd0",
+    "logical_entry_count": 11,
+    "native_continuation_count": 0,
+    "selector": "cursor/default",
+    "session_id": "01a03e1d-077b-7336-82cc-9e8547aa1a8e",
+    "session_prefix_bytes": 28326,
+    "session_prefix_sha256": "801d90b5a7eafd58a24faaa262a51c977f718153a0b809370aad45e695014134",
+    "session_started_at_utc": "2026-08-26T12:48:04.987Z",
+    "thinking": "auto",
+    "thinking_receipt_count": 0,
+    "user_entry_id": "b5881cad"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-glm53-normalized-canary-v1-01-96b1d9decb",
+  "captured_at_utc": "2026-08-27T01:01:00.591Z",
+  "error": "ControllerError: models.db or WAL changed during read-only capture",
+  "no_retry": true,
+  "nonce": "96b1d9decbe85f0fcb7344cb4bb1004d",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": null,
+  "popen_observed": false,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

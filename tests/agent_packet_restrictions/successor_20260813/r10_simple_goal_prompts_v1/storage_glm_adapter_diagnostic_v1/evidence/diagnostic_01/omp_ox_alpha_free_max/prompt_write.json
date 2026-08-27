@@ -1,0 +1,21 @@
+{
+  "attempt_id": "storage-glm-diag-v1-01-c1ebf0d60d",
+  "bytes": 3036,
+  "low_level_write_ordinal": 1,
+  "nonce": "c1ebf0d60d2dd71b2d8f987b426efdca",
+  "ordinal": 1,
+  "pass_id": "diagnostic_01",
+  "path": "stdin_prompt.raw",
+  "pid": 1190117,
+  "pre_prompt": {
+    "bytes": 83426,
+    "path": "pre_prompt.raw",
+    "sha256": "b7d9a8a6c4671118009d95e56e3b88cb58e74ae19eec4ed1445faeebb885a1d0"
+  },
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+  "terminator_included": false,
+  "write_return_bytes": 3036,
+  "written_at_utc": "2026-08-26T14:53:08.486Z"
+}

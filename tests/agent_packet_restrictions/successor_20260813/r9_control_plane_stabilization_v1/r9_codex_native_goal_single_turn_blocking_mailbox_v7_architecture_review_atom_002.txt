@@ -1,0 +1,25 @@
+ATOM V7_ARCHITECTURE_REVIEW_002
+Architecture: r9_codex_native_goal_single_turn_blocking_mailbox_architecture_v7.json sha256=2976364b0f548d86ffb66c71e9a5b6526237a7df7839a833552580db698df53c bytes=9166 mode=0644.
+Data validation: r9_codex_native_goal_single_turn_blocking_mailbox_v7_data_only_validation_v1.json sha256=d48db71f85b946c496eb41c7cb5f8ef32ea28d2a552a096fd9cd17fe0fa2f07f bytes=3026 mode=0644.
+Prior review protocol failure: r9_codex_native_goal_single_turn_blocking_mailbox_v7_architecture_review_001_protocol_failure_receipt_v1.json sha256=62182cca46649ec7070826703e1309b2c1a12e14bdfb6c9120d777b5f0ea4944 bytes=2027 mode=0644. Its semantic PASS has zero authority because its Goal objective drifted. Do not use it.
+
+Review one fresh control-flow atom.
+
+1. Each row is one new fork_turns=none task with unique task/nonce/objective, exact model/effort, and a control-only prompt <=456 bytes. No subject, private scorer, answer, or expected-answer hash is exposed before native Goal ACTIVE.
+2. Its only same-turn semantic sequence is create_goal ACTIVE, one blocking waiter exec, update_goal COMPLETE, final token, task_complete. Waiter deadline 25 seconds is below exec yield 30 seconds. No follow-up, extra tool, second turn, retry, or recovery exists.
+3. The waiter fsyncs ready while subject names are absent. Parent publication is forbidden until ready plus two stable identical trace-prefix reads prove the same task/session/Goal, requested route, ACTIVE receipt, and pending waiter call with no subject/output/update/final/completion.
+4. After that gate only, the parent derives one <=512-byte subject from frozen public sources and terminal dependencies, then publishes once by same-directory absent-name hardlink with file and both directory fsync boundaries. The waiter validates exact bytes/hash and answer-blind six-field shape before returning it once.
+5. Immutable predeclaration maps the Goal objective's nonce to subject bytes/hash, public result-contract hash, matrix/wave/route, task path, model/effort, and waiter identity. Expected answer and private scorer fields are absent.
+6. Terminal verification requires the complete raw trace to extend the gated prefix, one turn and exact three-tool order, exact subject once, same Goal COMPLETE receipt, valid public result, and global task/Goal/turn/nonce/attempt uniqueness.
+7. Data-only checks cover C03 plus all 15,612 rows of Matrix013 and Matrix014, exact roster mini/xhigh, mini/medium, luna/medium, prompt/payload ceilings, 17 event mutations, and seven waiter filesystem cases. V5 and V6 failures remain failures. Qualification stays 0/2 until clean consecutive Matrix013 and Matrix014. OMP remains separate.
+
+PASS only if this distinct architecture closes both the V5 pre-subject boundary and V6 child-visible expected-answer-hash defect without weakening Goal, prompt, roster, failure, or no-retry requirements. Review authority is implementation only; no subject, canary, matrix, qualification, or release authority.
+
+Return exactly one token:
+V7_PASS_IMPLEMENTATION_ONLY
+V7_FAIL_ACTIVE_GATE
+V7_FAIL_GOAL_BINDING
+V7_FAIL_PRIVACY
+V7_FAIL_PUBLICATION
+V7_FAIL_RETRY
+V7_FAIL_OTHER

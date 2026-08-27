@@ -1,0 +1,70 @@
+{
+  "attempt_id": "storage-glm53-max-norm-v2-pass_01-01-ff9ff1d11f",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 1588,
+      "path": "launch.json",
+      "sha256": "5111e8b50d0703eb41eeb9cf95f360b1ee90f1d4c9aac68cc8b256c3a0d6ef63"
+    },
+    {
+      "bytes": 20034,
+      "path": "omp_preflight.json",
+      "sha256": "07f864ca22c6833691426ec5250d685c0a1dc34767a955f84c3319e48d55624a"
+    },
+    {
+      "bytes": 10419,
+      "path": "pre_prompt.raw",
+      "sha256": "03826365532bf2dd6aabd52f7051d1ea128e1d3bb8de5587df051e2930e87721"
+    },
+    {
+      "bytes": 693,
+      "path": "prompt_write.json",
+      "sha256": "69afff869cdb22fdd27b021d2e85eb52831e34118403b6f3cc6c5548105b312d"
+    },
+    {
+      "bytes": 349,
+      "path": "reservation.json",
+      "sha256": "b78a53832f2aac50f9dba6441b4f59d9d000154866c2e6073e4f51670ae76813"
+    },
+    {
+      "bytes": 526,
+      "path": "runner_failure.json",
+      "sha256": "6a3ce72f22ccebf57eb3d27888d11d4b4ff604ed870ebc21664f47055b5abf16"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 10419,
+      "path": "transcript.raw",
+      "sha256": "03826365532bf2dd6aabd52f7051d1ea128e1d3bb8de5587df051e2930e87721"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-27T06:33:11.022Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/glm-5.3-flash",
+  "no_retry": true,
+  "nonce": "ff9ff1d11ff27aa1aff29c6239527601",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "max"
+}

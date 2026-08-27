@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-glm53-normalized-canary-v2-01-a7effb05a0",
+  "captured_at_utc": "2026-08-27T02:52:54.572Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 1497188: PermanentPrefixError: OMP retryRecovery is permanent: [{\"entry_id\":\"bc3a579e\",\"entry_index\":5,\"message_id\":null,\"retryRecovery\":{\"attempt\":1,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"c879cbd7\",\"entry_index\":6,\"message_id\":null,\"retryRecovery\":{\"attempt\":2,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"9dabdfb6\",\"entry_index\":7,\"message_id\":null,\"retryRecovery\":{\"attempt\":3,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"52ae9155\",\"entry_index\":8,\"message_id\":null,\"retryRecovery\":{\"attempt\":4,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"9104c4b6\",\"entry_index\":9,\"message_id\":null,\"retryRecovery\":{\"attempt\":5,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"f34d956c\",\"entry_index\":10,\"message_id\":null,\"retryRecovery\":{\"attempt\":6,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"ad7e5b7b\",\"entry_index\":11,\"message_id\":null,\"retryRecovery\":{\"attempt\":7,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"1d853729\",\"entry_index\":12,\"message_id\":null,\"retryRecovery\":{\"attempt\":8,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"5a03341f\",\"entry_index\":13,\"message_id\":null,\"retryRecovery\":{\"attempt\":9,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}},{\"entry_id\":\"e3c8f6fd\",\"entry_index\":14,\"message_id\":null,\"retryRecovery\":{\"attempt\":10,\"kind\":\"auto-retry\",\"note\":\"error; retried\",\"recovery\":\"plain\",\"status\":\"superseded\"}}]",
+  "no_retry": true,
+  "nonce": "a7effb05a08ce0995658dcea7244b5ff",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": 1497188,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

@@ -1,0 +1,78 @@
+ATOM_ID: R9_V5_JIT_PUBLICATION_REVIEW_001
+COMPONENT: materialize.py sha256=5b5e0c0abe1a6d5bdc5b4866e6536ada8126ded3a6aff6bec78366f1e5400d6b bytes=65918 mode=0644
+QUESTION: Does this closed slice ensure the activation-only prepared row is validated from a completed ACTIVE trace before any case, subject tool input, or subject trigger is durably published, and does SHOW expose only that stored case to the matching active Goal?
+PREBOUND_FACTS: publish is O_EXCL, fsync-file, fsync-parent, exact reopen; lock_run holds the run lock; row inventories are exact closed lists; derive_case accepts only immutable prior terminal results; failures have no recovery/retry surface.
+FAILURE_RULE: Any hard mismatch means JIT_FAIL_<UPPERCASE_FAMILY>. If no hard mismatch, JIT_PASS_NONE.
+Do not infer runtime success, canary authority, matrix authority, or qualification. Judge only this atom.
+CODE_BEGIN
+def record_active(matrix_code, wave_text, route_code, trace_path):
+    recipe, _ = load_recipe()
+    spec = matrix_spec(recipe, matrix_code)
+    require(re.fullmatch(r"[0-9]{4}", wave_text) and int(wave_text) < spec["wave_count"], "active-wave")
+    require(route_code in set(ROUTE_CODES.values()), "active-route")
+    wave = int(wave_text)
+    route = next(route for route, code in ROUTE_CODES.items() if code == route_code)
+    root, run, fd = lock_run(recipe, matrix_code, True)
+    try:
+        row_root = row_path(root, wave, route)
+        require(sorted(os.listdir(row_root)) == recipe["evidence_contract"]["row_inventories"]["prepared"], "active-row-state")
+        admission = read_admission(row_root, recipe)
+        source_raw = read_source_trace(trace_path)
+        proof = validate_trace(source_raw, admission, "active")
+        require(os.path.basename(trace_path).endswith("-" + proof["goal_thread_id"] + ".jsonl"), "active-trace-name")
+        publish(row_root + "/activation_trace.jsonl", source_raw)
+        active = {
+            "activation_trace": {"bytes": len(source_raw), "sha256": sha(source_raw)},
+            "goal_objective": admission["goal_objective"],
+            "goal_thread_id": proof["goal_thread_id"],
+            "matrix_id": run["matrix_id"],
+            "qualification_credit": 0,
+            "schema_id": "pw-r9-codex-native-goal-jit-post-goal-delivery-active-v1",
+            "status": "ACTIVE_ATTESTED_ZERO_CREDIT",
+            "task_path": proof["task_path"],
+            "turn_id": proof["turn_ids"][0],
+            "wave_index": wave,
+        }
+        require(set(active) == set(recipe["schemas"]["active_fields"]), "active-fields")
+        publish(row_root + "/active.json", canon(active) + b"\n")
+        case_raw = derive_case(recipe, root, admission)
+        tool_input = subject_tool_input(matrix_code, wave, route_code, proof["goal_thread_id"])
+        trigger = subject_trigger(recipe, admission["execution_nonce"], tool_input)
+        publish(row_root + "/case.txt", case_raw)
+        publish(row_root + "/subject_tool_input.txt", tool_input.encode("utf-8"))
+        publish(row_root + "/subject_trigger.txt", trigger)
+        require(sorted(os.listdir(row_root)) == recipe["evidence_contract"]["row_inventories"]["active"], "active-final-state")
+        sys.stdout.buffer.write(canon({
+            "goal_thread_id": proof["goal_thread_id"],
+            "matrix_id": run["matrix_id"],
+            "qualification_credit": 0,
+            "route": route,
+            "status": "ACTIVE_ATTESTED_SUBJECT_JIT_PUBLISHED",
+            "subject_trigger": {"bytes": len(trigger), "sha256": sha(trigger)},
+            "wave_index": wave,
+        }) + b"\n")
+    finally:
+        fcntl.flock(fd, fcntl.LOCK_UN)
+        os.close(fd)
+
+
+def show(matrix_code, wave_text, route_code, goal_thread_id):
+    recipe, _ = load_recipe()
+    spec = matrix_spec(recipe, matrix_code)
+    require(re.fullmatch(r"[0-9]{4}", wave_text) and int(wave_text) < spec["wave_count"], "show-wave")
+    require(route_code in set(ROUTE_CODES.values()) and UUID_RE.fullmatch(goal_thread_id), "show-address")
+    wave = int(wave_text)
+    route = next(route for route, code in ROUTE_CODES.items() if code == route_code)
+    root, _, fd = lock_run(recipe, matrix_code, False)
+    try:
+        row_root = row_path(root, wave, route)
+        require(sorted(os.listdir(row_root)) == recipe["evidence_contract"]["row_inventories"]["active"], "show-row-state")
+        admission = read_admission(row_root, recipe)
+        active = read_active(row_root, recipe, admission)
+        require(active["goal_thread_id"] == goal_thread_id, "show-active")
+        case_raw = read_bound(row_root + "/case.txt", 0o444, recipe["limits"]["show_output_utf8_bytes_max"])
+        sys.stdout.buffer.write(case_raw)
+    finally:
+        fcntl.flock(fd, fcntl.LOCK_UN)
+CODE_END
+

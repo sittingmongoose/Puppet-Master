@@ -1,0 +1,14 @@
+ATOM V6R1_SUBJECT_LINE_DELTA_001
+Base: r9_codex_native_goal_single_turn_blocking_mailbox_architecture_v6.json sha256=7ab9523f729b6d2bf07b5c96399a468d3361a32d890232d2ac7403171340814e bytes=11969 mode=0644
+Addendum: r9_codex_native_goal_single_turn_blocking_mailbox_architecture_v6r1_subject_line_correction_v1.json sha256=4c31a9c966747fe80632d734db68fc6e56d0d73d0d95d32bec90891dd61fbc45 bytes=2837 mode=0644
+Source recipe: /mnt/Cursor/PuppetMaster/tests/r9g12/closed_recipe.json sha256=85328ffd1c599aca2ee5c28eb222daf74ac99fd6540d63874e417020a8692498 bytes=7860 mode=0644
+
+Review only this delta: the exact source recipe separately defines subject_payload_utf8_bytes_max=170 and show_output_utf8_bytes_max=512. An exhaustive data-only rendering of all 15612 source nodes, using longest allowed dependency results, observed a maximum complete canonical c,p,q,r,v,z case of 345 bytes. The addendum therefore keeps 170 as the nested p payload ceiling and sets 512 as the complete one-line waiter stdout ceiling. It changes no Goal lifecycle, tool/event grammar, publication gate, roster, retry/reuse/recovery rule, C02 zero-credit rule, or Matrix013/014 qualification rule.
+
+PASS only if this resolves the size mismatch without weakening bite-size execution or changing the reviewed single-turn control flow. FAIL on the first hard gap. Grant no canary, matrix, qualification, or release authority.
+
+Return exactly one token:
+V6R1_DELTA_PASS_NONE
+V6R1_DELTA_FAIL_LIMIT
+V6R1_DELTA_FAIL_SCOPE
+V6R1_DELTA_FAIL_OTHER

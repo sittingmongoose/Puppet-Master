@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-glm53-max-norm-v1-pass_01-01-ca6cb04dd7",
+  "captured_at_utc": "2026-08-27T05:18:09.928Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 1551413: PermanentCanaryError: exactly one request at active-Goal prefix",
+  "no_retry": true,
+  "nonce": "ca6cb04dd7898a5134541486c8bba957",
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "pid": 1551413,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

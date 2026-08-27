@@ -1,0 +1,30 @@
+ATOM_ID: R9_V5_JIT_PUBLICATION_REVIEW_002
+COMPONENT: materialize.py sha256=dc1a45a8957c019767b8651f3bbf5423cd9196900c8e592c2f9244bce565bbfd bytes=66188 mode=0644
+RECIPE: closed_recipe.json sha256=85328ffd1c599aca2ee5c28eb222daf74ac99fd6540d63874e417020a8692498 bytes=7860 mode=0644
+RECEIPT: r9_codex_native_goal_jit_post_goal_delivery_v5_implementation_receipt_v2.json sha256=3422ac0eef2dcef343e7be8eb5b3660fb21c064188b47f0c4f63a9f8b3e9b6b9 bytes=4651 mode=0644
+QUESTION: Does this slice keep the subject case and trigger unavailable until a completed ACTIVE Goal trace is validated and durably bound, and does SHOW release only the stored case to the matching active Goal?
+PREBOUND_FACTS: The row initially has exactly activation.txt and admission.json. publish uses O_EXCL, fsyncs the file and parent, and reopens exact bytes. lock_run retains the run lock. Any interrupted or malformed row is consumed with no retry, reuse, resume, or repair surface.
+FAILURE_RULE: Return JIT_V2_FAIL_<UPPERCASE_FAMILY> for any hard mismatch. Return JIT_V2_PASS_NONE only if this atom has no hard mismatch.
+NONCLAIMS: Do not infer live execution, canary admission, matrix authority, qualification, or validity of review cycle 001.
+CODE_BEGIN
+require(sorted(os.listdir(row_root)) == prepared_inventory, "active-row-state")
+admission = read_admission(row_root, recipe)
+source_raw = read_source_trace(trace_path)
+proof = validate_trace(source_raw, admission, "active")
+require(os.path.basename(trace_path).endswith("-" + proof["goal_thread_id"] + ".jsonl"), "active-trace-name")
+publish(row_root + "/activation_trace.jsonl", source_raw)
+publish(row_root + "/active.json", exact_active_receipt(proof))
+case_raw = derive_case(recipe, root, admission)
+tool_input = subject_tool_input(matrix_code, wave, route_code, proof["goal_thread_id"])
+trigger = subject_trigger(recipe, admission["execution_nonce"], tool_input)
+publish(row_root + "/case.txt", case_raw)
+publish(row_root + "/subject_tool_input.txt", tool_input.encode("utf-8"))
+publish(row_root + "/subject_trigger.txt", trigger)
+require(sorted(os.listdir(row_root)) == active_inventory, "active-final-state")
+
+require(sorted(os.listdir(row_root)) == active_inventory, "show-row-state")
+admission = read_admission(row_root, recipe)
+active = read_active(row_root, recipe, admission)
+require(active["goal_thread_id"] == goal_thread_id, "show-active")
+sys.stdout.buffer.write(read_bound(row_root + "/case.txt", 0o444, show_limit))
+CODE_END

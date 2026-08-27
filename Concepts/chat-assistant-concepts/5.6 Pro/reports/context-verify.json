@@ -1,7 +1,7 @@
 {
   "overall": "PASS",
   "summary": {
-    "passed": 96,
+    "passed": 99,
     "failed": 0
   },
   "failures": [],
@@ -18,6 +18,9 @@
     "Actions are labelled Compact now / More details",
     "Cache-hit reading sits on the same action row",
     "Cache reading is not truncated by the action row",
+    "Thread note sits above Compact now / More details (not on that row)",
+    "Thread note sits to the right of More limits when that button is present",
+    "Cache-hit reading is slightly larger (≥10px)",
     "Plan-limits block renders meter rows",
     "Plan-limits head is product · connection",
     "Meter fill has real geometry",
@@ -177,5 +180,5 @@
       "none": 1
     }
   },
-  "generatedAt": "2026-08-25T03:25:08.751Z"
+  "generatedAt": "2026-08-26T20:26:11.091Z"
 }

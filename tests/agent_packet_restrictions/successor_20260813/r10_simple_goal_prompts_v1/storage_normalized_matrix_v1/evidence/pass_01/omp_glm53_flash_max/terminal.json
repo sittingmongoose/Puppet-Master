@@ -1,0 +1,35 @@
+{
+  "attempt_id": "storage-normalized-matrix-v1-pass_01-01-cdef82a218",
+  "cwd_entries_after": null,
+  "evidence": [
+    {
+      "bytes": 352,
+      "path": "reservation.json",
+      "sha256": "8b39cd49d5dea1fed2cc449cd89d202084a1680693deaeceb82de1bc0d2ec744"
+    },
+    {
+      "bytes": 441,
+      "path": "runner_failure.json",
+      "sha256": "49ac32c1ad398657be59c6b0415ab7f9420ee9eebf8de389d9e3effa66fa6a08"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-27T10:55:12.659Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/glm-5.3-flash",
+  "no_retry": true,
+  "nonce": "cdef82a218c53966f11f3a0d3a66e1b6",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "pass_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "max"
+}

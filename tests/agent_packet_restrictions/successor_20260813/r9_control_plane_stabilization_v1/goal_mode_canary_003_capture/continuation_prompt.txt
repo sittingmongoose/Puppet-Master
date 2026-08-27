@@ -1,0 +1,17 @@
+R9 NATIVE GOAL MODE EXPLICIT RESUME BOOTSTRAP — THE SCORED SUBJECT IS NOT PRESENT.
+
+This is the documented resume of the same fresh test-taker task. Before any file access, command, web request, collaboration action, or subject reasoning, execute exactly this code-mode call and inspect its JSON:
+
+`const r = await tools.get_goal({});
+text(r);`
+
+Require the exact previously created objective and status `active`. If the Goal is absent, changed, or terminal, stop without opening the subject channel. After and only after that active Goal receipt, execute exactly this one code-mode call:
+
+```javascript
+const r = await tools.exec_command({cmd:"timeout --signal=TERM --kill-after=5s 25s python3 -B /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v4/read_goal_subject.py --fifo /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_canary_003_capture/subject.fifo --sha256 10d213bcc05336f1343e945f439a8828454b9378e0ac7fc82ea785bcb133241d --bytes 76 --timeout-seconds 20",workdir:"/mnt/Cursor/PuppetMaster",yield_time_ms:30000,max_output_tokens:20000});
+if (r.exit_code !== 0) throw new Error('subject reader failed');
+text(r.output);
+```
+
+Treat the returned UTF-8 text as the sole scored subject prompt. Do not read another prompt source. Perform all subject reasoning in this resumed Goal turn. Do not retry, relaunch, replace, delegate, or reuse a different task. When the answer is fully determined, call `const r = await tools.update_goal({status:"complete"});
+text(r);` exactly once, require the same Goal with status `complete`, and emit only the subject answer as the terminal assistant message.

@@ -1,0 +1,38 @@
+R9 NATIVE GOAL MODE SINGLE-PROCESS BOOTSTRAP — THE SCORED SUBJECT IS NOT PRESENT.
+
+You are one fresh empirical test taker. The controller has committed the subject hash and byte count but has not included the subject text. Before any file access, command, web request, collaboration action, or subject reasoning, invoke exactly these three native Goal actions as separate calls: `get_goal`, `create_goal`, then `get_goal`. If your tool surface exposes those Goal tools directly, call them directly with exact arguments. Otherwise use the exact code-mode forms below. Do not invoke any non-Goal tool first. Bootstrap commentary is allowed, but it is not a subject answer.
+
+1. ```javascript
+const r = await tools.get_goal({});
+text(r);
+```
+Require `goal` null.
+2. ```javascript
+const r = await tools.create_goal({objective:"R9 Goal Mode test taker goal-mode-native-action-normalization-canary-001/row-000/0; criteria_sha256=8d55d38789456be48b075012451e853f40f671ebff5fdbe66a647bf0c17b7b84; control_envelope_sha256=73d4600b6e21a77d158458045943998e4d1aa8820330810ef16a5345e65f6a68; subject_commitment_sha256=d557e37cb99b60f3c347fc01bc889e0b2c746a83bb723f577f2ac54e7dbbaba8; execute exactly one gated subject after native Goal activation and settle terminal Goal state."});
+text(r);
+```
+Require the exact objective and status `active`.
+3. ```javascript
+const r = await tools.get_goal({});
+text(r);
+```
+Require the same Goal and status `active`.
+
+Commitments: run_id=goal-mode-native-action-normalization-canary-001; row_id=row-000; attempt=0; criteria_sha256=8d55d38789456be48b075012451e853f40f671ebff5fdbe66a647bf0c17b7b84; control_envelope_sha256=73d4600b6e21a77d158458045943998e4d1aa8820330810ef16a5345e65f6a68; subject_commitment_sha256=d557e37cb99b60f3c347fc01bc889e0b2c746a83bb723f577f2ac54e7dbbaba8; subject_utf8_bytes=89.
+
+After and only after call 3 succeeds, invoke the exact reader command once. If `exec_command` is exposed directly, call it directly with the same `cmd`, `workdir`, `yield_time_ms`, and `max_output_tokens`; otherwise execute exactly this one code-mode call:
+
+```javascript
+const r = await tools.exec_command({cmd:"timeout --signal=TERM --kill-after=5s 65s python3 -B /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v4/read_goal_subject.py --fifo /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_v6_route_canary_001_evidence/rows/row-000/subject.fifo --sha256 d557e37cb99b60f3c347fc01bc889e0b2c746a83bb723f577f2ac54e7dbbaba8 --bytes 89 --timeout-seconds 60",workdir:"/mnt/Cursor/PuppetMaster",yield_time_ms:30000,max_output_tokens:20000});
+if (r.exit_code !== 0) throw new Error('subject reader failed');
+text(r.output);
+```
+
+The reader blocks while the controller independently proves this task's fresh active native Goal. Treat the returned UTF-8 text as the sole scored subject prompt. Do not read another prompt source. Perform all subject reasoning after that return, in this same task and same active Goal turn. Do not retry, relaunch, replace, delegate, or use any other subject tool. When the answer is fully determined, invoke exactly one terminal `update_goal` action with status `complete`, directly if exposed or through this exact code-mode form:
+
+```javascript
+const r = await tools.update_goal({status:"complete"});
+text(r);
+```
+
+Require the same Goal with status `complete`, then emit only the subject answer as the terminal assistant message.

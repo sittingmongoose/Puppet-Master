@@ -222,6 +222,10 @@
        closing — the exit; see the Wave 1B contract note further down
    ===================================================================== */
 :root{
+  /* Open matches the Concept-12 Details inspector: kimi spring overshoot. */
+  --ph-t-open: 320ms;
+  --ph-ease-open: cubic-bezier(.34, 1.56, .64, 1);
+  /* Close / pin / width stay on material ease (no bounce while exiting). */
   --ph-t: 240ms;
   --ph-ease: cubic-bezier(.4,0,.2,1);
   --ph-open-w: 300px;   /* reference: min(300px, 85%) */
@@ -264,17 +268,22 @@
    taken against it. The safety clamp is applied LAST so it always wins: a
    clamp() would let the 170px floor beat the 42% cap on a narrow pane.
    --------------------------------------------------------------------------- */
-body[data-ph-drawer="pinned"]{
+body[data-ph-drawer="pinned"],
+body[data-ph-want-pin]{
   --ph-w: min( max(var(--ph-user-w, var(--ph-pin-w)), var(--ph-min-w)),
                calc(var(--ph-pane, 100vw) * .42) );
 }
 body[data-ph-drawer] .history-flyout{ width:min(var(--ph-open-w), calc(var(--ph-pane, 100vw) * .85)); }
-body[data-ph-drawer="pinned"] .history-flyout{ width:var(--ph-w); }
+body[data-ph-drawer][data-ph-want-pin] .history-flyout,
+body[data-ph-drawer="pinned"] .history-flyout,
+body[data-ph-drawer="closing"][data-ph-want-pin] .history-flyout{ width:var(--ph-w); }
 body[data-ph-drawer="pinned"] .assistant-grid{ padding-left:var(--ph-w); }
 
+/* ---- Details-panel motion (transform only) ------------------------------
+   Same spring open / material close / settled contract as the Concept-12
+   Details inspector, but docked to the LEFT of the assistant pane (W1 /
+   Pin left).  Transform alone — no animated clip-path (that wiped titles). */
 body[data-ph-drawer] .history-flyout{
-  /* OPEN LEFT.  styles.css:298 pins the flyout to `right:6px` and animates it
-     in from the right with `history-in`; both are replaced here. */
   left:var(--ph-x, 0px);
   right:auto;
   top:var(--ph-y, calc(var(--header-h) + 6px));
@@ -287,45 +296,32 @@ body[data-ph-drawer] .history-flyout{
   background:var(--surface-2);
   backdrop-filter:none;
   box-shadow:var(--shadow-float);
-  transform:translateX(-102%);
-  /* CLIPPED TO THE PANE.  In the reference the drawer is position:absolute
-     inside an overflow:hidden root, so it is never visible outside the column
-     it belongs to.  Here it is position:fixed inside #pmOverlayRoot, so without
-     this it slides in ACROSS THE EDITOR PANE and reads as a panel flying in
-     rather than a drawer emerging — caught by looking at the contact sheet, not
-     by any metric.  clip-path cannot be expressed against a fixed screen x, but
-     it does not need to be: at progress p the element sits at
-     translateX(-102%*(1-p)), so the part hanging left of the pane edge is
-     exactly 102%*(1-p) OF ITS OWN WIDTH.  Driving the left inset on the same
-     duration and easing keeps the two in exact lockstep — including while the
-     width itself is animating on close, because both are relative to the same
-     current width.
-
-     Only the LEFT inset does any clipping: the other three are -90px so the
-     float shadow (0 18px 65px) still paints on the three sides that are inside
-     the pane.  A plain inset(0) would have clipped the shadow away on all four,
-     which no metric here would have noticed — it is measured by an A/B pixel
-     read in history-verify.mjs instead. */
-  clip-path:inset(-90px -90px -90px 102%);
-  animation:none;
-  transition:transform var(--ph-t) var(--ph-ease),
-             clip-path var(--ph-t) var(--ph-ease),
-             width var(--ph-t) var(--ph-ease),
+  animation:none !important;
+  backface-visibility:hidden;
+  clip-path:none;
+  transform:translate3d(-102%, 0, 0);
+  transition:transform var(--ph-t-open) var(--ph-ease-open),
              box-shadow var(--ph-t) var(--ph-ease),
              border-color var(--ph-t) var(--ph-ease);
 }
 body[data-ph-drawer="open"] .history-flyout,
-body[data-ph-drawer="pinned"] .history-flyout{ transform:translateX(0); clip-path:inset(-90px -90px -90px 0); }
-/* PINNED: it does not move — the heavy overlay shadow becomes a quiet border. */
+body[data-ph-drawer="pinned"] .history-flyout{
+  transform:translate3d(0, 0, 0);
+}
+body[data-ph-drawer="open"][data-ph-settled] .history-flyout,
+body[data-ph-drawer="pinned"][data-ph-settled] .history-flyout,
+body[data-ph-pinning] .history-flyout{
+  transition:transform var(--ph-t-open) var(--ph-ease-open),
+             width var(--ph-t) var(--ph-ease),
+             box-shadow var(--ph-t) var(--ph-ease),
+             border-color var(--ph-t) var(--ph-ease);
+}
+body[data-ph-drawer="open"][data-ph-settled] .history-flyout,
+body[data-ph-drawer="pinned"][data-ph-settled] .history-flyout{ transform:none; }
 body[data-ph-drawer="pinned"] .history-flyout{ box-shadow:none; border-right-color:var(--border); }
 
 .assistant-grid{ transition:padding-left var(--ph-t) var(--ph-ease); }
 
-/* ---- scrim -------------------------------------------------------------
-   `.assistant-pane::after` rather than a node, because a node would have to be
-   emitted from app.js.  It is declarative, so the reference's sibling defect —
-   paintPin() hides the scrim on pin and never restores display on unpin — is
-   structurally impossible here: unpinning restores it with no JS. */
 .assistant-pane{ position:relative; }
 .assistant-pane::after{
   content:"";
@@ -336,24 +332,20 @@ body[data-ph-drawer="pinned"] .history-flyout{ box-shadow:none; border-right-col
 }
 body[data-ph-drawer="open"] .assistant-pane::after{ opacity:1; pointer-events:auto; }
 
-/* ---- exit --------------------------------------------------------------
-   Wave 1B published `.pm-leaving` + a duration read back from the computed
-   style.  Its `pm-overlay-out` collapses toward the trigger, which is right
-   for a menu and wrong for a drawer, so the keyframes are drawer-specific
-   while the CONTRACT is kept exactly: the class is applied, the wait is read
-   back with getComputedStyle().animationDuration, and reduced motion collapses
-   it to 1ms so a caller never stalls.  The selector is doubled onto the body
-   attribute because pmPatch strips the class from the node on the next work
-   tick; the body attribute is what actually survives the exit. */
-@keyframes ph-drawer-out{
-  from{ transform:translateX(0); clip-path:inset(-90px -90px -90px 0) }
-  to{ transform:translateX(-102%); clip-path:inset(-90px -90px -90px 102%) }
-}
-body[data-ph-drawer="closing"] .history-flyout,
-.history-flyout.pm-leaving{
-  animation:ph-drawer-out var(--ph-t) var(--ph-ease) both;
+/* Closing: material ease, no bounce.  Timing may also be applied one frame
+   earlier via data-ph-closing while still open/pinned (Details is-closing). */
+body[data-ph-closing] .history-flyout,
+body[data-ph-drawer="closing"] .history-flyout{
+  transition-property:transform, box-shadow, border-color;
+  transition-duration:var(--ph-t);
+  transition-timing-function:var(--ph-ease);
   pointer-events:none;
+  animation:none !important;
+  transform:translate3d(-102%, 0, 0);
 }
+
+/* Hide leftover clip host from earlier experiments */
+.ph-clip-host{ display:none !important; }
 
 /* ---- the drawer's pin strip -------------------------------------------- */
 body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ display:none; }
@@ -424,17 +416,23 @@ body[data-ph-resizing] .ph-resize::after{ background:var(--accent); }
    sit after the (0,2,1) transition rule above, so they win at equal weight. */
 body[data-ph-resizing] .history-flyout,
 body[data-ph-resizing] .assistant-grid{ transition:none; }
+/* Settled/pinning rules above are (0,3,1); without this the drag kept a 240ms
+   width transition and the pointer lagged (history-verify coupling/seam/lag). */
+body[data-ph-drawer][data-ph-resizing] .history-flyout,
+body[data-ph-drawer="pinned"][data-ph-settled][data-ph-resizing] .history-flyout,
+body[data-ph-drawer="open"][data-ph-settled][data-ph-resizing] .history-flyout,
+body[data-ph-pinning][data-ph-resizing] .history-flyout,
+body[data-ph-resizing] .assistant-grid{ transition:none; }
 
 @media (prefers-reduced-motion: reduce){
-  /* Must be re-declared here: motion.css's 1ms rule for `.history-flyout
-     .pm-leaving` is earlier in the cascade and would lose to the override
-     above at equal specificity.  Reduced motion still reaches the same end
-     state — the drawer is gone, the gutter is collapsed — just not decorated. */
-  body[data-ph-drawer="closing"] .history-flyout,
-  .history-flyout.pm-leaving{ animation-duration:1ms; }
+  /* Reduced motion still reaches the same end state — the drawer is gone, the
+     gutter is collapsed — just not decorated.  Close is a transition now (no
+     keyframes), so only transition-duration collapses. */
   body[data-ph-drawer] .history-flyout,
+  body[data-ph-drawer="closing"] .history-flyout,
+  body[data-ph-closing] .history-flyout,
   .assistant-grid,
-  .assistant-pane::after{ transition-duration:1ms; }
+  .assistant-pane::after{ transition-duration:1ms !important; }
 }
 
 /* =====================================================================
@@ -455,9 +453,8 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
 .history-flyout > *, .history-panel > *{ flex:0 0 auto; }
 .history-flyout > .history-scroll, .history-panel > .history-scroll{ flex:1 1 auto; min-height:0; }
 
-/* 2. Take 6 relaxes `.thread-sub` to `white-space:normal` so the summary can
-      clamp to two lines — but `.thread-sub` is a flex row, so the relaxation
-      also let the timestamp shrink to one character and wrap "2m" onto two
-      lines next to a hyphen-less separator.  Only the summary should wrap. */
+/* 2. Timestamp lives on the title row (`.thread-time`) and must never wrap.
+      Take 6 still relaxes `.thread-sub` for a two-line summary clamp. */
+.thread-time{ flex:0 0 auto; white-space:nowrap; }
 .history-panel[data-history-variant="5"] .thread-sub > span:not(.summary),
 .history-flyout[data-history-variant="5"] .thread-sub > span:not(.summary){ flex:0 0 auto; white-space:nowrap; }

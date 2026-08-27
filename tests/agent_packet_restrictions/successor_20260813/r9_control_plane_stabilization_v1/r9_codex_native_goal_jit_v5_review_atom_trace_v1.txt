@@ -1,0 +1,79 @@
+ATOM_ID: R9_V5_TRACE_CAUSALITY_REVIEW_001
+COMPONENT: materialize.py sha256=5b5e0c0abe1a6d5bdc5b4866e6536ada8126ded3a6aff6bec78366f1e5400d6b bytes=65918 mode=0644
+QUESTION: Does this closed trace core enforce one exact tool per phase, ACTIVE before the subject SHOW output, same-task three-turn causal order, no assistant prose, exact A/R/T finals, and matching COMPLETE Goal receipt?
+PREBOUND_FACTS: Earlier lines require strict trace byte-prefix extension, one session, exact parent/task path, exactly phase-count turn contexts, unique turn IDs, exact model/effort, and matching task_started/task_complete lists. Helpers parse duplicate-key-free finite JSON and exact two-item wrapper output.
+FAILURE_RULE: Any hard mismatch means TRACE_FAIL_<UPPERCASE_FAMILY>. If no hard mismatch, TRACE_PASS_NONE.
+Do not infer runtime success, canary authority, matrix authority, or qualification. Judge only this atom.
+CODE_BEGIN
+    expected_turns = {"active": 1, "result": 2, "terminal": 3}[phase]
+    require(len(contexts) == expected_turns, "trace-turn-count")
+    turn_ids = [payload["turn_id"] for _, payload in contexts]
+    require(len(set(turn_ids)) == expected_turns, "trace-turn-unique")
+    require(all(payload.get("model") == admission["model_requested"] and payload.get("effort") == admission["reasoning_effort_requested"] for _, payload in contexts), "trace-route")
+    starts = event_items(events, "event_msg", "task_started")
+    completes = event_items(events, "event_msg", "task_complete")
+    require([payload.get("turn_id") for _, payload in starts] == turn_ids, "trace-starts")
+    require([payload.get("turn_id") for _, payload in completes] == turn_ids, "trace-completes")
+    direct_calls = event_items(events, "response_item", "function_call")
+    direct_outputs = event_items(events, "response_item", "function_call_output")
+    require(not direct_calls and not direct_outputs, "trace-direct-tool")
+    calls = event_items(events, "response_item", "custom_tool_call")
+    outputs = event_items(events, "response_item", "custom_tool_call_output")
+    require(len(calls) == expected_turns and len(outputs) == expected_turns, "trace-tool-count")
+    require(all(set(payload) == {"call_id", "id", "input", "internal_chat_message_metadata_passthrough", "name", "status", "type"} for _, payload in calls), "trace-tool-call-shape")
+    require(all(set(payload) == {"call_id", "id", "internal_chat_message_metadata_passthrough", "output", "type"} for _, payload in outputs), "trace-tool-output-shape")
+    require(all(payload.get("name") == "exec" and payload.get("status", "completed") == "completed" for _, payload in calls), "trace-tool-name")
+    expected_inputs = [admission["activation_tool_input"]]
+    if expected_turns >= 2:
+        require(active_value is not None, "trace-active-input")
+        expected_inputs.append(subject_tool_input(admission["matrix_code"], admission["wave_index"], admission["route_code"], active_value["goal_thread_id"]))
+    if expected_turns == 3:
+        expected_inputs.append(completion_tool_input())
+    require([payload.get("input") for _, payload in calls] == expected_inputs, "trace-tool-input")
+    require([item_turn(payload) for _, payload in calls] == turn_ids, "trace-call-turn")
+    by_call = {payload.get("call_id"): (index, payload) for index, payload in outputs}
+    require(len(by_call) == expected_turns and set(by_call) == {payload.get("call_id") for _, payload in calls}, "trace-tool-output-bind")
+    require([item_turn(by_call[payload["call_id"]][1]) for _, payload in calls] == turn_ids, "trace-output-turn")
+    finals = []
+    for index, payload in event_items(events, "response_item", "message"):
+        if payload.get("role") == "assistant" and payload.get("phase") == "final_answer":
+            content = payload.get("content")
+            require(isinstance(content, list) and len(content) == 1 and content[0].get("type") == "output_text", "trace-final-shape")
+            finals.append((index, item_turn(payload), content[0].get("text")))
+    require(len(finals) == expected_turns and [item[1] for item in finals] == turn_ids, "trace-finals")
+    assistant_messages = [(index, payload) for index, payload in event_items(events, "response_item", "message") if payload.get("role") == "assistant"]
+    visible_messages = event_items(events, "event_msg", "agent_message")
+    require(len(assistant_messages) == expected_turns and all(payload.get("phase") == "final_answer" for _, payload in assistant_messages), "trace-no-assistant-prose")
+    require(len(visible_messages) == expected_turns and all(payload.get("phase") == "final_answer" for _, payload in visible_messages), "trace-no-visible-prose")
+    for turn_index in range(expected_turns):
+        call = calls[turn_index][1]
+        output_index = by_call[call["call_id"]][0]
+        require(starts[turn_index][0] < contexts[turn_index][0] < calls[turn_index][0] < output_index < finals[turn_index][0] < completes[turn_index][0], "trace-causal-order")
+    create_text = wrapper_text(by_call[calls[0][1]["call_id"]][1])
+    active_goal = parse(create_text.encode("utf-8")).get("goal")
+    require(isinstance(active_goal, dict), "trace-active-goal")
+    require(active_goal.get("threadId") == thread_id and active_goal.get("objective") == admission["goal_objective"] and active_goal.get("status") == "active", "trace-active-receipt")
+    expected_a = "A|{}|{}|active".format(admission["execution_nonce"], thread_id)
+    require(finals[0][2] == expected_a and completes[0][1].get("last_agent_message") == expected_a, "trace-active-final")
+    result_token = None
+    if expected_turns >= 2:
+        require(case_raw is not None, "trace-case-input")
+        show_text = wrapper_text(by_call[calls[1][1]["call_id"]][1])
+        require(show_text.encode("utf-8") == case_raw, "trace-show-output")
+        prefix = "R|{}|".format(admission["execution_nonce"])
+        require(isinstance(finals[1][2], str) and finals[1][2].startswith(prefix), "trace-result-final-prefix")
+        result_token = finals[1][2][len(prefix):]
+        require(1 <= len(result_token.encode("utf-8")) <= 48 and TOKEN_RE.fullmatch(result_token), "trace-result-token")
+        require(completes[1][1].get("last_agent_message") == finals[1][2], "trace-result-task-final")
+    terminal_goal = None
+    if expected_turns == 3:
+        terminal_text = wrapper_text(by_call[calls[2][1]["call_id"]][1])
+        terminal_goal = parse(terminal_text.encode("utf-8")).get("goal")
+        require(isinstance(terminal_goal, dict), "trace-terminal-goal")
+        require(terminal_goal.get("threadId") == thread_id and terminal_goal.get("objective") == admission["goal_objective"] and terminal_goal.get("status") == "complete", "trace-terminal-receipt")
+        require(isinstance(terminal_goal.get("tokensUsed"), int) and terminal_goal["tokensUsed"] > 0, "trace-terminal-tokens")
+        require(isinstance(terminal_goal.get("timeUsedSeconds"), int) and terminal_goal["timeUsedSeconds"] >= 0, "trace-terminal-time")
+        expected_t = "T|{}|{}|complete".format(admission["execution_nonce"], thread_id)
+        require(finals[2][2] == expected_t and completes[2][1].get("last_agent_message") == expected_t, "trace-terminal-final")
+CODE_END
+

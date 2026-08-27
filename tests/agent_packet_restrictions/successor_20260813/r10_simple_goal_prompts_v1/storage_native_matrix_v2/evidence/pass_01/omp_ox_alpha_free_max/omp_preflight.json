@@ -1,0 +1,246 @@
+{
+  "attempt_id": "storage-native-matrix-v2-pass_01-01-cd6bf93baf",
+  "binary": "/home/sittingmongoose/.local/bin/omp",
+  "binary_bytes": 179881160,
+  "binary_sha256": "94ec42d17d71975a381e20335bb3c005a7fd7eec19b319358df6d22f28e16b37",
+  "config_commands": [
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "advisor.enabled"
+      ],
+      "exit_code": 0,
+      "key": "advisor.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "task.agentAdvisor"
+      ],
+      "exit_code": 0,
+      "key": "task.agentAdvisor",
+      "stdout": "{\"task\":\"off\"}"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "memory.backend"
+      ],
+      "exit_code": 0,
+      "key": "memory.backend",
+      "stdout": "off"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "autolearn.enabled"
+      ],
+      "exit_code": 0,
+      "key": "autolearn.enabled",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "mcp.enableProjectConfig"
+      ],
+      "exit_code": 0,
+      "key": "mcp.enableProjectConfig",
+      "stdout": "false"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "tools.approvalMode"
+      ],
+      "exit_code": 0,
+      "key": "tools.approvalMode",
+      "stdout": "yolo"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.enabled"
+      ],
+      "exit_code": 0,
+      "key": "goal.enabled",
+      "stdout": "true"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "goal.continuationModes"
+      ],
+      "exit_code": 0,
+      "key": "goal.continuationModes",
+      "stdout": "[\"interactive\"]"
+    },
+    {
+      "argv": [
+        "/home/sittingmongoose/.local/bin/omp",
+        "config",
+        "get",
+        "plan.defaultOnStartup"
+      ],
+      "exit_code": 0,
+      "key": "plan.defaultOnStartup",
+      "stdout": "false"
+    }
+  ],
+  "config_overlay": null,
+  "effective_config": {
+    "advisor.enabled": false,
+    "autolearn.enabled": false,
+    "goal.continuationModes": [
+      "interactive"
+    ],
+    "goal.enabled": true,
+    "mcp.enableProjectConfig": false,
+    "memory.backend": "off",
+    "plan.defaultOnStartup": false,
+    "task.agentAdvisor": {
+      "task": "off"
+    },
+    "tools.approvalMode": "yolo"
+  },
+  "expected_argv": [
+    "/home/sittingmongoose/.local/bin/omp",
+    "--session-dir",
+    "/tmp/pm-r10-storage-v7-session-native-matrix-v2-pass_01-01-cd6bf93baf",
+    "--no-title",
+    "--no-tools",
+    "--no-skills",
+    "--no-rules",
+    "--cwd",
+    "/tmp/pm-r10-storage-v7-native-matrix-v2-pass_01-01-cd6bf93baf",
+    "--model",
+    "opencode-go/ox-alpha-free",
+    "--thinking",
+    "max"
+  ],
+  "git_custody": {
+    "candidate_commit": "b96e80d45a624425110c20a2a1bb1e4ba6e068b2",
+    "head": "b96e80d45a624425110c20a2a1bb1e4ba6e068b2",
+    "origin_main": "b96e80d45a624425110c20a2a1bb1e4ba6e068b2",
+    "sources": [
+      {
+        "bytes": 4616,
+        "git_mode": "100644",
+        "git_oid": "bb2d333ccd17de91c7f0725e9b05afb226a611bd",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/README.md",
+        "sha256": "a771bd9ba47dde87b5d46b5bccd7588eb84eefc943cf75a1c2b1c6c6fc08b8ca"
+      },
+      {
+        "bytes": 26644,
+        "git_mode": "100644",
+        "git_oid": "99ece6e7e3c06ef87fc1109dfb67e4b87673d352",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/matrix_contract.json",
+        "sha256": "4ebdb9ad3a37d784fd328bdf17c0e4d115646af497c90a384f8ca04e0012a55b"
+      },
+      {
+        "bytes": 34781,
+        "git_mode": "100644",
+        "git_oid": "aad99c9a021cecdf3977aa60fc9cd961a7618604",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/controller.py",
+        "sha256": "3785d21d4999943a9a55dbc8c42d6197bc12e8e7d495d7ed7cb01d0ca5fa901a"
+      },
+      {
+        "bytes": 18014,
+        "git_mode": "100644",
+        "git_oid": "85dd2f07fe2e4b1cd7423a4e44a58f8bab647e77",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/codex_app_lane.py",
+        "sha256": "7f53764158feb6c6cfa529ad9c36b23e5637e1d692c1268e91583c81c768fc7d"
+      },
+      {
+        "bytes": 29124,
+        "git_mode": "100644",
+        "git_oid": "2a36bb7bd3e75ab33282a400f03875a0202ea859",
+        "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/selftest.py",
+        "sha256": "74741f0af2117dd3542a0e114fc3bf6cbd9c282d80796392a96d250f92a131d7"
+      }
+    ],
+    "truenas_backup_main": "b96e80d45a624425110c20a2a1bb1e4ba6e068b2"
+  },
+  "matrix_contract": {
+    "bytes": 26644,
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/matrix_contract.json",
+    "sha256": "4ebdb9ad3a37d784fd328bdf17c0e4d115646af497c90a384f8ca04e0012a55b"
+  },
+  "model": "opencode-go/ox-alpha-free",
+  "nonce": "cd6bf93bafda558a3b8b1016d7ba5ef2",
+  "observed_at_utc": "2026-08-26T12:39:18.838Z",
+  "ordinal": 1,
+  "owned_sources": [
+    {
+      "bytes": 4616,
+      "git_mode": "100644",
+      "git_oid": "bb2d333ccd17de91c7f0725e9b05afb226a611bd",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/README.md",
+      "sha256": "a771bd9ba47dde87b5d46b5bccd7588eb84eefc943cf75a1c2b1c6c6fc08b8ca"
+    },
+    {
+      "bytes": 26644,
+      "git_mode": "100644",
+      "git_oid": "99ece6e7e3c06ef87fc1109dfb67e4b87673d352",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/matrix_contract.json",
+      "sha256": "4ebdb9ad3a37d784fd328bdf17c0e4d115646af497c90a384f8ca04e0012a55b"
+    },
+    {
+      "bytes": 34781,
+      "git_mode": "100644",
+      "git_oid": "aad99c9a021cecdf3977aa60fc9cd961a7618604",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/controller.py",
+      "sha256": "3785d21d4999943a9a55dbc8c42d6197bc12e8e7d495d7ed7cb01d0ca5fa901a"
+    },
+    {
+      "bytes": 18014,
+      "git_mode": "100644",
+      "git_oid": "85dd2f07fe2e4b1cd7423a4e44a58f8bab647e77",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/codex_app_lane.py",
+      "sha256": "7f53764158feb6c6cfa529ad9c36b23e5637e1d692c1268e91583c81c768fc7d"
+    },
+    {
+      "bytes": 29124,
+      "git_mode": "100644",
+      "git_oid": "2a36bb7bd3e75ab33282a400f03875a0202ea859",
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/selftest.py",
+      "sha256": "74741f0af2117dd3542a0e114fc3bf6cbd9c282d80796392a96d250f92a131d7"
+    }
+  ],
+  "pass_id": "pass_01",
+  "profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+  "protocol_adapter": "native_default",
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "row_time_budget_seconds": 3600,
+  "schema_id": "pm.r10.storage_pipeline.omp_preflight.v2",
+  "subject_calls": 0,
+  "surface": "omp_tui",
+  "thinking": "max",
+  "version_command": {
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "omp/18.0.4"
+  },
+  "version_stdout": "omp/18.0.4"
+}

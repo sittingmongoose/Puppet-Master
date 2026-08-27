@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-glm-disamb-v1-01-97fd146264",
+  "captured_at_utc": "2026-08-26T16:49:03.147Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 1218939: RunnerError: row time budget expired before exact Goal terminal result",
+  "no_retry": true,
+  "nonce": "97fd146264df28c18856e3c60c457dd8",
+  "ordinal": 1,
+  "pass_id": "native_ox_01",
+  "pid": 1218939,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

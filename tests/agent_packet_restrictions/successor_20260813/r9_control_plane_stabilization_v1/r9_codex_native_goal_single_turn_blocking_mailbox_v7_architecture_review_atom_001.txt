@@ -1,0 +1,30 @@
+ATOM V7_ARCHITECTURE_REVIEW_001
+Architecture: r9_codex_native_goal_single_turn_blocking_mailbox_architecture_v7.json sha256=2976364b0f548d86ffb66c71e9a5b6526237a7df7839a833552580db698df53c bytes=9166 mode=0644
+Data validation: r9_codex_native_goal_single_turn_blocking_mailbox_v7_data_only_validation_v1.json sha256=d48db71f85b946c496eb41c7cb5f8ef32ea28d2a552a096fd9cd17fe0fa2f07f bytes=3026 mode=0644
+V5 runtime failure preserved: a465f0d921c721a25594a40271dd9f40c21f1d08e580aed88b89b2cd36626f80/5869/0644.
+V6R1 preimplementation failure preserved: ef1f3b95cc116a9cfc60c562f7fcac97a9c725f736d1d6fe4f3e4c755c88bb94/3460/0644.
+
+Review one control-flow atom only.
+
+Facts:
+1. Every row has one fresh fork_turns=none task, a unique nonce/task/objective, a <=456-byte control-only spawn prompt, and no subject, scorer, answer, or expected-answer hash before its native Goal is ACTIVE.
+2. In the first and only turn, the ordered semantic tools are create_goal, one blocking waiter exec, and update_goal complete. The waiter deadline is 25 seconds and the exec yield is 30 seconds. There is no follow-up or second subject turn.
+3. The waiter writes and fsyncs ready.json while subject.stage and subject.txt are absent. It remains blocked. The parent must reopen ready.json and two identical live trace-prefix reads proving the exact session/task, requested model/effort, ACTIVE Goal receipt, and pending waiter call. Any output, subject, update, final, completion, extra tool, or second turn before publication consumes the row.
+4. Only after that gate, the parent independently derives the <=512-byte one-line subject from frozen public sources and terminal dependency results. It publishes once via same-directory absent-name hardlink from a fully fsynced/reopened stage, fsyncs, unlinks the stage, and fsyncs again.
+5. The waiter validates exact bytes/hash and the six-field answer-blind subject shape, writes that line once to stdout, and exits. The child solves it, completes the same Goal, and returns one <=48-byte token in the same turn.
+6. The immutable predeclaration binds nonce, objective, matrix/wave/route, exact model/effort, task path, subject bytes/hash, public result-contract hash, and waiter identity. It contains no private scorer or expected-answer field. The Goal objective binds the nonce transitively to that predeclaration.
+7. Terminal verification requires the complete trace to extend the gated prefix and prove one task, one turn, exact three-tool order, exact subject once, same Goal COMPLETE receipt, exact model/effort, and globally fresh task/Goal/turn/nonce/attempt identities.
+8. Exact roster remains mini/xhigh, mini/medium, luna/medium. C03 is a three-route zero-credit canary. Only consecutive clean full Matrix013 then Matrix014 can move 0/2. No retry, reuse, resend, relaunch, replacement, recovery, best-of, OMP ownership, or direct-Assistant-Chat change exists.
+9. The prototype passed 46,869 data-only assertions over C03 plus all 15,612 rows of each matrix, maximum nested payload 170, maximum full subject 278, maximum spawn prompt 456, and 17 negative event mutations. The exact waiter passed one happy and six fail-closed temporary-filesystem cases; workspace and evidence writes were zero.
+10. This review can authorize implementation only. It cannot authorize a canary, matrix, qualification, release, or subject call.
+
+Question: Does this distinct single-turn blocking flow close both the V5 pre-subject turn-boundary failure and V6 child-visible expected-answer-hash defect while preserving native Goal evidence, bite-size prompts, exact roster, no-retry semantics, failure history, and 0/2 qualification?
+
+Return exactly one token:
+V7_PASS_IMPLEMENTATION_ONLY
+V7_FAIL_ACTIVE_GATE
+V7_FAIL_GOAL_BINDING
+V7_FAIL_PRIVACY
+V7_FAIL_PUBLICATION
+V7_FAIL_RETRY
+V7_FAIL_OTHER

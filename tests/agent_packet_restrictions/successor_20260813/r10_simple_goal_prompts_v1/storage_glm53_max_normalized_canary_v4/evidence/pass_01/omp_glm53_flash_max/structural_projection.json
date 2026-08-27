@@ -1,0 +1,40 @@
+{
+  "assistant_lifecycle_shape": "standard_tool_cycle",
+  "assistant_message_count": 2,
+  "entry_ids": {
+    "final_assistant": "0af5b0ad",
+    "goal_active": "fb7f8517",
+    "goal_call_assistant": "add28c4d",
+    "goal_complete_mode": "4f2aed83",
+    "goal_completed": "7faff543",
+    "goal_contexts": [
+      "106a87b5"
+    ],
+    "goal_exit": "d1050d21",
+    "goal_result": "0206050d",
+    "goal_tool_start": "5a938766",
+    "native_continuation": null,
+    "session_exit": "3d1543b7",
+    "user": "13b9f350"
+  },
+  "final_text": "Structural checks all pass, but they don't confer readiness: canonical currentness failed (`stale_generated_index_artifact`, `Plans/.plan_index/node_readiness_report.json`; recomputed vs stored stable sha256 mismatch) and runtime certification is incomplete (PNC-019). Either condition mandates `blocked`. No WorkNodes/Plan edits proposed.\n\nTime used: 58 seconds.\n\nPM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "final_text_sha256": "a87cebb2f6cb6053fe80167b5b6e40c53825b7d1664f692a8c4d22589360271a",
+  "goal_context_count": 1,
+  "goal_id": "1567d6f447eb5456",
+  "goal_tool_call_id": "call_400c4629f73440b9bbaa9d43",
+  "leaf_id": "3d1543b7",
+  "logical_entry_count": 15,
+  "model": "glm-5.3-flash",
+  "native_continuation_count": 0,
+  "ordinary_tool_calls": 0,
+  "pre_goal_call_text_utf8_bytes": 661,
+  "provider": "opencode-go",
+  "selector": "opencode-go/glm-5.3-flash",
+  "session_file_bytes": 40297,
+  "session_file_sha256": "c2bd8c0dd60443533252224a1b90b7c9c4264368d8a0702c85d0a19beafd185a",
+  "session_id": "01a04226-7f0e-7649-bac4-cea10610bef9",
+  "session_started_at_utc": "2026-08-27T07:36:54.286Z",
+  "thinking": "max",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256
+}

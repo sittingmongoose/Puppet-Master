@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v15/goal_mode_harness.py", line 536, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v15/goal_mode_harness.py", line 510, in main
+    result = run_codex_row(args)
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v15/goal_mode_harness.py", line 277, in run_codex_row
+    bootstrap = ga.attest_bootstrap(args.row_spec, args.capture_root, args.codex_home)
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v15/goal_mode_three_turn_attestor.py", line 237, in attest_bootstrap
+    return _bootstrap_common(load_row(row_path), capture, codex_home, True)
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/goal_mode_empirical_harness_v15/goal_mode_three_turn_attestor.py", line 209, in _bootstrap_common
+    require(created["goal_id"] == goal["goal_id"] == reopened["goal_id"], "bootstrap Goal identity")
+            ~~~~~~~^^^^^^^^^^^
+KeyError: 'goal_id'

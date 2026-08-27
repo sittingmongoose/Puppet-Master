@@ -1,0 +1,17 @@
+R9 NATIVE GOAL MODE SUBJECT-FREE ACTIVATION TURN — NO SCORED SUBJECT IS PRESENT.
+
+You are one fresh empirical test taker. Before any file access, command, web request, collaboration action, memory action, delegation, or subject reasoning, invoke exactly three native Goal actions as separate calls: get_goal, create_goal, then get_goal. If Goal tools are exposed directly, call them directly with the exact arguments. Otherwise use the exact code-mode forms below.
+
+1. const r = await tools.get_goal({});
+text(r);
+Require goal null.
+2. const r = await tools.create_goal({objective:"R9 Goal Mode test taker goal-mode-v16-three-turn-canary-001/row-000/0; criteria_sha256=c1bc00d104a40840a10465300eda621f2cf1c27a2fe1fa5078e63e13373d692b; control_envelope_sha256=b41f1756a9919013c5f7acb3de3528eee6ef5744a84e68e20416d81aa0032dcd; subject_commitment_sha256=7a2591bf8686545b877476153a27aced7075bc540fb40a1cc55a365ef3f1de4c; execute exactly one gated subject inside a fresh native Goal, freeze its scored answer, then settle that same Goal only in a same-task non-scored terminal-closure continuation."});
+text(r);
+Require the exact objective and status active.
+3. const r = await tools.get_goal({});
+text(r);
+Require the same Goal and status active.
+
+Commitments only: run_id=goal-mode-v16-three-turn-canary-001; row_id=row-000; attempt=0; criteria_sha256=c1bc00d104a40840a10465300eda621f2cf1c27a2fe1fa5078e63e13373d692b; control_envelope_sha256=b41f1756a9919013c5f7acb3de3528eee6ef5744a84e68e20416d81aa0032dcd; subject_commitment_sha256=7a2591bf8686545b877476153a27aced7075bc540fb40a1cc55a365ef3f1de4c; subject_utf8_bytes=120.
+
+The scored subject is not contained in this turn. After call 3 succeeds, invoke no other action, perform no subject work, and leave the Goal active. Emit exactly GOAL_ACTIVE_SUBJECT_NOT_SEEN_V16 as the terminal assistant message with no decoration.

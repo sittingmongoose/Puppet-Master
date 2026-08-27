@@ -1,0 +1,15 @@
+R9 V20 GOAL ACTIVATION — NO SCORED SUBJECT IS PRESENT.
+This fresh task will receive one small atomic subject later. Do no subject work now.
+If Goal functions are unavailable, perform at most one tool-definition search with exactly {"limit":5,"query":"goal tools direct exposed get_goal create_goal update_goal"}; invoke none of its returned tools.
+Then make exactly these three separate native calls, with no batch or other action:
+1. const r = await tools.get_goal({});
+text(r);
+Require null.
+2. const r = await tools.create_goal({objective:"R9V20 atomic Goal;run=goal-mode-v20-bite-size-three-turn-canary-001;row=row-000;attempt=0;subject=7a2591bf8686545b877476153a27aced7075bc540fb40a1cc55a365ef3f1de4c;criteria=c1bc00d104a40840a10465300eda621f2cf1c27a2fe1fa5078e63e13373d692b;control=be424bab1139a1cfe95c327510fd78971686d4429aea58ca56336850a82ca676;one subject only;keep active through answer capture;then complete in closure."});
+text(r);
+Require the exact objective active.
+3. const r = await tools.get_goal({});
+text(r);
+Require the same active Goal.
+Bindings: run=goal-mode-v20-bite-size-three-turn-canary-001; row=row-000; attempt=0; criteria=c1bc00d104a40840a10465300eda621f2cf1c27a2fe1fa5078e63e13373d692b; control=be424bab1139a1cfe95c327510fd78971686d4429aea58ca56336850a82ca676; subject=7a2591bf8686545b877476153a27aced7075bc540fb40a1cc55a365ef3f1de4c; subject_bytes=120.
+Leave the Goal active. Output exactly GOAL_ACTIVE_SUBJECT_NOT_SEEN_V20.

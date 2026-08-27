@@ -1,0 +1,10 @@
+$ bun --cwd=packages/stats run gen:stats
+$ bun scripts/generate-client-bundle.ts --generate
+$ bun run build.ts
+$ bun scripts/build-tool-views.ts
+$ bun --cwd=packages/natives run gen:native
+$ bun scripts/embed-native.ts
+$ bun --cwd=packages/natives run gen:native:reset
+$ bun scripts/embed-native.ts --reset
+$ bun --cwd=packages/stats run gen:stats:reset
+$ bun scripts/generate-client-bundle.ts --reset

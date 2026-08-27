@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-color="dark" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title>Puppet Master Settings — Kimi K3 Concept 12</title>
+  <link rel="stylesheet" href="../_shared-settings-v3/settings-core.css?v=3.0.12">
+</head>
+<body data-variant="kimi">
+  <div id="pm-settings-concept12"></div>
+  <noscript>This Settings concept requires JavaScript.</noscript>
+  <script src="../_shared-settings-v3/settings-inventory.js?v=3.0.12"></script>
+  <script src="../_shared-settings-v3/settings-data.js?v=3.0.12"></script>
+  <script src="../_shared-settings-v3/settings-core.js?v=3.0.12"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      try {
+        window.PMSettingsConcept12.mount({ root: '#pm-settings-concept12', variant: 'kimi' });
+      } catch (error) {
+        document.getElementById('pm-settings-concept12').innerHTML = '<main style="padding:24px;font:14px/1.5 Inter,system-ui;color:#fff;background:#0c1022;height:100vh"><h1>Concept 12 could not start</h1><pre style="white-space:pre-wrap;color:#ff9bad">' + String(error && error.stack || error) + '</pre></main>';
+        throw error;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+ATOM V6_CONTROL_FLOW_REVIEW_002
+Architecture identity: r9_codex_native_goal_single_turn_blocking_mailbox_architecture_v6.json sha256=7ab9523f729b6d2bf07b5c96399a468d3361a32d890232d2ac7403171340814e bytes=11969 mode=0644
+Runtime failure identity: r9_codex_native_goal_jit_mailbox_canary_001_runtime_failure_receipt_v1.json sha256=a465f0d921c721a25594a40271dd9f40c21f1d08e580aed88b89b2cd36626f80 bytes=5869 mode=0644
+Prior review failure identity: r9_codex_native_goal_single_turn_blocking_mailbox_v6_control_flow_review_001_protocol_failure_receipt_v1.json sha256=0d71b284e8a01ffbb99b61d907c2787109607683ed344e2ea6aafc2e17041015 bytes=2657 mode=0644
+
+Review one new atom. The prior review's semantic token has zero authority because its Goal objective was wrong. Do not use that token as evidence.
+
+Question: Does the closed V6 flow below structurally eliminate the C01 pre-subject turn boundary while preserving bite-size Goal-native execution and all no-retry rules?
+
+Facts to adjudicate:
+1. Every row starts one fresh fork_turns=none task. Its control-only prompt is <=512 bytes and contains no subject/scorer. Its exact Goal objective is <=256 bytes.
+2. During the first and only task turn, create_goal must return ACTIVE for that objective. The next semantic tool is one exec_command running a bound waiter. The tool call remains blocked, so the task cannot final or auto-continue before subject delivery.
+3. The waiter creates exact ready.json then waits. Subject stage/final remain absent until the parent reopens ready.json and a stable raw trace prefix proving ACTIVE then the pending wait, with no update_goal, final, task_complete, second turn, followup, subject, retry, or reuse.
+4. Parent publication is one absent-name same-directory hardlink publication from a fully fsynced/reopened stage, with final inode/bytes/hash recheck and both required directory fsyncs.
+5. The waiter validates exact subject bytes/hash, returns the sole <=170-byte subject line once, and exits before the 30-second exec yield. A timeout or session yield consumes the row.
+6. The child solves only that stdout, calls update_goal COMPLETE for the same Goal, emits one <=48-byte result, and ends the same turn. The complete trace must contain exactly one turn_context and one task_complete.
+7. Offline normalization accepts exactly one closed carrier profile for all three ordered semantic tools: direct native events or exec-wrapped events under an anchored finite wrapper grammar. Mixed profiles, get_goal, extra/unknown tools, malformed outputs, or any identity drift consume the row.
+8. There is no followup_task, send_message, child poll, resend, retry, relaunch, replacement, recovery, public resume, or task reuse. C01 stays consumed. C02 is a new zero-credit canary. Only consecutive clean Matrix013 and Matrix014 can reach 2/2. Exact roster remains mini/xhigh, mini/medium, luna/medium. OMP stays frozen and separate.
+
+PASS only if this is a distinct closed control flow with no hard gap that recreates the C01 boundary. FAIL on the first hard gap. Grant no implementation, canary, matrix, qualification, or release authority beyond the atom's verdict.
+
+Return exactly one token:
+V6R2_PASS_NONE
+V6R2_FAIL_TURN
+V6R2_FAIL_EVENTS
+V6R2_FAIL_RETRY
+V6R2_FAIL_DISTINCT
+V6R2_FAIL_OTHER

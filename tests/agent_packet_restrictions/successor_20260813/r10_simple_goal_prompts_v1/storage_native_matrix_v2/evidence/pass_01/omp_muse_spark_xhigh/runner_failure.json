@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-native-matrix-v2-pass_01-03-a5a1305592",
+  "captured_at_utc": "2026-08-26T13:54:40.135Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 1118761: RunnerError: row time budget expired before exact Goal terminal result",
+  "no_retry": true,
+  "nonce": "a5a1305592df0bb757c708f238416819",
+  "ordinal": 3,
+  "pass_id": "pass_01",
+  "pid": 1118761,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_muse_spark_xhigh",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

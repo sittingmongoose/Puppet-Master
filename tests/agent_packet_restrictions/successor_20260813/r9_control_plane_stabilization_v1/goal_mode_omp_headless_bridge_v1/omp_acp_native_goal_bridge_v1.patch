@@ -1,0 +1,362 @@
+diff --git a/packages/coding-agent/src/modes/acp/acp-agent.ts b/packages/coding-agent/src/modes/acp/acp-agent.ts
+index 435fdc5c7..b4ab324ad 100644
+--- a/packages/coding-agent/src/modes/acp/acp-agent.ts
++++ b/packages/coding-agent/src/modes/acp/acp-agent.ts
+@@ -101,6 +101,15 @@ const THINKING_CONFIG_ID = "thinking";
+ const THINKING_OFF = "off";
+ const SESSION_PAGE_SIZE = 50;
+ const SPEECH_MODELS_LIST_METHOD = "speech.models.list";
++const R9_GOAL_BRIDGE_ENABLED = process.env.PW_R9_OMP_GOAL_BRIDGE_V1 === "1";
++const R9_GOAL_BRIDGE_ACTIVATE_METHOD = "_omp/r9/goal/activate";
++const R9_GOAL_BRIDGE_SETTLE_METHOD = "_omp/r9/goal/settle";
++const R9_GOAL_BRIDGE_ACTIVATION_SCHEMA = "pw-r9-omp-native-goal-activation-v1";
++const R9_GOAL_BRIDGE_TERMINAL_SCHEMA = "pw-r9-omp-native-goal-terminal-v1";
++const R9_GOAL_BRIDGE_MAX_SUBJECT_BYTES = 4_096;
++const R9_GOAL_BRIDGE_MAX_OBJECTIVE_BYTES = 512;
++const R9_GOAL_BRIDGE_ROW_ID = /^[a-z0-9][a-z0-9._-]{0,127}$/;
++const R9_GOAL_BRIDGE_SHA256 = /^[0-9a-f]{64}$/;
+ /**
+  * Delay between `session/new` (or `session/load` / `session/resume` /
+  * `unstable_session/fork`) returning and the agent firing the first
+@@ -182,6 +191,15 @@ type ManagedSessionRecord = {
+ 	closedError: PromptLifecycleError | undefined;
+ 	promptEventHandlers: Set<Promise<void>>;
+ 	extensionUserMessageTasks: Set<Promise<void>>;
++	r9GoalBridge:
++		| {
++				phase: "FRESH" | "ACTIVE" | "PROMPT_CONSUMED" | "SETTLED" | "CONSUMED_FAILED";
++				rowId?: string;
++				controlSha256?: string;
++				goalId?: string;
++				objective?: string;
++		  }
++		| undefined;
+ };
+ 
+ type ReplayableMessage = {
+@@ -655,21 +673,25 @@ export class AcpAgent implements Agent {
+ 			},
+ 			authMethods,
+ 			agentCapabilities: {
+-				loadSession: true,
+-				mcpCapabilities: {
+-					http: true,
+-					sse: true,
+-				},
++				loadSession: !R9_GOAL_BRIDGE_ENABLED,
++				mcpCapabilities: R9_GOAL_BRIDGE_ENABLED
++					? {}
++					: {
++							http: true,
++							sse: true,
++						},
+ 				promptCapabilities: {
+-					embeddedContext: true,
+-					image: true,
+-				},
+-				sessionCapabilities: {
+-					list: {},
+-					fork: {},
+-					resume: {},
+-					close: {},
++					embeddedContext: !R9_GOAL_BRIDGE_ENABLED,
++					image: !R9_GOAL_BRIDGE_ENABLED,
+ 				},
++				sessionCapabilities: R9_GOAL_BRIDGE_ENABLED
++					? { close: {} }
++					: {
++							list: {},
++							fork: {},
++							resume: {},
++							close: {},
++						},
+ 			},
+ 		};
+ 	}
+@@ -688,6 +710,9 @@ export class AcpAgent implements Agent {
+ 
+ 	async newSession(params: NewSessionRequest): Promise<NewSessionResponse> {
+ 		this.#assertAbsoluteCwd(params.cwd);
++		if (R9_GOAL_BRIDGE_ENABLED && params.mcpServers.length !== 0) {
++			throw new Error("R9 Goal bridge requires session/new with no MCP servers");
++		}
+ 		const record = await this.#createNewSessionRecord(params.cwd, params.mcpServers);
+ 		const response: NewSessionResponse = {
+ 			sessionId: record.session.sessionId,
+@@ -699,6 +724,7 @@ export class AcpAgent implements Agent {
+ 	}
+ 
+ 	async loadSession(params: LoadSessionRequest): Promise<LoadSessionResponse> {
++		if (R9_GOAL_BRIDGE_ENABLED) throw new Error("R9 Goal bridge forbids session/load");
+ 		this.#assertAbsoluteCwd(params.cwd);
+ 		const record = await this.#loadManagedSession(params.sessionId, params.cwd, params.mcpServers);
+ 		await this.#replaySessionHistory(record);
+@@ -728,6 +754,7 @@ export class AcpAgent implements Agent {
+ 	}
+ 
+ 	async resumeSession(params: ResumeSessionRequest): Promise<ResumeSessionResponse> {
++		if (R9_GOAL_BRIDGE_ENABLED) throw new Error("R9 Goal bridge forbids session/resume");
+ 		this.#assertAbsoluteCwd(params.cwd);
+ 		const record = await this.#resumeManagedSession(params.sessionId, params.cwd, params.mcpServers ?? []);
+ 		const response: ResumeSessionResponse = {
+@@ -739,6 +766,7 @@ export class AcpAgent implements Agent {
+ 	}
+ 
+ 	async unstable_forkSession(params: ForkSessionRequest): Promise<ForkSessionResponse> {
++		if (R9_GOAL_BRIDGE_ENABLED) throw new Error("R9 Goal bridge forbids session/fork");
+ 		this.#assertAbsoluteCwd(params.cwd);
+ 		const record = await this.#forkManagedSession(params);
+ 		const response: ForkSessionResponse = {
+@@ -761,6 +789,10 @@ export class AcpAgent implements Agent {
+ 
+ 	async setSessionMode(params: SetSessionModeRequest): Promise<SetSessionModeResponse> {
+ 		const record = this.#getSessionRecord(params.sessionId);
++		if (record.r9GoalBridge) {
++			record.r9GoalBridge.phase = "CONSUMED_FAILED";
++			throw new Error("R9 Goal bridge forbids ACP mode changes");
++		}
+ 		this.#applyModeChange(record.session, params.modeId);
+ 		await this.#connection.sessionUpdate({
+ 			sessionId: record.session.sessionId,
+@@ -772,6 +804,16 @@ export class AcpAgent implements Agent {
+ 
+ 	async setSessionConfigOption(params: SetSessionConfigOptionRequest): Promise<SetSessionConfigOptionResponse> {
+ 		const record = this.#getSessionRecord(params.sessionId);
++		if (record.r9GoalBridge) {
++			if (params.configId === MODE_CONFIG_ID) {
++				record.r9GoalBridge.phase = "CONSUMED_FAILED";
++				throw new Error("R9 Goal bridge forbids ACP mode changes");
++			}
++			if (record.r9GoalBridge.phase !== "FRESH") {
++				record.r9GoalBridge.phase = "CONSUMED_FAILED";
++				throw new Error("R9 Goal bridge route configuration is frozen after Goal activation");
++			}
++		}
+ 		if (typeof params.value === "boolean") {
+ 			throw new Error(`Unsupported boolean ACP config option: ${params.configId}`);
+ 		}
+@@ -818,6 +860,7 @@ export class AcpAgent implements Agent {
+ 
+ 	async prompt(params: PromptRequest): Promise<PromptResponse> {
+ 		const record = this.#getSessionRecord(params.sessionId);
++		const r9Converted = record.r9GoalBridge ? this.#consumeR9GoalSubject(record, params.prompt) : undefined;
+ 		const activeTurn = record.promptTurn;
+ 		if (activeTurn && !activeTurn.settled && record.session.isStreaming) {
+ 			// New prompt arrived while the previous turn is still in-flight (e.g. the
+@@ -851,7 +894,7 @@ export class AcpAgent implements Agent {
+ 			}
+ 			this.#throwIfRecordClosed(record);
+ 
+-			const converted = this.#convertPromptBlocks(params.prompt);
++			const converted = r9Converted ?? this.#convertPromptBlocks(params.prompt);
+ 			const pendingPrompt = Promise.withResolvers<PromptResponse>();
+ 			record.promptTurn = {
+ 				cancelRequested: false,
+@@ -1109,6 +1152,10 @@ export class AcpAgent implements Agent {
+ 
+ 	async extMethod(method: string, params: { [key: string]: unknown }): Promise<{ [key: string]: unknown }> {
+ 		switch (method) {
++			case R9_GOAL_BRIDGE_ACTIVATE_METHOD:
++				return await this.#activateR9Goal(params);
++			case R9_GOAL_BRIDGE_SETTLE_METHOD:
++				return await this.#settleR9Goal(params);
+ 			case SPEECH_MODELS_LIST_METHOD:
+ 				return buildAcpSpeechModelsCatalog();
+ 			case "_omp/sessions/listAll": {
+@@ -1187,6 +1234,150 @@ export class AcpAgent implements Agent {
+ 		}
+ 	}
+ 
++	#assertR9ExactKeys(params: { [key: string]: unknown }, expected: readonly string[]): void {
++		const actual = Object.keys(params).sort();
++		const wanted = [...expected].sort();
++		if (actual.length !== wanted.length || actual.some((key, index) => key !== wanted[index])) {
++			throw new Error(`R9 Goal bridge fields must be exactly: ${wanted.join(",")}`);
++		}
++	}
++
++	#r9GoalObjective(rowId: string, controlSha256: string): string {
++		const objective = `R9 row ${rowId}; control ${controlSha256}; answer exactly one admitted atomic subject; use no tools except goal; call goal complete only after the final answer is verified.`;
++		if (Buffer.byteLength(objective, "utf8") > R9_GOAL_BRIDGE_MAX_OBJECTIVE_BYTES) {
++			throw new Error("R9 Goal bridge objective exceeds its frozen UTF-8 byte ceiling");
++		}
++		return objective;
++	}
++
++	async #activateR9Goal(params: { [key: string]: unknown }): Promise<{ [key: string]: unknown }> {
++		if (!R9_GOAL_BRIDGE_ENABLED) throw new Error("R9 Goal bridge is disabled");
++		const sessionId = params.sessionId;
++		const record = typeof sessionId === "string" ? this.#getSessionRecord(sessionId) : undefined;
++		const bridge = record?.r9GoalBridge;
++		if (!record || !bridge) throw new Error("R9 Goal bridge sessionId must name a dedicated fresh session");
++		try {
++			this.#assertR9ExactKeys(params, ["controlSha256", "rowId", "sessionId"]);
++			if (bridge.phase !== "FRESH") throw new Error("R9 Goal bridge activation is single-use");
++			const rowId = params.rowId;
++			const controlSha256 = params.controlSha256;
++			if (typeof rowId !== "string" || !R9_GOAL_BRIDGE_ROW_ID.test(rowId)) {
++				throw new Error("R9 Goal bridge rowId is malformed");
++			}
++			if (typeof controlSha256 !== "string" || !R9_GOAL_BRIDGE_SHA256.test(controlSha256)) {
++				throw new Error("R9 Goal bridge controlSha256 is malformed");
++			}
++			if (!record.session.settings.get("goal.enabled")) {
++				throw new Error("R9 Goal bridge requires native Goal mode enabled in OMP settings");
++			}
++			if (record.session.getPlanModeState()?.enabled) throw new Error("R9 Goal bridge forbids plan mode");
++			if (record.session.getGoalModeState()) throw new Error("R9 Goal bridge fresh session already has Goal state");
++			const messageCount = record.session.sessionManager.buildSessionContext().messages.length;
++			if (messageCount !== 0 || record.promptTurn || record.session.isStreaming) {
++				throw new Error("R9 Goal bridge activation requires a subject-free fresh session");
++			}
++			const baseline = { goal: null, messageCount, phase: "FRESH" };
++			const objective = this.#r9GoalObjective(rowId, controlSha256);
++			const state = await record.session.goalRuntime.createGoal({ objective });
++			await record.session.setActiveToolsByName(["goal"]);
++			const active = record.session.getGoalModeState();
++			if (
++				!active?.enabled ||
++				active.mode !== "active" ||
++				active.goal.status !== "active" ||
++				active.goal.id !== state.goal.id ||
++				active.goal.objective !== objective ||
++				record.session.getActiveToolNames().length !== 1 ||
++				record.session.getActiveToolNames()[0] !== "goal"
++			) {
++				throw new Error("R9 Goal bridge native activation postcondition failed");
++			}
++			const activationEntryId = record.session.sessionManager.appendCustomEntry("r9-goal-bridge-activation-v1", {
++				controlSha256,
++				goalId: active.goal.id,
++				objective,
++				rowId,
++				sessionId: record.session.sessionId,
++			});
++			await record.session.sessionManager.flush();
++			const reopened = record.session.getGoalModeState();
++			if (!reopened?.enabled || reopened.goal.id !== active.goal.id || reopened.goal.objective !== objective) {
++				throw new Error("R9 Goal bridge native activation reopen failed");
++			}
++			bridge.phase = "ACTIVE";
++			bridge.rowId = rowId;
++			bridge.controlSha256 = controlSha256;
++			bridge.goalId = reopened.goal.id;
++			bridge.objective = objective;
++			return {
++				activation: { activeTools: ["goal"], entryId: activationEntryId, nativeMode: "goal" },
++				baseline,
++				controlSha256,
++				goal: { ...reopened.goal },
++				objective,
++				phase: bridge.phase,
++				rowId,
++				schemaId: R9_GOAL_BRIDGE_ACTIVATION_SCHEMA,
++				sessionId: record.session.sessionId,
++			};
++		} catch (error) {
++			bridge.phase = "CONSUMED_FAILED";
++			throw error;
++		}
++	}
++
++	async #settleR9Goal(params: { [key: string]: unknown }): Promise<{ [key: string]: unknown }> {
++		if (!R9_GOAL_BRIDGE_ENABLED) throw new Error("R9 Goal bridge is disabled");
++		const sessionId = params.sessionId;
++		const record = typeof sessionId === "string" ? this.#getSessionRecord(sessionId) : undefined;
++		const bridge = record?.r9GoalBridge;
++		if (!record || !bridge) throw new Error("R9 Goal bridge sessionId must name a dedicated session");
++		try {
++			this.#assertR9ExactKeys(params, ["sessionId"]);
++			if (bridge.phase !== "PROMPT_CONSUMED") throw new Error("R9 Goal bridge settle requires one consumed prompt");
++			if (record.session.isStreaming || (record.promptTurn && !record.promptTurn.settled)) {
++				throw new Error("R9 Goal bridge settle requires a terminal model turn");
++			}
++			const state = record.session.getGoalModeState();
++			if (
++				state?.enabled !== false ||
++				state.mode !== "exiting" ||
++				state.reason !== "completed" ||
++				state.goal.status !== "complete" ||
++				state.goal.id !== bridge.goalId ||
++				state.goal.objective !== bridge.objective
++			) {
++				throw new Error("R9 Goal bridge requires native goal-tool completion before settlement");
++			}
++			const goal = { ...state.goal };
++			record.session.setGoalModeState(undefined);
++			const modeEntryId = record.session.sessionManager.appendModeChange("none");
++			const completedData = {
++				objective: goal.objective,
++				timeUsedSeconds: goal.timeUsedSeconds,
++				tokenBudget: goal.tokenBudget,
++				tokensUsed: goal.tokensUsed,
++			};
++			const completedEntryId = record.session.sessionManager.appendCustomEntry("goal-completed", completedData);
++			await record.session.sessionManager.flush();
++			if (record.session.getGoalModeState() !== undefined) {
++				throw new Error("R9 Goal bridge terminal Goal state did not clear after reconciliation");
++			}
++			bridge.phase = "SETTLED";
++			return {
++				goal,
++				goalCompletedRecord: { data: completedData, entryId: completedEntryId, type: "goal-completed" },
++				modeChange: { entryId: modeEntryId, mode: "none" },
++				phase: bridge.phase,
++				schemaId: R9_GOAL_BRIDGE_TERMINAL_SCHEMA,
++				sessionId: record.session.sessionId,
++			};
++		} catch (error) {
++			bridge.phase = "CONSUMED_FAILED";
++			throw error;
++		}
++	}
++
+ 	async extNotification(_method: string, _params: { [key: string]: unknown }): Promise<void> {}
+ 
+ 	get signal(): AbortSignal {
+@@ -1341,6 +1532,7 @@ export class AcpAgent implements Agent {
+ 			promptEventHandlers: new Set(),
+ 			extensionUserMessageTasks: new Set(),
+ 			lifetimeUnsubscribe: undefined,
++			r9GoalBridge: R9_GOAL_BRIDGE_ENABLED ? { phase: "FRESH" } : undefined,
+ 		};
+ 	}
+ 
+@@ -1668,6 +1860,37 @@ export class AcpAgent implements Agent {
+ 		}
+ 	}
+ 
++	#consumeR9GoalSubject(
++		record: ManagedSessionRecord,
++		blocks: PromptRequest["prompt"],
++	): { text: string; images: AgentImageContent[] } {
++		const bridge = record.r9GoalBridge;
++		if (!bridge) throw new Error("R9 Goal bridge state missing");
++		const fail = (message: string): never => {
++			bridge.phase = "CONSUMED_FAILED";
++			throw new Error(message);
++		};
++		if (bridge.phase !== "ACTIVE") {
++			return fail("R9 Goal bridge requires one active native Goal before the sole subject prompt");
++		}
++		if (record.promptTurn || record.session.isStreaming) {
++			return fail("R9 Goal bridge forbids overlapping or repeated prompts");
++		}
++		if (blocks.length !== 1 || blocks[0]?.type !== "text") {
++			return fail("R9 Goal bridge requires exactly one text prompt block");
++		}
++		const text = blocks[0].text;
++		const bytes = Buffer.byteLength(text, "utf8");
++		if (bytes === 0 || bytes > R9_GOAL_BRIDGE_MAX_SUBJECT_BYTES) {
++			return fail(`R9 Goal bridge subject must be 1-${R9_GOAL_BRIDGE_MAX_SUBJECT_BYTES} UTF-8 bytes`);
++		}
++		if (text.trimStart().startsWith("/")) {
++			return fail("R9 Goal bridge subject must not dispatch as a slash command");
++		}
++		bridge.phase = "PROMPT_CONSUMED";
++		return { text, images: [] };
++	}
++
+ 	#convertPromptBlocks(blocks: PromptRequest["prompt"]): { text: string; images: AgentImageContent[] } {
+ 		const textParts: string[] = [];
+ 		const images: AgentImageContent[] = [];

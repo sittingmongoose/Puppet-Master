@@ -1,0 +1,5 @@
+G=R9 atom;run=codex-native-goal-direct-canary-002;c=0;r=b;a=n00000;m=3e6f2cda613872a4871587bce05bbfcb88d852b4a12dc090ec985e68339b7ac8;no-retry.
+F=r9_codex_goal_runs/codex-native-goal-direct-canary-002/atoms/00004.json
+B=611
+H=83953ec86ef32380ba1ffdde636a1d0fdd2da86bd0c4959cdd5e8e8b58c4ab8c
+First:create_goal(G);require ACTIVE. Then one exec: wc -c F && sha256sum F && sed -n '1,4096p' F. Require B/H;solve only JSON;update_goal complete;final R|RESULT|G|threadId. No other tool/read/retry.

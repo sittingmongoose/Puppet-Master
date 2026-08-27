@@ -1,0 +1,100 @@
+{
+  "attempt_id": "storage-glm-disamb-v1-01-97fd146264",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 718,
+      "path": "composer_ack.json",
+      "sha256": "bc55fd9055371fd5a8d9cf7b021435eaccc98a62cd7a8a1385971a51dc1b3fdb"
+    },
+    {
+      "bytes": 103590,
+      "path": "composer_ack.raw",
+      "sha256": "3c514d1ddbb152ca203f61cdf419ac889f232c50d7add4dfa00f68b2cba4c8b9"
+    },
+    {
+      "bytes": 740,
+      "path": "enter_write.json",
+      "sha256": "7b55832ab6d094886143a344c436b07d804637049b02d8c14856e7e3e0850f02"
+    },
+    {
+      "bytes": 1476,
+      "path": "launch.json",
+      "sha256": "81aa0e3ee4e4c2dd6ebffc1696fc936fad49fff88762c494145289a8f2ffa3f5"
+    },
+    {
+      "bytes": 10993,
+      "path": "omp_preflight.json",
+      "sha256": "55a6b081e366c0ab0d1d1af751f58036a7beab4bdce1eaee44a46f322857f5bc"
+    },
+    {
+      "bytes": 22422,
+      "path": "postfailure_session.raw.jsonl",
+      "sha256": "caa0dede475a1b4e070f67c1659c84dc5714e25b4ddd7d7332dd886ac9b34efb"
+    },
+    {
+      "bytes": 95180,
+      "path": "pre_prompt.raw",
+      "sha256": "3c3404ff1006bf086b298c84e074df18a393aa1be7b0a4a1e4252437694a9b76"
+    },
+    {
+      "bytes": 688,
+      "path": "prompt_write.json",
+      "sha256": "d78ccd4bc361cb4139831bc82e0c8440b17357a5b761fa231418ad796e204532"
+    },
+    {
+      "bytes": 344,
+      "path": "reservation.json",
+      "sha256": "3b3a0cea12ce866276815e8a02aafdfd454e615e9b69ce02ba88ae1b5cd3d02c"
+    },
+    {
+      "bytes": 534,
+      "path": "runner_failure.json",
+      "sha256": "da5dc5fb31920a894337a0b501c01e812c3f1ceb86682649ec514a4dcabf8d32"
+    },
+    {
+      "bytes": 12412,
+      "path": "session_prefix.raw.jsonl",
+      "sha256": "3902c969c6745dbdd167038d7810eec39bfc49b36e4594946189681cfb6f467a"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 3036,
+      "path": "stdin_prompt.raw",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 1329,
+      "path": "submission_acceptance.json",
+      "sha256": "e289e166a90a72ee22d36f7294fc075beeb53b19d6683e7eb8aaf20f44781eea"
+    },
+    {
+      "bytes": 223060,
+      "path": "transcript.raw",
+      "sha256": "282db09be557e12b4d21226d75c2233f9f18562af38938275b47da7f13471422"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-26T16:49:03.155Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/ox-alpha-free",
+  "no_retry": true,
+  "nonce": "97fd146264df28c18856e3c60c457dd8",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "native_ox_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_ox_alpha_free_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "max"
+}
