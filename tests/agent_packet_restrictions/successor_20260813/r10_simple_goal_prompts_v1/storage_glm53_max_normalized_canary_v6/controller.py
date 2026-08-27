@@ -31,6 +31,9 @@ EVIDENCE = HERE / "evidence"
 SOURCES = ("README.md", "canary_contract.json", "controller.py", "selftest.py", "models.yml", "result_normalizer.py")
 ROUTE_ID = "omp_glm53_flash_max"
 ENDPOINT = "https://opencode.ai/zen/go/v1/chat/completions"
+HTTP_FINAL_SCHEMA = "pm.r10.storage_pipeline.http_final_receipt.v6"
+HTTP_FINAL_PHASE = "post_structural_order_sensitive_normalized_normal_exit_complete_pairs"
+HTTP_FINAL_KEYS = {"schema_id","phase","request_pair_count","verified_assistant_turn_count","pairs","sensitive_material_copied"}
 MODELS_BYTES = b"providers:\n  opencode-go:\n    modelOverrides:\n      glm-5.3-flash:\n        thinking:\n          mode: effort\n          efforts: [low, high, max]\n"
 VISIBLE_MAX = "GLM-5.3-Flash (2x usage) · ◉ max ·".encode()
 PROMPT_READY = "❯".encode()
@@ -207,9 +210,11 @@ def assistant_receipts(path: Path, structural: dict[str, Any]) -> list[dict[str,
         permanent(all(type(item) is int and item >= 0 for item in safe.values()) and safe["totalTokens"] == safe["input"] + safe["cacheRead"] + safe["output"], "assistant usage values"); result.append({"assistant_ordinal":len(result)+1,"entry_index":index,"entry_id":entry.get("id"),"text_utf8_bytes":len(text),"text_sha256":P.sha256_bytes(text),"stopReason":stop,"usage":safe})
     permanent(len(result) == structural.get("assistant_message_count") and len(result) in (2,3), "verified standard assistant count")
     ids = [item["entry_id"] for item in result]; permanent(ids[-1] == structural["entry_ids"]["final_assistant"] and ids.count(structural["entry_ids"]["goal_call_assistant"]) == 1, "assistant structural identity/order"); return result
+def validate_http_envelope(receipt: Any, count: int) -> None:
+    permanent(isinstance(receipt,dict) and set(receipt) == HTTP_FINAL_KEYS and receipt.get("schema_id") == HTTP_FINAL_SCHEMA and receipt.get("phase") == HTTP_FINAL_PHASE and type(receipt.get("request_pair_count")) is int and receipt.get("request_pair_count") == receipt.get("verified_assistant_turn_count") == count and isinstance(receipt.get("pairs"),list) and len(receipt["pairs"]) == count and receipt.get("sensitive_material_copied") is False, "exact final HTTP receipt envelope")
 def validate_final_http(receipt: Any, structural: dict[str, Any], private: Path, session_path: Path) -> None:
-    assistants = assistant_receipts(session_path,structural); count = len(assistants); call_index = [a["entry_id"] for a in assistants].index(structural["entry_ids"]["goal_call_assistant"]); goal_id = structural["goal_tool_call_id"]
-    permanent(private.is_dir() and not private.is_symlink() and (private.stat().st_mode & 0o777) == 0o700 and isinstance(receipt,dict) and receipt.get("request_pair_count") == receipt.get("verified_assistant_turn_count") == count and len(receipt.get("pairs",[])) == count, "private HTTP roster and assistant 1:1 count")
+    assistants = assistant_receipts(session_path,structural); count = len(assistants); validate_http_envelope(receipt,count); call_index = [a["entry_id"] for a in assistants].index(structural["entry_ids"]["goal_call_assistant"]); goal_id = structural["goal_tool_call_id"]
+    permanent(private.is_dir() and not private.is_symlink() and (private.stat().st_mode & 0o777) == 0o700, "private HTTP roster")
     permanent([pair.get("assistant") for pair in receipt["pairs"]] == assistants, "HTTP/assistant ordinal pairing")
     expected_names: list[str] = []
     for index, pair in enumerate(receipt["pairs"]):
@@ -231,7 +236,7 @@ def final_http(structural: dict[str, Any], session_path: Path) -> dict[str, Any]
     permanent(not os.path.lexists(private) and set(entries) == set(expected), "contiguous complete terminal request roster")
     pairs = []
     for index in range(1,count+1): pairs.append({"pair_index":index,"assistant":assistants[index-1],"request":safe_request(cwd / f"rr-session-{index}.json"),"response":safe_response(cwd / f"rr-session-{index}.res.log")})
-    receipt = {"schema_id":"pm.r10.storage_pipeline.http_final_receipt.v6","phase":"post_structural_order_sensitive_normalized_normal_exit_complete_pairs","request_pair_count":count,"verified_assistant_turn_count":count,"pairs":pairs,"sensitive_material_copied":False}; no_sensitive(receipt); write_once(target,receipt)
+    receipt = {"schema_id":HTTP_FINAL_SCHEMA,"phase":HTTP_FINAL_PHASE,"request_pair_count":count,"verified_assistant_turn_count":count,"pairs":pairs,"sensitive_material_copied":False}; no_sensitive(receipt); write_once(target,receipt)
     private.mkdir(mode=0o700)
     for path in entries: path.replace(private / path.name); os.chmod(private / path.name,0o600)
     permanent(not any(cwd.iterdir()), "empty cwd after private capture move"); validate_final_http(receipt,structural,private,session_path); return receipt

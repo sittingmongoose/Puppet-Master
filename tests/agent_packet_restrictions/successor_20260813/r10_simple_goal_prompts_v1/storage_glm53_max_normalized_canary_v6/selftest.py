@@ -183,6 +183,12 @@ def chain_tests() -> None:
         target = row / "http_final_receipt.json"; rejects(c.CanaryError,lambda:c.write_once(target,{}),"final receipt overwrite accepted")
     c.EVIDENCE = old
 
+def http_envelope_tests() -> None:
+    receipt = {"schema_id":c.HTTP_FINAL_SCHEMA,"phase":c.HTTP_FINAL_PHASE,"request_pair_count":2,"verified_assistant_turn_count":2,"pairs":[{},{}],"sensitive_material_copied":False}; c.validate_http_envelope(receipt,2); check(True,"exact HTTP final envelope")
+    for key,value,label in (("schema_id","foreign.schema","foreign HTTP receipt schema"),("phase","foreign_phase","foreign HTTP receipt phase"),("sensitive_material_copied",True,"sensitive material copied true")):
+        mutation = copy.deepcopy(receipt); mutation[key] = value; rejects(c.PermanentCanaryError,lambda value=mutation:c.validate_http_envelope(value,2),f"{label} accepted")
+    mutation = copy.deepcopy(receipt); mutation["extra"] = True; rejects(c.PermanentCanaryError,lambda:c.validate_http_envelope(mutation,2),"extra HTTP receipt key accepted")
+
 def postpass_scope_tests() -> None:
     frozen = c.spec()["consumed_v4_pass_replay"]; v4 = c.R10 / "storage_glm53_max_normalized_canary_v4"; evidence = v4 / "evidence"; terminal = c.P.load_json(evidence / "pass_01" / c.ROUTE_ID / "terminal.json")
     check(terminal["status"] == "PASS" and terminal["no_retry"] is True and terminal["process_exit_code"] == terminal["qualification_credit"] == 0 and len(terminal["evidence"]) == frozen["terminal_evidence_join_count"],"V4 PASS subject remains zero-credit/no-retro")
@@ -236,7 +242,7 @@ def static_and_prelaunch_tests() -> None:
     finally: c.git_custody,c.current_runtime_preflight,c.verify_prefix,c.ORIGINAL_POPEN = old_git,old_runtime,old_prefix,old_popen
 
 def main() -> int:
-    static_and_prelaunch_tests(); corrected, formal = formal_v5_replay(); order_sensitive_normalizer_tests(corrected,formal); session_health_boundary_tests(formal); v1_failure_and_prefix_tests(); composer_and_patch_tests(); zero_mcp_verify_row_tests(); profile_and_subprocess_tests(); chain_tests(); postpass_scope_tests()
+    static_and_prelaunch_tests(); corrected, formal = formal_v5_replay(); order_sensitive_normalizer_tests(corrected,formal); session_health_boundary_tests(formal); v1_failure_and_prefix_tests(); composer_and_patch_tests(); zero_mcp_verify_row_tests(); profile_and_subprocess_tests(); chain_tests(); http_envelope_tests(); postpass_scope_tests()
     check(not list(c.HERE.rglob("*.pyc")) and not list(c.HERE.rglob("__pycache__")),"no cache residue"); print(c.P.canonical_json({"status":"PASS_ZERO_SUBJECT_SELFTEST","checks":CHECKS,"subject_calls":0,"qualification_credit":0})); return 0
 
 if __name__ == "__main__": raise SystemExit(main())
