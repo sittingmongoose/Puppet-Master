@@ -1,0 +1,7 @@
+providers:
+  opencode-go:
+    modelOverrides:
+      glm-5.3-flash:
+        thinking:
+          mode: effort
+          efforts: [low, high, max]
