@@ -1,0 +1,119 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.mimo_normalized_canary_v2_prelaunch_failure_review.v1",
+  "reviewed_at_utc": "2026-08-27T20:41:07.601685170Z",
+  "source_commit": "9a9f3068a01652071933582266244cce726a2dd5",
+  "package": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v2",
+    "tree_oid": "19af6c0edd2821186a5dee88a34c8ccec69026a9",
+    "source_file_count": 5
+  },
+  "planned_row": {
+    "attempt_id": "storage-mimo-normalized-canary-v2-01-1b2cc0ccc0",
+    "nonce": "1b2cc0ccc04aa7b5b50dce18ddf20e20",
+    "ordinal": 1,
+    "pass_id": "pass_01",
+    "route_id": "omp_mimo_v25_free_high",
+    "model": "opencode-zen/mimo-v2.5-free",
+    "thinking": "high",
+    "max_seconds": 3600,
+    "evidence_path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v2/evidence/pass_01/omp_mimo_v25_free_high"
+  },
+  "authorized_execution": {
+    "working_directory": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v2",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "argv": [
+      "python3",
+      "-B",
+      "controller.py",
+      "run",
+      "1",
+      "--max-seconds",
+      "3600"
+    ],
+    "display_command_utf8": "PYTHONDONTWRITEBYTECODE=1 python3 -B controller.py run 1 --max-seconds 3600",
+    "display_command_utf8_bytes": 75,
+    "display_command_sha256": "da8eb38b179872dac6d96498280979f5a943d74683db343fadc7a3977bad4e29",
+    "invocation_count": 1,
+    "exit_code": 1,
+    "wall_time_seconds_observed_by_exec_tool": 17.034858365,
+    "started_at_utc": null,
+    "finished_at_utc": null,
+    "exact_utc_start_and_finish_not_captured": true,
+    "postexit_audit_observed_at_utc": "2026-08-27T20:39:01.045161585Z",
+    "stdout_utf8": "{\"error\":\"PipelineError: frozen input byte drift: Plans/storage-plan.md\",\"qualification_credit\":0,\"status\":\"FAIL_PRELAUNCH_NO_MUTATION\"}\n",
+    "stdout_utf8_bytes": 137,
+    "stdout_sha256": "3f4312ad90b9923b53146a5b9860c4c39c32696d0935fb8729707cad11ec7904",
+    "separate_raw_stdout_file_created": false
+  },
+  "failure": {
+    "status": "FAIL_PRELAUNCH_NO_MUTATION",
+    "error": "PipelineError: frozen input byte drift: Plans/storage-plan.md",
+    "stage": "validate_static_frozen_pipeline_input_before_reservation_runtime_catalog_and_popen",
+    "source_manifest": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/source_manifest.json",
+      "bytes": 3171,
+      "sha256": "b4950627ff8b4d417325dadb3a0099065253970b0bca1c6a5d2997669ba88b9d",
+      "expected_source": {
+        "path": "Plans/storage-plan.md",
+        "utf8_bytes": 974842,
+        "line_count": 18204,
+        "sha256": "d18a405bd34411252183166a84ff12b48b6d9c9953cb37319a0503d39f60d506"
+      }
+    },
+    "source_commit_plan_blob": {
+      "path": "Plans/storage-plan.md",
+      "mode": "100644",
+      "blob_oid": "5cf703a31fbadfcc520ce3b7d123fe5b4dd03f87",
+      "bytes": 974842,
+      "sha256": "d18a405bd34411252183166a84ff12b48b6d9c9953cb37319a0503d39f60d506"
+    },
+    "live_plan_observed_at_failure_and_reopen": {
+      "path": "Plans/storage-plan.md",
+      "bytes": 982880,
+      "line_count": 18348,
+      "sha256": "635db26dab9fdf5b0cd8d9df8660a64fc5f6aff56f3b37f1f643e11fbc256050",
+      "mode": "0777",
+      "mtime_utc": "2026-08-27T20:13:38.631040852Z",
+      "inode_observation": 566063,
+      "device_observation": 63,
+      "git_diff_numstat": {
+        "additions": 178,
+        "deletions": 34
+      },
+      "live_bytes_are_uncommitted_and_mutable": true
+    }
+  },
+  "postfailure_absence": {
+    "observed_at_utc": "2026-08-27T20:39:01.045161585Z",
+    "reservation_created": false,
+    "evidence_root_created": false,
+    "launch_journal_created": false,
+    "terminal_created": false,
+    "runtime_paths_created": false,
+    "owned_pid_observed": false,
+    "session_created": false,
+    "goal_created": false,
+    "catalog_refresh_called": false,
+    "provider_or_model_call_observed": false,
+    "prompt_submitted": false,
+    "subject_popen_observed": false,
+    "cache_residue_observed": false
+  },
+  "outcome": {
+    "row_consumed": false,
+    "retry_performed": false,
+    "retry_authorized_by_this_receipt": false,
+    "qualification_credit": 0,
+    "matrix_credit": 0,
+    "production_credit": 0,
+    "prior_failures_reclassified": false,
+    "successor_or_repair_authorized_by_this_receipt": false
+  },
+  "named_residuals": [
+    "The controller stdout was captured by the execution tool but no separate raw stdout file was created.",
+    "Exact UTC process start and finish timestamps were not captured; only the execution tool wall duration and post-exit audit time are retained.",
+    "The live Plan bytes are unrelated mutable worktree state and are recorded by hash only; this receipt does not copy, alter, stage, or claim ownership of them."
+  ]
+}
