@@ -1,0 +1,452 @@
+{
+  "architecture_limits": {
+    "controller_max_lines": 750,
+    "copied_v7_runner_parser_scorer_verifier_body_count": 0,
+    "package_max_bytes": 125000,
+    "package_max_lines": 1700,
+    "selftest_max_lines": 360
+  },
+  "authority": {
+    "authority_source_kind": "current_active_native_goal_exact_objective",
+    "authorized_attempt_ids": [
+      "storage-mimo-normalized-canary-v2-01-1b2cc0ccc0"
+    ],
+    "authorized_fresh_canary_count": 1,
+    "authorized_selector": "opencode-zen/mimo-v2.5-free",
+    "authorized_thinking": "high",
+    "current_goal_created_at": 1787781232,
+    "current_goal_exact_authorizing_excerpt": "First qualify exactly one fresh zero-credit normalized native OMP Goal canary with opencode-zen/mimo-v2.5-free at high.",
+    "current_goal_objective_sha256": "560a6b2e6852f351fd5d95e1ed44ec0f5044dab367318b20458c3cd76139c406",
+    "current_goal_objective_utf8_bytes": 2703,
+    "current_goal_status": "active",
+    "current_goal_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+    "current_goal_updated_at_observation": 1787861158,
+    "matrix_credit": 0,
+    "matrix_launch_authorized_by_canary": false,
+    "normalization_course_correction": {
+      "receipt_kind": "current_user_course_correction_before_launch",
+      "source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+      "text_sha256": "cebc005f707144a0efe7c33ae54b0971e43ef6039f3416814fc41b85928ce184",
+      "text_utf8": "USER COURSE CORRECTION BEFORE LAUNCH: response normalization must accept semantically equivalent model variation. Do NOT require input JSON object insertion/key order. Interpret objective's `schema/type/value/order` as strict schema/types/values, meaningful list/sequence order, and deterministic schema-defined order in the emitted canonical minified result. Accept different surrounding prose, whitespace, PM_RESULT location, and object-key order. Still reject malformed JSON, duplicate keys, nonfinite values, missing/extra fields, wrong types/values, reordered meaningful arrays, zero candidates, and conflicting non-identical candidates; no repair/coercion/invention. Multiple candidates may differ only in benign formatting/object-key order and must canonicalize to the same typed semantic value. Keep lifecycle/tool/retry/exit gates strict. Update package/normalizer/selftests/contract accordingly before launch; do not use byte-identical V6 order-sensitive normalizer.",
+      "text_utf8_bytes": 976
+    },
+    "normalization_program_authority": {
+      "assistant_contract": {
+        "jsonl_line_bytes_including_lf": 1093,
+        "jsonl_line_sha256_including_lf": "cada218ad7952e36572e7dcb297f30e28d4a4cc0c9b7cff4284b268dad9cc351",
+        "message_id": "msg_09747b8db7972cfa016a8f5ae67af887d1abb585a8a8783f7e",
+        "ordinal": 28926,
+        "phase": "commentary",
+        "physical_line": 28927,
+        "role": "assistant",
+        "text_sha256": "00bbefdf07b901f3665bb3c27e778bb53f325bc48095ce2f6cb678787e7a2acd",
+        "text_utf8": "Agreed. The harness-specific final prose is not a stable product contract, so requiring byte-exact terminal prose is the wrong invariant.\n\nThe stable contract should be:\n\n- native Goal must activate and complete;\n- the model must emit one schema-valid typed result somewhere in the bounded task lifecycle;\n- the host deterministically extracts, validates, and canonicalizes that result;\n- conflicting multiple results fail;\n- surrounding prose and harness-specific final wording are ignored.\n\nThat keeps semantics, authority, and lifecycle strict while making the output portable to PuppetMaster’s eventual native runtime. I’ll pivot the qualification to a fresh normalized-output denominator; no old failure gets retro-credit.",
+        "text_utf8_bytes": 731,
+        "timestamp": "2026-08-26T21:30:18.154Z",
+        "turn_id": "01a03f9b-da82-7a93-b8c7-6974cc7f563d"
+      },
+      "assistant_program_answer": {
+        "jsonl_line_bytes_including_lf": 958,
+        "jsonl_line_sha256_including_lf": "eaefd3b7971cc283d72b11125803ccab28464e9e133751fe8b8904f428b5243d",
+        "message_id": "msg_09747b8db7972cfa016a8f5b7cb43887d19b351f7f6ca3612e",
+        "ordinal": 28946,
+        "phase": "final_answer",
+        "physical_line": 28947,
+        "role": "assistant",
+        "text_sha256": "e9c484ce848b0aa2638ac3bf11250d6bdc2490f6770371b8860dd8bf379e3e44",
+        "text_utf8": "A program, not another agent.\n\nThe PuppetMaster host/controller would:\n\n1. Read the bounded task’s raw assistant outputs.\n2. Extract every `PM_RESULT` candidate.\n3. Strictly parse and schema-validate them.\n4. Require all valid candidates to represent the same typed value.\n5. Reject missing, malformed, or conflicting results.\n6. Emit one canonical minified JSON result.\n\nNo model call or judgment is involved. For qualification, the program also compares that canonical result with the frozen oracle. This keeps normalization deterministic, cheap, and independent of harness-specific prose.",
+        "text_utf8_bytes": 593,
+        "timestamp": "2026-08-26T21:32:47.399Z",
+        "turn_id": "01a03f9b-da82-7a93-b8c7-6974cc7f563d"
+      },
+      "source_jsonl_basename": "rollout-2026-08-24T17-02-55-01a034b9-a1c8-7a80-937f-4e45e3f2ae45.jsonl",
+      "user_correction": {
+        "jsonl_line_bytes_including_lf": 565,
+        "jsonl_line_sha256_including_lf": "36969d325f589bc533babc46dd38c32437a45195602e40afa0b034b210eec97c",
+        "message_id": "msg_01a03ffa-f335-71b0-bca2-c69f0727786c",
+        "ordinal": 28921,
+        "phase": null,
+        "physical_line": 28922,
+        "role": "user",
+        "text_sha256": "00e40f2fb20461d8714a37cc5380fa126312621ca6ce5efed9c540c9920b426e",
+        "text_utf8": "Keep in mind, the harness the ai agent is using will change responses slightly, so running natively in Puppet Master, once built, will give a slightly different prose response.  So the only option is likely normalizing.\n",
+        "text_utf8_bytes": 220,
+        "timestamp": "2026-08-26T21:30:06.005Z",
+        "turn_id": "01a03f9b-da82-7a93-b8c7-6974cc7f563d"
+      },
+      "user_host_question": {
+        "jsonl_line_bytes_including_lf": 481,
+        "jsonl_line_sha256_including_lf": "0dab2444dc8e8ba9c7ccc62bcf8f6fcf1446f9695c7c42aa9696d6e394a1cdf1",
+        "message_id": "msg_01a03ffd-2b73-7051-9c8d-3872550c5304",
+        "ordinal": 28941,
+        "phase": null,
+        "physical_line": 28942,
+        "role": "user",
+        "text_sha256": "24f91eb464f288176b8bcc8b7911db9f80205fe336b00b6aa705ecf80beec5db",
+        "text_utf8": "In this case \"the host deterministically extracts, validates, and canonicalizes that result;\" Is the host another agent or a program?\n",
+        "text_utf8_bytes": 134,
+        "timestamp": "2026-08-26T21:32:31.476Z",
+        "turn_id": "01a03f9b-da82-7a93-b8c7-6974cc7f563d"
+      }
+    },
+    "older_mimo_contract_authoritative_for_fresh_v2": false,
+    "other_route_or_subject_authorized": false,
+    "production_credit": 0,
+    "qualification_credit": 0,
+    "retry_replacement_reuse_or_retro_credit_authorized": false,
+    "runtime_launch_authorized_by_active_objective": true,
+    "separate_review_before_launch_required": true,
+    "source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+    "status": "AUTHORIZED_EXACT_ONE_FRESH_MIMO_HIGH_CANARY_BY_CURRENT_ACTIVE_GOAL",
+    "v6_glm_max_contract_authoritative_for_mimo_v2": false,
+    "v6_glm_max_evidence_role": "compatibility_evidence_only",
+    "windows_omp_interaction_authorized": false
+  },
+  "catalog_gate": {
+    "argv": [
+      "/home/sittingmongoose/.local/bin/omp",
+      "models",
+      "refresh",
+      "opencode-zen",
+      "--json",
+      "--no-extensions"
+    ],
+    "command_timeout_seconds": 30,
+    "exact_selector_count": 1,
+    "expected_assistant_api": "openai-completions",
+    "expected_model": {
+      "contextWindow": 200000,
+      "cost": {
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "input": 0,
+        "output": 0
+      },
+      "id": "mimo-v2.5-free",
+      "input": [
+        "text",
+        "image"
+      ],
+      "maxTokens": 32000,
+      "name": "MiMo V2.5 Free",
+      "provider": "opencode-zen",
+      "reasoning": true,
+      "selector": "opencode-zen/mimo-v2.5-free",
+      "thinking": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "extensions_disabled": true,
+    "forced_online": true,
+    "freshness_to_popen_max_seconds": 60,
+    "recognized_thinking_efforts": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "required_thinking_effort": "high",
+    "schema_id": "pm.r10.storage_pipeline.omp_catalog_gate.v2",
+    "stderr_must_be_empty": true,
+    "zero_price_required": true
+  },
+  "created_at_utc": "2026-08-27T00:00:00Z",
+  "dependencies": [
+    {
+      "bytes": 41009,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+      "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+    },
+    {
+      "bytes": 37909,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_session.py",
+      "sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+    },
+    {
+      "bytes": 35041,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+      "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+    },
+    {
+      "bytes": 29419,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/pipeline.py",
+      "sha256": "e240db07e8de31f7fa7294c5f722b9a63b90f634a86d00fe976deee63a8e1708"
+    },
+    {
+      "bytes": 1788,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_check.py",
+      "sha256": "170680502462ac6066077dcd43ab69b1838e986cc268590d9784bea3520a452e"
+    },
+    {
+      "bytes": 4443,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_manifest.json",
+      "sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3"
+    },
+    {
+      "bytes": 2370,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/matrix.json",
+      "sha256": "70adc74155e652808d1c9ede781698c3f5675a58e094e8b3a0d93ce9e827957e"
+    },
+    {
+      "bytes": 1335,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/runtime_manifest.json",
+      "sha256": "56943ce8625c6ce7e3d621323d382d8db8f10f2b8f2c0970193ca97f89d726ba"
+    },
+    {
+      "bytes": 34781,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_native_matrix_v2/controller.py",
+      "sha256": "3785d21d4999943a9a55dbc8c42d6197bc12e8e7d495d7ed7cb01d0ca5fa901a"
+    },
+    {
+      "bytes": 39685,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_native_canary_v1/controller.py",
+      "sha256": "a542eed1a81f9ba6b245661d7d0d97685f362cf25666a8bed0c083fffc1f9dd1"
+    },
+    {
+      "bytes": 13856,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_native_canary_v1/canary_contract.json",
+      "sha256": "91e537ae27cd725e61eadd2f2abdbb2711f921ee4c50ad3c7b8f62c9dc49fa2f"
+    },
+    {
+      "bytes": 7024,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v1/result_normalizer.py",
+      "sha256": "382cb5bb0b357bc223010a813dbef7e9c8daf8f952568db0ce4d5e1620129a43"
+    }
+  ],
+  "frozen_storage_artifacts": [
+    {
+      "bytes": 3036,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "bytes": 2909,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/capsule.json",
+      "sha256": "1d384296b6b8e648915281b2ffdeb1bdfdfb991e3525ff10809badc1ebd003ca"
+    },
+    {
+      "bytes": 407,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/oracle.json",
+      "sha256": "f11f136b271d739e8b1108cce38ab52dbd0258357f9a591da1c5c1ba69e36bdf"
+    },
+    {
+      "bytes": 1142,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/response.schema.json",
+      "sha256": "64484356c062ddda98385c35dfa51328744a8a5b36320df4bb24e9852a6aca97"
+    }
+  ],
+  "governance_goal_receipt": {
+    "create_call_id": "call_Rklj1ZlFk4yF18PFKEOaeCrm",
+    "create_call_jsonl_line_bytes_including_lf": 3161,
+    "create_call_jsonl_line_sha256_including_lf": "333f17c24805d52e0073474113fe2d50a930e84934bc1ba2108f302aa36f40d0",
+    "create_call_ordinal": 29054,
+    "create_call_physical_line": 29055,
+    "create_call_timestamp": "2026-08-26T21:53:52.879Z",
+    "create_output_call_id": "call_Rklj1ZlFk4yF18PFKEOaeCrm",
+    "create_output_jsonl_line_bytes_including_lf": 3425,
+    "create_output_jsonl_line_sha256_including_lf": "ec0894967ff91de3f068495d17e8060d5be5970312ec202c67b33a618b816fd1",
+    "create_output_ordinal": 29055,
+    "create_output_physical_line": 29056,
+    "create_output_timestamp": "2026-08-26T21:53:52.955Z",
+    "created_at": 1787781232,
+    "goal_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+    "objective_sha256": "560a6b2e6852f351fd5d95e1ed44ec0f5044dab367318b20458c3cd76139c406",
+    "objective_utf8": "Course-correct and complete PuppetMaster's original bounded-context prompt-complexity project. Prove, using the already-completed Storage Plan as a sandboxed end-to-end pre-WorkNode vertical slice, that automated PuppetMaster workflows other than separate direct Assistant Chat can receive bounded task-specific PromptCapsules through the platform's native one-prompt Goal interfaces without giant prompts or custom Goal choreography, while preserving authority, safety, lineage, and deterministic host validation. Preserve canonical Plans and ledgers unchanged and create no WorkNodes. The host must be deterministic program code, not another agent: from the bounded verified assistant text it must extract every line-shaped PM_RESULT candidate, strictly parse and schema/type/value/order validate each without repair or coercion, require at least one, permit only canonically identical duplicates, reject malformed or conflicting candidates, and emit one canonical minified typed result; harness-specific surrounding prose is non-authoritative. Native Goal activation and successful completion, zero forbidden ordinary tools/retries, current route/config custody, and normal exit remain independent mandatory gates. First qualify exactly one fresh zero-credit normalized native OMP Goal canary with opencode-zen/mimo-v2.5-free at high. If that passes, freeze and empirically qualify the authorized 12-route matrix twice on unchanged bytes/configuration, with MiMo/high replacing the delisted opencode-go/ox-alpha-free|max rows and every other prescribed route/order preserved: MiMo first, Cursor/default auto second, Qwen last. Use native OMP /goal with both advisor controls off for OMP routes and native Codex App Goal with one ordinary prompt beginning 'Create a goal that' for Codex routes. Require unique fresh identities, exact typed normalized output, raw native Goal lifecycle evidence, deterministic host verification, no WorkNodes, no retro-credit, and preservation of every failure. Fresh development diagnostics may use additional OMP calls, but consumed qualification rows are never retried or retro-credited. Do not spend paid, Codex, or Cursor tokens until the free first-route harness passes cleanly. If MiMo Free becomes unavailable, preserve the failure and pivot through a freshly frozen authorized cheap fallback using Muse or opencode-go/glm-5.3-flash at xhigh rather than stopping or weakening acceptance. Use gpt-5.6-sol medium and xhigh subagents for the bulk of implementation and adversarial review. Every 30 minutes, re-read this objective and audit for drift, looping, or churn; if detected, simplify, pivot, or reset architecture and keep progressing rather than stopping.",
+    "objective_utf8_bytes": 2703,
+    "receipt_refreshed_at_utc": "2026-08-27T00:00:00Z",
+    "remaining_tokens_observation": null,
+    "schema_id": "pm.r10.storage_pipeline.active_goal_creation_receipt.v1",
+    "source_jsonl_basename": "rollout-2026-08-24T17-02-55-01a034b9-a1c8-7a80-937f-4e45e3f2ae45.jsonl",
+    "source_thread_id": "01a034b9-a1c8-7a80-937f-4e45e3f2ae45",
+    "status": "active",
+    "time_used_seconds": 0,
+    "token_usage_is_semantic_authority": false,
+    "tokens_used": 0,
+    "tokens_used_observation": 1562040,
+    "updated_at": 1787861158
+  },
+  "historic_identity_root": {
+    "bytes": 21758,
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v1/canary_contract.json",
+    "sha256": "ded1932b46d260bc8b8e3fc9f093c4e9be60c3ecc51b2952b7e13202386fc1ab"
+  },
+  "hypothesis": "On current OMP 18.0.7, a fresh isolated native MiMo/high Goal can complete the unchanged bounded Storage prompt and the deterministic program can emit the exact typed result despite non-authoritative prose.",
+  "nonclaims": [
+    "Static validation is not subject success.",
+    "Catalog availability is not model inference or Goal success.",
+    "A PASS would remain zero qualification, matrix, and production credit.",
+    "Prior MiMo failures remain failures and are not retried or retro-credited.",
+    "V6 GLM/max evidence is compatibility evidence only and is not authority for MiMo/high.",
+    "No Plans, ledgers, WorkNodes, Windows OMP, Assistant Chat, paid route, or matrix action is authorized here."
+  ],
+  "owned_file_roster": [
+    "README.md",
+    "canary_contract.json",
+    "controller.py",
+    "result_normalizer.py",
+    "selftest.py"
+  ],
+  "prior_failure_custody": [
+    {
+      "bytes": 3041,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_native_canary_v1/evidence/pass_01/omp_mimo_v25_free_high/terminal.json",
+      "sha256": "46bafbde749108249b075cc4d4e58d4e4a65c81e463c58fdff004775856f0c7c"
+    },
+    {
+      "bytes": 51501,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_native_canary_v1/evidence/pass_01/omp_mimo_v25_free_high/postfailure_session.raw.jsonl",
+      "sha256": "16260db38f0998ddbb7c18a65724dfff954dc9655d3b62cffa9bcc00c72badf1"
+    },
+    {
+      "bytes": 13855,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_native_canary_v1/evidence/pass_01/omp_mimo_v25_free_high/failure_review.json",
+      "sha256": "f149bb09af135de0558bb345b85acf9b946123f8d47674deae108cf846219205"
+    },
+    {
+      "bytes": 3045,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v1/evidence/pass_01/omp_mimo_v25_free_high/terminal.json",
+      "sha256": "ef627191255eb9a505b7e8a299b793ec72cf3a1e84f57eb31880e18e951aa452"
+    },
+    {
+      "bytes": 38028,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v1/evidence/pass_01/omp_mimo_v25_free_high/postfailure_session.raw.jsonl",
+      "sha256": "715cf5d56a93f7ccdfa14b5cbc1f40bc10ad7d6edd7e5f30c6f8314727a5341b"
+    },
+    {
+      "bytes": 24140,
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v1/evidence/pass_01/omp_mimo_v25_free_high/failure_review.json",
+      "sha256": "4209da18e0e6d1464ae12de2c7ab5f23aec0f67bc602f847ae527f94cebea90b"
+    }
+  ],
+  "result_normalizer": {
+    "bytes": 7183,
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_normalized_canary_v2/result_normalizer.py",
+    "sha256": "0832c205a2b62917ffb874838c84159d358c78f79bbad6c9f4ec8fccbd637c9f"
+  },
+  "route": {
+    "id": "omp_mimo_v25_free_high",
+    "model": "opencode-zen/mimo-v2.5-free",
+    "surface": "omp_tui",
+    "thinking": "high"
+  },
+  "rows": [
+    {
+      "attempt_id": "storage-mimo-normalized-canary-v2-01-1b2cc0ccc0",
+      "claude_config_dir": "/tmp/pm-r10-storage-v7-claude-mimo-normalized-canary-v2-1b2cc0ccc0",
+      "copilot_home": "/tmp/pm-r10-storage-v7-copilot-mimo-normalized-canary-v2-1b2cc0ccc0",
+      "cwd": "/tmp/pm-r10-storage-v7-mimo-normalized-canary-v2-cwd-1b2cc0ccc0",
+      "evidence_path": "evidence/pass_01/omp_mimo_v25_free_high",
+      "home_dir": "/tmp/pm-r10-storage-v7-home-mimo-normalized-canary-v2-1b2cc0ccc0",
+      "model": "opencode-zen/mimo-v2.5-free",
+      "nonce": "1b2cc0ccc04aa7b5b50dce18ddf20e20",
+      "ordinal": 1,
+      "pass_id": "pass_01",
+      "profile_dir": "/tmp/pm-r10-storage-v7-profile-mimo-normalized-canary-v2-1b2cc0ccc0",
+      "prompt_sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638",
+      "prompt_utf8_bytes": 3036,
+      "protocol_adapter": "native_default",
+      "route_id": "omp_mimo_v25_free_high",
+      "session_dir": "/tmp/pm-r10-storage-v7-session-mimo-normalized-canary-v2-1b2cc0ccc0",
+      "surface": "omp_tui",
+      "thinking": "high",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v7-xdg-cache-mimo-normalized-canary-v2-1b2cc0ccc0",
+      "xdg_config_home": "/tmp/pm-r10-storage-v7-xdg-config-mimo-normalized-canary-v2-1b2cc0ccc0",
+      "xdg_data_home": "/tmp/pm-r10-storage-v7-xdg-data-mimo-normalized-canary-v2-1b2cc0ccc0"
+    }
+  ],
+  "runtime": {
+    "active_wait_seconds": 3600,
+    "binary": "/home/sittingmongoose/.local/bin/omp",
+    "binary_bytes": 183686344,
+    "binary_mode": "0o755",
+    "binary_sha256": "4e2468ad6974e6a2edea621da82abca8c95ec62a8354630381c353dc08c7769b",
+    "config_overlay": null,
+    "ctrl_d_after_stable_structural_and_normalized_success_count": 1,
+    "effective_config": {
+      "advisor.enabled": false,
+      "autolearn.enabled": false,
+      "goal.continuationModes": [
+        "interactive"
+      ],
+      "goal.enabled": true,
+      "mcp.enableProjectConfig": false,
+      "memory.backend": "off",
+      "plan.defaultOnStartup": false,
+      "task.agentAdvisor": {
+        "task": "off"
+      },
+      "tools.approvalMode": "yolo"
+    },
+    "extensions_enabled": false,
+    "external_goal_prompt_count": 1,
+    "foreign_windows_omp_terminal_boundary": "DO_NOT_INSPECT_FOCUS_INJECT_SIGNAL_REUSE_CLOSE_OR_CLEANUP",
+    "isolated_linux_only": true,
+    "normal_exit_required": true,
+    "ordinary_tools_enabled": false,
+    "pre_submission_jsonl_required": false,
+    "row_time_budget_seconds": 3600,
+    "rules_enabled": false,
+    "skills_enabled": false,
+    "source_profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "standalone_enter_count": 1,
+    "version": "omp/18.0.7"
+  },
+  "schema_id": "pm.r10.storage_pipeline.storage_mimo_normalized_canary.v2",
+  "sequencing": {
+    "all_rows_count": true,
+    "best_of": false,
+    "exact_route_order": [
+      "omp_mimo_v25_free_high"
+    ],
+    "fail_stop": true,
+    "matrix_credit": 0,
+    "only_next_ordinal_launchable": true,
+    "production_credit": 0,
+    "qualification_credit": 0,
+    "replacement_count": 0,
+    "required_rows": 1,
+    "retry_count": 0
+  },
+  "smallest_changed_invariant": "Fresh denominator on current runtime with truthful route-local three-file profile, empty MCP/extensions surface, semantic object-key normalization, exact meaningful list order, and schema-defined canonical output order; no GLM models override and no pre-submit JSONL gate.",
+  "status": "FROZEN_ZERO_SUBJECT_PRELAUNCH_REQUIRES_SEPARATE_REVIEW_AND_PUSHED_CUSTODY",
+  "temporary_bindings": [
+    "omp_row_runner.EVIDENCE",
+    "omp_row_runner.route_map",
+    "omp_row_runner.plan_rows",
+    "omp_row_runner.planned_row",
+    "omp_row_runner.expected_argv",
+    "omp_row_runner.row_preflight",
+    "omp_row_runner.verify_composer_transition",
+    "omp_row_runner.run_row",
+    "omp_row_runner.atomic_json",
+    "omp_row_runner.pipeline",
+    "omp_row_runner.subprocess",
+    "omp_session.verify_submission_prefix",
+    "omp_session.verify_session",
+    "verify_matrix.EVIDENCE",
+    "verify_matrix.launch_plan_map",
+    "verify_matrix.expected_argv",
+    "verify_matrix.verify_omp_raw",
+    "verify_matrix.pipeline"
+  ],
+  "verification": {
+    "candidate_marker_grammar": "ascii_horizontal_outer_whitespace_then_PM_RESULT_then_one_or_more_ascii_horizontal_separators_then_strict_json_payload",
+    "canonical_output_object_order": "frozen_oracle_schema_defined",
+    "distinct_final_assistant_required": true,
+    "native_goal_complete_required": true,
+    "normal_exit_required": true,
+    "normalization_second": "v2_local_result_normalizer.normalize_verified_session",
+    "normalized_exact_result_required": true,
+    "input_object_key_order": "semantically_irrelevant",
+    "meaningful_list_order": "exact",
+    "inline_prose_marker_authoritative": false,
+    "pre_submission_jsonl_required": false,
+    "raw_final_assistant_may_be_non_authoritative_prose": true,
+    "raw_session_preserved": true,
+    "raw_tui_transcript_preserved": true,
+    "retry_or_provider_error_permanent": true,
+    "structural_first": "unmodified_v7_omp_session.verify_session",
+    "structural_terminal_error_permanent_only_after_explicit_session_exit": true
+  }
+}
