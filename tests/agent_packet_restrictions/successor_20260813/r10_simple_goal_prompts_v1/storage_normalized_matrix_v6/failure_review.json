@@ -1,0 +1,222 @@
+{
+  "schema_id": "pm.r10.storage_normalized_matrix.v6.failure_review.v1",
+  "reviewed_at_utc": "2026-08-28T01:04:45Z",
+  "source_custody": {
+    "candidate_commit": "3ddeaf13497f61bc9262bc9198fb68a69e227fda",
+    "origin_main_observed": "3ddeaf13497f61bc9262bc9198fb68a69e227fda",
+    "truenas_backup_main_observed": "3ddeaf13497f61bc9262bc9198fb68a69e227fda",
+    "owned_source_sha256": {
+      "README.md": "a61caa49a900673622019a88e34e419979188c5cf2280f83008a8103802a9ef1",
+      "controller.py": "aae3acd897184b909e1f21c30ca4b698a4d6f13bd9628290205aab59fe1f0f9f",
+      "matrix_contract.json": "48d7726a314d312a8fe5d2006a69439a856fb62130dabcdb077ecda1c21243a3",
+      "selftest.py": "d82fdfbb88c2bdddc2ea270e4693657dae805b2e151bfecaf5af0e737946ac36"
+    }
+  },
+  "row_identity": {
+    "attempt_id": "storage-normalized-matrix-v6-pass_01-01-306ec0de42",
+    "nonce": "306ec0de426272d2f2cdccadb868d13a",
+    "ordinal": 1,
+    "pass_id": "pass_01",
+    "route_id": "omp_mimo_v25_free_high",
+    "model": "opencode-zen/mimo-v2.5-free",
+    "thinking": "high",
+    "pid": 566155,
+    "session_id": "01a0459d-c69d-72e4-b76c-05c1912df974",
+    "goal_id": "1568b4c637703a65"
+  },
+  "outcome": {
+    "status": "FAIL_CONSUMED_STOP_SUFFIX",
+    "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+    "error": "PostPopenRunnerError: post-Popen failure for pid 566155: RunnerError: row time budget expired before exact Goal terminal result",
+    "reservation_at_utc": "2026-08-27T23:45:25.977Z",
+    "launch_at_utc": "2026-08-27T23:45:59.108Z",
+    "terminal_at_utc": "2026-08-28T00:45:59.780Z",
+    "launch_to_terminal_seconds": 3600.672,
+    "row_time_budget_seconds": 3600,
+    "controller_exit_code": 1,
+    "terminal_process_exit_code": null,
+    "qualification_credit": 0,
+    "retry_count": 0,
+    "no_retry": true,
+    "rows_2_through_24_evidence_absent": true,
+    "rows_2_through_24_runtime_absent": true
+  },
+  "generic_terminal_correction": {
+    "terminal_goal_activation_observed": false,
+    "terminal_goal_complete_observed": false,
+    "terminal_observed_identity": null,
+    "terminal_observed_non_goal_tool_calls": null,
+    "interpretation": "The generic failure-terminal false and null summary fields are conservative defaults, not claims that activation or identity evidence was absent. The preserved raw session proves native Goal activation and exact identities; it proves no Goal completion."
+  },
+  "raw_session_facts": {
+    "goal_activation_observed": true,
+    "goal_activation_entry_id": "1fc45b1f",
+    "goal_status_snapshots": [
+      {
+        "entry_id": "1fc45b1f",
+        "status": "active",
+        "time_used_seconds": 0,
+        "tokens_used": 0,
+        "updated_at": 1787874363613
+      },
+      {
+        "entry_id": "8970c3bf",
+        "status": "active",
+        "time_used_seconds": 14,
+        "tokens_used": 1851,
+        "updated_at": 1787874377647
+      },
+      {
+        "entry_id": "0d611c52",
+        "status": "active",
+        "time_used_seconds": 23,
+        "tokens_used": 5046,
+        "updated_at": 1787874386624
+      }
+    ],
+    "assistant_entry_ids": [
+      "e33e0d2a",
+      "4e4442ba"
+    ],
+    "assistant_stop_reasons": [
+      "stop",
+      "stop"
+    ],
+    "external_user_message_count": 1,
+    "external_submission_count": 1,
+    "low_level_input_write_count": 2,
+    "goal_tool_call_count": 0,
+    "goal_complete_count": 0,
+    "ordinary_tool_call_count": 0,
+    "retry_recovery_count": 0,
+    "terminal_control_receipt_absent": true,
+    "session_exit": {
+      "kind": "signal",
+      "reason": "sigterm",
+      "recorded_at_utc": "2026-08-28T00:45:59.135Z"
+    }
+  },
+  "normalization": {
+    "formal_admission": false,
+    "formal_admission_blocker": "The structural Goal-complete gate did not pass, so no normalized_projection.json was admitted.",
+    "read_only_diagnostic_projection": {
+      "candidate_count": 2,
+      "candidates_identical_and_schema_valid": true,
+      "canonical_utf8_bytes": 416,
+      "canonical_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+      "result_authority": "deterministic_host_program_over_preserved_assistant_text_only"
+    }
+  },
+  "frozen_input_snapshot": {
+    "commit": "9a9f3068a01652071933582266244cce726a2dd5",
+    "commit_tree_oid": "037c2e6842177c2b667c15f99b53b1fe21a29934",
+    "tree_oids": {
+      "Plans": "f49b5214ff0a22ec60bebe5b50a27ad5769a2ecd",
+      "scripts": "a00c6451d5200148898cd39fb4e3b7863682a110"
+    },
+    "storage_plan_blob": {
+      "bytes": 974842,
+      "git_mode": "100755",
+      "git_oid": "5cf703a31fbadfcc520ce3b7d123fe5b4dd03f87",
+      "sha256": "d18a405bd34411252183166a84ff12b48b6d9c9953cb37319a0503d39f60d506"
+    },
+    "entry_count": 6097,
+    "total_blob_bytes": 286212474,
+    "roster_sha256": "aacc99ef10eb0c6a2e66c50d4c0813df080ce8ebd28b4b5c95e52cc46cdadcb7",
+    "content_roster_sha256": "c1ce5558298ce5d7ed7c66c6d784c348cd9c81df0915186be3eea8a685766150",
+    "input_snapshot_sha256": "b426f149a5d8159350122b1abe9bee371d17e527ae7caf5b695083543263863e",
+    "git_objects_only": true,
+    "live_plans_open_or_read_count": 0,
+    "materialized_snapshot_retained": false
+  },
+  "evidence_custody": {
+    "evidence_root": "evidence",
+    "evidence_file_count": 17,
+    "evidence_roster_canonicalization": "relative-path-sorted array of path,bytes,sha256; JSON sort_keys compact without trailing newline",
+    "evidence_roster_canonical_sha256": "7deb9f7831990c6d810fc11f292e4e52ad5eec1851015d32eb1b03c58463ac8e",
+    "journal": {
+      "bytes": 487,
+      "path": "evidence/launch_journal.jsonl",
+      "sha256": "2da12a03b5ffec538391d1663313a2b182841238b014248cc5e0166c4370a84e"
+    },
+    "terminal": {
+      "bytes": 3047,
+      "path": "evidence/pass_01/omp_mimo_v25_free_high/terminal.json",
+      "sha256": "b537f8c5970532bd59799c4dd7be98b7e655ca7355c45d6a7a5330572fb00ad9",
+      "bound_evidence_count": 15,
+      "bound_evidence_canonical_sha256": "90b878ceae00a93a7acb6cce5c6bf41606b48cd07398151f1003f3d40ddf8c21"
+    },
+    "runner_failure": {
+      "bytes": 543,
+      "path": "evidence/pass_01/omp_mimo_v25_free_high/runner_failure.json",
+      "sha256": "370447d87f29b40805496c5a67201d4bf914a6274b91c10616ec8c2090dff7f6"
+    },
+    "postfailure_session": {
+      "bytes": 34714,
+      "path": "evidence/pass_01/omp_mimo_v25_free_high/postfailure_session.raw.jsonl",
+      "sha256": "b84b3129de177352686f2e665fda5125b2408d3da5c22e2a0b01895c659ce5af"
+    },
+    "transcript": {
+      "bytes": 1417337,
+      "path": "evidence/pass_01/omp_mimo_v25_free_high/transcript.raw",
+      "sha256": "a03567217d2aa8b4834697d159bfad691da1db502970f095ed90f4edb0ac71dc"
+    },
+    "existing_evidence_bytes_changed_by_review": false
+  },
+  "retained_runtime_residuals": {
+    "cleanup_performed": false,
+    "snapshot_path_absent": true,
+    "cwd_empty": true,
+    "paths": [
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-normalized-matrix-v6-cwd-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0775",
+        "path": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-profile-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-home-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-xdg-config-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-xdg-cache-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-xdg-data-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-claude-config-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-copilot-home-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a"
+      }
+    ],
+    "session_file": {
+      "bytes": 34714,
+      "mode": "0664",
+      "path": "/tmp/pm-r10-storage-v7-session-normalized-matrix-v6-306ec0de426272d2f2cdccadb868d13a/2026-08-27T23-46-03-037Z_01a0459d-c69d-72e4-b76c-05c1912df974.jsonl",
+      "sha256": "b84b3129de177352686f2e665fda5125b2408d3da5c22e2a0b01895c659ce5af"
+    }
+  },
+  "scope": {
+    "evidence_commit_authorizes_no_future_subject": true,
+    "matrix_completion_claim": false,
+    "no_live_plans_used_by_review": true,
+    "no_retro_credit": true,
+    "no_suffix_launched": true
+  }
+}
