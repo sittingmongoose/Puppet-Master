@@ -1,0 +1,182 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.mimo_goal_completion_diagnostic_v8.prelaunch_failure_review.v1",
+  "generated_at_utc": "2026-08-28T03:15:55Z",
+  "review_scope": "durable_review_of_one_executor_observed_prelaunch_failure_only",
+  "source_custody": {
+    "commit": "c71705e045480f7a73a0d7449d0cf7df048a9bc9",
+    "parent_commit": "7a83f6d2d662d17b52c62e117d79242da1a9dda0",
+    "commit_tree": "603246b4193ee9fede7ec79c1bd96d820b205e96",
+    "package_path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_goal_completion_diagnostic_v8",
+    "package_tree": "84b57a48a79ddb8ae15795874ccfb5ce256ffa66",
+    "origin_main_observed": "c71705e045480f7a73a0d7449d0cf7df048a9bc9",
+    "truenas_backup_main_observed": "c71705e045480f7a73a0d7449d0cf7df048a9bc9",
+    "files": [
+      {
+        "path": "README.md",
+        "mode": "100644",
+        "blob": "faab6da21f110c9e9c0acff071b8d3fccacae570",
+        "bytes": 2279,
+        "sha256": "be5b583b013cc19bb70c289688c71ac4492935d6403074e9937ee49e6d344813"
+      },
+      {
+        "path": "controller.py",
+        "mode": "100644",
+        "blob": "eef7cd3188f958cd719173b5cdae30d7e2686d1e",
+        "bytes": 59116,
+        "sha256": "61fd88bfa62faf3cf974327344255e3ed40b17941ceacb5cf2163b18b125345d"
+      },
+      {
+        "path": "local_runtime.py",
+        "mode": "100644",
+        "blob": "61e2f070dc278ae458239ef61b48796ba7f21ba1",
+        "bytes": 55896,
+        "sha256": "3050d85182c45114c3211121f1b063bd92021b8c7d3b5ecd53212f34a0ff4fb8"
+      },
+      {
+        "path": "local_runtime_selftest.py",
+        "mode": "100644",
+        "blob": "e0ec09f1b437ea3f60c0c6c33e4f6436c56ab1b1",
+        "bytes": 29293,
+        "sha256": "bc6d50bfcdfda92ddbe1586ab13ddea01b073484ce8ce9a7df6dd3c3f73fafe1"
+      },
+      {
+        "path": "matrix_contract.json",
+        "mode": "100644",
+        "blob": "fcd0f63a3bd61d44a10947e9d5658a375ac703d0",
+        "bytes": 18212,
+        "sha256": "cb5f11b65d9d60428e9d013a2e71815f67f3a2584459f0c995011c3d966c6bdb"
+      },
+      {
+        "path": "prompt.txt",
+        "mode": "100644",
+        "blob": "7ba42c2c71380bdfbe05a1acc9fec6ef4ed0d806",
+        "bytes": 3286,
+        "sha256": "58a3842778a3bc8b720b1ef86ecef134c3cae66173dc6bd7f2cc1a98a86f1d3d"
+      },
+      {
+        "path": "selftest.py",
+        "mode": "100644",
+        "blob": "de709e76ef5d3ca56397312e8b82164ce28ad04a",
+        "bytes": 17034,
+        "sha256": "ae58796fe61fded08d73a57019621555eae59f9c3b661c57f3681963e7c6b921"
+      }
+    ]
+  },
+  "planned_row": {
+    "ordinal": 1,
+    "pass_id": "diagnostic_01",
+    "route_id": "omp_mimo_v25_free_high",
+    "attempt_id": "storage-mimo-goal-completion-diagnostic-v8-949442bd70",
+    "nonce": "949442bd70c5939fd7a015d3654587a4",
+    "model": "opencode-zen/mimo-v2.5-free",
+    "thinking": "high",
+    "max_seconds": 3600,
+    "qualification_credit": 0
+  },
+  "invocation": {
+    "working_directory": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_goal_completion_diagnostic_v8",
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "argv": [
+      "python3",
+      "-B",
+      "controller.py",
+      "run",
+      "1",
+      "--max-seconds",
+      "3600"
+    ],
+    "exit_code": 1,
+    "started_at_utc": null,
+    "finished_at_utc": null,
+    "exact_start_and_finish_timestamps_available": false,
+    "executor_absence_observation_epoch_seconds": null,
+    "exact_absence_observation_timestamp_available": false
+  },
+  "executor_observation": {
+    "status": "FAIL_PRELAUNCH_NO_MUTATION",
+    "exception_text": "MatrixError: live/HEAD mode: tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/ARCHITECTURE.md",
+    "exception_text_authority": "executor_observed_combined_output_not_owned_raw_stream",
+    "qualification_credit": 0,
+    "raw_stdout_available": false,
+    "raw_stderr_available": false,
+    "stdout_stderr_separation_available": false,
+    "raw_stream_bytes_or_sha256_recorded": false,
+    "raw_stream_custody_gap": "The unified executor exposed the parsed combined output and exit code but no owned byte-for-byte stdout/stderr artifact; no stream bytes, byte counts, hashes, or reconstructed raw files are asserted."
+  },
+  "failed_dependency": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/ARCHITECTURE.md",
+    "live": {
+      "type": "regular_file",
+      "mode": "0777",
+      "bytes": 8832,
+      "sha256": "31d8ce7bab020f31f6e3058a5d9bf9c2ed37f0aa60f776e953e3678b269d4bff"
+    },
+    "index": {
+      "stage": 0,
+      "mode": "100644",
+      "blob": "8159a92c97d0518d1b4a5f0255ad0f3fda6fbc7e"
+    },
+    "head": {
+      "commit": "c71705e045480f7a73a0d7449d0cf7df048a9bc9",
+      "mode": "100644",
+      "blob": "8159a92c97d0518d1b4a5f0255ad0f3fda6fbc7e",
+      "bytes": 8832,
+      "sha256": "31d8ce7bab020f31f6e3058a5d9bf9c2ed37f0aa60f776e953e3678b269d4bff"
+    },
+    "bytes_equal_live_index_head": true,
+    "failed_comparison": "live filesystem mode 0777 != exact Git index/HEAD mode 100644"
+  },
+  "phase_and_cause": {
+    "phase": "controller_run_git_custody_after_static_prefix_authority_before_runtime_preflight",
+    "bounded_cause": "Mode-only live-versus-index-and-HEAD custody mismatch on one frozen V7 dependency; byte content, size, SHA-256, and Git blob identity were equal.",
+    "underlying_reason_for_live_mode_drift": "unknown",
+    "before_omp_runtime_and_config_preflight": true,
+    "before_forced_catalog_refresh": true,
+    "before_input_snapshot_materialization": true,
+    "before_reservation": true,
+    "before_subject_popen": true,
+    "before_provider_call": true,
+    "before_prompt_write": true
+  },
+  "absence_custody": {
+    "observation": "All exact planned paths were absent after executor termination.",
+    "paths": [
+      "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/storage_mimo_goal_completion_diagnostic_v8/evidence",
+      "/tmp/pm-r10-storage-v7-diagnostic-v8-cwd-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-session-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-profile-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-snapshot-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-home-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-xdg-config-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-xdg-cache-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-xdg-data-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-claude-config-diagnostic-v8-949442bd70c5939fd7a015d3654587a4",
+      "/tmp/pm-r10-storage-v7-copilot-home-diagnostic-v8-949442bd70c5939fd7a015d3654587a4"
+    ],
+    "all_paths_absent": true,
+    "reservation_absent": true,
+    "evidence_absent": true,
+    "pid_absent": true,
+    "session_absent": true,
+    "goal_absent": true,
+    "catalog_receipt_absent": true,
+    "provider_call_absent": true,
+    "prompt_submission_absent": true,
+    "subject_popen_absent": true
+  },
+  "disposition": {
+    "attempt_consumed": false,
+    "qualification_credit": 0,
+    "no_retry": true,
+    "retro_credit_authorized": false,
+    "retro_credit_forbidden": true,
+    "suffix_blocked": true,
+    "suffix_launch_authorized": false,
+    "successor_authorized": false,
+    "source_or_dependency_repair_authorized_by_this_review": false,
+    "subject_failure_claim": false,
+    "model_failure_claim": false
+  }
+}
