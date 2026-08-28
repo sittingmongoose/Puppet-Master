@@ -219,8 +219,15 @@ def historical_identity_clean(frozen: list[dict[str, Any]]) -> None:
     for needle in needles: command.extend(["-e",needle.decode()])
     command.extend(["HEAD","--",R10.relative_to(REPO).as_posix()])
     result=run_git(*command); require(result.returncode in {0,1},"historical identity Git-object scan")
-    own=HERE.relative_to(REPO).as_posix()+"/"
-    require(all(line.split(":",1)[0].startswith(own) for line in result.stdout.splitlines()),"historical identity reuse")
+    own=HERE.relative_to(REPO).as_posix()+"/"; parse_historical_identity_matches(result.stdout,{own+name for name in SOURCES})
+def parse_historical_identity_matches(output: str, allowed_paths: set[str]) -> list[str]:
+    matches=[]
+    for line in output.splitlines():
+        require(line.startswith("HEAD:"),"historical identity revision prefix")
+        fields=line[5:].split(":",2); require(len(fields)==3,"historical identity output shape")
+        path,line_number,_=fields; require(path in allowed_paths and bool(re.fullmatch(r"[1-9][0-9]*",line_number)),"historical identity reuse")
+        matches.append(path)
+    return matches
 def metric(path: Path) -> dict[str, int]:
     return {"lines": len(path.read_bytes().splitlines()), "bytes": path.stat().st_size}
 def verify_pinned_canary() -> dict[str, Any]:

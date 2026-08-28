@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Zero-subject V15 matrix tests. Never launches OMP or creates an App task."""
-import copy,json,os,sys,tempfile
+import copy,json,os,subprocess,sys,tempfile
 from pathlib import Path
 os.environ["PYTHONDONTWRITEBYTECODE"]="1"
 HERE=Path(__file__).resolve().parent; sys.path.insert(0,str(HERE)); import controller as C
@@ -27,6 +27,17 @@ def route_contract():
     check(C.DB.verify()==C.DEPENDENCY_RECEIPT and C.DEPENDENCY_RECEIPT["file_count"]==28,"dependencies")
     check(contract["snapshot"]["commit"]==C.G.SNAPSHOT_COMMIT and contract["snapshot"]["entry_count"]==6097,"snapshot")
     check(C.verify_lineage()["status"]=="PASS_V14_LINEAGE_AND_MIMO_429_FALLBACK","lineage")
+def historical_scanner_controls():
+    identity="fresh-v15-disposable-identity"
+    with tempfile.TemporaryDirectory() as td:
+        repo=Path(td); package=repo/"pkg"; package.mkdir(); (package/"matrix_contract.json").write_text(json.dumps({"attempt_id":identity})+"\n")
+        def git(*args): return subprocess.run(["git",*args],cwd=repo,text=True,capture_output=True,check=True)
+        git("init","-q"); git("add","pkg/matrix_contract.json"); git("-c","user.name=V15 Test","-c","user.email=v15@example.invalid","commit","-qm","self identity")
+        actual=git("grep","-n","-F","-e",identity,"HEAD","--","pkg").stdout; check(C.parse_historical_identity_matches(actual,{"pkg/matrix_contract.json"})==["pkg/matrix_contract.json"],"actual git grep HEAD self identity")
+        (repo/"foreign.txt").write_text(identity+"\n"); git("add","foreign.txt"); git("-c","user.name=V15 Test","-c","user.email=v15@example.invalid","commit","-qm","foreign reuse")
+        foreign=git("grep","-n","-F","-e",identity,"HEAD","--",".").stdout; rejects(lambda:C.parse_historical_identity_matches(foreign,{"pkg/matrix_contract.json"}),"foreign committed identity reuse")
+        rejects(lambda:C.parse_historical_identity_matches(actual.replace("HEAD:","HEAD~1:",1),{"pkg/matrix_contract.json"}),"foreign revision prefix")
+        rejects(lambda:C.parse_historical_identity_matches("HEAD:pkg/matrix_contract.json:not-a-line:value\n",{"pkg/matrix_contract.json"}),"malformed grep output")
 class Sentinel:
     def __init__(self,*args,**kwargs): calls.append((args,kwargs))
 def dispatch_sentinels():
@@ -130,5 +141,5 @@ def codex_grammar():
             changed=copy.deepcopy(raw); mutate(changed); p.write_bytes(C.P.jsonl_bytes(changed));
             with C.selected(row): rejects(lambda:C.normalize_codex(p,final),"Codex terminal mutation")
 try:
-    route_contract(); dispatch_sentinels(); semantic_carriers(); continuation_controls(); journal_global_controls(); dependency_hold_controls(); post_pass_hold_controls(); codex_grammar(); print(C.P.canonical_json({"status":"PASS_V15_ZERO_SUBJECT_SELFTEST","checks":checks,"omp_fake_popen":12,"codex_fake_create":12,"subject_calls":0,"qualification_credit":0}))
+    route_contract(); historical_scanner_controls(); dispatch_sentinels(); semantic_carriers(); continuation_controls(); journal_global_controls(); dependency_hold_controls(); post_pass_hold_controls(); codex_grammar(); print(C.P.canonical_json({"status":"PASS_V15_ZERO_SUBJECT_SELFTEST","checks":checks,"omp_fake_popen":12,"codex_fake_create":12,"subject_calls":0,"qualification_credit":0}))
 finally: C.DB.cleanup()
