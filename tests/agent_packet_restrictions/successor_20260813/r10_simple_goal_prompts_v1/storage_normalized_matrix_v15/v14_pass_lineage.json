@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.v14_pass_lineage.v1",
+  "source_commit": "bfbd3af36371333178b59f2c7f3de5ac657e79bc",
+  "source_tree_oid": "f647ae9ffb8c0c8a4bb697bdea84b3dfdca45eaa",
+  "package_source_tree_oid": "45f356c3e5e225997886a933ed9b955e7e1450fd",
+  "attempt_id": "storage-glm53-max-fallback-qualification-v14-ea6d740787",
+  "status": "PASS",
+  "model": "opencode-go/glm-5.3-flash",
+  "thinking": "max",
+  "process_exit_code": 0,
+  "no_retry": true,
+  "qualification_credit": 0,
+  "evidence": {
+    "launch_journal.jsonl": {"bytes": 497, "sha256": "3176cefacf4322db6f84c31e615db043948c8f8829b4ec57a9f004674ca84b71"},
+    "terminal.json": {"bytes": 34552, "sha256": "da0cad3f6d24fa96b6ddea0ce62693f82b24f205f05e4d0225f811746ab6f73b"},
+    "normalized_projection.json": {"bytes": 9962, "sha256": "21af58605df306bb10d3a6d5dbf188350e439235cb8def80d4bb8b349b41f832"},
+    "structural_projection.json": {"bytes": 5486, "sha256": "aa94450b447791b06e7bc5d7b101abd4f7ec5bea130b15e9714e0000d8c790aa"},
+    "request_response_projection.json": {"bytes": 2353, "sha256": "e4dc9ff023c9e660627efd87dea0239e7c9def3126def9a77e8c2a3f534f9c73"}
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "assistant_api": "openai-completions",
+  "assistant_api_message_count": 1,
+  "assistant_lifecycle_shape": "standard_single_turn_goal_complete",
+  "assistant_message_count": 1,
+  "entry_ids": {
+    "final_assistant": "4a694c57",
+    "goal_active": "e879d38e",
+    "goal_call_assistant": "4a694c57",
+    "goal_complete_mode": "552615e3",
+    "goal_completed": "pm-r10-dev-one-turn-completed",
+    "goal_contexts": [
+      "4d1dd311"
+    ],
+    "goal_exit": "pm-r10-dev-one-turn-none",
+    "goal_result": "a44a3370",
+    "goal_tool_start": "c5b47dde",
+    "native_continuation": null,
+    "session_exit": "8fb989e5",
+    "user": "457ab7a5"
+  },
+  "final_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "final_text_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+  "goal_completion_call_provenance": {
+    "assistant_ordinal": 1,
+    "block_index": 2,
+    "entry_id": "4a694c57",
+    "entry_index": 6,
+    "message_id": null,
+    "tool_call_id": "call_475dfbd92eb94ea0bd1021e7"
+  },
+  "goal_context_count": 1,
+  "goal_id": "156976205dd9d73f",
+  "goal_tool_call_id": "call_475dfbd92eb94ea0bd1021e7",
+  "leaf_id": "8fb989e5",
+  "logical_entry_count": 12,
+  "model": "glm-5.3-flash",
+  "native_continuation_count": 0,
+  "one_turn_final_payload_before_goal_complete": true,
+  "ordinary_tool_calls": 0,
+  "persisted_thinking_literal": "max",
+  "post_exit_shutdown_tail": {
+    "entries": [
+      {
+        "entry_id": "ef2db5db",
+        "entry_timestamp": "2026-08-28T13:51:15.257Z",
+        "errorId": 134221824,
+        "errorMessage": "Request was aborted",
+        "message_timestamp": 1787925075226,
+        "ordinal": 1,
+        "parent_id": "8fb989e5",
+        "raw_jsonl_bytes": 467,
+        "raw_jsonl_sha256": "cf2dcf4a46c44643387818fd63fe235e9d522ef939955aa287bf2661d32ec01c",
+        "response_id": null,
+        "stopReason": "aborted",
+        "thinking_block_count": 0
+      }
+    ],
+    "entry_count": 1,
+    "entry_ids": [
+      "ef2db5db"
+    ],
+    "lifecycle_credit": false,
+    "parent_exit_id": "8fb989e5",
+    "raw_jsonl_bytes": 467,
+    "raw_jsonl_sha256": "cf2dcf4a46c44643387818fd63fe235e9d522ef939955aa287bf2661d32ec01c",
+    "schema_id": "pm.r10.storage_pipeline.post_exit_teardown_tail.v14",
+    "semantic_credit": false,
+    "usage_credit": 0
+  },
+  "pre_goal_call_text_utf8_bytes": 1694,
+  "provider": "opencode-go",
+  "raw_last_assistant_sha256": "8502af3b8a9b655d7fde7dc703693c73b77c26fd8f019e092f08194defef9179",
+  "raw_last_assistant_text": "Audit from the four admitted receipts only:\n\n- **Source match**: `Plans/storage-plan.md` receipted (sha256 `d18a405b…`, 18204 lines); `comparison_and_gate_receipt.source_match: true`; plan units, acceptance units, and dependency edges all exact-match.\n- **Structural success (preserved separately)**: extraction clean — 248 plan units, 811 acceptance units, 0 parse errors, 0 duplicate IDs, 0 missing metadata; dependency registry `resolved` (1047 edges, 0 missing targets, 0 true cycles); migration coverage `pass` (130 spans); canonical comparison `pass`.\n- **Gate blockers (preserved separately)**: canonical currentness check executed and failed globally — `stale_generated_index_artifact` at `Plans/.plan_index/node_readiness_report.json` (stored stable sha `c32a34b0…` ≠ recomputed `c1125b67…`) → `canonical_node_readiness_artifact_stale`; node readiness `blocked_runtime_certification_incomplete` (ref PNC-019) → `pnc019_runtime_certification_incomplete`.\n\nPer the admitted constraint, a failing canonical currentness check and incomplete runtime certification each independently mandate a blocked disposition regardless of structural success. Receipted disposition: `blocked`, no WorkNodes created.\n\nPM_RESULT\n{\n  \"schema_id\": \"pm.r10.storage_pipeline.subject_result.v1\",\n  \"source_match\": true,\n  \"plan_unit_count\": 248,\n  \"acceptance_unit_count\": 811,\n  \"dependency_registry_status\": \"resolved\",\n  \"migration_coverage_status\": \"pass\",\n  \"canonical_comparison_status\": \"pass\",\n  \"pre_worknode_disposition\": \"blocked\",\n  \"blocker_codes\": [\n    \"canonical_node_readiness_artifact_stale\",\n    \"pnc019_runtime_certification_incomplete\"\n  ],\n  \"no_worknodes_created\": true\n}",
+  "raw_last_assistant_utf8_bytes": 1694,
+  "request_effort_receipt": {
+    "completed_pair_count": 1,
+    "post_exit_aborted_request_count": 1,
+    "raw_copied_to_evidence": false,
+    "raw_private_root": "/tmp/pm-r10-storage-v7-http-fallback-v14-ea6d7407878d4d70a906320b4620544e",
+    "requests": [
+      {
+        "model": "glm-5.3-flash",
+        "ordinal": 1,
+        "post_exit_aborted": false,
+        "reasoning_effort": "max",
+        "request_bytes": 20646,
+        "request_sha256": "15ed6ecbf39cb4f1438ecf836a8cef690aa73bd38082e614d2241b2031ab7e5e",
+        "tool_names": [
+          "goal"
+        ]
+      },
+      {
+        "model": "glm-5.3-flash",
+        "ordinal": 2,
+        "post_exit_aborted": true,
+        "reasoning_effort": "max",
+        "request_bytes": 28683,
+        "request_sha256": "359a76b2360d7200dbc1e54f422d3a9dff28793cf13f2fa50f7df821ebfb520e",
+        "tool_names": [
+          "goal"
+        ]
+      }
+    ],
+    "schema_id": "pm.r10.storage_pipeline.dev_glm_request_effort.v1"
+  },
+  "request_response_projection": {
+    "binding_sha256": "a0c5515b37bd69125e1e4a947a51a3948412d0cc3dffe09f5c90e4e843d8d31c",
+    "bytes": 2353,
+    "path": "request_response_projection.json",
+    "sha256": "e4dc9ff023c9e660627efd87dea0239e7c9def3126def9a77e8c2a3f534f9c73"
+  },
+  "result_normalization": {
+    "all_candidates_strictly_before_goal_complete": true,
+    "candidate_count": 1,
+    "candidates": [
+      {
+        "assistant_ordinal": 1,
+        "block_index": 1,
+        "end_line_index": 24,
+        "entry_id": "4a694c57",
+        "entry_index": 6,
+        "line_index": 9,
+        "marker_offset_chars": 1208,
+        "marker_offset_utf8_bytes": 1224,
+        "message_id": null,
+        "payload_offset_chars": 1218,
+        "payload_offset_utf8_bytes": 1234,
+        "raw_span": "PM_RESULT\n{\n  \"schema_id\": \"pm.r10.storage_pipeline.subject_result.v1\",\n  \"source_match\": true,\n  \"plan_unit_count\": 248,\n  \"acceptance_unit_count\": 811,\n  \"dependency_registry_status\": \"resolved\",\n  \"migration_coverage_status\": \"pass\",\n  \"canonical_comparison_status\": \"pass\",\n  \"pre_worknode_disposition\": \"blocked\",\n  \"blocker_codes\": [\n    \"canonical_node_readiness_artifact_stale\",\n    \"pnc019_runtime_certification_incomplete\"\n  ],\n  \"no_worknodes_created\": true\n}",
+        "raw_span_sha256": "c98945b0abbd3f9340d60af277f7d582851e7cd3fb6f9e9dc1b783f452651cc6",
+        "raw_span_utf8_bytes": 470,
+        "separator_utf8_bytes": 1
+      }
+    ],
+    "canonical_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "canonical_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+    "canonical_utf8_bytes": 416,
+    "list_order_authoritative": true,
+    "marker_count": 1,
+    "marker_provenance": [
+      {
+        "assistant_ordinal": 1,
+        "block_index": 1,
+        "end_line_index": 24,
+        "entry_id": "4a694c57",
+        "entry_index": 6,
+        "line_index": 9,
+        "marker_offset_chars": 1208,
+        "marker_offset_utf8_bytes": 1224,
+        "message_id": null,
+        "payload_offset_chars": 1218,
+        "payload_offset_utf8_bytes": 1234,
+        "raw_span": "PM_RESULT\n{\n  \"schema_id\": \"pm.r10.storage_pipeline.subject_result.v1\",\n  \"source_match\": true,\n  \"plan_unit_count\": 248,\n  \"acceptance_unit_count\": 811,\n  \"dependency_registry_status\": \"resolved\",\n  \"migration_coverage_status\": \"pass\",\n  \"canonical_comparison_status\": \"pass\",\n  \"pre_worknode_disposition\": \"blocked\",\n  \"blocker_codes\": [\n    \"canonical_node_readiness_artifact_stale\",\n    \"pnc019_runtime_certification_incomplete\"\n  ],\n  \"no_worknodes_created\": true\n}",
+        "raw_span_sha256": "c98945b0abbd3f9340d60af277f7d582851e7cd3fb6f9e9dc1b783f452651cc6",
+        "raw_span_utf8_bytes": 470,
+        "separator_utf8_bytes": 1
+      }
+    ],
+    "object_key_order_authoritative": false,
+    "raw_session_preserved": true,
+    "result_authority": "deterministic_matrix_host_program_over_verified_assistant_text",
+    "schema_id": "pm.r10.storage_pipeline.result_normalization.v3",
+    "surrounding_prose_authoritative": false
+  },
+  "selector": "opencode-go/glm-5.3-flash",
+  "session_file_bytes": 38054,
+  "session_file_sha256": "50823e4e5f474c6eae8b0cd4317ce0c77afbddc7ae96e284f0a9d6df288436d9",
+  "session_id": "01a048a3-2ec8-70aa-b538-e0f19ebf351f",
+  "session_started_at_utc": "2026-08-28T13:50:49.032Z",
+  "thinking": "max",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256,
+  "verified_assistant_text_blocks": [
+    {
+      "assistant_ordinal": 1,
+      "block_index": 1,
+      "entry_id": "4a694c57",
+      "entry_index": 6,
+      "message_id": null,
+      "sha256": "8502af3b8a9b655d7fde7dc703693c73b77c26fd8f019e092f08194defef9179",
+      "utf8_bytes": 1694
+    }
+  ],
+  "verified_assistant_text_utf8_bytes": 1694
+}

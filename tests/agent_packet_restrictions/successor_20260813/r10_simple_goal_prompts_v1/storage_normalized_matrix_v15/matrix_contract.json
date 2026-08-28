@@ -1,0 +1,1167 @@
+{
+  "schema_id": "pm.r10.storage_normalized_matrix.v15",
+  "status": "MUTABLE_PRELAUNCH_ZERO_CREDIT",
+  "architecture_limits": {
+    "controller_max_lines": 1400,
+    "local_runtime_max_lines": 1150,
+    "selftest_max_lines": 800,
+    "package_max_lines": 6000,
+    "package_max_bytes": 500000
+  },
+  "route_order": [
+    "omp_glm53_flash_max",
+    "omp_cursor_default_auto",
+    "omp_muse_spark_xhigh",
+    "omp_deepseek_v4_flash_max",
+    "omp_gemini_37_flash_high",
+    "codex_luna_max",
+    "codex_luna_medium",
+    "codex_gpt54_xhigh",
+    "codex_gpt54_medium",
+    "codex_gpt54mini_xhigh",
+    "codex_gpt54mini_medium",
+    "omp_qwen38_max_xhigh"
+  ],
+  "routes": [
+    {
+      "id": "omp_glm53_flash_max",
+      "model": "opencode-go/glm-5.3-flash",
+      "surface": "omp_tui",
+      "thinking": "max"
+    },
+    {
+      "id": "omp_cursor_default_auto",
+      "model": "cursor/default",
+      "surface": "omp_tui",
+      "thinking": "auto"
+    },
+    {
+      "id": "omp_muse_spark_xhigh",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "surface": "omp_tui",
+      "thinking": "xhigh"
+    },
+    {
+      "id": "omp_deepseek_v4_flash_max",
+      "model": "opencode-go/deepseek-v4-flash",
+      "surface": "omp_tui",
+      "thinking": "max"
+    },
+    {
+      "id": "omp_gemini_37_flash_high",
+      "model": "google-antigravity/gemini-3.7-flash",
+      "surface": "omp_tui",
+      "thinking": "high"
+    },
+    {
+      "id": "codex_luna_max",
+      "model": "gpt-5.6-luna",
+      "surface": "codex_app",
+      "thinking": "max"
+    },
+    {
+      "id": "codex_luna_medium",
+      "model": "gpt-5.6-luna",
+      "surface": "codex_app",
+      "thinking": "medium"
+    },
+    {
+      "id": "codex_gpt54_xhigh",
+      "model": "gpt-5.4",
+      "surface": "codex_app",
+      "thinking": "xhigh"
+    },
+    {
+      "id": "codex_gpt54_medium",
+      "model": "gpt-5.4",
+      "surface": "codex_app",
+      "thinking": "medium"
+    },
+    {
+      "id": "codex_gpt54mini_xhigh",
+      "model": "gpt-5.4-mini",
+      "surface": "codex_app",
+      "thinking": "xhigh"
+    },
+    {
+      "id": "codex_gpt54mini_medium",
+      "model": "gpt-5.4-mini",
+      "surface": "codex_app",
+      "thinking": "medium"
+    },
+    {
+      "id": "omp_qwen38_max_xhigh",
+      "model": "alibaba-token-plan/qwen3.8-max",
+      "surface": "omp_tui",
+      "thinking": "xhigh"
+    }
+  ],
+  "rows": [
+    {
+      "ordinal": 1,
+      "pass_id": "pass_01",
+      "route_id": "omp_glm53_flash_max",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-1-1500000000",
+      "nonce": "15000000000000000000000000000001",
+      "surface": "omp_tui",
+      "model": "opencode-go/glm-5.3-flash",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000001",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000001",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000001",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000001",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000001",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000001",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000001",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000001",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000001",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000001",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_01/omp_glm53_flash_max",
+      "profile_override": "glm53_exact_models_yml",
+      "private_capture_dir": "/tmp/pm-r10-storage-v15-http-15000000000000000000000000000001"
+    },
+    {
+      "ordinal": 2,
+      "pass_id": "pass_01",
+      "route_id": "omp_cursor_default_auto",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-2-1500000000",
+      "nonce": "15000000000000000000000000000002",
+      "surface": "omp_tui",
+      "model": "cursor/default",
+      "thinking": "auto",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000002",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000002",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000002",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000002",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000002",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000002",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000002",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000002",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000002",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000002",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_01/omp_cursor_default_auto",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 3,
+      "pass_id": "pass_01",
+      "route_id": "omp_muse_spark_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-3-1500000000",
+      "nonce": "15000000000000000000000000000003",
+      "surface": "omp_tui",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000003",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000003",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000003",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000003",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000003",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000003",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000003",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000003",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000003",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000003",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_01/omp_muse_spark_xhigh",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 4,
+      "pass_id": "pass_01",
+      "route_id": "omp_deepseek_v4_flash_max",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-4-1500000000",
+      "nonce": "15000000000000000000000000000004",
+      "surface": "omp_tui",
+      "model": "opencode-go/deepseek-v4-flash",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000004",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000004",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000004",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000004",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000004",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000004",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000004",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000004",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000004",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000004",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_01/omp_deepseek_v4_flash_max",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 5,
+      "pass_id": "pass_01",
+      "route_id": "omp_gemini_37_flash_high",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-5-1500000000",
+      "nonce": "15000000000000000000000000000005",
+      "surface": "omp_tui",
+      "model": "google-antigravity/gemini-3.7-flash",
+      "thinking": "high",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000005",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000005",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000005",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000005",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000005",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000005",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000005",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000005",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000005",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000005",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_01/omp_gemini_37_flash_high",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 6,
+      "pass_id": "pass_01",
+      "route_id": "codex_luna_max",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-6-1500000000",
+      "nonce": "15000000000000000000000000000006",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000006",
+      "title": "R10 Storage V15 pass_01 row 6 codex_luna_max",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_01/codex_luna_max",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000006"
+    },
+    {
+      "ordinal": 7,
+      "pass_id": "pass_01",
+      "route_id": "codex_luna_medium",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-7-1500000000",
+      "nonce": "15000000000000000000000000000007",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000007",
+      "title": "R10 Storage V15 pass_01 row 7 codex_luna_medium",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_01/codex_luna_medium",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000007"
+    },
+    {
+      "ordinal": 8,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-8-1500000000",
+      "nonce": "15000000000000000000000000000008",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000008",
+      "title": "R10 Storage V15 pass_01 row 8 codex_gpt54_xhigh",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_01/codex_gpt54_xhigh",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000008"
+    },
+    {
+      "ordinal": 9,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54_medium",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-9-1500000000",
+      "nonce": "15000000000000000000000000000009",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000009",
+      "title": "R10 Storage V15 pass_01 row 9 codex_gpt54_medium",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_01/codex_gpt54_medium",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000009"
+    },
+    {
+      "ordinal": 10,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54mini_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-10-1500000000",
+      "nonce": "15000000000000000000000000000010",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000010",
+      "title": "R10 Storage V15 pass_01 row 10 codex_gpt54mini_xhigh",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_01/codex_gpt54mini_xhigh",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000010"
+    },
+    {
+      "ordinal": 11,
+      "pass_id": "pass_01",
+      "route_id": "codex_gpt54mini_medium",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-11-1500000000",
+      "nonce": "15000000000000000000000000000011",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000011",
+      "title": "R10 Storage V15 pass_01 row 11 codex_gpt54mini_medium",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_01/codex_gpt54mini_medium",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000011"
+    },
+    {
+      "ordinal": 12,
+      "pass_id": "pass_01",
+      "route_id": "omp_qwen38_max_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_01-12-1500000000",
+      "nonce": "15000000000000000000000000000012",
+      "surface": "omp_tui",
+      "model": "alibaba-token-plan/qwen3.8-max",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000012",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000012",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000012",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000012",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000012",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000012",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000012",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000012",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000012",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000012",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_01/omp_qwen38_max_xhigh",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 13,
+      "pass_id": "pass_02",
+      "route_id": "omp_glm53_flash_max",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-13-1500000000",
+      "nonce": "15000000000000000000000000000013",
+      "surface": "omp_tui",
+      "model": "opencode-go/glm-5.3-flash",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000013",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000013",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000013",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000013",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000013",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000013",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000013",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000013",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000013",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000013",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_02/omp_glm53_flash_max",
+      "profile_override": "glm53_exact_models_yml",
+      "private_capture_dir": "/tmp/pm-r10-storage-v15-http-15000000000000000000000000000013"
+    },
+    {
+      "ordinal": 14,
+      "pass_id": "pass_02",
+      "route_id": "omp_cursor_default_auto",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-14-1500000000",
+      "nonce": "15000000000000000000000000000014",
+      "surface": "omp_tui",
+      "model": "cursor/default",
+      "thinking": "auto",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000014",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000014",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000014",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000014",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000014",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000014",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000014",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000014",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000014",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000014",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_02/omp_cursor_default_auto",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 15,
+      "pass_id": "pass_02",
+      "route_id": "omp_muse_spark_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-15-1500000000",
+      "nonce": "15000000000000000000000000000015",
+      "surface": "omp_tui",
+      "model": "opencode-go/muse-spark-1.2-contributor",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000015",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000015",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000015",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000015",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000015",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000015",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000015",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000015",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000015",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000015",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_02/omp_muse_spark_xhigh",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 16,
+      "pass_id": "pass_02",
+      "route_id": "omp_deepseek_v4_flash_max",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-16-1500000000",
+      "nonce": "15000000000000000000000000000016",
+      "surface": "omp_tui",
+      "model": "opencode-go/deepseek-v4-flash",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000016",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000016",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000016",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000016",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000016",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000016",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000016",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000016",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000016",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000016",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_02/omp_deepseek_v4_flash_max",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 17,
+      "pass_id": "pass_02",
+      "route_id": "omp_gemini_37_flash_high",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-17-1500000000",
+      "nonce": "15000000000000000000000000000017",
+      "surface": "omp_tui",
+      "model": "google-antigravity/gemini-3.7-flash",
+      "thinking": "high",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000017",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000017",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000017",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000017",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000017",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000017",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000017",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000017",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000017",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000017",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_02/omp_gemini_37_flash_high",
+      "profile_override": "none"
+    },
+    {
+      "ordinal": 18,
+      "pass_id": "pass_02",
+      "route_id": "codex_luna_max",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-18-1500000000",
+      "nonce": "15000000000000000000000000000018",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "max",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000018",
+      "title": "R10 Storage V15 pass_02 row 18 codex_luna_max",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_02/codex_luna_max",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000018"
+    },
+    {
+      "ordinal": 19,
+      "pass_id": "pass_02",
+      "route_id": "codex_luna_medium",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-19-1500000000",
+      "nonce": "15000000000000000000000000000019",
+      "surface": "codex_app",
+      "model": "gpt-5.6-luna",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000019",
+      "title": "R10 Storage V15 pass_02 row 19 codex_luna_medium",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_02/codex_luna_medium",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000019"
+    },
+    {
+      "ordinal": 20,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-20-1500000000",
+      "nonce": "15000000000000000000000000000020",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000020",
+      "title": "R10 Storage V15 pass_02 row 20 codex_gpt54_xhigh",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_02/codex_gpt54_xhigh",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000020"
+    },
+    {
+      "ordinal": 21,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54_medium",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-21-1500000000",
+      "nonce": "15000000000000000000000000000021",
+      "surface": "codex_app",
+      "model": "gpt-5.4",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000021",
+      "title": "R10 Storage V15 pass_02 row 21 codex_gpt54_medium",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_02/codex_gpt54_medium",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000021"
+    },
+    {
+      "ordinal": 22,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54mini_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-22-1500000000",
+      "nonce": "15000000000000000000000000000022",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000022",
+      "title": "R10 Storage V15 pass_02 row 22 codex_gpt54mini_xhigh",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_02/codex_gpt54mini_xhigh",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000022"
+    },
+    {
+      "ordinal": 23,
+      "pass_id": "pass_02",
+      "route_id": "codex_gpt54mini_medium",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-23-1500000000",
+      "nonce": "15000000000000000000000000000023",
+      "surface": "codex_app",
+      "model": "gpt-5.4-mini",
+      "thinking": "medium",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "projectless_directory_name": "pm-r10-storage-v15-app-15000000000000000000000000000023",
+      "title": "R10 Storage V15 pass_02 row 23 codex_gpt54mini_medium",
+      "prompt_utf8_bytes": 4190,
+      "prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+      "evidence_path": "evidence/pass_02/codex_gpt54mini_medium",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000023"
+    },
+    {
+      "ordinal": 24,
+      "pass_id": "pass_02",
+      "route_id": "omp_qwen38_max_xhigh",
+      "attempt_id": "storage-normalized-matrix-v15-pass_02-24-1500000000",
+      "nonce": "15000000000000000000000000000024",
+      "surface": "omp_tui",
+      "model": "alibaba-token-plan/qwen3.8-max",
+      "thinking": "xhigh",
+      "advisor_enabled": false,
+      "task_agent_advisor": {
+        "task": "off"
+      },
+      "cwd": "/tmp/pm-r10-storage-v15-cwd-15000000000000000000000000000024",
+      "session_dir": "/tmp/pm-r10-storage-v15-session-15000000000000000000000000000024",
+      "profile_dir": "/tmp/pm-r10-storage-v15-profile-15000000000000000000000000000024",
+      "home_dir": "/tmp/pm-r10-storage-v15-home-15000000000000000000000000000024",
+      "xdg_config_home": "/tmp/pm-r10-storage-v15-xdg-config-15000000000000000000000000000024",
+      "xdg_cache_home": "/tmp/pm-r10-storage-v15-xdg-cache-15000000000000000000000000000024",
+      "xdg_data_home": "/tmp/pm-r10-storage-v15-xdg-data-15000000000000000000000000000024",
+      "claude_config_dir": "/tmp/pm-r10-storage-v15-claude-config-15000000000000000000000000000024",
+      "copilot_home": "/tmp/pm-r10-storage-v15-copilot-home-15000000000000000000000000000024",
+      "snapshot_dir": "/tmp/pm-r10-storage-v15-snapshot-15000000000000000000000000000024",
+      "prompt_utf8_bytes": 4006,
+      "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+      "evidence_path": "evidence/pass_02/omp_qwen38_max_xhigh",
+      "profile_override": "none"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/ARCHITECTURE.md",
+      "bytes": 8832,
+      "sha256": "31d8ce7bab020f31f6e3058a5d9bf9c2ed37f0aa60f776e953e3678b269d4bff"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/README.md",
+      "bytes": 3748,
+      "sha256": "67c9e1857363fa0a2be3fe382a4ea15f8c565ce7f69babb7ea7ab175b0e1fa01"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_check.py",
+      "bytes": 1788,
+      "sha256": "170680502462ac6066077dcd43ab69b1838e986cc268590d9784bea3520a452e"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/acceptance_units.jsonl",
+      "bytes": 710989,
+      "sha256": "fdaf1175c68606d0136b062f4ad5a7dad18242429cda6e05f0afcf75b8c0550f"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/canonical_recomputed_node_readiness_report.json",
+      "bytes": 1083415,
+      "sha256": "088a07e68cc433dd47724d3d64ec1d8a05177e9dcea8d189ea7028e9ec020b18"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/capsule.json",
+      "bytes": 2909,
+      "sha256": "1d384296b6b8e648915281b2ffdeb1bdfdfb991e3525ff10809badc1ebd003ca"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/comparison_report.json",
+      "bytes": 1013,
+      "sha256": "888cf95f45e33a3805c78148b133a7f4aa4a55cb2fffcc495f3454593fa99e74"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/coverage_report.json",
+      "bytes": 958,
+      "sha256": "1c47f81685e940462b1b98d6258025ca5160f42ea5c3ebd11c72424ebea3a134"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/doc_cards.json",
+      "bytes": 13318,
+      "sha256": "a63176d8f6785437159fef7368fcac11cf3c3c9b89306b420d28f39f17cab568"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/metrics.json",
+      "bytes": 541,
+      "sha256": "27dd7279db34354f1720c618011ffc36b7043a60681cae411c4b6f3aa470fe3a"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/node_readiness_report.json",
+      "bytes": 964,
+      "sha256": "a5530f5895d1b82ace286a6c4731f90db6a6830a2de6953d17ebbb545b25678b"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/pipeline_report.json",
+      "bytes": 1287,
+      "sha256": "337fe8f46416f21e28dcf9cb73de6409bcaddfbd0508a7e6078b6aed214dd2d1"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/plan_units.jsonl",
+      "bytes": 696250,
+      "sha256": "540cd5e7a0a2b0f7e131fe5cfb92677dff303dc3621b691278a4d214af454bda"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/host_outputs/scoped_dependencies.json",
+      "bytes": 138353,
+      "sha256": "cdefe5297b963f48b52e65dd43f461a50741b4a6c1b5114b92014cf3f52292df"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/launch_plan.json",
+      "bytes": 14899,
+      "sha256": "891de844cb697d3207d49b63d5c04f907950d0ffe373deadf27e2de78fc5d247"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/matrix.json",
+      "bytes": 2370,
+      "sha256": "70adc74155e652808d1c9ede781698c3f5675a58e094e8b3a0d93ce9e827957e"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_row_runner.py",
+      "bytes": 41009,
+      "sha256": "decb8c826419945a2d892490b473b20ea1353093eb2b3c9bb52286673338afb1"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/omp_session.py",
+      "bytes": 37909,
+      "sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/oracle.json",
+      "bytes": 407,
+      "sha256": "f11f136b271d739e8b1108cce38ab52dbd0258357f9a591da1c5c1ba69e36bdf"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/pipeline.py",
+      "bytes": 29419,
+      "sha256": "e240db07e8de31f7fa7294c5f722b9a63b90f634a86d00fe976deee63a8e1708"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/codex.prompt.txt",
+      "bytes": 3050,
+      "sha256": "15242f325366e8f66e485ca80f03d239c0ab2b6d1e450e08e77d888ef5d14c38"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/prompts/omp.prompt.txt",
+      "bytes": 3036,
+      "sha256": "eff40a61579a080ce6e21bb71bcae2dd0640c100c9d61c199f45ac5dece43638"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/response.schema.json",
+      "bytes": 1142,
+      "sha256": "64484356c062ddda98385c35dfa51328744a8a5b36320df4bb24e9852a6aca97"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/runtime_manifest.json",
+      "bytes": 1335,
+      "sha256": "56943ce8625c6ce7e3d621323d382d8db8f10f2b8f2c0970193ca97f89d726ba"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/selftest.py",
+      "bytes": 58033,
+      "sha256": "fb47411b2db6db849c54290604ab28ae6076d9b5b99cb3003fb33839c1e23b5a"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/source_manifest.json",
+      "bytes": 3171,
+      "sha256": "b4950627ff8b4d417325dadb3a0099065253970b0bca1c6a5d2997669ba88b9d"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/verify_matrix.py",
+      "bytes": 35041,
+      "sha256": "e6ecb3deb51643f7ee2b4785b30272169dbaaba924a3a87e4bb7acfec1a389f8"
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7/freeze_manifest.json",
+      "bytes": 4443,
+      "sha256": "cb5f6500ea1d2bc95bd13dcf5d329146c1929b3e8740d0a1114464f4f81412a3"
+    }
+  ],
+  "snapshot": {
+    "commit": "9a9f3068a01652071933582266244cce726a2dd5",
+    "entry_count": 6097,
+    "complete_tree_roots": [
+      "Plans",
+      "scripts"
+    ],
+    "live_plans_reads": 0,
+    "read_only": true
+  },
+  "detached_v3_custody": {
+    "source_commit": "fccf63c813e185c715293005f7f7390d28a850ae",
+    "evidence_commit": "7c017517c48ce678eea580a1639ef16d7d6bd408",
+    "closure_commit": "bd2da304e75d4a551f80f5ddba969f4531f7a385",
+    "authority": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/STORAGE_MIMO_NORMALIZED_CANARY_V3_AUTHORITY.json",
+      "mode": "100644",
+      "blob": "7cb80945d9f925873a66721cabda854f1a93ca4b",
+      "bytes": 17188,
+      "sha256": "cef8a00fd00760d3bb296f146855f20aba043e63f37c50ebcb051538a70848bc"
+    },
+    "push_custody": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/STORAGE_MIMO_NORMALIZED_CANARY_V3_PUSH_CUSTODY.json",
+      "mode": "100644",
+      "blob": "1141664ca66e099675c5db5d20f801b2b946d9d6",
+      "bytes": 17742,
+      "sha256": "5d1091cbba6e23b89c2efb397e289494d52311d324f2166f4408cacd6657a372"
+    },
+    "verification": "git_objects_only_no_historical_verifier_no_residual_runtime_roots",
+    "matrix_authority": false,
+    "source_tree": "9f5f878f42bee9bc889a84eee2addb9fd78e6190",
+    "evidence_tree": "aa8b07dc87ce77dbb5543691686fa617b05bfc2c",
+    "closure_tree": "6c20013c261bd970fd21cb17481e3f6d8f8799fc"
+  },
+  "runtime": {
+    "native_goal": true,
+    "ordinary_omp_prompt_count": 1,
+    "ordinary_codex_prompt_count": 1,
+    "codex_prompt_prefix": "Create a goal that",
+    "config_overlay": null,
+    "models_yml_forbidden": false,
+    "pi_req_debug_forbidden": true,
+    "private_http_forbidden": true,
+    "advisor_enabled": false,
+    "task_agent_advisor": {
+      "task": "off"
+    },
+    "mimo_catalog_gate_only": false,
+    "generic_omp_adapter": true,
+    "retry_count": 0,
+    "pass2_requires_pass1_12_of_12": true,
+    "row_time_budget_seconds": 3600,
+    "codex_wait_max_receipts": 30,
+    "codex_wait_timeout_ms": 120000,
+    "codex_read_turn_limit": 8,
+    "codex_read_max_output_chars_per_item": 8192,
+    "codex_raw_stable_read_count": 2,
+    "codex_parent_allowed_calls": [
+      "create_thread",
+      "wait_threads",
+      "read_thread"
+    ],
+    "codex_parent_forbidden_calls": [
+      "send_message_to_thread",
+      "fork_thread",
+      "handoff_thread",
+      "follow_up"
+    ],
+    "source_profile_dir": "/home/sittingmongoose/.omp/pmdev-r10-simple-canary-v1",
+    "omp_version": "omp/18.0.7",
+    "normal_exit_required": true,
+    "binary": "/home/sittingmongoose/.local/bin/omp",
+    "binary_bytes": 183686344,
+    "binary_mode": "0o755",
+    "binary_sha256": "4e2468ad6974e6a2edea621da82abca8c95ec62a8354630381c353dc08c7769b",
+    "version": "omp/18.0.7",
+    "effective_config": {
+      "advisor.enabled": false,
+      "autolearn.enabled": false,
+      "goal.continuationModes": [],
+      "goal.enabled": true,
+      "mcp.enableProjectConfig": false,
+      "memory.backend": "off",
+      "plan.defaultOnStartup": false,
+      "recap.enabled": false,
+      "task.agentAdvisor": {
+        "task": "off"
+      },
+      "tools.approvalMode": "yolo"
+    },
+    "source_effective_config": {
+      "advisor.enabled": false,
+      "autolearn.enabled": false,
+      "goal.continuationModes": [
+        "interactive"
+      ],
+      "goal.enabled": true,
+      "mcp.enableProjectConfig": false,
+      "memory.backend": "off",
+      "plan.defaultOnStartup": false,
+      "task.agentAdvisor": {
+        "task": "off"
+      },
+      "tools.approvalMode": "yolo"
+    },
+    "native_goal_completion_count": 1,
+    "provided_goal_complete_arguments": {
+      "op": "complete"
+    },
+    "models_yml": {
+      "bytes": 144,
+      "sha256": "f1a585a1ec9c1a89f2d7533322bad3b7897117cd5fe3e1899bf6bf1139969a69",
+      "mode": "0o600",
+      "git_commit": "4beba8892ec3fd82a5b83c6ec403b4ebd56e7512",
+      "git_blob": "f71494ecbb66cbed545bdfa72bd09de0b65cf971"
+    },
+    "pi_req_debug_required_for_request_custody": true,
+    "private_http_capture_required": true,
+    "request_response_projection": {
+      "schema_id": "pm.r10.storage_pipeline.glm_request_response_projection.v1",
+      "completed_pair_count": 1,
+      "post_exit_aborted_request_count": 1,
+      "response_http_status": 200,
+      "response_content_type": "text/event-stream",
+      "response_terminal": "DONE",
+      "response_finish_reason": "tool_calls",
+      "sole_tool": "goal",
+      "sole_tool_arguments": {
+        "op": "complete"
+      },
+      "prelaunch_binding_schema_id": "pm.r10.storage_pipeline.glm_request_response_binding.v1",
+      "durable_replay_after_private_cleanup": true
+    },
+    "post_exit_teardown_tail": {
+      "schema_id": "pm.r10.storage_pipeline.post_exit_teardown_tail.v14",
+      "minimum_entries": 1,
+      "maximum_entries": 4,
+      "maximum_raw_jsonl_bytes": 8192,
+      "same_session_parent_chain": true,
+      "timestamps_not_before_exit": true,
+      "assistant_only": true,
+      "allowed_stop_reasons": [
+        "aborted",
+        "error"
+      ],
+      "nonempty_error_metadata": true,
+      "optional_response_id": true,
+      "optional_thinking_blocks": true,
+      "visible_text_forbidden": true,
+      "tools_and_goal_forbidden": true,
+      "pm_result_forbidden": true,
+      "additional_exit_forbidden": true,
+      "semantic_credit": false,
+      "lifecycle_credit": false,
+      "usage_credit": 0
+    },
+    "terminal_control": "CTRL_D_ONCE_AFTER_FINAL",
+    "qualification_credit": 0,
+    "suffix_row_count": 23,
+    "codex_prompt_utf8_bytes": 4190,
+    "codex_prompt_sha256": "3b46fff91df4b73819d7504557e17b81f51ecf032ca4921bf90f08f68afff26e",
+    "models_yml_route_only": "omp_glm53_flash_max",
+    "pi_req_debug_route_only": "omp_glm53_flash_max",
+    "private_http_route_only": "omp_glm53_flash_max",
+    "pass1_row1_spend_harness_gate": true,
+    "continue_after_model_specific_failure": true,
+    "global_contamination_stops_suffix": true,
+    "pass2_requires_pass1_completion_not_12_passes": true,
+    "qualification_credit_requires_exact_24_passes": true
+  },
+  "normalization": {
+    "schema_id": "pm.r10.storage_pipeline.matrix_semantic_normalizer.v3",
+    "source": "storage_normalized_matrix_v15/controller.py",
+    "function": "semantic_normalize",
+    "source_sha256": "ad0e1215b27d953e750cad06105ab7491d5fdd1440bb84d38564f33ac8b159b0",
+    "v3_helper_role": "local_runtime_pinned_extraction_strict_load_typed_equal_schema_only",
+    "benign": [
+      "object_key_order",
+      "json_whitespace",
+      "surrounding_prose",
+      "candidate_location"
+    ],
+    "strict": [
+      "schema",
+      "types",
+      "values",
+      "list_order",
+      "duplicate_keys",
+      "nonfinite",
+      "malformed",
+      "marker_separator_bounds_1_to_64",
+      "authoritative_assistant_text_only",
+      "goal_lifecycle_independent_of_candidate_location",
+      "conflicts",
+      "zero_candidates"
+    ],
+    "cursor_location_exception": [
+      "omp_session.require:OMP Cursor aggregate result absent before Goal call",
+      "omp_session.require:OMP Cursor aggregate result follows Goal call"
+    ],
+    "restore_in_finally": true,
+    "cursor_exception_source": "system_pipeline_sandbox_v7/omp_session.py",
+    "cursor_exception_source_sha256": "1a578d20678b7d360d0bafdc94c26661ea9f4ae2318e97ba1f67e6a1a6f9280e"
+  },
+  "authority": {
+    "schema_id": "pm.r10.storage_pipeline.active_user_matrix_authority.v15",
+    "authority_source": "active_user_direction_2026-08-28_storage_normalized_matrix_v15",
+    "authorized_attempt_ids": [
+      "storage-normalized-matrix-v15-pass_01-1-1500000000",
+      "storage-normalized-matrix-v15-pass_01-2-1500000000",
+      "storage-normalized-matrix-v15-pass_01-3-1500000000",
+      "storage-normalized-matrix-v15-pass_01-4-1500000000",
+      "storage-normalized-matrix-v15-pass_01-5-1500000000",
+      "storage-normalized-matrix-v15-pass_01-6-1500000000",
+      "storage-normalized-matrix-v15-pass_01-7-1500000000",
+      "storage-normalized-matrix-v15-pass_01-8-1500000000",
+      "storage-normalized-matrix-v15-pass_01-9-1500000000",
+      "storage-normalized-matrix-v15-pass_01-10-1500000000",
+      "storage-normalized-matrix-v15-pass_01-11-1500000000",
+      "storage-normalized-matrix-v15-pass_01-12-1500000000",
+      "storage-normalized-matrix-v15-pass_02-13-1500000000",
+      "storage-normalized-matrix-v15-pass_02-14-1500000000",
+      "storage-normalized-matrix-v15-pass_02-15-1500000000",
+      "storage-normalized-matrix-v15-pass_02-16-1500000000",
+      "storage-normalized-matrix-v15-pass_02-17-1500000000",
+      "storage-normalized-matrix-v15-pass_02-18-1500000000",
+      "storage-normalized-matrix-v15-pass_02-19-1500000000",
+      "storage-normalized-matrix-v15-pass_02-20-1500000000",
+      "storage-normalized-matrix-v15-pass_02-21-1500000000",
+      "storage-normalized-matrix-v15-pass_02-22-1500000000",
+      "storage-normalized-matrix-v15-pass_02-23-1500000000",
+      "storage-normalized-matrix-v15-pass_02-24-1500000000"
+    ],
+    "authorized_row_count": 24,
+    "authorized_call_count": 24,
+    "runtime_launch_authorized": true,
+    "provider_calls_authorized": true,
+    "codex_app_creation_authorized": true,
+    "row1_spend_harness_gate_required": true,
+    "continue_after_model_specific_failure": true,
+    "global_source_authority_custody_fail_stop": true,
+    "qualification_credit_requires_exact_24_of_24": true,
+    "retry_replacement_reuse_or_retro_credit_authorized": false,
+    "live_plans_or_ledgers_authorized": false,
+    "windows_interaction_authorized": false,
+    "worknodes_authorized": false
+  },
+  "dependency_count": 28,
+  "dependency_bootstrap": {
+    "schema_id": "pm.r10.storage_pipeline.dependency_snapshot.v10",
+    "commit": "c71705e045480f7a73a0d7449d0cf7df048a9bc9",
+    "tree_oid": "facc375e2335350d557eb9e51ccd0b076bbdba00",
+    "root": "/tmp/pm-r10-storage-v15-dependencies-15000000000000000000000000000000/tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/system_pipeline_sandbox_v7",
+    "file_count": 28,
+    "roster_sha256": "30138176b7cb5d3ba9b6071af6b9b7df2a1f0a33a56d96d7d80e9e9c94b188e3",
+    "content_roster_sha256": "4e8e5bfd875c45562eb83086c86683dc08ff0468eb2c4336696d7628befa84e8",
+    "git_objects_only": true,
+    "live_tree_reads": 0,
+    "directory_mode": "0555",
+    "regular_mode": "0444",
+    "executable_mode": "0555"
+  },
+  "v7_runtime_custody": {
+    "tree_oid": "facc375e2335350d557eb9e51ccd0b076bbdba00",
+    "freeze_manifest_file_count": 27,
+    "declared_dependency_count_including_manifest": 28,
+    "historical_controller_imports": 0,
+    "codex_lane_imports": 0
+  },
+  "profile_roster_semantics": {
+    "pre_config_query_exact_files": [
+      "agent.db",
+      "config.yml",
+      "models.db",
+      "models.yml"
+    ],
+    "pre_config_query_mode": "0o600",
+    "immediate_seed_capture_before_any_omp_process": true,
+    "immutable_across_queries": true,
+    "post_config_query_optional_files": [
+      "agent.db-shm",
+      "agent.db-wal"
+    ],
+    "optional_files_regular_non_symlink": true,
+    "optional_files_mode": "0o600",
+    "optional_file_bytes_and_sha_bound": true,
+    "preflight_profile_state_bound": true,
+    "optional_files_role": "runtime_sqlite_sidecars_not_source_config",
+    "all_other_entries_forbidden": true,
+    "non_glm_seed_exact_files": [
+      "agent.db",
+      "config.yml",
+      "models.db"
+    ]
+  },
+  "catalog_gate": {
+    "enabled": false,
+    "reason": "V15 has no MiMo route; GLM uses exact committed models.yml override"
+  },
+  "v14_pass_lineage": {
+    "source_commit": "bfbd3af36371333178b59f2c7f3de5ac657e79bc",
+    "source_tree_oid": "f647ae9ffb8c0c8a4bb697bdea84b3dfdca45eaa",
+    "package_source_tree_oid": "45f356c3e5e225997886a933ed9b955e7e1450fd",
+    "attempt_id": "storage-glm53-max-fallback-qualification-v14-ea6d740787",
+    "status": "PASS",
+    "qualification_credit": 0,
+    "model": "opencode-go/glm-5.3-flash",
+    "thinking": "max",
+    "process_exit_code": 0,
+    "evidence": {
+      "launch_journal.jsonl": {
+        "bytes": 497,
+        "sha256": "3176cefacf4322db6f84c31e615db043948c8f8829b4ec57a9f004674ca84b71"
+      },
+      "terminal.json": {
+        "bytes": 34552,
+        "sha256": "da0cad3f6d24fa96b6ddea0ce62693f82b24f205f05e4d0225f811746ab6f73b"
+      },
+      "normalized_projection.json": {
+        "bytes": 9962,
+        "sha256": "21af58605df306bb10d3a6d5dbf188350e439235cb8def80d4bb8b349b41f832"
+      },
+      "structural_projection.json": {
+        "bytes": 5486,
+        "sha256": "aa94450b447791b06e7bc5d7b101abd4f7ec5bea130b15e9714e0000d8c790aa"
+      },
+      "request_response_projection.json": {
+        "bytes": 2353,
+        "sha256": "e4dc9ff023c9e660627efd87dea0239e7c9def3126def9a77e8c2a3f534f9c73"
+      }
+    }
+  },
+  "mimo_dev11_fallback_lineage": {
+    "attempt_id": "storage-mimo-dev-dev11-e34fff7f6b",
+    "provider_error_status": 429,
+    "provider_error_type": "FreeUsageLimitError",
+    "status": "FAIL_CONSUMED_ZERO_CREDIT",
+    "qualification_credit": 0,
+    "no_retry": true,
+    "fallback_route": "omp_glm53_flash_max"
+  },
+  "source_freeze": {
+    "once_for_both_passes": true,
+    "owned_source_count": 10,
+    "committed_and_dual_pushed_required_before_launch": true
+  }
+}
