@@ -1,0 +1,55 @@
+{
+  "attempt_id": "storage-glm53-max-fallback-qualification-v12-b82e640fbf",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 46804,
+      "path": "omp_preflight.json",
+      "sha256": "ef89829f9d93ec20ee9e07550845bb2059344a384a24f86dddbd1c559b29c47f"
+    },
+    {
+      "bytes": 366,
+      "path": "reservation.json",
+      "sha256": "914c9988ad481d3e7f012bcdb44f3cdc36440324551ba7500c893eca22f2e6a4"
+    },
+    {
+      "bytes": 481,
+      "path": "runner_failure.json",
+      "sha256": "cd2c53a202feda7c014e2286d9340b7c994927b2eb0b68ec107846f86863d39d"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 4006,
+      "path": "stdin_prompt.raw",
+      "sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616"
+    },
+    {
+      "bytes": 0,
+      "path": "transcript.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-28T09:55:22.319Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-go/glm-5.3-flash",
+  "no_retry": true,
+  "nonce": "b82e640fbfaf4ae4a9c4e51d2e82d351",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "qualification_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_glm53_flash_max",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "max"
+}
