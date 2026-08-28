@@ -1,0 +1,21 @@
+{
+  "attempt_id": "storage-mimo-goal-completion-diagnostic-v9-63a904fd12",
+  "bytes": 3286,
+  "low_level_write_ordinal": 1,
+  "nonce": "63a904fd120d47cfb8d5b43dc07faca2",
+  "ordinal": 1,
+  "pass_id": "diagnostic_01",
+  "path": "stdin_prompt.raw",
+  "pid": 836655,
+  "pre_prompt": {
+    "bytes": 10246,
+    "path": "pre_prompt.raw",
+    "sha256": "260a0a99af0bb0108d45c7365087097337c7d51bfd215df8784ff7ac6371d43c"
+  },
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.prompt_write.v7",
+  "sha256": "58a3842778a3bc8b720b1ef86ecef134c3cae66173dc6bd7f2cc1a98a86f1d3d",
+  "terminator_included": false,
+  "write_return_bytes": 3286,
+  "written_at_utc": "2026-08-28T04:09:36.359Z"
+}

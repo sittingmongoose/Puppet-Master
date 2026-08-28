@@ -1,0 +1,14 @@
+{
+  "attempt_id": "storage-mimo-goal-completion-diagnostic-v9-63a904fd12",
+  "captured_at_utc": "2026-08-28T04:11:07.242Z",
+  "error": "PostPopenRunnerError: post-Popen failure for pid 836655: RunnerError: persisted active-Goal submission acceptance timeout",
+  "no_retry": true,
+  "nonce": "63a904fd120d47cfb8d5b43dc07faca2",
+  "ordinal": 1,
+  "pass_id": "diagnostic_01",
+  "pid": 836655,
+  "popen_observed": true,
+  "qualification_credit": 0,
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.runner_failure.v2"
+}

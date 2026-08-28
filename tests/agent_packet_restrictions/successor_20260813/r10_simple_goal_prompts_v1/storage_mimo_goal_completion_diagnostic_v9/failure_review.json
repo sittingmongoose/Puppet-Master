@@ -1,0 +1,398 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.mimo_goal_completion_diagnostic_v9.failure_review.v1",
+  "reviewed_at_utc": "2026-08-28T06:26:40Z",
+  "review_location": "outside_closed_terminal_evidence_roster",
+  "source_custody": {
+    "candidate_commit": "2abf365c7988b195f08f7f57171038e3fd93de19",
+    "package_tree_oid": "5b3bc02e80526186295486f76b957c6d09ec73df",
+    "head_at_launch": "2abf365c7988b195f08f7f57171038e3fd93de19",
+    "origin_main_at_launch": "2abf365c7988b195f08f7f57171038e3fd93de19",
+    "truenas_backup_main_at_launch": "2abf365c7988b195f08f7f57171038e3fd93de19",
+    "owned_sources": [
+      {
+        "bytes": 2415,
+        "git_mode": "100644",
+        "git_oid": "86a233801d9a842325ec43b634d7a482f6daf5ca",
+        "path": "README.md",
+        "sha256": "73487344b89bda45596254693f99eebe8be2ffbf8d974aa3cb8e977f72a6d7c4"
+      },
+      {
+        "bytes": 19414,
+        "git_mode": "100644",
+        "git_oid": "4932a20b5d25d04579e6110402c5b5d999501fae",
+        "path": "matrix_contract.json",
+        "sha256": "49c56e4c3e66ec0921809a39eabb3c526f76b1ee54353950551e99fdc17ca540"
+      },
+      {
+        "bytes": 63091,
+        "git_mode": "100644",
+        "git_oid": "ddadb87a0974ef565ea955a038fe968557c9cfa9",
+        "path": "controller.py",
+        "sha256": "93e3391b47a0e6e3790d844716121c84cd7f4b54ffa34b5c0bc8b00880a07d8f"
+      },
+      {
+        "bytes": 10298,
+        "git_mode": "100644",
+        "git_oid": "9e0f8ec11f0ff61bf6b972450e43ac275a227040",
+        "path": "dependency_bootstrap.py",
+        "sha256": "bfa23c2fafc9f0a188081e8080463fbf7a414aed4023d7e4471b0a6728b8ec44"
+      },
+      {
+        "bytes": 55942,
+        "git_mode": "100644",
+        "git_oid": "dc40931151c48fc3a961399a0dc1c44beba44d3f",
+        "path": "local_runtime.py",
+        "sha256": "39adf5274c40563f75b68d22f807959dd0decf7dc2e0ee1a885be734133fb656"
+      },
+      {
+        "bytes": 29337,
+        "git_mode": "100644",
+        "git_oid": "192be6df5e592f23d4abf161a7b2078e8c39ac05",
+        "path": "local_runtime_selftest.py",
+        "sha256": "e52a1b4ff3c4051dec9d85f0d4fe2bfa6131652d82467b7930f15defb3d01db8"
+      },
+      {
+        "bytes": 3286,
+        "git_mode": "100644",
+        "git_oid": "7ba42c2c71380bdfbe05a1acc9fec6ef4ed0d806",
+        "path": "prompt.txt",
+        "sha256": "58a3842778a3bc8b720b1ef86ecef134c3cae66173dc6bd7f2cc1a98a86f1d3d"
+      },
+      {
+        "bytes": 21950,
+        "git_mode": "100644",
+        "git_oid": "949ffd489aa83c8b21ca4e49c8ed4407ef005526",
+        "path": "selftest.py",
+        "sha256": "810de4c4068f7a710dabc4c0eec301c46580bd6a1b31118a21510b5589ed830d"
+      }
+    ]
+  },
+  "row_identity": {
+    "attempt_id": "storage-mimo-goal-completion-diagnostic-v9-63a904fd12",
+    "goal_id": "1568f1188e1e2c53",
+    "goal_tool_call_id": "call_cc62f66a10cc4b77ba703b0c",
+    "model": "opencode-zen/mimo-v2.5-free",
+    "nonce": "63a904fd120d47cfb8d5b43dc07faca2",
+    "ordinal": 1,
+    "pass_id": "diagnostic_01",
+    "pid": 836655,
+    "route_id": "omp_mimo_v25_free_high",
+    "session_id": "01a0468f-0f9c-76b2-b591-23b065a2b5bd",
+    "surface": "omp_tui",
+    "thinking": "high"
+  },
+  "outcome": {
+    "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+    "no_retry": true,
+    "permanent_failure": true,
+    "process_exit_code": null,
+    "qualification_credit": 0,
+    "replacement_count": 0,
+    "retry_count": 0,
+    "status": "FAIL_CONSUMED_STOP_NO_SUFFIX",
+    "suffix_exists": false,
+    "terminal_error": "PostPopenRunnerError: post-Popen failure for pid 836655: RunnerError: persisted active-Goal submission acceptance timeout"
+  },
+  "transport": {
+    "enter": {
+      "bytes": 1,
+      "hex": "0d",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    "external_submission_count": 1,
+    "low_level_input_write_count": 2,
+    "persisted_user_text": {
+      "bytes": 3279,
+      "equals_stdin_prompt_slice": "stdin_prompt.raw[6:-1]",
+      "sha256": "d00c5837675bf2089c635ba8a8f0c317d59800aa69a79340ac3a5cfb385578d7"
+    },
+    "prompt": {
+      "bytes": 3286,
+      "equals_frozen_prompt_txt": true,
+      "path": "evidence/diagnostic_01/omp_mimo_v25_free_high/stdin_prompt.raw",
+      "sha256": "58a3842778a3bc8b720b1ef86ecef134c3cae66173dc6bd7f2cc1a98a86f1d3d",
+      "starts_with_hex": "2f676f616c20",
+      "terminator_included": false,
+      "trailing_byte_hex": "0a"
+    }
+  },
+  "submission_acceptance": {
+    "acceptance_timeout_seconds": 90,
+    "captured_at_utc": "2026-08-28T04:11:06.614Z",
+    "enter_to_timeout_seconds": 90.075,
+    "last_parser_error": "OmpSessionError: OMP submission exact objective",
+    "last_session_snapshot": {
+      "bytes": 36342,
+      "path": "submission_timeout_session.raw.jsonl",
+      "sha256": "832073843f739247b15241b8e0963dc6d90695f964ad53a3cf8d80898969dde5"
+    },
+    "status": "FAIL_TIMEOUT"
+  },
+  "raw_session_facts": {
+    "assistant_entries": [
+      {
+        "entry_id": "e9517968",
+        "stop_reason": "toolUse",
+        "text_blocks_sha256": [
+          "6e2d2f060dedae17ab54a5442cc92c116ba4bf0f96da85f4fc0d2b2c5777022c",
+          "f1b901847390b0ed7e374e7c1e464ec17b46a427c487a5ad6cbd2906405083d5"
+        ]
+      },
+      {
+        "entry_id": "76c583a5",
+        "stop_reason": "stop",
+        "text_sha256": "b14aa9685dd64c56ebdf1bfad82497670c5e79a350dcbb9e25ae64221c2dcc6d",
+        "text_utf8_bytes": 219
+      }
+    ],
+    "canonical_goal_call_count": 1,
+    "goal_call": {
+      "arguments": {
+        "op": "complete"
+      },
+      "assistant_entry_id": "e9517968",
+      "call_id": "call_cc62f66a10cc4b77ba703b0c",
+      "name": "goal"
+    },
+    "goal_complete_state": {
+      "entry_id": "82d688a5",
+      "timestamp": "2026-08-28T04:10:12.026Z"
+    },
+    "goal_completed_event": {
+      "entry_id": "63365f69",
+      "timestamp": "2026-08-28T04:10:43.873Z"
+    },
+    "goal_result": {
+      "entry_id": "f294bc4f",
+      "is_error": false,
+      "timestamp": "2026-08-28T04:10:12.039Z"
+    },
+    "goal_tool_start": {
+      "entry_id": "94f1d146",
+      "timestamp": "2026-08-28T04:10:12.022Z"
+    },
+    "ordinary_tool_call_count": 0,
+    "postfailure_session": {
+      "bytes": 36549,
+      "entry_count": 16,
+      "path": "postfailure_session.raw.jsonl",
+      "sha256": "c795c7be526d134ad05213e29c51aacfdb3c6d501c707a7f1ff20c87a30f1c5e"
+    },
+    "retry_recovery_count": 0,
+    "successful_goal_result_count": 1
+  },
+  "normalization_diagnostic": {
+    "candidate_found": true,
+    "candidate_form": "line_start_PM_RESULT_then_JSON_object_on_following_lines",
+    "candidate_json": {
+      "canonical_sorted_sha256": "bd5f4bd6c0e304a8eba337aa3fbcc1668162d7a42458cb81897a7fb11b098948",
+      "canonical_sorted_utf8_bytes": 945,
+      "raw_json_sha256": "03bf66d5bc509086a93a4b915032b7c0e35ba7b62d04e428f90e80665d702517",
+      "raw_json_utf8_bytes": 1031
+    },
+    "formal_admission": false,
+    "forbidden_extra_field_count": 11,
+    "forbidden_extra_fields": [
+      "node_readiness_status",
+      "runtime_blocker_ref",
+      "canonical_global_validation_status",
+      "canonical_global_failure",
+      "canonical_global_failure_path",
+      "recomputed_node_readiness_stable_sha256",
+      "stored_node_readiness_stable_sha256",
+      "dependency_edges_exact_match",
+      "plan_units_exact_match",
+      "acceptance_units_exact_match",
+      "work_unit_id"
+    ],
+    "host_repair_or_coercion_performed": false,
+    "missing_required_field_count": 3,
+    "missing_required_fields": [
+      "schema_id",
+      "plan_unit_count",
+      "acceptance_unit_count"
+    ],
+    "qualification_credit": 0,
+    "schema_valid": false
+  },
+  "lifecycle": {
+    "ctrl_d_sent": false,
+    "final_assistant_at_utc": "2026-08-28T04:10:43.846Z",
+    "final_assistant_to_sigterm_seconds": 22.805,
+    "goal_complete_to_sigterm_seconds": 54.625,
+    "launch_started_at_utc": "2026-08-28T04:09:26.750Z",
+    "launch_to_terminal_seconds": 100.499,
+    "normal_exit_observed": false,
+    "session_exit": {
+      "entry_id": "557d0a85",
+      "kind": "signal",
+      "reason": "sigterm",
+      "timestamp": "2026-08-28T04:11:06.651Z"
+    },
+    "terminal_control_receipt_absent": true,
+    "terminal_finished_at_utc": "2026-08-28T04:11:07.249Z"
+  },
+  "generic_terminal_correction": {
+    "fields": {
+      "final_assistant_text": "",
+      "goal_activation_observed": false,
+      "goal_complete_observed": false,
+      "observed_identity": null,
+      "observed_non_goal_tool_calls": null,
+      "process_exit_code": null
+    },
+    "interpretation": "These generic failure-terminal defaults were emitted after the pre-acceptance failure and are not contrary claims about the preserved raw session. The raw session proves Goal activation, one successful Goal completion, two assistant entries, zero ordinary tools, zero retryRecovery entries, and SIGTERM rather than normal exit."
+  },
+  "evidence_custody": {
+    "existing_evidence_bytes_changed_by_review": false,
+    "existing_evidence_file_count": 17,
+    "existing_evidence_roster_canonical_sha256": "eeadaa518695ac503b9bcb8fe6e13435ff8d4d6e2a5532caa1ae6e74276bc1a8",
+    "existing_evidence_roster_canonicalization": "evidence-relative path-sorted array of path,bytes,sha256; JSON sort_keys compact without trailing newline",
+    "journal": {
+      "bytes": 496,
+      "path": "evidence/launch_journal.jsonl",
+      "sha256": "6c9600dde49fb909c2274b8900e206cf99f34495a56aceb3e0083be98c46d41e"
+    },
+    "row_records": [
+      {
+        "bytes": 1008,
+        "path": "composer_ack.json",
+        "sha256": "dce7ab5a4c653a577ed4c61c46241718b489a21035833300e60eaee64bf656ae"
+      },
+      {
+        "bytes": 29091,
+        "path": "composer_ack.raw",
+        "sha256": "90712a51f3f819ee04996baefc721ee5ff4336449ec1f10adb36706bbdfa8942"
+      },
+      {
+        "bytes": 759,
+        "path": "enter_write.json",
+        "sha256": "55fb8d6cea97c5303200003f411922552e7e32fb6dff9782816b2c29b236da9d"
+      },
+      {
+        "bytes": 9784,
+        "path": "launch.json",
+        "sha256": "20b643d98406eb92e451beba29ea4150ab7ef5679d8b652ec915b48647b84f42"
+      },
+      {
+        "bytes": 70425,
+        "path": "omp_preflight.json",
+        "sha256": "7bf9142f2808d907c9c8987d9fd8a04eff9d4dee6394e4293823a6cd362850af"
+      },
+      {
+        "bytes": 36549,
+        "path": "postfailure_session.raw.jsonl",
+        "sha256": "c795c7be526d134ad05213e29c51aacfdb3c6d501c707a7f1ff20c87a30f1c5e"
+      },
+      {
+        "bytes": 10246,
+        "path": "pre_prompt.raw",
+        "sha256": "260a0a99af0bb0108d45c7365087097337c7d51bfd215df8784ff7ac6371d43c"
+      },
+      {
+        "bytes": 707,
+        "path": "prompt_write.json",
+        "sha256": "46ba5dbcf2bfb2dfc4969d33212a07b0c41e29162c3efb89f8bea2eebf045797"
+      },
+      {
+        "bytes": 364,
+        "path": "reservation.json",
+        "sha256": "3931ab1581082f59e2040b159bcc264bb110a68a2cebbdcb8aaa7e113c1871e8"
+      },
+      {
+        "bytes": 546,
+        "path": "runner_failure.json",
+        "sha256": "aa192ef5247ae9cc82c055c7c2a806acb1ac19f83de4a5467cff5f390281106e"
+      },
+      {
+        "bytes": 1,
+        "path": "stdin_enter.raw",
+        "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+      },
+      {
+        "bytes": 3286,
+        "path": "stdin_prompt.raw",
+        "sha256": "58a3842778a3bc8b720b1ef86ecef134c3cae66173dc6bd7f2cc1a98a86f1d3d"
+      },
+      {
+        "bytes": 1054,
+        "path": "submission_timeout.json",
+        "sha256": "e55e91de75bf22d28adc48cc84917ca04eff139349a70ae720506a209719e695"
+      },
+      {
+        "bytes": 36342,
+        "path": "submission_timeout_session.raw.jsonl",
+        "sha256": "832073843f739247b15241b8e0963dc6d90695f964ad53a3cf8d80898969dde5"
+      },
+      {
+        "bytes": 3066,
+        "path": "terminal.json",
+        "sha256": "e5c3c23365b937d6db6c7c16278c861d401da5fe6238f387d9e107caf32a2c37"
+      },
+      {
+        "bytes": 1469004,
+        "path": "transcript.raw",
+        "sha256": "50405c7240e6403a149f1c26679a8d4ff29299605a986538992106fd3e68466a"
+      }
+    ],
+    "terminal_bound_evidence_canonical_sha256": "614b04685440f8a4383fb687ac52679e381b624337ceab3ff504942cd0b531fc",
+    "terminal_bound_evidence_count": 15
+  },
+  "retained_runtime_residuals": {
+    "cleanup_performed": false,
+    "paths": [
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-diagnostic-v9-cwd-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0775",
+        "path": "/tmp/pm-r10-storage-v7-session-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-profile-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-home-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-xdg-config-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-xdg-cache-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-xdg-data-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-claude-config-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      },
+      {
+        "mode": "0700",
+        "path": "/tmp/pm-r10-storage-v7-copilot-home-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2"
+      }
+    ],
+    "retained_root_count": 9,
+    "session_file": {
+      "bytes": 36549,
+      "mode": "0664",
+      "path": "/tmp/pm-r10-storage-v7-session-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2/2026-08-28T04-09-35-900Z_01a0468f-0f9c-76b2-b591-23b065a2b5bd.jsonl",
+      "sha256": "c795c7be526d134ad05213e29c51aacfdb3c6d501c707a7f1ff20c87a30f1c5e"
+    },
+    "snapshot_path_absent": true
+  },
+  "scope": {
+    "failure_review_authorizes_successor": false,
+    "matrix_or_qualification_claim": false,
+    "no_live_plans_read_by_review": true,
+    "no_retro_credit": true,
+    "no_suffix_launched": true,
+    "review_authorizes_retry": false
+  }
+}

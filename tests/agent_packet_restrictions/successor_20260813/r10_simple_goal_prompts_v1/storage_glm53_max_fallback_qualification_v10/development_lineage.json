@@ -1,0 +1,28 @@
+{
+  "schema_id":"pm.r10.storage_pipeline.glm53_max_fallback_development_lineage.v1",
+  "qualification_authority":false,
+  "qualification_credit":0,
+  "mimo_fallback_reason":{
+    "attempt_id":"storage-mimo-dev-dev11-e34fff7f6b",
+    "model":"opencode-zen/mimo-v2.5-free",
+    "thinking":"high",
+    "status":"FAIL_CONSUMED_ZERO_CREDIT",
+    "provider_error_status":429,
+    "provider_error_type":"FreeUsageLimitError",
+    "no_retry":true,
+    "terminal":{"bytes":2714,"sha256":"f67579bb7ea50f3426d269aa175b2bf67c376e3a0887a35b27d867b08277811e"},
+    "runner_failure":{"bytes":517,"sha256":"0ec128c9e9388c3598c0fe2832792374fe393394732ac49830789ca7c157ff18"},
+    "postfailure_session":{"bytes":15760,"sha256":"63648849d37e5718286e4822d8777618085d40f4cc11c0c1baceefb5d6f7949b"}
+  },
+  "development_passes":[
+    {
+      "label":"dev17","attempt_id":"storage-mimo-dev-dev17-304e207283","model":"opencode-go/glm-5.3-flash","thinking":"max","session_id":"01a046fc-5769-74e0-97b5-2640df1d1473","goal_id":"15690c6a6e9351c8","status":"PASS_DEVELOPMENT_ZERO_CREDIT","qualification_credit":0,"terminal":{"bytes":29772,"sha256":"812e000ffb7989b3d46a7713eb717f236c827f60525be2cb5391a98b50620579"},"structural_projection":{"bytes":4738,"sha256":"b091577b4bed611f277b56bf16de36c52a5ed36b1c8f735cb6921445775ed4e0"},"session":{"bytes":38502,"sha256":"ed846c44627593316f6b828c2c6b52c3c806606d4080fa803b20015bb55554bb"}
+    },
+    {
+      "label":"dev18","attempt_id":"storage-mimo-dev-dev18-17abe9b304","model":"opencode-go/glm-5.3-flash","thinking":"max","session_id":"01a046ff-1bff-735e-ad8f-68dd93c637d6","goal_id":"15690d1b980a363b","status":"PASS_DEVELOPMENT_ZERO_CREDIT","qualification_credit":0,"terminal":{"bytes":29368,"sha256":"2c5d4a21dc327b97bc6d63fed4b23a6d6cfeeb9bfc257a26ed5bd3b5e0f85a08"},"structural_projection":{"bytes":4390,"sha256":"35eb4aa42bf73c23630acbe902fb7c21ecb2dbc040b8b8e371e7592831420cde"},"session":{"bytes":38464,"sha256":"72fa9a7a3b950aa0b78bfbe82b6c64b031832a497d6c1a950f28563cec9d9ba9"}
+    }
+  ],
+  "consecutive_core_passes":true,
+  "launch_authority_conferred":false,
+  "nonqualification_lineage_only":true
+}

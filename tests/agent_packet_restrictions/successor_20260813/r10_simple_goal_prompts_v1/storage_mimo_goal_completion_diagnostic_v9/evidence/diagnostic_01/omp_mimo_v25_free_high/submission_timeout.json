@@ -1,0 +1,26 @@
+{
+  "attempt_id": "storage-mimo-goal-completion-diagnostic-v9-63a904fd12",
+  "captured_at_utc": "2026-08-28T04:11:06.614Z",
+  "last_parser_error": "OmpSessionError: OMP submission exact objective",
+  "last_session_snapshot": {
+    "bytes": 36342,
+    "path": "submission_timeout_session.raw.jsonl",
+    "sha256": "832073843f739247b15241b8e0963dc6d90695f964ad53a3cf8d80898969dde5"
+  },
+  "last_session_source_name": "2026-08-28T04-09-35-900Z_01a0468f-0f9c-76b2-b591-23b065a2b5bd.jsonl",
+  "nonce": "63a904fd120d47cfb8d5b43dc07faca2",
+  "ordinal": 1,
+  "pass_id": "diagnostic_01",
+  "pid": 836655,
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.submission_timeout.v7",
+  "session_dir": "/tmp/pm-r10-storage-v7-session-diagnostic-v9-63a904fd120d47cfb8d5b43dc07faca2",
+  "session_dir_roster": [
+    {
+      "bytes": 36342,
+      "kind": "file",
+      "name": "2026-08-28T04-09-35-900Z_01a0468f-0f9c-76b2-b591-23b065a2b5bd.jsonl",
+      "sha256": "832073843f739247b15241b8e0963dc6d90695f964ad53a3cf8d80898969dde5"
+    }
+  ]
+}

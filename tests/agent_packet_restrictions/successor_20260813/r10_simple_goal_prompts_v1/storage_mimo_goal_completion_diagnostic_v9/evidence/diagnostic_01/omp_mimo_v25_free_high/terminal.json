@@ -1,0 +1,100 @@
+{
+  "attempt_id": "storage-mimo-goal-completion-diagnostic-v9-63a904fd12",
+  "cwd_entries_after": 0,
+  "evidence": [
+    {
+      "bytes": 1008,
+      "path": "composer_ack.json",
+      "sha256": "dce7ab5a4c653a577ed4c61c46241718b489a21035833300e60eaee64bf656ae"
+    },
+    {
+      "bytes": 29091,
+      "path": "composer_ack.raw",
+      "sha256": "90712a51f3f819ee04996baefc721ee5ff4336449ec1f10adb36706bbdfa8942"
+    },
+    {
+      "bytes": 759,
+      "path": "enter_write.json",
+      "sha256": "55fb8d6cea97c5303200003f411922552e7e32fb6dff9782816b2c29b236da9d"
+    },
+    {
+      "bytes": 9784,
+      "path": "launch.json",
+      "sha256": "20b643d98406eb92e451beba29ea4150ab7ef5679d8b652ec915b48647b84f42"
+    },
+    {
+      "bytes": 70425,
+      "path": "omp_preflight.json",
+      "sha256": "7bf9142f2808d907c9c8987d9fd8a04eff9d4dee6394e4293823a6cd362850af"
+    },
+    {
+      "bytes": 36549,
+      "path": "postfailure_session.raw.jsonl",
+      "sha256": "c795c7be526d134ad05213e29c51aacfdb3c6d501c707a7f1ff20c87a30f1c5e"
+    },
+    {
+      "bytes": 10246,
+      "path": "pre_prompt.raw",
+      "sha256": "260a0a99af0bb0108d45c7365087097337c7d51bfd215df8784ff7ac6371d43c"
+    },
+    {
+      "bytes": 707,
+      "path": "prompt_write.json",
+      "sha256": "46ba5dbcf2bfb2dfc4969d33212a07b0c41e29162c3efb89f8bea2eebf045797"
+    },
+    {
+      "bytes": 364,
+      "path": "reservation.json",
+      "sha256": "3931ab1581082f59e2040b159bcc264bb110a68a2cebbdcb8aaa7e113c1871e8"
+    },
+    {
+      "bytes": 546,
+      "path": "runner_failure.json",
+      "sha256": "aa192ef5247ae9cc82c055c7c2a806acb1ac19f83de4a5467cff5f390281106e"
+    },
+    {
+      "bytes": 1,
+      "path": "stdin_enter.raw",
+      "sha256": "9d1e0e2d9459d06523ad13e28a4093c2316baafe7aec5b25f30eba2e113599c4"
+    },
+    {
+      "bytes": 3286,
+      "path": "stdin_prompt.raw",
+      "sha256": "58a3842778a3bc8b720b1ef86ecef134c3cae66173dc6bd7f2cc1a98a86f1d3d"
+    },
+    {
+      "bytes": 1054,
+      "path": "submission_timeout.json",
+      "sha256": "e55e91de75bf22d28adc48cc84917ca04eff139349a70ae720506a209719e695"
+    },
+    {
+      "bytes": 36342,
+      "path": "submission_timeout_session.raw.jsonl",
+      "sha256": "832073843f739247b15241b8e0963dc6d90695f964ad53a3cf8d80898969dde5"
+    },
+    {
+      "bytes": 1469004,
+      "path": "transcript.raw",
+      "sha256": "50405c7240e6403a149f1c26679a8d4ff29299605a986538992106fd3e68466a"
+    }
+  ],
+  "failure_code": "RUNNER_OR_EVIDENCE_FAILURE",
+  "final_assistant_text": "",
+  "finished_at_utc": "2026-08-28T04:11:07.249Z",
+  "goal_activation_observed": false,
+  "goal_complete_observed": false,
+  "model": "opencode-zen/mimo-v2.5-free",
+  "no_retry": true,
+  "nonce": "63a904fd120d47cfb8d5b43dc07faca2",
+  "observed_identity": null,
+  "observed_non_goal_tool_calls": null,
+  "ordinal": 1,
+  "pass_id": "diagnostic_01",
+  "process_exit_code": null,
+  "qualification_credit": 0,
+  "route_id": "omp_mimo_v25_free_high",
+  "schema_id": "pm.r10.storage_pipeline.terminal.v2",
+  "status": "FAIL",
+  "surface": "omp_tui",
+  "thinking": "high"
+}
