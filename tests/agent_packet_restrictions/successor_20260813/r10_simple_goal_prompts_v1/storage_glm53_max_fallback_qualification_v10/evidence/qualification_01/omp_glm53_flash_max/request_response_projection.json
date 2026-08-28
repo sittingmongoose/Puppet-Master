@@ -1,0 +1,69 @@
+{
+  "aborted_requests": [
+    {
+      "ordinal": 2,
+      "post_exit_aborted": true,
+      "raw_request_bytes": 30147,
+      "raw_request_sha256": "af5055f67078305a9a3ec0520a86f92a5d0f784c502a987ff2bba56580643c14"
+    }
+  ],
+  "binding": {
+    "sha256": "f5bc91fa1ee9d6aaa770893ffef0a04bca3ad81a819a4567b475bb0d7e2030d5",
+    "value": {
+      "attempt_id": "storage-glm53-max-fallback-qualification-v10-c5f848301f",
+      "completed_pair_count": 1,
+      "model": "glm-5.3-flash",
+      "nonce": "c5f848301f5d1dab5c209e89f8fbbb41",
+      "ordinal": 1,
+      "pass_id": "qualification_01",
+      "post_exit_aborted_request_count": 1,
+      "projection_path": "request_response_projection.json",
+      "provider": "opencode-go",
+      "reasoning_effort": "max",
+      "route_id": "omp_glm53_flash_max",
+      "schema_id": "pm.r10.storage_pipeline.glm_request_response_binding.v1",
+      "selector": "opencode-go/glm-5.3-flash"
+    }
+  },
+  "completed_pair_count": 1,
+  "pairs": [
+    {
+      "assistant_entry_id": "e7dcfebb",
+      "ordinal": 1,
+      "request": {
+        "method": "POST",
+        "model": "glm-5.3-flash",
+        "raw_request_bytes": 20646,
+        "raw_request_sha256": "dfcc1cb57cf524bdc4304ed9fda2fe0fa50dba33bfd139506a0a11266a74c0ad",
+        "reasoning_effort": "max",
+        "tool_names": [
+          "goal"
+        ]
+      },
+      "response": {
+        "assistant_text_sha256": "744c0209b5bc5c666daa3cbf3266a6fc42cf6167be9692662c64c29dc72dad89",
+        "assistant_text_utf8_bytes": 1382,
+        "completion_id_sha256": "a0976ce46314e632b9f1cd22333fec45732796c966669e2822d7f7b68cdd7bfe",
+        "content_type": "text/event-stream",
+        "finish_reason": "tool_calls",
+        "http_status": 200,
+        "raw_response_bytes": 196735,
+        "raw_response_sha256": "e2009fa7f629ac3d0567e40a3b78d1e46ed902c66f0a22b2d878d892ca069c04",
+        "route": {
+          "host": "opencode.ai",
+          "path": "/zen/go/v1/chat/completions",
+          "scheme": "https"
+        },
+        "sse_chunk_count": 967,
+        "terminal": "DONE",
+        "tool_arguments": {
+          "op": "complete"
+        },
+        "tool_call_id": "call_2e3e649f80d3463fa29ab0f5",
+        "tool_name": "goal"
+      }
+    }
+  ],
+  "post_exit_aborted_request_count": 1,
+  "schema_id": "pm.r10.storage_pipeline.glm_request_response_projection.v1"
+}

@@ -1,0 +1,186 @@
+{
+  "schema_id": "pm.r10.storage_pipeline.glm53_max_fallback_v10.hold_review.v1",
+  "review_status": "HOLD_POST_PASS_CONTROLLER_FAULT",
+  "qualification_pass": false,
+  "qualification_credit": 0,
+  "source_custody": {
+    "commit": "cee0a07bb4ad6d5c38c6305706354c161d540b44",
+    "parent_commit": "2abf365c7988b195f08f7f57171038e3fd93de19",
+    "commit_tree_oid": "38a442effc96ee2466400beb384222b6866f20cc",
+    "package_source_tree_oid": "91fc25d279128471cd9733bbd10257928162e774",
+    "origin_main_observed": "cee0a07bb4ad6d5c38c6305706354c161d540b44",
+    "truenas_backup_main_observed": "cee0a07bb4ad6d5c38c6305706354c161d540b44"
+  },
+  "identity": {
+    "attempt_id": "storage-glm53-max-fallback-qualification-v10-c5f848301f",
+    "nonce": "c5f848301f5d1dab5c209e89f8fbbb41",
+    "pass_id": "qualification_01",
+    "ordinal": 1,
+    "route_id": "omp_glm53_flash_max",
+    "selector": "opencode-go/glm-5.3-flash",
+    "thinking": "max",
+    "omp_version": "omp/18.0.7",
+    "pid": 1083372,
+    "session_id": "01a04769-33a4-7396-b0ab-594a729c535f",
+    "goal_id": "156927a1923e83de",
+    "goal_tool_call_id": "call_2e3e649f80d3463fa29ab0f5"
+  },
+  "immutable_subject_terminal": {
+    "status": "PASS",
+    "process_exit_code": 0,
+    "finished_at_utc": "2026-08-28T08:08:24.077Z",
+    "goal_activation_observed": true,
+    "goal_complete_observed": true,
+    "external_prompt_count": 1,
+    "prompt_utf8_bytes": 4006,
+    "prompt_sha256": "316a5af878ac5cda474505801f8089e44b27db18169185f195082844b3ef9616",
+    "ordinary_tool_calls": 0,
+    "retry_recovery_count": 0,
+    "native_continuation_count": 0,
+    "terminal_control_sent_once": true,
+    "terminal_control_hex": "04",
+    "enter_hex": "0d",
+    "persisted_thinking_literal": "max",
+    "completed_http_pair_count": 1,
+    "post_exit_aborted_request_count": 1,
+    "post_exit_aborted_request_is_not_a_retry": true,
+    "canonical_result_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "canonical_result": {
+      "schema_id": "pm.r10.storage_pipeline.subject_result.v1",
+      "source_match": true,
+      "plan_unit_count": 248,
+      "acceptance_unit_count": 811,
+      "dependency_registry_status": "resolved",
+      "migration_coverage_status": "pass",
+      "canonical_comparison_status": "pass",
+      "pre_worknode_disposition": "blocked",
+      "blocker_codes": [
+        "canonical_node_readiness_artifact_stale",
+        "pnc019_runtime_certification_incomplete"
+      ],
+      "no_worknodes_created": true
+    },
+    "terminal_subject_pass_does_not_equal_qualification_pass": true
+  },
+  "wrapper_hold": {
+    "controller_exit_code": 1,
+    "captured_at_utc": "2026-08-28T08:09:05.111Z",
+    "error": "MatrixError: OMP preflight immediately precedes launch",
+    "suffix_blocked": true,
+    "pass_terminal_immutable": true,
+    "no_retry": true,
+    "no_replacement": true,
+    "no_retro_credit": true,
+    "cause": {
+      "classification": "self_imposed_preflight_to_launch_freshness_window_exceeded",
+      "preflight_observed_at_utc": "2026-08-28T08:05:49.482Z",
+      "launch_started_at_utc": "2026-08-28T08:07:16.253Z",
+      "observed_delta_seconds": 86.771,
+      "required_maximum_delta_seconds": 60,
+      "provider_or_model_failure": false
+    }
+  },
+  "frozen_inputs": {
+    "input_snapshot_commit": "9a9f3068a01652071933582266244cce726a2dd5",
+    "plans_tree_oid": "f49b5214ff0a22ec60bebe5b50a27ad5769a2ecd",
+    "scripts_tree_oid": "a00c6451d5200148898cd39fb4e3b7863682a110",
+    "snapshot_entry_count": 6097,
+    "live_plans_open_or_read_count": 0,
+    "dependency_snapshot_commit": "c71705e045480f7a73a0d7449d0cf7df048a9bc9",
+    "dependency_snapshot_tree_oid": "facc375e2335350d557eb9e51ccd0b076bbdba00",
+    "dependency_snapshot_file_count": 28
+  },
+  "evidence_custody": {
+    "evidence_file_count": 21,
+    "closed_row_direct_file_count": 19,
+    "terminal_bound_preterminal_record_count": 18,
+    "raw_evidence_bytes_modified_by_review": false,
+    "records": {
+      "evidence/HOLD.json": {
+        "bytes": 287,
+        "sha256": "b35fac10d99d4fa7b3db031ac8fbccc36244ab8acfcf751aac91c03eeb80493b"
+      },
+      "evidence/launch_journal.jsonl": {
+        "bytes": 499,
+        "sha256": "4ab614b1e38fce380038336e8302bb285480a785b3e57c63d54e0ef7e4a3304c"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/terminal.json": {
+        "bytes": 32925,
+        "sha256": "1ace04306e033d36815a361454db67ed1b7b6477e9dbb56af934abf73aaa258d"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/session.raw.jsonl": {
+        "bytes": 39473,
+        "sha256": "2af1de24bd39c9a515712d303fcbae702fdb18b40b414aaca9e96fd0d21ee768"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/transcript.raw": {
+        "bytes": 1835937,
+        "sha256": "0eca90036df2cbc999d1ead0233f3c7cfdd9f7fd0f085ba6a7b3360b2a7ed40c"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/request_response_projection.json": {
+        "bytes": 2353,
+        "sha256": "e0891d0c8e272fc920e6b1a626527b63b6cca2a9eb86708205c8357143441ea9"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/normalized_projection.json": {
+        "bytes": 9169,
+        "sha256": "d501da78259dbc1cdf3f10e597337f0ad90447be8eae80cdd7d04b9375d403d4"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/structural_projection.json": {
+        "bytes": 4731,
+        "sha256": "46c357499f1044dc7c82def8f07c9e2a203baa2fd8c84d2ecef72cdaab3a3e13"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/omp_preflight.json": {
+        "bytes": 46804,
+        "sha256": "e189786aa2b8ddaa3faba39a227398da31f0952cbad10d21453e3bd88ef5cfb6"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/launch.json": {
+        "bytes": 10518,
+        "sha256": "0539d73326d2d8fda7c62ab3c3b48eb037c22a6c9ba0c2c0b2ebd55e138bef80"
+      },
+      "evidence/qualification_01/omp_glm53_flash_max/control.raw": {
+        "bytes": 1,
+        "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+      }
+    },
+    "http_pair_hashes": {
+      "completed_request_bytes": 20646,
+      "completed_request_sha256": "dfcc1cb57cf524bdc4304ed9fda2fe0fa50dba33bfd139506a0a11266a74c0ad",
+      "completed_response_bytes": 196735,
+      "completed_response_sha256": "e2009fa7f629ac3d0567e40a3b78d1e46ed902c66f0a22b2d878d892ca069c04",
+      "post_exit_aborted_request_bytes": 30147,
+      "post_exit_aborted_request_sha256": "af5055f67078305a9a3ec0520a86f92a5d0f784c502a987ff2bba56580643c14"
+    }
+  },
+  "runtime_residuals": {
+    "retained_root_count": 9,
+    "retained_roots": [
+      "/tmp/pm-r10-storage-v7-fallback-v10-cwd-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-home-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-profile-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-session-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-xdg-cache-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-xdg-config-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-xdg-data-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-claude-config-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "/tmp/pm-r10-storage-v7-copilot-home-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41"
+    ],
+    "live_session_file": {
+      "path": "/tmp/pm-r10-storage-v7-session-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41/2026-08-28T08-07-51-972Z_01a04769-33a4-7396-b0ab-594a729c535f.jsonl",
+      "bytes": 39473,
+      "sha256": "2af1de24bd39c9a515712d303fcbae702fdb18b40b414aaca9e96fd0d21ee768"
+    },
+    "private_http_raw": {
+      "declared_root": "/tmp/pm-r10-storage-v7-http-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+      "observed_after_controller_finalization": "absent",
+      "raw_copied_to_evidence": false,
+      "raw_bytes_retained": false,
+      "sanitized_projection_and_raw_hashes_retained": true,
+      "manual_cleanup_performed_by_executor": false,
+      "custody_residual": "private request and response bytes are unavailable after controller finalization"
+    }
+  },
+  "successor_authority": {
+    "v11_authorized": false,
+    "this_review_authorizes_successor": false,
+    "required_authority_source": "separate_xhigh_audit"
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "assistant_api": "openai-completions",
+  "assistant_api_message_count": 1,
+  "assistant_lifecycle_shape": "standard_single_turn_goal_complete",
+  "assistant_message_count": 1,
+  "entry_ids": {
+    "final_assistant": "e7dcfebb",
+    "goal_active": "9da45b1b",
+    "goal_call_assistant": "e7dcfebb",
+    "goal_complete_mode": "1bd78e2f",
+    "goal_completed": "pm-r10-dev-one-turn-completed",
+    "goal_contexts": [
+      "88283fa4"
+    ],
+    "goal_exit": "pm-r10-dev-one-turn-none",
+    "goal_result": "d3149571",
+    "goal_tool_start": "cbbe4c01",
+    "native_continuation": null,
+    "session_exit": "06710189",
+    "user": "284095d7"
+  },
+  "final_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+  "final_text_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+  "goal_completion_call_provenance": {
+    "assistant_ordinal": 1,
+    "block_index": 2,
+    "entry_id": "e7dcfebb",
+    "entry_index": 6,
+    "message_id": null,
+    "tool_call_id": "call_2e3e649f80d3463fa29ab0f5"
+  },
+  "goal_context_count": 1,
+  "goal_id": "156927a1923e83de",
+  "goal_tool_call_id": "call_2e3e649f80d3463fa29ab0f5",
+  "leaf_id": "06710189",
+  "logical_entry_count": 12,
+  "model": "glm-5.3-flash",
+  "native_continuation_count": 0,
+  "one_turn_final_payload_before_goal_complete": true,
+  "ordinary_tool_calls": 0,
+  "persisted_thinking_literal": "max",
+  "post_exit_shutdown_artifact": {
+    "content_block_count": 0,
+    "entry_id": "726e79d1",
+    "entry_timestamp": "2026-08-28T08:08:23.594Z",
+    "errorId": 134221824,
+    "errorMessage": "Request was aborted",
+    "message_timestamp": 1787904503562,
+    "parent_exit_id": "06710189",
+    "raw_jsonl_bytes": 467,
+    "raw_jsonl_sha256": "5ac1f2f2a0d5a20894de52cfb1910daa23542b218f5e3ff411b88dbceb2bc710",
+    "semantic_candidate_count": 0,
+    "stopReason": "aborted",
+    "tool_call_count": 0
+  },
+  "pre_goal_call_text_utf8_bytes": 1382,
+  "provider": "opencode-go",
+  "raw_last_assistant_sha256": "744c0209b5bc5c666daa3cbf3266a6fc42cf6167be9692662c64c29dc72dad89",
+  "raw_last_assistant_text": "Audit complete against the four admitted receipts, no ordinary tools used.\n\nEvidence chain: extraction receipt shows clean structural parse (248 plan units, 811 acceptance units, 0 parse errors, 0 duplicates) and dependency/migration receipts show a resolved registry with passing migration coverage — but per constraint, readiness is not inferred from structural success. The gate receipt independently executes the canonical currentness function, which fails globally (`stale_generated_index_artifact` at `Plans/.plan_index/node_readiness_report.json`; stored stable sha256 `c32a34…` ≠ recomputed `c1125b…`) and reports node readiness `blocked_runtime_certification_incomplete` with runtime blocker PNC-019. A failing canonical currentness check plus incomplete runtime certification forces the blocked disposition. Both blockers preserved separately from the structural passes; no WorkNodes created or proposed.\n\nPM_RESULT\n{\n  \"schema_id\": \"pm.r10.storage_pipeline.subject_result.v1\",\n  \"source_match\": true,\n  \"plan_unit_count\": 248,\n  \"acceptance_unit_count\": 811,\n  \"dependency_registry_status\": \"resolved\",\n  \"migration_coverage_status\": \"pass\",\n  \"canonical_comparison_status\": \"pass\",\n  \"pre_worknode_disposition\": \"blocked\",\n  \"blocker_codes\": [\"canonical_node_readiness_artifact_stale\", \"pnc019_runtime_certification_incomplete\"],\n  \"no_worknodes_created\": true\n}",
+  "raw_last_assistant_utf8_bytes": 1382,
+  "request_effort_receipt": {
+    "completed_pair_count": 1,
+    "post_exit_aborted_request_count": 1,
+    "raw_copied_to_evidence": false,
+    "raw_private_root": "/tmp/pm-r10-storage-v7-http-fallback-v10-c5f848301f5d1dab5c209e89f8fbbb41",
+    "requests": [
+      {
+        "model": "glm-5.3-flash",
+        "ordinal": 1,
+        "post_exit_aborted": false,
+        "reasoning_effort": "max",
+        "request_bytes": 20646,
+        "request_sha256": "dfcc1cb57cf524bdc4304ed9fda2fe0fa50dba33bfd139506a0a11266a74c0ad",
+        "tool_names": [
+          "goal"
+        ]
+      },
+      {
+        "model": "glm-5.3-flash",
+        "ordinal": 2,
+        "post_exit_aborted": true,
+        "reasoning_effort": "max",
+        "request_bytes": 30147,
+        "request_sha256": "af5055f67078305a9a3ec0520a86f92a5d0f784c502a987ff2bba56580643c14",
+        "tool_names": [
+          "goal"
+        ]
+      }
+    ],
+    "schema_id": "pm.r10.storage_pipeline.dev_glm_request_effort.v1"
+  },
+  "request_response_projection": {
+    "binding_sha256": "f5bc91fa1ee9d6aaa770893ffef0a04bca3ad81a819a4567b475bb0d7e2030d5",
+    "bytes": 2353,
+    "path": "request_response_projection.json",
+    "sha256": "e0891d0c8e272fc920e6b1a626527b63b6cca2a9eb86708205c8357143441ea9"
+  },
+  "result_normalization": {
+    "all_candidates_strictly_before_goal_complete": true,
+    "candidate_count": 1,
+    "candidates": [
+      {
+        "assistant_ordinal": 1,
+        "block_index": 1,
+        "end_line_index": 17,
+        "entry_id": "e7dcfebb",
+        "entry_index": 6,
+        "line_index": 5,
+        "marker_offset_chars": 916,
+        "marker_offset_utf8_bytes": 924,
+        "message_id": null,
+        "payload_offset_chars": 926,
+        "payload_offset_utf8_bytes": 934,
+        "raw_span": "PM_RESULT\n{\n  \"schema_id\": \"pm.r10.storage_pipeline.subject_result.v1\",\n  \"source_match\": true,\n  \"plan_unit_count\": 248,\n  \"acceptance_unit_count\": 811,\n  \"dependency_registry_status\": \"resolved\",\n  \"migration_coverage_status\": \"pass\",\n  \"canonical_comparison_status\": \"pass\",\n  \"pre_worknode_disposition\": \"blocked\",\n  \"blocker_codes\": [\"canonical_node_readiness_artifact_stale\", \"pnc019_runtime_certification_incomplete\"],\n  \"no_worknodes_created\": true\n}",
+        "raw_span_sha256": "bacb0168b18cd897aa89cedd9dfd458c94e8c581e82dec98b696d2ee4baf115b",
+        "raw_span_utf8_bytes": 458,
+        "separator_utf8_bytes": 1
+      }
+    ],
+    "canonical_sha256": "5eb4f7269e19e89f065b2c83fe512ff0294723f317a49eead71a84efb01723cf",
+    "canonical_text": "PM_RESULT {\"schema_id\":\"pm.r10.storage_pipeline.subject_result.v1\",\"source_match\":true,\"plan_unit_count\":248,\"acceptance_unit_count\":811,\"dependency_registry_status\":\"resolved\",\"migration_coverage_status\":\"pass\",\"canonical_comparison_status\":\"pass\",\"pre_worknode_disposition\":\"blocked\",\"blocker_codes\":[\"canonical_node_readiness_artifact_stale\",\"pnc019_runtime_certification_incomplete\"],\"no_worknodes_created\":true}",
+    "canonical_utf8_bytes": 416,
+    "list_order_authoritative": true,
+    "marker_count": 1,
+    "marker_provenance": [
+      {
+        "assistant_ordinal": 1,
+        "block_index": 1,
+        "end_line_index": 17,
+        "entry_id": "e7dcfebb",
+        "entry_index": 6,
+        "line_index": 5,
+        "marker_offset_chars": 916,
+        "marker_offset_utf8_bytes": 924,
+        "message_id": null,
+        "payload_offset_chars": 926,
+        "payload_offset_utf8_bytes": 934,
+        "raw_span": "PM_RESULT\n{\n  \"schema_id\": \"pm.r10.storage_pipeline.subject_result.v1\",\n  \"source_match\": true,\n  \"plan_unit_count\": 248,\n  \"acceptance_unit_count\": 811,\n  \"dependency_registry_status\": \"resolved\",\n  \"migration_coverage_status\": \"pass\",\n  \"canonical_comparison_status\": \"pass\",\n  \"pre_worknode_disposition\": \"blocked\",\n  \"blocker_codes\": [\"canonical_node_readiness_artifact_stale\", \"pnc019_runtime_certification_incomplete\"],\n  \"no_worknodes_created\": true\n}",
+        "raw_span_sha256": "bacb0168b18cd897aa89cedd9dfd458c94e8c581e82dec98b696d2ee4baf115b",
+        "raw_span_utf8_bytes": 458,
+        "separator_utf8_bytes": 1
+      }
+    ],
+    "object_key_order_authoritative": false,
+    "raw_session_preserved": true,
+    "result_authority": "deterministic_matrix_host_program_over_verified_assistant_text",
+    "schema_id": "pm.r10.storage_pipeline.result_normalization.v3",
+    "surrounding_prose_authoritative": false
+  },
+  "selector": "opencode-go/glm-5.3-flash",
+  "session_file_bytes": 39473,
+  "session_file_sha256": "2af1de24bd39c9a515712d303fcbae702fdb18b40b414aaca9e96fd0d21ee768",
+  "session_id": "01a04769-33a4-7396-b0ab-594a729c535f",
+  "session_started_at_utc": "2026-08-28T08:07:51.972Z",
+  "thinking": "max",
+  "thinking_receipt_count": 1,
+  "title_slot_bytes": 256,
+  "verified_assistant_text_blocks": [
+    {
+      "assistant_ordinal": 1,
+      "block_index": 1,
+      "entry_id": "e7dcfebb",
+      "entry_index": 6,
+      "message_id": null,
+      "sha256": "744c0209b5bc5c666daa3cbf3266a6fc42cf6167be9692662c64c29dc72dad89",
+      "utf8_bytes": 1382
+    }
+  ],
+  "verified_assistant_text_utf8_bytes": 1382
+}
