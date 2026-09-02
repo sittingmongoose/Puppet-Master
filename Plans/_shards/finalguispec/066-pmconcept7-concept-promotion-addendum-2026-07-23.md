@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31808-L32439
+Source lines: L31819-L32458
 
-Source SHA256: `ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523`
+Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
 
 ---
 
@@ -336,14 +336,21 @@ canonical_text: >-
   motion kills the entire system by clearing translate and glow and stopping the engine.
   One shared animation driver services the system, effect writes are compositor-friendly
   translate and opacity writes, and the driver self-suspends when nothing is hovered,
-  settling, or glowing.
+  settling, or glowing. On magnetic Usage cards, the painted move and resize controls define
+  measured base-relative corner zones. Magnet translation attenuates continuously to zero as
+  the pointer enters either zone, while body magnetism remains unchanged elsewhere. A short
+  pointer-id-, time-, and bounds-scoped lease may hand an otherwise displaced corner control
+  to the existing drag/resize controller from document capture; unrelated buttons, links,
+  fields, pointer ids, expired leases, and points outside the corridor never activate it. Every
+  direct or rescued transaction clears the lease before capture and resets latent magnet state
+  on cleanup.
 gui_related: true
 gui_classification_reason: This unit defines visible magnet lean, spotlight ring, wash, and bloom hover behavior on shell boxes.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "Every box in the former jiggle selector set runs the magnet and spotlight hover system with spring translate toward the pointer and a continuous-intensity accent ring, interior wash, and outward bloom."
+- "Every box in the former jiggle selector set runs the magnet and spotlight hover system with spring translate toward the pointer and a continuous-intensity accent ring, interior wash, and outward bloom; Usage move/resize corner acquisition measures the painted controls in the card's base coordinates, continuously attenuates only card translation to zero near those controls, preserves body magnetism elsewhere, scopes rescue to one live pointer id plus a short time/bounds corridor, excludes other interactive controls, and clears the lease and latent magnet state on direct activation, rescued activation, commit, cancellation, and no-op cleanup."
 - "Intensity ramps continuously from a bleed distance outside the box with no snap at edges; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
 - "Per-theme knobs give retro a stiff small hard ring, basic restraint, glass a wide soft ring with stronger magnet, and friendly springy micro-overshoot, with the accent color riding the theme accent."
 - "Reduced motion clears translate and glow and stops the engine; one shared self-suspending driver performs compositor-friendly translate and opacity writes."
@@ -370,6 +377,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate channel."
 - "Do not attach per-element pointer-move listeners; one shared driver services the whole selector set through the merged document pointer-move handler."
+- "Do not disable Usage card magnetism globally, synthesize a second pointerdown, or let a stale/foreign acquisition lease activate through another interactive control."
 compatibility_only_notes:
 - "Slint portability: the magnet maps to translate plus an animated spring, pointer tracking maps to TouchArea.mouse-cursor-position, the ring renders as a radial-gradient Rectangle with an inner cover instead of a mask, the wash is a second under-content Rectangle, and the bloom is a drop-shadow on the box (ScrollView clips automatically with no fixed proxy needed); no blend modes, filters, or canvas."
 stale_retired_dispositions:

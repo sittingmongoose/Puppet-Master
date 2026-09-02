@@ -649,7 +649,7 @@ Persisted destination state is subordinate to the requested route target. `/view
 
 The route/open split is structural. `route_target` gets the user to the correct app surface, project `/run/thread` scope, object, and focus context, and may reference `subject_id`, `object_kind/object_id`, `object_kind`, `/object_id`, `tab_id`, `inspector_target`, and related scope fields. `OpenSubject` takes the canonical `subject_id` and resolves it to a workspace-backed file or `/document` open, a transient `generated://<artifact_id>` source buffer keyed by `artifact_id`, or another subject-native preview/open path defined by the subject contract; it does not own broad shell routing, panel selection, or the whole `/open` route envelope. When run scope or exact resumption matters, route payloads carry `focused_run_id` plus narrow anchor details such as wizard-step focus rather than relying on remembered shell state.
 
-Usage deep links are object routes, not top-level route aliases. Cost or usage rows normalize through `object_kind = usage_event` and `object_id = <canonical usage event id>`; `usage_event_ref` may remain a storage/projection reference, but it must not survive as a top-level route field that bypasses the canonical `object_kind` and `object_id` selector model.
+Usage deep links are object routes, not top-level route aliases. Event-primary cost or usage rows normalize through `object_kind = usage_event` and `object_id = <canonical usage event id>`. PMConcept7 Ledger attempt rows instead normalize through `object_kind = usage_attempt` and `object_id = attempt_id`, while `usage_event_ref` remains correlation/accounting identity. Neither reference may bypass the canonical `object_kind` and `object_id` selector model as an independent top-level route selector.
 
 Route validation rejects invalid-combination payloads before any surface-specific open behavior runs. `route_target` requires `project_id` and one primary selector; it must reject a missing primary selector, competing `subject_id` and `object_kind/object_id` selectors, `object_kind` without `object_id`, `object_id` without `object_kind`, `inspector_target` without an object selector, `tab_id` that conflicts with `target_kind`, `line` or `range` inside `route_target`, and any per-surface state inside `route_target`. `/object_id`, `subject_id`, `object_kind`, `object_id`, `target_kind`, `tab_id`, and `inspector_target` are route contract fields only when these selector rules are satisfied.
 
@@ -749,7 +749,7 @@ Blocked episodes are the canonical unit for waiting and recovery. A blocked epis
 
 The runtime packet set requires `execution_role`, and receipt-style operation bridges are where `operational_identity` belongs. One shared attribution family is available to `tool.invoked`, `tool.denied`, `runtime_artifact.*`, `runtime_artifact`, runtime receipts, `usage_record` / `cost_usage`, and relevant evidence or trace views so tool, receipt, usage, artifact, and evidence pivots do not fork attribution semantics.
 
-Usage routing treats `usage_event_ref` as canonical when present. `usage-feature` / `usage-feature.md` may retain timestamp or `/run/thread` fallback only as degraded compatibility, not as the preferred routing path when canonical usage identity exists.
+Usage routing treats `usage_event_ref` as canonical accounting and event identity when present. Event-primary callers select `usage_event` by `usage_event_ref`; the PMConcept7 Ledger attempt-primary caller selects `usage_attempt` by `attempt_id` and retains `usage_event_ref` as correlation. `usage-feature` / `usage-feature.md` may retain timestamp or `/run/thread` fallback only as degraded compatibility, not as a replacement for either typed identity branch.
 
 Runtime open contracts include attempt-scoped and generated-object opens. Evidence opens by `attempt_id`, safe-point manifests or restore logs by `safe_point_id`, remediation lineage summaries by `remediation_root_id`, generated non-repo drafts, and runtime artifacts by `artifact_id` are valid second-category opens distinct from repository file opens.
 
@@ -805,7 +805,7 @@ The command-definition layer carries minimal command-classification and normaliz
 
 Route serialization and source opening stay separate from destination semantics. `resume_url` is a derived serialization of `route_target` with decoding rules anchored back to `Contracts_V0.md`; `Contracts_V0` owns the route/object contract, and canonical route/object identity remains primary over `/object` transport links. `OpenSubject` is identity plus open intent, not storage metadata and not shell routing. If `OpenSubject` carries panel/tab/shell destination semantics or `/tab/shell` state, it collapses into a second route contract; destination class stays in required `target_kind`, while transport/open realization detail and shell/view persistence detail stay outside `route_target`.
 
-Route normalization happens before special identifiers enter the canonical route layer. Restore `project_id` first, then route scope such as `focused_run_id` and `thread_id` when present. Normalize every special-case id into `subject_id` or `object_kind` + `object_id`; `subject_id` is not a second generic object taxonomy. Usage routes normalize `usage_event_ref` into `object_kind = usage_event` with the canonical usage event as `object_id`. Graph/detail pivots and `/detail` opens are canonical route restoration, not tab switches plus local state.
+Route normalization happens before special identifiers enter the canonical route layer. Restore `project_id` first, then route scope such as `focused_run_id` and `thread_id` when present. Normalize every special-case id into `subject_id` or `object_kind` + `object_id`; `subject_id` is not a second generic object taxonomy. Event-primary Usage routes normalize `usage_event_ref` into `object_kind = usage_event`; PMConcept7 Ledger attempt routes normalize `attempt_id` into `object_kind = usage_attempt` while retaining `usage_event_ref` only as correlation. Graph/detail pivots and `/detail` opens are canonical route restoration, not tab switches plus local state.
 
 `artifact_id` and `document_id` normalize into `subject_id`; `document_id` or `artifact_id` prose in navigation should name `subject_id` directly when the target is a content subject. `wizard_id`, `message_id`, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, and similar domain/runtime identities normalize into `object_kind` + `object_id`. `subject_id` wins for openable/renderable content subjects; `object_kind` + `object_id` wins for domain/runtime/governance objects.
 
@@ -813,7 +813,7 @@ Route normalization happens before special identifiers enter the canonical route
 
 Do not add `thread:`, `run:`, `wizard:`, `safe_point:`, or similar runtime/governance families as new `subject_id` prefixes. Those identities are modeled as `object_kind/object_id`, with `thread`, `run`, `wizard`, and `safe_point` values carried through route object identity.
 
-Inspection and usage refs do not become route identity. `Orchestrator_Page.md` may use `evidence_ref` for summary/evidence surfaces because that is record inspection, not routing; `resume_url` remains serialized transport derived from canonical route identity. Usage may keep `usage_event_ref` as canonical usage identity for accounting and evidence joins, while `tier_id` cross-surface node usage is compatibility or projection context rather than the primary usage route key.
+Inspection and correlation refs do not become competing route identity. `Orchestrator_Page.md` may use `evidence_ref` for summary/evidence surfaces because that is record inspection, not routing; `resume_url` remains serialized transport derived from canonical route identity. Usage keeps `usage_event_ref` as canonical accounting/evidence identity and as the event-primary selector, while a PMConcept7 Ledger attempt route uses `attempt_id` as the `usage_attempt` selector and retains the event ref as correlation. `tier_id` cross-surface node usage is compatibility or projection context rather than a primary Usage route key.
 
 Approval and dispatch proof stay runtime-command aware. `allowed_action_ids[]` has won at the runtime-command layer, so approval targeting resolves through `blocked_sequence` while any retained `request_id` is lineage or lookup metadata. `GATE-010` must eventually validate more than flat wiring coverage: command wrapper normalization, `route_target` pass-through, `OpenSubject` subject-open binding, and deprecated alias versus stable wrapper semantics are part of the Contracts-owned proof shape.
 
@@ -1949,7 +1949,25 @@ Behavioral rules:
 
 Required fields:
 - `target_kind`
-- `project_id`
+- `resolver_scope`
+- `project_id` (required-present; nullable only for the explicit non-Project scopes below)
+
+`resolver_scope` is closed to:
+- `project`
+- `server`
+- `application`
+- `bootstrap`
+- `run`
+- `thread`
+- `global`
+
+Legacy route payloads that omit `resolver_scope` normalize to `project` only when
+`project_id` is present and non-null. New producers MUST emit `resolver_scope`.
+`resolver_scope = project | run | thread` requires a non-null `project_id`.
+`server`, `application`, `bootstrap`, and `global` require `project_id = null`;
+`server` additionally requires `server_id`, while `bootstrap` identifies its
+in-progress owner workflow through the primary object selector and must not
+fabricate a Project or Server identity.
 
 Allowed focus fields:
 - `focused_run_id`
@@ -1962,6 +1980,37 @@ Allowed focus fields:
 - `terminal_session_id`
 - `dev_session_id`
 - `inspector_target`
+
+Allowed cross-owner context-binding fields:
+- `server_id`
+- `repository_id`
+- `snapshot_id`
+- `capture_set_id`
+- `backup_destination_id`
+- `recovery_set_id`
+- `retention_preview_id`
+- `backup_policy_id`
+- `restore_preview_id`
+- `restore_run_id`
+- `repository_binding_ref`
+- `automation_binding_id`
+- `server_endpoint_id`
+- `remote_route_id`
+- `connector_id`
+- `route_provenance_ref`
+- `binding_generation`
+- `currentness_ref`
+- `filter_ref`
+- `focus_ref`
+- `return_route_ref`
+
+These fields constrain and restore the selected primary object; they are not
+additional selectors. `filter_ref` is an owner-issued immutable/redacted filter
+reference, never inline arbitrary query state. `focus_ref` is an owner-issued
+stable semantic focus key, never a DOM/CSS selector. `return_route_ref` points to
+an immutable normalized route snapshot and is not a recursively embedded route or
+a second routing primitive. Owner schemas validate which context fields apply to
+each object kind and reject contradictory identities.
 
 Exactly one selector is required:
 - `subject_id`
@@ -1983,6 +2032,7 @@ Exactly one selector is required:
 - `message`
 - `wizard`
 - `usage_event`
+- `usage_attempt`
 - `run`
 - `node`
 - `attempt`
@@ -2004,6 +2054,35 @@ Exactly one selector is required:
 - `terminal_pane`
 - `terminal_session`
 - `dev_session`
+- `source_repository`
+- `repository_forge_binding`
+- `automation_binding`
+- `automation_definition`
+- `automation_run`
+- `automation_gate`
+- `automation_stage`
+- `automation_job`
+- `automation_step`
+- `automation_artifact`
+- `automation_runner`
+- `forge_review`
+- `forge_release`
+- `forge_release_asset`
+- `backup_destination`
+- `backup_repository`
+- `backup_snapshot`
+- `backup_capture_set`
+- `backup_recovery_set`
+- `backup_retention_preview`
+- `backup_policy`
+- `backup_browse_operation`
+- `restore_run`
+- `restore_preview`
+- `backup_recovery_bootstrap`
+- `server`
+- `server_endpoint`
+- `remote_route`
+- `remote_connector`
 
 Terminal-focused `/open` and reveal contracts use the terminal object kinds above with the matching focus identifiers. A route that targets a terminal section, tab, pane, session, or dev session MUST stay in `route_target` object identity instead of inventing panel-local terminal routing semantics.
 
@@ -2020,7 +2099,7 @@ Terminal widgets target runtime/worker identity (`/worker`) and terminal object 
 - `details`
 
 Rules:
-- `project_id` is required
+- `project_id` is required-present; it is non-null for project/run/thread resolution and null for server/application/bootstrap/global resolution
 - route activation must override remembered shell state when needed to reveal the requested object, scope, and destination surface
 - route activation may reuse remembered shell state when that state still reveals the requested object cleanly
 - terminal routes prefer exact same-session reveal when `terminal_session_id` is supplied and still resolvable
@@ -2033,9 +2112,13 @@ Rules:
 - Reuse is one-tab-per-path-per-group for `OpenFile`; opening the same path in another group requires explicit `multi-group` disposition rather than accidental duplication.
 - Settings, `/object/navigation`, search/open entry points, chat links, file-tree selections, and wizard/object links normalize to `route_target` plus `OpenFile` or `OpenSubject` as the source realization; they MUST NOT own bespoke open behavior.
 - Do not mint a brand-new routing primitive for generated, `/thread-backed`, `/artifact-backed`, browser-session, terminal-session, or dev-session reveals; use `route_target` for destination/focus and `OpenSubject` only for canonical document/artifact source realization.
+- Forge routes bind the exact `repository_id`, `repository_binding_ref`, optional independent `automation_binding_id`, `binding_generation`, and `currentness_ref`; repository hosting never implies automation authority. `github_actions` is migration input that normalizes to the canonical `repository_automation` destination with an explicit GitHub automation binding and is never dispatched merely because a remote is named `origin`.
+- Legacy panel-context `repo_id` normalizes to `repository_id`. Legacy GitHub `workflow_id`, `run_id`, `job_id`, and `step_id` normalize to the matching `automation_definition`, `automation_run`, `automation_job`, or `automation_step` primary object plus an explicit `automation_binding_id`; they do not remain an untyped panel-local argument bag.
+- Backup routes select an immutable destination, repository, snapshot, capture set, RecoverySet, retention preview, browse operation, RestoreRun, or Bootstrap recovery object. Snapshot browse and reverse navigation bind the exact `repository_id`, `snapshot_id`, `capture_set_id`, Project/Server scope, `filter_ref`, and `focus_ref`; refresh, provider discovery, or retention change MUST NOT replace any bound identity with `latest` or another snapshot.
+- Server and Remote Access routes bind the exact `server_id`, endpoint or route object, `server_endpoint_id`, `remote_route_id`, optional `connector_id`, and owner-issued `route_provenance_ref`. Connector-private, hosted Funnel, and externally managed host-Tailscale routes remain distinct provenance; an address, label, or tailnet membership never proves Server identity, pairing, trust, or route equivalence.
+- Protected authentication, Recovery Kit, and connector setup continuations capture a normalized `return_route_ref` before handoff and return to that exact route/focus only after owner currentness validation. The route snapshot contains no credential, recovery key, authorization URL/code, browser content, connector state, or secret material.
 
 Additional route resolver fields:
-- `resolver_scope` closed to `project | run | thread | global`
 - `route_recipe_id?` for owner-defined route recipes that bundle selector, destination, and inspector defaults
 - `tab_family?` for surfaces whose tabs have owner-defined families
 - `open_disposition?` closed to `reuse_existing | open_new | split_group | focus_only`
@@ -2044,10 +2127,11 @@ Route validity rules:
 - Legacy labels `tab-family` and `open-disposition` map to `tab_family` and `open_disposition`; producers must use the canonical underscore field names in payloads.
 - A route is rejected as `invalid_route` when `target_kind`, selector, `resolver_scope`, `tab_family`, or `open_disposition` is not valid for the destination surface.
 - Resolver scope must be explicit when the same `object_kind` can exist in more than one run, thread, or project.
+- Full Server recovery before Project creation uses `resolver_scope = bootstrap`, `project_id = null`, and `object_kind = backup_recovery_bootstrap`; it does not mint placeholder Project or Server identities.
 - `tab_id` is valid with `target_kind = page_tab` or with a routed page whose visibility depends on a known stable tab family; otherwise `tab_id` is rejected as shell-local state. For `tab_family = orchestrator`, the active closed values are `progress`, `plan_compile`, `seams`, `node_graph`, `evidence`, `history`, and `ledger`; retired `tiers` / `Tiers` labels are compatibility/search aliases only and are not valid active route targets.
 - `tab_id` does not replace `target_kind`; `tab_id` does not replace `inspector_target`.
 - Route examples are normative selector examples: a chat search result uses `object_kind = message` with `object_id = <message_id>`, and a wizard resume uses `object_kind = wizard` with `object_id = <wizard_id>`.
-- Scoped-resolution rules are part of the refinement layer: `blocked_episode` uses `object_id = blocked_sequence` and requires `focused_run_id` plus node membership inside that run; `scheduler_pass` uses `object_id = scheduler_pass_id` and requires `focused_run_id`; `safe_point` uses `object_id = safe_point_id` and requires `focused_run_id`; `remediation` uses `object_id = remediation_root_id` and requires `focused_run_id`; `attempt` uses `object_id = attempt_id` and requires `focused_run_id`.
+- Scoped-resolution rules are part of the refinement layer: `blocked_episode` uses `object_id = blocked_sequence` and requires `focused_run_id` plus node membership inside that run; `scheduler_pass` uses `object_id = scheduler_pass_id` and requires `focused_run_id`; `safe_point` uses `object_id = safe_point_id` and requires `focused_run_id`; `remediation` uses `object_id = remediation_root_id` and requires `focused_run_id`; generic runtime `attempt` uses `object_id = attempt_id` and requires `focused_run_id`; Usage-specific `usage_attempt` also uses `object_id = attempt_id` but remains a distinct governed kind whose payload retains `usage_event_ref` as correlation/accounting identity.
 - Selector precedence, reject rules, route examples, and scoped-resolution rules belong to `route_target` / `OpenSubject` refinement: `route_target` owns destination, scope, selector, and resolver validation, while `OpenSubject` owns identity-native source opening.
 - Route activation may reuse an existing destination only when `open_disposition` permits reuse and the existing destination still reveals the requested object, scope, and inspector target.
 - Route producers must not add a generic extra-args bag to bypass field validation.
@@ -2062,7 +2146,7 @@ Labels:
 
 Behavioral rules:
 - Exactly one canonical primary selector is permitted.
-- `project_id` is required.
+- `project_id` is required-present; null is permitted only under the explicit server/application/bootstrap/global resolver rules.
 - `target_kind` is destination class only, and `inspector_target` is focus refinement only after selector identity is established.
 - `resume_url` is serialized transport of `route_target`, not a second routing ontology.
 
@@ -5626,17 +5710,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  route_target requires project_id plus one primary selector; reject missing
-  selector, competing subject_id and object_kind/object_id, object halves,
-  inspector_target without object selector, conflicting tab_id, line/range, or
-  per-surface state inside route_target.
+  route_target requires resolver_scope, required-present project_id, and one primary
+  selector. project_id is non-null for project/run/thread resolution and null
+  only for server, application, bootstrap, or global resolution. Reject missing or contradictory scope,
+  competing subject_id and object_kind/object_id, object halves, inspector_target
+  without object selector, conflicting tab_id, line/range, or per-surface state.
 gui_related: false
 gui_classification_reason: This unit defines route_target validation and reject rules.
 split_recommended: true
 depends_on: [CV-031]
 unblocks: [CV-055, CV-057, CV-058, CV-059]
 acceptance_criteria:
-  - route_target requires project_id plus one primary selector.
+  - route_target requires resolver_scope, required-present project_id, and one primary selector.
+  - Legacy scope omission normalizes only to Project scope with a non-null project_id; non-Project scope never fabricates a Project identity.
   - Invalid selector combinations are rejected.
   - line/range and per-surface state stay outside base route_target.
 validation_surfaces:
@@ -5662,6 +5748,7 @@ preserved_exact_tokens:
   - "`tab_id`"
   - "`line`"
   - "`range`"
+  - "`resolver_scope`"
 negative_constraints:
   - "Base route_target must not contain line/range or per-surface state."
 owner_hints:
@@ -5866,8 +5953,10 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Usage routes normalize usage_event_ref to object_kind = usage_event and the
-  canonical usage event object_id; timestamp/run/thread/tier filters are
+  Usage routes use typed primary selectors. Event-primary callers normalize
+  usage_event_ref to object_kind = usage_event and the canonical event object_id;
+  PMConcept7 Ledger attempt rows normalize attempt_id to object_kind = usage_attempt
+  and retain usage_event_ref as correlation. Timestamp/run/thread/tier filters are
   degraded compatibility or narrowing, not primary route identity.
 gui_related: false
 gui_classification_reason: This unit defines usage route identity and compatibility filters.
@@ -5875,8 +5964,8 @@ split_recommended: true
 depends_on: [CV-031, CV-054]
 unblocks: []
 acceptance_criteria:
-  - usage_event_ref normalizes into object_kind = usage_event.
-  - The canonical usage event is the object_id for usage routes.
+  - Event-primary usage_event_ref normalizes into object_kind = usage_event and the canonical event object_id.
+  - A PMConcept7 Ledger attempt row normalizes attempt_id into object_kind = usage_attempt and retains usage_event_ref as correlation/accounting identity.
   - Timestamp/run/thread/tier filters are not primary route identity.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5894,6 +5983,8 @@ source_lineage:
 preserved_exact_tokens:
   - "`usage_event_ref`"
   - "`object_kind = usage_event`"
+  - "`object_kind = usage_attempt`"
+  - "`attempt_id`"
   - "`object_id`"
   - "`tier_id`"
 compatibility_only_notes:
@@ -11167,7 +11258,9 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   route_target is the canonical navigation-and-focus contract requiring
-  target_kind and project_id, with target_kind as destination class only.
+  target_kind, resolver_scope, and required-present project_id, with project_id
+  nullable only for explicit non-Project scopes and target_kind remaining a
+  destination class only.
 gui_related: false
 gui_classification_reason: This unit defines route_target required fields and destination classes.
 split_recommended: true
@@ -11175,7 +11268,8 @@ depends_on: [CV-031, CV-054]
 unblocks: [CV-164, CV-166, CV-169, CV-173]
 acceptance_criteria:
   - "route_target remains the canonical navigation-and-focus contract."
-  - "target_kind and project_id are required."
+  - "target_kind, resolver_scope, and required-present project_id are required."
+  - "project_id is non-null for project/run/thread resolution and null only for the explicit server, application, bootstrap, or global resolver scopes governed by CV-327."
   - "target_kind closes to primary_view, side_panel, bottom_panel, embedded_surface, and page_tab."
   - "target_kind is destination class only."
 validation_surfaces:
@@ -11203,6 +11297,7 @@ preserved_exact_tokens:
   - "`bottom_panel`"
   - "`embedded_surface`"
   - "`page_tab`"
+  - "`resolver_scope`"
   - "ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md"
 negative_constraints:
   - "target_kind must not replace selector identity."
@@ -11219,7 +11314,9 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   route_target permits exactly one canonical primary selector: subject_id or
-  object_kind plus object_id, with closed subject and object-kind families.
+  object_kind plus object_id, with closed subject and object-kind families;
+  owner-issued context-binding fields constrain that selected object and never
+  become competing selectors.
 gui_related: false
 gui_classification_reason: This unit defines route primary selector identity.
 split_recommended: true
@@ -11230,6 +11327,7 @@ acceptance_criteria:
   - "subject_id closes to doc:<document_id> and artifact:<artifact_id>."
   - "object_kind list from the source span is preserved."
   - "object_id pairs with object_kind for object selectors."
+  - "Context-binding fields such as repository_id, snapshot_id, automation_binding_id, server_id, filter_ref, and focus_ref cannot replace or compete with the primary selector."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -11253,6 +11351,7 @@ preserved_exact_tokens:
   - "`message`"
   - "`wizard`"
   - "`usage_event`"
+  - "`usage_attempt`"
   - "`blocked_episode`"
   - "`browser_session`"
   - "`terminal_session`"
@@ -11485,15 +11584,17 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Route resolver refinement uses resolver_scope, route_recipe_id?, tab_family?,
-  and open_disposition?, with legacy tab-family and open-disposition labels
-  normalized to canonical underscore field names.
+  and open_disposition?, with resolver_scope closed across project, server,
+  bootstrap, run, thread, and global resolution and legacy tab-family and
+  open-disposition labels normalized to canonical underscore field names.
 gui_related: false
 gui_classification_reason: This unit defines route resolver fields and alias normalization.
 split_recommended: true
 depends_on: [CV-163]
 unblocks: [CV-170, CV-172]
 acceptance_criteria:
-  - "resolver_scope closes to project, run, thread, and global."
+  - "resolver_scope closes to project, server, bootstrap, run, thread, and global."
+  - "project_id pairing agrees with resolver_scope; bootstrap cannot fabricate a Project or Server identity."
   - "open_disposition closes to reuse_existing, open_new, split_group, and focus_only."
   - "route_recipe_id? and tab_family? remain owner-defined refinement fields."
   - "Legacy tab-family and open-disposition labels normalize to tab_family and open_disposition."
@@ -11519,6 +11620,8 @@ preserved_exact_tokens:
   - "`open_disposition?`"
   - "`tab-family`"
   - "`open-disposition`"
+  - "`server`"
+  - "`bootstrap`"
 compatibility_only_notes:
   - "Legacy labels tab-family and open-disposition map to tab_family and open_disposition."
 negative_constraints:
@@ -20408,15 +20511,15 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  GUI Usage route/open payloads normalize every usage drill-through target into route_target.object_kind = usage_event and route_target.object_id = the canonical usage event id when usage_event_ref exists. OpenSubject carries the display subject, while usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health remain correlation and projection fields. Thread_id, tier_id, timestamp, and run_id can filter or scope a view but cannot replace UsageRecord identity. Raw/Curated consumers share the same redaction contract: Curated receives normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not unredacted provider payloads.
+  GUI Usage route/open payloads use typed object-first selectors. Event-primary callers normalize usage_event_ref into route_target.object_kind = usage_event and the canonical event object_id. PMConcept7 Ledger attempt rows normalize attempt_id into route_target.object_kind = usage_attempt and route_target.object_id = attempt_id, repeat attempt_id at top level, retain usage_event_ref plus UsageRecord/provider/runtime refs as correlation, and carry no OpenSubject. Event-primary Usage object routes likewise carry no OpenSubject. Thread_id, tier_id, timestamp, and run_id can filter or scope a view but cannot replace the selected event or attempt identity. Raw/Curated consumers share the same redaction contract: Curated receives normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not unredacted provider payloads.
 gui_related: true
 gui_classification_reason: Shared route/open payloads drive visible Usage, Ledger, chat, artifact, graph, and orchestrator navigation.
 depends_on: [CV-309, UF-087, UF-088]
 unblocks: [SP-234, WM-043]
 acceptance_criteria:
-  - Route payload fixtures fail if usage_event_ref remains a top-level route selector without object_kind = usage_event and object_id normalization.
-  - OpenSubject fixtures preserve usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id.
-  - Cross-surface drill-through fixtures fail timestamp/run/thread/tier primary routing when usage_event_ref is available.
+  - Event-primary route payload fixtures fail if usage_event_ref bypasses object_kind = usage_event and object_id normalization; PMConcept7 Ledger fixtures fail unless attempt_id selects object_kind = usage_attempt and usage_event_ref remains correlation.
+  - Both Usage selector branches carry no OpenSubject and preserve applicable usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id.
+  - Cross-surface drill-through fixtures fail timestamp/run/thread/tier primary routing when a canonical event or attempt selector is available.
   - Raw/Curated fixtures prove redacted Raw refs and normalized Curated fields share the same UsageRecord identity.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -20441,6 +20544,8 @@ source_lineage:
   - "Plans/Runtime_Artifacts_Panel.md:316"
 preserved_exact_tokens:
   - route_target.object_kind = usage_event
+  - route_target.object_kind = usage_attempt
+  - attempt_id
   - object_id
   - OpenSubject
   - usage_event_ref
@@ -20450,8 +20555,9 @@ preserved_exact_tokens:
   - source_confidence
   - settlement_status
 negative_constraints:
-  - Do not let usage_event_ref bypass object-first route normalization.
-  - Do not use timestamp, run_id, thread_id, or tier_id as primary Usage route identity when usage_event_ref exists.
+  - Do not let usage_event_ref or attempt_id bypass object-first route normalization.
+  - Do not attach OpenSubject to either Usage object-route branch.
+  - Do not use timestamp, run_id, thread_id, or tier_id as primary Usage route identity when a canonical event or attempt selector exists.
   - Do not expose unredacted Raw provider payloads through route/open payloads.
 owner_hints:
   - Plans/Contracts_V0.md
@@ -20998,4 +21104,136 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
   - 'Plans/runtime_integration_disposition.json#items[PRM-012]'
+```
+
+## Touch Closure Registry Boundary Addendum - 2026-09-01
+
+### CV-326 - Touch Closure Registry And Static Production-Intent Boundary
+
+```yaml
+plan_unit_id: CV-326
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Plans/touch_closure.json with Plans/touch_closure.schema.json is the exact-key
+  machine crosswalk for touched requirements, owners, PlanUnits, commands or typed
+  local actions, contracts, sole future handlers, static production-intent wiring,
+  reverse GUI consumers, persistence, tests, evidence classes, dispositions, and
+  residual risks. Plans/server_command_gap_adjudication.json with its schema is the
+  frozen 171-row compatibility and materialization registry that feeds that
+  crosswalk. These registries consume owner contracts; they do not own payloads,
+  create handlers, register commands, admit EventRecord families, or prove running
+  production behavior. expected_event_types=[] and receipt/projection-only rows are
+  explicit non-admission of event types, not incomplete event declarations.
+gui_related: true
+gui_classification_reason: The registry records GUI trigger, disabled-state, return-route, and reverse-consumer contract pointers without owning their presentation.
+split_recommended: false
+depends_on: [CV-325, C-051, DR-041, CS-074, WM-051, SIR-031, RAS-013]
+unblocks: [0PI-068, ATS-042]
+acceptance_criteria:
+  - "Both registries validate against closed Draft 2020-12 schemas and retain exact content-addressed custody where frozen."
+  - "Every schema_ref resolves to an owner definition; compatibility aliases use owner $ref composition rather than copied state machines."
+  - "expected_event_types=[] means the action is event-silent under current Event Authority, and no receipt or projection name is promoted into an EventRecord family."
+  - "A production-intent or future-handler row remains static canonical planning data and cannot be cited as native handler, running service, browser, visual, motion, accessibility, performance, security, recovery, readiness, or Slint proof."
+  - "The dedicated server-gap and Touch Closure validators remain separately callable and part of both aggregate governance gates."
+validation_surfaces:
+  - python3 scripts/pm-server-command-gap-verify.py --json
+  - python3 scripts/pm-touch-closure-verify.py --json
+  - python3 scripts/pm-plans-verify.py validate-server-command-gap
+  - python3 scripts/pm-plans-verify.py validate-touch-closure
+  - python3 scripts/pm-plan-index.py validate
+risk_class: static_registry_promoted_to_runtime_or_event_authority
+reasoning_tier: high
+context_scope: touch_closure_registry_contract_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/touch_closure.json
+  - Plans/touch_closure.schema.json
+  - Plans/server_command_gap_adjudication.json
+  - Plans/server_command_gap_adjudication.schema.json
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint: {mode: static_registry_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Crosswalk.md#c-051---touch-closure-authority-and-consumer-routing
+  - Plans/DRY_Rules.md#dr-041---touch-closure-exact-key-and-no-peer-dry-rule
+  - Plans/Commands_System.md#cs-074---remaining-packet-command-production-intent-and-sole-future-handler-closure
+preserved_exact_tokens: [touch_closure.json, server_command_gap_adjudication.json, expected_event_types, production-intent, future-handler, static]
+negative_constraints:
+  - "Do not treat either registry as a payload, runtime, command, handler, persistence, evidence, or Event Authority owner."
+  - "Do not infer an EventRecord family from a receipt, projection, status, or ObservableWork field."
+  - "Do not replace owner schemas with copied definitions inside either registry."
+owner_hints: [Plans/Contracts_V0.md, Plans/Crosswalk.md, Plans/DRY_Rules.md, Plans/Commands_System.md, Plans/Wiring_Matrix.md]
+```
+
+## Forge/Backup/tsnet Route Scope And Exact-Return Addendum - 2026-09-01
+
+### CV-327 - Cross-Owner Route Scope, Immutable Selection, And Provenance Binding
+
+```yaml
+plan_unit_id: CV-327
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  route_target retains exactly one subject or object primary selector while adding
+  explicit project/server/application/bootstrap/global resolver scope and bounded owner-issued
+  context refs for repository hosting, independent automation binding, immutable
+  Backup selection, Server endpoint and Remote Access provenance, exact filters,
+  semantic focus, currentness generation, and return-route restoration. Context
+  refs constrain the selected object and never become peer selectors, copied owner
+  records, secret transport, arbitrary argument bags, or evidence that a handler,
+  provider, connector, restore engine, route, trust decision, or native surface is
+  operational.
+gui_related: true
+gui_classification_reason: Exact object, filter, focus, return, provider-binding, snapshot, and endpoint identity controls every affected visible deep link and reverse-navigation flow.
+split_recommended: false
+depends_on: [CV-054, CV-163, CV-164, CV-166, CV-168, CV-169, CV-170, CV-172, FGI-012, BRS-014, BRS-016, RAS-015, SCS-013, SRV-013]
+unblocks: [C-052]
+acceptance_criteria:
+  - "New route producers emit resolver_scope; legacy omission normalizes only to project with a non-null project_id. project_id is required-present and null only for server, application, bootstrap, or global resolution."
+  - "Full Server recovery before Project creation uses bootstrap scope plus a backup_recovery_bootstrap primary object and never invents Project or Server identity."
+  - "Exactly one primary subject_id or object_kind/object_id selector remains mandatory; all repository, binding, destination, snapshot, capture-set, recovery-set, policy, retention, restore-preview/run, endpoint, provenance, filter, focus, currentness, and return fields are validated context constraints only."
+  - "Forge routing keeps RepositoryForgeBinding and AutomationBinding independent; github_actions normalizes to repository_automation with an explicit GitHub automation binding and never dispatches from a remote name or selected shell alone."
+  - "Legacy repo_id and GitHub workflow/run/job/step panel fields normalize to repository_id plus typed automation object identity and an explicit automation_binding_id before route validation."
+  - "Backup browse and reverse routes retain immutable repository_id, snapshot_id, capture_set_id, scope, filter_ref, and focus_ref; refresh, discovery, retention, or latest-state changes never retarget the user."
+  - "Server and Remote Access routes retain exact server_id, endpoint or route identity, server_endpoint_id, remote_route_id, optional connector_id, and route_provenance_ref; connector-private, Funnel, and external host-managed routes never imply identity, pairing, trust, or equivalence."
+  - "filter_ref and focus_ref are owner-issued typed refs, not raw query bags or DOM selectors; return_route_ref is an immutable normalized route snapshot, not recursive route data or a second route ontology."
+  - "Protected continuations contain no credential, Recovery Key/Kit, authorization URL/code, browser content, connector state, secret bytes, or foreign absolute paths."
+  - "CMDX-001/CMDX-002 bind each semantic action to one owner command/handler and one common non-secret envelope carrying operation/request, actor/Client, Home Server, Project, repository/source-location/checkout/Host/Environment, provider instance/connection/profile, expected revision/capability revision, idempotency, and optional Goal/Plan/thread refs only when applicable."
+  - "Host-owned mutation revalidates context and leases; external effects distinguish accepted, running, outcome_unknown, observed_complete, failed, partial, and cancelled, while read-only observations return revision/freshness and never claim current state from stale cache."
+  - "AUTH-001..AUTH-008 preservation routes authority/baseline, Server/storage, platform/package, Project settings/continuity, application update, WAN/UI, safety/resource, and migration/consent to their existing semantic owners; route context copies none of their state machines or evidence."
+  - "Static contract, schema, fixture, route, and owner-map evidence is partial only: dirty-tree/baseline receipts, executable diffs, release artifacts, handlers, provider behavior, restore drills, native GUI, and PROC-001/PROC-002 execution proof remain absent until separately produced."
+validation_surfaces:
+  - Plans/Contracts_V0.md#73-route_target
+  - Plans/Crosswalk.md#c-052---forge-backuptsnet-owner-precedence-and-exact-route-context
+  - future route-scope/selector/currentness/reverse-focus fixtures
+  - Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord
+  - Plans/shared_integration_runtime_expansion_fixtures.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: cross_owner_route_retarget_or_authority_conflation
+reasoning_tier: high
+context_scope: forge_backup_tsnet_route_scope_and_exact_return
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/Crosswalk.md, future canonical route schema and resolver]
+node_compile_hint: {mode: shared_route_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:2026-09-01:GUI-005-GUI-007
+  - source_ref:packet:2026-09-01:REST-003-REST-009
+  - source_ref:packet:2026-09-01:TSX-001-TSX-004
+  - source_ref:packet:2026-09-01:CMDX-001-CMDX-004
+  - source_ref:packet:2026-09-01:AUTH-001-AUTH-008
+  - source_ref:packet:2026-09-01:PROC-001-PROC-002
+  - Plans/Forge_Integrations.md#FGI-012
+  - Plans/Backup_Restore_System.md#BRS-014
+  - Plans/Backup_Restore_System.md#BRS-016
+  - Plans/Remote_Access_System.md#RAS-015
+  - Plans/Server_System.md#SRV-013
+preserved_exact_tokens: [resolver_scope, project_id, server_id, repository_id, snapshot_id, capture_set_id, automation_binding_id, binding_generation, currentness_ref, automation_gate, automation_artifact, automation_runner, backup_policy_id, retention_preview_id, restore_preview_id, restore_run_id, server_endpoint_id, remote_route_id, connector_id, route_provenance_ref, filter_ref, focus_ref, return_route_ref, repository_automation, github_actions, outcome_unknown, observed_complete, handler_unavailable, "expected_event_types=[]"]
+negative_constraints:
+  - "Do not add a generic extra-args bag, competing selector, copied domain record, or consumer-owned routing primitive."
+  - "Do not select latest or substitute a new repository, snapshot, capture set, binding, Server, endpoint, route, filter, or focus after refresh."
+  - "Do not infer automation authority from repository hosting, Server trust from reachability, or Backup access from tailnet authentication."
+  - "Do not claim handler, runtime, provider, connector, restore, visual, security, readiness, or Slint evidence from route contracts or static fixtures."
+  - "Do not claim the AUTH preservation matrix, PROC-001, PROC-002, a baseline hash, dirty-tree protection, executable diff, or release proof is complete from this static contract."
+owner_hints: [Plans/Contracts_V0.md, Plans/Crosswalk.md, Plans/Forge_Integrations.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md]
 ```

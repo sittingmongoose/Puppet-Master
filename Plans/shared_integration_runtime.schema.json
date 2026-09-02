@@ -1,0 +1,621 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.shared_integration_runtime.command_contracts.schema.v1",
+  "title": "Puppet Master shared integration connection, selection, and consumer-boundary contracts",
+  "description": "Owner-side static contracts for five shared integration connection commands, cmd.installation.select, and reference-only consumers in forge, repository automation, backup, and embedded connector domains. No central registration, native handler, wiring, EventRecord producer, acquisition, authentication, provider capability, or runtime proof is implied.",
+  "x-schema-id": "pm.shared_integration_runtime.command_contracts.v1",
+  "oneOf": [
+    {"$ref": "#/$defs/IntegrationConnectionCommandRequest"},
+    {"$ref": "#/$defs/IntegrationConnectionCommandResult"},
+    {"$ref": "#/$defs/IntegrationConnectionAvailability"},
+    {"$ref": "#/$defs/SharedIntegrationPermissionDecision"},
+    {"$ref": "#/$defs/IntegrationConnectionCommandError"},
+    {"$ref": "#/$defs/InstallationSelectCommandRequest"},
+    {"$ref": "#/$defs/InstallationSelectCommandResult"},
+    {"$ref": "#/$defs/InstallationSelectAvailability"},
+    {"$ref": "#/$defs/InstallationSelectCommandError"},
+    {"$ref": "#/$defs/SharedIntegrationConsumerProjection"}
+  ],
+  "$defs": {
+    "Id": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "NonSecretRef": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*(?:secret|token|password|credential|cookie)=).+$"},
+    "NullableNonSecretRef": {"anyOf": [{"$ref": "#/$defs/NonSecretRef"}, {"type": "null"}]},
+    "ReturnSettlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["return_context_ref", "settlement", "initiating_surface_restored"],
+      "properties": {
+        "return_context_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "settlement": {"enum": ["restored", "retained", "caller_unavailable"]},
+        "initiating_surface_restored": {"type": "boolean"}
+      },
+      "allOf": [
+        {"if": {"properties": {"settlement": {"const": "restored"}}, "required": ["settlement"]}, "then": {"properties": {"initiating_surface_restored": {"const": true}}}},
+        {"if": {"properties": {"settlement": {"enum": ["retained", "caller_unavailable"]}}, "required": ["settlement"]}, "then": {"properties": {"initiating_surface_restored": {"const": false}}}}
+      ]
+    },
+    "IntegrationConnectionCommandId": {"enum": ["cmd.integration.connection.add", "cmd.integration.connection.update", "cmd.integration.connection.test", "cmd.integration.connection.remove", "cmd.integration.connection.open_details"]},
+    "IntegrationConnectionAction": {"enum": ["add", "update", "test", "remove", "open_details"]},
+    "ConnectionState": {"enum": ["unconfigured", "configured", "testing", "ready", "ready_with_limits", "needs_attention", "unavailable", "removing", "removed", "recovery_required"]},
+    "ConnectionDisabledReasonCode": {
+      "enum": [
+        "command_not_registered",
+        "handler_unavailable",
+        "owner_contract_stale",
+        "provider_missing",
+        "provider_unsupported",
+        "connection_missing",
+        "connection_generation_stale",
+        "topology_generation_stale",
+        "setup_required",
+        "installation_required",
+        "authentication_required",
+        "authentication_stale",
+        "initiating_client_unavailable",
+        "topology_unavailable",
+        "credential_broker_unavailable",
+        "permission_required",
+        "permission_denied",
+        "policy_denied",
+        "operation_in_progress",
+        "rate_limited",
+        "provider_degraded",
+        "capability_unavailable",
+        "confirmation_required",
+        "dependency_active",
+        "resource_blocked",
+        "recovery_required"
+      ]
+    },
+    "ConnectionErrorCode": {
+      "enum": [
+        "invalid_request",
+        "not_found",
+        "already_in_state",
+        "stale_generation",
+        "identity_mismatch",
+        "setup_required",
+        "installation_required",
+        "authentication_required",
+        "authentication_failed",
+        "topology_unavailable",
+        "credential_broker_unavailable",
+        "permission_denied",
+        "policy_denied",
+        "provider_unavailable",
+        "provider_incompatible",
+        "rate_limited",
+        "deadline_expired",
+        "dependency_active",
+        "operation_conflict",
+        "cancelled",
+        "effect_unknown",
+        "recovery_required"
+      ]
+    },
+    "SharedIntegrationPermissionScope": {"enum": ["connection_add", "connection_update", "connection_test", "connection_remove", "connection_details_read", "installation_select"]},
+    "SharedIntegrationPermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "decision_id", "command_id", "permission_snapshot_ref", "required_scopes", "decision", "confirmation_ref", "credential_material_exposed", "authority_widening", "decided_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "shared_integration_permission_decision"},
+        "decision_id": {"$ref": "#/$defs/Id"},
+        "command_id": {"enum": ["cmd.integration.connection.add", "cmd.integration.connection.update", "cmd.integration.connection.test", "cmd.integration.connection.remove", "cmd.integration.connection.open_details", "cmd.installation.select"]},
+        "permission_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "required_scopes": {"type": "array", "minItems": 1, "maxItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/SharedIntegrationPermissionScope"}},
+        "decision": {"enum": ["admitted", "confirmation_required", "denied", "stale", "policy_blocked"]},
+        "confirmation_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "credential_material_exposed": {"const": false},
+        "authority_widening": {"const": false},
+        "decided_at_utc": {"type": "string", "format": "date-time"}
+      }
+    },
+    "IntegrationConnectionAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "provider_id", "connection_id", "project_id", "execution_host_id", "execution_environment_id", "connection_generation", "topology_generation", "state", "disabled_reason", "currentness", "evaluated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "integration_connection_availability"},
+        "command_id": {"$ref": "#/$defs/IntegrationConnectionCommandId"},
+        "provider_id": {"$ref": "#/$defs/Id"},
+        "connection_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "project_id": {"$ref": "#/$defs/Id"},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "connection_generation": {"type": "integer", "minimum": 0},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "state": {"enum": ["available", "unavailable", "busy", "blocked", "recovery_required"]},
+        "disabled_reason": {"anyOf": [{"$ref": "#/$defs/ConnectionDisabledReasonCode"}, {"type": "null"}]},
+        "currentness": {"enum": ["current", "cached", "synchronizing", "stale", "failed"]},
+        "evaluated_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "available"}}, "required": ["state"]}, "then": {"properties": {"disabled_reason": {"type": "null"}, "currentness": {"const": "current"}}}},
+        {"if": {"properties": {"state": {"enum": ["unavailable", "busy", "blocked", "recovery_required"]}}, "required": ["state"]}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/ConnectionDisabledReasonCode"}}}}
+      ]
+    },
+    "IntegrationConnectionCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "error_code", "retryable", "safe_message", "retry_after_utc", "technical_details_ref", "effect_state"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "integration_connection_command_error"},
+        "error_code": {"$ref": "#/$defs/ConnectionErrorCode"},
+        "retryable": {"type": "boolean"},
+        "safe_message": {"type": "string", "minLength": 1, "maxLength": 512},
+        "retry_after_utc": {"type": ["string", "null"], "format": "date-time"},
+        "technical_details_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "effect_state": {"enum": ["none", "committed", "rolled_back", "partial", "unknown"]}
+      }
+    },
+    "ConnectionMutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["setup_route", "profile_ref", "account_id", "credential_ref", "patch_ref", "probe_policy_ref", "confirmation_ref", "credential_disposition", "remote_data_disposition", "details_projection_ref"],
+      "properties": {
+        "setup_route": {"$ref": "#/$defs/NonSecretRef"},
+        "profile_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "account_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "credential_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "patch_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "probe_policy_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "confirmation_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "credential_disposition": {"enum": ["not_applicable", "retain_broker_ref", "revoke_broker_ref", "revocation_pending", "recovery_required"]},
+        "remote_data_disposition": {"enum": ["not_applicable", "retain_provider_data", "provider_action_required", "recovery_required"]},
+        "details_projection_ref": {"$ref": "#/$defs/NullableNonSecretRef"}
+      }
+    },
+    "IntegrationConnectionCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "action", "command_instance_id", "idempotency_key", "origin", "connection_kind", "provider_id", "provider_variant", "connection_id", "project_id", "route_id", "home_server_id", "execution_host_id", "execution_environment_id", "expected_connection_generation", "topology_generation", "permission_snapshot_ref", "observable_work_ref", "return_context_ref", "mutation"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "integration_connection_command_request"},
+        "command_id": {"$ref": "#/$defs/IntegrationConnectionCommandId"},
+        "action": {"$ref": "#/$defs/IntegrationConnectionAction"},
+        "command_instance_id": {"$ref": "#/$defs/Id"},
+        "idempotency_key": {"$ref": "#/$defs/Id"},
+        "origin": {"enum": ["forge_gui", "settings_gui", "command_palette", "natural_language_user", "doctor_user_action", "owner_reconciler"]},
+        "connection_kind": {"enum": ["forge", "source_control_host", "provider_service", "mcp_service", "other_registered"]},
+        "provider_id": {"$ref": "#/$defs/Id"},
+        "provider_variant": {"$ref": "#/$defs/Id"},
+        "connection_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "project_id": {"$ref": "#/$defs/Id"},
+        "route_id": {"$ref": "#/$defs/Id"},
+        "home_server_id": {"$ref": "#/$defs/Id"},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "expected_connection_generation": {"type": "integer", "minimum": 0},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "permission_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "observable_work_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "return_context_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "mutation": {"$ref": "#/$defs/ConnectionMutation"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.add"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "add"}, "connection_id": {"type": "null"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"credential_disposition": {"const": "not_applicable"}, "remote_data_disposition": {"const": "not_applicable"}}}]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.update"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "update"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"patch_ref": {"$ref": "#/$defs/NonSecretRef"}}}]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.test"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "test"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"probe_policy_ref": {"$ref": "#/$defs/NonSecretRef"}}}]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.remove"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "remove"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "credential_disposition": {"enum": ["retain_broker_ref", "revoke_broker_ref", "revocation_pending", "recovery_required"]}, "remote_data_disposition": {"enum": ["retain_provider_data", "provider_action_required", "recovery_required"]}}}]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.open_details"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "open_details"}, "connection_id": {"$ref": "#/$defs/Id"}, "observable_work_ref": {"type": "null"}}}}
+      ]
+    },
+    "IntegrationConnectionCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "result_id", "command_id", "command_instance_id", "provider_id", "connection_id", "project_id", "prior_connection_generation", "result_connection_generation", "outcome", "connection_state", "availability", "permission_decision_ref", "non_secret_connection_ref", "capability_snapshot_ref", "probe_evidence_ref", "details_projection_ref", "observable_work_ref", "return_settlement", "error", "receipt_ref", "event_effect_policy", "completed_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "integration_connection_command_result"},
+        "result_id": {"$ref": "#/$defs/Id"},
+        "command_id": {"$ref": "#/$defs/IntegrationConnectionCommandId"},
+        "command_instance_id": {"$ref": "#/$defs/Id"},
+        "provider_id": {"$ref": "#/$defs/Id"},
+        "connection_id": {"$ref": "#/$defs/Id"},
+        "project_id": {"$ref": "#/$defs/Id"},
+        "prior_connection_generation": {"type": "integer", "minimum": 0},
+        "result_connection_generation": {"type": "integer", "minimum": 0},
+        "outcome": {"enum": ["succeeded", "failed", "cancelled", "rejected", "recovery_required", "no_effect"]},
+        "connection_state": {"$ref": "#/$defs/ConnectionState"},
+        "availability": {"$ref": "#/$defs/IntegrationConnectionAvailability"},
+        "permission_decision_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "non_secret_connection_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "capability_snapshot_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "probe_evidence_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "details_projection_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "observable_work_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "return_settlement": {"$ref": "#/$defs/ReturnSettlement"},
+        "error": {"anyOf": [{"$ref": "#/$defs/IntegrationConnectionCommandError"}, {"type": "null"}]},
+        "receipt_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "event_effect_policy": {"const": "receipt_only_no_eventrecord_pending_event_authority"},
+        "completed_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"enum": ["failed", "rejected", "recovery_required"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"$ref": "#/$defs/IntegrationConnectionCommandError"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["succeeded", "cancelled", "no_effect"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"type": "null"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.test"}, "outcome": {"const": "succeeded"}}, "required": ["command_id", "outcome"]}, "then": {"properties": {"probe_evidence_ref": {"$ref": "#/$defs/NonSecretRef"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.open_details"}}, "required": ["command_id"]}, "then": {"properties": {"outcome": {"const": "no_effect"}, "details_projection_ref": {"$ref": "#/$defs/NonSecretRef"}, "observable_work_ref": {"type": "null"}}}}
+      ]
+    },
+    "InstallationSelectDisabledReasonCode": {
+      "enum": ["command_not_registered", "handler_unavailable", "installation_missing", "installation_unverified", "installation_ineligible", "installation_conflicted", "installation_generation_stale", "inventory_generation_stale", "topology_generation_stale", "host_environment_mismatch", "provenance_unverified", "compatibility_failed", "permission_required", "permission_denied", "policy_denied", "immutable_image_blocked", "operation_in_progress", "resource_blocked", "recovery_required"]
+    },
+    "InstallationSelectErrorCode": {
+      "enum": ["invalid_request", "not_found", "already_selected", "stale_generation", "identity_mismatch", "unverified", "ineligible", "conflicted", "host_environment_mismatch", "provenance_unverified", "compatibility_failed", "permission_denied", "policy_denied", "activation_failed", "cancelled", "effect_unknown", "recovery_required"]
+    },
+    "InstallationSelectAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "product_id", "installation_id", "execution_host_id", "execution_environment_id", "inventory_generation", "installation_generation", "topology_generation", "state", "disabled_reason", "evaluated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "installation_select_availability"},
+        "command_id": {"const": "cmd.installation.select"},
+        "product_id": {"$ref": "#/$defs/Id"},
+        "installation_id": {"$ref": "#/$defs/Id"},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "inventory_generation": {"type": "integer", "minimum": 0},
+        "installation_generation": {"type": "integer", "minimum": 0},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "state": {"enum": ["available", "unavailable", "busy", "blocked", "recovery_required"]},
+        "disabled_reason": {"anyOf": [{"$ref": "#/$defs/InstallationSelectDisabledReasonCode"}, {"type": "null"}]},
+        "evaluated_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "available"}}, "required": ["state"]}, "then": {"properties": {"disabled_reason": {"type": "null"}}}},
+        {"if": {"properties": {"state": {"enum": ["unavailable", "busy", "blocked", "recovery_required"]}}, "required": ["state"]}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/InstallationSelectDisabledReasonCode"}}}}
+      ]
+    },
+    "InstallationSelectCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "error_code", "retryable", "safe_message", "technical_details_ref", "effect_state"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "installation_select_command_error"},
+        "error_code": {"$ref": "#/$defs/InstallationSelectErrorCode"},
+        "retryable": {"type": "boolean"},
+        "safe_message": {"type": "string", "minLength": 1, "maxLength": 512},
+        "technical_details_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "effect_state": {"enum": ["none", "committed", "rolled_back", "partial", "unknown"]}
+      }
+    },
+    "InstallationSelectCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "command_instance_id", "idempotency_key", "origin", "product_id", "installation_id", "project_id", "route_id", "home_server_id", "execution_host_id", "execution_environment_id", "expected_inventory_generation", "expected_installation_generation", "topology_generation", "verification_proof_ref", "provenance_ref", "compatibility_ref", "permission_snapshot_ref", "observable_work_ref", "continuation_ref", "return_context_ref", "acquisition_allowed", "authentication_allowed"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "installation_select_command_request"},
+        "command_id": {"const": "cmd.installation.select"},
+        "command_instance_id": {"$ref": "#/$defs/Id"},
+        "idempotency_key": {"$ref": "#/$defs/Id"},
+        "origin": {"enum": ["settings_gui", "forge_gui", "cursor_origin_gui", "command_palette", "natural_language_user", "doctor_user_action"]},
+        "product_id": {"$ref": "#/$defs/Id"},
+        "installation_id": {"$ref": "#/$defs/Id"},
+        "project_id": {"$ref": "#/$defs/Id"},
+        "route_id": {"$ref": "#/$defs/Id"},
+        "home_server_id": {"$ref": "#/$defs/Id"},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "expected_inventory_generation": {"type": "integer", "minimum": 0},
+        "expected_installation_generation": {"type": "integer", "minimum": 0},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "verification_proof_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "provenance_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "compatibility_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "observable_work_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "continuation_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "return_context_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "acquisition_allowed": {"const": false},
+        "authentication_allowed": {"const": false}
+      }
+    },
+    "InstallationSelectCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "result_id", "command_id", "command_instance_id", "product_id", "installation_id", "project_id", "execution_host_id", "execution_environment_id", "prior_selected_installation_id", "result_inventory_generation", "result_installation_generation", "outcome", "selection_state", "availability", "permission_decision_ref", "activation_proof_ref", "observable_work_ref", "continuation_ref", "return_settlement", "error", "receipt_ref", "event_effect_policy", "completed_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "installation_select_command_result"},
+        "result_id": {"$ref": "#/$defs/Id"},
+        "command_id": {"const": "cmd.installation.select"},
+        "command_instance_id": {"$ref": "#/$defs/Id"},
+        "product_id": {"$ref": "#/$defs/Id"},
+        "installation_id": {"$ref": "#/$defs/Id"},
+        "project_id": {"$ref": "#/$defs/Id"},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "prior_selected_installation_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "result_inventory_generation": {"type": "integer", "minimum": 0},
+        "result_installation_generation": {"type": "integer", "minimum": 0},
+        "outcome": {"enum": ["succeeded", "failed", "cancelled", "rejected", "recovery_required"]},
+        "selection_state": {"enum": ["selected", "unchanged", "failed", "recovery_required"]},
+        "availability": {"$ref": "#/$defs/InstallationSelectAvailability"},
+        "permission_decision_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "activation_proof_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "observable_work_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "continuation_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "return_settlement": {"$ref": "#/$defs/ReturnSettlement"},
+        "error": {"anyOf": [{"$ref": "#/$defs/InstallationSelectCommandError"}, {"type": "null"}]},
+        "receipt_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "event_effect_policy": {"const": "receipt_only_no_eventrecord_pending_event_authority"},
+        "completed_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"enum": ["failed", "rejected", "recovery_required"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"$ref": "#/$defs/InstallationSelectCommandError"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["succeeded", "cancelled"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"type": "null"}}}}
+        ,{"if": {"properties": {"outcome": {"const": "succeeded"}}, "required": ["outcome"]}, "then": {"properties": {"selection_state": {"const": "selected"}, "activation_proof_ref": {"$ref": "#/$defs/NonSecretRef"}}}}
+      ]
+    },
+    "SharedIntegrationConsumerProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "consumer_binding_id",
+        "consumer_kind",
+        "semantic_owner_ref",
+        "owner_record_ref",
+        "home_server_id",
+        "project_id",
+        "provider_id",
+        "provider_instance_ref",
+        "forge_binding_ref",
+        "automation_binding_ref",
+        "backup_destination_ref",
+        "connector_identity_ref",
+        "connection_profile_ref",
+        "auth_continuation_ref",
+        "expected_owner_generation",
+        "observed_owner_generation",
+        "availability_state",
+        "read_operations_allowed",
+        "mutation_dispatch_allowed",
+        "protected_handoff_required",
+        "human_only_protected_content",
+        "agent_access_to_protected_content",
+        "adapter_access_to_protected_content",
+        "automation_binding_inferred_from_forge_binding",
+        "connector_identity_scope",
+        "shared_runtime_primitives",
+        "unaffected_capability_refs",
+        "event_effect_policy",
+        "runtime_evidence_claimed",
+        "evaluated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "shared_integration_consumer_projection"},
+        "consumer_binding_id": {"$ref": "#/$defs/Id"},
+        "consumer_kind": {
+          "enum": [
+            "forgejo_instance",
+            "gitea_instance",
+            "repository_automation",
+            "backup_destination",
+            "embedded_tsnet_connector"
+          ]
+        },
+        "semantic_owner_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "owner_record_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "home_server_id": {"$ref": "#/$defs/Id"},
+        "project_id": {"anyOf": [{"$ref": "#/$defs/Id"}, {"type": "null"}]},
+        "provider_id": {"anyOf": [{"enum": ["forgejo", "gitea"]}, {"type": "null"}]},
+        "provider_instance_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "forge_binding_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "automation_binding_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "backup_destination_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "connector_identity_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "connection_profile_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "auth_continuation_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "expected_owner_generation": {"type": "integer", "minimum": 0},
+        "observed_owner_generation": {"type": "integer", "minimum": 0},
+        "availability_state": {
+          "enum": [
+            "ready",
+            "read_only",
+            "protected",
+            "handler_unavailable",
+            "auth_required",
+            "permission_denied",
+            "policy_blocked",
+            "temporarily_unavailable",
+            "stale",
+            "unknown"
+          ]
+        },
+        "read_operations_allowed": {"type": "boolean"},
+        "mutation_dispatch_allowed": {"type": "boolean"},
+        "protected_handoff_required": {"type": "boolean"},
+        "human_only_protected_content": {"const": true},
+        "agent_access_to_protected_content": {"const": false},
+        "adapter_access_to_protected_content": {"const": false},
+        "automation_binding_inferred_from_forge_binding": {"const": false},
+        "connector_identity_scope": {"enum": ["not_applicable", "one_connector_identity_per_pm_server"]},
+        "shared_runtime_primitives": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "contains": {"const": "durable_command_outbox"},
+          "allOf": [
+            {"contains": {"const": "runtime_resource_governor"}},
+            {"contains": {"const": "observable_work"}},
+            {"contains": {"const": "lease_coordinator"}},
+            {"contains": {"const": "authentication_profile_and_credential_attachment"}}
+          ],
+          "items": {
+            "enum": [
+              "durable_command_outbox",
+              "runtime_resource_governor",
+              "observable_work",
+              "lease_coordinator",
+              "authentication_profile_and_credential_attachment",
+              "exact_return_continuation"
+            ]
+          }
+        },
+        "unaffected_capability_refs": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/NonSecretRef"}
+        },
+        "event_effect_policy": {"const": "receipt_projection_only_no_unregistered_eventrecord"},
+        "runtime_evidence_claimed": {"const": false},
+        "evaluated_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"consumer_kind": {"const": "forgejo_instance"}}, "required": ["consumer_kind"]},
+          "then": {
+            "properties": {
+              "provider_id": {"const": "forgejo"},
+              "provider_instance_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connection_profile_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connector_identity_scope": {"const": "not_applicable"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"consumer_kind": {"const": "gitea_instance"}}, "required": ["consumer_kind"]},
+          "then": {
+            "properties": {
+              "provider_id": {"const": "gitea"},
+              "provider_instance_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connection_profile_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connector_identity_scope": {"const": "not_applicable"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"consumer_kind": {"const": "repository_automation"}}, "required": ["consumer_kind"]},
+          "then": {
+            "properties": {
+              "automation_binding_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connector_identity_scope": {"const": "not_applicable"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"consumer_kind": {"const": "backup_destination"}}, "required": ["consumer_kind"]},
+          "then": {
+            "properties": {
+              "backup_destination_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connection_profile_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "auth_continuation_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connector_identity_scope": {"const": "not_applicable"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"consumer_kind": {"const": "embedded_tsnet_connector"}}, "required": ["consumer_kind"]},
+          "then": {
+            "properties": {
+              "project_id": {"type": "null"},
+              "provider_id": {"type": "null"},
+              "connector_identity_ref": {"$ref": "#/$defs/NonSecretRef"},
+              "connector_identity_scope": {"const": "one_connector_identity_per_pm_server"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"availability_state": {"enum": ["handler_unavailable", "permission_denied", "policy_blocked", "temporarily_unavailable", "stale", "unknown"]}}, "required": ["availability_state"]},
+          "then": {"properties": {"mutation_dispatch_allowed": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"availability_state": {"const": "read_only"}}, "required": ["availability_state"]},
+          "then": {"properties": {"read_operations_allowed": {"const": true}, "mutation_dispatch_allowed": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"availability_state": {"const": "protected"}}, "required": ["availability_state"]},
+          "then": {
+            "properties": {
+              "protected_handoff_required": {"const": true},
+              "mutation_dispatch_allowed": {"const": false}
+            }
+          }
+        }
+      ]
+    },
+    "IntegrationCredentialCommandRequest": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest"
+    },
+    "IntegrationCredentialCommandResult": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult"
+    },
+    "IntegrationCredentialCommandError": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandError"
+    },
+    "IntegrationCredentialCommandAvailability": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandAvailability"
+    },
+    "IntegrationCredentialCommandDisabledReason": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandDisabledReason"
+    },
+    "IntegrationCredentialPermissionDecision": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialPermissionDecision"
+    },
+    "IntegrationCredentialLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.credential_attachment.open_consumers",
+                "ui.credential_attachment.open_details",
+                "ui.credential_source.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.credential_attachment.open_consumers",
+                "cmd.credential_attachment.open_details",
+                "cmd.credential_source.open_details"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "IntegrationCredentialLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.credential_attachment.open_consumers",
+                "ui.credential_attachment.open_details",
+                "ui.credential_source.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.credential_attachment.open_consumers",
+                "cmd.credential_attachment.open_details",
+                "cmd.credential_source.open_details"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/server_command_gap_adjudication.schema.json",
+  "title": "Server/WAN command gap adjudication registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "generated_at_utc", "claim_boundary", "source", "counts", "by_packet_group", "by_semantic_family", "by_owner", "duplicate_and_semantic_family_analysis", "rows"],
+  "properties": {
+    "schema_id": {"const": "pm.server_wan_backup.command_gap_adjudication.v1"},
+    "generated_at_utc": {"type": "string", "format": "date-time"},
+    "claim_boundary": {"type": "string", "minLength": 200},
+    "source": {"$ref": "#/$defs/source"},
+    "counts": {"$ref": "#/$defs/counts"},
+    "by_packet_group": {"$ref": "#/$defs/by_packet_group"},
+    "by_semantic_family": {"$ref": "#/$defs/by_semantic_family"},
+    "by_owner": {"$ref": "#/$defs/by_owner"},
+    "duplicate_and_semantic_family_analysis": {"$ref": "#/$defs/duplicate_analysis"},
+    "rows": {"type": "array", "minItems": 171, "maxItems": 171, "items": {"$ref": "#/$defs/row"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "non_empty": {"type": "string", "minLength": 1},
+    "command_id": {"type": "string", "pattern": "^cmd(?:\\.[a-z][a-z0-9_]*){2,}$"},
+    "local_action_id": {"type": "string", "pattern": "^ui(?:\\.[a-z][a-z0-9_]*){2,}$"},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["gap_register", "gap_register_sha256", "gap_register_checked_at", "packet_command_census_sha256", "packet_source_rows_verified", "packet_candidate_rule"],
+      "properties": {
+        "gap_register": {"const": "scratchpad/pm-integration-20260831/audits/server-wan-exact-recheck/rerun-20260901T032121Z/canonical-gap-register.json"},
+        "gap_register_sha256": {"const": "e2b7436ae822004909b73be65078556e2a61a5827dc2ffe2e7e404d68df2c1af"},
+        "gap_register_checked_at": {"const": "2026-09-01T03:28:03+00:00"},
+        "packet_command_census_sha256": {"const": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b"},
+        "packet_source_rows_verified": {"const": 171},
+        "packet_candidate_rule": {"const": "Candidate IDs are not automatically canonical; reconcile semantic equivalents and create no parallel private handlers."}
+      }
+    },
+    "disposition_counts": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "approved_alias_to_exact": {"type": "integer", "minimum": 1},
+        "new_canonical_required": {"type": "integer", "minimum": 1},
+        "rejected_with_reason": {"type": "integer", "minimum": 1},
+        "typed_local_ui_action": {"type": "integer", "minimum": 1}
+      },
+      "minProperties": 1
+    },
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_rows", "unique_tokens", "dispositions", "retired_process_only", "reuse_exact_canonical"],
+      "properties": {
+        "input_rows": {"const": 171}, "unique_tokens": {"const": 171},
+        "dispositions": {
+          "type": "object", "additionalProperties": false,
+          "required": ["approved_alias_to_exact", "new_canonical_required", "rejected_with_reason", "typed_local_ui_action"],
+          "properties": {"approved_alias_to_exact": {"const": 43}, "new_canonical_required": {"const": 86}, "rejected_with_reason": {"const": 3}, "typed_local_ui_action": {"const": 39}}
+        },
+        "retired_process_only": {"const": 0}, "reuse_exact_canonical": {"const": 0}
+      }
+    },
+    "by_packet_group": {
+      "type": "object", "additionalProperties": false,
+      "required": ["App/content update", "Authentication/profile/credentials", "Client trust", "Doctor/health", "Execution host/environment", "Goal handoff", "Installation/tool", "Neutral source control accepted additions", "Onboarding navigation only", "Project hosting/source", "Project lifecycle/settings/templates", "Project move", "Puppet Master Remote Link", "Runtime/cluster/registry connections"],
+      "properties": {
+        "App/content update": {"$ref": "#/$defs/disposition_counts"}, "Authentication/profile/credentials": {"$ref": "#/$defs/disposition_counts"}, "Client trust": {"$ref": "#/$defs/disposition_counts"}, "Doctor/health": {"$ref": "#/$defs/disposition_counts"}, "Execution host/environment": {"$ref": "#/$defs/disposition_counts"}, "Goal handoff": {"$ref": "#/$defs/disposition_counts"}, "Installation/tool": {"$ref": "#/$defs/disposition_counts"}, "Neutral source control accepted additions": {"$ref": "#/$defs/disposition_counts"}, "Onboarding navigation only": {"$ref": "#/$defs/disposition_counts"}, "Project hosting/source": {"$ref": "#/$defs/disposition_counts"}, "Project lifecycle/settings/templates": {"$ref": "#/$defs/disposition_counts"}, "Project move": {"$ref": "#/$defs/disposition_counts"}, "Puppet Master Remote Link": {"$ref": "#/$defs/disposition_counts"}, "Runtime/cluster/registry connections": {"$ref": "#/$defs/disposition_counts"}
+      }
+    },
+    "by_semantic_family": {
+      "type": "object", "additionalProperties": false,
+      "required": ["auth_profile", "auth_session", "client", "connection", "credential", "doctor", "execution", "goal", "installation", "onboarding", "project", "project_host", "project_move", "remote", "settings", "source_control", "update_app", "update_content"],
+      "properties": {
+        "auth_profile": {"$ref": "#/$defs/disposition_counts"}, "auth_session": {"$ref": "#/$defs/disposition_counts"}, "client": {"$ref": "#/$defs/disposition_counts"}, "connection": {"$ref": "#/$defs/disposition_counts"}, "credential": {"$ref": "#/$defs/disposition_counts"}, "doctor": {"$ref": "#/$defs/disposition_counts"}, "execution": {"$ref": "#/$defs/disposition_counts"}, "goal": {"$ref": "#/$defs/disposition_counts"}, "installation": {"$ref": "#/$defs/disposition_counts"}, "onboarding": {"$ref": "#/$defs/disposition_counts"}, "project": {"$ref": "#/$defs/disposition_counts"}, "project_host": {"$ref": "#/$defs/disposition_counts"}, "project_move": {"$ref": "#/$defs/disposition_counts"}, "remote": {"$ref": "#/$defs/disposition_counts"}, "settings": {"$ref": "#/$defs/disposition_counts"}, "source_control": {"$ref": "#/$defs/disposition_counts"}, "update_app": {"$ref": "#/$defs/disposition_counts"}, "update_content": {"$ref": "#/$defs/disposition_counts"}
+      }
+    },
+    "by_owner": {
+      "type": "object", "additionalProperties": false,
+      "required": ["Plans/Goal_Runtime_System.md", "Plans/Multi-Account.md", "Plans/Planning_Wizard.md", "Plans/Project_Sync_and_Backbone.md", "Plans/Project_System.md", "Plans/Release_Supply_Chain.md", "Plans/Remote_Access_System.md", "Plans/Server_System.md", "Plans/Settings_System.md", "Plans/Shared_Integration_Runtime.md", "Plans/Source_Control_System.md", "Plans/newtools.md"],
+      "properties": {
+        "Plans/Goal_Runtime_System.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Multi-Account.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Planning_Wizard.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Project_Sync_and_Backbone.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Project_System.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Release_Supply_Chain.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Remote_Access_System.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Server_System.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Settings_System.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Shared_Integration_Runtime.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/Source_Control_System.md": {"$ref": "#/$defs/disposition_counts"}, "Plans/newtools.md": {"$ref": "#/$defs/disposition_counts"}
+      }
+    },
+    "cluster_map": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^(?:cmd|ui)(?:\\.[a-z][a-z0-9_]*){2,}$": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/command_id"}}
+      }
+    },
+    "duplicate_analysis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["exact_duplicate_tokens_in_input", "semantic_duplicate_rows_normalized", "semantic_alias_target_count", "alias_target_clusters", "local_action_target_clusters", "new_distinct_semantics", "rejected_command_shaped_rows", "analysis_rule"],
+      "properties": {
+        "exact_duplicate_tokens_in_input": {"const": 0}, "semantic_duplicate_rows_normalized": {"const": 43}, "semantic_alias_target_count": {"const": 19},
+        "alias_target_clusters": {"$ref": "#/$defs/cluster_map"}, "local_action_target_clusters": {"$ref": "#/$defs/cluster_map"},
+        "new_distinct_semantics": {"const": 86}, "rejected_command_shaped_rows": {"const": 3},
+        "analysis_rule": {"const": "Exact string uniqueness does not imply semantic uniqueness; normalize only where payload/result and owner effects can preserve the source behavior without a second handler."}
+      }
+    },
+    "packet_source_verification": {
+      "type": "object", "additionalProperties": false,
+      "required": ["verified", "logical_path", "line", "line_text", "source_sha256"],
+      "properties": {
+        "verified": {"const": true},
+        "logical_path": {"const": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json"},
+        "line": {"type": "integer", "minimum": 1},
+        "line_text": {"type": "string", "pattern": "^\\\"command_id\\\": \\\"cmd(?:\\.[a-z][a-z0-9_]*){2,}\\\",$"},
+        "source_sha256": {"const": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b"}
+      }
+    },
+    "conflict_evidence": {
+      "type": "object", "additionalProperties": false, "required": ["ref", "note"],
+      "properties": {"ref": {"$ref": "#/$defs/non_empty"}, "note": {"$ref": "#/$defs/non_empty"}}
+    },
+    "row": {
+      "type": "object", "additionalProperties": false,
+      "required": ["row_index", "case_ref", "packet_source_ref", "packet_source_verification", "token", "packet_group", "semantic_family", "packet_candidate_disposition", "intended_semantics", "canonical_owner", "owner_component", "disposition", "disposition_reason", "proposed_exact_target", "alias_registration", "normalization_rule", "proposed_schema", "proposed_sole_handler", "gui_consumers", "availability_until_native_proof", "event_receipt_rule", "conflict_evidence", "source_gap_findings"],
+      "properties": {
+        "row_index": {"type": "integer", "minimum": 1, "maximum": 171},
+        "case_ref": {"type": "string", "pattern": "^server_command_candidates/cmd(?:\\.[a-z][a-z0-9_]*){2,}$"},
+        "packet_source_ref": {"type": "string", "pattern": "^PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/.+/machine/command_census\\.json:[1-9][0-9]*$"},
+        "packet_source_verification": {"$ref": "#/$defs/packet_source_verification"},
+        "token": {"$ref": "#/$defs/command_id"},
+        "packet_group": {"enum": ["App/content update", "Authentication/profile/credentials", "Client trust", "Doctor/health", "Execution host/environment", "Goal handoff", "Installation/tool", "Neutral source control accepted additions", "Onboarding navigation only", "Project hosting/source", "Project lifecycle/settings/templates", "Project move", "Puppet Master Remote Link", "Runtime/cluster/registry connections"]},
+        "semantic_family": {"enum": ["auth_profile", "auth_session", "client", "connection", "credential", "doctor", "execution", "goal", "installation", "onboarding", "project", "project_host", "project_move", "remote", "settings", "source_control", "update_app", "update_content"]},
+        "packet_candidate_disposition": {"enum": ["accepted_addition", "reconcile_or_register"]},
+        "intended_semantics": {"$ref": "#/$defs/non_empty"},
+        "canonical_owner": {"enum": ["Plans/Goal_Runtime_System.md", "Plans/Multi-Account.md", "Plans/Planning_Wizard.md", "Plans/Project_Sync_and_Backbone.md", "Plans/Project_System.md", "Plans/Release_Supply_Chain.md", "Plans/Remote_Access_System.md", "Plans/Server_System.md", "Plans/Settings_System.md", "Plans/Shared_Integration_Runtime.md", "Plans/Source_Control_System.md", "Plans/newtools.md"]},
+        "owner_component": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9]+(?:/[A-Za-z][A-Za-z0-9]+)*$"},
+        "disposition": {"enum": ["approved_alias_to_exact", "new_canonical_required", "rejected_with_reason", "typed_local_ui_action"]},
+        "disposition_reason": {"$ref": "#/$defs/non_empty"},
+        "proposed_exact_target": {"$ref": "#/$defs/non_empty"},
+        "alias_registration": {"type": ["boolean", "null"]},
+        "normalization_rule": {"type": ["string", "null"]},
+        "proposed_schema": {"$ref": "#/$defs/non_empty"},
+        "proposed_sole_handler": {"$ref": "#/$defs/non_empty"},
+        "gui_consumers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_empty"}},
+        "availability_until_native_proof": {"enum": ["handler_unavailable", "inherit exact target", "local action state", "not_actionable", "protected_boundary_unproven"]},
+        "event_receipt_rule": {"enum": ["receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success", "no domain EventRecord; preserve accessibility/currentness/return evidence", "no dispatch or receipt"]},
+        "conflict_evidence": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"$ref": "#/$defs/conflict_evidence"}},
+        "source_gap_findings": {"const": ["command_absent_from_ui_command_catalog", "command_absent_from_commands_system", "command_absent_from_typed_contract_schema", "command_absent_from_production_wiring", "command_absent_from_touch_closure", "native_application_and_handler_evidence_absent"]}
+      },
+      "allOf": [
+        {"if": {"properties": {"disposition": {"const": "approved_alias_to_exact"}}, "required": ["disposition"]}, "then": {"properties": {"proposed_exact_target": {"$ref": "#/$defs/command_id"}, "alias_registration": {"const": false}, "normalization_rule": {"type": "string", "minLength": 1}, "proposed_schema": {"type": "string", "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[A-Za-z0-9_]+(?:\\|[A-Za-z0-9_]+)?(?: \\([^)]*\\))?$"}, "proposed_sole_handler": {"type": "string", "pattern": "^handlers::[a-z0-9_]+::[a-z0-9_]+$"}, "availability_until_native_proof": {"const": "inherit exact target"}, "event_receipt_rule": {"const": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"}}}},
+        {"if": {"properties": {"disposition": {"const": "new_canonical_required"}}, "required": ["disposition"]}, "then": {"properties": {"proposed_exact_target": {"$ref": "#/$defs/command_id"}, "alias_registration": {"type": "null"}, "normalization_rule": {"type": "null"}, "proposed_schema": {"type": "string", "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[A-Za-z0-9_]+\\|[A-Za-z0-9_]+(?: \\([^)]*\\))?$"}, "proposed_sole_handler": {"type": "string", "pattern": "^handlers::[a-z0-9_]+::[a-z0-9_]+$"}, "availability_until_native_proof": {"const": "handler_unavailable"}, "event_receipt_rule": {"const": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"}}}},
+        {"if": {"properties": {"disposition": {"const": "typed_local_ui_action"}}, "required": ["disposition"]}, "then": {"properties": {"proposed_exact_target": {"$ref": "#/$defs/local_action_id"}, "alias_registration": {"type": "null"}, "normalization_rule": {"type": "null"}, "proposed_schema": {"type": "string", "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[A-Za-z0-9_]+\\|[A-Za-z0-9_]+(?: \\([^)]*\\))?$"}, "proposed_sole_handler": {"const": "owner-local typed UI controller; no semantic-domain handler"}, "availability_until_native_proof": {"enum": ["local action state", "protected_boundary_unproven"]}, "event_receipt_rule": {"const": "no domain EventRecord; preserve accessibility/currentness/return evidence"}}}},
+        {"if": {"properties": {"disposition": {"const": "rejected_with_reason"}}, "required": ["disposition"]}, "then": {"properties": {"alias_registration": {"type": "null"}, "normalization_rule": {"type": "null"}, "proposed_schema": {"type": "string", "pattern": "^none; use the exact replacement owner schema named in proposed_exact_target$"}, "proposed_sole_handler": {"const": "none"}, "availability_until_native_proof": {"const": "not_actionable"}, "event_receipt_rule": {"const": "no dispatch or receipt"}}}}
+      ]
+    }
+  }
+}

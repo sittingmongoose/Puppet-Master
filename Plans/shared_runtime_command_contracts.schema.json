@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
   "title": "Puppet Master shared runtime command contracts",
-  "description": "Pre-build typed requests, results, errors, cancellation, and idempotency for the 26 canonical shared-runtime commands plus the retained remote reconnect wrapper. These contracts authorize no EventRecord producer.",
+  "description": "Pre-build typed requests, results, errors, cancellation, and idempotency for the 26 canonical shared-runtime commands plus the retained remote reconnect wrapper. Fixture-only PM7 interaction and Context-compaction trace definitions validate local-preview versus settled-result behavior and authorize no command or EventRecord producer.",
   "oneOf": [
     {"$ref": "#/$defs/environment_connection_command_request"},
     {"$ref": "#/$defs/thread_outbox_retry_request"},
@@ -40,6 +40,23 @@
   ],
   "$defs": {
     "non_empty_string": {"type": "string", "minLength": 1},
+    "home_workspace_layout_event_command_id": {
+      "type": "string",
+      "enum": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.editor.close_panel",
+        "cmd.editor.open_panel",
+        "cmd.file.open",
+        "cmd.panel.switch",
+        "cmd.panel.undock",
+        "cmd.terminal.move_workgroup",
+        "cmd.terminal.split_pane",
+        "cmd.workspace_layout.move_surface",
+        "cmd.workspace_layout.reset",
+        "cmd.workspace_layout.resize_surface",
+        "cmd.workspace_layout.set_collapsed"
+      ]
+    },
     "nullable_non_empty_string": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
     "timestamp": {"type": "string", "format": "date-time"},
     "nullable_timestamp": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
@@ -430,7 +447,12 @@
         {"$ref": "#/$defs/command_request_envelope"},
         {
           "type": "object",
-          "required": ["action", "provider_id", "route_id", "profile_ref", "account_id", "connection_id", "auth_surface", "credential_ref", "authentication_operation_id", "expected_auth_revision", "continuation_ref"],
+          "required": [
+            "action", "provider_id", "route_id", "profile_ref", "account_id", "connection_id",
+            "auth_surface", "credential_ref", "authentication_operation_id", "expected_auth_revision",
+            "continuation_ref", "initiating_client_id", "expected_initiating_client_session_generation",
+            "protected_auth_session_ref", "return_target_ref", "client_handoff_policy"
+          ],
           "properties": {
             "command_id": {"enum": ["cmd.authentication.start", "cmd.authentication.cancel", "cmd.authentication.resume"]},
             "action": {"enum": ["start", "cancel", "resume"]},
@@ -443,12 +465,56 @@
             "credential_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
             "authentication_operation_id": {"$ref": "#/$defs/nullable_non_empty_string"},
             "expected_auth_revision": {"type": ["integer", "null"], "minimum": 0},
-            "continuation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+            "continuation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "initiating_client_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "expected_initiating_client_session_generation": {"type": ["integer", "null"], "minimum": 0},
+            "protected_auth_session_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "return_target_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "client_handoff_policy": {"enum": ["not_applicable", "initiating_active_client_only"]}
           }
         },
         {"if": {"properties": {"command_id": {"const": "cmd.authentication.start"}}}, "then": {"properties": {"action": {"const": "start"}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.authentication.cancel"}}}, "then": {"properties": {"action": {"const": "cancel"}}}},
-        {"if": {"properties": {"command_id": {"const": "cmd.authentication.resume"}}}, "then": {"properties": {"action": {"const": "resume"}}}}
+        {"if": {"properties": {"command_id": {"const": "cmd.authentication.resume"}}}, "then": {"properties": {"action": {"const": "resume"}}}},
+        {
+          "if": {"properties": {"auth_surface": {"const": "protected_auth_browser"}}, "required": ["auth_surface"]},
+          "then": {
+            "properties": {
+              "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "protected_auth_session_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "continuation_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "client_handoff_policy": {"const": "initiating_active_client_only"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"command_id": {"const": "cmd.authentication.cancel"}}, "required": ["command_id"]},
+          "then": {
+            "properties": {
+              "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_auth_revision": {"type": "integer", "minimum": 0},
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"command_id": {"const": "cmd.authentication.resume"}}, "required": ["command_id"]},
+          "then": {
+            "properties": {
+              "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_auth_revision": {"type": "integer", "minimum": 0},
+              "continuation_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"}
+            }
+          }
+        }
       ],
       "unevaluatedProperties": false
     },
@@ -632,7 +698,85 @@
     "authentication_command_result": {
       "allOf": [
         {"$ref": "#/$defs/command_result_envelope"},
-        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "AuthenticationCommandResult"}, "command_id": {"enum": ["cmd.authentication.start", "cmd.authentication.cancel", "cmd.authentication.resume"]}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+        {
+          "type": "object",
+          "required": [
+            "subject_ref", "authentication_operation_id", "auth_revision", "auth_surface",
+            "initiating_client_id", "observed_initiating_client_session_generation", "return_target_ref",
+            "return_fence_state", "authentication_disposition", "content_exposed_to_caller",
+            "caller_navigation_allowed", "content_capture_allowed", "content_recording_allowed",
+            "content_persistence_allowed"
+          ],
+          "properties": {
+            "result_type": {"const": "AuthenticationCommandResult"},
+            "command_id": {"enum": ["cmd.authentication.start", "cmd.authentication.cancel", "cmd.authentication.resume"]},
+            "subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+            "auth_revision": {"type": "integer", "minimum": 0},
+            "auth_surface": {"enum": ["protected_auth_browser", "device_code", "terminal_user_flow", "provider_owned_external"]},
+            "initiating_client_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "observed_initiating_client_session_generation": {"type": ["integer", "null"], "minimum": 0},
+            "return_target_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "return_fence_state": {
+              "enum": [
+                "not_applicable", "pending_exact_operation_and_client", "exact_operation_and_initiating_active_client",
+                "cancelled_without_content_return", "timed_out_without_content_return", "rejected_stale_operation",
+                "rejected_initiating_client", "rejected_client_and_stale_operation"
+              ]
+            },
+            "authentication_disposition": {"enum": ["in_progress", "verified", "cancelled", "timed_out", "failed_closed"]},
+            "content_exposed_to_caller": {"const": false},
+            "caller_navigation_allowed": {"const": false},
+            "content_capture_allowed": {"const": false},
+            "content_recording_allowed": {"const": false},
+            "content_persistence_allowed": {"const": false}
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "auth_surface": {"const": "protected_auth_browser"},
+              "authentication_disposition": {"const": "verified"}
+            },
+            "required": ["auth_surface", "authentication_disposition"]
+          },
+          "then": {
+            "properties": {
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "observed_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "return_fence_state": {"const": "exact_operation_and_initiating_active_client"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"authentication_disposition": {"const": "cancelled"}}, "required": ["authentication_disposition"]},
+          "then": {"properties": {"outcome": {"const": "cancelled"}, "return_fence_state": {"const": "cancelled_without_content_return"}}}
+        },
+        {
+          "if": {"properties": {"authentication_disposition": {"const": "timed_out"}}, "required": ["authentication_disposition"]},
+          "then": {
+            "properties": {
+              "outcome": {"const": "failed"},
+              "return_fence_state": {"const": "timed_out_without_content_return"},
+              "error": {
+                "allOf": [
+                  {"$ref": "#/$defs/command_error"},
+                  {"properties": {"code": {"const": "deadline_expired"}}, "required": ["code"]}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "return_fence_state": {"enum": ["rejected_stale_operation", "rejected_initiating_client", "rejected_client_and_stale_operation"]}
+            },
+            "required": ["return_fence_state"]
+          },
+          "then": {"properties": {"authentication_disposition": {"const": "failed_closed"}}}
+        }
       ],
       "unevaluatedProperties": false
     },
@@ -663,6 +807,677 @@
         {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "BackSeatDriverModeSetResult"}, "command_id": {"const": "cmd.bsd.set"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
       ],
       "unevaluatedProperties": false
+    },
+    "pm7_settled_interaction_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "fixture_id",
+        "surface_kind",
+        "phase",
+        "command_id",
+        "command_dispatch_count",
+        "command_result_count",
+        "receipt_count",
+        "result_outcome",
+        "dispatch_accepted",
+        "event_types",
+        "persistence_write_attempt_count",
+        "persistence_write_count",
+        "settled_state_changed",
+        "preview_frame_count",
+        "rollback_completed",
+        "cleanup_completed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.pm7.settled_interaction_trace.v1"
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "surface_kind": {
+          "enum": [
+            "usage_widget",
+            "home_surface",
+            "dashboard_widget",
+            "shared_assistant",
+            "context_detail"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "preview",
+            "commit",
+            "cancel",
+            "no_change",
+            "owner_rejected",
+            "persistence_adapter_failed"
+          ]
+        },
+        "command_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^cmd\\.widget\\.[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+            },
+            {"$ref": "#/$defs/home_workspace_layout_event_command_id"},
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_dispatch_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "command_result_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "receipt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "result_outcome": {
+          "enum": [
+            "not_dispatched",
+            "accepted",
+            "rejected",
+            "failed"
+          ]
+        },
+        "dispatch_accepted": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "event_types": {
+          "type": "array",
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "persistence_write_attempt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "persistence_write_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "settled_state_changed": {
+          "type": "boolean"
+        },
+        "preview_frame_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rollback_completed": {
+          "type": "boolean"
+        },
+        "cleanup_completed": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "enum": [
+                  "preview",
+                  "cancel",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "type": "null"
+              },
+              "command_dispatch_count": {
+                "const": 0
+              },
+              "command_result_count": {
+                "const": 0
+              },
+              "receipt_count": {
+                "const": 0
+              },
+              "result_outcome": {
+                "const": "not_dispatched"
+              },
+              "dispatch_accepted": {
+                "type": "null"
+              },
+              "event_types": {
+                "maxItems": 0
+              },
+              "persistence_write_attempt_count": {
+                "const": 0
+              },
+              "persistence_write_count": {
+                "const": 0
+              },
+              "settled_state_changed": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "preview"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rollback_completed": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "enum": [
+                  "cancel",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rollback_completed": {
+                "const": true
+              }
+            }
+          }
+        },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "commit"
+          }
+        },
+        "required": [
+          "phase"
+        ]
+      },
+      "then": {
+        "properties": {
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "home_surface",
+              "dashboard_widget"
+            ]
+          },
+          "command_id": {
+            "type": "string"
+              },
+              "command_dispatch_count": {
+                "const": 1
+              },
+          "command_result_count": {
+            "const": 1
+          },
+          "receipt_count": {
+            "const": 1
+          },
+          "result_outcome": {
+            "const": "accepted"
+          },
+          "dispatch_accepted": {
+            "const": true
+          },
+          "persistence_write_attempt_count": {
+            "const": 1
+          },
+          "persistence_write_count": {
+            "const": 1
+          },
+          "settled_state_changed": {
+            "const": true
+          },
+          "rollback_completed": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "owner_rejected"
+          }
+        },
+        "required": [
+          "phase"
+        ]
+      },
+      "then": {
+        "properties": {
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "home_surface",
+              "dashboard_widget"
+            ]
+          },
+          "command_id": {
+            "type": "string"
+          },
+          "command_dispatch_count": {
+            "const": 1
+          },
+          "command_result_count": {
+            "const": 1
+          },
+          "receipt_count": {
+            "const": 1
+          },
+          "result_outcome": {
+            "const": "rejected"
+          },
+          "dispatch_accepted": {
+            "const": false
+          },
+          "event_types": {
+            "maxItems": 0
+          },
+          "persistence_write_attempt_count": {
+            "const": 0
+          },
+          "persistence_write_count": {
+            "const": 0
+          },
+          "settled_state_changed": {
+            "const": false
+          },
+          "rollback_completed": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "persistence_adapter_failed"
+          }
+        },
+        "required": [
+          "phase"
+        ]
+      },
+      "then": {
+        "properties": {
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "home_surface",
+              "dashboard_widget"
+            ]
+          },
+          "command_id": {
+            "type": "string"
+          },
+          "command_dispatch_count": {
+            "const": 1
+          },
+          "command_result_count": {
+            "const": 1
+          },
+          "receipt_count": {
+            "const": 1
+          },
+          "result_outcome": {
+            "const": "failed"
+          },
+          "dispatch_accepted": {
+            "const": true
+          },
+          "event_types": {
+            "maxItems": 0
+          },
+          "persistence_write_attempt_count": {
+            "const": 1
+          },
+          "persistence_write_count": {
+            "const": 0
+          },
+          "settled_state_changed": {
+            "const": false
+          },
+          "rollback_completed": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "commit"
+          },
+          "surface_kind": {
+            "const": "home_surface"
+          }
+        },
+        "required": [
+          "phase",
+          "surface_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "$ref": "#/$defs/home_workspace_layout_event_command_id"
+          },
+          "event_types": {
+            "const": [
+              "workspace.layout_changed"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "commit"
+          },
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "dashboard_widget"
+            ]
+          }
+        },
+        "required": [
+          "phase",
+          "surface_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "pattern": "^cmd\\.widget\\."
+          },
+          "event_types": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+      ]
+    },
+    "ExecutionTopologyCommandRequest": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest"
+    },
+    "ExecutionTopologyCommandResult": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult"
+    },
+    "ExecutionTopologyCommandError": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandError"
+    },
+    "ExecutionTopologyCommandAvailability": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandAvailability"
+    },
+    "ExecutionTopologyCommandDisabledReason": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandDisabledReason"
+    },
+    "ExecutionTopologyPermissionDecision": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyPermissionDecision"
+    },
+    "ProjectTopologyCommandRequest": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest"
+    },
+    "ProjectTopologyCommandResult": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult"
+    },
+    "ProjectTopologyCommandError": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandError"
+    },
+    "ProjectTopologyCommandAvailability": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandAvailability"
+    },
+    "ProjectTopologyCommandDisabledReason": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandDisabledReason"
+    },
+    "ProjectTopologyPermissionDecision": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyPermissionDecision"
+    },
+    "ExecutionTopologyLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.execution_environment.open_details",
+                "ui.execution_environment.open_logs",
+                "ui.execution_host.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.execution_environment.open_details",
+                "cmd.execution_environment.open_logs",
+                "cmd.execution_host.open_details"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionTopologyLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.execution_environment.open_details",
+                "ui.execution_environment.open_logs",
+                "ui.execution_host.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.execution_environment.open_details",
+                "cmd.execution_environment.open_logs",
+                "cmd.execution_host.open_details"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ProjectTopologyLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "const": "ui.project.source_location.open_details"
+            },
+            "packet_token": {
+              "const": "cmd.project.source_location.open_details"
+            }
+          }
+        }
+      ]
+    },
+    "ProjectTopologyLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "const": "ui.project.source_location.open_details"
+            },
+            "packet_token": {
+              "const": "cmd.project.source_location.open_details"
+            }
+          }
+        }
+      ]
+    },
+    "InstallationLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.installation.open_details",
+                "ui.installation.open_logs",
+                "ui.tool_package.open_provenance",
+                "ui.tool_package.review_license"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.installation.open_details",
+                "cmd.installation.open_logs",
+                "cmd.tool_package.open_provenance",
+                "cmd.tool_package.review_license"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "InstallationLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.installation.open_details",
+                "ui.installation.open_logs",
+                "ui.tool_package.open_provenance",
+                "ui.tool_package.review_license"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.installation.open_details",
+                "cmd.installation.open_logs",
+                "cmd.tool_package.open_provenance",
+                "cmd.tool_package.review_license"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "pm7_context_compaction_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "fixture_id",
+        "command_id",
+        "outcome",
+        "command_result_count",
+        "receipt_count",
+        "event_types",
+        "context_revision_before",
+        "context_revision_after",
+        "compaction_history_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.pm7.context_compaction_trace.v1"
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.compact_context"
+        },
+        "outcome": {
+          "enum": [
+            "started",
+            "already_running",
+            "cancelled",
+            "no_op",
+            "degraded",
+            "unavailable",
+            "retry_scheduled",
+            "completed",
+            "failed"
+          ]
+        },
+        "command_result_count": {
+          "const": 1
+        },
+        "receipt_count": {
+          "const": 1
+        },
+        "event_types": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "context_revision_before": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "context_revision_after": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "compaction_history_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      }
     }
   }
 }

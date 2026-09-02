@@ -153,10 +153,10 @@ await page.evaluate(() => window.PM56_DEMO.selectThread('route'));
 await page.waitForTimeout(200);
 const routeMeta = await page.evaluate(() => {
   const rows = [...document.querySelectorAll('.message .message-meta')].map(e => ({
-    text: e.innerText.replace(/\n/g, ' | '),
-    model: e.querySelector('[data-model]')?.innerText || null,
-    provider: e.querySelector('[data-provider]')?.innerText || null,
-    time: e.querySelector('.meta-time')?.innerText || null
+    text: e.textContent.replace(/\n/g, ' | '),
+    model: e.querySelector('[data-model]')?.textContent?.trim() || null,
+    provider: e.querySelector('[data-provider]')?.textContent?.trim() || null,
+    time: e.querySelector('.meta-time')?.textContent?.trim() || null
   }));
   return {
     rows,
@@ -183,8 +183,8 @@ const allPairs = await page.evaluate(async () => {
     window.PM56_DEMO.selectThread(t.id);
     await new Promise(r => setTimeout(r, 0));
     document.querySelectorAll('.message .message-meta').forEach(e => {
-      const p = e.querySelector('[data-provider]')?.innerText;
-      const m = e.querySelector('[data-model]')?.innerText;
+      const p = e.querySelector('[data-provider]')?.textContent?.trim();
+      const m = e.querySelector('[data-model]')?.textContent?.trim();
       if (p && m) seen.add(p + '/' + m);
     });
   }
@@ -216,7 +216,7 @@ const chipVsPanel = await page.evaluate(() => {
     panel.querySelectorAll('.detail-kv').forEach(kv => {
       if (kv.querySelector('label')?.textContent === 'Model') panelModel = kv.querySelector('strong').textContent;
     });
-    rows.push({ chip: chip.innerText.trim(), panel: panelModel, agree: chip.innerText.trim() === panelModel });
+    rows.push({ chip: chip.textContent.trim(), panel: panelModel, agree: chip.textContent.trim() === panelModel });
   });
   return rows;
 });
@@ -248,13 +248,80 @@ ok('message actions are PRESENT on hover (owns its own centre)', hovHit.owns, ho
 ok('message actions PAINT on hover (crop gains colours)',
   hovCrop.distinct > restCrop.distinct + 4, { rest: restCrop.distinct, hover: hovCrop.distinct });
 
-/* the meta row, by contrast, must paint AT REST */
+/* the meta row is hover-gated like the action buttons */
 await page.mouse.move(5, 5); await page.waitForTimeout(300);
-const metaRect = await rectOf(page, '.message-assistant .message-meta');
-const metaCrop = await crop(page, metaRect);
-const metaHit = await ownsCentre(page, '.message-assistant .message-meta .meta-model');
-ok('the meta row PAINTS AT REST (not swept up in the hover gate)',
-  metaCrop.distinct > 8 && metaHit.owns, { distinct: metaCrop.distinct, owns: metaHit.owns });
+const metaRestHit = await ownsCentre(page, '.message-assistant .message-meta .meta-model');
+const metaRestCrop = await crop(page, await rectOf(page, '.message-assistant .message-meta'));
+await page.hover('.message-assistant .message-body');
+await page.waitForTimeout(350);
+const metaHovHit = await ownsCentre(page, '.message-assistant .message-meta .meta-model');
+const metaHovCrop = await crop(page, await rectOf(page, '.message-assistant .message-meta'));
+ok('the meta row is ABSENT at rest (does not own its own centre)',
+  metaRestHit.found && !metaRestHit.owns, metaRestHit);
+ok('the meta row PAINTS on hover',
+  metaHovHit.owns && metaHovCrop.distinct > metaRestCrop.distinct + 4,
+  { restDistinct: metaRestCrop.distinct, hoverDistinct: metaHovCrop.distinct, owns: metaHovHit.owns });
+
+await page.hover('.message-assistant .message-body');
+await page.waitForTimeout(200);
+await page.mouse.move(5, 5);
+await page.waitForTimeout(100);
+const dwellStill = await ownsCentre(page, copySel);
+ok('chrome still visible ~100ms after pointer leaves (hide dwell)',
+  dwellStill.owns, dwellStill);
+await page.waitForTimeout(400);
+const dwellGone = await ownsCentre(page, copySel);
+ok('chrome hides after dwell delay',
+  dwellGone.found && !dwellGone.owns, dwellGone);
+
+const noReanswer = await page.evaluate(() => !document.querySelector('[data-action="reanswer-message"]'));
+ok('Re-answer row action is removed', noReanswer, null);
+const noYouChip = await page.evaluate(() => {
+  return ![...document.querySelectorAll('.message-user .meta-quiet')].some(e => e.textContent.trim() === 'You');
+});
+ok('user turns do not show a "You" meta chip', noYouChip, null);
+const copyIconOnly = await page.evaluate(() => {
+  const b = document.querySelector('.message-assistant [data-action="copy-message"]');
+  const span = b?.querySelector('span');
+  return b && b.classList.contains('icon-only') && span && getComputedStyle(span).display === 'none';
+});
+ok('Copy is icon-only with aria-label preserved',
+  copyIconOnly && await page.evaluate(() => {
+    const b = document.querySelector('.message-assistant [data-action="copy-message"]');
+    return b && b.getAttribute('aria-label')?.includes('Copy');
+  }), null);
+
+/* copy flash: check icon + is-copied, then reverts */
+await page.hover('.message-assistant .message-body');
+await page.waitForTimeout(300);
+await page.click('.message-assistant [data-action="copy-message"]');
+await page.waitForTimeout(100);
+const copyFlash = await page.evaluate(() => {
+  const b = document.querySelector('.message-assistant [data-action="copy-message"]');
+  return {
+    copied: b?.classList.contains('is-copied'),
+    label: b?.getAttribute('aria-label'),
+    hasCheck: !!b?.querySelector('svg path[d="m5 12 4 4L19 6"]')
+  };
+});
+ok('Copy swaps to a checkmark with is-copied after click',
+  copyFlash.copied && copyFlash.hasCheck && copyFlash.label === 'Copied', copyFlash);
+await page.mouse.move(5, 5);
+await page.waitForTimeout(450);
+const chromeAfterCopyClick = await ownsCentre(page, copySel);
+ok('chrome hides after copy click when pointer leaves (no focus-within stickiness)',
+  chromeAfterCopyClick.found && !chromeAfterCopyClick.owns, chromeAfterCopyClick);
+await page.waitForTimeout(1300);
+const copyReverted = await page.evaluate(() => {
+  const b = document.querySelector('.message-assistant [data-action="copy-message"]');
+  return {
+    copied: b?.classList.contains('is-copied'),
+    label: b?.getAttribute('aria-label'),
+    hasCopy: !!b?.querySelector('svg rect[x="8"][y="8"]')
+  };
+});
+ok('Copy icon reverts after ~1.2s flash',
+  !copyReverted.copied && copyReverted.hasCopy && copyReverted.label?.includes('Copy'), copyReverted);
 
 /* --- 8.5 exactly one Edit per thread ---------------------------------- */
 const editCounts = await page.evaluate(async () => {
@@ -376,19 +443,24 @@ for (const take of TAKES) {
   const r = await page.evaluate(() => {
     const metas = [...document.querySelectorAll('.message .message-meta')];
     const painted = metas.filter(e => e.getBoundingClientRect().height > 0).length;
-    const models = [...new Set(metas.map(e => e.querySelector('[data-model]')?.innerText).filter(Boolean))];
+    const models = [...new Set(metas.map(e => e.querySelector('[data-model]')?.textContent?.trim()).filter(Boolean))];
     return { metas: metas.length, painted, models: models.length, hOverflow: document.body.scrollWidth - document.body.clientWidth };
   });
   takeRows.push({ take, ...r });
 }
-ok(`meta row renders and paints in takes ${TAKES.join('/')}`,
-  takeRows.every(r => r.metas > 0 && r.painted === r.metas && r.models === 2 && r.hOverflow <= 0), takeRows);
+ok(`meta row renders in takes ${TAKES.join('/')}`,
+  takeRows.every(r => r.metas > 0 && r.models === 2 && r.hOverflow <= 0), takeRows);
 await page.evaluate(() => window.PM56_DEMO.setVariant(5, 0));
 
 /* ===================================================================== */
 /* ITEM 9 — Context Lens selection                                       */
 /* ===================================================================== */
 const L = (fn, ...a) => page.evaluate(fn, ...a);
+
+async function openLensMenu() {
+  await page.click('[data-action="lens-open"]');
+  await page.waitForTimeout(280);
+}
 
 async function lensReset() {
   await page.evaluate(() => {
@@ -400,7 +472,7 @@ async function lensReset() {
 
 /* --- 9.1 the four canonical modes, and only those --------------------- */
 await lensReset();
-await page.click('.pm-lens-trigger');
+await openLensMenu();
 await page.waitForTimeout(300);
 const modeMenu = await L(() => {
   const items = [...document.querySelectorAll('.overlay-menu .lens-mode-item')];
@@ -502,7 +574,7 @@ ok('selection adds an OUTLINE and no left-edge accent bar (packet rule)',
 /* --- 9.4 Focus applies immediately too, and elevates ------------------ */
 await lensReset();
 await L(() => { window.PM56_DEMO.selectThread('plain'); });
-await page.click('.pm-lens-trigger'); await page.waitForTimeout(250);
+await openLensMenu(); await page.waitForTimeout(250);
 await page.click('.lens-mode-item[data-value="focus"]'); await page.waitForTimeout(250);
 await page.keyboard.press('Escape'); await page.waitForTimeout(200);
 await page.click('.pm-lens-check'); await page.waitForTimeout(350);
@@ -517,7 +589,7 @@ ok('Focus applies IMMEDIATELY and elevates the turn',
 
 /* --- 9.5 Subcompact requires an explicit Apply ------------------------ */
 await lensReset();
-await page.click('.pm-lens-trigger'); await page.waitForTimeout(250);
+await openLensMenu(); await page.waitForTimeout(250);
 await page.click('.lens-mode-item[data-value="subcompact"]'); await page.waitForTimeout(250);
 await page.keyboard.press('Escape'); await page.waitForTimeout(200);
 const boxes = await page.$$('.pm-lens-check');
@@ -533,7 +605,7 @@ const beforeApply = await L(() => {
 ok('Subcompact does NOT apply on toggle (3 selected, 0 operations, 0 summary cards)',
   beforeApply.sel === 3 && beforeApply.ops === 0 && beforeApply.cards === 0 && beforeApply.hidden === 0, beforeApply);
 
-await page.click('.pm-lens-trigger'); await page.waitForTimeout(250);
+await openLensMenu(); await page.waitForTimeout(250);
 await page.click('[data-action="lens-apply"]'); await page.waitForTimeout(400);
 await page.keyboard.press('Escape'); await page.waitForTimeout(250);
 const afterApply = await L(() => {
@@ -570,7 +642,7 @@ ok('Rehydrate restores the source messages and marks them `source`, not plain',
 
 /* --- 9.6 the 25 cap, refused at 26, accumulating across operations ---- */
 await lensReset();
-await page.click('.pm-lens-trigger'); await page.waitForTimeout(250);
+await openLensMenu(); await page.waitForTimeout(250);
 await page.click('.lens-mode-item[data-value="mute"]'); await page.waitForTimeout(250);
 await page.keyboard.press('Escape'); await page.waitForTimeout(200);
 const capRun = await L(async () => {
@@ -593,8 +665,10 @@ const toastText = await L(() => [...document.querySelectorAll('.toast')].map(t =
 ok('the refusal explains the cap is PER OPERATION and offers the way forward',
   /per operation/i.test(toastText) && /seal/i.test(toastText), { toastText });
 
-await page.click('.pm-lens-trigger'); await page.waitForTimeout(250);
+await openLensMenu(); await page.waitForTimeout(250);
 await page.click('[data-action="lens-seal"]'); await page.waitForTimeout(350);
+await openLensMenu(); await page.waitForTimeout(250);
+await page.click('.lens-mode-item[data-value="mute"]'); await page.waitForTimeout(250);
 await page.keyboard.press('Escape'); await page.waitForTimeout(200);
 const accum = await L(async () => {
   const tid = 'plain';
@@ -657,7 +731,7 @@ ok('effective assembly EXCLUDES muted, PROTECTS focused, and canonical history k
   { canonical: eff.canonical, base: eff.base, ...effMixed });
 
 /* --- 9.8 Turn Off clears selection state ------------------------------ */
-await page.click('.pm-lens-trigger'); await page.waitForTimeout(250);
+await openLensMenu(); await page.waitForTimeout(250);
 await page.click('.lens-mode-item[data-value="off"]'); await page.waitForTimeout(400);
 await page.keyboard.press('Escape'); await page.waitForTimeout(300);
 const off = await L(() => {
@@ -677,7 +751,7 @@ ok('Turn Off exits selection mode, clears selection state and restores every tur
 
 /* --- 9.9 the affordance is stable across the 2s work tick ------------- */
 await lensReset();
-await page.click('.pm-lens-trigger'); await page.waitForTimeout(250);
+await openLensMenu(); await page.waitForTimeout(250);
 await page.click('.lens-mode-item[data-value="mute"]'); await page.waitForTimeout(250);
 await page.keyboard.press('Escape'); await page.waitForTimeout(200);
 /* NOT an attribute probe: pmSyncAttrs() removes any attribute absent from the
@@ -741,12 +815,175 @@ ok('the messageOverflow row renders a More button and opens a real panel',
   ofCrop.distinct > 8, { ...overflow, ...overflowOpen, distinct: ofCrop.distinct });
 ok('the overflow affordance is ABSENT, not empty, when no module registers an item',
   overflow.emptyBehaviour === 0, { withNoItems: overflow.emptyBehaviour });
+await page.mouse.move(5, 5);
+await page.waitForTimeout(350);
+const overflowSticky = await page.evaluate(() => ({
+  panel: !!document.querySelector('.message-assistant .pm-msg-overflow'),
+  expanded: document.querySelector('.message-assistant .pm-msg-more')?.getAttribute('aria-expanded'),
+  chromeVisible: (() => {
+    const c = document.querySelector('.message-assistant .message-chrome');
+    if (!c) return false;
+    const s = getComputedStyle(c);
+    return s.visibility !== 'hidden' && parseFloat(s.opacity) > 0.5;
+  })()
+}));
+ok('overflow panel stays open and chrome stays visible when pointer leaves',
+  overflowSticky.panel && overflowSticky.expanded === 'true' && overflowSticky.chromeVisible, overflowSticky);
+const overflowLayout = await page.evaluate(() => {
+  const msg = document.querySelector('.message-assistant');
+  const meta = msg?.querySelector('.message-meta')?.getBoundingClientRect();
+  const acts = msg?.querySelector('.message-actions')?.getBoundingClientRect();
+  const panel = msg?.querySelector('.pm-msg-overflow');
+  const pr = panel?.getBoundingClientRect();
+  return {
+    metaTop: meta?.top, metaBottom: meta?.bottom,
+    actTop: acts?.top, actBottom: acts?.bottom,
+    panelTop: pr?.top,
+    sibling: !!(panel && panel.parentElement?.classList.contains('message-chrome'))
+  };
+});
+ok('overflow stacks meta, toolbar, then panel as sibling rows',
+  overflowLayout.sibling &&
+  overflowLayout.metaBottom <= overflowLayout.actTop + 2 &&
+  overflowLayout.actBottom <= overflowLayout.panelTop + 2, overflowLayout);
+await page.click('.message-assistant .pm-msg-more');
+await page.waitForTimeout(350);
+await page.hover('.message-assistant .message-body');
+await page.waitForTimeout(300);
+await page.click('.message-assistant [data-action="message-details"]');
+await page.mouse.move(5, 5);
+await page.waitForTimeout(450);
+const chromeAfterDetails = await ownsCentre(page, '.message-assistant .message-meta .meta-model');
+ok('chrome hides after details click when pointer leaves (unless overflow open)',
+  chromeAfterDetails.found && !chromeAfterDetails.owns, chromeAfterDetails);
+
+/* active history row: one-line title + visible summary */
+await page.evaluate(() => {
+  window.PM56_DEMO.selectThread('visuals');
+  window.PM56_DEMO.setVariant(1, 5);
+});
+await page.waitForTimeout(300);
+const historyTitle = await page.evaluate(() => {
+  const row = document.querySelector('.history-flyout .thread-row.active, .history-panel .thread-row.active');
+  const name = row?.querySelector('.thread-name');
+  const sub = row?.querySelector('.thread-sub');
+  const rect = name?.getBoundingClientRect();
+  return {
+    title: name?.textContent?.trim(),
+    height: rect?.height || 0,
+    subHidden: sub ? getComputedStyle(sub).display === 'none' : null,
+    whiteSpace: name ? getComputedStyle(name).whiteSpace : null,
+    titleWhiteSpace: row?.querySelector('.thread-title') ? getComputedStyle(row.querySelector('.thread-title')).whiteSpace : null
+  };
+});
+ok('active history row keeps one-line title and visible summary',
+  historyTitle.title?.includes('Inline Visualizer Gallery') &&
+  historyTitle.height > 0 && historyTitle.subHidden === false &&
+  (historyTitle.whiteSpace === 'nowrap' || historyTitle.titleWhiteSpace === 'nowrap'), historyTitle);
+await page.evaluate(() => window.PM56_DEMO.selectThread('query'));
+
+/* --- scroll-to-bottom jump control ------------------------------------ */
+await page.evaluate(() => {
+  window.PM56_DEMO.selectThread('query');
+  window.PM56_DEMO.pauseWorking();
+});
+await page.waitForTimeout(300);
+const jumpAtBottom = await page.evaluate(() => {
+  const tr = document.querySelector('[data-scroll-key="transcript"]');
+  if (tr) {
+    tr.style.scrollBehavior = 'auto';
+    tr.scrollTo({ top: tr.scrollHeight, behavior: 'instant' });
+    tr.dispatchEvent(new Event('scroll'));
+  }
+  const btn = document.querySelector('.jump-bottom');
+  return {
+    overflow: tr ? tr.scrollHeight - tr.clientHeight : 0,
+    visible: !!(btn && btn.classList.contains('is-visible')),
+    found: !!btn
+  };
+});
+ok('jump-bottom exists and is hidden when the transcript is at the bottom',
+  jumpAtBottom.found && jumpAtBottom.overflow > 24 && !jumpAtBottom.visible, jumpAtBottom);
+
+await page.evaluate(() => {
+  const tr = document.querySelector('[data-scroll-key="transcript"]');
+  if (!tr) return;
+  tr.style.scrollBehavior = 'auto';
+  tr.scrollTo({ top: 0, behavior: 'instant' });
+  tr.dispatchEvent(new Event('scroll'));
+});
+await page.waitForFunction(() => {
+  const btn = document.querySelector('.jump-bottom');
+  return !!(btn && btn.classList.contains('is-visible'));
+}, null, { timeout: 2000 });
+const jumpScrolled = await page.evaluate(() => {
+  const btn = document.querySelector('.jump-bottom');
+  const r = btn ? btn.getBoundingClientRect() : null;
+  const hit = r ? document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) : null;
+  return {
+    visible: !!(btn && btn.classList.contains('is-visible')),
+    owns: !!(hit && btn && (hit === btn || btn.contains(hit))),
+    w: r && r.width, h: r && r.height
+  };
+});
+ok('jump-bottom appears and owns its centre after scrolling up',
+  jumpScrolled.visible && jumpScrolled.owns && jumpScrolled.w >= 28 && jumpScrolled.h >= 28, jumpScrolled);
+const jumpRect = await rectOf(page, '.jump-bottom');
+const jumpCrop = await crop(page, jumpRect);
+ok('jump-bottom paints when visible', jumpCrop.distinct > 4, { distinct: jumpCrop.distinct });
+
+await page.click('.jump-bottom');
+await page.waitForTimeout(1700);
+const jumpAfterClick = await page.evaluate(() => {
+  const tr = document.querySelector('[data-scroll-key="transcript"]');
+  const btn = document.querySelector('.jump-bottom');
+  const remain = tr ? tr.scrollHeight - tr.clientHeight - tr.scrollTop : 999;
+  return { remain, visible: !!(btn && btn.classList.contains('is-visible')) };
+});
+ok('clicking jump-bottom scrolls to the end and hides the control',
+  jumpAfterClick.remain <= 24 && !jumpAfterClick.visible, jumpAfterClick);
+
+await page.evaluate(() => window.PM56_DEMO.startWorking());
+await page.waitForTimeout(200);
+await page.evaluate(() => {
+  const tr = document.querySelector('[data-scroll-key="transcript"]');
+  if (tr) {
+    tr.style.scrollBehavior = 'auto';
+    tr.scrollTo({ top: 0, behavior: 'instant' });
+    tr.dispatchEvent(new Event('scroll'));
+  }
+});
+await page.waitForTimeout(200);
+const jumpWorking = await page.evaluate(() => {
+  const btn = document.querySelector('.jump-bottom');
+  const svg = btn && btn.querySelector('svg');
+  const anim = svg ? getComputedStyle(svg).animationName : '';
+  return {
+    visible: !!(btn && btn.classList.contains('is-visible')),
+    working: !!(btn && btn.classList.contains('is-working')),
+    anim
+  };
+});
+ok('jump-bottom is working-styled while the agent is running and the reader is scrolled up',
+  jumpWorking.visible && jumpWorking.working, jumpWorking);
+if (REDUCED) {
+  ok('reduced motion: jump-bottom working has no chevron animation',
+    !jumpWorking.anim || jumpWorking.anim === 'none', jumpWorking);
+}
+await page.evaluate(() => window.PM56_DEMO.pauseWorking());
 
 /* --- 9.11 lens works across takes ------------------------------------- */
 const lensTakes = [];
 for (const take of TAKES) {
-  await page.evaluate((t) => window.PM56_DEMO.setVariant(5, t), take);
+  await lensReset();
+  await page.evaluate((t) => { window.PM56_DEMO.setVariant(5, t); window.PM56_DEMO.selectThread('plain'); }, take);
   await page.waitForTimeout(250);
+  await openLensMenu();
+  await page.click('.lens-mode-item[data-value="mute"]');
+  await page.waitForTimeout(200);
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(200);
+  await bringIntoView(page, '.pm-lens-check');
   const r = await page.evaluate(() => {
     const c = document.querySelector('.pm-lens-check');
     const rect = c ? c.getBoundingClientRect() : null;

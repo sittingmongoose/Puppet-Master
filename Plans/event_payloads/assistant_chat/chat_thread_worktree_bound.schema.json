@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.assistant_chat_event.chat_thread_worktree_bound.schema.v1",
+  "$comment": "Static field-shape materialization only. This schema grants no registry admission, EventRecord append or dispatch authority, persistence binding, checkpoint advance, replay certification, or executable-depth credit.",
+  "title": "chat.thread_worktree_bound payload",
+  "description": "Closed payload for a successfully materialized one-thread-to-one-worktree binding. Large evidence is reference-only; branch and relative path display fields are bounded and credential-free by shape.",
+  "x-event-type": "chat.thread_worktree_bound",
+  "x-family-id": "event-family-chat-thread-worktree-bound",
+  "x-family-revision": "1.0.0-proposed",
+  "x-scope-policy": "project_only",
+  "x-retention-policy-proposal": "RP-AUTHORITY-INDEFINITE",
+  "x-source-row-id": "ea-successor-row-173ce60ef395427f43ea",
+  "x-source-open-index": 28,
+  "x-owner-evidence-lines": [2942, 2946, 2962, 2966, 2980, 3007],
+  "x-event-append-authorized": false,
+  "x-event-dispatch-authorized": false,
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "thread_id",
+    "thread_revision",
+    "actor_ref",
+    "worktree_id",
+    "branch_name",
+    "worktree_path",
+    "binding_origin",
+    "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.assistant_chat_event.chat_thread_worktree_bound.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/stable_id"},
+    "thread_id": {"$ref": "#/$defs/thread_id"},
+    "thread_revision": {"$ref": "#/$defs/thread_revision"},
+    "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "reason_code": {"$ref": "#/$defs/reason_code"},
+    "worktree_id": {"$ref": "#/$defs/worktree_id"},
+    "repo_id": {"$ref": "#/$defs/stable_id"},
+    "branch_name": {"$ref": "#/$defs/branch_name"},
+    "worktree_path": {"$ref": "#/$defs/relative_path"},
+    "binding_origin": {
+      "type": "string",
+      "enum": ["manual", "auto_create"]
+    },
+    "path_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "branch_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "ts": {"$ref": "#/$defs/utc_timestamp"}
+  },
+  "$defs": {
+    "stable_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "thread_id": {"type": "string", "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$"},
+    "thread_revision": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "worktree_id": {"type": "string", "minLength": 3, "maxLength": 320, "pattern": "^(?:wt-[A-Za-z0-9][A-Za-z0-9._-]*|worktree::[A-Za-z0-9][A-Za-z0-9._:-]*)$"},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "branch_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+      "allOf": [
+        {"not": {"pattern": "(?:\\.\\.|//|@\\{|[~^:?*\\[\\]\\\\\\s])"}},
+        {"not": {"pattern": "[./]$"}}
+      ]
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\u0000-\\u001F\\u007F]+$"
+    },
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "utc_timestamp": {"type": "string", "format": "date-time", "maxLength": 35, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z$"}
+  }
+}

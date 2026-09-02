@@ -1,0 +1,53 @@
+{
+  "batch_count": 8,
+  "batch_size": 10,
+  "batch_status": "pass",
+  "canonical_plan_docs_modified": false,
+  "conversion_performed": false,
+  "coverage_disposition_type_counts": {
+    "already_standardized_existing_planunits": 9943
+  },
+  "coverage_rows": 9943,
+  "coverage_status_counts": {
+    "already_standardized_existing_planunits": 9943
+  },
+  "doc_count": 74,
+  "docs_still_source_preserving_count": 0,
+  "expected_doc_count": 74,
+  "generated_at_utc": "2026-08-29T23:46:47Z",
+  "governance_seal_required": true,
+  "historical_artifacts_modified": false,
+  "implementation_files_created": false,
+  "lineage_status": "current_complete_snapshot_supersedes_declared_historical_scope_without_rewriting_history",
+  "live_plan_unit_count": 5912,
+  "next_batch_cursor": null,
+  "next_cursor": null,
+  "no_executable_build_tasks_created": true,
+  "no_final_node_queues_created": true,
+  "no_worknodes_created": true,
+  "nodeseed_candidates_created": false,
+  "notes": [
+    "This COMPLETE status applies only to exact current Plans/*.md snapshot and existing same-document PlanUnit coverage.",
+    "No new conversion, product implementation, runtime verification, readiness, or production certification is claimed."
+  ],
+  "pilot_status": "pass",
+  "plans_manifest_sha256": "7254bdd0cc5b22fc095af3fe9e456588502163afb892e4b269c9903acbcd396b",
+  "pre_conversion_preserved_in_place_rows": 0,
+  "production_build_tasks_created": false,
+  "residual_source_preserving_plan_units": [],
+  "run_id": "pds-20260829-007-current-planunit-snapshot",
+  "schema_id": "pm.plan_migration.current_snapshot_final_summary.v1",
+  "shard_check_status": "not_asserted_by_snapshot",
+  "snapshot_mode": "current_planunit_state_snapshot",
+  "snapshot_operation": "verification_only_no_conversion",
+  "snapshot_status": "complete_current_bytes_and_existing_planunits",
+  "source_lineage_residual_plan_units": [],
+  "source_preserving_unit_count_after_batch": 0,
+  "standard_run_gates_status": "not_asserted_by_snapshot",
+  "status": "COMPLETE",
+  "supersedes_run_ids": [
+    "pds-20260829-006-current-planunit-snapshot"
+  ],
+  "unique_live_plan_unit_count": 5912,
+  "vague_pre_conversion_rows": 0
+}

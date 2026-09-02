@@ -1,0 +1,2969 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/project_sync_backbone.schema.json",
+  "title": "Project Sync and Backbone command and local-action contracts",
+  "description": "Closed DRY Project Move and PM content-update request/result/error/availability/disabled/permission/local-action families. Static owner contract only.",
+  "x-schema-id": "pm.project_sync_backbone.contracts.v1",
+  "x-command-count": 11,
+  "x-command-ids": [
+    "cmd.project.move.cancel",
+    "cmd.project.move.pause",
+    "cmd.project.move.preflight",
+    "cmd.project.move.resume",
+    "cmd.project.move.retry",
+    "cmd.project.move.rollback",
+    "cmd.project.move.start",
+    "cmd.update.content.activate",
+    "cmd.update.content.check",
+    "cmd.update.content.download",
+    "cmd.update.content.rollback"
+  ],
+  "x-local-action-count": 2,
+  "x-local-action-ids": [
+    "ui.project.move.open_details",
+    "ui.update.content.open_details"
+  ],
+  "x-family-contracts": {
+    "project_move": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "local_request_ref": "#/$defs/ProjectMoveLocalActionRequest",
+      "local_result_ref": "#/$defs/ProjectMoveLocalActionResult"
+    },
+    "content_update": {
+      "request_ref": "#/$defs/ContentUpdateCommandRequest",
+      "result_ref": "#/$defs/ContentUpdateCommandResult",
+      "error_ref": "#/$defs/ContentUpdateCommandError",
+      "availability_ref": "#/$defs/ContentUpdateCommandAvailability",
+      "permission_ref": "#/$defs/ContentUpdatePermissionDecision",
+      "local_request_ref": "#/$defs/ContentUpdateLocalActionRequest",
+      "local_result_ref": "#/$defs/ContentUpdateLocalActionResult"
+    }
+  },
+  "x-command-contracts": {
+    "cmd.project.move.cancel": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ProjectMoveDisabledReason",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "sole_handler": "handlers::project_move::cancel",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Cancel the exact current Project Move operation only when the semantic owner reports it cancellable.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1254"
+    },
+    "cmd.project.move.pause": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ProjectMoveDisabledReason",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "sole_handler": "handlers::project_move::pause",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Request a durable safe-point pause for the exact Project Move; never freeze or serialize a live process as proof.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1266"
+    },
+    "cmd.project.move.preflight": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ProjectMoveDisabledReason",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "sole_handler": "handlers::project_move::preflight",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Build an immutable Project/Vault move plan with exact topology, inventory, capacity, conflict, permission, FileSafe, recovery, and credential-readiness evidence.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1272"
+    },
+    "cmd.project.move.resume": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ProjectMoveDisabledReason",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "sole_handler": "handlers::project_move::resume",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Resume the same fenced Project Move operation from its durable continuation and current owner state.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1278"
+    },
+    "cmd.project.move.retry": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ProjectMoveDisabledReason",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "sole_handler": "handlers::project_move::retry",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Retry the same idempotent Project Move operation after revalidating currentness and the typed failure condition.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1284"
+    },
+    "cmd.project.move.rollback": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ProjectMoveDisabledReason",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "sole_handler": "handlers::project_move::rollback",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Restore the last verified Project/Vault placement from the exact move recovery boundary or report recovery_required truthfully.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1290"
+    },
+    "cmd.project.move.start": {
+      "request_ref": "#/$defs/ProjectMoveCommandRequest",
+      "result_ref": "#/$defs/ProjectMoveCommandResult",
+      "error_ref": "#/$defs/ProjectMoveCommandError",
+      "availability_ref": "#/$defs/ProjectMoveCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ProjectMoveDisabledReason",
+      "permission_ref": "#/$defs/ProjectMovePermissionDecision",
+      "sole_handler": "handlers::project_move::start",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Start the approved staged Project/Vault move while retaining the verified source and one-writer authority until cutover.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1296"
+    },
+    "cmd.update.content.activate": {
+      "request_ref": "#/$defs/ContentUpdateCommandRequest",
+      "result_ref": "#/$defs/ContentUpdateCommandResult",
+      "error_ref": "#/$defs/ContentUpdateCommandError",
+      "availability_ref": "#/$defs/ContentUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ContentUpdateDisabledReason",
+      "permission_ref": "#/$defs/ContentUpdatePermissionDecision",
+      "sole_handler": "handlers::content_update::activate",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Atomically activate a verified staged PM content/catalog generation while retaining last-known-good rollback state.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2220"
+    },
+    "cmd.update.content.check": {
+      "request_ref": "#/$defs/ContentUpdateCommandRequest",
+      "result_ref": "#/$defs/ContentUpdateCommandResult",
+      "error_ref": "#/$defs/ContentUpdateCommandError",
+      "availability_ref": "#/$defs/ContentUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ContentUpdateDisabledReason",
+      "permission_ref": "#/$defs/ContentUpdatePermissionDecision",
+      "sole_handler": "handlers::content_update::check",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Run a coalesced, cached, policy-bounded check for the exact PM content update channel or catalog.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2226"
+    },
+    "cmd.update.content.download": {
+      "request_ref": "#/$defs/ContentUpdateCommandRequest",
+      "result_ref": "#/$defs/ContentUpdateCommandResult",
+      "error_ref": "#/$defs/ContentUpdateCommandError",
+      "availability_ref": "#/$defs/ContentUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ContentUpdateDisabledReason",
+      "permission_ref": "#/$defs/ContentUpdatePermissionDecision",
+      "sole_handler": "handlers::content_update::download",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Download and verify the selected PM content update artifact without activating it early.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2232"
+    },
+    "cmd.update.content.rollback": {
+      "request_ref": "#/$defs/ContentUpdateCommandRequest",
+      "result_ref": "#/$defs/ContentUpdateCommandResult",
+      "error_ref": "#/$defs/ContentUpdateCommandError",
+      "availability_ref": "#/$defs/ContentUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ContentUpdateDisabledReason",
+      "permission_ref": "#/$defs/ContentUpdatePermissionDecision",
+      "sole_handler": "handlers::content_update::rollback",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Roll back the exact PM content update operation to a verified retained generation or report recovery_required.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2244"
+    }
+  },
+  "x-source-adjudication-rows": {
+    "109": {
+      "source_token": "cmd.project.move.cancel",
+      "canonical_target": "cmd.project.move.cancel",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Cancel the exact current Project Move operation only when the semantic owner reports it cancellable.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1254",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "handlers::project_move::cancel",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "110": {
+      "source_token": "cmd.project.move.open_details",
+      "canonical_target": "ui.project.move.open_details",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Open a bounded, redacted, lazy details projection for the exact Project Move without mutating it.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1260",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    },
+    "111": {
+      "source_token": "cmd.project.move.pause",
+      "canonical_target": "cmd.project.move.pause",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Request a durable safe-point pause for the exact Project Move; never freeze or serialize a live process as proof.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1266",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "handlers::project_move::pause",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "112": {
+      "source_token": "cmd.project.move.preflight",
+      "canonical_target": "cmd.project.move.preflight",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Build an immutable Project/Vault move plan with exact topology, inventory, capacity, conflict, permission, FileSafe, recovery, and credential-readiness evidence.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1272",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "handlers::project_move::preflight",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "113": {
+      "source_token": "cmd.project.move.resume",
+      "canonical_target": "cmd.project.move.resume",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Resume the same fenced Project Move operation from its durable continuation and current owner state.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1278",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "handlers::project_move::resume",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "114": {
+      "source_token": "cmd.project.move.retry",
+      "canonical_target": "cmd.project.move.retry",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Retry the same idempotent Project Move operation after revalidating currentness and the typed failure condition.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1284",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "handlers::project_move::retry",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "115": {
+      "source_token": "cmd.project.move.rollback",
+      "canonical_target": "cmd.project.move.rollback",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Restore the last verified Project/Vault placement from the exact move recovery boundary or report recovery_required truthfully.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1290",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "handlers::project_move::rollback",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "116": {
+      "source_token": "cmd.project.move.start",
+      "canonical_target": "cmd.project.move.start",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Start the approved staged Project/Vault move while retaining the verified source and one-writer authority until cutover.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1296",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "ProjectMoveCoordinator",
+      "sole_handler": "handlers::project_move::start",
+      "gui_consumers": [
+        "Projects > Move Project",
+        "Settings > Hosting & Files",
+        "Doctor",
+        "status bar"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "167": {
+      "source_token": "cmd.update.content.activate",
+      "canonical_target": "cmd.update.content.activate",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Atomically activate a verified staged PM content/catalog generation while retaining last-known-good rollback state.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2220",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "AppContentUpdateCoordinator",
+      "sole_handler": "handlers::content_update::activate",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "168": {
+      "source_token": "cmd.update.content.check",
+      "canonical_target": "cmd.update.content.check",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Run a coalesced, cached, policy-bounded check for the exact PM content update channel or catalog.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2226",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "AppContentUpdateCoordinator",
+      "sole_handler": "handlers::content_update::check",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "169": {
+      "source_token": "cmd.update.content.download",
+      "canonical_target": "cmd.update.content.download",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Download and verify the selected PM content update artifact without activating it early.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2232",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "AppContentUpdateCoordinator",
+      "sole_handler": "handlers::content_update::download",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "170": {
+      "source_token": "cmd.update.content.open_details",
+      "canonical_target": "ui.update.content.open_details",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Open a bounded, redacted, lazy details projection for the exact PM content update without mutating it.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2238",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "AppContentUpdateCoordinator",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    },
+    "171": {
+      "source_token": "cmd.update.content.rollback",
+      "canonical_target": "cmd.update.content.rollback",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Roll back the exact PM content update operation to a verified retained generation or report recovery_required.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2244",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "AppContentUpdateCoordinator",
+      "sole_handler": "handlers::content_update::rollback",
+      "gui_consumers": [
+        "Settings > Updates > Content",
+        "content attention/status",
+        "Doctor"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    }
+  },
+  "x-claim-boundary": "static source contract only; all commands remain handler_unavailable; no central registration, native handler, runtime, security-attack, restart execution, GUI implementation, or certification proof",
+  "$defs": {
+    "ProjectMoveNonSecretRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "not": {
+        "pattern": "(^|[._:/-])(raw|password|secret|access_token|refresh_token|api_key|cookie|authorization)([._:/-]|$)"
+      }
+    },
+    "ProjectMoveSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ProjectMoveTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ProjectMoveReturnContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "route_id",
+        "focus_target",
+        "invocation_token",
+        "return_generation"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "route_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "focus_target": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ProjectMoveIntegrationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "central_registered",
+        "schema_bound",
+        "native_handler_bound",
+        "permission_route_bound",
+        "production_wired",
+        "receipt_or_admitted_event_bound"
+      ],
+      "properties": {
+        "central_registered": {
+          "type": "boolean"
+        },
+        "schema_bound": {
+          "type": "boolean"
+        },
+        "native_handler_bound": {
+          "type": "boolean"
+        },
+        "permission_route_bound": {
+          "type": "boolean"
+        },
+        "production_wired": {
+          "type": "boolean"
+        },
+        "receipt_or_admitted_event_bound": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ProjectMoveCommandId": {
+      "type": "string",
+      "enum": [
+        "cmd.project.move.cancel",
+        "cmd.project.move.pause",
+        "cmd.project.move.preflight",
+        "cmd.project.move.resume",
+        "cmd.project.move.retry",
+        "cmd.project.move.rollback",
+        "cmd.project.move.start"
+      ]
+    },
+    "ProjectMoveOperation": {
+      "type": "string",
+      "enum": [
+        "cancel",
+        "pause",
+        "preflight",
+        "resume",
+        "retry",
+        "rollback",
+        "start"
+      ]
+    },
+    "ProjectMoveCommandPayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "move_operation_id",
+            "cancellable_proof_ref",
+            "confirmation"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.move.cancel"
+            },
+            "move_operation_id": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "cancellable_proof_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "confirmation": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "move_operation_id",
+            "safe_point_policy_ref",
+            "live_process_frozen"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.move.pause"
+            },
+            "move_operation_id": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "safe_point_policy_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "live_process_frozen": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "inventory_snapshot_ref",
+            "capacity_evidence_ref",
+            "conflict_policy_ref",
+            "filesafe_evidence_ref",
+            "recovery_boundary_ref",
+            "credential_readiness_ref",
+            "move_plan_sha256"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.move.preflight"
+            },
+            "inventory_snapshot_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "capacity_evidence_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "conflict_policy_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "filesafe_evidence_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "recovery_boundary_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "credential_readiness_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "move_plan_sha256": {
+              "$ref": "#/$defs/ProjectMoveSha256"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "move_operation_id",
+            "continuation_ref",
+            "owner_state_ref"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.move.resume"
+            },
+            "move_operation_id": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "continuation_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "owner_state_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "move_operation_id",
+            "failure_ref",
+            "original_idempotency_key"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.move.retry"
+            },
+            "move_operation_id": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "failure_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "original_idempotency_key": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "move_operation_id",
+            "recovery_boundary_ref",
+            "last_verified_placement_ref",
+            "confirmation"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.move.rollback"
+            },
+            "move_operation_id": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "recovery_boundary_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "last_verified_placement_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "confirmation": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "approved_move_plan_ref",
+            "approved_move_plan_sha256",
+            "source_retention_ref",
+            "writer_lease_ref"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.move.start"
+            },
+            "approved_move_plan_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "approved_move_plan_sha256": {
+              "$ref": "#/$defs/ProjectMoveSha256"
+            },
+            "source_retention_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            "writer_lease_ref": {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            }
+          }
+        }
+      ]
+    },
+    "ProjectMoveCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "idempotency_key",
+        "project_id",
+        "project_vault_id",
+        "source_host_id",
+        "destination_host_id",
+        "source_environment_id",
+        "destination_environment_id",
+        "source_location_id",
+        "destination_location_id",
+        "expected_topology_generation",
+        "expected_project_generation",
+        "expected_source_generation",
+        "expected_destination_generation",
+        "permission_snapshot_ref",
+        "return_context",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.command_request.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMoveCommandRequest"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectMoveCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/ProjectMoveOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "project_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "project_vault_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "source_host_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "destination_host_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "source_environment_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "destination_environment_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "destination_location_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "expected_topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_project_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_destination_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/ProjectMoveReturnContext"
+        },
+        "payload": {
+          "$ref": "#/$defs/ProjectMoveCommandPayload"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.cancel"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "cancel"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.cancel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.pause"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "pause"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.pause"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.preflight"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "preflight"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.preflight"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.resume"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "resume"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.resume"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.retry"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "retry"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.retry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.rollback"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rollback"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.rollback"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.start"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "start"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.start"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectMoveCommandOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "changed",
+        "state",
+        "currentness",
+        "operation_receipt_ref",
+        "resulting_generation",
+        "restart_disposition",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/ProjectMoveCommandId"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "running",
+            "paused",
+            "completed",
+            "cancelled",
+            "rolled_back",
+            "blocked",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "conflicted",
+            "unknown"
+          ]
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "resulting_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restart_disposition": {
+          "enum": [
+            "not_applicable",
+            "resume",
+            "rollback",
+            "recovery_required"
+          ]
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "ProjectMoveCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "status",
+        "project_id",
+        "project_vault_id",
+        "source_host_id",
+        "destination_host_id",
+        "source_environment_id",
+        "destination_environment_id",
+        "source_location_id",
+        "destination_location_id",
+        "expected_topology_generation",
+        "expected_project_generation",
+        "expected_source_generation",
+        "expected_destination_generation",
+        "receipt_ref",
+        "observable_work_ref",
+        "return_context",
+        "event_effect_policy",
+        "output",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.command_result.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMoveCommandResult"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectMoveCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/ProjectMoveOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "no_change",
+            "blocked",
+            "cancelled",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "project_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "project_vault_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "source_host_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "destination_host_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "source_environment_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "destination_environment_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "destination_location_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "expected_topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_project_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_destination_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "observable_work_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/ProjectMoveReturnContext"
+        },
+        "event_effect_policy": {
+          "const": "receipt_only_no_eventrecord_pending_event_authority"
+        },
+        "output": {
+          "$ref": "#/$defs/ProjectMoveCommandOutput"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/ProjectMoveTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.cancel"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "cancel"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.cancel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.pause"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "pause"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.pause"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.preflight"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "preflight"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.preflight"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.resume"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "resume"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.resume"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.retry"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "retry"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.retry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.rollback"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rollback"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.rollback"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.move.start"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "start"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.move.start"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectMoveCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "code",
+        "retryability",
+        "safe_message",
+        "return_context",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.command_error.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMoveCommandError"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectMoveCommandId"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "code": {
+          "enum": [
+            "invalid_request",
+            "handler_unavailable",
+            "permission_denied",
+            "filesafe_denied",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_conflict",
+            "duplicate_conflict",
+            "plan_or_checkpoint_mismatch",
+            "recovery_required",
+            "internal_fail_closed"
+          ]
+        },
+        "retryability": {
+          "enum": [
+            "not_retryable",
+            "retry_after_state_change",
+            "retry_same_idempotent_operation",
+            "manual_recovery_required"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "return_context": {
+          "$ref": "#/$defs/ProjectMoveReturnContext"
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "ProjectMoveDisabledReason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "code",
+        "safe_message",
+        "blocking_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.disabled_reason.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMoveDisabledReason"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectMoveCommandId"
+        },
+        "code": {
+          "enum": [
+            "central_registration_missing",
+            "schema_binding_missing",
+            "handler_unavailable",
+            "permission_route_missing",
+            "production_wiring_missing",
+            "receipt_or_event_disposition_missing",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_in_progress",
+            "recovery_required",
+            "permission_denied",
+            "filesafe_denied"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "blocking_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ProjectMoveNonSecretRef"
+          }
+        }
+      }
+    },
+    "ProjectMoveCommandAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "available",
+        "integration_evidence",
+        "disabled_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.availability.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMoveCommandAvailability"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectMoveCommandId"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "integration_evidence": {
+          "$ref": "#/$defs/ProjectMoveIntegrationEvidence"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ProjectMoveDisabledReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "integration_evidence": {
+                "properties": {
+                  "central_registered": {
+                    "const": true
+                  },
+                  "schema_bound": {
+                    "const": true
+                  },
+                  "native_handler_bound": {
+                    "const": true
+                  },
+                  "permission_route_bound": {
+                    "const": true
+                  },
+                  "production_wired": {
+                    "const": true
+                  },
+                  "receipt_or_admitted_event_bound": {
+                    "const": true
+                  }
+                }
+              },
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/ProjectMoveDisabledReason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectMovePermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "permission_snapshot_ref",
+        "permission_class",
+        "decision",
+        "authority_widening",
+        "secret_material_exposed",
+        "reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.permission_decision.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMovePermissionDecision"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectMoveCommandId"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "permission_class": {
+          "enum": [
+            "project.move.inspect",
+            "project.move.mutate",
+            "project.move.recover"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ProjectMoveNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "deny",
+                  "prompt_human"
+                ]
+              }
+            },
+            "required": [
+              "decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/ProjectMoveNonSecretRef"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectMoveCommandRoundTrip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/ProjectMoveCommandRequest"
+        },
+        "result": {
+          "$ref": "#/$defs/ProjectMoveCommandResult"
+        }
+      },
+      "x-semantic-invariants": [
+        "request.command_id == result.command_id",
+        "request.command_instance_id == result.command_instance_id",
+        "request return_context is byte-identical to result return_context",
+        "result generations never regress"
+      ]
+    },
+    "ProjectMoveLocalActionId": {
+      "type": "string",
+      "enum": [
+        "ui.project.move.open_details"
+      ]
+    },
+    "ProjectMoveLocalActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "expected_projection_generation",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.local_action_request.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMoveLocalActionRequest"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/ProjectMoveLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "expected_projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context": {
+          "$ref": "#/$defs/ProjectMoveReturnContext"
+        }
+      }
+    },
+    "ProjectMoveLocalActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "projection_generation",
+        "redacted",
+        "lazy",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "accessible_focus_target",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_move.local_action_result.v1"
+        },
+        "record_kind": {
+          "const": "ProjectMoveLocalActionResult"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/ProjectMoveLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted": {
+          "const": true
+        },
+        "lazy": {
+          "const": true
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "accessible_focus_target": {
+          "$ref": "#/$defs/ProjectMoveNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/ProjectMoveReturnContext"
+        }
+      }
+    },
+    "ContentUpdateNonSecretRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "not": {
+        "pattern": "(^|[._:/-])(raw|password|secret|access_token|refresh_token|api_key|cookie|authorization)([._:/-]|$)"
+      }
+    },
+    "ContentUpdateSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ContentUpdateTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ContentUpdateReturnContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "route_id",
+        "focus_target",
+        "invocation_token",
+        "return_generation"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "route_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "focus_target": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ContentUpdateIntegrationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "central_registered",
+        "schema_bound",
+        "native_handler_bound",
+        "permission_route_bound",
+        "production_wired",
+        "receipt_or_admitted_event_bound"
+      ],
+      "properties": {
+        "central_registered": {
+          "type": "boolean"
+        },
+        "schema_bound": {
+          "type": "boolean"
+        },
+        "native_handler_bound": {
+          "type": "boolean"
+        },
+        "permission_route_bound": {
+          "type": "boolean"
+        },
+        "production_wired": {
+          "type": "boolean"
+        },
+        "receipt_or_admitted_event_bound": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ContentUpdateCommandId": {
+      "type": "string",
+      "enum": [
+        "cmd.update.content.activate",
+        "cmd.update.content.check",
+        "cmd.update.content.download",
+        "cmd.update.content.rollback"
+      ]
+    },
+    "ContentUpdateOperation": {
+      "type": "string",
+      "enum": [
+        "activate",
+        "check",
+        "download",
+        "rollback"
+      ]
+    },
+    "ContentUpdateCommandPayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "staged_generation_ref",
+            "verified_artifact_ref",
+            "signature_evidence_ref",
+            "last_known_good_generation_ref"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.content.activate"
+            },
+            "staged_generation_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "verified_artifact_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "signature_evidence_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "last_known_good_generation_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "catalog_ref",
+            "cache_policy",
+            "coalesce_key"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.content.check"
+            },
+            "catalog_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "cache_policy": {
+              "enum": [
+                "use_current_cache",
+                "refresh_if_stale"
+              ]
+            },
+            "coalesce_key": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "selected_generation_ref",
+            "artifact_manifest_ref",
+            "signing_policy_ref",
+            "activate_after_download"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.content.download"
+            },
+            "selected_generation_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "artifact_manifest_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "signing_policy_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "activate_after_download": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "target_generation_ref",
+            "recovery_boundary_ref",
+            "verification_policy_ref",
+            "confirmation"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.content.rollback"
+            },
+            "target_generation_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "recovery_boundary_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "verification_policy_ref": {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            "confirmation": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    "ContentUpdateCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "idempotency_key",
+        "application_id",
+        "content_catalog_id",
+        "channel_id",
+        "content_update_operation_id",
+        "active_generation_ref",
+        "expected_catalog_generation",
+        "expected_update_generation",
+        "permission_snapshot_ref",
+        "return_context",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.command_request.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdateCommandRequest"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ContentUpdateCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/ContentUpdateOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "application_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "content_catalog_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "channel_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "content_update_operation_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "active_generation_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "expected_catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_update_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/ContentUpdateReturnContext"
+        },
+        "payload": {
+          "$ref": "#/$defs/ContentUpdateCommandPayload"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.activate"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "activate"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.activate"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.check"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "check"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.check"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.download"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "download"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.download"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.rollback"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rollback"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.rollback"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ContentUpdateCommandOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "changed",
+        "state",
+        "currentness",
+        "operation_receipt_ref",
+        "resulting_generation",
+        "restart_disposition",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/ContentUpdateCommandId"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "running",
+            "paused",
+            "completed",
+            "cancelled",
+            "rolled_back",
+            "blocked",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "conflicted",
+            "unknown"
+          ]
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "resulting_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restart_disposition": {
+          "enum": [
+            "not_applicable",
+            "resume",
+            "rollback",
+            "recovery_required"
+          ]
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "ContentUpdateCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "status",
+        "application_id",
+        "content_catalog_id",
+        "channel_id",
+        "content_update_operation_id",
+        "active_generation_ref",
+        "expected_catalog_generation",
+        "expected_update_generation",
+        "receipt_ref",
+        "observable_work_ref",
+        "return_context",
+        "event_effect_policy",
+        "output",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.command_result.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdateCommandResult"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ContentUpdateCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/ContentUpdateOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "no_change",
+            "blocked",
+            "cancelled",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "application_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "content_catalog_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "channel_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "content_update_operation_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "active_generation_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "expected_catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_update_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "observable_work_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/ContentUpdateReturnContext"
+        },
+        "event_effect_policy": {
+          "const": "receipt_only_no_eventrecord_pending_event_authority"
+        },
+        "output": {
+          "$ref": "#/$defs/ContentUpdateCommandOutput"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/ContentUpdateTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.activate"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "activate"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.activate"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.check"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "check"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.check"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.download"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "download"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.download"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.content.rollback"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rollback"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.content.rollback"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ContentUpdateCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "code",
+        "retryability",
+        "safe_message",
+        "return_context",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.command_error.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdateCommandError"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ContentUpdateCommandId"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "code": {
+          "enum": [
+            "invalid_request",
+            "handler_unavailable",
+            "permission_denied",
+            "filesafe_denied",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_conflict",
+            "duplicate_conflict",
+            "plan_or_checkpoint_mismatch",
+            "recovery_required",
+            "internal_fail_closed"
+          ]
+        },
+        "retryability": {
+          "enum": [
+            "not_retryable",
+            "retry_after_state_change",
+            "retry_same_idempotent_operation",
+            "manual_recovery_required"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "return_context": {
+          "$ref": "#/$defs/ContentUpdateReturnContext"
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "ContentUpdateDisabledReason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "code",
+        "safe_message",
+        "blocking_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.disabled_reason.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdateDisabledReason"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ContentUpdateCommandId"
+        },
+        "code": {
+          "enum": [
+            "central_registration_missing",
+            "schema_binding_missing",
+            "handler_unavailable",
+            "permission_route_missing",
+            "production_wiring_missing",
+            "receipt_or_event_disposition_missing",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_in_progress",
+            "recovery_required",
+            "permission_denied",
+            "filesafe_denied"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "blocking_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ContentUpdateNonSecretRef"
+          }
+        }
+      }
+    },
+    "ContentUpdateCommandAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "available",
+        "integration_evidence",
+        "disabled_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.availability.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdateCommandAvailability"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ContentUpdateCommandId"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "integration_evidence": {
+          "$ref": "#/$defs/ContentUpdateIntegrationEvidence"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ContentUpdateDisabledReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "integration_evidence": {
+                "properties": {
+                  "central_registered": {
+                    "const": true
+                  },
+                  "schema_bound": {
+                    "const": true
+                  },
+                  "native_handler_bound": {
+                    "const": true
+                  },
+                  "permission_route_bound": {
+                    "const": true
+                  },
+                  "production_wired": {
+                    "const": true
+                  },
+                  "receipt_or_admitted_event_bound": {
+                    "const": true
+                  }
+                }
+              },
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/ContentUpdateDisabledReason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ContentUpdatePermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "permission_snapshot_ref",
+        "permission_class",
+        "decision",
+        "authority_widening",
+        "secret_material_exposed",
+        "reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.permission_decision.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdatePermissionDecision"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ContentUpdateCommandId"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "permission_class": {
+          "enum": [
+            "content.update.inspect",
+            "content.update.manage"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ContentUpdateNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "deny",
+                  "prompt_human"
+                ]
+              }
+            },
+            "required": [
+              "decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/ContentUpdateNonSecretRef"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ContentUpdateCommandRoundTrip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/ContentUpdateCommandRequest"
+        },
+        "result": {
+          "$ref": "#/$defs/ContentUpdateCommandResult"
+        }
+      },
+      "x-semantic-invariants": [
+        "request.command_id == result.command_id",
+        "request.command_instance_id == result.command_instance_id",
+        "request return_context is byte-identical to result return_context",
+        "result generations never regress"
+      ]
+    },
+    "ContentUpdateLocalActionId": {
+      "type": "string",
+      "enum": [
+        "ui.update.content.open_details"
+      ]
+    },
+    "ContentUpdateLocalActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "expected_projection_generation",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.local_action_request.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdateLocalActionRequest"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/ContentUpdateLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "expected_projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context": {
+          "$ref": "#/$defs/ContentUpdateReturnContext"
+        }
+      }
+    },
+    "ContentUpdateLocalActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "projection_generation",
+        "redacted",
+        "lazy",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "accessible_focus_target",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.content_update.local_action_result.v1"
+        },
+        "record_kind": {
+          "const": "ContentUpdateLocalActionResult"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/ContentUpdateLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted": {
+          "const": true
+        },
+        "lazy": {
+          "const": true
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "accessible_focus_target": {
+          "$ref": "#/$defs/ContentUpdateNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/ContentUpdateReturnContext"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ProjectMoveCommandRequest"
+    },
+    {
+      "$ref": "#/$defs/ProjectMoveCommandResult"
+    },
+    {
+      "$ref": "#/$defs/ProjectMoveCommandError"
+    },
+    {
+      "$ref": "#/$defs/ProjectMoveCommandAvailability"
+    },
+    {
+      "$ref": "#/$defs/ProjectMoveDisabledReason"
+    },
+    {
+      "$ref": "#/$defs/ProjectMovePermissionDecision"
+    },
+    {
+      "$ref": "#/$defs/ProjectMoveCommandRoundTrip"
+    },
+    {
+      "$ref": "#/$defs/ProjectMoveLocalActionRequest"
+    },
+    {
+      "$ref": "#/$defs/ProjectMoveLocalActionResult"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateCommandRequest"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateCommandResult"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateCommandError"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateCommandAvailability"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateDisabledReason"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdatePermissionDecision"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateCommandRoundTrip"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateLocalActionRequest"
+    },
+    {
+      "$ref": "#/$defs/ContentUpdateLocalActionResult"
+    }
+  ]
+}

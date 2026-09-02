@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
+from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +23,7 @@ PLANS = ROOT / "Plans"
 SCHEMA_PATH = PLANS / "shared_runtime_command_contracts.schema.json"
 BINDINGS_PATH = PLANS / "shared_runtime_command_bindings.json"
 FIXTURE_PATH = PLANS / "shared_runtime_command_contract_fixtures.json"
+EXPANSION_SCHEMA_PATH = PLANS / "shared_integration_runtime_expansion_contracts.schema.json"
 WIRING_PATH = PLANS / "Wiring_Matrix.production.json"
 WIRING_SCHEMA_PATH = PLANS / "Wiring_Matrix.schema.json"
 EXCLUSIONS_PATH = PLANS / "Wiring_Matrix.production.exclusions.json"
@@ -45,10 +47,28 @@ def resolve_definition(ref: str, schema: dict[str, Any]) -> str:
     return name
 
 
-def definition_validator(schema: dict[str, Any], name: str) -> Draft202012Validator:
+def offline_schema_registry() -> Registry:
+    """Resolve the reviewed expansion owner from disk and never from the network."""
+
+    expansion = read_json(EXPANSION_SCHEMA_PATH)
+    Draft202012Validator.check_schema(expansion)
+    expansion_uri = expansion.get("$id")
+    if not isinstance(expansion_uri, str) or not expansion_uri:
+        raise ValueError("shared integration expansion schema has no canonical $id")
+    return Registry(
+        retrieve=lambda uri: (_ for _ in ()).throw(
+            ValueError(f"unregistered schema URI: {uri}")
+        )
+    ).with_resource(expansion_uri, Resource.from_contents(expansion))
+
+
+def definition_validator(
+    schema: dict[str, Any], name: str, registry: Registry
+) -> Draft202012Validator:
     return Draft202012Validator(
         {**schema["$defs"][name], "$defs": schema["$defs"]},
         format_checker=FormatChecker(),
+        registry=registry,
     )
 
 
@@ -89,23 +109,25 @@ def semantic_instance_failures(value: Any, definition: str) -> list[str]:
     return failures
 
 
-def instance_failures(value: Any, definition: str, schema: dict[str, Any]) -> list[str]:
+def instance_failures(
+    value: Any, definition: str, schema: dict[str, Any], registry: Registry
+) -> list[str]:
     errors = [
         error.message
-        for error in definition_validator(schema, definition).iter_errors(value)
+        for error in definition_validator(schema, definition, registry).iter_errors(value)
     ]
     if errors:
         return errors
     return semantic_instance_failures(value, definition)
 
 
-def fixture_checks(schema: dict[str, Any]) -> dict[str, bool]:
+def fixture_checks(schema: dict[str, Any], registry: Registry) -> dict[str, bool]:
     fixtures = read_json(FIXTURE_PATH)
     valid_by_name = {fixture["name"]: fixture for fixture in fixtures["valid"]}
     checks: dict[str, bool] = {}
     for fixture in fixtures["valid"]:
         checks[fixture["name"]] = not instance_failures(
-            fixture["value"], fixture["definition"], schema
+            fixture["value"], fixture["definition"], schema, registry
         )
     for fixture in fixtures["invalid"]:
         base = valid_by_name[fixture["base_valid"]]
@@ -113,7 +135,7 @@ def fixture_checks(schema: dict[str, Any]) -> dict[str, bool]:
         for key in fixture.get("remove", []):
             candidate.pop(key, None)
         checks[fixture["name"]] = bool(
-            instance_failures(candidate, base["definition"], schema)
+            instance_failures(candidate, base["definition"], schema, registry)
         )
     for fixture in fixtures["pairwise_invalid"]:
         base = valid_by_name[fixture["left_valid"]]
@@ -164,6 +186,8 @@ def exclusion_tokens(exclusions: Any) -> set[str]:
 
 def validate() -> dict[str, Any]:
     schema = read_json(SCHEMA_PATH)
+    expansion_schema = read_json(EXPANSION_SCHEMA_PATH)
+    registry = offline_schema_registry()
     bindings = read_json(BINDINGS_PATH)
     wiring_schema = read_json(WIRING_SCHEMA_PATH)
     wiring = read_json(WIRING_PATH)
@@ -251,11 +275,16 @@ def validate() -> dict[str, Any]:
     elif len(production_by_command.get("cmd.lsp.open_problems", [])) != 1:
         failures.append("lsp_open_problems_target_not_wired_exactly_once")
 
-    checks = fixture_checks(schema)
+    checks = fixture_checks(schema, registry)
     failures.extend(f"fixture:{name}" for name, passed in checks.items() if not passed)
     return {
         "schema_id": "pm.shared_runtime.command_contract_validation.v1",
         "scope": "pre_build_static_contract_only",
+        "schema_resolution": {
+            "network_retrieval": "forbidden",
+            "expansion_schema_path": str(EXPANSION_SCHEMA_PATH.relative_to(ROOT)),
+            "expansion_schema_id": expansion_schema.get("$id"),
+        },
         "canonical_binding_count": len(rows),
         "compatibility_count": len(compatibility),
         "rejected_count": len(rejected),

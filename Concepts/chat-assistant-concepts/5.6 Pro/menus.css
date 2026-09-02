@@ -52,7 +52,7 @@
 .overlay-menu,
 .overlay-menu.sidecar,
 .overlay-menu.model-menu {
-  z-index: var(--z-menu);
+  z-index: 1200;                         /* above --z-tip (1100) so hover cards cannot steal hits */
   animation: none;                       /* retire menu-pop / sidecar-pop */
   --pm56-sx: .72;                        /* closed scale: wide  */
   --pm56-sy: .48;                        /* closed scale: tall  */
@@ -79,9 +79,19 @@
    edge facing the root menu instead of a corner, with the axes swapped --
    wider grow than tall.  `data-side` is emitted by renderMenu() and says
    which side of the root menu the sidecar was placed on. */
-.overlay-menu.sidecar { --pm56-sx: .48; --pm56-sy: .72; --pm56-ty: 0px; }
-.overlay-menu.sidecar[data-side="right"] { --pm56-tx: -10px; transform-origin: 0% 18%; }
-.overlay-menu.sidecar[data-side="left"]  { --pm56-tx: 10px;  transform-origin: 100% 18%; }
+.overlay-menu.sidecar {
+  --pm56-sx: .48; --pm56-sy: .72; --pm56-ty: 0px;
+  width: 228px; min-width: 228px; max-width: 228px;
+  box-sizing: border-box;
+  transform-origin: var(--origin-x, 100%) var(--origin-y, 28%);
+  transition: opacity 140ms var(--ease),
+              transform 300ms cubic-bezier(.22, 1.55, .36, 1),
+              height 360ms cubic-bezier(.22, 1.78, .36, 1);
+}
+.overlay-menu.sidecar[data-side="right"] { --pm56-tx: -10px; }
+.overlay-menu.sidecar .menu-item .menu-copy span {
+  white-space: normal;
+}
 
 /* Closed nudge direction, written by menus.js from --origin-y. */
 #pmOverlayRoot[data-pm56-sprout="b"] .overlay-menu[data-overlay="root-menu"] { --pm56-ty: 10px; }
@@ -123,10 +133,13 @@
    reflow, and only then read the settled rect: the bottom anchor is derived
    from that rect, and deriving it from the pinned one parked the model picker
    at the top of the viewport. */
+/* Do not park menus at left/top 8px for measurement. That origin was
+   captured by the 340ms hold and looked like a random jump to the left
+   edge (and covered the wand root). -hidden already makes the first
+   frame invisible and untransformed; positionOverlays writes left/top. */
 #pmOverlayRoot.pm56-r-pin .overlay-menu[data-overlay="root-menu"],
 #pmOverlayRoot.pm56-s-pin .overlay-menu[data-overlay="sidecar"] {
-  left: 8px !important;
-  top: 8px !important;
+  visibility: hidden;
 }
 
 /* THE ONE THAT ACTUALLY CLOSES IT: hold the geometry for the whole entrance.
@@ -150,6 +163,7 @@
 #pmOverlayRoot.pm56-s-hold .overlay-menu[data-overlay="sidecar"] {
   left: var(--pm56-shold-left) !important;
   top: var(--pm56-shold-top) !important;
+  transform-origin: var(--pm56-shold-ox) var(--pm56-shold-oy) !important;
 }
 
 /* THIRD measurement trap, and the one with real teeth. positionOverlays runs
@@ -228,8 +242,17 @@
   40%  { transform: translate3d(0, 0, 0) scale3d(1.012, 1.055, 1); }
   100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
 }
+@keyframes pm56-effort-size-bounce {
+  0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+  35%  { transform: translate3d(0, 0, 0) scale3d(1.045, 1.16, 1); }
+  70%  { transform: translate3d(0, 0, 0) scale3d(0.985, 0.93, 1); }
+  100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+}
 #pmOverlayRoot.pm56-r-bounce .overlay-menu[data-overlay="root-menu"] {
   animation: pm56-menu-size-bounce 380ms cubic-bezier(.22, 1.55, .36, 1);
+}
+#pmOverlayRoot.pm56-s-bounce .overlay-menu[data-overlay="sidecar"] {
+  animation: pm56-effort-size-bounce 420ms cubic-bezier(.22, 1.65, .36, 1);
 }
 
 
@@ -337,6 +360,7 @@
     opacity: 1;
     transform: none;
   }
-  #pmOverlayRoot.pm56-r-bounce .overlay-menu[data-overlay="root-menu"] { animation: none !important; }
+  #pmOverlayRoot.pm56-r-bounce .overlay-menu[data-overlay="root-menu"],
+  #pmOverlayRoot.pm56-s-bounce .overlay-menu[data-overlay="sidecar"] { animation: none !important; }
   .overlay-menu.pm56-menu-ghost { display: none !important; }
 }

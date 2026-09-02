@@ -1,0 +1,665 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/final_gui_interaction_contracts.schema.json",
+  "title": "Final GUI reconciled interaction presentation contracts",
+  "description": "Strict static presentation contracts for K3 Settings/Doctor, Product Onboarding, Guided Tour, PMHoverTag, and evidence separation. Validation is not runtime or native Slint proof.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "contracts"],
+  "properties": {
+    "schema_id": {"const": "pm.final_gui_interaction_contracts.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "contracts": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/k3_geometry"},
+          {"$ref": "#/$defs/onboarding_motion"},
+          {"$ref": "#/$defs/guided_tour"},
+          {"$ref": "#/$defs/doctor_workspace"},
+          {"$ref": "#/$defs/hover_tag"},
+          {"$ref": "#/$defs/evidence_boundary"},
+          {"$ref": "#/$defs/provider_recovery_connector_presentation"},
+          {"$ref": "#/$defs/source_control_forge_depth_presentation"}
+        ]
+      },
+      "allOf": [
+        {"contains": {"properties": {"contract_kind": {"const": "k3_geometry"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "onboarding_motion"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "guided_tour"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "doctor_workspace"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "hover_tag"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "evidence_boundary"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "provider_recovery_connector_presentation"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "source_control_forge_depth_presentation"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1}
+      ]
+    }
+  },
+  "$defs": {
+    "theme_order": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "Basic Dark"},
+        {"const": "Basic Light"},
+        {"const": "Friendly Dark"},
+        {"const": "Friendly Light"},
+        {"const": "Glass Dark"},
+        {"const": "Glass Light"},
+        {"const": "Retro Dark"},
+        {"const": "Retro Light"}
+      ],
+      "items": false,
+      "minItems": 8,
+      "maxItems": 8
+    },
+    "k3_geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "rail_px", "topbar_px", "page_index_px", "details_px", "body_max_px", "continuous_regions", "themes", "workspace_tabs", "responsive_widths_px", "owner_projection_only", "new_back_or_breadcrumb"],
+      "properties": {
+        "contract_kind": {"const": "k3_geometry"},
+        "plan_unit_ref": {"const": "F3-519"},
+        "rail_px": {"const": 250},
+        "topbar_px": {"const": 62},
+        "page_index_px": {"const": 168},
+        "details_px": {"const": 350},
+        "body_max_px": {"const": 1040},
+        "continuous_regions": {
+          "type": "array",
+          "prefixItems": [{"const": "document"}, {"const": "index"}, {"const": "details"}, {"const": "manager"}],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "themes": {"$ref": "#/$defs/theme_order"},
+        "workspace_tabs": {"const": true},
+        "responsive_widths_px": {
+          "type": "array",
+          "prefixItems": [{"const": 1180}, {"const": 960}, {"const": 720}, {"const": 320}],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "owner_projection_only": {"const": true},
+        "new_back_or_breadcrumb": {"const": false}
+      }
+    },
+    "onboarding_motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "setup_model", "stage_count", "stages", "journey_mode", "connect_existing_stage_count", "connect_existing_stages", "connect_existing_skips", "reverse_back_contract", "navigation_before_apply", "selection_effect", "first_choice_stage", "first_choice_options", "independent_roles", "roles_visible", "role_choice_stage", "theme_choice_stage", "theme_choice_timing", "theme_picker", "safe_history", "remote_access", "review_apply", "owner_action_identity", "owner_projection_only", "private_owner_mutations", "synthetic_onboarding_commands", "max_prominent_choices", "dominant_primary_actions", "hero_ms", "step_transition_ms", "stagger_ms", "microinteraction_ms", "success_ms", "interruptible", "input_blocking", "reduced_motion"],
+      "properties": {
+        "contract_kind": {"const": "onboarding_motion"},
+        "plan_unit_ref": {"const": "F3-520"},
+        "setup_model": {"const": "reversible_staged_setup_plan"},
+        "stage_count": {"const": 9},
+        "stages": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "welcome"},
+            {"const": "path"},
+            {"const": "project"},
+            {"const": "source"},
+            {"const": "places"},
+            {"const": "access"},
+            {"const": "review"},
+            {"const": "preparing"},
+            {"const": "ready"}
+          ],
+          "items": false,
+          "minItems": 9,
+          "maxItems": 9
+        },
+        "journey_mode": {"const": "dynamic_path_with_reversible_visited_stages"},
+        "connect_existing_stage_count": {"const": 6},
+        "connect_existing_stages": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "welcome"},
+            {"const": "path"},
+            {"const": "access"},
+            {"const": "review"},
+            {"const": "preparing"},
+            {"const": "ready"}
+          ],
+          "items": false,
+          "minItems": 6,
+          "maxItems": 6
+        },
+        "connect_existing_skips": {
+          "type": "array",
+          "prefixItems": [{"const": "project"}, {"const": "source"}, {"const": "places"}],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "reverse_back_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action_label", "traversal", "available_before_apply", "preserves_queued_selections"],
+          "properties": {
+            "action_label": {"const": "Back"},
+            "traversal": {"const": "previous_visited_stage"},
+            "available_before_apply": {"const": true},
+            "preserves_queued_selections": {"const": true}
+          }
+        },
+        "navigation_before_apply": {"const": "back_and_forward_reversible"},
+        "selection_effect": {"const": "queue_only_until_apply"},
+        "first_choice_stage": {"const": "path"},
+        "first_choice_options": {
+          "type": "array",
+          "prefixItems": [{"const": "start_new_setup"}, {"const": "connect_existing_puppet_master"}],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "independent_roles": {
+          "type": "array",
+          "prefixItems": [{"const": "Server"}, {"const": "Storage"}, {"const": "Client"}],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "roles_visible": {"const": true},
+        "role_choice_stage": {"const": "places"},
+        "theme_choice_stage": {"const": "welcome"},
+        "theme_choice_timing": {"const": "early_before_project_and_infrastructure"},
+        "theme_picker": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["themes", "presentation", "bounded"],
+          "properties": {
+            "themes": {"$ref": "#/$defs/theme_order"},
+            "presentation": {"const": "modal"},
+            "bounded": {"const": true}
+          }
+        },
+        "safe_history": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["local_history_required", "source_control_backends", "git_role", "jujutsu_role", "filesafe_role", "filesafe_is_source_control_backend", "forge_role", "forge_optional", "forge_does_not_replace_local_history"],
+          "properties": {
+            "local_history_required": {"const": true},
+            "source_control_backends": {
+              "type": "array",
+              "prefixItems": [{"const": "Git"}, {"const": "Jujutsu"}],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "git_role": {"const": "local_source_control_backend"},
+            "jujutsu_role": {"const": "local_source_control_backend"},
+            "filesafe_role": {"const": "independent_local_recovery_history"},
+            "filesafe_is_source_control_backend": {"const": false},
+            "forge_role": {"const": "optional_remote_collaboration"},
+            "forge_optional": {"const": true},
+            "forge_does_not_replace_local_history": {"const": true}
+          }
+        },
+        "remote_access": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["recommended_options", "remote_link_label", "remote_link_placement"],
+          "properties": {
+            "recommended_options": {
+              "type": "array",
+              "prefixItems": [{"const": "Tailscale_or_Headscale"}, {"const": "existing_VPN"}, {"const": "reverse_proxy"}],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "remote_link_label": {"const": "Remote Link"},
+            "remote_link_placement": {"const": "more_options"}
+          }
+        },
+        "review_apply": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["review_stage", "apply_progress_stage", "review_required", "back_available_before_apply", "apply_is_user_initiated", "apply_executes_queued_actions", "ready_requires_apply_settlement"],
+          "properties": {
+            "review_stage": {"const": "review"},
+            "apply_progress_stage": {"const": "preparing"},
+            "review_required": {"const": true},
+            "back_available_before_apply": {"const": true},
+            "apply_is_user_initiated": {"const": true},
+            "apply_executes_queued_actions": {"const": true},
+            "ready_requires_apply_settlement": {"const": true}
+          }
+        },
+        "owner_action_identity": {"const": "canonical_owner_command_or_typed_local_ui_action"},
+        "owner_projection_only": {"const": true},
+        "private_owner_mutations": {"const": false},
+        "synthetic_onboarding_commands": {"const": false},
+        "max_prominent_choices": {"const": 2},
+        "dominant_primary_actions": {"const": 1},
+        "hero_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 1200}, "max": {"const": 1500}}},
+        "step_transition_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 420}, "max": {"const": 560}}},
+        "stagger_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 60}, "max": {"const": 80}}},
+        "microinteraction_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 120}, "max": {"const": 220}}},
+        "success_ms": {"const": 700},
+        "interruptible": {"const": true},
+        "input_blocking": {"const": false},
+        "reduced_motion": {"const": "immediate_or_short_opacity"}
+      }
+    },
+    "guided_tour": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "application_surface", "first_surface", "scenes", "actions", "watch_contract", "options_label", "options_actions", "planning_contract", "chat_contract", "top_controls", "reduced_motion_owner", "tour_reduced_motion_toggle", "skip_restores", "finish_layout", "fabricated_success", "protected_auth_content"],
+      "properties": {
+        "contract_kind": {"const": "guided_tour"},
+        "plan_unit_ref": {"const": "F3-521"},
+        "application_surface": {"const": "mounted_real_application"},
+        "first_surface": {"const": "Usage"},
+        "scenes": {
+          "type": "array",
+          "prefixItems": [{"const": "usage"}, {"const": "planning_wizard"}, {"const": "chat_teacher"}],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "actions": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "ui.guided_tour.start"},
+            {"const": "ui.guided_tour.next"},
+            {"const": "ui.guided_tour.back"},
+            {"const": "ui.guided_tour.pause"},
+            {"const": "ui.guided_tour.resume"},
+            {"const": "ui.guided_tour.skip"},
+            {"const": "ui.guided_tour.focus_route"},
+            {"const": "ui.guided_tour.toggle_eli5"},
+            {"const": "ui.guided_tour.finish"},
+            {"const": "ui.guided_tour.replay"}
+          ],
+          "items": false,
+          "minItems": 10,
+          "maxItems": 10
+        },
+        "watch_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "placement", "behavior"],
+          "properties": {
+            "label": {"const": "Watch"},
+            "placement": {"const": "same_card"},
+            "behavior": {"const": "hide_and_return_to_same_card"}
+          }
+        },
+        "options_label": {"const": "Options"},
+        "options_actions": {
+          "type": "array",
+          "prefixItems": [{"const": "Try"}],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "planning_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["surface", "progression"],
+          "properties": {
+            "surface": {"const": "mounted_real_planning_wizard"},
+            "progression": {"const": "intent_progression"}
+          }
+        },
+        "chat_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["placement", "progression"],
+          "properties": {
+            "placement": {"const": "far_right"},
+            "progression": {
+              "type": "array",
+              "prefixItems": [
+                {"const": "guide_selector"},
+                {"const": "Teacher"},
+                {"const": "real_composer_send"},
+                {"const": "deterministic_local_reply"}
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            }
+          }
+        },
+        "top_controls": {
+          "type": "array",
+          "prefixItems": [{"const": "ELI5"}, {"const": "Pause"}, {"const": "Skip"}],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "reduced_motion_owner": {"const": "Settings"},
+        "tour_reduced_motion_toggle": {"const": false},
+        "skip_restores": {
+          "type": "array",
+          "prefixItems": [{"const": "pre_tour_layout"}, {"const": "pre_tour_placeholder"}, {"const": "pre_tour_focus"}],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "finish_layout": {"const": "Chat_far_right"},
+        "fabricated_success": {"const": false},
+        "protected_auth_content": {"const": false}
+      }
+    },
+    "doctor_workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "host_geometry_ref", "cached_first", "lazy_details", "scoped_rechecks", "freshness_and_confidence", "requested_effective_split", "owner_routed_remediation", "private_mutations"],
+      "properties": {
+        "contract_kind": {"const": "doctor_workspace"},
+        "plan_unit_ref": {"const": "F3-522"},
+        "host_geometry_ref": {"const": "F3-519"},
+        "cached_first": {"const": true},
+        "lazy_details": {"const": true},
+        "scoped_rechecks": {"const": true},
+        "freshness_and_confidence": {"const": true},
+        "requested_effective_split": {"const": true},
+        "owner_routed_remediation": {"const": true},
+        "private_mutations": {"const": false}
+      }
+    },
+    "hover_tag": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "component", "controller", "min_height_px", "horizontal_padding_px", "single_line_text_px", "detail_text_px", "detail_first_line_emphasized", "max_width_px", "anchor_gap_px", "viewport_margin_px", "pointer_residence_ms", "pointer_stationary_ms", "pointer_radius_px", "focus_dwell_ms", "departure_grace_ms", "standard_entrance_ms", "retro_entrance_ms", "retro_scales", "reduced_motion", "escape_closes", "accessible_relation", "accessible_description_binding", "accessible_role", "visual_setting", "glass_contrast_enforced"],
+      "properties": {
+        "contract_kind": {"const": "hover_tag"},
+        "plan_unit_ref": {"const": "F3-523"},
+        "component": {"const": "PMHoverTag"},
+        "controller": {"const": "HoverTagController"},
+        "min_height_px": {"const": 24},
+        "horizontal_padding_px": {"const": 8},
+        "single_line_text_px": {"const": 12},
+        "detail_text_px": {"const": 11},
+        "detail_first_line_emphasized": {"const": true},
+        "max_width_px": {"const": 280},
+        "anchor_gap_px": {"const": 8},
+        "viewport_margin_px": {"const": 8},
+        "pointer_residence_ms": {"const": 1600},
+        "pointer_stationary_ms": {"const": 1100},
+        "pointer_radius_px": {"const": 5},
+        "focus_dwell_ms": {"const": 1000},
+        "departure_grace_ms": {"const": 160},
+        "standard_entrance_ms": {"const": 240},
+        "retro_entrance_ms": {"const": 140},
+        "retro_scales": {"const": false},
+        "reduced_motion": {"const": "immediate"},
+        "escape_closes": {"const": true},
+        "accessible_relation": {"const": "aria-describedby"},
+        "accessible_description_binding": {"const": "immediate"},
+        "accessible_role": {"const": "tooltip"},
+        "visual_setting": {"const": "general.interaction.show-tooltips"},
+        "glass_contrast_enforced": {"const": true}
+      }
+    },
+    "provider_recovery_connector_presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_kind",
+        "plan_unit_ref",
+        "activity_bar",
+        "automation_binding",
+        "automation_regions",
+        "backup_components",
+        "backup_projection",
+        "snapshot_browse",
+        "recovery_kit_handoff",
+        "connector_projection",
+        "consumer_surfaces",
+        "owner_projection_only",
+        "private_mutations",
+        "handler_state",
+        "event_policy",
+        "expected_event_types",
+        "runtime_evidence_claimed"
+      ],
+      "properties": {
+        "contract_kind": {"const": "provider_recovery_connector_presentation"},
+        "plan_unit_ref": {"const": "F3-528"},
+        "activity_bar": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["canonical_occupant_count", "occupant_id", "label", "legacy_alias", "migration_direction", "duplicate_occupant_allowed", "backup_occupant_added", "connector_occupant_added"],
+          "properties": {
+            "canonical_occupant_count": {"const": 10},
+            "occupant_id": {"const": "repository_automation"},
+            "label": {"const": "Actions & Pipelines"},
+            "legacy_alias": {"const": "github_actions"},
+            "migration_direction": {"const": "read_alias_to_repository_automation"},
+            "duplicate_occupant_allowed": {"const": false},
+            "backup_occupant_added": {"const": false},
+            "connector_occupant_added": {"const": false}
+          }
+        },
+        "automation_binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["identity", "selected_only_when_multiple", "repository_host_inferred_as_automation_provider", "provider_headings"],
+          "properties": {
+            "identity": {"const": "AutomationBinding"},
+            "selected_only_when_multiple": {"const": true},
+            "repository_host_inferred_as_automation_provider": {"const": false},
+            "provider_headings": {
+              "type": "array",
+              "prefixItems": [
+                {"const": "GitHub Actions"},
+                {"const": "GitLab Pipelines"},
+                {"const": "Forgejo Actions"},
+                {"const": "Gitea Actions"}
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            }
+          }
+        },
+        "automation_regions": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "repository_and_automation_context"},
+            {"const": "current_checks"},
+            {"const": "pinned_definitions"},
+            {"const": "definitions_workflows_pipelines"},
+            {"const": "runs"},
+            {"const": "gates_approvals"},
+            {"const": "stage_job_step_detail"},
+            {"const": "logs_trace"},
+            {"const": "artifacts"},
+            {"const": "manual_dispatch"},
+            {"const": "runners_secrets_variables"},
+            {"const": "external_unsupported_explanation"}
+          ],
+          "items": false,
+          "minItems": 12,
+          "maxItems": 12
+        },
+        "backup_components": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "DestinationCard"},
+            {"const": "ScopeCoverageSummary"},
+            {"const": "SnapshotBrowser"},
+            {"const": "RestorePreview"},
+            {"const": "RecoveryKitHandoff"},
+            {"const": "VerificationBadge"},
+            {"const": "RetentionPreview"},
+            {"const": "ObservableWorkProgress"}
+          ],
+          "items": false,
+          "minItems": 8,
+          "maxItems": 8
+        },
+        "backup_projection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scope_explicit", "owner_truth_only", "account_and_decryption_separate", "last_complete_not_latest_attempt", "read_only_retention_preview", "prune_dispatched_from_preview", "status_adds_routine_synced"],
+          "properties": {
+            "scope_explicit": {"const": true},
+            "owner_truth_only": {"const": true},
+            "account_and_decryption_separate": {"const": true},
+            "last_complete_not_latest_attempt": {"const": true},
+            "read_only_retention_preview": {"const": true},
+            "prune_dispatched_from_preview": {"const": false},
+            "status_adds_routine_synced": {"const": false}
+          }
+        },
+        "snapshot_browse": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["read_only", "immutable_repository_snapshot_capture_set", "download_to_initiating_client_only", "extract_requires_authorized_host_and_path", "compare_binds_immutable_and_current", "export_disclosed_as_non_restore", "activates_or_executes_project"],
+          "properties": {
+            "read_only": {"const": true},
+            "immutable_repository_snapshot_capture_set": {"const": true},
+            "download_to_initiating_client_only": {"const": true},
+            "extract_requires_authorized_host_and_path": {"const": true},
+            "compare_binds_immutable_and_current": {"const": true},
+            "export_disclosed_as_non_restore": {"const": true},
+            "activates_or_executes_project": {"const": false}
+          }
+        },
+        "recovery_kit_handoff": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["human_only", "step_up_protected", "no_store", "initiating_client_bound", "non_recordable", "masked_non_secret_state_only", "doctor_consumer_allowed", "agent_nl_api_allowed", "key_or_kit_bytes_visible"],
+          "properties": {
+            "human_only": {"const": true},
+            "step_up_protected": {"const": true},
+            "no_store": {"const": true},
+            "initiating_client_bound": {"const": true},
+            "non_recordable": {"const": true},
+            "masked_non_secret_state_only": {"const": true},
+            "doctor_consumer_allowed": {"const": false},
+            "agent_nl_api_allowed": {"const": false},
+            "key_or_kit_bytes_visible": {"const": false}
+          }
+        },
+        "connector_projection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["disconnected_copy", "owner_truth_only", "headscale_funnel_shown", "serve_toggle_shown", "ordinary_browser_enrolled_by_tsnet", "protected_browser_content_exposed", "connector_secrets_or_raw_state_exposed", "exact_return_focus_preserved"],
+          "properties": {
+            "disconnected_copy": {
+              "type": "array",
+              "prefixItems": [{"const": "Tailscale"}, {"const": "Built into Puppet Master"}, {"const": "Not connected"}, {"const": "[Set Up]"}],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "owner_truth_only": {"const": true},
+            "headscale_funnel_shown": {"const": false},
+            "serve_toggle_shown": {"const": false},
+            "ordinary_browser_enrolled_by_tsnet": {"const": false},
+            "protected_browser_content_exposed": {"const": false},
+            "connector_secrets_or_raw_state_exposed": {"const": false},
+            "exact_return_focus_preserved": {"const": true}
+          }
+        },
+        "consumer_surfaces": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "Settings"},
+            {"const": "Files"},
+            {"const": "Projects"},
+            {"const": "Source Control"},
+            {"const": "Product Onboarding"},
+            {"const": "Doctor"},
+            {"const": "bottom/status"}
+          ],
+          "items": false,
+          "minItems": 7,
+          "maxItems": 7
+        },
+        "owner_projection_only": {"const": true},
+        "private_mutations": {"const": false},
+        "handler_state": {"const": "handler_unavailable"},
+        "event_policy": {"const": "event_silent_pending_event_authority"},
+        "expected_event_types": {"type": "array", "maxItems": 0},
+        "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "source_control_forge_depth_presentation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "source_control_header", "source_control_sections", "git_visual_semantics", "jujutsu_visual_semantics", "review_and_publication", "automation_sections", "capability_states", "related_surfaces", "hosted_administration", "provider_native_vocabulary", "selector_only_when_ambiguous", "owner_projection_only", "private_mutations", "runtime_evidence_claimed"],
+      "properties": {
+        "contract_kind": {"const": "source_control_forge_depth_presentation"}, "plan_unit_ref": {"const": "F3-529"},
+        "source_control_header": {
+          "type": "object", "additionalProperties": false,
+          "required": ["summary_identity", "compact_labels", "details_fields", "infrastructure_identity_overload"],
+          "properties": {
+            "summary_identity": {"type": "array", "prefixItems": [{"const": "repository"}, {"const": "workspace"}], "items": false},
+            "compact_labels": {"type": "array", "prefixItems": [{"const": "local_engine"}, {"const": "hosting_service"}], "items": false},
+            "details_fields": {"type": "array", "prefixItems": [{"const": "home_server"}, {"const": "execution_environment"}, {"const": "source_path"}, {"const": "remote_fetch_targets"}, {"const": "remote_push_targets"}, {"const": "authentication"}, {"const": "observed_revision"}], "items": false},
+            "infrastructure_identity_overload": {"const": false}
+          }
+        },
+        "source_control_sections": {"type": "array", "prefixItems": [{"const": "changes_and_diff"}, {"const": "backend_working_action"}, {"const": "branch_or_bookmark_tracking"}, {"const": "remotes_and_publication"}, {"const": "history_and_graph"}, {"const": "conflicts"}, {"const": "conditional_stashes"}, {"const": "worktrees_or_workspaces"}, {"const": "review_requests"}, {"const": "changed_files_comments_checks"}, {"const": "recovery_or_operation_history"}, {"const": "source_protection_and_backup"}, {"const": "retained_or_explicitly_migrated_live_additional_sections"}], "items": false},
+        "git_visual_semantics": {"type": "object", "additionalProperties": false, "required": ["groups", "diff_kind", "primary_action", "stashes_visible", "workspaces_label"], "properties": {"groups": {"type": "array", "prefixItems": [{"const": "Staged"}, {"const": "Unstaged"}], "items": false}, "diff_kind": {"const": "index_aware"}, "primary_action": {"const": "Commit"}, "stashes_visible": {"const": true}, "workspaces_label": {"const": "Worktrees"}}},
+        "jujutsu_visual_semantics": {"type": "object", "additionalProperties": false, "required": ["groups", "actions", "graph_identities", "graph_states", "staging_visible", "stash_visible", "operation_history_distinct_from_backup", "hidden_git_mutation"], "properties": {"groups": {"type": "array", "prefixItems": [{"const": "Current Change"}, {"const": "Description"}, {"const": "Parent and change context"}, {"const": "Bookmarks and tracking"}, {"const": "Operation History"}], "items": false}, "actions": {"type": "array", "prefixItems": [{"const": "New Change"}, {"const": "Edit"}, {"const": "Split"}, {"const": "Squash"}, {"const": "Abandon"}], "items": false}, "graph_identities": {"type": "array", "prefixItems": [{"const": "stable_change_id"}, {"const": "current_commit_id"}, {"const": "current_at"}], "items": false}, "graph_states": {"type": "array", "prefixItems": [{"const": "rewritten"}, {"const": "abandoned"}, {"const": "conflicted"}, {"const": "local_bookmarks"}, {"const": "remote_bookmarks"}], "items": false}, "staging_visible": {"const": false}, "stash_visible": {"const": false}, "operation_history_distinct_from_backup": {"const": true}, "hidden_git_mutation": {"const": false}}},
+        "review_and_publication": {"type": "object", "additionalProperties": false, "required": ["common_review_shell", "provider_native_detail_label", "fields", "publish_preview_fields", "publish_and_review_separate_by_default", "combined_preview_lists_both_effects", "expected_head_guard", "remote_limit_reasons_visible", "outcome_unknown_distinct_from_failure", "blanket_origin_read_only_badge"], "properties": {"common_review_shell": {"const": true}, "provider_native_detail_label": {"const": true}, "fields": {"type": "array", "prefixItems": [{"const": "native_status"}, {"const": "source_ref"}, {"const": "target_ref"}, {"const": "author"}, {"const": "draft"}, {"const": "permissions"}, {"const": "threads"}, {"const": "checks"}, {"const": "currentness"}], "items": false}, "publish_preview_fields": {"type": "array", "prefixItems": [{"const": "actual_push_destination"}, {"const": "refspecs"}, {"const": "origin_mirror_write_through"}, {"const": "protection"}, {"const": "ci_and_cost_effects"}], "items": false}, "publish_and_review_separate_by_default": {"const": true}, "combined_preview_lists_both_effects": {"const": true}, "expected_head_guard": {"const": true}, "remote_limit_reasons_visible": {"const": true}, "outcome_unknown_distinct_from_failure": {"const": true}, "blanket_origin_read_only_badge": {"const": false}}},
+        "automation_sections": {"type": "array", "prefixItems": [{"const": "current_revision_checks"}, {"const": "pinned_definitions"}, {"const": "available_definitions"}, {"const": "active_and_recent_runs"}, {"const": "queued_scheduled_manual_gates"}, {"const": "run_details"}, {"const": "native_stage_job_step_hierarchy_or_trace"}, {"const": "streamed_logs"}, {"const": "artifacts_and_retention"}, {"const": "environments_deployments_approvals"}, {"const": "runner_secret_variable_links"}, {"const": "external_or_unsupported_explanation"}], "items": false},
+        "capability_states": {"type": "array", "prefixItems": [{"const": "ready"}, {"const": "not_configured"}, {"const": "auth_required"}, {"const": "permission_denied"}, {"const": "policy_blocked"}, {"const": "protected"}, {"const": "unsupported"}, {"const": "adapter_missing"}, {"const": "external_only"}, {"const": "temporarily_unavailable"}, {"const": "stale"}, {"const": "unknown"}], "items": false},
+        "related_surfaces": {"type": "object", "additionalProperties": false, "required": ["files", "artifacts", "testing", "assistant_chat", "bottom_bar"], "properties": {
+          "files": {"type": "array", "prefixItems": [{"const": "engine_correct_decorations_and_ignore"}, {"const": "useful_repository_source_badges"}, {"const": "read_only_backup_preview"}, {"const": "Restore this file"}], "items": false},
+          "artifacts": {"type": "array", "prefixItems": [{"const": "provider_ci"}, {"const": "pm_runtime"}, {"const": "backup_export"}, {"const": "expiry"}, {"const": "checksum"}, {"const": "provenance"}, {"const": "explicit_import_or_download"}, {"const": "download_never_auto_executes"}], "items": false},
+          "testing": {"type": "array", "prefixItems": [{"const": "check_links"}, {"const": "reproduction_receipts"}, {"const": "remote_ci_not_local_test_proof"}], "items": false},
+          "assistant_chat": {"type": "array", "prefixItems": [{"const": "compact_capability_summary"}, {"const": "action_receipts"}, {"const": "no_extra_forge_or_host_banner"}], "items": false},
+          "bottom_bar": {"type": "array", "prefixItems": [{"const": "truthful_publication_backup_connector_work"}, {"const": "no_routine_synced"}, {"const": "no_secret_content"}, {"const": "no_backup_as_token_usage"}], "items": false}
+        }},
+        "hosted_administration": {"type": "object", "additionalProperties": false, "required": ["areas", "read_write_independent", "versioned_provider_field_schema", "external_only_labeled", "secret_readback", "runner_requires_host_and_consent", "enable_ci_registers_runner"], "properties": {"areas": {"type": "array", "prefixItems": [{"const": "repository_and_branch_policy"}, {"const": "ci_environments_and_deployment_approvals"}, {"const": "secrets_and_variables"}, {"const": "runner_list_registration_removal"}, {"const": "release_assets"}], "items": false}, "read_write_independent": {"const": true}, "versioned_provider_field_schema": {"const": true}, "external_only_labeled": {"const": true}, "secret_readback": {"const": false}, "runner_requires_host_and_consent": {"const": true}, "enable_ci_registers_runner": {"const": false}}},
+        "provider_native_vocabulary": {"const": true}, "selector_only_when_ambiguous": {"const": true}, "owner_projection_only": {"const": true}, "private_mutations": {"const": false}, "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "evidence_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "native_target", "rust_toolchain", "widths_px", "themes", "motion_modes", "evidence_classes", "evidence_classes_interchangeable", "browser_is_native_certification", "static_is_runtime_proof", "resample_to_claim_60fps"],
+      "properties": {
+        "contract_kind": {"const": "evidence_boundary"},
+        "plan_unit_ref": {"const": "F3-524"},
+        "native_target": {"const": "Slint 1.17.1"},
+        "rust_toolchain": {"const": "stable"},
+        "widths_px": {
+          "type": "array",
+          "prefixItems": [
+            {"const": 320}, {"const": 520}, {"const": 680}, {"const": 720}, {"const": 750}, {"const": 760},
+            {"const": 860}, {"const": 900}, {"const": 960}, {"const": 975}, {"const": 980}, {"const": 1180},
+            {"const": 1200}, {"const": 1280}, {"const": 1440}, {"const": 1700}, {"const": 2200}, {"const": 2500}
+          ],
+          "items": false,
+          "minItems": 18,
+          "maxItems": 18
+        },
+        "themes": {"$ref": "#/$defs/theme_order"},
+        "motion_modes": {"type": "array", "prefixItems": [{"const": "full"}, {"const": "reduced"}], "items": false, "minItems": 2, "maxItems": 2},
+        "evidence_classes": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "static"},
+            {"const": "schema"},
+            {"const": "browser"},
+            {"const": "visual"},
+            {"const": "motion"},
+            {"const": "accessibility"},
+            {"const": "performance"},
+            {"const": "native_runtime"},
+            {"const": "certification"}
+          ],
+          "items": false,
+          "minItems": 9,
+          "maxItems": 9
+        },
+        "evidence_classes_interchangeable": {"const": false},
+        "browser_is_native_certification": {"const": false},
+        "static_is_runtime_proof": {"const": false},
+        "resample_to_claim_60fps": {"const": false}
+      }
+    }
+  }
+}

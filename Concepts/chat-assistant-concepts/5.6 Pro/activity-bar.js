@@ -36,7 +36,7 @@
   var EXT = window.PM56_EXT;
   if (!EXT || !EXT.slot) return;
 
-  var DOMAINS = ['goal', 'todo', 'subagents', 'changes', 'artifacts'];
+  var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'changes', 'artifacts'];
   var ROWS = 5;                 /* every list in every card caps here, then "+N more" */
 
   /* ---------------------------------------------------------------- utils */
@@ -47,6 +47,21 @@
   }
   function num(v) { var n = Number(v); return isFinite(n) ? n : 0; }
   function list(v) { return Array.isArray(v) ? v : []; }
+  function coll(ctx) {
+    if (ctx.activityScope) return ctx.activityScope();
+    return {
+      live: { goal: true, todo: true, subagents: true, crew: false, changes: true, artifacts: true },
+      todos: list(ctx.D.todos),
+      subagents: list(ctx.D.subagents),
+      crew: [],
+      changes: list(ctx.D.changes),
+      artifacts: list(ctx.D.artifacts),
+      hasGoal: true,
+      hasAttachedGoal: true,
+      hasSubagents: list(ctx.D.subagents).length > 0,
+      hasCrew: false
+    };
+  }
   function count(arr, fn) { var n = 0; for (var i = 0; i < arr.length; i++) if (fn(arr[i])) n++; return n; }
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
   function compact(n) {
@@ -146,14 +161,14 @@
   var STATUS = {
     blocked: { label: 'Blocked', tone: 'blocked', icon: 'lock' },
     failed: { label: 'Failed', tone: 'blocked', icon: 'warning' },
-    error: { label: 'Error', tone: 'blocked', icon: 'warning' },
-    deleted: { label: 'Deleted', tone: 'blocked', icon: 'minus' },
+    error: { label: 'Needs retry', tone: 'attention', icon: 'refresh' },
+    deleted: { label: 'Deleted', tone: 'changed', icon: 'minus' },
     retrying: { label: 'Retrying', tone: 'attention', icon: 'refresh' },
     fallback: { label: 'Fallback route', tone: 'attention', icon: 'branch' },
     replanned: { label: 'Replanned', tone: 'attention', icon: 'refresh' },
     stale: { label: 'Stale', tone: 'attention', icon: 'history' },
     waiting: { label: 'Waiting', tone: 'attention', icon: 'pause' },
-    renamed: { label: 'Renamed', tone: 'attention', icon: 'fork' },
+    renamed: { label: 'Renamed', tone: 'changed', icon: 'fork' },
     in_progress: { label: 'Active', tone: 'working', icon: 'play' },
     doing: { label: 'Active', tone: 'working', icon: 'play' },
     running: { label: 'Active', tone: 'working', icon: 'play' },
@@ -168,7 +183,7 @@
     done: { label: 'Done', tone: 'done', icon: 'check' },
     complete: { label: 'Complete', tone: 'done', icon: 'check' },
     ready: { label: 'Ready', tone: 'done', icon: 'check' },
-    added: { label: 'Added', tone: 'done', icon: 'plus' },
+    added: { label: 'Added', tone: 'changed', icon: 'plus' },
     skipped: { label: 'Skipped', tone: 'muted', icon: 'minus' }
   };
   /* Most-urgent first. A five-row preview of fourteen agents must show the
@@ -184,20 +199,21 @@
   function st(status) {
     return STATUS[status] || { label: humanize(status), tone: 'idle', icon: 'todo' };
   }
+  window.PM56_ACTIVITY_STATUS = {
+    get: function (status) {
+      var value = st(status);
+      return { label: value.label, tone: value.tone, icon: value.icon };
+    },
+    toneLabel: function (tone) {
+      return {
+        blocked: 'Blocked', attention: 'Needs attention', working: 'Working',
+        changed: 'Changed', done: 'Settled', idle: 'Queued', muted: 'Inactive'
+      }[tone] || humanize(tone);
+    }
+  };
   function rankOf(status) { var i = RANK.indexOf(status); return i < 0 ? RANK.length : i; }
   function byRank(arr) {
     return arr.slice().sort(function (a, b) { return rankOf(a.status) - rankOf(b.status); });
-  }
-  /* Histogram over EVERY status present, in rank order — so the footer always
-     sums to the collection size. The first version listed four hand-picked
-     buckets and reported 10 of 14 agents. */
-  function histogram(arr) {
-    var m = Object.create(null);
-    arr.forEach(function (x) { var k = x && x.status ? x.status : 'unknown'; m[k] = (m[k] || 0) + 1; });
-    return Object.keys(m)
-      .sort(function (a, b) { return rankOf(a) - rankOf(b); })
-      .map(function (k) { return m[k] + ' ' + st(k).label.toLowerCase(); })
-      .join(' · ');
   }
   var TONE_PRIORITY = ['blocked', 'attention', 'working', 'changed', 'done', 'idle', 'muted'];
   function worstTone(arr) {
@@ -214,38 +230,37 @@
   function barTone(id, ctx) {
     var D = ctx.D, defs = ctx.activityDefs();
     if (id === 'goal') {
-      /* The Goals agent owns goal state. Prefer its tone, then app.js's derived
-         one; never compute it here. `paused` has no icon vocabulary of its own
-         — a paused goal is not working and is not a problem. */
-      var api = goalApi();
+      /* The Goals agent owns goal state on a thread that actually has a
+         durable goal. Goal Mode can publish a stub domain on other threads;
+         those must not inherit Query Performance's tone. */
+      var attached = !!(coll(ctx).hasAttachedGoal || (defs.goal && defs.goal.attached));
+      var api = attached ? goalApi() : null;
       var s = api && api.summary && api.summary();
       var t = (s && s.tone) || (defs.goal && defs.goal.tone);
       if (t === 'paused') return 'idle';
-      /* summary().tone reports `blocked` for budget_limited too. Budget
-         exhaustion is a stop, not a fault, and it is emphatically not
-         completion — amber, not red. (Wave 2 Goals confirmed the distinction
-         lives on summary().status, not on tone.) */
       var gstatus = (s && s.status) || (api && api.get && api.get() && api.get().status) ||
-        (ctx.D.goal && ctx.D.goal.status);
+        (attached && ctx.D.goal && ctx.D.goal.status);
       if (gstatus === 'budget_limited') return 'attention';
       if (gstatus === 'stopped' || gstatus === 'cleared') return 'idle';
       return TONES.indexOf(t) >= 0 ? t : 'idle';
     }
     /* A dirty working tree is a fact, not an activity: steady `changed`, never
        a pulse, whatever the individual file statuses are. */
-    if (id === 'changes') return list(D.changes).length ? 'changed' : 'idle';
+    if (id === 'changes') return list(coll(ctx).changes).length ? 'changed' : 'idle';
     if (id === 'artifacts') {
       /* A recoverable renderer error is `attention`, never `blocked`. Painting
          it the same red as a policy-blocked schema change is what made the old
          status lights meaningless. */
-      var t2 = worstTone(list(D.artifacts));
+      var t2 = worstTone(list(coll(ctx).artifacts));
       return t2 === 'blocked' ? 'attention' : t2;
     }
-    return worstTone(list(id === 'todo' ? D.todos : D.subagents));
+    var sc = coll(ctx);
+    if (id === 'crew') return worstTone(list(sc.crew));
+    return worstTone(list(id === 'todo' ? sc.todos : sc.subagents));
   }
 
   function diffTotals(ctx) {
-    var ch = list(ctx.D.changes), add = 0, del = 0;
+    var ch = list(coll(ctx).changes), add = 0, del = 0;
     for (var i = 0; i < ch.length; i++) { add += num(ch[i].add); del += num(ch[i].del); }
     return { add: add, del: del, files: ch.length };
   }
@@ -257,14 +272,30 @@
   function setAttr(el, name, value) {
     if (el.getAttribute(name) !== value) el.setAttribute(name, value);
   }
+  function delAttr(el, name) {
+    if (el.hasAttribute(name)) el.removeAttribute(name);
+  }
+  function delVar(el, name) {
+    if (el.style.getPropertyValue(name)) el.style.removeProperty(name);
+  }
   function setVar(el, name, value) {
     if (el.style.getPropertyValue(name) !== value) el.style.setProperty(name, value);
   }
   function syncIndicators(ctx) {
     var root = document.documentElement, body = document.body;
     if (!root || !body) return;
+    var live = coll(ctx).live || {};
     for (var i = 0; i < DOMAINS.length; i++) {
-      var id = DOMAINS[i], tone = barTone(id, ctx);
+      var id = DOMAINS[i];
+      if (live[id] === false || (live[id] == null && !(ctx.activityDefs() || {})[id])) {
+        delAttr(root, 'data-ab-' + id);
+        delVar(body, '--ab-ink-' + id);
+        delVar(body, '--ab-anim-' + id);
+        delVar(body, '--ab-shadow-' + id);
+        delVar(body, '--ab-stroke-' + id);
+        continue;
+      }
+      var tone = barTone(id, ctx);
       setAttr(root, 'data-ab-' + id, tone);
       /* The ink is written as `var(--danger)` rather than a resolved colour so
          a theme swap needs no re-sync. It is set on <body> — NOT <html> —
@@ -297,8 +328,10 @@
       '<span class="ab-head-meta">' + esc(meta) + '</span>' +
       '</div>';
   }
-  function foot(text) {
-    return text ? '<div class="ab-foot" data-k="ab-foot">' + esc(text) + '</div>' : '';
+  function foot(ctx, id) {
+    return '<button class="ab-foot" type="button" data-k="ab-foot" data-action="open-activity" data-domain="' +
+      esc(id) + '" aria-label="Open ' + esc(id) + ' Activity Detail"><span>Open Activity</span>' +
+      ctx.icon('chevron', 11) + '</button>';
   }
   function row(opts) {
     var tag = opts.action ? 'button' : 'div';
@@ -312,9 +345,6 @@
       (opts.right || '') +
       '</' + tag + '>';
   }
-  function glyph(ctx, name, tone) {
-    return '<span class="ab-glyph" data-tone="' + esc(tone) + '">' + ctx.icon(name, 11) + '</span>';
-  }
 
   /* ------------------------------------------------------------------ goal
      Authored by the Wave 2 Goals agent, not here. PM56_GOAL.render.compact()
@@ -323,10 +353,11 @@
      resort so the card still says something true with no goal fixture at all. */
   function goalCard(ctx, def) {
     var api = goalApi(), body = '';
-    if (api && api.render && typeof api.render.compact === 'function') {
+    var attached = !!(coll(ctx).hasAttachedGoal || (def && def.attached));
+    if (attached && api && api.render && typeof api.render.compact === 'function') {
       try { body = api.render.compact(ctx) || ''; } catch (e) { body = ''; }
     }
-    if (!body && api && api.summary) {
+    if (!body && attached && api && api.summary) {
       var s = api.summary(), g = api.get && api.get();
       body = '<p class="ab-objective" data-k="ab-obj">' + esc((g && (g.title || g.objective)) || def.summary) + '</p>' +
         '<div class="ab-goal-lines" data-k="ab-goal-lines">' +
@@ -336,36 +367,37 @@
         '</div>';
     }
     if (!body) {
-      /* No goal module loaded. app.js's goalSummary() still gives real
-         phase counts (from D.goal when it exists, from its one clearly
-         labelled fallback when it does not) — so render the progression as
-         pips rather than as "phase 2 of 4" prose. */
+      body = '<p class="ab-objective" data-k="ab-obj">' + esc(def.summary) + '</p>' +
+        '<div class="ab-goal-lines" data-k="ab-goal-lines"><span>' +
+        esc(def.detail || def.summary) + '</span></div>';
       var parts = String(def.count || '').split('/');
       var done = num(parts[0]), total = num(parts[1]);
-      var pips = '';
-      for (var i = 0; i < total; i++) {
-        pips += '<i data-state="' + (i < done ? 'completed' : i === done ? 'in_progress' : 'pending') +
-          '" title="Phase ' + (i + 1) + '"></i>';
+      if (total) {
+        var pips = '';
+        for (var i = 0; i < total; i++) {
+          pips += '<i data-state="' + (i < done ? 'completed' : i === done ? 'in_progress' : 'pending') +
+            '" title="Phase ' + (i + 1) + '"></i>';
+        }
+        body = '<p class="ab-objective" data-k="ab-obj">' + esc(def.summary) + '</p>' +
+          '<div class="ab-pips" data-k="ab-pips">' + pips + '</div>' +
+          '<div class="ab-goal-lines" data-k="ab-goal-lines"><span>' +
+          esc(done + ' of ' + total + ' phases complete') + '</span></div>';
       }
-      body = '<p class="ab-objective" data-k="ab-obj">' + esc(def.summary) + '</p>' +
-        (total ? '<div class="ab-pips" data-k="ab-pips">' + pips + '</div>' : '') +
-        '<div class="ab-goal-lines" data-k="ab-goal-lines"><span>' +
-        esc(done + ' of ' + total + ' phases complete') + '</span></div>';
     }
-    return head(ctx, 'goal', def, def.count) + '<div class="ab-body" data-k="ab-body">' + body + '</div>';
+    return head(ctx, 'goal', def, def.count) + '<div class="ab-body" data-k="ab-body">' + body + '</div>' +
+      foot(ctx, 'goal');
   }
 
   /* ------------------------------------------------------------------ todo */
   var DONE_TODO = ['done', 'completed'];
   function todoCard(ctx, def) {
-    var todos = list(ctx.D.todos);
+    var todos = list(coll(ctx).todos);
     var done = count(todos, function (x) { return DONE_TODO.indexOf(x.status) >= 0; });
     var shown = byRank(todos).slice(0, ROWS);
     var body = shown.length ? shown.map(function (x) {
       var s = st(x.status);
       return row({
         k: 'todo:' + (x.id || x.label), state: s.tone,
-        lead: glyph(ctx, s.icon, s.tone),
         main: x.label,
         sub: [x.source, x.blocker].filter(Boolean).join(' · '),
         right: '<span class="ab-row-right"><b data-tone="' + s.tone + '">' + esc(s.label) + '</b></span>',
@@ -374,7 +406,7 @@
     }).join('') : empty('No todos recorded for this thread.');
     return head(ctx, 'todo', def, todos.length ? done + '/' + todos.length + ' done' : '0') +
       '<div class="ab-body" data-k="ab-body">' + body + overflow(todos.length, shown.length) + '</div>' +
-      foot(histogram(todos));
+      foot(ctx, 'todo');
   }
 
   /* ------------------------------------------------------------- subagents */
@@ -382,16 +414,15 @@
     return String(name || '?').split(/\s+/).map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase();
   }
   function agentCard(ctx, def) {
-    var agents = list(ctx.D.subagents);
+    var agents = list(coll(ctx).subagents);
     var shown = byRank(agents).slice(0, ROWS);
     var body = shown.length ? shown.map(function (a) {
       var s = st(a.status);
       return row({
         k: 'agent:' + a.id, state: s.tone, action: 'open-agent',
         attrs: ' data-id="' + esc(a.id) + '"',
-        lead: '<span class="ab-avatar" data-tone="' + s.tone + '">' + esc(initials(a.name)) + '</span>',
-        main: a.name + (a.model ? ' · ' + a.model : ''),
-        sub: a.blocker || a.current || '',
+        main: a.name,
+        sub: [a.model, a.blocker || a.current].filter(Boolean).join(' · '),
         right: '<span class="ab-row-right"><b data-tone="' + s.tone + '">' + esc(s.label) + '</b>' +
           (a.elapsed ? '<i>' + esc(a.elapsed) + '</i>' : '') + '</span>',
         title: 'Open ' + (a.name || 'agent')
@@ -399,7 +430,27 @@
     }).join('') : empty('No child agents on this thread.');
     return head(ctx, 'subagents', def, agents.length + ' total') +
       '<div class="ab-body" data-k="ab-body">' + body + overflow(agents.length, shown.length) + '</div>' +
-      foot(histogram(agents));
+      foot(ctx, 'subagents');
+  }
+
+  /* ------------------------------------------------------------------ crew */
+  function crewCard(ctx, def) {
+    var crew = list(coll(ctx).crew);
+    var shown = byRank(crew).slice(0, ROWS);
+    var body = shown.length ? shown.map(function (a) {
+      var s = st(a.status);
+      return row({
+        k: 'crew:' + a.id, state: s.tone,
+        lead: '<span class="ab-avatar" data-tone="' + s.tone + '">' + esc(initials(a.name)) + '</span>',
+        main: a.name,
+        sub: a.current || '',
+        right: '<span class="ab-row-right"><b data-tone="' + s.tone + '">' + esc(s.label) + '</b></span>',
+        title: a.name
+      });
+    }).join('') : empty('Crew Mode is on. No members assigned yet.');
+    return head(ctx, 'crew', def, crew.length + ' members') +
+      '<div class="ab-body" data-k="ab-body">' + body + overflow(crew.length, shown.length) + '</div>' +
+      foot(ctx, 'crew');
   }
 
   /* --------------------------------------------------------------- changes */
@@ -408,7 +459,7 @@
     return { dir: i < 0 ? '' : s.slice(0, i + 1), file: i < 0 ? s : s.slice(i + 1) };
   }
   function changeCard(ctx, def) {
-    var changes = list(ctx.D.changes), t = diffTotals(ctx);
+    var changes = list(coll(ctx).changes), t = diffTotals(ctx);
     /* Biggest diffs first — a five-row preview of a twelve-file change set
        should show the files that moved the most, not the first five ids. */
     var shown = changes.slice().sort(function (a, b) {
@@ -419,7 +470,6 @@
       return row({
         k: 'change:' + (c.id || c.path), state: s.tone, action: 'open-change',
         attrs: ' data-path="' + esc(c.path) + '"',
-        lead: glyph(ctx, s.icon, s.tone),
         main: sp.file + (c.line ? ':' + c.line : ''),
         sub: sp.dir || c.summary || '',
         right: '<span class="ab-row-right ab-diff"><b>+' + num(c.add) + '</b><i>−' + num(c.del) + '</i></span>',
@@ -428,24 +478,18 @@
     }).join('') : empty('No file changes in this worktree.');
     return head(ctx, 'changes', def, changes.length ? '+' + t.add + ' −' + t.del : '0 files') +
       '<div class="ab-body" data-k="ab-body">' + body + overflow(changes.length, shown.length) + '</div>' +
-      foot(changes.length ? plural(changes.length, 'file', 'files') + ' · ' + histogram(changes) : '');
+      foot(ctx, 'changes');
   }
 
   /* ------------------------------------------------------------- artifacts */
-  var ART_ICON = {
-    image: 'image', mermaid: 'code', chart: 'chart', dashboard: 'chart',
-    plan: 'document', document: 'document', evidence: 'flask', data: 'terminal',
-    architecture: 'globe', quiz: 'todo', periodic: 'artifact', flowchart: 'fork'
-  };
   function artifactCard(ctx, def) {
-    var arts = list(ctx.D.artifacts);
+    var arts = list(coll(ctx).artifacts);
     var shown = byRecency(arts).slice(0, ROWS);
     var body = shown.length ? shown.map(function (a) {
       var s = st(a.status);
       return row({
         k: 'art:' + a.id, state: s.tone, action: 'open-artifact',
         attrs: ' data-id="' + esc(a.id) + '" data-artifact-id="' + esc(a.id) + '"',
-        lead: glyph(ctx, ART_ICON[a.kind] || 'artifact', s.tone),
         main: a.title,
         sub: [a.kind, a.version ? 'v' + a.version : ''].filter(Boolean).join(' · '),
         right: '<span class="ab-row-right"><b>' + esc(whenLabel(a)) + '</b>' +
@@ -453,13 +497,13 @@
         title: 'Open ' + (a.title || 'artifact')
       });
     }).join('') : empty('Nothing rendered yet on this thread.');
-    return head(ctx, 'artifacts', def, arts.length ? shown.length + ' of ' + arts.length : '0') +
+    return head(ctx, 'artifacts', def, arts.length ? arts.length + ' total' : '0') +
       '<div class="ab-body" data-k="ab-body">' + body + '</div>' +
-      foot(histogram(arts));
+      foot(ctx, 'artifacts');
   }
 
   var CARDS = {
-    goal: goalCard, todo: todoCard, subagents: agentCard,
+    goal: goalCard, todo: todoCard, subagents: agentCard, crew: crewCard,
     changes: changeCard, artifacts: artifactCard
   };
 
@@ -467,12 +511,14 @@
     var id = ctx.domain, def = ctx.def || (ctx.activityDefs() || {})[id];
     var build = CARDS[id];
     if (!def || !build) return '';
+    if (coll(ctx).live && coll(ctx).live[id] === false) return '';
     /* data-k on the card itself: #pmOverlayRoot is reconciled positionally for
        unkeyed nodes, so an unkeyed hover card can be matched against a toast
        stack (both plain divs) on the 2s work tick. Keyed, it is matched by
        identity and simply patched in place — no entrance replay. */
-    return '<div class="hover-card ab-card" data-overlay="hover" data-k="ab-card" ' +
-      'data-domain="' + esc(id) + '" data-tone="' + barTone(id, ctx) + '" role="tooltip">' +
+    return '<div class="hover-card ab-card" id="activity-domain-preview" data-overlay="hover" data-k="ab-card" ' +
+      'data-domain="' + esc(id) + '" data-tone="' + barTone(id, ctx) +
+      '" role="dialog" aria-modal="false" aria-label="' + esc(def.label) + ' activity preview">' +
       build(ctx, def) + '</div>';
   });
 
@@ -490,6 +536,40 @@
      cannot race, and using the same `:hover` re-check so crossing the 8px gap
      back to the button does not close it. */
   var leaveTimer = null;
+  window.PM56_AB = window.PM56_AB || {};
+  window.PM56_AB.dismissActivityHover = function () { clearTimeout(leaveTimer); };
+  document.addEventListener('focusin', function (e) {
+    var anchor = e.target && e.target.closest && e.target.closest('[data-hover-domain]');
+    if (!anchor) return;
+    if (window.PM56_AB && window.PM56_AB.suppressNextFocusPreview) {
+      window.PM56_AB.suppressNextFocusPreview = false;
+      return;
+    }
+    clearTimeout(leaveTimer);
+    var ext = window.PM56_EXT;
+    if (!ext || typeof ext.ctx !== 'function') return;
+    var ctx = ext.ctx();
+    var domain = anchor.dataset.hoverDomain;
+    if (!domain || !(ctx.activityDefs() || {})[domain]) return;
+    ctx.state.hover = { type: 'activity', domain: domain };
+    ctx.renderOverlays();
+  });
+  document.addEventListener('focusout', function (e) {
+    var from = e.target && e.target.closest && e.target.closest('[data-hover-domain], .ab-card');
+    if (!from) return;
+    clearTimeout(leaveTimer);
+    leaveTimer = setTimeout(function () {
+      var active = document.activeElement;
+      if (active && active.closest && active.closest('[data-hover-domain], .ab-card')) return;
+      var ext = window.PM56_EXT;
+      if (!ext || typeof ext.ctx !== 'function') return;
+      var ctx = ext.ctx();
+      if (ctx && ctx.state && ctx.state.hover && ctx.state.hover.type === 'activity') {
+        ctx.state.hover = null;
+        ctx.renderOverlays();
+      }
+    }, 180);
+  });
   document.addEventListener('pointerout', function (e) {
     var t = e.target;
     if (!t || !t.closest) return;

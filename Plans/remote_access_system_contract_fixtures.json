@@ -1,0 +1,4704 @@
+{
+  "schema_id": "pm.remote_access_system.contract_fixtures.v1",
+  "contract_schema_id": "pm.remote_access_system.contracts.v1",
+  "evidence_level": "schema_fixture_only",
+  "owner_schema": "Plans/remote_access_system_contracts.schema.json",
+  "claim_boundary": "Fixture/schema validation proves the static RAS-015 Go tsnet connector, command/alias, migration, redaction, coexistence, and backup-exclusion shapes and named invariants only; it does not prove a connector binary, signatures, central command registration, native handlers, production wiring, Event Authority admission, IPC authentication, state persistence, tailnet enrollment, WAN behavior, public security effectiveness, E2E protection, backup/restore execution, native/web visuals, readiness, or certification. TSN-001..020 and TSX-001..005 remain runtime NOT_RUN.",
+  "coverage": {
+    "primary_command_count": 44,
+    "primary_command_ids": [
+      "cmd.remote_access.open",
+      "cmd.remote_access.set_enabled",
+      "cmd.remote_access.route.set_policy",
+      "cmd.remote_access.route.test",
+      "cmd.remote_access.route.retry",
+      "cmd.remote_access.route.open_details",
+      "cmd.remote_access.open_logs",
+      "cmd.remote_access.tailscale.connector.check",
+      "cmd.remote_access.tailscale.connector.restart",
+      "cmd.remote_access.tailscale.identity.reset",
+      "cmd.remote_access.tailscale.disable",
+      "cmd.remote_access.tailscale.headscale.start",
+      "cmd.remote_access.tailscale.headscale.submit_registration",
+      "cmd.remote_access.tailscale.login.resume",
+      "cmd.remote_access.tailscale.login.start",
+      "cmd.remote_access.tailscale.setup.start",
+      "cmd.remote_access.tailscale.sign_out",
+      "cmd.remote_access.tailscale.test",
+      "cmd.remote_access.funnel.preflight",
+      "cmd.remote_access.funnel.enable",
+      "cmd.remote_access.funnel.test",
+      "cmd.remote_access.funnel.disable",
+      "cmd.remote_access.funnel.restore",
+      "cmd.remote_access.proxy.preview",
+      "cmd.remote_access.proxy.generate",
+      "cmd.remote_access.proxy.export",
+      "cmd.remote_access.proxy.set_external_origin",
+      "cmd.remote_access.proxy.set_trusted_proxies",
+      "cmd.remote_access.proxy.test",
+      "cmd.remote_access.proxy.disable",
+      "cmd.remote_access.proxy.open_details",
+      "cmd.remote_access.remote_link.setup",
+      "cmd.remote_access.remote_link.enable",
+      "cmd.remote_access.remote_link.disable",
+      "cmd.remote_access.remote_link.retry",
+      "cmd.remote_access.remote_link.copy_address",
+      "cmd.remote_access.remote_link.open",
+      "cmd.remote_access.remote_link.rotate_recovery_key",
+      "cmd.remote_access.remote_link.configure_gateway",
+      "cmd.remote_access.remote_link.open_details",
+      "cmd.remote_access.private_endpoint.add",
+      "cmd.remote_access.private_endpoint.update",
+      "cmd.remote_access.private_endpoint.test",
+      "cmd.remote_access.private_endpoint.remove"
+    ],
+    "payload_positive_case_count": 44,
+    "compatibility_alias_count": 8,
+    "compatibility_aliases": [
+      {
+        "input_id": "cmd.remote_access.open_details",
+        "canonical_target": "cmd.remote_access.route.open_details",
+        "normalization_rule": "direct_alias"
+      },
+      {
+        "input_id": "cmd.remote_access.tailscale.check",
+        "canonical_target": "cmd.remote_access.tailscale.connector.check",
+        "normalization_rule": "direct_alias"
+      },
+      {
+        "input_id": "cmd.remote_access.tailscale.configure",
+        "canonical_target": "cmd.remote_access.tailscale.setup.start",
+        "normalization_rule": "direct_alias"
+      },
+      {
+        "input_id": "cmd.remote_access.remote_link.test",
+        "canonical_target": "cmd.remote_access.route.test",
+        "normalization_rule": "pre_validation_alias"
+      },
+      {
+        "input_id": "cmd.remote_access.tailscale.component.check",
+        "canonical_target": "cmd.remote_access.tailscale.connector.check",
+        "normalization_rule": "pre_policy_alias"
+      },
+      {
+        "input_id": "cmd.remote_access.tailscale.serve.enable",
+        "canonical_target": "cmd.remote_access.tailscale.setup.start",
+        "normalization_rule": "pre_policy_alias_with_fixed_scope"
+      },
+      {
+        "input_id": "cmd.remote_access.tailscale.serve.test",
+        "canonical_target": "cmd.remote_access.tailscale.test",
+        "normalization_rule": "pre_policy_alias"
+      },
+      {
+        "input_id": "cmd.remote_access.tailscale.serve.disable",
+        "canonical_target": "cmd.remote_access.tailscale.disable",
+        "normalization_rule": "pre_policy_alias_with_fixed_scope"
+      }
+    ],
+    "owner_closure": {
+      "legacy_hosted_tailscale_auth_handoff_positive_cases": 4,
+      "legacy_hosted_tailscale_auth_handoff_negative_cases": 7,
+      "headscale_hosted_distinction_negative_cases": 2,
+      "funnel_consent_preflight_negative_cases": 4,
+      "route_migration_identity_currentness_negative_cases": 2,
+      "callback_protected_content_negative_cases": 1,
+      "remote_primary_command_count_after_delta": 44,
+      "remote_primary_command_delta": -1,
+      "browser_auth_command_count_added": 0,
+      "connector_primary_count_added": 3,
+      "legacy_primary_count_demoted": 4,
+      "connector_commands_begin_handler_unavailable": true,
+      "connector_expected_event_types_empty": true,
+      "settings_backend_selector_added": false,
+      "connector_state_count": 17,
+      "tsn_tsx_runtime_status": "NOT_RUN"
+    },
+    "compatibility_reference_positive_case_count": 2,
+    "compatibility_reference_negative_case_count": 3,
+    "remote_link_test_normalizes_before_typed_request": true
+  },
+  "semantic_rules": {
+    "exact_return_context": "request and result command_id, command_instance_id, correlation_id, and return_context must be byte-equivalent JSON values",
+    "command_action_parity": "command_result.command_id must equal command_result.output.action",
+    "protected_auth_exact_return": "hosted Tailscale protected authentication has one durable Server-owned operation; refresh and Client loss do not cancel it, while every protected open requires a current authorized Client/session handoff for that exact operation and generation and transfers no browser contents or cookies",
+    "protected_auth_no_content_surface": "protected authentication exposes no content and permits no caller navigation, capture, recording, or persistence",
+    "funnel_consent_and_preflight": "Funnel is hosted-Tailscale-only, off by default, and requires separately keyed explicit consent plus a current exact-generation preflight before enablement",
+    "route_migration_identity_currentness": "completed migration requires matched existing-Server endpoint/fingerprint evidence and current expected Server/endpoint/route generations",
+    "connector_identity": "exactly one active connector node is bound per stable server_id; external host Tailscale remains unmanaged and is deduplicated only after PM Server identity verification",
+    "private_funnel_separation": "private tsnet listener starts automatically after approved enrollment and remains independent of explicit hosted-only Funnel; Headscale remains private and Funnel disable preserves private access",
+    "connector_backup_exclusion": "Project copy/move/backup/source capture always exclude connector state; portable Full Server default excludes it; restore cannot create two live copies of one connector identity"
+  },
+  "fixture_summary": {
+    "total_cases": 171,
+    "positive_cases": 94,
+    "negative_cases": 77,
+    "preserved_system_positive_cases": 7,
+    "preserved_system_negative_cases": 9,
+    "merged_short_positive_cases": 64,
+    "merged_short_negative_cases": 28,
+    "added_action_parity_negative_cases": 1,
+    "owner_closure_positive_cases": 4,
+    "owner_closure_negative_cases": 16,
+    "server_gap_compatibility_ref_positive_cases": 2,
+    "server_gap_compatibility_ref_negative_cases": 3,
+    "server_gap_compatibility_alias_positive_cases": 1,
+    "ras_015_connector_positive_cases": 13,
+    "ras_015_alias_positive_cases": 4,
+    "ras_015_connector_negative_cases": 20,
+    "legacy_serve_payload_positive_cases": 0,
+    "runtime_scenarios_run": 0
+  },
+  "source_sha256": {
+    "Plans/remote_access_system_contracts.schema.json": "54a8288b6fd9d78995b1a541e6a9b82cd000bb0cd6de6bfd2ffbac8f395016e9",
+    "Plans/remote_access_system_contract_fixtures.json": "8faa9f2973fc65039b576e14cd965f60a7c0bfba1c282de0364a4b56feab4e78",
+    "Plans/remote_access_contracts.schema.json": "6e83a6a7b1abbb2baff2911a48ec6bc7b3454afe1c52c1b01248c6e58d9251e1",
+    "Plans/remote_access_contract_fixtures.json": "c384992bcf204af47fbb38bc1137a3113e7c54b5fab1171f458797b633643882"
+  },
+  "valid": [
+    {
+      "name": "private_tailscale_route_is_verified_beneath_existing_server",
+      "definition": "remote_route_record",
+      "value": {
+        "schema_id": "pm.remote_access_system.remote_route_record.v1",
+        "schema_version": "1.0.0",
+        "remote_route_id": "remote-route:tailscale-01",
+        "server_id": "server:home-01",
+        "server_endpoint_id": "server-endpoint:tailscale-01",
+        "route_type": "tailscale_private",
+        "route_generation": 4,
+        "transport_generation": 3,
+        "address_ref": "endpoint:tailscale:home-01",
+        "public_ingress": false,
+        "identity_verification": "verified",
+        "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "state": "active",
+        "preference_rank": 2,
+        "user_enabled": true,
+        "security_policy_ref": "policy:remote-private:default",
+        "configuration_ref": "tailscale-config:home-01",
+        "last_test_receipt_ref": "receipt:remote-test:tailscale-01",
+        "failure_ref": null,
+        "created_at_utc": "2026-08-31T12:00:00Z",
+        "updated_at_utc": "2026-08-31T12:02:00Z",
+        "currentness_ref": "currentness:remote-route:tailscale-01:4",
+        "policy_generation": 1,
+        "visibility": "private",
+        "preferred": false,
+        "persisted_at": "2026-08-31T12:02:00Z"
+      }
+    },
+    {
+      "name": "headscale_0_29_3_serve_and_funnel_effective_false",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:headscale-01",
+        "server_id": "server:home-01",
+        "mode": "headscale",
+        "control_plane_version": "0.29.3",
+        "component_state": "ready",
+        "installation_disposition": "packaged_dormant",
+        "registration_mode": "headscale_interactive_approval",
+        "control_url_ref": "endpoint:headscale:organization",
+        "registration_ref": "registration:headscale:home-01",
+        "device_identity_ref": "device:tailnet:home-01",
+        "hosted_auth_handoff_ref": null,
+        "hosted_account_binding_state": "not_applicable",
+        "serve_requested": true,
+        "serve_effective": false,
+        "serve_support_status": "unsupported",
+        "funnel_requested": true,
+        "funnel_effective": false,
+        "funnel_support_status": "unsupported",
+        "official_capability_matrix_ref": "official:headscale:features:0.29.3",
+        "exact_live_probe_ref": null,
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": true,
+        "signed_in": false,
+        "reuse_existing_install": false,
+        "existing_install_proof": null,
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": true
+        },
+        "effective_capabilities": {
+          "serve": false,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "hosted_tailscale_serve_is_separately_probe_gated",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:hosted-01",
+        "server_id": "server:home-01",
+        "mode": "hosted_tailscale",
+        "control_plane_version": "hosted-current-profile",
+        "component_state": "ready",
+        "installation_disposition": "reuse_verified_existing",
+        "registration_mode": "hosted_browser_auth",
+        "control_url_ref": null,
+        "registration_ref": "registration:tailscale:home-01",
+        "device_identity_ref": "device:tailnet:home-01",
+        "hosted_auth_handoff_ref": "protected-auth-handoff:tailscale:home-01",
+        "hosted_account_binding_state": "verified",
+        "serve_requested": true,
+        "serve_effective": true,
+        "serve_support_status": "supported",
+        "funnel_requested": false,
+        "funnel_effective": false,
+        "funnel_support_status": "supported",
+        "official_capability_matrix_ref": "official:tailscale:serve:current",
+        "exact_live_probe_ref": "probe:tailscale-hosted-serve:home-01",
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": true,
+        "signed_in": true,
+        "reuse_existing_install": true,
+        "existing_install_proof": {
+          "ownership_verified": true,
+          "version_verified": true,
+          "compatibility_verified": true,
+          "identity_verified": true
+        },
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": false
+        },
+        "effective_capabilities": {
+          "serve": true,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "funnel_security_policy_prohibits_internal_surfaces",
+      "definition": "public_ingress_security_policy",
+      "value": {
+        "schema_id": "pm.remote_access_system.public_ingress_security_policy.v1",
+        "schema_version": "1.0.0",
+        "policy_id": "public-ingress-policy:funnel-01",
+        "server_id": "server:home-01",
+        "remote_route_id": "remote-route:funnel-01",
+        "route_generation": 2,
+        "policy_generation": 1,
+        "ingress_kind": "hosted_tailscale_funnel",
+        "control_plane_profile": "hosted_tailscale",
+        "default_enabled": false,
+        "pm_auth_required": true,
+        "pairing_required": true,
+        "revocation_enforced": true,
+        "rate_limit_before_hydration": true,
+        "metadata_minimal_preauth": true,
+        "csrf_enforced": true,
+        "origin_policy": "exact_configured_origins",
+        "cookie_policy": "secure_http_only_same_site",
+        "host_policy": "configured_hosts_only",
+        "websocket_policy": "authenticated_origin_checked",
+        "trusted_proxy_policy": "configured_peers_only",
+        "allowed_surface": [
+          "authenticated_https_ui",
+          "authenticated_api",
+          "authenticated_websocket"
+        ],
+        "prohibited_surfaces": [
+          "unclaimed_setup",
+          "debug_cdp",
+          "browser_control",
+          "pty",
+          "ssh",
+          "docker_socket",
+          "provider_callback_internal",
+          "cluster_credentials",
+          "internal_health",
+          "project_metadata_preauth",
+          "vault_content",
+          "backup_content"
+        ],
+        "unclaimed_setup_local_private_only": true,
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_public_approval": true,
+        "explicit_consent_ref": "consent:public-ingress:funnel-01",
+        "consent_generation": 1,
+        "preflight_passed": true,
+        "preflight_receipt_ref": "receipt:funnel-preflight:funnel-01",
+        "preflight_generation": 1,
+        "preflight_currentness": "current",
+        "exposed_surfaces": [
+          "authenticated_web_ui",
+          "authenticated_api",
+          "authenticated_websocket"
+        ],
+        "unclaimed_setup_public": false,
+        "protected_auth_browser_observable": false
+      }
+    },
+    {
+      "name": "remote_link_is_accountless_outbound_and_stores_no_content",
+      "definition": "remote_link_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.remote_link_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "remote-link-config:home-01",
+        "server_id": "server:home-01",
+        "provider_id": "remote-link-provider:initial",
+        "gateway_mode": "hosted_replaceable",
+        "opaque_address_ref": "remote-link-address:home-01",
+        "outbound_dial": true,
+        "account_required": false,
+        "email_required": false,
+        "api_key_required": false,
+        "public_port_required": false,
+        "application_e2e_policy_ref": "policy:remote-link-e2e:1",
+        "public_plane_storage_policy": "no_product_content",
+        "preauth_rate_limit_policy_ref": "policy:remote-link-preauth:1",
+        "transport_state": "direct",
+        "recovery_key_record_ref": "recovery-key-record:remote-link:home-01",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "router_change_required": false,
+        "user_run_public_component_required": false,
+        "home_server_outbound_only": true,
+        "pairing_required": true,
+        "application_e2e_required": true,
+        "public_plane_stores_protected_content": false,
+        "public_plane_logs_protected_content": false,
+        "preauth_rate_limited": true,
+        "provider_replaceable": true
+      }
+    },
+    {
+      "name": "route_migration_complete_preserves_identity_commands_and_cursor",
+      "definition": "remote_route_migration_receipt",
+      "value": {
+        "schema_id": "pm.remote_access_system.remote_route_migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:remote-route-migration:01",
+        "migration_id": "remote-route-migration:01",
+        "server_id": "server:home-01",
+        "from_remote_route_id": "remote-route:remote-link-relay-01",
+        "to_remote_route_id": "remote-route:remote-link-direct-01",
+        "from_server_endpoint_id": "server-endpoint:remote-link-relay-01",
+        "to_server_endpoint_id": "server-endpoint:remote-link-direct-01",
+        "identity_fence_ref": "fence:route-migration:identity:01",
+        "identity_fence_status": "matched_existing_server",
+        "currentness_fence_ref": "fence:route-migration:currentness:01",
+        "currentness_fence_status": "expected_generations_current",
+        "terminal_status": "complete",
+        "server_identity_preserved": true,
+        "project_authority_unchanged": true,
+        "command_idempotency_preserved": true,
+        "projection_cursor_preserved": true,
+        "test_receipt_ref": "receipt:remote-test:remote-link-direct-01",
+        "commit_or_rollback_ref": "commit:remote-route-migration:01",
+        "failure_ref": null,
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "completed_at_utc": "2026-08-31T12:01:00Z",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "name": "dedicated_hostname_proxy_is_security_complete",
+      "definition": "reverse_proxy_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.reverse_proxy_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "reverse-proxy-config:nginx-01",
+        "server_id": "server:home-01",
+        "proxy_family": "nginx",
+        "deployment_form": "compose",
+        "external_origin": "https://pm.example.test",
+        "base_path": "/",
+        "dedicated_hostname": true,
+        "trusted_proxy_cidrs": [
+          "10.0.0.0/24"
+        ],
+        "tls_required": true,
+        "forwarded_host_proto_policy": "trust_configured_peers_only",
+        "forwarded_client_policy": "trust_configured_peers_only",
+        "websocket_upgrade": true,
+        "secure_cookie_policy": "secure_http_only_same_site",
+        "csrf_policy": "enforced",
+        "origin_policy": "exact_external_origin",
+        "callback_policy": "validated_exact_return_context",
+        "file_transfer_policy": "authenticated_bounded_stream",
+        "generated_artifact_ref": "artifact:reverse-proxy:nginx-01",
+        "test_receipt_ref": "receipt:remote-test:proxy-01",
+        "state": "ready",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "trust_forwarded_headers_from_any_peer": false,
+        "deep_links_tested": true,
+        "callbacks_tested": true,
+        "transfers_tested": true,
+        "arbitrary_subpath_supported": false,
+        "claims_to_solve_cgnat": false
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.open",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.open",
+        "command_instance_id": "rcmd_case-000000000001",
+        "correlation_id": "corr_remote-000000000001",
+        "idempotency_key": "idem_remote-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {}
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.set_enabled",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.set_enabled",
+        "command_instance_id": "rcmd_case-000000000002",
+        "correlation_id": "corr_remote-000000000002",
+        "idempotency_key": "idem_remote-000000000002",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.route.set_policy",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.route.set_policy",
+        "command_instance_id": "rcmd_case-000000000003",
+        "correlation_id": "corr_remote-000000000003",
+        "idempotency_key": "idem_remote-000000000003",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "ordered_route_types": [
+            "loopback",
+            "lan",
+            "tailscale_private",
+            "remote_link_direct",
+            "remote_link_relay"
+          ],
+          "privacy_floor": "prefer_private",
+          "expected_policy_generation": 4
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.route.test",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.route.test",
+        "command_instance_id": "rcmd_case-000000000004",
+        "correlation_id": "corr_remote-000000000004",
+        "idempotency_key": "idem_remote-000000000004",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.route.retry",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.route.retry",
+        "command_instance_id": "rcmd_case-000000000005",
+        "correlation_id": "corr_remote-000000000005",
+        "idempotency_key": "idem_remote-000000000005",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "reason": "Retry after network recovery"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.route.open_details",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.route.open_details",
+        "command_instance_id": "rcmd_case-000000000006",
+        "correlation_id": "corr_remote-000000000006",
+        "idempotency_key": "idem_remote-000000000006",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.open_logs",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.open_logs",
+        "command_instance_id": "rcmd_case-000000000007",
+        "correlation_id": "corr_remote-000000000007",
+        "idempotency_key": "idem_remote-000000000007",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "cursor": "cursor-44",
+          "limit": 100
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.connector.check",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.connector.check",
+        "command_instance_id": "rcmd_case-000000000008",
+        "correlation_id": "corr_remote-000000000008",
+        "idempotency_key": "idem_remote-000000000008",
+        "server_id": "server:abcdefghijkl",
+        "connector_id": "connector:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "expected_connector_revision": 9
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.disable",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.disable",
+        "command_instance_id": "rcmd_case-000000000009",
+        "correlation_id": "corr_remote-000000000009",
+        "idempotency_key": "idem_remote-000000000009",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "confirmation": true,
+          "preserve_private_identity": true,
+          "disable_scope": "private_connector_route"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.headscale.start",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.headscale.start",
+        "command_instance_id": "rcmd_case-000000000010",
+        "correlation_id": "corr_remote-000000000010",
+        "idempotency_key": "idem_remote-000000000010",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "control_url": "https://headscale.example.test",
+          "authorization_mode": "interactive_approval"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.headscale.submit_registration",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.headscale.submit_registration",
+        "command_instance_id": "rcmd_case-000000000011",
+        "correlation_id": "corr_remote-000000000011",
+        "idempotency_key": "idem_remote-000000000011",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "registration_ref": "hsreg_abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.login.resume",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.login.resume",
+        "command_instance_id": "rcmd_case-000000000012",
+        "correlation_id": "corr_remote-000000000012",
+        "idempotency_key": "idem_remote-000000000012",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "auth_session_ref": "authref_abcdefghijkl",
+          "authentication_operation_id": "authentication-operation:tailscale-login:abcdefghijkl",
+          "expected_operation_generation": 5,
+          "authorized_client_id": "client:abcdefghijkl",
+          "authorized_client_session_generation": 7,
+          "handoff_generation": 2
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.login.start",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.login.start",
+        "command_instance_id": "rcmd_case-000000000013",
+        "correlation_id": "corr_remote-000000000013",
+        "idempotency_key": "idem_remote-000000000013",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "control_plane_profile": "hosted_tailscale",
+          "authentication_operation_id": "authentication-operation:tailscale-login:abcdefghijkl",
+          "operation_generation": 5,
+          "initiating_client_id": "client:abcdefghijkl",
+          "initiating_client_session_generation": 7,
+          "protected_auth_session_ref": "protected-auth-session:tailscale-login:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.connector.restart",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.connector.restart",
+        "command_instance_id": "rcmd_case-000000000014",
+        "correlation_id": "corr_remote-000000000014",
+        "idempotency_key": "idem_remote-000000000014",
+        "server_id": "server:abcdefghijkl",
+        "connector_id": "connector:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "expected_connector_revision": 9,
+          "reason": "bounded owner-routed recovery"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.identity.reset",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.identity.reset",
+        "command_instance_id": "rcmd_case-000000000015",
+        "correlation_id": "corr_remote-000000000015",
+        "idempotency_key": "idem_remote-000000000015",
+        "server_id": "server:abcdefghijkl",
+        "connector_id": "connector:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "expected_connector_revision": 9,
+          "approved_preview_ref": "preview:tailscale-identity-reset:15",
+          "step_up_ref": "approval:tailscale-identity-reset:15",
+          "confirmation": true,
+          "collision_disclosure_acknowledged": true,
+          "reauthentication_required_acknowledged": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.setup.start",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.setup.start",
+        "command_instance_id": "rcmd_case-000000000017",
+        "correlation_id": "corr_remote-000000000017",
+        "idempotency_key": "idem_remote-000000000017",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "control_server_kind": "hosted_tailscale",
+          "expected_connector_revision": 9
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.sign_out",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.sign_out",
+        "command_instance_id": "rcmd_case-000000000018",
+        "correlation_id": "corr_remote-000000000018",
+        "idempotency_key": "idem_remote-000000000018",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.tailscale.test",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.test",
+        "command_instance_id": "rcmd_case-000000000019",
+        "correlation_id": "corr_remote-000000000019",
+        "idempotency_key": "idem_remote-000000000019",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.funnel.preflight",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.funnel.preflight",
+        "command_instance_id": "rcmd_case-000000000020",
+        "correlation_id": "corr_remote-000000000020",
+        "idempotency_key": "idem_remote-000000000020",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "control_plane_profile": "hosted_tailscale",
+          "expected_policy_generation": 4,
+          "requested_surfaces": [
+            "authenticated_web_ui",
+            "authenticated_api",
+            "authenticated_websocket"
+          ]
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.funnel.enable",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.funnel.enable",
+        "command_instance_id": "rcmd_case-000000000021",
+        "correlation_id": "corr_remote-000000000021",
+        "idempotency_key": "idem_remote-000000000021",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "preflight_receipt_id": "rapf_abcdefghijkl",
+          "control_plane_profile": "hosted_tailscale",
+          "explicit_consent": true,
+          "consent_ref": "consent:public-ingress:abcdefghijkl",
+          "expected_preflight_generation": 2,
+          "expected_policy_generation": 4,
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.funnel.test",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.funnel.test",
+        "command_instance_id": "rcmd_case-000000000022",
+        "correlation_id": "corr_remote-000000000022",
+        "idempotency_key": "idem_remote-000000000022",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.funnel.disable",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.funnel.disable",
+        "command_instance_id": "rcmd_case-000000000023",
+        "correlation_id": "corr_remote-000000000023",
+        "idempotency_key": "idem_remote-000000000023",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "confirmation": true,
+          "preserve_private_routes": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.funnel.restore",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.funnel.restore",
+        "command_instance_id": "rcmd_case-000000000024",
+        "correlation_id": "corr_remote-000000000024",
+        "idempotency_key": "idem_remote-000000000024",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "restore_receipt_id": "rarst_abcdefghijkl",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.preview",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.preview",
+        "command_instance_id": "rcmd_case-000000000025",
+        "correlation_id": "corr_remote-000000000025",
+        "idempotency_key": "idem_remote-000000000025",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "configuration": {
+            "proxy_kind": "nginx",
+            "packaging": "compose",
+            "dedicated_hostname": "pm.example.test",
+            "external_origin": "https://pm.example.test",
+            "trusted_proxy_cidrs": [
+              "10.0.0.0/8"
+            ],
+            "websocket_upgrade": true,
+            "secure_cookies": true,
+            "csrf_origin_enforced": true
+          }
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.generate",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.generate",
+        "command_instance_id": "rcmd_case-000000000026",
+        "correlation_id": "corr_remote-000000000026",
+        "idempotency_key": "idem_remote-000000000026",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "configuration": {
+            "proxy_kind": "nginx",
+            "packaging": "compose",
+            "dedicated_hostname": "pm.example.test",
+            "external_origin": "https://pm.example.test",
+            "trusted_proxy_cidrs": [
+              "10.0.0.0/8"
+            ],
+            "websocket_upgrade": true,
+            "secure_cookies": true,
+            "csrf_origin_enforced": true
+          }
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.export",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.export",
+        "command_instance_id": "rcmd_case-000000000027",
+        "correlation_id": "corr_remote-000000000027",
+        "idempotency_key": "idem_remote-000000000027",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "configuration_ref": "proxycfg_abcdefghijkl",
+          "destination_ref": "filesafe_abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.set_external_origin",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.set_external_origin",
+        "command_instance_id": "rcmd_case-000000000028",
+        "correlation_id": "corr_remote-000000000028",
+        "idempotency_key": "idem_remote-000000000028",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "external_origin": "https://pm.example.test"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.set_trusted_proxies",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.set_trusted_proxies",
+        "command_instance_id": "rcmd_case-000000000029",
+        "correlation_id": "corr_remote-000000000029",
+        "idempotency_key": "idem_remote-000000000029",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "trusted_proxy_cidrs": [
+            "10.0.0.0/8"
+          ]
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.test",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.test",
+        "command_instance_id": "rcmd_case-000000000030",
+        "correlation_id": "corr_remote-000000000030",
+        "idempotency_key": "idem_remote-000000000030",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.disable",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.disable",
+        "command_instance_id": "rcmd_case-000000000031",
+        "correlation_id": "corr_remote-000000000031",
+        "idempotency_key": "idem_remote-000000000031",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.proxy.open_details",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.open_details",
+        "command_instance_id": "rcmd_case-000000000032",
+        "correlation_id": "corr_remote-000000000032",
+        "idempotency_key": "idem_remote-000000000032",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.setup",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.setup",
+        "command_instance_id": "rcmd_case-000000000033",
+        "correlation_id": "corr_remote-000000000033",
+        "idempotency_key": "idem_remote-000000000033",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "gateway_profile": "built_in"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.enable",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.enable",
+        "command_instance_id": "rcmd_case-000000000034",
+        "correlation_id": "corr_remote-000000000034",
+        "idempotency_key": "idem_remote-000000000034",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.disable",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.disable",
+        "command_instance_id": "rcmd_case-000000000035",
+        "correlation_id": "corr_remote-000000000035",
+        "idempotency_key": "idem_remote-000000000035",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "confirmation": true,
+          "preserve_server_identity": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.retry",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.retry",
+        "command_instance_id": "rcmd_case-000000000036",
+        "correlation_id": "corr_remote-000000000036",
+        "idempotency_key": "idem_remote-000000000036",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "reason": "Retry direct route"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.copy_address",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.copy_address",
+        "command_instance_id": "rcmd_case-000000000037",
+        "correlation_id": "corr_remote-000000000037",
+        "idempotency_key": "idem_remote-000000000037",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.open",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.open",
+        "command_instance_id": "rcmd_case-000000000038",
+        "correlation_id": "corr_remote-000000000038",
+        "idempotency_key": "idem_remote-000000000038",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.rotate_recovery_key",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.rotate_recovery_key",
+        "command_instance_id": "rcmd_case-000000000039",
+        "correlation_id": "corr_remote-000000000039",
+        "idempotency_key": "idem_remote-000000000039",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "confirmation": true,
+          "filesafe_destination_ref": "filesafe_bcdefghijklm"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.configure_gateway",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.configure_gateway",
+        "command_instance_id": "rcmd_case-000000000040",
+        "correlation_id": "corr_remote-000000000040",
+        "idempotency_key": "idem_remote-000000000040",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "gateway_profile": "self_hosted",
+          "gateway_url": "https://gateway.example.test"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.remote_link.open_details",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.remote_link.open_details",
+        "command_instance_id": "rcmd_case-000000000041",
+        "correlation_id": "corr_remote-000000000041",
+        "idempotency_key": "idem_remote-000000000041",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.private_endpoint.add",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.private_endpoint.add",
+        "command_instance_id": "rcmd_case-000000000042",
+        "correlation_id": "corr_remote-000000000042",
+        "idempotency_key": "idem_remote-000000000042",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "route_type": "manual_https_wss",
+          "endpoint": "https://vpn.example.test:7443",
+          "identity_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.private_endpoint.update",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.private_endpoint.update",
+        "command_instance_id": "rcmd_case-000000000043",
+        "correlation_id": "corr_remote-000000000043",
+        "idempotency_key": "idem_remote-000000000043",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "endpoint": "https://vpn2.example.test:7443",
+          "expected_route_generation": 5
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.private_endpoint.test",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.private_endpoint.test",
+        "command_instance_id": "rcmd_case-000000000044",
+        "correlation_id": "corr_remote-000000000044",
+        "idempotency_key": "idem_remote-000000000044",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.remote_access.private_endpoint.remove",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.private_endpoint.remove",
+        "command_instance_id": "rcmd_case-000000000045",
+        "correlation_id": "corr_remote-000000000045",
+        "idempotency_key": "idem_remote-000000000045",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.open_details",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.open_details",
+        "canonical_target": "cmd.remote_access.route.open_details",
+        "normalization_rule": "direct_alias",
+        "fixed_payload": {},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.tailscale.check",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.tailscale.check",
+        "canonical_target": "cmd.remote_access.tailscale.connector.check",
+        "normalization_rule": "direct_alias",
+        "fixed_payload": {},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.tailscale.configure",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.tailscale.configure",
+        "canonical_target": "cmd.remote_access.tailscale.setup.start",
+        "normalization_rule": "direct_alias",
+        "fixed_payload": {},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.remote_link.test",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.remote_link.test",
+        "canonical_target": "cmd.remote_access.route.test",
+        "normalization_rule": "pre_validation_alias",
+        "fixed_payload": {},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.tailscale.component.check",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.tailscale.component.check",
+        "canonical_target": "cmd.remote_access.tailscale.connector.check",
+        "normalization_rule": "pre_policy_alias",
+        "fixed_payload": {},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.tailscale.serve.enable",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.tailscale.serve.enable",
+        "canonical_target": "cmd.remote_access.tailscale.setup.start",
+        "normalization_rule": "pre_policy_alias_with_fixed_scope",
+        "fixed_payload": {"operation_scope": "ensure_private_endpoint"},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.tailscale.serve.test",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.tailscale.serve.test",
+        "canonical_target": "cmd.remote_access.tailscale.test",
+        "normalization_rule": "pre_policy_alias",
+        "fixed_payload": {},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.alias.cmd.remote_access.tailscale.serve.disable",
+      "definition": "compatibility_alias",
+      "value": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.tailscale.serve.disable",
+        "canonical_target": "cmd.remote_access.tailscale.disable",
+        "normalization_rule": "pre_policy_alias_with_fixed_scope",
+        "fixed_payload": {"disable_scope": "private_connector_route", "preserve_private_identity": true},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": false,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "positive.result",
+      "definition": "command_result",
+      "value": {
+        "record_type": "remote_access.command.result.v1",
+        "command_id": "cmd.remote_access.route.test",
+        "command_instance_id": "rcmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "rrcpt_result-00000000001",
+        "resulting_route_generation": 6,
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "output": {
+          "action": "cmd.remote_access.route.test",
+          "changed": false,
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "actual_route_type": "tailscale_private",
+          "visibility": "private",
+          "currentness": "current"
+        }
+      }
+    },
+    {
+      "name": "positive.error",
+      "definition": "command_error",
+      "value": {
+        "record_type": "remote_access.command.error.v1",
+        "command_id": "cmd.remote_access.route.test",
+        "command_instance_id": "rcmd_error-000000000001",
+        "correlation_id": "corr_error-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "status": "failed",
+        "code": "route_unreachable",
+        "retryable": true,
+        "message": "The route did not answer the authenticated transport probe.",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        }
+      }
+    },
+    {
+      "name": "positive.disabled_reason",
+      "definition": "command_disabled_reason",
+      "value": {
+        "record_type": "remote_access.command.disabled_reason.v1",
+        "command_id": "cmd.remote_access.tailscale.connector.check",
+        "connector_id": "connector:tsnet-hosted-01",
+        "code": "handler_unavailable",
+        "message": "The PM tailnet connector handler is unavailable.",
+        "blocking_refs": [
+          "Plans/Wiring_Matrix.production.json"
+        ],
+        "remediation_command_id": null
+      }
+    },
+    {
+      "name": "positive.availability_disabled_static",
+      "definition": "command_availability",
+      "value": {
+        "record_type": "remote_access.command.availability.v1",
+        "command_id": "cmd.remote_access.tailscale.connector.check",
+        "server_id": "server:abcdefghijkl",
+        "connector_id": "connector:tsnet-hosted-01",
+        "available": false,
+        "currentness": "blocked",
+        "evaluated_at": "2026-08-31T00:00:00Z",
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "security_preflight_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "record_type": "remote_access.command.disabled_reason.v1",
+          "command_id": "cmd.remote_access.tailscale.connector.check",
+          "connector_id": "connector:tsnet-hosted-01",
+          "code": "handler_unavailable",
+          "message": "The PM tailnet connector handler is unavailable.",
+          "blocking_refs": [
+            "Plans/Wiring_Matrix.production.json"
+          ],
+          "remediation_command_id": null
+        }
+      }
+    },
+    {
+      "name": "positive.permission",
+      "definition": "command_permission",
+      "value": {
+        "record_type": "remote_access.command.permission.v1",
+        "command_id": "cmd.remote_access.funnel.enable",
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "principal_id": "local-user",
+        "permission_class": "remote_access.public_ingress",
+        "decision": "allowed",
+        "filesafe_confirmation_required": true,
+        "policy_generation": 4,
+        "evaluated_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.public_route",
+      "definition": "remote_route_record",
+      "value": {
+        "schema_id": "pm.remote_access_system.remote_route_record.v1",
+        "schema_version": "1.0.0",
+        "remote_route_id": "remote-route:contract-public",
+        "server_id": "server:home-01",
+        "server_endpoint_id": "server-endpoint:contract-public",
+        "route_type": "funnel_public",
+        "route_generation": 4,
+        "transport_generation": 3,
+        "address_ref": "endpoint:funnel:contract-public",
+        "public_ingress": true,
+        "identity_verification": "verified",
+        "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "state": "active",
+        "preference_rank": 9,
+        "user_enabled": true,
+        "security_policy_ref": "policy:public-ingress:contract-public",
+        "configuration_ref": "tailscale-config:contract-public",
+        "last_test_receipt_ref": "receipt:remote-test:contract-public",
+        "failure_ref": null,
+        "created_at_utc": "2026-08-31T12:00:00Z",
+        "updated_at_utc": "2026-08-31T12:02:00Z",
+        "currentness_ref": "currentness:remote-route:contract-public:5",
+        "policy_generation": 1,
+        "visibility": "public",
+        "preferred": false,
+        "persisted_at": "2026-08-31T12:02:00Z"
+      }
+    },
+    {
+      "name": "positive.route_migration_exact_continuity",
+      "definition": "remote_route_migration_record",
+      "value": {
+        "schema_id": "pm.remote_access_system.remote_route_migration_record.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "remote-route-migration:contract-positive",
+        "server_id": "server:contract-positive",
+        "from_remote_route_id": "remote-route:source",
+        "to_remote_route_id": "remote-route:target",
+        "from_server_endpoint_id": "server-endpoint:source",
+        "to_server_endpoint_id": "server-endpoint:target",
+        "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_to_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "identity_fence_status": "matched_existing_server",
+        "expected_server_generation": 3,
+        "observed_server_generation": 3,
+        "expected_from_endpoint_generation": 2,
+        "observed_from_endpoint_generation": 2,
+        "expected_to_endpoint_generation": 1,
+        "observed_to_endpoint_generation": 1,
+        "expected_from_route_generation": 4,
+        "observed_from_route_generation": 4,
+        "expected_to_route_generation": 5,
+        "observed_to_route_generation": 5,
+        "from_currentness_ref": "currentness:remote-route:source:4",
+        "to_currentness_ref": "currentness:remote-route:target:5",
+        "currentness_fence_status": "expected_generations_current",
+        "currentness_checked_at_utc": "2026-08-31T00:04:30Z",
+        "phase": "complete",
+        "journal_ref": "journal:remote-route-migration:contract-positive",
+        "idempotency_key": "remote-route-migration-contract-positive",
+        "command_cursor_fence_ref": "cursor:commands:81",
+        "projection_cursor_ref": "cursor:remote-access:99",
+        "staged_test_receipt_ref": "receipt:remote-test:contract-positive",
+        "commit_marker_ref": "commit:remote-route-migration:contract-positive",
+        "rollback_marker_ref": null,
+        "failure_ref": null,
+        "started_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:05:00Z",
+        "terminal_at_utc": "2026-08-31T00:05:00Z",
+        "identity_verified": true,
+        "transport_verified": true,
+        "preference_switched": true,
+        "old_route_drained": true,
+        "idempotency_preserved": true,
+        "projection_cursor_preserved": true,
+        "server_identity_changed": false,
+        "project_move_started": false,
+        "goal_restart_started": false,
+        "restart_convergence": "commit",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.lifecycle_persistent",
+      "definition": "remote_access_lifecycle_record",
+      "value": {
+        "record_type": "remote_access.lifecycle.v1",
+        "server_id": "server:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "lifecycle_generation": 6,
+        "state": "active",
+        "durable_journal_ref": "redb:remote-access-lifecycle:6",
+        "observable_work_id": "work_abcdefghijkl",
+        "preference_policy_persisted": true,
+        "route_credentials_stored_as_secret_refs_only": true,
+        "restart_convergence": "resume",
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.tailscale_dormant",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:contract-dormant",
+        "server_id": "server:home-01",
+        "mode": "hosted_tailscale",
+        "control_plane_version": "hosted-current-profile",
+        "component_state": "dormant",
+        "installation_disposition": "packaged_dormant",
+        "registration_mode": "none",
+        "control_url_ref": null,
+        "registration_ref": null,
+        "device_identity_ref": null,
+        "hosted_auth_handoff_ref": null,
+        "hosted_account_binding_state": "not_started",
+        "serve_requested": true,
+        "serve_effective": false,
+        "serve_support_status": "supported",
+        "funnel_requested": false,
+        "funnel_effective": false,
+        "funnel_support_status": "supported",
+        "official_capability_matrix_ref": "official:tailscale:serve:current",
+        "exact_live_probe_ref": null,
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": false,
+        "signed_in": false,
+        "reuse_existing_install": false,
+        "existing_install_proof": null,
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": false
+        },
+        "effective_capabilities": {
+          "serve": false,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "positive.headscale_0_29_3_effective_caps_false",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:contract-headscale",
+        "server_id": "server:home-01",
+        "mode": "headscale",
+        "control_plane_version": "0.29.3",
+        "component_state": "ready",
+        "installation_disposition": "packaged_dormant",
+        "registration_mode": "headscale_interactive_approval",
+        "control_url_ref": "endpoint:headscale:organization",
+        "registration_ref": "registration:headscale:home-01",
+        "device_identity_ref": "device:tailnet:home-01",
+        "hosted_auth_handoff_ref": null,
+        "hosted_account_binding_state": "not_applicable",
+        "serve_requested": true,
+        "serve_effective": false,
+        "serve_support_status": "unsupported",
+        "funnel_requested": true,
+        "funnel_effective": false,
+        "funnel_support_status": "unsupported",
+        "official_capability_matrix_ref": "official:headscale:features:0.29.3",
+        "exact_live_probe_ref": null,
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": true,
+        "signed_in": false,
+        "reuse_existing_install": false,
+        "existing_install_proof": null,
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": true
+        },
+        "effective_capabilities": {
+          "serve": false,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "positive.public_ingress_security",
+      "definition": "public_ingress_security_policy",
+      "value": {
+        "schema_id": "pm.remote_access_system.public_ingress_security_policy.v1",
+        "schema_version": "1.0.0",
+        "policy_id": "public-ingress-policy:contract-positive",
+        "server_id": "server:home-01",
+        "remote_route_id": "remote-route:funnel-contract-positive",
+        "route_generation": 2,
+        "policy_generation": 1,
+        "ingress_kind": "hosted_tailscale_funnel",
+        "control_plane_profile": "hosted_tailscale",
+        "default_enabled": false,
+        "pm_auth_required": true,
+        "pairing_required": true,
+        "revocation_enforced": true,
+        "rate_limit_before_hydration": true,
+        "metadata_minimal_preauth": true,
+        "csrf_enforced": true,
+        "origin_policy": "exact_configured_origins",
+        "cookie_policy": "secure_http_only_same_site",
+        "host_policy": "configured_hosts_only",
+        "websocket_policy": "authenticated_origin_checked",
+        "trusted_proxy_policy": "configured_peers_only",
+        "allowed_surface": [
+          "authenticated_https_ui",
+          "authenticated_api",
+          "authenticated_websocket"
+        ],
+        "prohibited_surfaces": [
+          "unclaimed_setup",
+          "debug_cdp",
+          "browser_control",
+          "pty",
+          "ssh",
+          "docker_socket",
+          "provider_callback_internal",
+          "cluster_credentials",
+          "internal_health",
+          "project_metadata_preauth",
+          "vault_content",
+          "backup_content"
+        ],
+        "unclaimed_setup_local_private_only": true,
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_public_approval": true,
+        "explicit_consent_ref": "consent:public-ingress:contract-positive",
+        "consent_generation": 1,
+        "preflight_passed": true,
+        "preflight_receipt_ref": "receipt:funnel-preflight:contract-positive",
+        "preflight_generation": 1,
+        "preflight_currentness": "current",
+        "exposed_surfaces": [
+          "authenticated_web_ui",
+          "authenticated_api",
+          "authenticated_websocket"
+        ],
+        "unclaimed_setup_public": false,
+        "protected_auth_browser_observable": false
+      }
+    },
+    {
+      "name": "positive.reverse_proxy_security",
+      "definition": "reverse_proxy_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.reverse_proxy_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "reverse-proxy-config:contract-positive",
+        "server_id": "server:home-01",
+        "proxy_family": "nginx",
+        "deployment_form": "compose",
+        "external_origin": "https://pm.example.test",
+        "base_path": "/",
+        "dedicated_hostname": true,
+        "trusted_proxy_cidrs": [
+          "10.0.0.0/24"
+        ],
+        "tls_required": true,
+        "forwarded_host_proto_policy": "trust_configured_peers_only",
+        "forwarded_client_policy": "trust_configured_peers_only",
+        "websocket_upgrade": true,
+        "secure_cookie_policy": "secure_http_only_same_site",
+        "csrf_policy": "enforced",
+        "origin_policy": "exact_external_origin",
+        "callback_policy": "validated_exact_return_context",
+        "file_transfer_policy": "authenticated_bounded_stream",
+        "generated_artifact_ref": "artifact:reverse-proxy:nginx-01",
+        "test_receipt_ref": "receipt:remote-test:proxy-01",
+        "state": "ready",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "trust_forwarded_headers_from_any_peer": false,
+        "deep_links_tested": true,
+        "callbacks_tested": true,
+        "transfers_tested": true,
+        "arbitrary_subpath_supported": false,
+        "claims_to_solve_cgnat": false
+      }
+    },
+    {
+      "name": "positive.remote_link_security",
+      "definition": "remote_link_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.remote_link_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "remote-link-config:contract-positive",
+        "server_id": "server:home-01",
+        "provider_id": "remote-link-provider:initial",
+        "gateway_mode": "hosted_replaceable",
+        "opaque_address_ref": "remote-link-address:home-01",
+        "outbound_dial": true,
+        "account_required": false,
+        "email_required": false,
+        "api_key_required": false,
+        "public_port_required": false,
+        "application_e2e_policy_ref": "policy:remote-link-e2e:1",
+        "public_plane_storage_policy": "no_product_content",
+        "preauth_rate_limit_policy_ref": "policy:remote-link-preauth:1",
+        "transport_state": "direct",
+        "recovery_key_record_ref": "recovery-key-record:remote-link:home-01",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "router_change_required": false,
+        "user_run_public_component_required": false,
+        "home_server_outbound_only": true,
+        "pairing_required": true,
+        "application_e2e_required": true,
+        "public_plane_stores_protected_content": false,
+        "public_plane_logs_protected_content": false,
+        "preauth_rate_limited": true,
+        "provider_replaceable": true
+      }
+    },
+    {
+      "name": "positive.callback_exact_return",
+      "definition": "callback_transport_record",
+      "value": {
+        "record_type": "remote_access.callback_transport.v1",
+        "callback_session_id": "cb_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "client_identity_role": "initiating_active_client",
+        "initiating_client_session_generation": 7,
+        "authentication_operation_id": "authentication-operation:abcdefghijkl",
+        "operation_generation": 5,
+        "operation_currentness_state": "current",
+        "return_fence_state": "exact_operation_and_initiating_active_client",
+        "protected_auth_session_ref": "protected-auth-session:abcdefghijkl",
+        "one_time_opaque_id": "opaque_abcdefghijkl",
+        "state_validated": true,
+        "pkce_validated": true,
+        "provider_validated": true,
+        "target_validated": true,
+        "expiry_validated": true,
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "protected_auth_human_only": true,
+        "protected_auth_ephemeral": true,
+        "protected_auth_observed_or_persisted": false,
+        "protected_auth_caller_navigation_allowed": false,
+        "protected_auth_content_capture_allowed": false,
+        "protected_auth_content_recording_allowed": false,
+        "web_client_loopback_assumed": false,
+        "expires_at": "2026-08-31T00:10:00Z"
+      }
+    },
+    {
+      "name": "positive.private_endpoint",
+      "definition": "private_endpoint_configuration",
+      "value": {
+        "record_type": "remote_access.private_endpoint_configuration.v1",
+        "server_id": "server:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "route_type": "vpn_private",
+        "endpoint": "https://vpn.example.test:7443",
+        "identity_verified": true,
+        "protocol_tested": true,
+        "api_tested": true,
+        "websocket_tested": true,
+        "stream_tested": true,
+        "file_transfer_tested": true,
+        "pairing_verified": true,
+        "puppet_master_administers_vpn": false
+      }
+    },
+    {
+      "name": "positive.command_exact_return",
+      "definition": "command_round_trip",
+      "value": {
+        "record_type": "remote_access.command.round_trip.v1",
+        "request": {
+          "record_type": "remote_access.command.payload.v1",
+          "command_id": "cmd.remote_access.route.test",
+          "command_instance_id": "rcmd_case-000000000100",
+          "correlation_id": "corr_remote-000000000100",
+          "idempotency_key": "idem_remote-000000000100",
+          "server_id": "server:abcdefghijkl",
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "client_id": "client:abcdefghijkl",
+          "session_id": "session:abcdefghijkl",
+          "expected_generations": {
+            "server_generation": 3,
+            "endpoint_generation": 2,
+            "route_generation": 5,
+            "policy_generation": 4,
+            "trust_generation": 2,
+            "session_generation": 7
+          },
+          "permission_snapshot_id": "perm_abcdefghijkl",
+          "return_context": {
+            "surface_id": "settings.remote_access",
+            "route_id": "settings/remote-access",
+            "focus_target": "route-card",
+            "invocation_token": "ret_remote-000000000001"
+          },
+          "args": {
+            "remote_route_id": "remote-route:abcdefghijkl"
+          }
+        },
+        "result": {
+          "record_type": "remote_access.command.result.v1",
+          "command_id": "cmd.remote_access.route.test",
+          "command_instance_id": "rcmd_case-000000000100",
+          "correlation_id": "corr_remote-000000000100",
+          "server_id": "server:abcdefghijkl",
+          "status": "succeeded",
+          "receipt_id": "rrcpt_result-00000000001",
+          "resulting_route_generation": 6,
+          "return_context": {
+            "surface_id": "settings.remote_access",
+            "route_id": "settings/remote-access",
+            "focus_target": "route-card",
+            "invocation_token": "ret_remote-000000000001"
+          },
+          "output": {
+            "action": "cmd.remote_access.route.test",
+            "changed": false,
+            "remote_route_id": "remote-route:abcdefghijkl",
+            "actual_route_type": "tailscale_private",
+            "visibility": "private",
+            "currentness": "current"
+          }
+        }
+      }
+    },
+    {
+      "name": "hosted_tailscale_auth_waits_on_exact_initiating_active_client",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "value": {
+        "record_type": "remote_access.hosted_tailscale_auth_handoff.v1",
+        "server_id": "server:hosted-tailscale:waiting",
+        "authentication_operation_id": "authentication-operation:hosted-tailscale:waiting",
+        "operation_generation": 4,
+        "protected_auth_session_ref": "protected-auth-session:hosted-tailscale:waiting",
+        "initiating_client_id": "client:hosted-tailscale:waiting",
+        "initiating_client_session_generation": 8,
+        "client_binding_state": "initiating_active",
+        "operation_currentness_state": "current",
+        "return_fence_state": "pending_exact_operation_and_client",
+        "state": "awaiting_human",
+        "terminal_reason_code": null,
+        "return_context": {
+          "surface_id": "onboarding.remote_access",
+          "route_id": "onboarding/remote-access/tailscale",
+          "focus_target": "tailscale-setup-button",
+          "invocation_token": "ret_tailscale-0000000001"
+        },
+        "focus_return_ref": "focus:onboarding:remote-access:tailscale",
+        "human_only": true,
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false,
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "deadline_at_utc": "2026-08-31T00:10:00Z",
+        "updated_at_utc": "2026-08-31T00:01:00Z"
+      }
+    },
+    {
+      "name": "hosted_tailscale_auth_returns_to_exact_operation_and_client",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "value": {
+        "record_type": "remote_access.hosted_tailscale_auth_handoff.v1",
+        "server_id": "server:hosted-tailscale:verified",
+        "authentication_operation_id": "authentication-operation:hosted-tailscale:verified",
+        "operation_generation": 5,
+        "protected_auth_session_ref": "protected-auth-session:hosted-tailscale:verified",
+        "initiating_client_id": "client:hosted-tailscale:verified",
+        "initiating_client_session_generation": 9,
+        "client_binding_state": "initiating_active",
+        "operation_currentness_state": "current",
+        "return_fence_state": "exact_operation_and_initiating_active_client",
+        "state": "verified",
+        "terminal_reason_code": null,
+        "return_context": {
+          "surface_id": "onboarding.remote_access",
+          "route_id": "onboarding/remote-access/tailscale",
+          "focus_target": "tailscale-setup-button",
+          "invocation_token": "ret_tailscale-0000000002"
+        },
+        "focus_return_ref": "focus:onboarding:remote-access:tailscale",
+        "human_only": true,
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false,
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "deadline_at_utc": "2026-08-31T00:10:00Z",
+        "updated_at_utc": "2026-08-31T00:03:00Z"
+      }
+    },
+    {
+      "name": "hosted_tailscale_auth_cancel_is_terminal_without_content_return",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "value": {
+        "record_type": "remote_access.hosted_tailscale_auth_handoff.v1",
+        "server_id": "server:hosted-tailscale:cancelled",
+        "authentication_operation_id": "authentication-operation:hosted-tailscale:cancelled",
+        "operation_generation": 6,
+        "protected_auth_session_ref": "protected-auth-session:hosted-tailscale:cancelled",
+        "initiating_client_id": "client:hosted-tailscale:cancelled",
+        "initiating_client_session_generation": 10,
+        "client_binding_state": "initiating_active",
+        "operation_currentness_state": "current",
+        "return_fence_state": "cancelled_without_content_return",
+        "state": "cancelled",
+        "terminal_reason_code": "user_cancelled",
+        "return_context": {
+          "surface_id": "onboarding.remote_access",
+          "route_id": "onboarding/remote-access/tailscale",
+          "focus_target": "tailscale-setup-button",
+          "invocation_token": "ret_tailscale-0000000003"
+        },
+        "focus_return_ref": "focus:onboarding:remote-access:tailscale",
+        "human_only": true,
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false,
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "deadline_at_utc": "2026-08-31T00:10:00Z",
+        "updated_at_utc": "2026-08-31T00:02:00Z"
+      }
+    },
+    {
+      "name": "hosted_tailscale_auth_timeout_is_terminal_without_content_return",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "value": {
+        "record_type": "remote_access.hosted_tailscale_auth_handoff.v1",
+        "server_id": "server:hosted-tailscale:timed-out",
+        "authentication_operation_id": "authentication-operation:hosted-tailscale:timed-out",
+        "operation_generation": 7,
+        "protected_auth_session_ref": "protected-auth-session:hosted-tailscale:timed-out",
+        "initiating_client_id": "client:hosted-tailscale:timed-out",
+        "initiating_client_session_generation": 11,
+        "client_binding_state": "initiating_active",
+        "operation_currentness_state": "current",
+        "return_fence_state": "timed_out_without_content_return",
+        "state": "timed_out",
+        "terminal_reason_code": "deadline_expired",
+        "return_context": {
+          "surface_id": "onboarding.remote_access",
+          "route_id": "onboarding/remote-access/tailscale",
+          "focus_target": "tailscale-setup-button",
+          "invocation_token": "ret_tailscale-0000000004"
+        },
+        "focus_return_ref": "focus:onboarding:remote-access:tailscale",
+        "human_only": true,
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false,
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "deadline_at_utc": "2026-08-31T00:10:00Z",
+        "updated_at_utc": "2026-08-31T00:10:00Z"
+      }
+    },
+    {
+      "name": "positive.compatibility_ref.remote_access_command_request",
+      "definition": "RemoteAccessCommandRequest",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.route.test",
+        "command_instance_id": "rcmd_case-000000000004",
+        "correlation_id": "corr_remote-000000000004",
+        "idempotency_key": "idem_remote-000000000004",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.compatibility_ref.remote_access_command_result",
+      "definition": "RemoteAccessCommandResult",
+      "value": {
+        "record_type": "remote_access.command.result.v1",
+        "command_id": "cmd.remote_access.route.test",
+        "command_instance_id": "rcmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "rrcpt_result-00000000001",
+        "resulting_route_generation": 6,
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "output": {
+          "action": "cmd.remote_access.route.test",
+          "changed": false,
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "actual_route_type": "tailscale_private",
+          "visibility": "private",
+          "currentness": "current"
+        }
+      }
+    },
+    {
+      "name": "connector_configuration.hosted_go_tsnet_exact_copy",
+      "definition": "tailscale_connector_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_configuration.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "implementation": "go_tsnet",
+        "helper_binary": "pm-tailnet-connector",
+        "artifact_ownership": "puppet_master_core_artifact",
+        "embedded_module": "tailscale.com/tsnet",
+        "signature_state": "verified_pm_signature",
+        "full_tailscale_product_adopted": false,
+        "control_server_kind": "hosted_tailscale",
+        "headscale_origin_ref": null,
+        "secure_state_ref": "server-secure-state:connector:tsnet-hosted-01",
+        "connector_version": "1.0.0",
+        "state_schema_version": "1.0.0",
+        "build_id": "pm-tailnet-connector-linux-amd64-build-01",
+        "ipc_protocol_version": "1.0.0",
+        "tsnet_module_version": "release-pinned",
+        "build_provenance_ref": "provenance:pm-tailnet-connector:build-01",
+        "expected_connector_revision": 9,
+        "current_connector_revision": 9,
+        "one_active_binding": true,
+        "node_scope": "one_per_server_id",
+        "automatic_private_endpoint": true,
+        "external_host_tailscale_adopted": false,
+        "normal_title": "Tailscale",
+        "normal_subtitle": "Built into Puppet Master",
+        "updated_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "connector_configuration.headscale_private_no_funnel_promise",
+      "definition": "tailscale_connector_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_configuration.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-headscale-01",
+        "connector_id": "connector:tsnet-headscale-01",
+        "implementation": "go_tsnet",
+        "helper_binary": "pm-tailnet-connector",
+        "artifact_ownership": "puppet_master_core_artifact",
+        "embedded_module": "tailscale.com/tsnet",
+        "signature_state": "verified_pm_signature",
+        "full_tailscale_product_adopted": false,
+        "control_server_kind": "headscale",
+        "headscale_origin_ref": "origin-redacted:headscale:organization",
+        "secure_state_ref": "server-secure-state:connector:tsnet-headscale-01",
+        "connector_version": "1.0.0",
+        "state_schema_version": "1.0.0",
+        "build_id": "pm-tailnet-connector-linux-amd64-build-01",
+        "ipc_protocol_version": "1.0.0",
+        "tsnet_module_version": "release-pinned",
+        "build_provenance_ref": "provenance:pm-tailnet-connector:build-01",
+        "expected_connector_revision": 4,
+        "current_connector_revision": 4,
+        "one_active_binding": true,
+        "node_scope": "one_per_server_id",
+        "automatic_private_endpoint": true,
+        "external_host_tailscale_adopted": false,
+        "normal_title": "Tailscale",
+        "normal_subtitle": "Built into Puppet Master",
+        "updated_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "connector_process.corrupt_state_needs_attention_without_overwrite",
+      "definition": "tailscale_connector_process_projection",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_process_projection.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "connector_state": "needs_attention",
+        "process_state": "blocked",
+        "protocol_state": "compatible",
+        "backoff_state": "circuit_open",
+        "state_integrity": "corrupt",
+        "state_corrupt_overwritten_blindly": false,
+        "identity_binding_state": "bound_expected_server",
+        "supervisor_generation": 3,
+        "connector_revision": 9,
+        "ipc_protocol_version": "1.0.0",
+        "crash_isolation": "connector_process_only",
+        "goals_unaffected_by_connector_crash": true,
+        "observed_at_utc": "2026-09-01T12:01:00Z",
+        "freshness_ref": "freshness:connector-process:tsnet-hosted-01:3"
+      }
+    },
+    {
+      "name": "hosted_authorization.server_operation_survives_client_loss",
+      "definition": "tailscale_authorization_session",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_authorization_session.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "authentication_operation_id": "authentication-operation:tsnet-hosted-01",
+        "authorization_session_ref": "authorization-session:tsnet-hosted-01",
+        "control_server_kind": "hosted_tailscale",
+        "state": "waiting_for_authorization",
+        "operation_generation": 7,
+        "handoff_generation": 2,
+        "initiating_client_id": "client:tsnet-origin-01",
+        "authorized_client_id": null,
+        "authorized_client_session_generation": null,
+        "protected_action_ref": "protected-action:tailscale-authorization:handoff-02",
+        "approval_state": "not_required",
+        "client_loss_policy": "operation_survives_handoff_must_be_reauthorized",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "tailscale-setup-row",
+          "invocation_token": "ret_tsnet-auth-00000001"
+        },
+        "authorization_url_persisted": false,
+        "protected_content_persisted": false,
+        "cookies_persisted": false,
+        "started_at_utc": "2026-09-01T12:00:00Z",
+        "expires_at_utc": "2026-09-01T12:15:00Z",
+        "completed_at_utc": null,
+        "redacted_error_ref": null
+      }
+    },
+    {
+      "name": "headscale_private_endpoint.ready_independent_from_funnel",
+      "definition": "tailscale_private_endpoint_projection",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_private_endpoint_projection.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-headscale-01",
+        "connector_id": "connector:tsnet-headscale-01",
+        "server_endpoint_id": "server-endpoint:tsnet-headscale-01",
+        "remote_route_id": "remote-route:tsnet-headscale-private-01",
+        "control_server_kind": "headscale",
+        "state": "ready",
+        "enrollment_state": "approved",
+        "pm_ingress_validation": "passed",
+        "listener_kind": "tsnet_private_listener_reverse_proxy",
+        "automatic_after_setup": true,
+        "independent_from_funnel": true,
+        "visibility": "private",
+        "pm_auth_required": true,
+        "pairing_required": true,
+        "trusted_ingress_metadata_only": true,
+        "product_surfaces": ["web_ui", "api", "websocket", "stream", "upload", "download"],
+        "route_generation": 4,
+        "connector_revision": 4,
+        "fqdn_ref": "fqdn:headscale:pm-server-01",
+        "last_test_receipt_ref": "receipt:tailscale-private-test:headscale-01",
+        "observed_at_utc": "2026-09-01T12:02:00Z"
+      }
+    },
+    {
+      "name": "native_egress.bounded_verified_pm_endpoints_only",
+      "definition": "tailscale_native_egress_policy",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_native_egress_policy.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "policy_id": "policy:tailscale-native-egress:01",
+        "allowed_endpoint_refs": ["server-endpoint:approved-private-01"],
+        "dial_mode": "bounded_dial_or_stream_to_verified_pm_endpoints",
+        "open_socks_proxy": false,
+        "arbitrary_lan_pivot": false,
+        "ordinary_browser_enrolled": false,
+        "pm_identity_required": true,
+        "policy_generation": 1,
+        "updated_at_utc": "2026-09-01T12:02:00Z"
+      }
+    },
+    {
+      "name": "hosted_funnel.ready_with_private_preserved",
+      "definition": "tailscale_funnel_projection",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_funnel_projection.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "server_endpoint_id": "server-endpoint:tsnet-funnel-01",
+        "remote_route_id": "remote-route:tsnet-funnel-public-01",
+        "control_server_kind": "hosted_tailscale",
+        "state": "ready",
+        "listener_adapter": "pinned_tsnet_listen_funnel",
+        "default_enabled": false,
+        "explicit_consent_ref": "consent:funnel:tsnet-hosted-01",
+        "current_preflight_receipt_ref": "receipt:funnel-preflight:tsnet-hosted-01",
+        "visibility": "public",
+        "private_endpoint_preserved": true,
+        "headscale_supported": false,
+        "trusted_ingress_metadata_only": true,
+        "funnel_only_is_private_default": false,
+        "route_generation": 5,
+        "policy_generation": 3,
+        "observed_at_utc": "2026-09-01T12:03:00Z"
+      }
+    },
+    {
+      "name": "connector_ipc.authenticated_versioned_peer_validated",
+      "definition": "tailscale_connector_ipc_envelope",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_ipc_envelope.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "request_id": "request:connector-private-test:01",
+        "idempotency_key": "idem-tsnet-private-test-01",
+        "ipc_protocol_version": "1.0.0",
+        "expected_connector_revision": 9,
+        "operation": "test_private_endpoint",
+        "deadline_at_utc": "2026-09-01T12:05:00Z",
+        "cancellation_ref": "cancellation:connector-private-test:01",
+        "authenticated_peer_ref": "peer:pm-server-process:tsnet-hosted-01",
+        "peer_validation": "owning_pm_server_only",
+        "payload_ref": "ipc-payload:connector-private-test:01",
+        "public_management_api": false,
+        "general_localapi_exposed": false,
+        "redaction_profile": "connector_secrets_excluded"
+      }
+    },
+    {
+      "name": "connector_receipt.complete_context_and_redaction",
+      "definition": "tailscale_connector_receipt",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:connector-private-test:01",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "server_endpoint_id": "server-endpoint:tsnet-private-01",
+        "remote_route_id": "remote-route:tsnet-private-01",
+        "connector_version": "1.0.0",
+        "ipc_protocol_version": "1.0.0",
+        "tsnet_module_version": "release-pinned",
+        "build_id": "pm-tailnet-connector-linux-amd64-build-01",
+        "build_provenance_ref": "provenance:pm-tailnet-connector:build-01",
+        "control_server_kind": "hosted_tailscale",
+        "redacted_control_origin_ref": null,
+        "requested_operation": "test_private_endpoint",
+        "effective_operation": "test_private_endpoint",
+        "requested_route_class": "private",
+        "effective_route_class": "private",
+        "before_revision": 9,
+        "after_revision": 9,
+        "initiating_client_id": "client:tsnet-origin-01",
+        "approval_ref": null,
+        "consent_ref": null,
+        "pm_identity_result": "verified",
+        "ingress_class": "private_tailnet",
+        "observable_work_ref": "work:connector-private-test:01",
+        "bounded_remediation_ref": null,
+        "invoked_compatibility_id": "cmd.remote_access.tailscale.serve.test",
+        "started_at_utc": "2026-09-01T12:02:00Z",
+        "completed_at_utc": "2026-09-01T12:02:01Z",
+        "freshness_ref": "freshness:connector-private-test:01",
+        "secret_material_excluded": true,
+        "raw_state_excluded": true,
+        "authorization_url_excluded": true,
+        "cookies_excluded": true,
+        "unredacted_query_excluded": true
+      }
+    },
+    {
+      "name": "legacy_configuration.migrates_without_host_state_ingest",
+      "definition": "tailscale_connector_migration_record",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_migration_record.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "migration:tailscale-connector:01",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "source_schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "source_disposition": "migration_reader_only",
+        "source_route_type": "serve_private",
+        "target_schema_id": "pm.remote_access_system.tailscale_connector_configuration.v1",
+        "target_route_type": "tailscale_private",
+        "state": "complete",
+        "expected_connector_revision": 8,
+        "observed_connector_revision": 9,
+        "host_tailscale_state_ingested": false,
+        "identity_collision_status": "not_detected",
+        "project_operation_state_included": false,
+        "portable_full_server_default_included": false,
+        "journal_ref": "journal:tailscale-connector-migration:01",
+        "receipt_ref": "receipt:tailscale-connector-migration:01",
+        "started_at_utc": "2026-09-01T11:59:00Z",
+        "completed_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "connector_security.secure_state_and_redaction_boundary",
+      "definition": "tailscale_connector_security_policy",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_security_policy.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "secure_state_owner": "server_owner_permissioned_secure_state",
+        "allowed_secret_location": "server_secure_state_only",
+        "forbidden_secret_sinks": ["project_vault", "ordinary_redb_projection", "seglog_event", "settings", "logs", "chat", "usage", "screenshot", "concept"],
+        "local_ipc_peer_policy": "owning_pm_server_only",
+        "least_privilege": true,
+        "public_management_api": false,
+        "tailnet_identity_grants_pm_authority": false,
+        "reset_requires_step_up": true,
+        "reset_requires_current_preview": true,
+        "logs_redacted": true,
+        "updated_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "connector_backup.project_and_portable_exclusions",
+      "definition": "tailscale_connector_backup_policy",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_backup_policy.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-hosted-01",
+        "project_copy": "always_excluded",
+        "project_move": "always_excluded",
+        "project_backup": "always_excluded",
+        "source_inclusive_capture": "always_excluded",
+        "portable_full_server_default": "excluded_reauthorization_and_re_pairing_disclosed",
+        "optional_secret_envelope": "unavailable",
+        "optional_secret_envelope_gate": "adapter_portability_and_single_active_collision_safety_not_proven",
+        "foreign_server_restore": "new_connector_identity_and_client_re_pair",
+        "same_host_rollback": "old_identity_only_after_exclusive_live_copy_fence",
+        "tailnet_login_unlocks_backup": false,
+        "cloud_credential_becomes_node_identity": false,
+        "backup_uses_pm_relay_by_default": false,
+        "restore_auto_enables_funnel": false,
+        "restore_auto_resumes_goals": false,
+        "restore_auto_pushes_source": false,
+        "restore_replays_webhooks": false,
+        "duplicate_writer_or_node_allowed": false,
+        "updated_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "external_host_tailscale.coexists_without_adoption",
+      "definition": "tailscale_external_endpoint_projection",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_external_endpoint_projection.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:tsnet-hosted-01",
+        "server_endpoint_id": "server-endpoint:external-host-tailscale-01",
+        "remote_route_id": "remote-route:external-host-tailscale-01",
+        "provenance": "external_user_managed_host_tailscale",
+        "pm_connector_managed": false,
+        "host_tailscale_adopted": false,
+        "identity_verification": "verified_existing_server",
+        "dedupe_key": "server_id",
+        "observed_at_utc": "2026-09-01T12:03:00Z"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "connector_primary_rejects_legacy_component_id",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.remote_access.tailscale.connector.check",
+      "patch": {"command_id": "cmd.remote_access.tailscale.component.check"},
+      "expected_invariant": "legacy_component_id_is_alias_only_before_typed_validation"
+    },
+    {
+      "name": "authorization_session_never_persists_reusable_url",
+      "definition": "tailscale_authorization_session",
+      "base_valid": "hosted_authorization.server_operation_survives_client_loss",
+      "patch": {"authorization_url_persisted": true},
+      "expected_invariant": "authorization_url_is_one_time_protected_action_not_durable_value"
+    },
+    {
+      "name": "authorization_session_never_persists_browser_content_or_cookies",
+      "definition": "tailscale_authorization_session",
+      "base_valid": "hosted_authorization.server_operation_survives_client_loss",
+      "patch": {"protected_content_persisted": true, "cookies_persisted": true},
+      "expected_invariant": "replacement_client_inherits_no_protected_content_or_cookies"
+    },
+    {
+      "name": "corrupt_connector_state_is_not_overwritten_blindly",
+      "definition": "tailscale_connector_process_projection",
+      "base_valid": "connector_process.corrupt_state_needs_attention_without_overwrite",
+      "patch": {"state_corrupt_overwritten_blindly": true},
+      "expected_invariant": "corrupt_state_requires_attention_and_explicit_owner_recovery"
+    },
+    {
+      "name": "hosted_configuration_cannot_claim_headscale_origin",
+      "definition": "tailscale_connector_configuration",
+      "base_valid": "connector_configuration.hosted_go_tsnet_exact_copy",
+      "patch": {"headscale_origin_ref": "origin-redacted:headscale:forbidden"},
+      "expected_invariant": "hosted_tailscale_has_no_headscale_origin"
+    },
+    {
+      "name": "headscale_configuration_requires_redacted_origin_ref",
+      "definition": "tailscale_connector_configuration",
+      "base_valid": "connector_configuration.headscale_private_no_funnel_promise",
+      "patch": {"headscale_origin_ref": null},
+      "expected_invariant": "headscale_requires_non_secret_redacted_origin_reference"
+    },
+    {
+      "name": "connector_artifact_must_be_pm_owned_and_signature_verified",
+      "definition": "tailscale_connector_configuration",
+      "base_valid": "connector_configuration.hosted_go_tsnet_exact_copy",
+      "patch": {"artifact_ownership": "external_product", "signature_state": "unverified", "full_tailscale_product_adopted": true},
+      "expected_invariant": "built_in_route_uses_only_the_signed_pm_owned_connector"
+    },
+    {
+      "name": "private_endpoint_cannot_depend_on_funnel",
+      "definition": "tailscale_private_endpoint_projection",
+      "base_valid": "headscale_private_endpoint.ready_independent_from_funnel",
+      "patch": {"independent_from_funnel": false},
+      "expected_invariant": "private_endpoint_is_automatic_and_independent_from_funnel"
+    },
+    {
+      "name": "private_endpoint_ready_requires_approved_enrollment_and_ingress",
+      "definition": "tailscale_private_endpoint_projection",
+      "base_valid": "headscale_private_endpoint.ready_independent_from_funnel",
+      "patch": {"enrollment_state": "pending", "pm_ingress_validation": "not_run"},
+      "expected_invariant": "automatic_listener_readiness_follows_approved_enrollment_and_pm_ingress_validation"
+    },
+    {
+      "name": "native_egress_cannot_be_open_socks_or_lan_pivot",
+      "definition": "tailscale_native_egress_policy",
+      "base_valid": "native_egress.bounded_verified_pm_endpoints_only",
+      "patch": {"open_socks_proxy": true, "arbitrary_lan_pivot": true},
+      "expected_invariant": "native_egress_is_bounded_to_verified_pm_endpoints"
+    },
+    {
+      "name": "funnel_cannot_target_headscale",
+      "definition": "tailscale_funnel_projection",
+      "base_valid": "hosted_funnel.ready_with_private_preserved",
+      "patch": {"control_server_kind": "headscale"},
+      "expected_invariant": "funnel_is_hosted_tailscale_only"
+    },
+    {
+      "name": "funnel_disable_or_ready_cannot_drop_private_endpoint",
+      "definition": "tailscale_funnel_projection",
+      "base_valid": "hosted_funnel.ready_with_private_preserved",
+      "patch": {"private_endpoint_preserved": false},
+      "expected_invariant": "public_funnel_lifecycle_preserves_private_access"
+    },
+    {
+      "name": "connector_ipc_cannot_expose_public_management_or_localapi",
+      "definition": "tailscale_connector_ipc_envelope",
+      "base_valid": "connector_ipc.authenticated_versioned_peer_validated",
+      "patch": {"public_management_api": true, "general_localapi_exposed": true},
+      "expected_invariant": "connector_ipc_is_local_authenticated_and_narrow"
+    },
+    {
+      "name": "connector_receipt_cannot_include_secret_classes",
+      "definition": "tailscale_connector_receipt",
+      "base_valid": "connector_receipt.complete_context_and_redaction",
+      "patch": {"secret_material_excluded": false, "raw_state_excluded": false, "authorization_url_excluded": false},
+      "expected_invariant": "receipt_excludes_keys_raw_state_reusable_urls_cookies_and_queries"
+    },
+    {
+      "name": "connector_migration_never_ingests_host_tailscale_state",
+      "definition": "tailscale_connector_migration_record",
+      "base_valid": "legacy_configuration.migrates_without_host_state_ingest",
+      "patch": {"host_tailscale_state_ingested": true},
+      "expected_invariant": "user_managed_host_tailscale_state_is_never_adopted"
+    },
+    {
+      "name": "legacy_serve_private_normalizes_only_to_tailscale_private",
+      "definition": "tailscale_connector_migration_record",
+      "base_valid": "legacy_configuration.migrates_without_host_state_ingest",
+      "patch": {"target_route_type": "headscale_private"},
+      "expected_invariant": "legacy_serve_private_is_a_hosted_tailscale_route_migration_value_not_an_active_serve_transport"
+    },
+    {
+      "name": "connector_migration_cannot_complete_with_identity_collision",
+      "definition": "tailscale_connector_migration_record",
+      "base_valid": "legacy_configuration.migrates_without_host_state_ingest",
+      "patch": {"identity_collision_status": "collision_detected"},
+      "expected_invariant": "one_live_connector_identity_per_server_binding"
+    },
+    {
+      "name": "connector_state_never_enters_project_or_default_portable_backup",
+      "definition": "tailscale_connector_backup_policy",
+      "base_valid": "connector_backup.project_and_portable_exclusions",
+      "patch": {"project_backup": "included", "portable_full_server_default": "included"},
+      "expected_invariant": "project_and_default_portable_backup_exclude_connector_state"
+    },
+    {
+      "name": "generic_secret_backup_permission_does_not_enable_connector_export",
+      "definition": "tailscale_connector_backup_policy",
+      "base_valid": "connector_backup.project_and_portable_exclusions",
+      "patch": {"optional_secret_envelope": "available"},
+      "expected_invariant": "connector_adapter_must_prove_portability_and_collision_safety"
+    },
+    {
+      "name": "external_host_tailscale_is_never_pm_adopted",
+      "definition": "tailscale_external_endpoint_projection",
+      "base_valid": "external_host_tailscale.coexists_without_adoption",
+      "patch": {"pm_connector_managed": true, "host_tailscale_adopted": true},
+      "expected_invariant": "external_host_route_is_user_managed_and_deduped_only_by_verified_server_id"
+    },
+    {
+      "name": "headscale_0_29_3_rejects_funnel_effective_true",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "base_valid": "headscale_0_29_3_serve_and_funnel_effective_false",
+      "patch": {
+        "funnel_effective": true
+      },
+      "expected_invariant": "headscale_has_no_funnel_promise"
+    },
+    {
+      "name": "headscale_0_29_3_rejects_serve_effective_true",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "base_valid": "headscale_0_29_3_serve_and_funnel_effective_false",
+      "patch": {
+        "serve_effective": true
+      },
+      "expected_invariant": "headscale_0_29_3_has_no_serve_capability"
+    },
+    {
+      "name": "hosted_tailscale_serve_requires_exact_live_probe",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "base_valid": "hosted_tailscale_serve_is_separately_probe_gated",
+      "patch": {
+        "exact_live_probe_ref": null
+      },
+      "expected_invariant": "hosted_tailscale_serve_requires_exact_live_probe"
+    },
+    {
+      "name": "public_funnel_route_requires_security_policy",
+      "definition": "remote_route_record",
+      "base_valid": "private_tailscale_route_is_verified_beneath_existing_server",
+      "patch": {
+        "route_type": "funnel_public",
+        "public_ingress": true,
+        "security_policy_ref": null
+      },
+      "expected_invariant": "public_route_requires_security_policy"
+    },
+    {
+      "name": "identity_mismatch_route_cannot_remain_enabled",
+      "definition": "remote_route_record",
+      "base_valid": "private_tailscale_route_is_verified_beneath_existing_server",
+      "patch": {
+        "identity_verification": "mismatch",
+        "state": "identity_mismatch"
+      },
+      "expected_invariant": "identity_mismatch_fails_closed"
+    },
+    {
+      "name": "remote_link_cannot_require_account_or_public_port",
+      "definition": "remote_link_configuration",
+      "base_valid": "remote_link_is_accountless_outbound_and_stores_no_content",
+      "patch": {
+        "account_required": true,
+        "public_port_required": true
+      },
+      "expected_invariant": "remote_link_accountless_outbound_only"
+    },
+    {
+      "name": "complete_route_migration_requires_cursor_preservation",
+      "definition": "remote_route_migration_receipt",
+      "base_valid": "route_migration_complete_preserves_identity_commands_and_cursor",
+      "patch": {
+        "projection_cursor_preserved": false
+      },
+      "expected_invariant": "route_migration_preserves_projection_continuity"
+    },
+    {
+      "name": "proxy_rejects_arbitrary_subpath",
+      "definition": "reverse_proxy_configuration",
+      "base_valid": "dedicated_hostname_proxy_is_security_complete",
+      "patch": {
+        "base_path": "/puppet-master"
+      },
+      "expected_invariant": "dedicated_hostname_root_path_baseline"
+    },
+    {
+      "name": "public_security_rejects_missing_internal_prohibition",
+      "definition": "public_ingress_security_policy",
+      "base_valid": "funnel_security_policy_prohibits_internal_surfaces",
+      "patch": {
+        "prohibited_surfaces": [
+          "unclaimed_setup"
+        ]
+      },
+      "expected_invariant": "public_internal_surfaces_prohibited"
+    },
+    {
+      "name": "negative.unknown_command",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.unknown",
+        "command_instance_id": "rcmd_case-000000000201",
+        "correlation_id": "corr_remote-000000000201",
+        "idempotency_key": "idem_remote-000000000201",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "negative.alias_cannot_be_primary_payload",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.open_details",
+        "command_instance_id": "rcmd_case-000000000202",
+        "correlation_id": "corr_remote-000000000202",
+        "idempotency_key": "idem_remote-000000000202",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "negative.alias_independent_handler",
+      "definition": "compatibility_alias",
+      "instance": {
+        "record_type": "remote_access.command.compatibility_alias.v1",
+        "input_id": "cmd.remote_access.open_details",
+        "canonical_target": "cmd.remote_access.route.open_details",
+        "normalization_rule": "direct_alias",
+        "fixed_payload": {},
+        "preserve_invoked_identity_in_receipt": true,
+        "preserve_serialized_identity_in_receipt": true,
+        "independent_handler_allowed": true,
+        "independent_wiring_allowed": false
+      }
+    },
+    {
+      "name": "negative.public_enable_without_confirmation",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.funnel.enable",
+        "command_instance_id": "rcmd_case-000000000203",
+        "correlation_id": "corr_remote-000000000203",
+        "idempotency_key": "idem_remote-000000000203",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "preflight_receipt_id": "rapf_abcdefghijkl",
+          "confirmation": false
+        }
+      }
+    },
+    {
+      "name": "negative.raw_headscale_key_in_payload",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.headscale.start",
+        "command_instance_id": "rcmd_case-000000000204",
+        "correlation_id": "corr_remote-000000000204",
+        "idempotency_key": "idem_remote-000000000204",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "control_url": "https://headscale.example.test",
+          "authorization_mode": "interactive_approval",
+          "api_key": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "negative.public_docker_socket_exposure",
+      "definition": "public_ingress_security_policy",
+      "instance": {
+        "schema_id": "pm.remote_access_system.public_ingress_security_policy.v1",
+        "schema_version": "1.0.0",
+        "policy_id": "public-ingress-policy:contract-positive",
+        "server_id": "server:home-01",
+        "policy_generation": 1,
+        "pm_auth_required": true,
+        "pairing_required": true,
+        "revocation_enforced": true,
+        "rate_limit_before_hydration": true,
+        "metadata_minimal_preauth": true,
+        "csrf_enforced": true,
+        "origin_policy": "exact_configured_origins",
+        "cookie_policy": "secure_http_only_same_site",
+        "host_policy": "configured_hosts_only",
+        "websocket_policy": "authenticated_origin_checked",
+        "trusted_proxy_policy": "configured_peers_only",
+        "allowed_surface": [
+          "authenticated_https_ui",
+          "authenticated_api",
+          "authenticated_websocket"
+        ],
+        "prohibited_surfaces": [
+          "unclaimed_setup",
+          "debug_cdp",
+          "browser_control",
+          "pty",
+          "ssh",
+          "docker_socket",
+          "provider_callback_internal",
+          "cluster_credentials",
+          "internal_health",
+          "project_metadata_preauth",
+          "vault_content",
+          "backup_content"
+        ],
+        "unclaimed_setup_local_private_only": true,
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_public_approval": true,
+        "preflight_passed": true,
+        "exposed_surfaces": [
+          "authenticated_web_ui",
+          "authenticated_api",
+          "authenticated_websocket",
+          "docker_socket"
+        ],
+        "unclaimed_setup_public": false,
+        "protected_auth_browser_observable": false
+      }
+    },
+    {
+      "name": "negative.public_unclaimed_setup",
+      "definition": "public_ingress_security_policy",
+      "instance": {
+        "schema_id": "pm.remote_access_system.public_ingress_security_policy.v1",
+        "schema_version": "1.0.0",
+        "policy_id": "public-ingress-policy:contract-positive",
+        "server_id": "server:home-01",
+        "policy_generation": 1,
+        "pm_auth_required": true,
+        "pairing_required": true,
+        "revocation_enforced": true,
+        "rate_limit_before_hydration": true,
+        "metadata_minimal_preauth": true,
+        "csrf_enforced": true,
+        "origin_policy": "exact_configured_origins",
+        "cookie_policy": "secure_http_only_same_site",
+        "host_policy": "configured_hosts_only",
+        "websocket_policy": "authenticated_origin_checked",
+        "trusted_proxy_policy": "configured_peers_only",
+        "allowed_surface": [
+          "authenticated_https_ui",
+          "authenticated_api",
+          "authenticated_websocket"
+        ],
+        "prohibited_surfaces": [
+          "unclaimed_setup",
+          "debug_cdp",
+          "browser_control",
+          "pty",
+          "ssh",
+          "docker_socket",
+          "provider_callback_internal",
+          "cluster_credentials",
+          "internal_health",
+          "project_metadata_preauth",
+          "vault_content",
+          "backup_content"
+        ],
+        "unclaimed_setup_local_private_only": true,
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_public_approval": true,
+        "preflight_passed": true,
+        "exposed_surfaces": [
+          "authenticated_web_ui",
+          "authenticated_api",
+          "authenticated_websocket"
+        ],
+        "unclaimed_setup_public": true,
+        "protected_auth_browser_observable": false
+      }
+    },
+    {
+      "name": "negative.headscale_0_29_3_serve_effective_true",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "instance": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:contract-headscale",
+        "server_id": "server:home-01",
+        "mode": "headscale",
+        "control_plane_version": "0.29.3",
+        "component_state": "ready",
+        "installation_disposition": "packaged_dormant",
+        "control_url_ref": "endpoint:headscale:organization",
+        "registration_ref": "registration:headscale:home-01",
+        "device_identity_ref": "device:tailnet:home-01",
+        "serve_requested": true,
+        "serve_effective": true,
+        "serve_support_status": "unsupported",
+        "funnel_requested": true,
+        "funnel_effective": false,
+        "funnel_support_status": "unsupported",
+        "official_capability_matrix_ref": "official:headscale:features:0.29.3",
+        "exact_live_probe_ref": null,
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": true,
+        "signed_in": true,
+        "reuse_existing_install": false,
+        "existing_install_proof": null,
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": true
+        },
+        "effective_capabilities": {
+          "serve": false,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "negative.headscale_0_29_3_funnel_effective_true",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "instance": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:contract-headscale",
+        "server_id": "server:home-01",
+        "mode": "headscale",
+        "control_plane_version": "0.29.3",
+        "component_state": "ready",
+        "installation_disposition": "packaged_dormant",
+        "control_url_ref": "endpoint:headscale:organization",
+        "registration_ref": "registration:headscale:home-01",
+        "device_identity_ref": "device:tailnet:home-01",
+        "serve_requested": true,
+        "serve_effective": false,
+        "serve_support_status": "unsupported",
+        "funnel_requested": true,
+        "funnel_effective": true,
+        "funnel_support_status": "unsupported",
+        "official_capability_matrix_ref": "official:headscale:features:0.29.3",
+        "exact_live_probe_ref": null,
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": true,
+        "signed_in": true,
+        "reuse_existing_install": false,
+        "existing_install_proof": null,
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": true
+        },
+        "effective_capabilities": {
+          "serve": false,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "negative.dormant_tailscale_signed_in",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "instance": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:contract-dormant",
+        "server_id": "server:home-01",
+        "mode": "hosted_tailscale",
+        "control_plane_version": "hosted-current-profile",
+        "component_state": "dormant",
+        "installation_disposition": "packaged_dormant",
+        "control_url_ref": null,
+        "registration_ref": null,
+        "device_identity_ref": null,
+        "serve_requested": true,
+        "serve_effective": false,
+        "serve_support_status": "supported",
+        "funnel_requested": false,
+        "funnel_effective": false,
+        "funnel_support_status": "supported",
+        "official_capability_matrix_ref": "official:tailscale:serve:current",
+        "exact_live_probe_ref": null,
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": false,
+        "signed_in": true,
+        "reuse_existing_install": false,
+        "existing_install_proof": null,
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": false
+        },
+        "effective_capabilities": {
+          "serve": false,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "negative.reuse_install_without_proof",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "instance": {
+        "schema_id": "pm.remote_access_system.tailscale_route_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "tailscale-config:contract-dormant",
+        "server_id": "server:home-01",
+        "mode": "hosted_tailscale",
+        "control_plane_version": "hosted-current-profile",
+        "component_state": "dormant",
+        "installation_disposition": "packaged_dormant",
+        "control_url_ref": null,
+        "registration_ref": null,
+        "device_identity_ref": null,
+        "serve_requested": true,
+        "serve_effective": false,
+        "serve_support_status": "supported",
+        "funnel_requested": false,
+        "funnel_effective": false,
+        "funnel_support_status": "supported",
+        "official_capability_matrix_ref": "official:tailscale:serve:current",
+        "exact_live_probe_ref": null,
+        "wsl_served_through_host": true,
+        "provenance_ref": "provenance:tailscale-component:1",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "explicit_setup_started": false,
+        "signed_in": false,
+        "reuse_existing_install": true,
+        "existing_install_proof": null,
+        "requested_capabilities": {
+          "serve": true,
+          "funnel": false
+        },
+        "effective_capabilities": {
+          "serve": false,
+          "funnel": false
+        },
+        "identity_persisted_outside_disposable_layers": true,
+        "automatic_headscale_deployment": false,
+        "per_wsl_node_default": false
+      }
+    },
+    {
+      "name": "negative.proxy_trusts_any_forwarded_headers",
+      "definition": "reverse_proxy_configuration",
+      "instance": {
+        "schema_id": "pm.remote_access_system.reverse_proxy_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "reverse-proxy-config:contract-positive",
+        "server_id": "server:home-01",
+        "proxy_family": "nginx",
+        "deployment_form": "compose",
+        "external_origin": "https://pm.example.test",
+        "base_path": "/",
+        "dedicated_hostname": true,
+        "trusted_proxy_cidrs": [
+          "10.0.0.0/24"
+        ],
+        "tls_required": true,
+        "forwarded_host_proto_policy": "trust_configured_peers_only",
+        "forwarded_client_policy": "trust_configured_peers_only",
+        "websocket_upgrade": true,
+        "secure_cookie_policy": "secure_http_only_same_site",
+        "csrf_policy": "enforced",
+        "origin_policy": "exact_external_origin",
+        "callback_policy": "validated_exact_return_context",
+        "file_transfer_policy": "authenticated_bounded_stream",
+        "generated_artifact_ref": "artifact:reverse-proxy:nginx-01",
+        "test_receipt_ref": "receipt:remote-test:proxy-01",
+        "state": "ready",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "trust_forwarded_headers_from_any_peer": true,
+        "deep_links_tested": true,
+        "callbacks_tested": true,
+        "transfers_tested": true,
+        "arbitrary_subpath_supported": false,
+        "claims_to_solve_cgnat": false
+      }
+    },
+    {
+      "name": "negative.proxy_claims_arbitrary_subpath",
+      "definition": "reverse_proxy_configuration",
+      "instance": {
+        "schema_id": "pm.remote_access_system.reverse_proxy_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "reverse-proxy-config:contract-positive",
+        "server_id": "server:home-01",
+        "proxy_family": "nginx",
+        "deployment_form": "compose",
+        "external_origin": "https://pm.example.test",
+        "base_path": "/",
+        "dedicated_hostname": true,
+        "trusted_proxy_cidrs": [
+          "10.0.0.0/24"
+        ],
+        "tls_required": true,
+        "forwarded_host_proto_policy": "trust_configured_peers_only",
+        "forwarded_client_policy": "trust_configured_peers_only",
+        "websocket_upgrade": true,
+        "secure_cookie_policy": "secure_http_only_same_site",
+        "csrf_policy": "enforced",
+        "origin_policy": "exact_external_origin",
+        "callback_policy": "validated_exact_return_context",
+        "file_transfer_policy": "authenticated_bounded_stream",
+        "generated_artifact_ref": "artifact:reverse-proxy:nginx-01",
+        "test_receipt_ref": "receipt:remote-test:proxy-01",
+        "state": "ready",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "trust_forwarded_headers_from_any_peer": false,
+        "deep_links_tested": true,
+        "callbacks_tested": true,
+        "transfers_tested": true,
+        "arbitrary_subpath_supported": true,
+        "claims_to_solve_cgnat": false
+      }
+    },
+    {
+      "name": "negative.domain_claims_to_solve_cgnat",
+      "definition": "reverse_proxy_configuration",
+      "instance": {
+        "schema_id": "pm.remote_access_system.reverse_proxy_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "reverse-proxy-config:contract-positive",
+        "server_id": "server:home-01",
+        "proxy_family": "nginx",
+        "deployment_form": "compose",
+        "external_origin": "https://pm.example.test",
+        "base_path": "/",
+        "dedicated_hostname": true,
+        "trusted_proxy_cidrs": [
+          "10.0.0.0/24"
+        ],
+        "tls_required": true,
+        "forwarded_host_proto_policy": "trust_configured_peers_only",
+        "forwarded_client_policy": "trust_configured_peers_only",
+        "websocket_upgrade": true,
+        "secure_cookie_policy": "secure_http_only_same_site",
+        "csrf_policy": "enforced",
+        "origin_policy": "exact_external_origin",
+        "callback_policy": "validated_exact_return_context",
+        "file_transfer_policy": "authenticated_bounded_stream",
+        "generated_artifact_ref": "artifact:reverse-proxy:nginx-01",
+        "test_receipt_ref": "receipt:remote-test:proxy-01",
+        "state": "ready",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "trust_forwarded_headers_from_any_peer": false,
+        "deep_links_tested": true,
+        "callbacks_tested": true,
+        "transfers_tested": true,
+        "arbitrary_subpath_supported": false,
+        "claims_to_solve_cgnat": true
+      }
+    },
+    {
+      "name": "negative.remote_link_requires_account",
+      "definition": "remote_link_configuration",
+      "instance": {
+        "schema_id": "pm.remote_access_system.remote_link_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "remote-link-config:contract-positive",
+        "server_id": "server:home-01",
+        "provider_id": "remote-link-provider:initial",
+        "gateway_mode": "hosted_replaceable",
+        "opaque_address_ref": "remote-link-address:home-01",
+        "outbound_dial": true,
+        "account_required": true,
+        "email_required": false,
+        "api_key_required": false,
+        "public_port_required": false,
+        "application_e2e_policy_ref": "policy:remote-link-e2e:1",
+        "public_plane_storage_policy": "no_product_content",
+        "preauth_rate_limit_policy_ref": "policy:remote-link-preauth:1",
+        "transport_state": "direct",
+        "recovery_key_record_ref": "recovery-key-record:remote-link:home-01",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "router_change_required": false,
+        "user_run_public_component_required": false,
+        "home_server_outbound_only": true,
+        "pairing_required": true,
+        "application_e2e_required": true,
+        "public_plane_stores_protected_content": false,
+        "public_plane_logs_protected_content": false,
+        "preauth_rate_limited": true,
+        "provider_replaceable": true
+      }
+    },
+    {
+      "name": "negative.remote_link_public_plane_content",
+      "definition": "remote_link_configuration",
+      "instance": {
+        "schema_id": "pm.remote_access_system.remote_link_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "remote-link-config:contract-positive",
+        "server_id": "server:home-01",
+        "provider_id": "remote-link-provider:initial",
+        "gateway_mode": "hosted_replaceable",
+        "opaque_address_ref": "remote-link-address:home-01",
+        "outbound_dial": true,
+        "account_required": false,
+        "email_required": false,
+        "api_key_required": false,
+        "public_port_required": false,
+        "application_e2e_policy_ref": "policy:remote-link-e2e:1",
+        "public_plane_storage_policy": "no_product_content",
+        "preauth_rate_limit_policy_ref": "policy:remote-link-preauth:1",
+        "transport_state": "direct",
+        "recovery_key_record_ref": "recovery-key-record:remote-link:home-01",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "router_change_required": false,
+        "user_run_public_component_required": false,
+        "home_server_outbound_only": true,
+        "pairing_required": true,
+        "application_e2e_required": true,
+        "public_plane_stores_protected_content": true,
+        "public_plane_logs_protected_content": false,
+        "preauth_rate_limited": true,
+        "provider_replaceable": true
+      }
+    },
+    {
+      "name": "negative.protected_auth_observed",
+      "definition": "callback_transport_record",
+      "instance": {
+        "record_type": "remote_access.callback_transport.v1",
+        "callback_session_id": "cb_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "one_time_opaque_id": "opaque_abcdefghijkl",
+        "state_validated": true,
+        "pkce_validated": true,
+        "provider_validated": true,
+        "target_validated": true,
+        "expiry_validated": true,
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "protected_auth_human_only": true,
+        "protected_auth_ephemeral": true,
+        "protected_auth_observed_or_persisted": true,
+        "web_client_loopback_assumed": false,
+        "expires_at": "2026-08-31T00:10:00Z"
+      }
+    },
+    {
+      "name": "negative.web_client_loopback_assumption",
+      "definition": "callback_transport_record",
+      "instance": {
+        "record_type": "remote_access.callback_transport.v1",
+        "callback_session_id": "cb_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "one_time_opaque_id": "opaque_abcdefghijkl",
+        "state_validated": true,
+        "pkce_validated": true,
+        "provider_validated": true,
+        "target_validated": true,
+        "expiry_validated": true,
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "protected_auth_human_only": true,
+        "protected_auth_ephemeral": true,
+        "protected_auth_observed_or_persisted": false,
+        "web_client_loopback_assumed": true,
+        "expires_at": "2026-08-31T00:10:00Z"
+      }
+    },
+    {
+      "name": "negative.public_route_labeled_private",
+      "definition": "remote_route_record",
+      "instance": {
+        "schema_id": "pm.remote_access_system.remote_route_record.v1",
+        "schema_version": "1.0.0",
+        "remote_route_id": "remote-route:contract-public",
+        "server_id": "server:home-01",
+        "server_endpoint_id": "server-endpoint:contract-public",
+        "route_type": "funnel_public",
+        "route_generation": 4,
+        "transport_generation": 3,
+        "address_ref": "endpoint:funnel:contract-public",
+        "public_ingress": true,
+        "identity_verification": "verified",
+        "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "state": "active",
+        "preference_rank": 9,
+        "user_enabled": true,
+        "security_policy_ref": "policy:public-ingress:contract-public",
+        "configuration_ref": "tailscale-config:contract-public",
+        "last_test_receipt_ref": "receipt:remote-test:contract-public",
+        "failure_ref": null,
+        "created_at_utc": "2026-08-31T12:00:00Z",
+        "updated_at_utc": "2026-08-31T12:02:00Z",
+        "currentness_ref": "currentness:remote-route:contract-public:5",
+        "policy_generation": 1,
+        "visibility": "private",
+        "preferred": false,
+        "persisted_at": "2026-08-31T12:02:00Z"
+      }
+    },
+    {
+      "name": "negative.route_migration_changes_server_identity",
+      "definition": "remote_route_migration_record",
+      "instance": {
+        "schema_id": "pm.remote_access_system.remote_route_migration_record.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "remote-route-migration:contract-positive",
+        "server_id": "server:contract-positive",
+        "from_remote_route_id": "remote-route:source",
+        "to_remote_route_id": "remote-route:target",
+        "expected_server_generation": 3,
+        "expected_from_route_generation": 4,
+        "expected_to_route_generation": 5,
+        "phase": "complete",
+        "journal_ref": "journal:remote-route-migration:contract-positive",
+        "idempotency_key": "remote-route-migration-contract-positive",
+        "command_cursor_fence_ref": "cursor:commands:81",
+        "projection_cursor_ref": "cursor:remote-access:99",
+        "staged_test_receipt_ref": "receipt:remote-test:contract-positive",
+        "commit_marker_ref": "commit:remote-route-migration:contract-positive",
+        "rollback_marker_ref": null,
+        "failure_ref": null,
+        "started_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:05:00Z",
+        "terminal_at_utc": "2026-08-31T00:05:00Z",
+        "identity_verified": true,
+        "transport_verified": true,
+        "preference_switched": true,
+        "old_route_drained": true,
+        "idempotency_preserved": true,
+        "projection_cursor_preserved": true,
+        "server_identity_changed": true,
+        "project_move_started": false,
+        "goal_restart_started": false,
+        "restart_convergence": "commit",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.route_migration_starts_project_move",
+      "definition": "remote_route_migration_record",
+      "instance": {
+        "schema_id": "pm.remote_access_system.remote_route_migration_record.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "remote-route-migration:contract-positive",
+        "server_id": "server:contract-positive",
+        "from_remote_route_id": "remote-route:source",
+        "to_remote_route_id": "remote-route:target",
+        "expected_server_generation": 3,
+        "expected_from_route_generation": 4,
+        "expected_to_route_generation": 5,
+        "phase": "complete",
+        "journal_ref": "journal:remote-route-migration:contract-positive",
+        "idempotency_key": "remote-route-migration-contract-positive",
+        "command_cursor_fence_ref": "cursor:commands:81",
+        "projection_cursor_ref": "cursor:remote-access:99",
+        "staged_test_receipt_ref": "receipt:remote-test:contract-positive",
+        "commit_marker_ref": "commit:remote-route-migration:contract-positive",
+        "rollback_marker_ref": null,
+        "failure_ref": null,
+        "started_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:05:00Z",
+        "terminal_at_utc": "2026-08-31T00:05:00Z",
+        "identity_verified": true,
+        "transport_verified": true,
+        "preference_switched": true,
+        "old_route_drained": true,
+        "idempotency_preserved": true,
+        "projection_cursor_preserved": true,
+        "server_identity_changed": false,
+        "project_move_started": true,
+        "goal_restart_started": false,
+        "restart_convergence": "commit",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.route_migration_restarts_goal",
+      "definition": "remote_route_migration_record",
+      "instance": {
+        "schema_id": "pm.remote_access_system.remote_route_migration_record.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "remote-route-migration:contract-positive",
+        "server_id": "server:contract-positive",
+        "from_remote_route_id": "remote-route:source",
+        "to_remote_route_id": "remote-route:target",
+        "expected_server_generation": 3,
+        "expected_from_route_generation": 4,
+        "expected_to_route_generation": 5,
+        "phase": "complete",
+        "journal_ref": "journal:remote-route-migration:contract-positive",
+        "idempotency_key": "remote-route-migration-contract-positive",
+        "command_cursor_fence_ref": "cursor:commands:81",
+        "projection_cursor_ref": "cursor:remote-access:99",
+        "staged_test_receipt_ref": "receipt:remote-test:contract-positive",
+        "commit_marker_ref": "commit:remote-route-migration:contract-positive",
+        "rollback_marker_ref": null,
+        "failure_ref": null,
+        "started_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:05:00Z",
+        "terminal_at_utc": "2026-08-31T00:05:00Z",
+        "identity_verified": true,
+        "transport_verified": true,
+        "preference_switched": true,
+        "old_route_drained": true,
+        "idempotency_preserved": true,
+        "projection_cursor_preserved": true,
+        "server_identity_changed": false,
+        "project_move_started": false,
+        "goal_restart_started": true,
+        "restart_convergence": "commit",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.route_migration_complete_without_identity",
+      "definition": "remote_route_migration_record",
+      "instance": {
+        "schema_id": "pm.remote_access_system.remote_route_migration_record.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "remote-route-migration:contract-positive",
+        "server_id": "server:contract-positive",
+        "from_remote_route_id": "remote-route:source",
+        "to_remote_route_id": "remote-route:target",
+        "expected_server_generation": 3,
+        "expected_from_route_generation": 4,
+        "expected_to_route_generation": 5,
+        "phase": "complete",
+        "journal_ref": "journal:remote-route-migration:contract-positive",
+        "idempotency_key": "remote-route-migration-contract-positive",
+        "command_cursor_fence_ref": "cursor:commands:81",
+        "projection_cursor_ref": "cursor:remote-access:99",
+        "staged_test_receipt_ref": "receipt:remote-test:contract-positive",
+        "commit_marker_ref": "commit:remote-route-migration:contract-positive",
+        "rollback_marker_ref": null,
+        "failure_ref": null,
+        "started_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:05:00Z",
+        "terminal_at_utc": "2026-08-31T00:05:00Z",
+        "identity_verified": false,
+        "transport_verified": true,
+        "preference_switched": true,
+        "old_route_drained": true,
+        "idempotency_preserved": true,
+        "projection_cursor_preserved": true,
+        "server_identity_changed": false,
+        "project_move_started": false,
+        "goal_restart_started": false,
+        "restart_convergence": "commit",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.lifecycle_allows_raw_credentials",
+      "definition": "remote_access_lifecycle_record",
+      "instance": {
+        "record_type": "remote_access.lifecycle.v1",
+        "server_id": "server:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "lifecycle_generation": 6,
+        "state": "active",
+        "durable_journal_ref": "redb:remote-access-lifecycle:6",
+        "observable_work_id": "work_abcdefghijkl",
+        "preference_policy_persisted": true,
+        "route_credentials_stored_as_secret_refs_only": false,
+        "restart_convergence": "resume",
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.puppet_master_administers_vpn",
+      "definition": "private_endpoint_configuration",
+      "instance": {
+        "record_type": "remote_access.private_endpoint_configuration.v1",
+        "server_id": "server:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "route_type": "vpn_private",
+        "endpoint": "https://vpn.example.test:7443",
+        "identity_verified": true,
+        "protocol_tested": true,
+        "api_tested": true,
+        "websocket_tested": true,
+        "stream_tested": true,
+        "file_transfer_tested": true,
+        "pairing_verified": true,
+        "puppet_master_administers_vpn": true
+      }
+    },
+    {
+      "name": "negative.available_without_integration_and_security",
+      "definition": "command_availability",
+      "instance": {
+        "record_type": "remote_access.command.availability.v1",
+        "command_id": "cmd.remote_access.funnel.enable",
+        "server_id": "server:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "available": true,
+        "currentness": "current",
+        "evaluated_at": "2026-08-31T00:00:00Z",
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "security_preflight_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        }
+      }
+    },
+    {
+      "name": "negative.permission_prompt_without_reason",
+      "definition": "command_permission",
+      "instance": {
+        "record_type": "remote_access.command.permission.v1",
+        "command_id": "cmd.remote_access.funnel.enable",
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "principal_id": "local-user",
+        "permission_class": "remote_access.public_ingress",
+        "decision": "prompt_required",
+        "filesafe_confirmation_required": true,
+        "policy_generation": 4,
+        "evaluated_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.exact_return_context_mismatch",
+      "definition": "command_round_trip",
+      "instance": {
+        "record_type": "remote_access.command.round_trip.v1",
+        "request": {
+          "record_type": "remote_access.command.payload.v1",
+          "command_id": "cmd.remote_access.route.test",
+          "command_instance_id": "rcmd_case-000000000100",
+          "correlation_id": "corr_remote-000000000100",
+          "idempotency_key": "idem_remote-000000000100",
+          "server_id": "server:abcdefghijkl",
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "client_id": "client:abcdefghijkl",
+          "session_id": "session:abcdefghijkl",
+          "expected_generations": {
+            "server_generation": 3,
+            "endpoint_generation": 2,
+            "route_generation": 5,
+            "policy_generation": 4,
+            "trust_generation": 2,
+            "session_generation": 7
+          },
+          "permission_snapshot_id": "perm_abcdefghijkl",
+          "return_context": {
+            "surface_id": "settings.remote_access",
+            "route_id": "settings/remote-access",
+            "focus_target": "route-card",
+            "invocation_token": "ret_remote-000000000001"
+          },
+          "args": {
+            "remote_route_id": "remote-route:abcdefghijkl"
+          }
+        },
+        "result": {
+          "record_type": "remote_access.command.result.v1",
+          "command_id": "cmd.remote_access.route.test",
+          "command_instance_id": "rcmd_case-000000000100",
+          "correlation_id": "corr_remote-000000000100",
+          "server_id": "server:abcdefghijkl",
+          "status": "succeeded",
+          "receipt_id": "rrcpt_result-00000000001",
+          "resulting_route_generation": 6,
+          "return_context": {
+            "surface_id": "settings.remote_access",
+            "route_id": "settings/remote-access",
+            "focus_target": "different-control",
+            "invocation_token": "ret_remote-000000000001"
+          },
+          "output": {
+            "action": "cmd.remote_access.route.test",
+            "changed": false,
+            "remote_route_id": "remote-route:abcdefghijkl",
+            "actual_route_type": "tailscale_private",
+            "visibility": "private",
+            "currentness": "current"
+          }
+        }
+      },
+      "semantic_rule": "exact_return_context"
+    },
+    {
+      "name": "negative.command_action_mismatch",
+      "definition": "command_result",
+      "instance": {
+        "record_type": "remote_access.command.result.v1",
+        "command_id": "cmd.remote_access.route.test",
+        "command_instance_id": "rcmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "rrcpt_result-00000000001",
+        "resulting_route_generation": 6,
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "output": {
+          "action": "cmd.remote_access.open",
+          "changed": false,
+          "remote_route_id": "remote-route:abcdefghijkl",
+          "actual_route_type": "tailscale_private",
+          "visibility": "private",
+          "currentness": "current"
+        }
+      },
+      "semantic_rule": "command_action_parity"
+    },
+    {
+      "name": "negative.hosted_tailscale_waiting_rejects_disconnected_initiating_client",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "base_valid": "hosted_tailscale_auth_waits_on_exact_initiating_active_client",
+      "patch": {
+        "client_binding_state": "initiating_disconnected"
+      }
+    },
+    {
+      "name": "negative.hosted_tailscale_verified_rejects_stale_operation",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "base_valid": "hosted_tailscale_auth_returns_to_exact_operation_and_client",
+      "patch": {
+        "operation_currentness_state": "stale"
+      }
+    },
+    {
+      "name": "negative.hosted_tailscale_auth_cannot_expose_content",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "base_valid": "hosted_tailscale_auth_waits_on_exact_initiating_active_client",
+      "patch": {
+        "content_exposed_to_caller": true
+      }
+    },
+    {
+      "name": "negative.hosted_tailscale_auth_cannot_navigate_capture_or_record",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "base_valid": "hosted_tailscale_auth_waits_on_exact_initiating_active_client",
+      "patch": {
+        "caller_navigation_allowed": true,
+        "content_capture_allowed": true,
+        "content_recording_allowed": true
+      }
+    },
+    {
+      "name": "negative.hosted_tailscale_timeout_cannot_claim_exact_content_return",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "base_valid": "hosted_tailscale_auth_timeout_is_terminal_without_content_return",
+      "patch": {
+        "return_fence_state": "exact_operation_and_initiating_active_client"
+      }
+    },
+    {
+      "name": "negative.hosted_tailscale_auth_rejects_shadow_operation_id",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "base_valid": "hosted_tailscale_auth_returns_to_exact_operation_and_client",
+      "patch": {
+        "returned_operation_id": "authentication-operation:hosted-tailscale:other"
+      }
+    },
+    {
+      "name": "negative.hosted_tailscale_auth_rejects_fallback_client_id",
+      "definition": "hosted_tailscale_auth_handoff_record",
+      "base_valid": "hosted_tailscale_auth_waits_on_exact_initiating_active_client",
+      "patch": {
+        "fallback_client_id": "client:hosted-tailscale:other"
+      }
+    },
+    {
+      "name": "negative.headscale_cannot_use_hosted_browser_auth",
+      "definition": "legacy_tailscale_route_configuration_migration_reader",
+      "base_valid": "headscale_0_29_3_serve_and_funnel_effective_false",
+      "patch": {
+        "registration_mode": "hosted_browser_auth",
+        "hosted_auth_handoff_ref": "protected-auth-handoff:forbidden",
+        "hosted_account_binding_state": "verified",
+        "signed_in": true
+      }
+    },
+    {
+      "name": "negative.hosted_login_command_cannot_target_headscale",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.remote_access.tailscale.login.start",
+      "patch": {
+        "args.control_plane_profile": "headscale"
+      }
+    },
+    {
+      "name": "negative.funnel_preflight_cannot_target_headscale",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.remote_access.funnel.preflight",
+      "patch": {
+        "args.control_plane_profile": "headscale"
+      }
+    },
+    {
+      "name": "negative.funnel_enable_requires_explicit_consent",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.remote_access.funnel.enable",
+      "patch": {
+        "args.explicit_consent": false
+      }
+    },
+    {
+      "name": "negative.funnel_enable_rejects_noncurrent_preflight_generation",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.remote_access.funnel.enable",
+      "patch": {
+        "args.expected_preflight_generation": 0
+      }
+    },
+    {
+      "name": "negative.funnel_policy_rejects_stale_preflight",
+      "definition": "public_ingress_security_policy",
+      "base_valid": "funnel_security_policy_prohibits_internal_surfaces",
+      "patch": {
+        "preflight_currentness": "stale"
+      }
+    },
+    {
+      "name": "negative.complete_route_migration_rejects_stale_currentness_fence",
+      "definition": "remote_route_migration_record",
+      "base_valid": "positive.route_migration_exact_continuity",
+      "patch": {
+        "currentness_fence_status": "stale"
+      }
+    },
+    {
+      "name": "negative.complete_route_migration_receipt_rejects_identity_mismatch",
+      "definition": "remote_route_migration_receipt",
+      "base_valid": "route_migration_complete_preserves_identity_commands_and_cursor",
+      "patch": {
+        "identity_fence_status": "mismatch"
+      }
+    },
+    {
+      "name": "negative.callback_return_cannot_navigate_capture_or_record_protected_auth",
+      "definition": "callback_transport_record",
+      "base_valid": "positive.callback_exact_return",
+      "patch": {
+        "protected_auth_caller_navigation_allowed": true,
+        "protected_auth_content_capture_allowed": true,
+        "protected_auth_content_recording_allowed": true
+      }
+    },
+    {
+      "name": "compatibility_ref_rejects_unormalized_remote_link_test_token",
+      "definition": "RemoteAccessCommandRequest",
+      "base_valid": "positive.compatibility_ref.remote_access_command_request",
+      "patch": {
+        "command_id": "cmd.remote_access.remote_link.test"
+      }
+    },
+    {
+      "name": "compatibility_ref_result_requires_exact_target_identity",
+      "definition": "RemoteAccessCommandResult",
+      "base_valid": "positive.compatibility_ref.remote_access_command_result",
+      "patch": {
+        "command_id": "cmd.remote_access.remote_link.test"
+      }
+    },
+    {
+      "name": "compatibility_ref_request_requires_idempotency",
+      "definition": "RemoteAccessCommandRequest",
+      "base_valid": "positive.compatibility_ref.remote_access_command_request",
+      "remove": [
+        "idempotency_key"
+      ]
+    }
+  ]
+}

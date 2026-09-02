@@ -54,7 +54,7 @@
   width:100%;background:none;border:0;border-radius:0;padding:0}
 .transcript[data-variant="9"] .message-assistant .message-surface{width:100%;padding:0}
 .transcript[data-variant="9"] .message-user::before{
-  content:attr(data-speaker);display:block;font-size:10px;font-weight:700;
+  content:attr(data-speaker);display:block;font-size:11px;font-weight:700;
   color:var(--muted);margin-bottom:6px}
 .transcript[data-variant="9"] .message{animation:tr9-band 340ms var(--pm-ease-out) both}
 @keyframes tr9-band{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0)}}
@@ -67,7 +67,7 @@
 .transcript[data-variant="10"] .message{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;justify-content:start}
 .transcript[data-variant="10"] .message::before{
   content:attr(data-speaker);position:sticky;top:4px;align-self:start;
-  font-size:10px;font-weight:750;color:var(--muted);text-align:right;
+  font-size:11px;font-weight:750;color:var(--muted);text-align:right;
   padding-top:2px;border-right:2px solid var(--border);padding-right:10px;min-height:22px}
 .transcript[data-variant="10"] .message-assistant::before{
   color:var(--accent);border-right-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
@@ -86,7 +86,7 @@
 .transcript[data-variant="11"] .message{
   display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;position:relative}
 .transcript[data-variant="11"] .message::before{
-  content:attr(data-time);font-family:var(--font-mono);font-size:9px;color:var(--subtle);
+  content:attr(data-time);font-family:var(--font-mono);font-size:10px;color:var(--subtle);
   text-align:right;padding-top:3px}
 .transcript[data-variant="11"] .message::after{
   content:"";position:absolute;left:63px;top:6px;bottom:-16px;width:1px;
@@ -111,7 +111,7 @@
 .transcript[data-variant="12"] .message{
   display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:start}
 .transcript[data-variant="12"] .message::before{
-  font-family:var(--font-mono);font-size:10px;color:var(--subtle);text-align:right;padding-top:8px;
+  font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-align:right;padding-top:8px;
   animation:tr12-stamp 240ms var(--pm-ease-pop) both}
 .transcript[data-variant="12"] .message-user::before{content:"In [" counter(msgc) "]";color:var(--accent)}
 .transcript[data-variant="12"] .message-assistant::before{content:"Out [" counter(msgc) "]";color:var(--positive)}
@@ -164,15 +164,15 @@
 .transcript[data-variant="14"] .message-user .message-body{
   font-size:16px;font-weight:750;line-height:1.35;letter-spacing:-.01em}
 .transcript[data-variant="14"] .message-user::before{
-  content:attr(data-time);display:block;font-size:9px;letter-spacing:.14em;
+  content:attr(data-time);display:block;font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--subtle);margin-bottom:5px}
 .transcript[data-variant="14"] .message-assistant .message-surface{width:100%;padding:0}
 .transcript[data-variant="14"] .message-assistant .message-body{font-size:13.5px;line-height:1.75}
 .transcript[data-variant="14"] .message-assistant .message-role{
-  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);
   margin-bottom:7px}
 .transcript[data-variant="14"] .message-assistant .message-role svg{display:none}
-.transcript[data-variant="14"] .message-actions .text-button{font-size:9px;color:var(--subtle)}
+.transcript[data-variant="14"] .message-actions .text-button{font-size:10px;color:var(--subtle)}
 .transcript[data-variant="14"] .message{animation:tr14-page 380ms var(--pm-ease-out) both}
 @keyframes tr14-page{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 

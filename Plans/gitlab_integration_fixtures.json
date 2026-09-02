@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.gitlab.integration_fixtures.v1",
+  "owner_schema": "Plans/forge_integration_contracts.schema.json",
+  "valid": [
+    {
+      "name": "gitlab_com_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "host_class": "cloud",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "merge_request",
+        "pipeline_noun": "pipeline",
+        "auth_methods": ["oauth", "pat_ref", "ssh_ref"],
+        "required_capabilities": ["repository", "review", "review_threads", "pipelines", "transport"],
+        "optional_capabilities": ["checks", "issues", "apps", "webhooks"],
+        "version_or_tier_gate": "gitlab_com_live_capability_probe",
+        "official_page_route_ref": "official-page:gitlab:connect",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": ["missing_scope", "tier_limit", "rate_limited"]
+      }
+    },
+    {
+      "name": "gitlab_self_managed_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_self_managed",
+        "host_class": "self_managed",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "merge_request",
+        "pipeline_noun": "pipeline",
+        "auth_methods": ["oauth", "pat_ref", "ssh_ref"],
+        "required_capabilities": ["repository", "review", "transport"],
+        "optional_capabilities": ["review_threads", "review_versions", "pipelines", "checks", "issues", "apps", "webhooks"],
+        "version_or_tier_gate": "signed_host_version_tier_support_entry",
+        "official_page_route_ref": "official-page:gitlab-self-managed:connect",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": "catalog:gitlab-self-managed:generation-4",
+        "unsupported_reason_codes": ["host_not_in_signed_catalog", "server_version_unsupported", "license_tier_limit"]
+      }
+    },
+    {
+      "name": "gitlab_dedicated_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_dedicated",
+        "host_class": "dedicated",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "merge_request",
+        "pipeline_noun": "pipeline",
+        "auth_methods": ["oauth", "pat_ref", "ssh_ref"],
+        "required_capabilities": ["repository", "review", "transport"],
+        "optional_capabilities": ["review_threads", "review_versions", "pipelines", "checks", "issues", "apps", "webhooks"],
+        "version_or_tier_gate": "signed_gitlab_dedicated_support_entry",
+        "official_page_route_ref": "official-page:gitlab-dedicated:connect",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": "catalog:gitlab-dedicated:generation-1",
+        "unsupported_reason_codes": ["host_not_in_signed_catalog", "dedicated_release_unsupported", "license_tier_limit"]
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "gitlab_environment_toolkit_is_not_a_forge_variant",
+      "definition": "provider_adapter_profile",
+      "expected_error": "invalid host class and product identity",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "gitlab_environment_toolkit",
+        "provider_variant": "environment_toolkit",
+        "host_class": "deployment_tool",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "merge_request",
+        "pipeline_noun": "pipeline",
+        "auth_methods": ["pat_ref"],
+        "required_capabilities": ["repository"],
+        "optional_capabilities": [],
+        "version_or_tier_gate": "not_applicable",
+        "official_page_route_ref": "official-page:invalid",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": []
+      }
+    }
+  ]
+}

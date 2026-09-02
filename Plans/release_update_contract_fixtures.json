@@ -1,0 +1,1320 @@
+{
+  "schema_id": "pm.release_update.contract_fixtures.v1",
+  "contract_schema_id": "pm.release_update.contracts.v1",
+  "claim_boundary": "static schema and semantic fixtures only; no native/runtime/restart/security-attack proof",
+  "coverage": {
+    "command_rows": 7,
+    "local_action_rows": 3,
+    "positive_cases": 33,
+    "negative_cases": 14,
+    "exact_gui_consumers": [
+      "Doctor",
+      "Server permanent web UI",
+      "Settings > Updates",
+      "bottom Update Available item"
+    ],
+    "bundled_artifact_admission_cases": 3,
+    "oauth_registration_release_gate_cases": 2,
+    "runtime_evidence_claimed": false
+  },
+  "valid": [
+    {
+      "name": "positive.automatic_set_enabled.request",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "operation": "automatic_set_enabled",
+        "command_instance_id": "command:release_update:1",
+        "idempotency_key": "idempotency:release_update:1",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "automatic-update-toggle",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.automatic.set_enabled",
+          "enabled": true,
+          "policy_generation": 3,
+          "manual_checks_remain_enabled": true
+        }
+      },
+      "row_index": 157
+    },
+    {
+      "name": "positive.automatic_set_enabled.result",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "operation": "automatic_set_enabled",
+        "command_instance_id": "command:release_update:1",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "automatic-update-toggle",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.automatic.set_enabled",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:1",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 157
+    },
+    {
+      "name": "positive.automatic_set_enabled.handler_unavailable",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.automatic.set_enabled",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::automatic_set_enabled"
+          ]
+        }
+      },
+      "row_index": 157
+    },
+    {
+      "name": "positive.cancel_download.request",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.cancel_download",
+        "operation": "cancel_download",
+        "command_instance_id": "command:release_update:2",
+        "idempotency_key": "idempotency:release_update:2",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:2",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "cancel-download-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.cancel_download",
+          "update_operation_id": "update-operation:1",
+          "expected_phase": "downloading",
+          "preserve_active_generation": true
+        }
+      },
+      "row_index": 158
+    },
+    {
+      "name": "positive.cancel_download.result",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.cancel_download",
+        "operation": "cancel_download",
+        "command_instance_id": "command:release_update:2",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:2",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "cancel-download-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.cancel_download",
+          "changed": true,
+          "state": "cancelled",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:2",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 158
+    },
+    {
+      "name": "positive.cancel_download.handler_unavailable",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.cancel_download",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.cancel_download",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::cancel_download"
+          ]
+        }
+      },
+      "row_index": 158
+    },
+    {
+      "name": "positive.check.request",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.check",
+        "operation": "check",
+        "command_instance_id": "command:release_update:3",
+        "idempotency_key": "idempotency:release_update:3",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:3",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "check-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.check",
+          "channel_id": "channel:stable",
+          "cache_policy": "refresh_if_stale",
+          "coalesce_key": "coalesce:update-check:stable"
+        }
+      },
+      "row_index": 159
+    },
+    {
+      "name": "positive.check.result",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.check",
+        "operation": "check",
+        "command_instance_id": "command:release_update:3",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:3",
+        "observable_work_ref": "work:release_update:3",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "check-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.check",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:3",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 159
+    },
+    {
+      "name": "positive.check.handler_unavailable",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.check",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.check",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::check"
+          ]
+        }
+      },
+      "row_index": 159
+    },
+    {
+      "name": "positive.download.request",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.download",
+        "operation": "download",
+        "command_instance_id": "command:release_update:4",
+        "idempotency_key": "idempotency:release_update:4",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:4",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "download-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.download",
+          "release_id": "release:1.2.3",
+          "artifact_manifest_ref": "artifact-manifest:1.2.3",
+          "signing_policy_ref": "signing-policy:stable",
+          "activate_after_download": false
+        }
+      },
+      "row_index": 160
+    },
+    {
+      "name": "positive.download.result",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.download",
+        "operation": "download",
+        "command_instance_id": "command:release_update:4",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:4",
+        "observable_work_ref": "work:release_update:4",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "download-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.download",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:4",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 160
+    },
+    {
+      "name": "positive.download.handler_unavailable",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.download",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.download",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::download"
+          ]
+        }
+      },
+      "row_index": 160
+    },
+    {
+      "name": "positive.install_restart.request",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.install_restart",
+        "operation": "install_restart",
+        "command_instance_id": "command:release_update:5",
+        "idempotency_key": "idempotency:release_update:5",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:5",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "install-restart-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.install_restart",
+          "release_id": "release:1.2.3",
+          "verified_artifact_ref": "verified-artifact:1.2.3",
+          "recovery_boundary_ref": "recovery-boundary:1",
+          "migration_preflight_ref": "migration-preflight:1",
+          "install_source_ref": "install-source:official",
+          "rollback_generation_ref": "generation:1.2.2",
+          "confirmation": true
+        }
+      },
+      "row_index": 161
+    },
+    {
+      "name": "positive.install_restart.result",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.install_restart",
+        "operation": "install_restart",
+        "command_instance_id": "command:release_update:5",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:5",
+        "observable_work_ref": "work:release_update:5",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "install-restart-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.install_restart",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:5",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 161
+    },
+    {
+      "name": "positive.install_restart.handler_unavailable",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.install_restart",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.install_restart",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::install_restart"
+          ]
+        }
+      },
+      "row_index": 161
+    },
+    {
+      "name": "positive.remind_later.request",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.remind_later",
+        "operation": "remind_later",
+        "command_instance_id": "command:release_update:6",
+        "idempotency_key": "idempotency:release_update:6",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:6",
+        "return_context": {
+          "surface_id": "bottom.update",
+          "route_id": "bottom/update",
+          "focus_target": "remind-later-button",
+          "invocation_token": "return:bottom.update:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.remind_later",
+          "reminder_policy_ref": "reminder-policy:bounded",
+          "defer_seconds": 86400,
+          "checks_remain_enabled": true
+        }
+      },
+      "row_index": 165
+    },
+    {
+      "name": "positive.remind_later.result",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.remind_later",
+        "operation": "remind_later",
+        "command_instance_id": "command:release_update:6",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:6",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "bottom.update",
+          "route_id": "bottom/update",
+          "focus_target": "remind-later-button",
+          "invocation_token": "return:bottom.update:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.remind_later",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:6",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 165
+    },
+    {
+      "name": "positive.remind_later.handler_unavailable",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.remind_later",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.remind_later",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::remind_later"
+          ]
+        }
+      },
+      "row_index": 165
+    },
+    {
+      "name": "positive.rollback.request",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.rollback",
+        "operation": "rollback",
+        "command_instance_id": "command:release_update:7",
+        "idempotency_key": "idempotency:release_update:7",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:7",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "rollback-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.rollback",
+          "target_generation_ref": "generation:1.2.2",
+          "compatibility_proof_ref": "compatibility:rollback:1",
+          "recovery_boundary_ref": "recovery-boundary:1",
+          "confirmation": true
+        }
+      },
+      "row_index": 166
+    },
+    {
+      "name": "positive.rollback.result",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.rollback",
+        "operation": "rollback",
+        "command_instance_id": "command:release_update:7",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:7",
+        "observable_work_ref": "work:release_update:7",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "rollback-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.rollback",
+          "changed": true,
+          "state": "rolled_back",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:7",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 166
+    },
+    {
+      "name": "positive.rollback.handler_unavailable",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.rollback",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.rollback",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::rollback"
+          ]
+        }
+      },
+      "row_index": 166
+    },
+    {
+      "name": "positive.permission_deny_is_explicit",
+      "definition": "ApplicationUpdatePermissionDecision",
+      "value": {
+        "schema_id": "pm.release_update.permission_decision.v1",
+        "record_kind": "ApplicationUpdatePermissionDecision",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "permission_snapshot_ref": "permission:release_update:deny",
+        "permission_class": "application.update.manage",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied"
+      }
+    },
+    {
+      "name": "positive.local.1.request",
+      "definition": "ApplicationUpdateLocalActionRequest",
+      "value": {
+        "schema_id": "pm.release_update.local_action_request.v1",
+        "record_kind": "ApplicationUpdateLocalActionRequest",
+        "local_action_id": "ui.update.app.open_details",
+        "projection_ref": "projection:release_update:1",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "update-details",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 162
+    },
+    {
+      "name": "positive.local.1.result",
+      "definition": "ApplicationUpdateLocalActionResult",
+      "value": {
+        "schema_id": "pm.release_update.local_action_result.v1",
+        "record_kind": "ApplicationUpdateLocalActionResult",
+        "local_action_id": "ui.update.app.open_details",
+        "projection_ref": "projection:release_update:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "update-details",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "update-details",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 162
+    },
+    {
+      "name": "positive.local.2.request",
+      "definition": "ApplicationUpdateLocalActionRequest",
+      "value": {
+        "schema_id": "pm.release_update.local_action_request.v1",
+        "record_kind": "ApplicationUpdateLocalActionRequest",
+        "local_action_id": "ui.update.app.open_logs",
+        "projection_ref": "projection:release_update:2",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "update-logs",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 163
+    },
+    {
+      "name": "positive.local.2.result",
+      "definition": "ApplicationUpdateLocalActionResult",
+      "value": {
+        "schema_id": "pm.release_update.local_action_result.v1",
+        "record_kind": "ApplicationUpdateLocalActionResult",
+        "local_action_id": "ui.update.app.open_logs",
+        "projection_ref": "projection:release_update:2",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "update-logs",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "update-logs",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 163
+    },
+    {
+      "name": "positive.local.3.request",
+      "definition": "ApplicationUpdateLocalActionRequest",
+      "value": {
+        "schema_id": "pm.release_update.local_action_request.v1",
+        "record_kind": "ApplicationUpdateLocalActionRequest",
+        "local_action_id": "ui.update.app.open_release_notes",
+        "projection_ref": "projection:release_update:3",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "release-notes",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 164
+    },
+    {
+      "name": "positive.local.3.result",
+      "definition": "ApplicationUpdateLocalActionResult",
+      "value": {
+        "schema_id": "pm.release_update.local_action_result.v1",
+        "record_kind": "ApplicationUpdateLocalActionResult",
+        "local_action_id": "ui.update.app.open_release_notes",
+        "projection_ref": "projection:release_update:3",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "release-notes",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "release-notes",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 164
+    },
+    {
+      "name": "positive.bundled.pm_tailnet_connector.blocked_static_admission",
+      "definition": "ReleaseBundledArtifactAdmission",
+      "value": {
+        "schema_id": "pm.release_update.bundled_artifact_admission.v1", "record_kind": "ReleaseBundledArtifactAdmission", "artifact_id": "artifact:pm-tailnet-connector:1", "artifact_kind": "pm_tailnet_connector", "artifact_role": "core_release_component", "release_id": "release:pending", "pinned_version_ref": "version:go-tsnet:pinned", "source_revision_ref": "source:pm-tailnet-connector:pending", "dependency_graph_ref": "dependency-graph:go:pending", "license_notice_ref": "license-notices:connector:pending", "sbom_ref": "sbom:connector:pending", "provenance_ref": "provenance:connector:pending", "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "signing_evidence_ref": "signing:connector:pending", "platform_matrix_ref": "platform-matrix:connector:pending", "protocol_compatibility_ref": "protocol:connector-ipc:pending", "state_format_migration_ref": "migration:connector-state:pending", "activation_unit": "same_puppet_master_release_or_image", "independent_updater_allowed": false, "acquisition_state": "handler_unavailable", "disabled_reason": "handler_unavailable", "implementation_time_reverification_required": true, "runtime_evidence_claimed": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.bundled.backup_engine_restic.blocked_static_admission",
+      "definition": "ReleaseBundledArtifactAdmission",
+      "value": {
+        "schema_id": "pm.release_update.bundled_artifact_admission.v1", "record_kind": "ReleaseBundledArtifactAdmission", "artifact_id": "artifact:restic:1", "artifact_kind": "backup_engine_restic", "artifact_role": "local_backup_engine", "release_id": "release:pending", "pinned_version_ref": "version:restic:pinned", "source_revision_ref": "source:restic:pending", "dependency_graph_ref": "dependency-graph:restic:pending", "license_notice_ref": "license-notices:restic:pending", "sbom_ref": "sbom:restic:pending", "provenance_ref": "provenance:restic:pending", "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "signing_evidence_ref": "signing:restic:pending", "platform_matrix_ref": "platform-matrix:restic:pending", "protocol_compatibility_ref": null, "state_format_migration_ref": null, "activation_unit": "same_puppet_master_release_or_image", "independent_updater_allowed": false, "acquisition_state": "handler_unavailable", "disabled_reason": "handler_unavailable", "implementation_time_reverification_required": true, "runtime_evidence_claimed": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.bundled.backup_transport_rclone.blocked_static_admission",
+      "definition": "ReleaseBundledArtifactAdmission",
+      "value": {
+        "schema_id": "pm.release_update.bundled_artifact_admission.v1", "record_kind": "ReleaseBundledArtifactAdmission", "artifact_id": "artifact:rclone:1", "artifact_kind": "backup_transport_rclone", "artifact_role": "backup_transport", "release_id": "release:pending", "pinned_version_ref": "version:rclone:pinned", "source_revision_ref": "source:rclone:pending", "dependency_graph_ref": "dependency-graph:rclone:pending", "license_notice_ref": "license-notices:rclone:pending", "sbom_ref": "sbom:rclone:pending", "provenance_ref": "provenance:rclone:pending", "artifact_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "signing_evidence_ref": "signing:rclone:pending", "platform_matrix_ref": "platform-matrix:rclone:pending", "protocol_compatibility_ref": null, "state_format_migration_ref": null, "activation_unit": "same_puppet_master_release_or_image", "independent_updater_allowed": false, "acquisition_state": "handler_unavailable", "disabled_reason": "handler_unavailable", "implementation_time_reverification_required": true, "runtime_evidence_claimed": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.oauth.google_drive.approval_pending_blocks_release",
+      "definition": "ReleaseOAuthRegistrationGate",
+      "value": {
+        "schema_id": "pm.release_update.oauth_registration_gate.v1", "record_kind": "ReleaseOAuthRegistrationGate", "provider_kind": "google_drive", "registration_ref": "oauth-registration:google-drive:pending", "callback_registration_ref": "oauth-callback:google-drive:pending", "client_id_provenance_ref": "client-id-provenance:google-drive:pending", "confidential_client_material_ref": "protected-ref:google-drive-client-material", "registration_state": "approval_pending", "provider_approval_state": "pending", "callback_mode": "registered_web_callback", "distributed_binary_contains_confidential_material": false, "release_gate_state": "blocked", "disabled_reason": "provider_approval_pending", "runtime_test_status": "NOT_RUN", "handler_available": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.oauth.microsoft_onedrive.unregistered_is_handler_unavailable",
+      "definition": "ReleaseOAuthRegistrationGate",
+      "value": {
+        "schema_id": "pm.release_update.oauth_registration_gate.v1", "record_kind": "ReleaseOAuthRegistrationGate", "provider_kind": "microsoft_onedrive", "registration_ref": null, "callback_registration_ref": null, "client_id_provenance_ref": null, "confidential_client_material_ref": null, "registration_state": "unregistered", "provider_approval_state": "not_submitted", "callback_mode": "unavailable", "distributed_binary_contains_confidential_material": false, "release_gate_state": "handler_unavailable", "disabled_reason": "registration_missing", "runtime_test_status": "NOT_RUN", "handler_available": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "negative.unknown_command",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.unknown",
+        "operation": "automatic_set_enabled",
+        "command_instance_id": "command:release_update:1",
+        "idempotency_key": "idempotency:release_update:1",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "automatic-update-toggle",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.automatic.set_enabled",
+          "enabled": true,
+          "policy_generation": 3,
+          "manual_checks_remain_enabled": true
+        }
+      }
+    },
+    {
+      "name": "negative.raw_secret",
+      "definition": "ApplicationUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.release_update.command_request.v1",
+        "record_kind": "ApplicationUpdateCommandRequest",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "operation": "automatic_set_enabled",
+        "command_instance_id": "command:release_update:1",
+        "idempotency_key": "idempotency:release_update:1",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "permission_snapshot_ref": "permission:release_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "automatic-update-toggle",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.app.automatic.set_enabled",
+          "enabled": true,
+          "policy_generation": 3,
+          "manual_checks_remain_enabled": true,
+          "raw_secret": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "negative.available_without_handler",
+      "definition": "ApplicationUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.release_update.availability.v1",
+        "record_kind": "ApplicationUpdateCommandAvailability",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "available": true,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.release_update.disabled_reason.v1",
+          "record_kind": "ApplicationUpdateDisabledReason",
+          "command_id": "cmd.update.app.automatic.set_enabled",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::application_update::automatic_set_enabled"
+          ]
+        }
+      }
+    },
+    {
+      "name": "negative.denied_without_reason",
+      "definition": "ApplicationUpdatePermissionDecision",
+      "value": {
+        "schema_id": "pm.release_update.permission_decision.v1",
+        "record_kind": "ApplicationUpdatePermissionDecision",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "permission_snapshot_ref": "permission:release_update:deny",
+        "permission_class": "application.update.manage",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "negative.secret_exposed",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "operation": "automatic_set_enabled",
+        "command_instance_id": "command:release_update:1",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "automatic-update-toggle",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.automatic.set_enabled",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:1",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": true,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "negative.local_domain_event",
+      "definition": "ApplicationUpdateLocalActionResult",
+      "value": {
+        "schema_id": "pm.release_update.local_action_result.v1",
+        "record_kind": "ApplicationUpdateLocalActionResult",
+        "local_action_id": "ui.update.app.open_release_notes",
+        "projection_ref": "projection:release_update:3",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "accessible_focus_target": "release-notes",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "release-notes",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      }
+    },
+    {
+      "name": "negative.restart_false_success",
+      "definition": "ApplicationUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.release_update.command_result.v1",
+        "record_kind": "ApplicationUpdateCommandResult",
+        "command_id": "cmd.update.app.automatic.set_enabled",
+        "operation": "automatic_set_enabled",
+        "command_instance_id": "command:release_update:1",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "channel_id": "channel:stable",
+        "update_operation_id": "update-operation:1",
+        "active_generation_ref": "generation:1.2.2",
+        "expected_catalog_generation": 4,
+        "expected_update_generation": 7,
+        "receipt_ref": "receipt:release_update:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "automatic-update-toggle",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.app.automatic.set_enabled",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:release_update:1",
+          "resulting_generation": 8,
+          "restart_disposition": "claim_success",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "negative.exact_return_mismatch",
+      "definition": "ApplicationUpdateCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.release_update.command_request.v1",
+          "record_kind": "ApplicationUpdateCommandRequest",
+          "command_id": "cmd.update.app.automatic.set_enabled",
+          "operation": "automatic_set_enabled",
+          "command_instance_id": "command:release_update:1",
+          "idempotency_key": "idempotency:release_update:1",
+          "application_id": "application:puppet-master",
+          "channel_id": "channel:stable",
+          "update_operation_id": "update-operation:1",
+          "active_generation_ref": "generation:1.2.2",
+          "expected_catalog_generation": 4,
+          "expected_update_generation": 7,
+          "permission_snapshot_ref": "permission:release_update:1",
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "automatic-update-toggle",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.update.app.automatic.set_enabled",
+            "enabled": true,
+            "policy_generation": 3,
+            "manual_checks_remain_enabled": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.release_update.command_result.v1",
+          "record_kind": "ApplicationUpdateCommandResult",
+          "command_id": "cmd.update.app.automatic.set_enabled",
+          "operation": "automatic_set_enabled",
+          "command_instance_id": "command:release_update:1",
+          "status": "succeeded",
+          "application_id": "application:puppet-master",
+          "channel_id": "channel:stable",
+          "update_operation_id": "update-operation:1",
+          "active_generation_ref": "generation:1.2.2",
+          "expected_catalog_generation": 4,
+          "expected_update_generation": 7,
+          "receipt_ref": "receipt:release_update:1",
+          "observable_work_ref": null,
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "different-control",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": -1
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.update.app.automatic.set_enabled",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:release_update:1",
+            "resulting_generation": 8,
+            "restart_disposition": "not_applicable",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "negative.race_generation_regression",
+      "definition": "ApplicationUpdateCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.release_update.command_request.v1",
+          "record_kind": "ApplicationUpdateCommandRequest",
+          "command_id": "cmd.update.app.automatic.set_enabled",
+          "operation": "automatic_set_enabled",
+          "command_instance_id": "command:release_update:1",
+          "idempotency_key": "idempotency:release_update:1",
+          "application_id": "application:puppet-master",
+          "channel_id": "channel:stable",
+          "update_operation_id": "update-operation:1",
+          "active_generation_ref": "generation:1.2.2",
+          "expected_catalog_generation": 4,
+          "expected_update_generation": 7,
+          "permission_snapshot_ref": "permission:release_update:1",
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "automatic-update-toggle",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.update.app.automatic.set_enabled",
+            "enabled": true,
+            "policy_generation": 3,
+            "manual_checks_remain_enabled": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.release_update.command_result.v1",
+          "record_kind": "ApplicationUpdateCommandResult",
+          "command_id": "cmd.update.app.automatic.set_enabled",
+          "operation": "automatic_set_enabled",
+          "command_instance_id": "command:release_update:1",
+          "status": "succeeded",
+          "application_id": "application:puppet-master",
+          "channel_id": "channel:stable",
+          "update_operation_id": "update-operation:1",
+          "active_generation_ref": "generation:1.2.2",
+          "expected_catalog_generation": 4,
+          "expected_update_generation": 7,
+          "receipt_ref": "receipt:release_update:1",
+          "observable_work_ref": null,
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "automatic-update-toggle",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.update.app.automatic.set_enabled",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:release_update:1",
+            "resulting_generation": -1,
+            "restart_disposition": "not_applicable",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "negative.connector_cannot_have_independent_updater",
+      "definition": "ReleaseBundledArtifactAdmission",
+      "value": {
+        "schema_id": "pm.release_update.bundled_artifact_admission.v1", "record_kind": "ReleaseBundledArtifactAdmission", "artifact_id": "artifact:pm-tailnet-connector:bad-updater", "artifact_kind": "pm_tailnet_connector", "artifact_role": "core_release_component", "release_id": "release:pending", "pinned_version_ref": "version:go-tsnet:pinned", "source_revision_ref": "source:connector:pending", "dependency_graph_ref": "dependency-graph:go:pending", "license_notice_ref": "license-notices:connector:pending", "sbom_ref": "sbom:connector:pending", "provenance_ref": "provenance:connector:pending", "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "signing_evidence_ref": "signing:connector:pending", "platform_matrix_ref": "platform-matrix:connector:pending", "protocol_compatibility_ref": "protocol:connector-ipc:pending", "state_format_migration_ref": "migration:connector-state:pending", "activation_unit": "same_puppet_master_release_or_image", "independent_updater_allowed": true, "acquisition_state": "handler_unavailable", "disabled_reason": "handler_unavailable", "implementation_time_reverification_required": true, "runtime_evidence_claimed": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.connector_requires_protocol_compatibility_ref",
+      "definition": "ReleaseBundledArtifactAdmission",
+      "value": {
+        "schema_id": "pm.release_update.bundled_artifact_admission.v1", "record_kind": "ReleaseBundledArtifactAdmission", "artifact_id": "artifact:pm-tailnet-connector:no-protocol", "artifact_kind": "pm_tailnet_connector", "artifact_role": "core_release_component", "release_id": "release:pending", "pinned_version_ref": "version:go-tsnet:pinned", "source_revision_ref": "source:connector:pending", "dependency_graph_ref": "dependency-graph:go:pending", "license_notice_ref": "license-notices:connector:pending", "sbom_ref": "sbom:connector:pending", "provenance_ref": "provenance:connector:pending", "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "signing_evidence_ref": "signing:connector:pending", "platform_matrix_ref": "platform-matrix:connector:pending", "protocol_compatibility_ref": null, "state_format_migration_ref": "migration:connector-state:pending", "activation_unit": "same_puppet_master_release_or_image", "independent_updater_allowed": false, "acquisition_state": "handler_unavailable", "disabled_reason": "handler_unavailable", "implementation_time_reverification_required": true, "runtime_evidence_claimed": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.backup_engine_cannot_claim_transport_role",
+      "definition": "ReleaseBundledArtifactAdmission",
+      "value": {
+        "schema_id": "pm.release_update.bundled_artifact_admission.v1", "record_kind": "ReleaseBundledArtifactAdmission", "artifact_id": "artifact:restic:wrong-role", "artifact_kind": "backup_engine_restic", "artifact_role": "backup_transport", "release_id": "release:pending", "pinned_version_ref": "version:restic:pinned", "source_revision_ref": "source:restic:pending", "dependency_graph_ref": "dependency-graph:restic:pending", "license_notice_ref": "license-notices:restic:pending", "sbom_ref": "sbom:restic:pending", "provenance_ref": "provenance:restic:pending", "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "signing_evidence_ref": "signing:restic:pending", "platform_matrix_ref": "platform-matrix:restic:pending", "protocol_compatibility_ref": null, "state_format_migration_ref": null, "activation_unit": "same_puppet_master_release_or_image", "independent_updater_allowed": false, "acquisition_state": "handler_unavailable", "disabled_reason": "handler_unavailable", "implementation_time_reverification_required": true, "runtime_evidence_claimed": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.oauth_approval_pending_cannot_be_admitted",
+      "definition": "ReleaseOAuthRegistrationGate",
+      "value": {
+        "schema_id": "pm.release_update.oauth_registration_gate.v1", "record_kind": "ReleaseOAuthRegistrationGate", "provider_kind": "google_drive", "registration_ref": "oauth-registration:google-drive:pending", "callback_registration_ref": "oauth-callback:google-drive:pending", "client_id_provenance_ref": "client-id-provenance:google-drive:pending", "confidential_client_material_ref": "protected-ref:google-drive-client-material", "registration_state": "approval_pending", "provider_approval_state": "pending", "callback_mode": "registered_web_callback", "distributed_binary_contains_confidential_material": false, "release_gate_state": "admitted_static_only", "disabled_reason": null, "runtime_test_status": "NOT_RUN", "handler_available": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.oauth_confidential_material_cannot_ship_in_binary",
+      "definition": "ReleaseOAuthRegistrationGate",
+      "value": {
+        "schema_id": "pm.release_update.oauth_registration_gate.v1", "record_kind": "ReleaseOAuthRegistrationGate", "provider_kind": "microsoft_onedrive", "registration_ref": null, "callback_registration_ref": null, "client_id_provenance_ref": null, "confidential_client_material_ref": null, "registration_state": "unregistered", "provider_approval_state": "not_submitted", "callback_mode": "unavailable", "distributed_binary_contains_confidential_material": true, "release_gate_state": "handler_unavailable", "disabled_reason": "registration_missing", "runtime_test_status": "NOT_RUN", "handler_available": false, "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority", "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    }
+  ]
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/Architecture_Invariants.md`
 
-Source lines: L445-L4530
+Source lines: L445-L4531
 
-Source SHA256: `a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543`
+Source SHA256: `6ce7f74c2d708b8bdc9358c3f7e41354630e681db5985087d30bd42654a39c7b`
 
 ---
 
@@ -257,8 +257,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Architecture_Invariants.md
 canonical_text: Runtime identity demotes tier_id from canonical execution correlation, preserves thread_id and correlation_id
-  tracing, migrates raw local IDs to subject_id or object_kind/object_id, normalizes usage_event_ref as object_kind = usage_event,
-  and keeps resume_url? as transport rather than canonical identity.
+  tracing, migrates raw local IDs to subject_id or object_kind/object_id, normalizes event-primary usage_event_ref as
+  object_kind = usage_event and PMConcept7 Ledger attempt_id as object_kind = usage_attempt while retaining the event
+  ref as correlation, and keeps resume_url? as transport rather than canonical identity.
 gui_related: false
 gui_classification_reason: This unit covers runtime and route identity normalization, not GUI behavior.
 split_recommended: false

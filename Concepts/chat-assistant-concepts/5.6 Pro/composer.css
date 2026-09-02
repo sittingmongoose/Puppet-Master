@@ -1,0 +1,338 @@
+/* composer.css — in-field composer chrome, selector collapse, follow-up queue.
+ *
+ * Concatenated after feature modules so these rules win over styles.css
+ * viewport hide/ellipsis that used to clip selectors by window width.
+ */
+
+.composer-box {
+  container-type: inline-size;
+  container-name: composer;
+  position: relative;
+}
+
+.composer-field { position: relative; }
+.composer-input { padding: 11px 12px 38px; min-height: 72px; }
+.composer-infield {
+  position: absolute;
+  left: 6px; right: 6px; bottom: 6px;
+  display: flex; align-items: center; gap: 4px;
+  pointer-events: none;
+}
+.composer-infield > * { pointer-events: auto; }
+.composer-infield-l {
+  display: flex; align-items: center; gap: 2px;
+  min-width: 0; flex: 1;
+}
+.composer-infield .icon-button {
+  width: 22px; height: 22px; min-height: 22px; flex: none; padding: 0;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--subtle);
+}
+.composer-infield .icon-button svg { width: 16px; height: 16px; }
+.composer-infield .send-button {
+  width: 24px; height: 24px; flex: none; margin-left: auto;
+  border-radius: 8px; box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 28%, transparent);
+  display: grid; place-items: center;
+}
+.composer-infield .send-button svg { width: 13px; height: 13px; transform: translate(-0.5px, 0.5px); }
+.composer-infield .send-button.is-stop svg { width: 11px; height: 11px; transform: none; }
+.composer-infield .send-button.is-stop {
+  background: var(--danger);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--danger) 28%, transparent);
+}
+.composer-infield .send-button:disabled {
+  opacity: .45; cursor: not-allowed; transform: none; filter: none;
+}
+
+.composer-infield .capability-indicators { display: flex; align-items: center; gap: 2px; }
+.composer-infield .capability-dot {
+  width: 22px; height: 22px; flex: none; border-radius: 9px;
+  display: grid; place-items: center;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+  animation: none;
+}
+.composer-infield .capability-dot.goal { color: var(--positive); }
+.composer-infield .capability-dot svg { width: 16px; height: 16px; }
+
+.composer-box:focus-within {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 25px rgb(0 0 0 / .1);
+}
+/* Global `textarea:focus-visible` is more specific than `.composer-input { outline:0 }`.
+   Layered Studio also clips the box (`overflow:hidden`), so the leftover outline
+   paints as a glowing line along the field / tools seam. */
+.composer-input:focus,
+.composer-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.composer-tools {
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px; padding: 2px 5px 3px; min-width: 0; overflow: hidden;
+  border-top: 1px solid var(--border-strong); border-left: 0; background: transparent;
+}
+/* Same hairline on Layered Studio. Focus must not recolor it — the glow was
+   the textarea outline sitting on this seam, not the divider itself. */
+.chat-stage[data-shell="7"] .composer-tools,
+.composer-box:focus-within .composer-tools,
+.chat-stage[data-shell="7"] .composer-box:focus-within .composer-tools {
+  border-top: 1px solid var(--border-strong);
+}
+.composer-tools > .icon-button {
+  width: 24px; height: 24px; min-height: 24px; padding: 0;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--subtle);
+}
+.composer-tools > .icon-button.active {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
+  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+}
+.composer-tools > .icon-button svg { width: 14px; height: 14px; }
+.selector-button {
+  flex: none; min-width: max-content; max-width: none;
+  height: 24px; min-height: 24px; font-size: 12px; padding: 0 8px;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.selector-button[data-kind="persona"],
+.selector-button[data-kind="model"],
+.selector-button[data-kind="mode"],
+.selector-button[data-kind="permissions"] { max-width: none; }
+.selector-button span { overflow: visible; text-overflow: clip; }
+.selector-button .sel-icon { display: none; place-items: center; flex: none; }
+.selector-button .sel-label { overflow: visible; text-overflow: clip; }
+
+.composer-hint { display: none; font-size: 10px; color: var(--subtle); padding: 0 4px 2px; text-align: center; }
+
+.composer-box.is-compact .selector-button .sel-icon { display: grid; }
+.composer-box.is-compact .selector-button .sel-label,
+.composer-box.is-compact .selector-button .fast-bolt { display: none; }
+.composer-box.is-compact .composer-hint { display: block; }
+.composer-box.is-compact .selector-button,
+.composer-box.is-compact .composer-tools > .icon-button {
+  width: 28px; height: 28px; min-height: 28px; padding: 0;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--subtle);
+}
+.composer-box.is-compact .selector-button.active,
+.composer-box.is-compact .composer-tools > .icon-button.active {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
+  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+}
+.composer-box.is-measuring .selector-button .sel-icon { display: none; }
+.composer-box.is-measuring .selector-button .sel-label,
+.composer-box.is-measuring .selector-button .fast-bolt { display: revert; }
+.composer-box.is-measuring .composer-hint { display: none; }
+.composer-box.is-measuring .selector-button {
+  width: auto; height: 24px; min-height: 24px; padding: 0 8px;
+}
+.composer-box.is-measuring .composer-tools > .icon-button {
+  width: 24px; height: 24px; min-height: 24px; padding: 0;
+}
+
+/* Undo viewport clipping of selectors — collapse is container-based. */
+@media (max-width: 820px) {
+  .selector-button[data-kind="persona"] { display: inline-flex; max-width: none; }
+}
+@media (max-width: 590px) {
+  .composer-input { min-height: 64px; }
+  .selector-button[data-kind="model"],
+  .selector-button[data-kind="mode"] { max-width: none; }
+  .selector-button[data-kind="permissions"] { display: inline-flex; }
+}
+@media (max-width: 390px) {
+  .selector-button[data-kind="mode"] { display: inline-flex; }
+}
+
+.chat-stage[data-shell="2"] .composer-box { display: block; }
+.chat-stage[data-shell="2"] .composer-tools { flex-direction: row; border-left: 0; align-items: center; justify-content: center; }
+.chat-stage[data-shell="2"] .composer-hint { display: none; }
+.chat-stage[data-shell="2"] .composer-box.is-compact .composer-hint { display: block; }
+
+/* Last-resort iconify when the composer is too narrow to hold even the
+   overflow check (ResizeObserver is the clip detector; this is a floor). */
+@container composer (max-width: 320px) {
+  .selector-button .sel-icon { display: grid; }
+  .selector-button .sel-label,
+  .selector-button .fast-bolt { display: none; }
+  .composer-hint { display: block; }
+  .chat-stage[data-shell="2"] .composer-hint { display: block; }
+  .selector-button,
+  .composer-tools > .icon-button {
+    width: 28px; height: 28px; min-height: 28px; padding: 0;
+    border-radius: 9px;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    color: var(--subtle);
+  }
+}
+
+/* Follow-up queue — floats with the activity bar on the transcript. */
+.send-queue {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 4px 10px 2px;
+  z-index: 8;
+}
+.chat-float .send-queue {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  pointer-events: none;
+}
+.chat-float .send-queue-row { pointer-events: auto; }
+.send-queue-row {
+  max-width: 980px; margin: 0 auto 4px;
+  display: flex; align-items: center; gap: 6px;
+  min-height: 28px; padding: 3px 8px;
+  border: 1px solid var(--border); border-radius: 9px;
+  background: var(--surface-2);
+}
+.send-queue-text {
+  flex: 1; min-width: 0;
+  font-size: 11px; color: var(--muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.send-queue-row .icon-button {
+  width: 22px; height: 22px; min-height: 22px; padding: 0; flex: none;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--subtle);
+}
+.send-queue-row .icon-button svg { width: 13px; height: 13px; }
+
+.provider-mark {
+  background: var(--surface-4);
+  color: var(--text);
+}
+.provider-mark svg,
+.provider-button svg { width: 16px; height: 16px; display: block; }
+.provider-button { color: var(--text); }
+
+.model-copy span.model-sub {
+  display: flex; align-items: center; gap: 6px; min-width: 0;
+  color: var(--subtle); font-size: 10px;
+  overflow: visible; text-overflow: unset; white-space: nowrap;
+}
+.model-copy span.effort-words { display: inline-flex; overflow: visible; }
+.model-copy span.effort-word,
+.model-copy span.effort-sep {
+  display: inline;
+  overflow: visible; text-overflow: unset; white-space: nowrap;
+}
+.model-account {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1 1 0;
+}
+.effort-words { display: inline-flex; align-items: baseline; gap: 0; flex: none; white-space: nowrap; }
+.effort-word { color: var(--subtle); font-weight: 550; }
+.effort-sep { color: var(--subtle); opacity: .7; }
+.effort-word.is-lit {
+  color: var(--accent);
+  font-weight: 750;
+  filter: saturate(1.15);
+}
+
+/* Orbit-node chrome on header / history / activity-detail icon controls.
+   Same language as .orbit-node (rounded square, surface-3, 1px border) —
+   not the 17px orbit size. New thread stays a labeled pill. Context ring
+   stays circular. */
+.chat-header .icon-button,
+.history-head .icon-button,
+.activity-panel-head .icon-button {
+  width: 28px; height: 28px; min-height: 28px; padding: 0;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--subtle);
+}
+.chat-header .icon-button svg,
+.history-head .icon-button svg,
+.history-head .hh-plus-glyph,
+.activity-panel-head .icon-button svg {
+  width: 16px; height: 16px;
+}
+.hh-plus-glyph { stroke-width: 2.6; }
+.chat-header .icon-button.active,
+.chat-header .icon-button.is-on,
+.history-head .icon-button.is-pinned,
+.activity-panel-head .icon-button[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
+  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+}
+.history-head .soft-button {
+  height: 28px; min-height: 28px;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.chat-header .context-ring {
+  background:
+    conic-gradient(var(--accent) calc(var(--context-pct,64)*1%), var(--surface-3) 0);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+/* Hover labels that pop up on icon chrome — same pill as labeled selectors,
+   not native OS tooltips and not text painted onto the icons. */
+.hover-card.hover-tip {
+  /* Above .overlay-menu (1200) so tips for ctx-pop / drawer chrome stay visible. */
+  z-index: 1300;
+  width: auto;
+  max-width: min(280px, calc(100vw - 16px));
+  padding: 6px 8px;
+  border-radius: 9px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.hover-card.hover-tip.hover-label {
+  min-height: 24px;
+  height: auto;
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.hover-card.hover-tip.hover-label strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--text);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.35;
+  max-width: 100%;
+}
+.hover-card.hover-tip strong {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+}
+.hover-card.hover-tip p {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

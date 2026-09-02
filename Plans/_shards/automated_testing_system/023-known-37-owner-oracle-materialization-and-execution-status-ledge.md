@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2258-L2512
+Source lines: L2270-L2524
 
-Source SHA256: `975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3`
+Source SHA256: `b25fb1aa2371456e671d9f1b4f5ae98200727a5497af258069de595ce5aa4ee9`
 
 ---
 
@@ -16,7 +16,7 @@ This is canonical acceptance/test-spec prose. `STATICALLY_MATERIALIZED` means th
 
 - `K37-STATIC-01` — `STATICALLY_MATERIALIZED` — The exact 31 authorized new JSON paths exist and parse; the 21 Goal roots and nine standalone schemas are Draft 2020-12 meta-valid; the catalog data validates.
 - `K37-STATIC-02` — `STATICALLY_MATERIALIZED` — All 21 Goal roots are self-contained, closed, select their exact event const and schema ID, and carry mechanically identical common definitions.
-- `K37-STATIC-03` — `STATICALLY_MATERIALIZED` — The historical Known-37 event-family slice validates at 2.0.0 / 2026-07-18.2 / RET-K37-ASSIGNMENT-001@1.0.0; exactly 37 rows in that bounded slice have revision 2.0.0 and the 23/4/5/3/1/1 retention distribution. This is not a currentness claim for the live 39-row revision `2026-08-04.1`.
+- `K37-STATIC-03` — `STATICALLY_MATERIALIZED` — The historical Known-37 event-family slice validates at 2.0.0 / 2026-07-18.2 / RET-K37-ASSIGNMENT-001@1.0.0; exactly 37 rows in that bounded slice have revision 2.0.0 and the 23/4/5/3/1/1 retention distribution. This is not a currentness claim for the live 39-row revision `2026-08-27.1`.
 - `K37-STATIC-04` — `STATICALLY_MATERIALIZED` — The storage registry validates against the unchanged schema, has exactly 24 policy IDs, and contains the exact requested_effective_runtime and recovery_unavailable_resolution_receipt rows once in both required-family arrays.
 - `K37-STATIC-05` — `STATICALLY_MATERIALIZED` — The seven governed v1 reader definitions are byte-semantic deep-equals of the prior active inline definitions, while the seven active roots are v2 writer-only registry selections.
 - `K37-STATIC-06` — `STATICALLY_MATERIALIZED` — The two recovery commands each have one exact wiring row, sole runtime handler, typed request/result reference, receipt effect, empty expected-event set, and blocked-state admission prose.

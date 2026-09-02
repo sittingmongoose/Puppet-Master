@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.concern_event.concern_resolved.schema.v1",
+  "$comment": "Static payload shape only. The owner/runtime must prove the active or acknowledged projection is current and the linked evidence supports the selected resolution kind. This schema grants no append or dispatch authority.",
+  "title": "concern.resolved payload",
+  "description": "Closed project-scoped payload resolving an active or acknowledged concern with the owner-defined resolution kind and evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "project_id", "concern_id", "concern_revision",
+    "prior_revision", "concern_record_ref", "actor_ref", "currentness_basis_ref",
+    "prior_state", "state", "resolution_kind", "resolution_ref", "evidence_refs",
+    "reason_code", "origin", "handler_target", "command_id", "correlation_id",
+    "idempotency_key", "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.concern_event.concern_resolved.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/non_empty_id"},
+    "concern_id": {"$ref": "#/$defs/non_empty_id"},
+    "concern_revision": {"type": "integer", "minimum": 2},
+    "prior_revision": {"type": "integer", "minimum": 1},
+    "concern_record_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "currentness_basis_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "source_refs": {"$ref": "#/$defs/ref_array"},
+    "evidence_refs": {"$ref": "#/$defs/non_empty_ref_array"},
+    "prior_state": {"enum": ["active", "acknowledged"]},
+    "state": {"const": "resolved"},
+    "resolution_kind": {"enum": ["fixed", "accepted_risk", "superseded", "merged", "split", "invalidated", "obsoleted_by_patch", "obsoleted_by_recovery"]},
+    "resolution_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "reason_code": {"$ref": "#/$defs/reason_code"},
+    "origin": {"$ref": "#/$defs/origin"},
+    "handler_target": {"const": "handlers::concern::resolve"},
+    "command_id": {"const": "cmd.concern.resolve"},
+    "correlation_id": {"$ref": "#/$defs/non_empty_id"},
+    "idempotency_key": {"$ref": "#/$defs/non_empty_id"},
+    "ts": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "origin": {"enum": ["orchestrator", "concern_center", "dashboard", "api"]},
+    "ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "maxItems": 64, "uniqueItems": true},
+    "non_empty_ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "minItems": 1, "maxItems": 64, "uniqueItems": true}
+  }
+}

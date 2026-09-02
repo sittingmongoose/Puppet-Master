@@ -1,0 +1,166 @@
+{
+  "schema_id": "pm.evidence_artifact_binding_modes.v1",
+  "captured_at_utc": "2026-08-29T23:58:00Z",
+  "expected_historical_snapshot_count": 21,
+  "expected_live_current_count": 1,
+  "forbidden_live_current_tokens": [
+    "node_readiness_status=ready_for_node_compile",
+    "ready_for_node_compile after executable PNC-019 certification",
+    "final FABLE convergence now records"
+  ],
+  "entries": [
+    {
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.p6.file-manager-editor.ledger-audit",
+      "bundle_sha256": "a9fb31c8c770bebba0bb6436e803d08a8a9d6130b8a4d0fdcf20d8cb9f6dc6e2",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.final-seal",
+      "bundle_sha256": "6d2a37f6faeef0df5095b416c2e59d5a9d44b803ef57f08780b7b9916758362c",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.final-seal",
+      "bundle_sha256": "52046516d4e2302e57da06dfd8f95b19fae95227c6659ae34745e7a7e8b8fd65",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.ledger-transfer.final-certification",
+      "bundle_sha256": "8dbacac9503f458cd5a7edc28e896e8286445b2b81dc7680cf6376c03da9fe1f",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.final-seal",
+      "bundle_sha256": "eed84ef13d733b0ab67d66f38b5ea1b60327fc70a17c560a85c2c9e0c6359227",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.p6.personas-ledger-transfer",
+      "bundle_sha256": "5d3d19118cf343e7514346763bff0a15561c189464769ad05c39d8bde7c5dfe7",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.part3-fable-cleanup-governance-seal",
+      "bundle_sha256": "9c5a1c9ee288a33d3d15bfa915681f379ae2790fa214ae47d2c957bccf642411",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.part4-fable-cleanup-post-audit-repair",
+      "bundle_sha256": "81d9717ca241519203f1926ef1365e12202d4af17ccf9a2cd0ec760488b752ad",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.shard-regeneration",
+      "bundle_sha256": "cbc2133cc4c142a306c5dd7d43b74e43a9dd2a6688cbf4662d4665de642a7415",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm6-concept-promotion-planunits-2026-07-11/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "7835436535059f76455b84c653aaa42b44a56fd44c724dbc62afb97165e34f0e",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-tweak-wave-2-2026-08-13/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "016fa7e23a71fa36787cd6a1493e87936246ca422ead25b6438938442b97e121",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-tweak-wave-3-2026-08-13/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "da67eef3fb1999297dd6dd8222243f9604d80ac21ef9afd5daf2bc3319657b2e",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-tweak-wave-4-2026-08-13/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "93f3966db24059a8358a1cb8f44773f668dc2e1d6a4ddd72c2ba5d76989d7269",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-tweak-wave-6-2026-08-14/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "b2ab1e680997fd8ff1a1e8b0a703310b308280adcd4158edcfb8047529fdac05",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-tweak-wave-7-2026-08-14/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "c445659ecc3fd512f85b188af3bef5fcaa10ed35eb41f26ffb1feb58da99ac31",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-tweak-wave-8-2026-08-15/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "c8654cd14278abf0670607b7e8c0f57e603e9c02ef74ed75bd02bc3249f6a834",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "mode": "live_current",
+      "node_id": "pm.build-governance.shard-regeneration",
+      "rationale": "Successor rolling sharding inventory for the current PM7 Usage recovery seal; artifact hashes must match current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pm7-workspace-repair-2026-08-13/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "c017e6a7924b1405a0ba84a1508a4961f1a62e4fa27d223208b85021aa05fa66",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pmconcept7-home-direct-manipulation-repair-2026-08-12/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "6d2a25454a4ee24e617834a615556bf48ed624754f3cdd670c67fea40c3295da",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/pmconcept7-home-workspace-post-audit-repair-2026-08-05/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "13e96a82dd53d9d272edbfea12049ca3a4f8af81ea7aaf6f1d3ca363540d4795",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "bf1916c0e49a4e46f676a9940c20c7b853f71ba36f5e21e06c5cdf11ce02b078",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    },
+    {
+      "path": "Plans/.evidence/tier-0c-2-storage-value-registry/evidence.json",
+      "mode": "historical_snapshot",
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "bundle_sha256": "2787f062e2d9b1fecffaffbba833743210eebd9f8d62239541d8fa500bc9f888",
+      "rationale": "Immutable point-in-time evidence; validate the bundle bytes and schema without rewriting its recorded artifact hashes to current repository bytes."
+    }
+  ]
+}

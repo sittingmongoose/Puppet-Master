@@ -55,6 +55,8 @@
 [data-step-kind="validate"]   { --pm-step:#3fae8a; }
 [data-step-kind="artifact"]   { --pm-step:#e0725b; }
 [data-step-kind="complete"]   { --pm-step:#3fb27a; }
+[data-step-kind="mcp"] { --pm-step: #e06ea0; }
+[data-step-kind="skill"] { --pm-step: #d9b13b; }
 
 /* ---- Materialize: the signature entrance ----------------------------
    Rows in the reference do not slide in. They resolve out of a blur,
@@ -246,6 +248,7 @@
   .calm-glyph,.bench-scan,.lane-wave i,.fast-bolt,.activity-bar[data-variant="6"]::before,
   .working-variant-0 .phase-dot.current,.calm-dots i.current,.activity-goal-tree .tree-child.live,
   .mini-graph i{ animation:none !important; }
+  .status-orbit::after{ transform:translateY(-7.5px); }
 }
 
 /* ---- Theme cross-fade -----------------------------------------------

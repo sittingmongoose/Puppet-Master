@@ -1,25 +1,26 @@
 # Shard Index: Plans/UI_Wiring_Rules.md
 
-Generated: 2026-08-18T03:40:28Z
+Generated: 2026-08-30T00:17:00Z
 
-Source SHA256: `0326db6d67d40c55aa98ecff25961a2d9430e1fa4a56b81544cb27dacc3ac6b0`
+Source SHA256: `1b85ffc05fc50570536d9c60b4a47e0ba1ec018de6b448c626df22858f70ed27`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L15 `99b574c4340bce9b71c2db5022f648ca3f6ec59bacc29d1850dfe01ee489232f`
-- [002 - 0. Scope](002-0.-scope.md) L16-L62 `09029ce6769e1aea6a83689d1f06188314b29211c214b8471a137a16f6e5d4d4`
-- [003 - Owner / Consumer Map](003-owner-consumer-map.md) L64-L70 `a59adbe68d5361994754253ac95bdc33dfaed2f5d0efb434671eab134cc703ee`
-- [004 - PlanUnits](004-planunits.md) L72-L423 `de9d671d32b670d248a8a80ac6e926ef323c22936e7ab227f63ea72729e837e9`
-- [005 - 1. Rule 1 — UI Command Dispatch Only](005-1.-rule-1-ui-command-dispatch-only.md) L424-L437 `8fce7749f4fe031c278c6319df0cbeceff603f9dc8172ffbd6a540bdec3dea20`
-- [006 - 2. Rule 2 — One Element, One Command](006-2.-rule-2-one-element-one-command.md) L438-L452 `c53b7eb9e275bff8cfedff983f8966b833e5bc89a997cd4f4c42d1bd296adcfa`
-- [007 - 3. UI Command Dispatcher Boundary](007-3.-ui-command-dispatcher-boundary.md) L453-L488 `cbd2a236e5d814c498190f01b2b8549c03c26735fa2af5b880218e197454a88b`
-- [008 - 4. Wiring Matrix Concept](008-4.-wiring-matrix-concept.md) L489-L526 `176bdbcd74aea90c2b26ca684aa0e6cd3c149cba94ea551cbe4b718d94b16c56`
-- [009 - 5. Autonomous Verification Strategy](009-5.-autonomous-verification-strategy.md) L527-L554 `b11238e761f09c2d7ff2c75efd06d0031270658a25ddbed68abbca452d859ad6`
-- [010 - 6. References](010-6.-references.md) L555-L567 `926feccdaf234f240f1df824eaa8fcf9edfc836034b3a01817940378098f0f7b`
-- [011 - Migration Coverage](011-migration-coverage.md) L569-L590 `9f2f86f7b50c8a7cb71a839cfce377168751c603856d6af586c9844d1eaa1175`
-- [012 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L592-L596 `a86cc38439336f291519e8a69e06460d2d683e9dc8d1b64d55017abf4a083f4d`
-- [013 - PMConcept7 Home Workspace wiring rules — 2026-08-04](013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md) L598-L674 `8a6d16143bc240631762c6a2a22be9f9ab2d89a476a988bdf6383af612ede239`
-- [014 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L676-L678 `c7844304ddb90e824e85689392b98daa3ed41c410439c3116c9838be7f334ab2`
-- [015 - Shared Runtime receipt/projection wiring addendum - 2026-08-13](015-shared-runtime-receipt-projection-wiring-addendum-2026-08-13.md) L680-L731 `3078e825b7f459bb243688d62e67f8c2c81df150c6d2c0988f47af1cd04d1b9e`
+- [001 - Preamble](001-preamble.md) L1-L15 `18111f7c87de3c002e040a2880ee36718aed25ef052d27ae4646fee203256886`
+- [002 - 0. Scope](002-0.-scope.md) L16-L62 `965f527d330b83a5f28c35df64e83e6eeaa4402eb4ada456416fd6d170f7fde0`
+- [003 - Owner / Consumer Map](003-owner-consumer-map.md) L64-L70 `732ea57d4b65dedf8411368f6c455159cf86343a7788dd5689cb3f34e7e25a4f`
+- [004 - PlanUnits](004-planunits.md) L72-L424 `bbbde977c7d5de5d74702ea8da4da7a3348fc1b17d216767c010e37fe42519ca`
+- [005 - 1. Rule 1 — UI Command Dispatch Only](005-1.-rule-1-ui-command-dispatch-only.md) L425-L438 `a0964c0005f62c68b0aedb5c1780f2bdd7a9ed5eb862db1dfcca3259face8297`
+- [006 - 2. Rule 2 — One Element, One Command](006-2.-rule-2-one-element-one-command.md) L439-L453 `7a28bce22d8d4e88d3f883e0b6c9b227f0188c9f82eabfedb4ea02015a8dfd89`
+- [007 - 3. UI Command Dispatcher Boundary](007-3.-ui-command-dispatcher-boundary.md) L454-L489 `1bf33cee05042bfcd5c67652c8de86a2daea68c6562490b381a04939eef960a0`
+- [008 - 4. Wiring Matrix Concept](008-4.-wiring-matrix-concept.md) L490-L527 `ab93a301b9ac1fb39b421245955d471a2338d305634cd71494710de52940db54`
+- [009 - 5. Autonomous Verification Strategy](009-5.-autonomous-verification-strategy.md) L528-L555 `c4d59dcb3b2073651556fb12eaff622e20cddff7fb95a38a19c53a7954a2509b`
+- [010 - 6. References](010-6.-references.md) L556-L568 `0ab531ad56c38d80c259b813729fe4c9e5931dffc0fc923f509b7b70771a29f1`
+- [011 - Migration Coverage](011-migration-coverage.md) L570-L591 `8e5e0e169897771d70d1f9122aac1237f004f34279850dd980d25370989fb259`
+- [012 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L593-L597 `e3b90587a611a333dbb8e282625fac428dfd25a45777dc83f8f1c9faa0f4e71d`
+- [013 - PMConcept7 Home Workspace wiring rules — 2026-08-04](013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md) L599-L675 `099bc94d08c2bd2f953a2a631546eb35854fca05d0803db91015ec719a371070`
+- [014 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L677-L679 `42b3b74092ec7fe0657a9ec167413b3130ebe02edb55c6509cb20ffb1df93742`
+- [015 - Shared Runtime receipt/projection wiring addendum - 2026-08-13](015-shared-runtime-receipt-projection-wiring-addendum-2026-08-13.md) L681-L732 `fbf1d368322ba532381c7d4882e54f27813754f4be71d9d2f6edd46ee4bf17c5`
+- [016 - PMConcept7 transactional interaction and shared-seat wiring addendum - 2026-08-27](016-pmconcept7-transactional-interaction-and-shared-seat-wiring-adde.md) L734-L837 `270a8728d6996b7969d1bc0fcb5a8f230d4ae6c17283a92829d864dae0bdf078`

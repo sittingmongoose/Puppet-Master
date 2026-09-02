@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""build_pm7.py -- PM7 build pipeline (re-baselined 2026-08-27; identity build).
+"""build_pm7.py -- PM7 build pipeline (re-baselined 2026-08-27; T33+).
 
 PMConcept7 is ALWAYS a build artifact. As of the 2026-08-27 re-baseline the
-pinned base IS the shipped document: base/PM7-base.html is byte-identical to
-Concepts/PMConcept7.html, the transform list is empty, and a build reproduces
-the base verbatim and then gates it. See README.md ("Re-baseline") for why.
+pinned base IS the prior shipped document: base/PM7-base.html. New work lands
+as T33+ transforms derived from that pin. See README.md ("Re-baseline").
 
 Never hand-edit the output. Never write anything under Concepts/pm6-build/
 (read-only; its emoji checker is invoked read-only as a gate).
@@ -14,18 +13,12 @@ Pipeline shape:
   2. Segment the document into style/script blocks by tag scan (census
      asserted: 43 blocks = 22 style + 21 script on the re-baselined base).
   3. Run ordered content-anchored transforms. Every transform carries
-     mandatory pre/post assertions; any failure aborts the build. TRANSFORMS
-     is currently empty, so this step is a no-op and the output equals the
-     base; future PM7 work lands here as T33+.
+     mandatory pre/post assertions; any failure aborts the build.
   4. Write output + JSON build report; run final static gates:
        - per-style-block brace balance
        - var(--x)-used-implies-defined (baseline-relative vs the base)
        - per-script extraction + `node --check`
        - Concepts/pm6-build/checks/check_no_emoji.py on the output (read-only)
-
-Note that gate 2 is baseline-relative, so while TRANSFORMS is empty it is
-structurally a no-op (output == base). It regains its meaning as soon as a
-real transform is added.
 
 Flags: --until N, --skip NAME (repeatable), --report, --out FILE,
        --outdir DIR (report/tmp destination; use the session scratchpad),
@@ -49,11 +42,29 @@ sys.path.insert(0, str(HERE))
 import css_audit  # noqa: E402  (segmentation + CSS rule scanner)
 import dead_selectors  # noqa: E402  (frozen human-reviewed dead list)
 import home_workspace_source as home_source  # noqa: E402  (authored T20 source)
+import usage_corrections_source as usage_source  # noqa: E402  (authored T34 source)
+import usage_residuals_source as usage_residuals_source  # noqa: E402  (authored T35 source)
+import narrow_layout_source as narrow_layout_source  # noqa: E402  (authored T36 source)
+import contrast_repairs_source as contrast_repairs_source  # noqa: E402  (authored T37 source)
+import widget_interaction_repairs_source as widget_interaction_repairs_source  # noqa: E402  (authored T38 source)
+import widget_grid_and_chart_repairs_source as widget_grid_and_chart_repairs_source  # noqa: E402  (authored T39 source)
+import widget_preview_and_resize_repairs_source as widget_preview_and_resize_repairs_source  # noqa: E402  (authored T40 source)
+import usage_control_and_overflow_repairs_source as usage_control_and_overflow_repairs_source  # noqa: E402  (authored T41 source)
+import usage_activation_layout_repairs_source as usage_activation_layout_repairs_source  # noqa: E402  (authored T42 source)
+import widget_live_resize_preview_source as widget_live_resize_preview_source  # noqa: E402  (authored T43 source)
+import settings_tome_source as settings_tome_source  # noqa: E402  (authored T44 source)
+import onboarding_cinematic_source as onboarding_cinematic_source  # noqa: E402  (authored T45 source)
+import guided_tour_source as guided_tour_source  # noqa: E402  (authored T45 live-shell source)
+import systems_integration_source as systems_integration_source  # noqa: E402  (authored T46 source)
+import forge_backup_post_integration_source as forge_backup_post_integration_source  # noqa: E402  (authored T46F source)
+import full_thread_performance_source as full_thread_performance_source  # noqa: E402  (authored T46P source)
+import global_hover_tags_source as global_hover_tags_source  # noqa: E402  (authored T47 source)
+import home_workspace_refresh_source as home_workspace_refresh_source  # noqa: E402  (authored T48 source)
 
 BASE_DEFAULT = HERE / "base" / "PM7-base.html"
 # Re-baselined 2026-08-27. Previous pin (the Jul 15 PMConcept6 assembly) was
 # 3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3.
-BASE_SHA = "9dcde2a8862de0cdd28a0d540cb4976396ea0556e6ff15a5c9c8fc14bd121090"
+BASE_SHA = "7bbc1932dbfbbee45bab9533a9fe41b96b13452720ea0fd29e43cbeab710d50d"
 
 # Segmentation census measured on the re-baselined base with
 # css_audit.segment_blocks (was 31 = 13 style + 18 script on the PM6 pin).
@@ -83,6 +94,20 @@ def need(cond, msg):
 
 def sha256_text(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def file_provenance(path):
+    """Return stable report provenance for one build input file."""
+    path = Path(path).resolve()
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    try:
+        display_path = str(path.relative_to(REPO))
+    except ValueError:
+        display_path = str(path)
+    return {"path": display_path, "sha256": digest.hexdigest()}
 
 
 # --------------------------------------------------------------------------
@@ -2044,7 +2069,294 @@ def t20_home_workspace(doc, notes):
 #
 # New PM7 work belongs here as T33+, restoring a real derivation chain from
 # this base forward.
-TRANSFORMS = []
+
+
+# --------------------------------------------------------------------------
+# T33 -- retro drag always dashed cut-out (selection still rotates)
+# --------------------------------------------------------------------------
+
+T33_CSS_COMMENT_OLD = (
+    "       User decision: keep ALL THREE concepts; every selection click\n"
+    "       fires a different one, rotating randomly (shuffle bag, no\n"
+    "       immediate repeats). Drags roll a mode per gesture the same way.\n"
+    "       The transient pm-retro-* classes are added and removed only by\n"
+)
+
+T33_CSS_COMMENT_NEW = (
+    "       User decision: keep ALL THREE concepts; every selection click\n"
+    "       fires a different one, rotating randomly (shuffle bag, no\n"
+    "       immediate repeats). Drags ALWAYS use the DOS dashed cut-out\n"
+    "       wireframe; selection rotation does not affect drag.\n"
+    "       The transient pm-retro-* classes are added and removed only by\n"
+)
+
+T33_JS_HEADER_OLD = (
+    "  /* ---------- retro tab motion (RETROMOTION) -----------------------------\n"
+    "     The three concepts (phosphor cursor / CRT redraw / DOS inversion) all\n"
+    "     shipped: every selection click and every reorder gesture rolls a\n"
+    "     different one from a shuffle bag (fair rotation, no immediate\n"
+    "     repeats), live ONLY when the active theme starts with \"retro\". All\n"
+    "     visuals live in pm-retro-* classes (10x-pm6-css-global); this IIFE\n"
+    "     only adds/removes them. It rides the SAME capture click wiring EDSHAPE\n"
+    "     uses, never stops propagation, and never touches .ed-tab-shape or the\n"
+    "     --ed-* variables: the silhouette snaps untouched beneath. Part 25 asks\n"
+    "     beginDrag() for the gesture's mode; phosphor/dos gestures quantize the\n"
+    "     glide to 8px character cells there. */\n"
+)
+
+T33_JS_HEADER_NEW = (
+    "  /* ---------- retro tab motion (RETROMOTION) -----------------------------\n"
+    "     The three concepts (phosphor cursor / CRT redraw / DOS inversion) all\n"
+    "     shipped: every selection click rolls a different one from a shuffle\n"
+    "     bag (fair rotation, no immediate repeats). Reorder gestures ALWAYS\n"
+    "     use the DOS dashed cut-out wireframe -- selection rotation does not\n"
+    "     affect drag. Live ONLY when the active theme starts with \"retro\". All\n"
+    "     visuals live in pm-retro-* classes (10x-pm6-css-global); this IIFE\n"
+    "     only adds/removes them. It rides the SAME capture click wiring EDSHAPE\n"
+    "     uses, never stops propagation, and never touches .ed-tab-shape or the\n"
+    "     --ed-* variables: the silhouette snaps untouched beneath. Part 25 asks\n"
+    "     beginDrag() which always returns 'dos'; the dos gesture quantizes\n"
+    "     the glide to 8px character cells there. */\n"
+)
+
+T33_BEGIN_DRAG_OLD = (
+    "    /* REORDER -- part 25 asks for a gesture mode at its drag threshold;\n"
+    "       the mode picks the carried-tab look here and the glide quantization\n"
+    "       there (phosphor/dos = 8px character cells, crt = smooth). */\n"
+    "    var gestureMode = null, gestureTab = null;\n"
+    "    function beginDrag(tab) {\n"
+    "      if (!retroOn() || reduced()) { gestureMode = null; gestureTab = null; return null; }\n"
+    "      gestureMode = roll();\n"
+    "      gestureTab = tab;\n"
+    "      if (tab) {\n"
+    "        tab.classList.add(gestureMode === 'phosphor' ? 'pm-retro-drag-phos' :\n"
+    "                          gestureMode === 'crt' ? 'pm-retro-drag-crt' : 'pm-retro-drag-dos');\n"
+    "      }\n"
+    "      return gestureMode;\n"
+    "    }\n"
+)
+
+T33_BEGIN_DRAG_NEW = (
+    "    /* REORDER -- part 25 asks for a gesture mode at its drag threshold.\n"
+    "       Drag ALWAYS uses the DOS dashed cut-out (pm-retro-drag-dos) and\n"
+    "       8px character-cell quantization; only selection clicks rotate. */\n"
+    "    var gestureMode = null, gestureTab = null;\n"
+    "    function beginDrag(tab) {\n"
+    "      if (!retroOn() || reduced()) { gestureMode = null; gestureTab = null; return null; }\n"
+    "      gestureMode = 'dos';\n"
+    "      gestureTab = tab;\n"
+    "      if (tab) tab.classList.add('pm-retro-drag-dos');\n"
+    "      return gestureMode;\n"
+    "    }\n"
+)
+
+T33_QUANTIZE_OLD = (
+    "                /* retro tab motion: the gesture's rolled mode (asked from\n"
+    "                   RETROMOTION once at the drag threshold) decides the glide:\n"
+    "                   phosphor/dos snap to an 8px character grid, crt stays\n"
+    "                   smooth. Quantize BEFORE lastTx so the drop settle starts\n"
+    "                   from the painted position, not the raw pointer position. */\n"
+    "                if (g.retroMode === 'phosphor' || g.retroMode === 'dos') {\n"
+    "                    tx = Math.round(tx / 8) * 8;\n"
+    "                }\n"
+)
+
+T33_QUANTIZE_NEW = (
+    "                /* retro tab motion: beginDrag always returns 'dos' (dashed\n"
+    "                   cut-out), so the glide always snaps to the 8px character\n"
+    "                   grid. Quantize BEFORE lastTx so the drop settle starts\n"
+    "                   from the painted position, not the raw pointer position. */\n"
+    "                if (g.retroMode) {\n"
+    "                    tx = Math.round(tx / 8) * 8;\n"
+    "                }\n"
+)
+
+
+def t33_retro_drag_dashed_cutout(doc, notes):
+    """Pin retro tab drag to the DOS dashed cut-out; keep selection rotation.
+
+    The bake-off shuffle bag still rotates phosphor/crt/dos on selection
+    clicks. Drag/reorder previously rolled the same bag and switched between
+    glow, CRT ghost, and dashed wireframe -- user wants drag fixed on the
+    dashed cut-out pattern only.
+    """
+    need(doc.count("gestureMode = roll();") == 1,
+         "T33: expected exactly one drag-side gestureMode = roll()")
+    need(doc.count("pm-retro-drag-dos") >= 1,
+         "T33: dos drag class missing from base")
+    doc = replace_exact_once(doc, T33_CSS_COMMENT_OLD, T33_CSS_COMMENT_NEW,
+                             "T33 CSS comment")
+    doc = replace_exact_once(doc, T33_JS_HEADER_OLD, T33_JS_HEADER_NEW,
+                             "T33 JS header")
+    doc = replace_exact_once(doc, T33_BEGIN_DRAG_OLD, T33_BEGIN_DRAG_NEW,
+                             "T33 beginDrag")
+    doc = replace_exact_once(doc, T33_QUANTIZE_OLD, T33_QUANTIZE_NEW,
+                             "T33 glide quantize")
+    need(doc.count("gestureMode = roll();") == 0,
+         "T33: drag still rolls a mode")
+    need(doc.count("gestureMode = 'dos';") == 1,
+         "T33: beginDrag must pin gestureMode to dos")
+    need(doc.count("var m = roll();") == 1,
+         "T33: selection roll() must remain exactly once")
+    need("Drags ALWAYS use the DOS dashed cut-out" in doc,
+         "T33: CSS decision comment missing")
+    notes["decision"] = ("selection keeps shuffle-bag rotation; "
+                         "drag always dos dashed cut-out + 8px snap")
+    notes["drag_class"] = "pm-retro-drag-dos"
+    return doc
+
+
+def t34_usage_audit_corrections(doc, notes):
+    """Apply the source-owned, assertion-guarded Usage recovery transform."""
+    return usage_source.apply(doc, notes, need)
+
+
+def t35_usage_residual_audit_closure(doc, notes):
+    """Apply the source-owned, assertion-guarded Usage residual transform."""
+    return usage_residuals_source.apply(doc, notes, need)
+
+
+def t36_physical_width_cross_page_layout(doc, notes):
+    """Apply the source-owned, assertion-guarded cross-page narrow repair."""
+    return narrow_layout_source.apply(doc, notes, need)
+
+
+def t37_component_scoped_contrast(doc, notes):
+    """Apply the source-owned, assertion-guarded local contrast repair."""
+    return contrast_repairs_source.apply(doc, notes, need)
+
+
+def t38_widget_interactions_and_chart_labels(doc, notes):
+    """Apply the source-owned stable widget transaction/chart transform."""
+    return widget_interaction_repairs_source.apply(doc, notes, need)
+
+
+def t39_widget_grid_and_chart_repairs(doc, notes):
+    """Apply the source-owned all-label and two-dimensional Usage repair."""
+    return widget_grid_and_chart_repairs_source.apply(doc, notes, need)
+
+
+def t40_widget_preview_and_resize_repairs(doc, notes):
+    """Apply the source-owned stable-preview and directional-resize repair."""
+    return widget_preview_and_resize_repairs_source.apply(doc, notes, need)
+
+
+def t41_usage_control_and_overflow_repairs(doc, notes):
+    """Apply the source-owned Usage control and page-overflow repair."""
+    return usage_control_and_overflow_repairs_source.apply(doc, notes, need)
+
+
+def t42_usage_activation_layout_repairs(doc, notes):
+    """Apply the source-owned first-visible Usage layout repair."""
+    return usage_activation_layout_repairs_source.apply(doc, notes, need)
+
+
+def t43_widget_live_resize_preview(doc, notes):
+    """Apply the source-owned live occupied-neighbor resize preview."""
+    return widget_live_resize_preview_source.apply(doc, notes, need)
+
+
+def t44_settings_tome_tabs(doc, notes):
+    """Port the source-owned winning K3 Settings Tome Tabs concept."""
+    return settings_tome_source.apply(doc, notes, need)
+
+
+def t45_product_onboarding_cinematic(doc, notes):
+    """Add the source-owned simple cinematic Product Onboarding flow."""
+    return onboarding_cinematic_source.apply(doc, notes, need)
+
+
+def t45_guided_tour_live_shell(doc, notes):
+    """Add the deterministic local-Teacher tour over the live PM7 shell."""
+    return guided_tour_source.apply(doc, notes, need)
+
+
+def t46_operational_systems_integration(doc, notes):
+    """Add owner-routed Doctor/system consumers and K3 host adaptation."""
+    return systems_integration_source.apply(doc, notes, need)
+
+
+def t46f_forge_backup_post_integration(doc, notes):
+    """Add the post-integration Forge, SCM, and backup PM7 projections."""
+    return forge_backup_post_integration_source.apply(doc, notes, need)
+
+
+def t46p_full_thread_performance(doc, notes):
+    """Add deterministic browser-only full-thread performance fixtures."""
+    return full_thread_performance_source.apply(doc, notes, need)
+
+
+def t47_global_hover_tags(doc, notes):
+    """Add the shared PMHoverTag/HoverTagController presentation system."""
+    return global_hover_tags_source.apply(doc, notes, need)
+
+
+def t48_home_workspace_source_refresh(doc, notes):
+    """Refresh the re-baselined T20 Home bands from current authored source."""
+    return home_workspace_refresh_source.apply(doc, notes, need)
+
+
+TRANSFORMS = [
+    ("T33_retro_drag_dashed_cutout", t33_retro_drag_dashed_cutout),
+    ("T34_usage_audit_corrections", t34_usage_audit_corrections),
+    ("T35_usage_residual_audit_closure", t35_usage_residual_audit_closure),
+    ("T36_physical_width_cross_page_layout", t36_physical_width_cross_page_layout),
+    ("T37_component_scoped_contrast", t37_component_scoped_contrast),
+    ("T38_widget_interactions_and_chart_labels", t38_widget_interactions_and_chart_labels),
+    ("T39_widget_grid_and_chart_repairs", t39_widget_grid_and_chart_repairs),
+    ("T40_widget_preview_and_resize_repairs", t40_widget_preview_and_resize_repairs),
+    ("T41_usage_control_and_overflow_repairs", t41_usage_control_and_overflow_repairs),
+    ("T42_usage_activation_layout_repairs", t42_usage_activation_layout_repairs),
+    ("T43_widget_live_resize_preview", t43_widget_live_resize_preview),
+    ("T44_settings_tome_tabs", t44_settings_tome_tabs),
+    ("T45_product_onboarding_cinematic", t45_product_onboarding_cinematic),
+    ("T45_guided_tour_live_shell", t45_guided_tour_live_shell),
+    ("T46_operational_systems_integration", t46_operational_systems_integration),
+    ("T46F_forge_backup_post_integration", t46f_forge_backup_post_integration),
+    ("T46P_full_thread_performance", t46p_full_thread_performance),
+    ("T47_global_hover_tags", t47_global_hover_tags),
+    ("T48_home_workspace_source_refresh", t48_home_workspace_source_refresh),
+]
+
+ACTIVE_AUTHORED_TRANSFORM_SOURCES = [
+    ("T34_usage_audit_corrections", usage_source),
+    ("T35_usage_residual_audit_closure", usage_residuals_source),
+    ("T36_physical_width_cross_page_layout", narrow_layout_source),
+    ("T37_component_scoped_contrast", contrast_repairs_source),
+    ("T38_widget_interactions_and_chart_labels", widget_interaction_repairs_source),
+    ("T39_widget_grid_and_chart_repairs", widget_grid_and_chart_repairs_source),
+    ("T40_widget_preview_and_resize_repairs", widget_preview_and_resize_repairs_source),
+    ("T41_usage_control_and_overflow_repairs", usage_control_and_overflow_repairs_source),
+    ("T42_usage_activation_layout_repairs", usage_activation_layout_repairs_source),
+    ("T43_widget_live_resize_preview", widget_live_resize_preview_source),
+    ("T44_settings_tome_tabs", settings_tome_source),
+    ("T45_product_onboarding_cinematic", onboarding_cinematic_source),
+    ("T45_guided_tour_live_shell", guided_tour_source),
+    ("T46_operational_systems_integration", systems_integration_source),
+    ("T46F_forge_backup_post_integration", forge_backup_post_integration_source),
+    ("T46P_full_thread_performance", full_thread_performance_source),
+    ("T47_global_hover_tags", global_hover_tags_source),
+    ("T48_home_workspace_source_refresh", home_workspace_refresh_source),
+]
+AUTHORED_TRANSFORM_SOURCE_BY_NAME = dict(ACTIVE_AUTHORED_TRANSFORM_SOURCES)
+
+
+def build_provenance():
+    return {
+        "pipeline": file_provenance(__file__),
+        "authored_transform_sources_used": [],
+    }
+
+
+def scope_transform_notes(name, notes):
+    """Prevent browser-oriented checks from implying native certification."""
+    if name in {"T44_settings_tome_tabs", "T45_product_onboarding_cinematic", "T45_guided_tour_live_shell", "T46_operational_systems_integration", "T46F_forge_backup_post_integration", "T46P_full_thread_performance", "T47_global_hover_tags", "T48_home_workspace_source_refresh"} and "slint_portability" in notes:
+        check = notes.pop("slint_portability")
+        notes["browser_prototype_portability_check"] = {
+            "check": check,
+            "scope": "static browser-prototype implementation constraints only",
+            "slint_1_17_1_compilation_runtime_certification": False,
+        }
 
 
 # --------------------------------------------------------------------------
@@ -2135,6 +2447,161 @@ def gate_js_syntax(doc, tmpdir):
     return result
 
 
+def gate_t45_final_contract(doc):
+    """Guard the final generated artifact, not only T45's intermediate source.
+
+    Later transforms must not reintroduce the retired provider stage/action
+    family or drift owner-flow returns away from the canonical first-project
+    stage.  This is a static browser-prototype gate; it is not runtime or
+    native-Slint certification.
+    """
+    script_blocks = [
+        block for block in css_audit.segment_blocks(doc)
+        if block.kind == "script" and block.tag_id == "pm7-onboarding-js"
+    ]
+    onboarding_script = script_blocks[0].content(doc) if len(script_blocks) == 1 else ""
+    allowed_actions = {
+        "ui.onboarding.start",
+        "ui.onboarding.next",
+        "ui.onboarding.back",
+        "ui.onboarding.close",
+        "ui.onboarding.skip",
+        "ui.onboarding.defer",
+        "ui.onboarding.open_details",
+        "ui.onboarding.more_ways",
+        "ui.onboarding.choose_simple_path",
+        "ui.onboarding.open_owner_flow",
+        "ui.onboarding.run_automatic_preparation",
+        "ui.onboarding.choose_first_project",
+        "ui.onboarding.finish",
+    }
+    # `ui.onboarding.next` is the typed local action for draft setup choices
+    # and bounded recovery previews. Defer and Details are, respectively, a
+    # durable continuation and an ephemeral same-stage disclosure. The nine
+    # visible screens remain presentation stages, not owner commands.
+    required_emitted_actions = allowed_actions
+    # Bind the census to T45's own authored script. A later transform must not
+    # be able to satisfy a missing T45 action by emitting the same token.
+    emitted_actions = set(re.findall(r"\bui\.onboarding\.[a-z0-9_]+\b", onboarding_script))
+    predecessor_actions = {
+        "ui.onboarding.choose_server_branch",
+        "ui.onboarding.choose_provider",
+        "ui.onboarding.choose_project",
+    }
+    internal_order_ok = bool(re.search(
+        r"\border\s*=\s*\[\s*['\"]welcome['\"]\s*,\s*['\"]path['\"]\s*,\s*['\"]project['\"]\s*,\s*['\"]source['\"]\s*,\s*['\"]places['\"]\s*,\s*['\"]access['\"]\s*,\s*['\"]review['\"]\s*,\s*['\"]preparing['\"]\s*,\s*['\"]ready['\"]\s*\]",
+        onboarding_script,
+    ))
+    canonical_stage_match = re.search(
+        r"function\s+canonicalStage\s*\(\s*screen\s*\)\s*\{\s*return\s*\(\s*\{(?P<body>[^{}]*)\}\s*\)\s*\[\s*screen\s*\]\s*\|\|\s*['\"]welcome['\"]\s*;\s*\}",
+        onboarding_script,
+    )
+    canonical_stage_mapping = dict(re.findall(
+        r"\b([a-z_]+)\s*:\s*['\"]([a-z_]+)['\"]",
+        canonical_stage_match.group("body") if canonical_stage_match else "",
+    ))
+    expected_stage_mapping = {
+        "welcome": "welcome",
+        "path": "simple_path",
+        "project": "first_project",
+        "source": "source_control_setup",
+        "places": "server_storage_client",
+        "access": "remote_access_setup",
+        "review": "review_setup_plan",
+        "preparing": "automatic_preparation",
+        "ready": "ready",
+    }
+    canonical_mapping_ok = canonical_stage_mapping == expected_stage_mapping
+    first_project_returns = len(re.findall(
+        r"return_stage\s*:\s*['\"]first_project['\"]", onboarding_script
+    ))
+    canonical_open_stage_bindings = len(re.findall(
+        r"return_stage\s*:\s*returnStage\b", onboarding_script
+    ))
+    exact_branch_stage_bindings = len(re.findall(
+        r"return_stage\s*:\s*state\.branch\.return_stage\b", onboarding_script
+    ))
+    canonical_open_stage_is_derived = bool(re.search(
+        r"\breturnStage\s*=\s*canonicalStage\s*\(\s*state\.screen\s*\)",
+        onboarding_script,
+    ))
+    stale_project_returns = len(re.findall(
+        r"return_stage\s*:\s*['\"]project['\"]", onboarding_script
+    ))
+    retired_owner_branch_entry_guarded = bool(re.search(
+        r"function\s+openBranch\s*\([^)]*\)\s*\{[^{}]*returnStage\s*=\s*canonicalStage\s*\(\s*state\.screen\s*\)[^{}]*return\s+false\s*;?\s*\}",
+        onboarding_script,
+    ))
+    retired_owner_branch_not_exported = not re.search(
+        r"\bopenBranch\s*:\s*openBranch\b", onboarding_script
+    )
+    restored_owner_branch_discarded = (
+        "if(state.branch){state.branch=null;renderBranch();persist();}"
+        in onboarding_script
+    )
+    provider_stage_tokens = re.findall(
+        r"(?:stage|screen)\s*[:=]\s*['\"]provider['\"]", onboarding_script
+    )
+    checks = {
+        "unique_script": len(script_blocks) == 1,
+        "unique_overlay": doc.count('id="pm7-onboarding"') == 1,
+        "staged_setup_internal_order": internal_order_ok,
+        "canonical_stage_mapping": canonical_mapping_ok,
+        "required_action_census": emitted_actions == required_emitted_actions,
+        "no_predecessor_actions": not (emitted_actions & predecessor_actions),
+        "no_cmd_onboarding_family": not re.search(r"\bcmd\.onboarding\.", doc),
+        "no_provider_stage": not provider_stage_tokens,
+        # Origin remains an explicit first-project insertion. The former
+        # nested owner sheets are retained only as inert source lineage: their
+        # entry point is guarded, it is not public API, and persisted sheet
+        # state is discarded. Exact-return/currentness machinery remains
+        # present for the future native owner handoff contract.
+        "owner_returns_first_project": (
+            first_project_returns >= 1
+            and canonical_open_stage_is_derived
+            and canonical_open_stage_bindings == 0
+            and exact_branch_stage_bindings >= 2
+            and stale_project_returns == 0
+            and retired_owner_branch_entry_guarded
+            and retired_owner_branch_not_exported
+            and restored_owner_branch_discarded
+        ),
+        "owner_return_currentness_fenced": all(
+            token in onboarding_script
+            for token in (
+                "payload.return_stage===state.branch.return_stage",
+                "payload.kind===state.branch.kind",
+                "payload.target_ref===state.branch.target_ref",
+                "payload.initiating_client_id===state.branch.initiating_client_id",
+                "payload.expected_revision===state.branch.expected_revision",
+                "payload.operation_id===state.branch.operation_id",
+                "payload.owner_branch_ref===state.branch.owner_branch_ref",
+                "payload.continuation_generation>state.branch.continuation_generation",
+                "owner_return_currentness_mismatch",
+            )
+        ),
+    }
+    return {
+        "name": "t45_final_contract",
+        "pass": all(checks.values()),
+        "claim_boundary": "final generated HTML static contract only; no native or runtime certification",
+        "checks": checks,
+        "emitted_actions": sorted(emitted_actions),
+        "expected_emitted_actions": sorted(required_emitted_actions),
+        "canonical_stage_mapping": canonical_stage_mapping,
+        "expected_stage_mapping": expected_stage_mapping,
+        "first_project_return_count": first_project_returns,
+        "canonical_open_stage_binding_count": canonical_open_stage_bindings,
+        "exact_branch_stage_binding_count": exact_branch_stage_bindings,
+        "canonical_open_stage_is_derived": canonical_open_stage_is_derived,
+        "retired_owner_branch_entry_guarded": retired_owner_branch_entry_guarded,
+        "retired_owner_branch_not_exported": retired_owner_branch_not_exported,
+        "restored_owner_branch_discarded": restored_owner_branch_discarded,
+        "stale_project_return_count": stale_project_returns,
+        "provider_stage_token_count": len(provider_stage_tokens),
+    }
+
+
 def gate_no_emoji(out_path):
     if not NO_EMOJI_CHECKER.exists():
         return {"name": "no_emoji", "pass": False,
@@ -2180,6 +2647,12 @@ def main(argv=None):
 
     report = {
         "generated": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "build_provenance": build_provenance(),
+        "portability_evidence_scope": {
+            "type": "browser_prototype_portability_checks",
+            "scope": "HTML/CSS/JavaScript prototype structure and static build gates",
+            "slint_1_17_1_compilation_runtime_certification": False,
+        },
         "base": str(args.base),
         "base_sha256": base_sha,
         "base_sha_pinned": BASE_SHA,
@@ -2219,6 +2692,11 @@ def main(argv=None):
             continue
         before = len(doc.encode("utf-8"))
         notes = {}
+        source_module = AUTHORED_TRANSFORM_SOURCE_BY_NAME.get(name)
+        if source_module is not None:
+            report["build_provenance"]["authored_transform_sources_used"].append(
+                {"transform": name, **file_provenance(source_module.__file__)}
+            )
         try:
             doc = fn(doc, notes)
         except TransformAbort as e:
@@ -2230,6 +2708,7 @@ def main(argv=None):
             print("ABORT in %s: %s" % (name, e), file=sys.stderr)
             print("report: %s" % report_path, file=sys.stderr)
             return 1
+        scope_transform_notes(name, notes)
         after = len(doc.encode("utf-8"))
         report["transforms"].append({
             "name": name, "status": "ok",
@@ -2246,6 +2725,7 @@ def main(argv=None):
     report["gates"].append(gate_brace_balance(doc))
     report["gates"].append(gate_css_vars(doc, base_text))
     report["gates"].append(gate_js_syntax(doc, outdir / "tmp_js"))
+    report["gates"].append(gate_t45_final_contract(doc))
     report["gates"].append(gate_no_emoji(out_path))
     gates_ok = all(g.get("pass") for g in report["gates"])
     report["gates_all_pass"] = gates_ok

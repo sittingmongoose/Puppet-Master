@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L4028-L4267
 
-Source SHA256: `f1c8531358918d5788c18d3a0f0c407701b78f97c679da3fbbaa5dbbf2cd9aa9`
+Source SHA256: `94877149d1b497059f7b921e13eb98409c6de5f1862ae5e6bc7bbcf566b4988a`
 
 ---
 
@@ -23,7 +23,7 @@ This addendum adjudicates the corrected remaining-runtime packet's 34 candidate 
 | `cmd.debug.session.action` | rejected generic dispatcher | the exact concrete `cmd.run_debug.*` verb |
 | `cmd.worktree.provision` | compatibility spelling, not registered | `cmd.git.worktree.create` |
 | `cmd.worktree.release` | compatibility spelling, not registered | `cmd.git.worktree.release` |
-| `cmd.context.receipt.open` | compatibility intent, not registered | `cmd.nav.open_subject`, or `cmd.nav.open_usage_subject` for Usage identity |
+| `cmd.context.receipt.open` | compatibility intent, not registered | `cmd.nav.open_subject` for a document/artifact subject, or `cmd.nav.open_usage_subject` only for event-backed Usage/Ledger identity carrying stable `usage_event_ref`; current PMConcept7 aggregate provider/account/panel cards stay local |
 | `cmd.remote.reconnect` | retained existing remote-surface wrapper | normalizes to `cmd.environment.reconnect` only after resolving an exact `ExecutionEnvironmentId`; it is not the generalized command |
 
 The remaining 26 IDs below are the only new canonical IDs from the 34-row candidate register. Chat, Settings, Onboarding, Doctor, provider, and panel surfaces reuse these IDs rather than minting local peers.

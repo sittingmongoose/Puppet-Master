@@ -1,0 +1,1405 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/goal_handoff.schema.json",
+  "title": "GoalHandoff command and local-action contracts",
+  "x-schema-id": "pm.goal_handoff.contracts.v1",
+  "x-command-count": 6,
+  "x-command-ids": [
+    "cmd.goal.checkpoint",
+    "cmd.goal.continue_on_host",
+    "cmd.goal.handoff.cancel",
+    "cmd.goal.handoff.retry",
+    "cmd.goal.pause",
+    "cmd.goal.resume_here"
+  ],
+  "x-local-action-count": 1,
+  "x-local-action-ids": [
+    "ui.goal.handoff.open_details"
+  ],
+  "x-command-contracts": {
+    "cmd.goal.checkpoint": {
+      "request_ref": "#/$defs/GoalHandoffCommandRequest",
+      "result_ref": "#/$defs/GoalHandoffCommandResult",
+      "error_ref": "#/$defs/GoalHandoffCommandError",
+      "availability_ref": "#/$defs/GoalHandoffCommandAvailability",
+      "disabled_reason_ref": "#/$defs/GoalHandoffDisabledReason",
+      "permission_ref": "#/$defs/GoalHandoffPermissionDecision",
+      "sole_handler": "handlers::goal_handoff::checkpoint",
+      "gui_consumers": [
+        "Goal/Assistant status",
+        "Project activity",
+        "Goal handoff modal",
+        "status bar",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.goal.continue_on_host": {
+      "request_ref": "#/$defs/GoalHandoffCommandRequest",
+      "result_ref": "#/$defs/GoalHandoffCommandResult",
+      "error_ref": "#/$defs/GoalHandoffCommandError",
+      "availability_ref": "#/$defs/GoalHandoffCommandAvailability",
+      "disabled_reason_ref": "#/$defs/GoalHandoffDisabledReason",
+      "permission_ref": "#/$defs/GoalHandoffPermissionDecision",
+      "sole_handler": "handlers::goal_handoff::continue_on_host",
+      "gui_consumers": [
+        "Goal/Assistant status",
+        "Project activity",
+        "Goal handoff modal",
+        "status bar",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.goal.handoff.cancel": {
+      "request_ref": "#/$defs/GoalHandoffCommandRequest",
+      "result_ref": "#/$defs/GoalHandoffCommandResult",
+      "error_ref": "#/$defs/GoalHandoffCommandError",
+      "availability_ref": "#/$defs/GoalHandoffCommandAvailability",
+      "disabled_reason_ref": "#/$defs/GoalHandoffDisabledReason",
+      "permission_ref": "#/$defs/GoalHandoffPermissionDecision",
+      "sole_handler": "handlers::goal_handoff::handoff_cancel",
+      "gui_consumers": [
+        "Goal/Assistant status",
+        "Project activity",
+        "Goal handoff modal",
+        "status bar",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.goal.handoff.retry": {
+      "request_ref": "#/$defs/GoalHandoffCommandRequest",
+      "result_ref": "#/$defs/GoalHandoffCommandResult",
+      "error_ref": "#/$defs/GoalHandoffCommandError",
+      "availability_ref": "#/$defs/GoalHandoffCommandAvailability",
+      "disabled_reason_ref": "#/$defs/GoalHandoffDisabledReason",
+      "permission_ref": "#/$defs/GoalHandoffPermissionDecision",
+      "sole_handler": "handlers::goal_handoff::handoff_retry",
+      "gui_consumers": [
+        "Goal/Assistant status",
+        "Project activity",
+        "Goal handoff modal",
+        "status bar",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.goal.pause": {
+      "request_ref": "#/$defs/GoalHandoffCommandRequest",
+      "result_ref": "#/$defs/GoalHandoffCommandResult",
+      "error_ref": "#/$defs/GoalHandoffCommandError",
+      "availability_ref": "#/$defs/GoalHandoffCommandAvailability",
+      "disabled_reason_ref": "#/$defs/GoalHandoffDisabledReason",
+      "permission_ref": "#/$defs/GoalHandoffPermissionDecision",
+      "sole_handler": "handlers::goal_handoff::pause",
+      "gui_consumers": [
+        "Goal/Assistant status",
+        "Project activity",
+        "Goal handoff modal",
+        "status bar",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.goal.resume_here": {
+      "request_ref": "#/$defs/GoalHandoffCommandRequest",
+      "result_ref": "#/$defs/GoalHandoffCommandResult",
+      "error_ref": "#/$defs/GoalHandoffCommandError",
+      "availability_ref": "#/$defs/GoalHandoffCommandAvailability",
+      "disabled_reason_ref": "#/$defs/GoalHandoffDisabledReason",
+      "permission_ref": "#/$defs/GoalHandoffPermissionDecision",
+      "sole_handler": "handlers::goal_handoff::resume_here",
+      "gui_consumers": [
+        "Goal/Assistant status",
+        "Project activity",
+        "Goal handoff modal",
+        "status bar",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    }
+  },
+  "x-claim-boundary": "static source contract only; no central registration, native handler, runtime, security attack, restart execution, or certification proof",
+  "$defs": {
+    "GoalHandoffNonSecretRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "not": {
+        "pattern": "(^|[._:/-])(raw|password|secret|access_token|refresh_token|api_key|cookie|authorization)([._:/-]|$)"
+      }
+    },
+    "GoalHandoffSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "GoalHandoffTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "GoalHandoffReturnContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "route_id",
+        "focus_target",
+        "invocation_token",
+        "return_generation"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "route_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "focus_target": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "GoalHandoffIntegrationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "central_registered",
+        "schema_bound",
+        "native_handler_bound",
+        "permission_route_bound",
+        "production_wired",
+        "receipt_or_admitted_event_bound"
+      ],
+      "properties": {
+        "central_registered": {
+          "type": "boolean"
+        },
+        "schema_bound": {
+          "type": "boolean"
+        },
+        "native_handler_bound": {
+          "type": "boolean"
+        },
+        "permission_route_bound": {
+          "type": "boolean"
+        },
+        "production_wired": {
+          "type": "boolean"
+        },
+        "receipt_or_admitted_event_bound": {
+          "type": "boolean"
+        }
+      }
+    },
+    "GoalHandoffCommandId": {
+      "type": "string",
+      "enum": [
+        "cmd.goal.checkpoint",
+        "cmd.goal.continue_on_host",
+        "cmd.goal.handoff.cancel",
+        "cmd.goal.handoff.retry",
+        "cmd.goal.pause",
+        "cmd.goal.resume_here"
+      ]
+    },
+    "GoalHandoffOperation": {
+      "type": "string",
+      "enum": [
+        "checkpoint",
+        "continue_on_host",
+        "handoff_cancel",
+        "handoff_retry",
+        "pause",
+        "resume_here"
+      ]
+    },
+    "GoalHandoffCommandPayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "checkpoint_id",
+            "source_snapshot_ref",
+            "artifact_manifest_ref",
+            "runtime_safe_point_ref",
+            "live_process_serialized"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.goal.checkpoint"
+            },
+            "checkpoint_id": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "source_snapshot_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "artifact_manifest_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "runtime_safe_point_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "live_process_serialized": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "checkpoint_ref",
+            "target_host_id",
+            "target_environment_id",
+            "compatibility_proof_ref",
+            "source_currentness_ref"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.goal.continue_on_host"
+            },
+            "checkpoint_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "target_host_id": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "target_environment_id": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "compatibility_proof_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "source_currentness_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "handoff_operation_id",
+            "cancellable_proof_ref",
+            "confirmation"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.goal.handoff.cancel"
+            },
+            "handoff_operation_id": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "cancellable_proof_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "confirmation": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "handoff_operation_id",
+            "failure_ref",
+            "retry_budget_ref",
+            "original_idempotency_key"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.goal.handoff.retry"
+            },
+            "handoff_operation_id": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "failure_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "retry_budget_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "original_idempotency_key": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "safe_point_policy_ref",
+            "pause_reason_ref",
+            "live_process_frozen"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.goal.pause"
+            },
+            "safe_point_policy_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "pause_reason_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "live_process_frozen": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "checkpoint_ref",
+            "reconstruction_proof_ref",
+            "current_host_id",
+            "worktree_currentness_ref"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.goal.resume_here"
+            },
+            "checkpoint_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "reconstruction_proof_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "current_host_id": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            "worktree_currentness_ref": {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            }
+          }
+        }
+      ]
+    },
+    "GoalHandoffCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "idempotency_key",
+        "goal_id",
+        "goal_run_id",
+        "project_id",
+        "source_location_id",
+        "current_host_id",
+        "expected_goal_generation",
+        "expected_topology_generation",
+        "expected_source_generation",
+        "permission_snapshot_ref",
+        "return_context",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.command_request.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffCommandRequest"
+        },
+        "command_id": {
+          "$ref": "#/$defs/GoalHandoffCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/GoalHandoffOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "goal_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "goal_run_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "project_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "current_host_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "expected_goal_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/GoalHandoffReturnContext"
+        },
+        "payload": {
+          "$ref": "#/$defs/GoalHandoffCommandPayload"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.checkpoint"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "checkpoint"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.checkpoint"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.continue_on_host"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "continue_on_host"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.continue_on_host"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.handoff.cancel"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "handoff_cancel"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.handoff.cancel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.handoff.retry"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "handoff_retry"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.handoff.retry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.pause"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "pause"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.pause"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.resume_here"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "resume_here"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.resume_here"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GoalHandoffCommandOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "changed",
+        "state",
+        "currentness",
+        "operation_receipt_ref",
+        "resulting_generation",
+        "restart_disposition",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/GoalHandoffCommandId"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "running",
+            "paused",
+            "completed",
+            "cancelled",
+            "rolled_back",
+            "blocked",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "conflicted",
+            "unknown"
+          ]
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "resulting_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restart_disposition": {
+          "enum": [
+            "not_applicable",
+            "resume",
+            "rollback",
+            "recovery_required"
+          ]
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "GoalHandoffCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "status",
+        "goal_id",
+        "goal_run_id",
+        "project_id",
+        "source_location_id",
+        "current_host_id",
+        "expected_goal_generation",
+        "expected_topology_generation",
+        "expected_source_generation",
+        "receipt_ref",
+        "observable_work_ref",
+        "return_context",
+        "event_effect_policy",
+        "output",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.command_result.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffCommandResult"
+        },
+        "command_id": {
+          "$ref": "#/$defs/GoalHandoffCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/GoalHandoffOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "no_change",
+            "blocked",
+            "cancelled",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "goal_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "goal_run_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "project_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "current_host_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "expected_goal_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "observable_work_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/GoalHandoffReturnContext"
+        },
+        "event_effect_policy": {
+          "const": "receipt_only_no_eventrecord_pending_event_authority"
+        },
+        "output": {
+          "$ref": "#/$defs/GoalHandoffCommandOutput"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/GoalHandoffTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.checkpoint"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "checkpoint"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.checkpoint"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.continue_on_host"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "continue_on_host"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.continue_on_host"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.handoff.cancel"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "handoff_cancel"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.handoff.cancel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.handoff.retry"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "handoff_retry"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.handoff.retry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.pause"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "pause"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.pause"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.goal.resume_here"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "resume_here"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.goal.resume_here"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GoalHandoffCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "code",
+        "retryability",
+        "safe_message",
+        "return_context",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.command_error.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffCommandError"
+        },
+        "command_id": {
+          "$ref": "#/$defs/GoalHandoffCommandId"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "code": {
+          "enum": [
+            "invalid_request",
+            "handler_unavailable",
+            "permission_denied",
+            "filesafe_denied",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_conflict",
+            "duplicate_conflict",
+            "plan_or_checkpoint_mismatch",
+            "recovery_required",
+            "internal_fail_closed"
+          ]
+        },
+        "retryability": {
+          "enum": [
+            "not_retryable",
+            "retry_after_state_change",
+            "retry_same_idempotent_operation",
+            "manual_recovery_required"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "return_context": {
+          "$ref": "#/$defs/GoalHandoffReturnContext"
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "GoalHandoffDisabledReason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "code",
+        "safe_message",
+        "blocking_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.disabled_reason.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffDisabledReason"
+        },
+        "command_id": {
+          "$ref": "#/$defs/GoalHandoffCommandId"
+        },
+        "code": {
+          "enum": [
+            "central_registration_missing",
+            "schema_binding_missing",
+            "handler_unavailable",
+            "permission_route_missing",
+            "production_wiring_missing",
+            "receipt_or_event_disposition_missing",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_in_progress",
+            "recovery_required",
+            "permission_denied",
+            "filesafe_denied"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "blocking_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/GoalHandoffNonSecretRef"
+          }
+        }
+      }
+    },
+    "GoalHandoffCommandAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "available",
+        "integration_evidence",
+        "disabled_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.availability.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffCommandAvailability"
+        },
+        "command_id": {
+          "$ref": "#/$defs/GoalHandoffCommandId"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "integration_evidence": {
+          "$ref": "#/$defs/GoalHandoffIntegrationEvidence"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/GoalHandoffDisabledReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "integration_evidence": {
+                "properties": {
+                  "central_registered": {
+                    "const": true
+                  },
+                  "schema_bound": {
+                    "const": true
+                  },
+                  "native_handler_bound": {
+                    "const": true
+                  },
+                  "permission_route_bound": {
+                    "const": true
+                  },
+                  "production_wired": {
+                    "const": true
+                  },
+                  "receipt_or_admitted_event_bound": {
+                    "const": true
+                  }
+                }
+              },
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/GoalHandoffDisabledReason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GoalHandoffPermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "permission_snapshot_ref",
+        "permission_class",
+        "decision",
+        "authority_widening",
+        "secret_material_exposed",
+        "reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.permission_decision.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffPermissionDecision"
+        },
+        "command_id": {
+          "$ref": "#/$defs/GoalHandoffCommandId"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "permission_class": {
+          "enum": [
+            "goal.control",
+            "goal.handoff"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/GoalHandoffNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "deny",
+                  "prompt_human"
+                ]
+              }
+            },
+            "required": [
+              "decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/GoalHandoffNonSecretRef"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GoalHandoffCommandRoundTrip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/GoalHandoffCommandRequest"
+        },
+        "result": {
+          "$ref": "#/$defs/GoalHandoffCommandResult"
+        }
+      },
+      "x-semantic-invariants": [
+        "request.command_id == result.command_id",
+        "request.command_instance_id == result.command_instance_id",
+        "request return_context is byte-identical to result return_context",
+        "result generations never regress"
+      ]
+    },
+    "GoalHandoffLocalActionId": {
+      "type": "string",
+      "enum": [
+        "ui.goal.handoff.open_details"
+      ]
+    },
+    "GoalHandoffLocalActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "expected_projection_generation",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.local_action_request.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffLocalActionRequest"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/GoalHandoffLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "expected_projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context": {
+          "$ref": "#/$defs/GoalHandoffReturnContext"
+        }
+      }
+    },
+    "GoalHandoffLocalActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "projection_generation",
+        "redacted",
+        "lazy",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "accessible_focus_target",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_handoff.local_action_result.v1"
+        },
+        "record_kind": {
+          "const": "GoalHandoffLocalActionResult"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/GoalHandoffLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted": {
+          "const": true
+        },
+        "lazy": {
+          "const": true
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "accessible_focus_target": {
+          "$ref": "#/$defs/GoalHandoffNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/GoalHandoffReturnContext"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/GoalHandoffCommandRequest"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffCommandResult"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffCommandError"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffCommandAvailability"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffDisabledReason"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffPermissionDecision"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffCommandRoundTrip"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffLocalActionRequest"
+    },
+    {
+      "$ref": "#/$defs/GoalHandoffLocalActionResult"
+    }
+  ]
+}

@@ -1,0 +1,728 @@
+{
+  "schema_id": "pm.section15_browser_program_contract_fixtures.v1",
+  "owner_schema": "Plans/section15_browser_program_contracts.schema.json",
+  "proof_boundary": "Schema fixture validity is static contract evidence only, not Browser runtime, security, race, migration, visual, performance, or empirical proof.",
+  "valid": [
+    {
+      "name": "compile_failure_is_source_spanned_and_no_effect",
+      "value": {
+        "schema_id": "pm.browser_program.compile_error.v1",
+        "record_kind": "browser_program_compile_error",
+        "compile_request_id": "compile-1",
+        "compile_status": "failed",
+        "no_effect": true,
+        "diagnostics": [
+          {
+            "code": "unknown_named_action",
+            "stage": "name",
+            "message": "Action name is not in the PM Browser Program API.",
+            "source_span": {"start_byte": 0, "end_byte": 7, "start_line": 1, "start_column": 1, "end_line": 1, "end_column": 8}
+          }
+        ],
+        "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "compiler_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "browser_program_api_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "capability_profile_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    },
+    {
+      "name": "typed_program_targets_only_ordinary_session",
+      "value": {
+        "schema_id": "pm.browser_program.program.v1",
+        "record_kind": "browser_program",
+        "program_id": "program-1",
+        "lineage": {
+          "project_id": "project-1",
+          "plan_id": "plan-1",
+          "goal_id": "goal-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "thread_id": "thread-1",
+          "agent_id": "agent-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "source_form": "pm_browser_script",
+        "compiler": {
+          "compiler_id": "pm_browser_program_compiler",
+          "compiler_version": "1.0.0",
+          "compiler_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "browser_program_api_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "capability_profile_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        },
+        "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ast": {
+          "ast_version": "1.0.0",
+          "actions": [
+            {
+              "action_id": "action-1",
+              "action_type": "navigate",
+              "source_span": {"start_byte": 0, "end_byte": 24, "start_line": 1, "start_column": 1, "end_line": 1, "end_column": 25},
+              "effect_class": "navigation",
+              "user_step_label": "Open the project preview",
+              "arguments": {"target_ref": "target-1"}
+            }
+          ],
+          "local_operators": [
+            {
+              "operator_id": "operator-1",
+              "operator": "count",
+              "input_refs": ["links"],
+              "output_name": "link_count",
+              "source_span": {"start_byte": 25, "end_byte": 38, "start_line": 2, "start_column": 1, "end_line": 2, "end_column": 14},
+              "limit": 1000
+            }
+          ],
+          "checkpoints": ["checkpoint-1"],
+          "ast_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "requested_execution_strategy": "automatic",
+        "effective_execution_strategy": "compiled_program",
+        "required_capabilities": ["browser.navigate", "browser.representation"],
+        "program_workspace_id": "program-workspace-1",
+        "expected_workspace_revision": 2,
+        "budgets": {
+          "max_actions": 100,
+          "max_segments": 10,
+          "max_wall_ms": 300000,
+          "max_local_compute_ms": 30000,
+          "max_output_bytes": 1048576,
+          "max_artifact_bytes": 104857600,
+          "max_memory_bytes": 268435456,
+          "max_representation_nodes": 20000,
+          "max_representation_bytes": 10485760
+        },
+        "result_mode": "compact",
+        "idempotency_key": "program-1-attempt-1"
+      }
+    },
+    {
+      "name": "workspace_revision_is_typed_and_not_a_host_directory",
+      "value": {
+        "schema_id": "pm.browser_program.workspace_revision.v1",
+        "record_kind": "program_workspace_revision",
+        "program_workspace_id": "program-workspace-1",
+        "expected_revision": 2,
+        "result_revision": 3,
+        "operation": "spill",
+        "values": [
+          {
+            "name": "large_table",
+            "value_kind": "spill_ref",
+            "schema_ref": "schema:browser-table:v1",
+            "byte_size": 8388608,
+            "value_ref": "artifact:program-workspace-spill:1"
+          }
+        ],
+        "artifact_refs": ["artifact:program-workspace-spill:1"],
+        "checkpoint_ref": "checkpoint:program-workspace:3",
+        "durable": true,
+        "host_directory_materialized": false,
+        "created_at_utc": "2026-08-31T12:00:00Z"
+      }
+    },
+    {
+      "name": "delta_query_is_exact_generation_and_budgeted",
+      "value": {
+        "schema_id": "pm.browser_program.representation_query.v1",
+        "record_kind": "representation_query",
+        "query_id": "representation-query-1",
+        "subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "representation_mode": "delta",
+        "base_representation_id": "representation-3",
+        "scope_roots": ["root-main"],
+        "detail_classes": ["accessibility", "interactive", "frames", "shadow", "layout", "action_refs"],
+        "operators": ["filter", "project", "limit", "count"],
+        "budget": {
+          "max_nodes": 20000,
+          "max_bytes": 10485760,
+          "max_time_ms": 5000,
+          "max_frames": 64,
+          "max_shadow_roots": 512,
+          "max_listener_records": 10000,
+          "max_style_records": 20000,
+          "max_layout_records": 20000
+        }
+      }
+    },
+    {
+      "name": "partial_representation_is_truthful",
+      "value": {
+        "schema_id": "pm.browser_program.representation_query_result.v1",
+        "record_kind": "representation_query_result",
+        "query_id": "representation-query-1",
+        "representation_id": "representation-4",
+        "subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "base_index_generation": 4,
+        "coverage": {
+          "status": "partial",
+          "nodes_indexed": 20000,
+          "frames_total": 4,
+          "frames_covered": 3,
+          "omission_codes": ["cross_origin_frame", "node_budget"],
+          "budget_exhausted": true,
+          "synthetic_id_collisions": 0
+        },
+        "result_schema_ref": "schema:page-representation:v1",
+        "result_ref": "artifact:representation:4",
+        "continuation": "continuation:representation:4:1",
+        "invalidated": false
+      }
+    },
+    {
+      "name": "unknown_effect_timeout_blocks_retry",
+      "value": {
+        "schema_id": "pm.browser_program.segment_receipt.v1",
+        "record_kind": "browser_program_segment_receipt",
+        "segment_id": "segment-4",
+        "program_id": "program-1",
+        "program_workspace_id": "program-workspace-1",
+        "expected_workspace_revision": 3,
+        "result_workspace_revision": 3,
+        "dependency_segment_ids": ["segment-3"],
+        "effect_range": "navigation",
+        "user_step_label": "Confirm the navigation result",
+        "idempotency_key": "program-1-segment-4",
+        "terminal_state": "timed_out_effect_state_unknown",
+        "retry_allowed": false,
+        "completed_action_ids": ["action-3"],
+        "unknown_effect_action_ids": ["action-4"],
+        "artifact_refs": ["artifact:segment-diagnostic:4"],
+        "capture_refs": ["capture:raw:4"],
+        "safe_next_action": "reconcile_effects",
+        "created_at_utc": "2026-08-31T12:01:00Z"
+      }
+    },
+    {
+      "name": "handoff_is_reconstructive_and_source_fenced",
+      "value": {
+        "schema_id": "pm.browser_program.handoff_receipt.v1",
+        "record_kind": "browser_handoff_receipt",
+        "handoff_id": "handoff-1",
+        "lineage": {
+          "project_id": "project-1",
+          "goal_id": "goal-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "source_subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "source_fence": {
+          "lease_id": "lease-1",
+          "lease_generation": 7,
+          "lease_epoch": 2,
+          "holder_id": "agent-1",
+          "page_generation": 4,
+          "last_sequence": 19
+        },
+        "source_fenced": true,
+        "checkpoint_ref": "checkpoint:program-workspace:3",
+        "finalized_capture_refs": ["capture:raw:4"],
+        "destination_home_server_id": "server-1",
+        "destination_execution_host_id": "host-2",
+        "destination_execution_environment_id": "environment-2",
+        "destination_browser_session_id": "browser-session-2",
+        "destination_browser_workspace_id": "browser-workspace-2",
+        "destination_page_generation": 1,
+        "reconstructed": true,
+        "live_process_migrated": false,
+        "unknown_effects": false,
+        "retry_allowed": true,
+        "terminal_state": "completed",
+        "created_at_utc": "2026-08-31T12:02:00Z"
+      }
+    },
+    {
+      "name": "routing_dimensions_are_orthogonal",
+      "value": {
+        "schema_id": "pm.browser_program.routing_decision.v1",
+        "record_kind": "browser_routing_decision",
+        "routing_decision_id": "routing-1",
+        "lineage": {
+          "project_id": "project-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "strategy": {"requested": "automatic", "effective": "compiled_program", "reason_code": "multi_action_local_efficiency"},
+        "runtime": {"requested": "pm_native_local", "effective": "pm_native_remote", "reason_code": "exact_environment_required"},
+        "source": {"requested": "authorized_private_browser", "effective": "authorized_private_browser", "reason_code": "localhost_project_preview"},
+        "visibility": {"requested": "visible_watchable", "effective": "visible_watchable", "reason_code": "user_requested"},
+        "capture": {"requested": "on_failure", "effective": "on_failure", "reason_code": "test_policy"},
+        "screenshot_model_attachment": "auto",
+        "permission_snapshot_ref": "permission:snapshot:browser:1",
+        "capture_policy_ref": "capture:policy:1",
+        "created_at_utc": "2026-08-31T12:03:00Z"
+      }
+    },
+    {
+      "name": "billable_external_adapter_closes_explicitly",
+      "value": {
+        "schema_id": "pm.browser_program.external_adapter_receipt.v1",
+        "record_kind": "external_browser_adapter_receipt",
+        "adapter_run_id": "adapter-run-1",
+        "adapter_id": "ego-optional-adapter",
+        "adapter_version": "1.0.0",
+        "adapter_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "lineage": {
+          "project_id": "project-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "allowlisted_environment_keys": ["LANG", "PM_ADAPTER_RUN_ID"],
+        "scoped_credential_refs": ["credential-lease:adapter:1"],
+        "private_runtime_ref": "runtime:private:adapter-run-1",
+        "ipc_schema_ref": "schema:browser-adapter-ipc:v1",
+        "input_budget_bytes": 1048576,
+        "output_budget_bytes": 1048576,
+        "artifact_budget_bytes": 104857600,
+        "process_tree_cancelled": false,
+        "stdout_path_artifact_authority": false,
+        "billable_session": true,
+        "billable_session_closed": true,
+        "cost_receipt_ref": "receipt:adapter-cost:1",
+        "terminal_state": "completed",
+        "created_at_utc": "2026-08-31T12:04:00Z"
+      }
+    },
+    {
+      "name": "observable_work_progress_is_not_a_verdict",
+      "value": {
+        "schema_id": "pm.browser_program.observable_work_projection.v1",
+        "record_kind": "browser_observable_work_projection",
+        "observable_work_id": "observable-browser-1",
+        "program_id": "program-1",
+        "phase": "segment",
+        "state": "degraded",
+        "progress_numerator": 4,
+        "progress_denominator": 10,
+        "progress_is_verdict": false,
+        "requested_strategy": "automatic",
+        "effective_strategy": "compiled_program",
+        "current_user_step_label": "Check the project preview",
+        "blocked_reason_code": null,
+        "artifact_refs": ["artifact:program-log:1"],
+        "capture_refs": ["capture:raw:4"],
+        "safe_next_actions": ["inspect", "pause", "cancel"],
+        "updated_at_utc": "2026-08-31T12:05:00Z"
+      }
+    },
+    {
+      "name": "browser_command_request_01_workspace_create",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-01","idempotency_key":"browser-idem-01","scope":{"command_id":"cmd.browser.workspace.create","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","workspace_policy_ref":"policy:browser-workspace:1","capability_profile_id":"browser-capability-standard"},"permission_snapshot_ref":"permission:browser:01","filesafe_decision_ref":"filesafe:browser:01","requested_at_utc":"2026-08-31T13:00:01Z"}
+    },
+    {
+      "name": "browser_command_request_02_workspace_close",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-02","idempotency_key":"browser-idem-02","scope":{"command_id":"cmd.browser.workspace.close","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","expected_workspace_revision":7,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"}},"permission_snapshot_ref":"permission:browser:02","filesafe_decision_ref":"filesafe:browser:02","requested_at_utc":"2026-08-31T13:00:02Z"}
+    },
+    {
+      "name": "browser_command_request_03_workspace_reset",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-03","idempotency_key":"browser-idem-03","scope":{"command_id":"cmd.browser.workspace.reset","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","expected_workspace_revision":7,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"}},"permission_snapshot_ref":"permission:browser:03","filesafe_decision_ref":"filesafe:browser:03","requested_at_utc":"2026-08-31T13:00:03Z"}
+    },
+    {
+      "name": "browser_command_request_04_page_create",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-04","idempotency_key":"browser-idem-04","scope":{"command_id":"cmd.browser.page.create","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","expected_workspace_revision":7,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"}},"permission_snapshot_ref":"permission:browser:04","filesafe_decision_ref":"filesafe:browser:04","requested_at_utc":"2026-08-31T13:00:04Z"}
+    },
+    {
+      "name": "browser_command_request_05_page_close",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-05","idempotency_key":"browser-idem-05","scope":{"command_id":"cmd.browser.page.close","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"}},"permission_snapshot_ref":"permission:browser:05","filesafe_decision_ref":"filesafe:browser:05","requested_at_utc":"2026-08-31T13:00:05Z"}
+    },
+    {
+      "name": "browser_command_request_06_page_activate",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-06","idempotency_key":"browser-idem-06","scope":{"command_id":"cmd.browser.page.activate","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12},"permission_snapshot_ref":"permission:browser:06","filesafe_decision_ref":"filesafe:browser:06","requested_at_utc":"2026-08-31T13:00:06Z"}
+    },
+    {
+      "name": "browser_command_request_07_page_evaluate",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-07","idempotency_key":"browser-idem-07","scope":{"command_id":"cmd.browser.page.evaluate","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"},"named_action":"click","named_action_arguments_ref":"args:browser-action:07"},"permission_snapshot_ref":"permission:browser:07","filesafe_decision_ref":"filesafe:browser:07","requested_at_utc":"2026-08-31T13:00:07Z"}
+    },
+    {
+      "name": "browser_command_request_08_representation_capture",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-08","idempotency_key":"browser-idem-08","scope":{"command_id":"cmd.browser.page.representation.capture","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"representation_mode":"standard","detail_classes":["accessibility","interactive"],"representation_budget":{"max_nodes":1000,"max_bytes":1000000,"max_time_ms":1000,"max_frames":8,"max_shadow_roots":16,"max_listener_records":100,"max_style_records":100,"max_layout_records":100}},"permission_snapshot_ref":"permission:browser:08","filesafe_decision_ref":"filesafe:browser:08","requested_at_utc":"2026-08-31T13:00:08Z"}
+    },
+    {
+      "name": "browser_command_request_09_representation_delta",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-09","idempotency_key":"browser-idem-09","scope":{"command_id":"cmd.browser.page.representation.delta","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"base_representation_id":"representation-11","representation_mode":"delta","representation_budget":{"max_nodes":1000,"max_bytes":1000000,"max_time_ms":1000,"max_frames":8,"max_shadow_roots":16,"max_listener_records":100,"max_style_records":100,"max_layout_records":100}},"permission_snapshot_ref":"permission:browser:09","filesafe_decision_ref":"filesafe:browser:09","requested_at_utc":"2026-08-31T13:00:09Z"}
+    },
+    {
+      "name": "browser_command_request_10_representation_query",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-10","idempotency_key":"browser-idem-10","scope":{"command_id":"cmd.browser.page.representation.query","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"representation_id":"representation-12","query_operators":["filter","limit"],"representation_budget":{"max_nodes":1000,"max_bytes":1000000,"max_time_ms":1000,"max_frames":8,"max_shadow_roots":16,"max_listener_records":100,"max_style_records":100,"max_layout_records":100}},"permission_snapshot_ref":"permission:browser:10","filesafe_decision_ref":"filesafe:browser:10","requested_at_utc":"2026-08-31T13:00:10Z"}
+    },
+    {
+      "name": "browser_command_request_11_program_run",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-11","idempotency_key":"browser-idem-11","scope":{"command_id":"cmd.browser.program.run","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"},"browser_program_id":"browser-program-cmd","browser_program_ref":"record:browser-program:cmd","program_workspace_id":"program-workspace-cmd","expected_program_workspace_revision":3,"capability_profile_id":"browser-capability-advanced"},"permission_snapshot_ref":"permission:browser:11","filesafe_decision_ref":"filesafe:browser:11","requested_at_utc":"2026-08-31T13:00:11Z"}
+    },
+    {
+      "name": "browser_command_request_12_program_pause",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-12","idempotency_key":"browser-idem-12","scope":{"command_id":"cmd.browser.program.pause","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"},"browser_program_id":"browser-program-cmd","program_workspace_id":"program-workspace-cmd","expected_program_workspace_revision":3},"permission_snapshot_ref":"permission:browser:12","filesafe_decision_ref":"filesafe:browser:12","requested_at_utc":"2026-08-31T13:00:12Z"}
+    },
+    {
+      "name": "browser_command_request_13_program_resume",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-13","idempotency_key":"browser-idem-13","scope":{"command_id":"cmd.browser.program.resume","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"},"browser_program_id":"browser-program-cmd","program_workspace_id":"program-workspace-cmd","expected_program_workspace_revision":3,"reconciled_checkpoint_ref":"checkpoint:browser-program:3","effect_state":"effects_reconciled"},"permission_snapshot_ref":"permission:browser:13","filesafe_decision_ref":"filesafe:browser:13","requested_at_utc":"2026-08-31T13:00:13Z"}
+    },
+    {
+      "name": "browser_command_request_14_program_cancel",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-14","idempotency_key":"browser-idem-14","scope":{"command_id":"cmd.browser.program.cancel","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"},"browser_program_id":"browser-program-cmd","program_workspace_id":"program-workspace-cmd","expected_program_workspace_revision":3},"permission_snapshot_ref":"permission:browser:14","filesafe_decision_ref":"filesafe:browser:14","requested_at_utc":"2026-08-31T13:00:14Z"}
+    },
+    {
+      "name": "browser_command_request_15_program_inspect",
+      "definition": "browser_command_request",
+      "value": {"schema_id":"pm.browser_program.command_request.v1","record_kind":"browser_command_request","command_instance_id":"browser-command-15","idempotency_key":"browser-idem-15","scope":{"command_id":"cmd.browser.program.inspect","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_program_id":"browser-program-cmd","program_workspace_id":"program-workspace-cmd","expected_program_workspace_revision":3},"permission_snapshot_ref":"permission:browser:15","filesafe_decision_ref":"filesafe:browser:15","requested_at_utc":"2026-08-31T13:00:15Z"}
+    },
+    {
+      "name": "browser_command_result_is_generic_and_effect_truthful",
+      "definition": "browser_command_result",
+      "value": {"schema_id":"pm.browser_program.command_result.v1","record_kind":"browser_command_result","command_instance_id":"browser-result-command-1","scope":{"command_id":"cmd.browser.workspace.create","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","workspace_policy_ref":"policy:browser-workspace:1","capability_profile_id":"browser-capability-standard"},"outcome":"succeeded","effect_state":"effects_reconciled","result_refs":["receipt:browser-workspace:create:1"],"dispatch_receipt_ref":null,"completed_at_utc":"2026-08-31T13:10:00Z"}
+    },
+    {
+      "name": "browser_command_error_blocks_unknown_effect_retry",
+      "definition": "browser_command_error",
+      "value": {"schema_id":"pm.browser_program.command_error.v1","record_kind":"browser_command_error","command_instance_id":"browser-error-command-1","scope":{"command_id":"cmd.browser.page.evaluate","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_workspace_id":"browser-workspace-cmd","browser_page_id":"browser-page-cmd","page_generation":12,"controller_authority":{"lease_id":"browser-lease-1","lease_generation":4,"lease_epoch":2,"holder_id":"agent-cmd"},"named_action":"click","named_action_arguments_ref":"args:browser-action:07"},"error_code":"effect_unknown","effect_state":"effect_unknown","retry_allowed":false,"safe_next_actions":["inspect","reconcile_effects"],"occurred_at_utc":"2026-08-31T13:11:00Z"}
+    },
+    {
+      "name": "browser_command_disabled_reason_is_typed",
+      "definition": "browser_command_disabled_reason",
+      "value": {"schema_id":"pm.browser_program.command_disabled_reason.v1","record_kind":"browser_command_disabled_reason","scope":{"command_id":"cmd.browser.program.inspect","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","browser_program_id":"browser-program-cmd","program_workspace_id":"program-workspace-cmd","expected_program_workspace_revision":3},"reason_code":"runtime_unavailable","blocking_ref":"runtime:browser:unavailable","safe_next_actions":["inspect"],"observed_at_utc":"2026-08-31T13:12:00Z"}
+    },
+    {
+      "name": "browser_command_availability_keeps_disabled_reason",
+      "definition": "browser_command_availability",
+      "value": {"schema_id":"pm.browser_program.command_availability.v1","record_kind":"browser_command_availability","scope":{"command_id":"cmd.browser.workspace.create","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","workspace_policy_ref":"policy:browser-workspace:1","capability_profile_id":"browser-capability-standard"},"available":false,"effective_capability_profile_id":"browser-capability-unavailable","disabled_reason":{"schema_id":"pm.browser_program.command_disabled_reason.v1","record_kind":"browser_command_disabled_reason","scope":{"command_id":"cmd.browser.workspace.create","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","workspace_policy_ref":"policy:browser-workspace:1","capability_profile_id":"browser-capability-standard"},"reason_code":"runtime_unavailable","blocking_ref":"runtime:browser:unavailable","safe_next_actions":["inspect"],"observed_at_utc":"2026-08-31T13:13:00Z"},"checked_at_utc":"2026-08-31T13:13:00Z"}
+    }
+  ],
+  "invalid": [
+    {
+      "name": "legacy_aggregate_payload_schema_id_requires_explicit_migration",
+      "value": {
+        "schema_id": "pm.section15_browser_program_contracts.schema.v1",
+        "record_kind": "browser_program_compile_error",
+        "compile_request_id": "compile-legacy-schema-id",
+        "compile_status": "failed",
+        "no_effect": true,
+        "diagnostics": [
+          {
+            "code": "unknown_named_action",
+            "stage": "name",
+            "message": "Action name is not in the PM Browser Program API.",
+            "source_span": {"start_byte": 0, "end_byte": 7, "start_line": 1, "start_column": 1, "end_line": 1, "end_column": 8}
+          }
+        ],
+        "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "compiler_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "browser_program_api_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "capability_profile_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    },
+    {
+      "name": "record_kind_cannot_use_another_browser_record_schema_id",
+      "value": {
+        "schema_id": "pm.browser_program.result.v1",
+        "record_kind": "browser_program_compile_error",
+        "compile_request_id": "compile-mismatched-schema-id",
+        "compile_status": "failed",
+        "no_effect": true,
+        "diagnostics": [
+          {
+            "code": "unknown_named_action",
+            "stage": "name",
+            "message": "Action name is not in the PM Browser Program API.",
+            "source_span": {"start_byte": 0, "end_byte": 7, "start_line": 1, "start_column": 1, "end_line": 1, "end_column": 8}
+          }
+        ],
+        "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "compiler_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "browser_program_api_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "capability_profile_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    },
+    {
+      "name": "adapter_credential_refs_cannot_contain_raw_secret_material",
+      "value": {
+        "schema_id": "pm.browser_program.external_adapter_receipt.v1",
+        "record_kind": "external_browser_adapter_receipt",
+        "adapter_run_id": "adapter-bad-raw-secret",
+        "adapter_id": "adapter-1",
+        "adapter_version": "1.0.0",
+        "adapter_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "lineage": {
+          "project_id": "project-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "allowlisted_environment_keys": ["HTTP_PROXY"],
+        "scoped_credential_refs": ["token=raw-secret-material-forbidden"],
+        "private_runtime_ref": "runtime:private:adapter-bad-raw-secret",
+        "ipc_schema_ref": "schema:browser-adapter-ipc:v1",
+        "input_budget_bytes": 1048576,
+        "output_budget_bytes": 1048576,
+        "artifact_budget_bytes": 10485760,
+        "process_tree_cancelled": true,
+        "stdout_path_artifact_authority": false,
+        "billable_session": true,
+        "billable_session_closed": true,
+        "terminal_state": "completed",
+        "created_at_utc": "2026-08-31T12:04:00Z"
+      }
+    },
+    {
+      "name": "protected_auth_cannot_be_program_subject",
+      "value": {
+        "schema_id": "pm.browser_program.program.v1",
+        "record_kind": "browser_program",
+        "program_id": "program-bad-auth",
+        "lineage": {
+          "project_id": "project-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "subject": {
+          "browser_session_id": "auth-browser-session-1",
+          "browser_workspace_id": "auth-workspace-1",
+          "browser_page_id": "auth-page-1",
+          "page_generation": 1,
+          "session_security_class": "protected_auth"
+        },
+        "source_form": "validated_ast"
+      }
+    },
+    {
+      "name": "compile_request_cannot_add_host_interpreter",
+      "value": {
+        "schema_id": "pm.browser_program.compile_request.v1",
+        "record_kind": "browser_program_compile_request",
+        "compile_request_id": "compile-bad-host",
+        "host_interpreter": "python"
+      }
+    },
+    {
+      "name": "delta_query_requires_base_representation",
+      "value": {
+        "schema_id": "pm.browser_program.representation_query.v1",
+        "record_kind": "representation_query",
+        "query_id": "representation-query-bad",
+        "subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "representation_mode": "delta",
+        "scope_roots": [],
+        "detail_classes": [],
+        "operators": [],
+        "budget": {
+          "max_nodes": 100,
+          "max_bytes": 10000,
+          "max_time_ms": 100,
+          "max_frames": 1,
+          "max_shadow_roots": 0,
+          "max_listener_records": 0,
+          "max_style_records": 0,
+          "max_layout_records": 0
+        }
+      }
+    },
+    {
+      "name": "unknown_effect_timeout_cannot_retry",
+      "value": {
+        "schema_id": "pm.browser_program.segment_receipt.v1",
+        "record_kind": "browser_program_segment_receipt",
+        "segment_id": "segment-bad-retry",
+        "program_id": "program-1",
+        "program_workspace_id": "program-workspace-1",
+        "expected_workspace_revision": 3,
+        "result_workspace_revision": 3,
+        "dependency_segment_ids": [],
+        "effect_range": "navigation",
+        "user_step_label": "Retry the unknown navigation",
+        "idempotency_key": "bad-retry",
+        "terminal_state": "timed_out_effect_state_unknown",
+        "retry_allowed": true,
+        "completed_action_ids": [],
+        "unknown_effect_action_ids": ["action-4"],
+        "safe_next_action": "retry",
+        "created_at_utc": "2026-08-31T12:06:00Z"
+      }
+    },
+    {
+      "name": "handoff_cannot_claim_live_process_migration",
+      "value": {
+        "schema_id": "pm.browser_program.handoff_receipt.v1",
+        "record_kind": "browser_handoff_receipt",
+        "handoff_id": "handoff-bad-live",
+        "source_fenced": true,
+        "reconstructed": true,
+        "live_process_migrated": true
+      }
+    },
+    {
+      "name": "billable_adapter_cannot_remain_open",
+      "value": {
+        "schema_id": "pm.browser_program.external_adapter_receipt.v1",
+        "record_kind": "external_browser_adapter_receipt",
+        "adapter_run_id": "adapter-bad-open",
+        "adapter_id": "adapter-1",
+        "adapter_version": "1.0.0",
+        "adapter_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "lineage": {
+          "project_id": "project-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "allowlisted_environment_keys": [],
+        "scoped_credential_refs": [],
+        "private_runtime_ref": "runtime:private:adapter-bad-open",
+        "ipc_schema_ref": "schema:browser-adapter-ipc:v1",
+        "input_budget_bytes": 1,
+        "output_budget_bytes": 1,
+        "artifact_budget_bytes": 1,
+        "process_tree_cancelled": false,
+        "stdout_path_artifact_authority": false,
+        "billable_session": true,
+        "billable_session_closed": false,
+        "terminal_state": "failed",
+        "created_at_utc": "2026-08-31T12:07:00Z"
+      }
+    },
+    {
+      "name": "observable_work_cannot_claim_verdict",
+      "value": {
+        "schema_id": "pm.browser_program.observable_work_projection.v1",
+        "record_kind": "browser_observable_work_projection",
+        "observable_work_id": "observable-bad-verdict",
+        "program_id": "program-1",
+        "phase": "terminal",
+        "state": "completed",
+        "progress_numerator": 10,
+        "progress_denominator": 10,
+        "progress_is_verdict": true,
+        "requested_strategy": "automatic",
+        "effective_strategy": "compiled_program",
+        "blocked_reason_code": null,
+        "safe_next_actions": ["none"],
+        "updated_at_utc": "2026-08-31T12:08:00Z"
+      }
+    },
+    {
+      "name": "playwright_action_is_not_a_named_browser_action",
+      "value": {
+        "schema_id": "pm.browser_program.compile_result.v1",
+        "record_kind": "browser_program_compile_result",
+        "compile_request_id": "compile-bad-playwright",
+        "compile_status": "compiled",
+        "no_effect_before_execution": true,
+        "program_id": "program-bad-playwright",
+        "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "compiler_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "browser_program_api_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "capability_profile_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "ast_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ast": {
+          "ast_version": "1.0.0",
+          "actions": [
+            {
+              "action_id": "action-bad",
+              "action_type": "playwright_evaluate",
+              "source_span": {"start_byte": 0, "end_byte": 1, "start_line": 1, "start_column": 1, "end_line": 1, "end_column": 2},
+              "effect_class": "page_mutation",
+              "user_step_label": "Run external page code"
+            }
+          ],
+          "local_operators": [],
+          "checkpoints": [],
+          "ast_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      }
+    },
+    {"name":"browser_command_negative_01_workspace_create_missing_policy","definition":"browser_command_request","base_valid":"browser_command_request_01_workspace_create","remove":["scope.workspace_policy_ref"]},
+    {"name":"browser_command_negative_02_workspace_close_missing_controller","definition":"browser_command_request","base_valid":"browser_command_request_02_workspace_close","remove":["scope.controller_authority"]},
+    {"name":"browser_command_negative_03_workspace_reset_missing_controller","definition":"browser_command_request","base_valid":"browser_command_request_03_workspace_reset","remove":["scope.controller_authority"]},
+    {"name":"browser_command_negative_04_page_create_missing_workspace_revision","definition":"browser_command_request","base_valid":"browser_command_request_04_page_create","remove":["scope.expected_workspace_revision"]},
+    {"name":"browser_command_negative_05_page_close_missing_generation","definition":"browser_command_request","base_valid":"browser_command_request_05_page_close","remove":["scope.page_generation"]},
+    {"name":"browser_command_negative_06_page_activate_missing_generation","definition":"browser_command_request","base_valid":"browser_command_request_06_page_activate","remove":["scope.page_generation"]},
+    {"name":"browser_command_negative_07_page_evaluate_missing_named_action","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","remove":["scope.named_action"]},
+    {"name":"browser_command_negative_08_representation_capture_missing_budget","definition":"browser_command_request","base_valid":"browser_command_request_08_representation_capture","remove":["scope.representation_budget"]},
+    {"name":"browser_command_negative_09_representation_delta_missing_base","definition":"browser_command_request","base_valid":"browser_command_request_09_representation_delta","remove":["scope.base_representation_id"]},
+    {"name":"browser_command_negative_10_representation_query_missing_identity","definition":"browser_command_request","base_valid":"browser_command_request_10_representation_query","remove":["scope.representation_id"]},
+    {"name":"browser_command_negative_11_program_run_missing_typed_program_ref","definition":"browser_command_request","base_valid":"browser_command_request_11_program_run","remove":["scope.browser_program_ref"]},
+    {"name":"browser_command_negative_12_program_pause_missing_program_identity","definition":"browser_command_request","base_valid":"browser_command_request_12_program_pause","remove":["scope.browser_program_id"]},
+    {"name":"browser_command_negative_13_program_resume_missing_reconciled_checkpoint","definition":"browser_command_request","base_valid":"browser_command_request_13_program_resume","remove":["scope.reconciled_checkpoint_ref"]},
+    {"name":"browser_command_negative_14_program_cancel_missing_controller","definition":"browser_command_request","base_valid":"browser_command_request_14_program_cancel","remove":["scope.controller_authority"]},
+    {"name":"browser_command_negative_15_program_inspect_missing_program_identity","definition":"browser_command_request","base_valid":"browser_command_request_15_program_inspect","remove":["scope.browser_program_id"]},
+    {"name":"browser_command_protected_auth_class_is_structurally_untargetable","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.session_security_class":"protected_auth"}},
+    {"name":"browser_command_auth_session_identity_is_structurally_untargetable","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.browser_session_id":"AuthBrowserSession-1"}},
+    {"name":"browser_command_cannot_carry_arbitrary_javascript","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.javascript":"document.body.innerHTML"}},
+    {"name":"browser_command_cannot_carry_raw_protocol","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.raw_protocol_method":"Runtime.evaluate"}},
+    {"name":"browser_program_named_action_arguments_cannot_carry_javascript","definition":"browser_program","base_valid":"typed_program_targets_only_ordinary_session","patch":{"ast.actions.0.arguments.javascript":"document.body.innerHTML"}},
+    {"name":"browser_program_named_action_arguments_cannot_carry_raw_protocol","definition":"browser_program","base_valid":"typed_program_targets_only_ordinary_session","patch":{"ast.actions.0.arguments.raw_protocol_method":"Runtime.evaluate"}},
+    {"name":"browser_command_cannot_use_playwright_namespace","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.command_id":"cmd.playwright.evaluate"}},
+    {"name":"browser_command_legacy_run_code_is_not_primary","definition":"browser_command_request","base_valid":"browser_command_request_11_program_run","patch":{"scope.command_id":"cmd.browser.run_code"}},
+    {"name":"browser_command_stale_negative_generation_fails","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.page_generation":-1}},
+    {"name":"browser_command_stale_controller_generation_fails","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.controller_authority.lease_generation":-1}},
+    {"name":"browser_command_available_state_cannot_keep_disabled_reason","definition":"browser_command_availability","base_valid":"browser_command_availability_keeps_disabled_reason","patch":{"available":true}},
+    {"name":"browser_command_effect_unknown_error_cannot_retry","definition":"browser_command_error","base_valid":"browser_command_error_blocks_unknown_effect_retry","patch":{"retry_allowed":true,"safe_next_actions":["retry"]}}
+  ]
+}

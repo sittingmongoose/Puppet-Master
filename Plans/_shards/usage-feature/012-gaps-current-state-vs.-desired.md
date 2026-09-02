@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L433-L645
 
-Source SHA256: `8d8c2355529ad6e6cc8e01415a8f5e4861f9c8df6b6ff295268f45b5ecbf1164`
+Source SHA256: `4dea9175dadfaebb338bcd2957d53fed33cd25c26d350a63f5169c643f8e78c0`
 
 ---
 
@@ -93,7 +93,7 @@ History inspector deref policy is on-demand only, never eager. History rows comb
 ### Canonical UsageRecord fields
 - For gap-001 lineage, this section is also the usage-side partial-transfer anchor for ``### Unified `UsageRecord` schema expectations`` and the queue-escaped alias ``### Unified \`UsageRecord\` schema expectations``; both resolve here rather than creating a second schema section.
 - UF-085 is the implementation-ready UsageRecord contract. Older field names in this section are compatibility, import, export, or display aliases unless they are repeated by UF-085.
-- `usage_id` resolves to `usage_record_id` or `usage_event_ref` according to the importing source; UI routes prefer `usage_event_ref` normalized through `object_kind = usage_event` and `object_id`.
+- `usage_id` resolves to `usage_record_id` or `usage_event_ref` according to the importing source; event-primary UI routes normalize `usage_event_ref` through `object_kind = usage_event`, while a PMConcept7 Ledger attempt row normalizes `attempt_id` through `object_kind = usage_attempt` and keeps the event ref as correlation.
 - `input_tokens` resolves to `input_total`; `output_tokens` resolves to `output_total`; older `cache_read_tokens`, `cached_input_tokens`, and `cache_creation_input_tokens` aliases resolve to `cache_read`, `cache_write`, `cache_write_1h`, or `cache_write_ttl` only when the provider mapper states the TTL and inclusive/exclusive semantics.
 - `cost_usd` is display or migration material only. Canonical cost authority uses `cost_microdollars`, provider minor units, currency, cost_status, pricing_snapshot_id/version/date/source, and custom-provider price row refs where applicable.
 - `usage_source_kind` remains source-lineage vocabulary and maps to UF-085 `source_class`, `source_confidence`, and `source_authority`; it does not replace the closed source classes `provider_reported`, `provider_header`, `cli_reported`, `local_estimated`, `pricing_estimated`, and `unknown`.

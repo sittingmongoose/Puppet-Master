@@ -117,6 +117,12 @@ async function newPage(opts = {}) {
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') consoleNoise.push(m.type() + ': ' + m.text()); });
   p.on('pageerror', e => consoleNoise.push('pageerror: ' + e.message));
   await p.goto('file://' + FILE);
+  /* Playwright keeps only one page frontmost; a backgrounded page gets its
+     rAF throttled to ~1Hz and its intervals coalesced, which starves the
+     500ms work tick and every in-page rAF trace. Measured here: a streaming
+     panel frozen at one row for 7s on a background page, five rows in the
+     same window once fronted. */
+  await p.bringToFront();
   await p.waitForFunction(() => window.PM56_DEMO, null, { timeout: 20000 });
   return p;
 }
@@ -137,7 +143,13 @@ async function setEditorPct(page, pct) {
 }
 async function orbit(page, step = 7) {
   await page.evaluate(s => { window.PM56_DEMO.setVariant(2, 1); window.PM56_DEMO.setWorkStep(s); }, step);
-  await page.waitForTimeout(620);
+  /* 950ms, not 620: a scrub mounts every spawned node at once and the ring
+     entrance is 360ms plus a 40ms-per-node stagger (capped at 8), so a 620ms
+     wait screenshotted nodes mid-flight and read flat card background at
+     their final rects. */
+  await page.waitForTimeout(950);
+  await page.evaluate(() => { const st = document.querySelector('.orbit-stage'); if (st) st.scrollIntoView({ block: 'center', behavior: 'instant' }); });
+  await page.waitForTimeout(120);
 }
 
 const page = await newPage();
@@ -186,7 +198,11 @@ await safe('Shared trail: painted stroke is over 1px in every take that uses it'
 
 await safe('Shared trail: the stroke reaches full colour in painted pixels', async () => {
   await page.evaluate(() => { window.PM56_DEMO.setVariant(2, 3); window.PM56_DEMO.setWorkStep(6); });
-  await page.waitForTimeout(520);
+  await page.waitForTimeout(700);
+  /* The +1px type pass grew everything above the card; off-viewport crops
+     read as flat background, which says nothing about the disc. */
+  await page.evaluate(() => { const c = document.querySelector('.working-card'); if (c) c.scrollIntoView({ block: 'center', behavior: 'instant' }); });
+  await page.waitForTimeout(160);
   for (const [which, sel] of [['current', '.wa-disc.current'], ['resting', '.wa-disc.done']]) {
     const box = await page.locator(sel).first().boundingBox();
     if (!box) { bad(which + ' disc not found'); continue; }
@@ -212,6 +228,7 @@ await safe('Shared trail: the track scrolls instead of clipping', async () => {
   /* Force a genuinely overflowing trail and prove every disc is reachable. */
   const reach = await page.evaluate(async () => {
     const t = document.querySelector('.wa-track');
+    t.scrollIntoView({ block: 'center', behavior: 'instant' });
     t.style.maxWidth = '90px';
     /* scroll-behavior:smooth means scrollLeft does NOT land in one frame — the
        first version of this probe read it one rAF later, saw 0, and reported a
@@ -272,6 +289,7 @@ await safe('Orbit: every node hit-tests to itself and paints', async () => {
     return {
       count: nodes.length,
       steps: window.PM56_DATA ? window.PM56_DATA.workSteps.length : null,
+      spawned: window.PM56_DEMO.getState().work.step + 1,
       ringPE: nodes.length ? getComputedStyle(document.querySelector('.orbit-ring')).pointerEvents : null,
       hits: nodes.map(n => { const b = n.getBoundingClientRect(); const el = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return n === el || n.contains(el); }),
       actions: nodes.map(n => n.dataset.action),
@@ -279,7 +297,7 @@ await safe('Orbit: every node hit-tests to itself and paints', async () => {
       tags: nodes.map(n => n.tagName)
     };
   });
-  check('a node exists for every work step', m.count > 0 && (m.steps == null || m.count === m.steps), m);
+  check('a node exists for every STARTED subject — the ring grows, it is never pre-built', m.count > 0 && m.count === m.spawned && (m.steps == null || m.count < m.steps), m);
   check('all nodes hit-test to themselves', m.count > 0 && m.hits.every(Boolean), { hits: m.hits });
   check('every node carries orbit-open-phase', m.count > 0 && m.actions.every(a => a === 'orbit-open-phase'), m.actions);
   check('nodes are real buttons with accessible names', m.count > 0 && m.tags.every(t => t === 'BUTTON') && m.labelled, { tags: m.tags && m.tags[0], labelled: m.labelled });
@@ -322,28 +340,37 @@ await safe('Orbit: transform carries no accidental delay', async () => {
 /* =====================================================================
    4 — collapsed / expanded, and the transition in both directions
    ===================================================================== */
-await safe('Orbit: collapsed state is the centred circle with no panel', async () => {
+await safe('Orbit: the live stage is ALWAYS open — dial left, panel visible, no collapse', async () => {
+  await setEditorPct(page, 26);
+  await page.waitForTimeout(400);
   await orbit(page, 7);
-  await page.evaluate(() => { const b = document.querySelector('[data-action="orbit-collapse"]'); if (b) b.click(); });
-  await page.waitForTimeout(620);
   const m = await page.evaluate(() => {
-    const st = document.querySelector('.orbit-stage'), p = st.querySelector('.orbit-panel'), d = st.querySelector('.orbit-dial');
-    const sr = st.getBoundingClientRect(), pr = p.getBoundingClientRect(), dr = d.getBoundingClientRect();
-    const el = document.elementFromPoint(sr.left + sr.width / 2, dr.top + dr.height / 2);
+    const card = document.querySelector('.working-variant-1');
+    const st = card.querySelector('.orbit-stage'), p = st.querySelector('.orbit-panel'), d = st.querySelector('.orbit-dial');
+    const pr = p.getBoundingClientRect(), dr = d.getBoundingClientRect();
+    const pin = st.querySelector('.orbit-panel-in');
     return {
-      open: st.dataset.orbitOpen,
-      panelW: +pr.width.toFixed(2), panelH: +pr.height.toFixed(2),
-      dialOffCentre: +Math.abs((dr.left + dr.width / 2) - (sr.left + sr.width / 2)).toFixed(2),
-      centreIsCore: !!(el && el.closest('.orbit-core')),
-      panelHasZeroArea: pr.width < 1 || pr.height < 1
+      open: st.dataset.orbitOpen, isOpen: st.classList.contains('is-open'),
+      panelArea: +(pr.width * pr.height).toFixed(0),
+      pinOpacity: getComputedStyle(pin).opacity,
+      panelBesideDial: pr.left >= dr.right - 8,
+      liveClose: !!st.querySelector('.orbit-close'),
+      headStrong: card.querySelector('.working-head strong').textContent,
+      arc: !!card.querySelector('.orbit-arc'), pct: !!card.querySelector('.orbit-core-pct'),
+      receipt: !!card.querySelector('.work-receipt'),
+      caption: (card.querySelector('.working-head .orbit-caption') || {}).textContent || null,
+      captionUnderDial: !!st.parentElement.querySelector(':scope > .orbit-caption')
     };
   });
-  check('collapsed: the panel occupies no area', m.open === '0' && m.panelHasZeroArea, m);
-  check('collapsed: the circle is centred in the stage (<=2px)', m.dialOffCentre <= 2, m);
-  check('collapsed: the stage centre hit-tests to the core, not the panel', m.centreIsCore, m);
+  check('no click needed: the panel is open with real area and full opacity', m.open === '1' && m.isOpen && m.panelArea > 4000 && parseFloat(m.pinOpacity) > 0.95, m);
+  check('wide: the dial sits LEFT of the panel', m.panelBesideDial, m);
+  check('a LIVE card carries the collapse X (wave 2: collapsible while working)', m.liveClose, m);
+  check('a LIVE head says Working', m.headStrong === 'Working', m.headStrong);
+  check('no percent ring, no percent readout, no receipt chips inside take 1', !m.arc && !m.pct && !m.receipt, m);
+  check('the live caption sits in the card head, not under the dial', !!m.caption && !m.captionUnderDial, m);
 });
 
-await safe('Orbit: clicking a node reveals that phase, and the content is the fixture', async () => {
+await safe('Orbit: a node click PINS the panel; the core and caption keep the live step', async () => {
   await orbit(page, 7);
   await page.click('.orbit-node[data-value="2"]');
   await page.waitForTimeout(620);
@@ -360,69 +387,48 @@ await safe('Orbit: clicking a node reveals that phase, and the content is the fi
       title: st.querySelector('.orbit-panel-title')?.textContent,
       expectTitle: step.verb,
       rowTexts: [...st.querySelectorAll('.orbit-rows .wa-rowtext')].map(x => x.textContent),
-      expectRows: rows.map(r => r.text),
+      expectRows: rows.filter(r => !r.stream).map(r => r.text),
       panelArea: +(pr.width * pr.height).toFixed(0),
       panelPaintedHit: !!(el && el.closest('.orbit-panel')),
       pinOpacity: getComputedStyle(pin).opacity,
       nodeOpen: st.querySelector('.orbit-node[data-value="2"]').classList.contains('open'),
-      stepKind: st.dataset.stepKind
+      coreLabel: st.querySelector('[data-k="corelabel"]').textContent,
+      liveLabel: D.workSteps[7].label,
+      headCaption: (document.querySelector('.working-variant-1 .working-head .orbit-caption') || {}).textContent || ''
     };
   });
-  check('the clicked phase becomes the focus', m.open === '1' && m.focus === m.expectId, m);
+  check('the clicked subject becomes the panel focus', m.open === '1' && m.focus === m.expectId, m);
   check('the panel title is the fixture verb, not a literal', m.title === m.expectTitle, { got: m.title, want: m.expectTitle });
-  check('the panel rows are the fixture phaseRows for that step',
+  check('the plain panel rows are the fixture phaseRows for that subject',
     m.expectRows.length > 0 && JSON.stringify(m.rowTexts) === JSON.stringify(m.expectRows), { got: m.rowTexts, want: m.expectRows });
   check('the panel occupies real area and hit-tests to itself', m.panelArea > 4000 && m.panelPaintedHit, m);
-  check('the panel is fully opaque once open', parseFloat(m.pinOpacity) > 0.95, m.pinOpacity);
-  check('the clicked node is marked open', m.nodeOpen, m);
+  check('the pinned node is marked open', m.nodeOpen, m);
+  check('the core keeps reporting the LIVE subject while pinned', m.coreLabel === m.liveLabel, { core: m.coreLabel, live: m.liveLabel });
+  check('the head caption also keeps the LIVE subject while pinned', m.headCaption.startsWith(m.liveLabel), { caption: m.headCaption.slice(0, 40), live: m.liveLabel });
 
   const pr = await page.locator('.orbit-panel').boundingBox();
   const px = await readPixels(page, clipOf(pr));
   check('the open panel paints content (>=25 distinct colours)', px.distinct >= 25, px);
-});
 
-await safe('Orbit: clicking the same node again collapses it', async () => {
+  /* A second click on the pinned node must NOT collapse anything. */
   await page.click('.orbit-node[data-value="2"]');
-  await page.waitForTimeout(620);
-  const m = await page.evaluate(() => {
-    const st = document.querySelector('.orbit-stage'), pr = st.querySelector('.orbit-panel').getBoundingClientRect();
-    return { open: st.dataset.orbitOpen, area: +(pr.width * pr.height).toFixed(0) };
+  await page.waitForTimeout(400);
+  const again = await page.evaluate(() => {
+    const st = document.querySelector('.orbit-stage'), pr2 = st.querySelector('.orbit-panel').getBoundingClientRect();
+    return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus, area: +(pr2.width * pr2.height).toFixed(0) };
   });
-  check('a second click on the same node returns to the circle', m.open === '0' && m.area < 1, m);
-});
+  check('a second click on the pinned node keeps it open and pinned (no toggle-collapse)',
+    again.open === '1' && again.focus === m.expectId && again.area > 4000, again);
 
-await safe('Orbit: the expand and the collapse both actually animate', async () => {
-  await orbit(page, 7);
-  /* rAF trace INSIDE the page. A Playwright click round-trip adds a phantom
-     ~200ms, so it cannot be used for a timing claim. */
-  const trace = await page.evaluate(async () => {
-    const st = document.querySelector('.orbit-stage');
-    const panel = st.querySelector('.orbit-panel');
-    const sample = async (ms) => {
-      const out = []; const t0 = performance.now();
-      return new Promise(res => {
-        const tick = () => {
-          out.push(+panel.getBoundingClientRect().height.toFixed(2));
-          if (performance.now() - t0 < ms) requestAnimationFrame(tick); else res({ ms: +(performance.now() - t0).toFixed(0), samples: out });
-        };
-        requestAnimationFrame(tick);
-      });
-    };
-    st.querySelector('.orbit-node[data-value="4"]').click();
-    const open = await sample(700);
-    st.querySelector('[data-action="orbit-collapse"]').click();
-    const close = await sample(700);
-    return { open, close };
-  });
-  const spread = a => Math.max(...a) - Math.min(...a);
-  const monotoneish = a => { const u = [...new Set(a)]; return u.length; };
-  check('expand travels through intermediate sizes (not a snap)',
-    spread(trace.open.samples) > 20 && monotoneish(trace.open.samples) > 6,
-    { first: trace.open.samples.slice(0, 4), distinct: monotoneish(trace.open.samples), spread: +spread(trace.open.samples).toFixed(1) });
-  check('collapse travels through intermediate sizes (not a snap)',
-    spread(trace.close.samples) > 20 && monotoneish(trace.close.samples) > 6,
-    { first: trace.close.samples.slice(0, 4), distinct: monotoneish(trace.close.samples), spread: +spread(trace.close.samples).toFixed(1) });
-  check('the collapse ends at zero', Math.min(...trace.close.samples) < 1, { min: Math.min(...trace.close.samples) });
+  /* The core click UNPINS: the panel returns to the live subject. */
+  await page.click('.orbit-core');
+  await page.waitForTimeout(400);
+  const un = await page.evaluate(() => ({
+    open: document.querySelector('.orbit-stage').dataset.orbitOpen,
+    focus: document.querySelector('.orbit-stage').dataset.orbitFocus,
+    liveId: window.PM56_DATA.workSteps[7].id
+  }));
+  check('a core click follows the live subject again (never collapses)', un.open === '1' && un.focus === un.liveId, un);
 });
 
 /* =====================================================================
@@ -520,22 +526,18 @@ await safe('Orbit: the states the fixture does not reach are still correct', asy
   /* Scroll it into view first: the panel opens below the dial on a narrow
      stage, which can put it past the bottom of the scrolling transcript, and
      document.elementFromPoint returns null off-viewport. */
-  await p4.evaluate(() => { const e = document.querySelector('.orbit-empty'); if (e) e.scrollIntoView({ block: 'center', behavior: 'instant' }); });
-  await p4.waitForTimeout(160);
-  const empty = await p4.evaluate(() => {
-    const e = document.querySelector('.orbit-empty');
-    const r = e && e.getBoundingClientRect();
-    const el = r && document.elementFromPoint(r.left + 6, r.top + r.height / 2);
-    return {
-      present: !!e, text: e ? e.textContent : null,
-      rows: document.querySelectorAll('.orbit-agent').length,
-      sats: document.querySelectorAll('.orbit-sat').length,
-      count: document.querySelector('.orbit-agents-head .count')?.textContent,
-      hits: !!(el && (el === e || e.contains(el)))
-    };
-  });
-  check('no child agents: an honest empty row is rendered and painted', empty.present && empty.rows === 0 && empty.hits, empty);
-  check('no child agents: the count says 0, and no rows are borrowed from another thread', empty.count === '0' && empty.sats === 0, empty);
+  /* Wave 2 (user decision): a delegation subject with NO agents renders NO
+     agents section and no satellites at all — an empty-state row begged the
+     question of why the category appeared in the first place. The subject
+     itself must still render its title and rows. */
+  const empty = await p4.evaluate(() => ({
+    section: !!document.querySelector('.orbit-agents'),
+    sats: document.querySelectorAll('.orbit-sat').length,
+    rows: document.querySelectorAll('.orbit-agent').length,
+    title: document.querySelector('.orbit-panel-title')?.textContent || ''
+  }));
+  check('no child agents: the agents section and satellites are simply absent', !empty.section && empty.sats === 0 && empty.rows === 0, empty);
+  check('no child agents: the subject panel still renders its own content', empty.title.length > 3, empty.title);
   await p4.close();
 
   /* (b) the RUNNING chip. Every other path in this harness pauses the run
@@ -672,11 +674,434 @@ await safe('Orbit: reduced motion reaches the same end state with no perpetual l
   });
   check('reduced motion: the panel still opens, and fast', m.open === '1' && m.area > 4000, m);
   check('reduced motion: nothing inside the orbit loops forever', m.loops.length === 0, m.loops);
-  await p3.click('[data-action="orbit-collapse"]');
+  await p3.click('.orbit-core');
   await p3.waitForTimeout(180);
-  const m2 = await p3.evaluate(() => { const st = document.querySelector('.orbit-stage'); const pr = st.querySelector('.orbit-panel').getBoundingClientRect(); return { open: st.dataset.orbitOpen, w: +pr.width.toFixed(2), h: +pr.height.toFixed(2) }; });
-  check('reduced motion: the collapse still completes', m2.open === '0' && (m2.h < 1 || m2.w < 1), m2);
+  const m2 = await p3.evaluate(() => { const st = document.querySelector('.orbit-stage'); return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus }; });
+  check('reduced motion: the stage stays open after unpin (no collapse path exists)', m2.open === '1', m2);
   await p3.close();
+});
+
+/* =====================================================================
+   9 — the multi-orbit turn: sequencing, compaction, two-beat reopen
+   ===================================================================== */
+await safe('Multi-orbit turn: A runs, compacts under B; strips reopen in two beats', async () => {
+  const p9 = await newPage();
+  await p9.evaluate(() => { window.PM56_DEMO.setVariant(2, 1); window.PM56_DEMO.selectThread('orbit-run'); });
+  await p9.waitForTimeout(950);
+  const t1 = await p9.evaluate(() => ({
+    cards: document.querySelectorAll('.transcript-inner .working-card').length,
+    interim: document.querySelector('.transcript-inner').textContent.includes('Scope is confirmed')
+  }));
+  check('turn playback: one live card, the later turn is hidden', t1.cards === 1 && !t1.interim, t1);
+  await p9.click('.transcript-inner .working-card [data-action="complete-working"]');
+  /* A no longer compacts at completion — B spawns at +1400ms and A's collapse
+     choreography (430+240ms) lands after that. */
+  await p9.waitForTimeout(2600);
+  const t2 = await p9.evaluate(() => {
+    const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
+    return { n: cards.length,
+      interim: document.querySelector('.transcript-inner').textContent.includes('Scope is confirmed'),
+      aStrip: cards[0] ? cards[0].querySelectorAll('.orbit-strip-item').length : 0,
+      bLive: !!(cards[1] && cards[1].querySelector('.orbit-stage.is-open')) };
+  });
+  check('A done: the interim text reveals, B spawns live, A compacts to its subject strip',
+    t2.n === 2 && t2.interim && t2.aStrip === 3 && t2.bLive, t2);
+  await p9.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]').click();
+  await p9.waitForTimeout(1900);
+  const t3 = await p9.evaluate(() => {
+    const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
+    const bSt = cards[1] && cards[1].querySelector('.orbit-stage');
+    return { summary: document.querySelector('.transcript-inner').textContent.includes('Done. The composite index landed'),
+      aStrip: cards[0] ? cards[0].querySelectorAll('.orbit-strip-item').length : 0,
+      bOpen: bSt ? bSt.dataset.orbitOpen : 'gone',
+      bStrip: cards[1] ? cards[1].querySelectorAll('.orbit-strip-item').length : -1,
+      chev: !!(cards[0] && cards[0].querySelector('.orbit-strip-chev')),
+      title: (cards[0] && cards[0].querySelector('.orbit-strip-item') || {}).dataset?.hoverTip || '' };
+  });
+  check('B done: the summary reveals, the LAST activity stays expanded, A is a 3-disc strip',
+    t3.summary && t3.aStrip === 3 && t3.bOpen === '1' && t3.bStrip === 0, t3);
+  check('the compact strip carries an expand chevron', t3.chev, t3);
+  check('strip discs carry the per-subject stat in their hover text', /·/.test(t3.title), t3.title);
+  const chips = await p9.evaluate(() => [...document.querySelectorAll('.transcript-inner .working-card >> .receipt-chip'.replace(' >> ',' ')).values()].map(x => x.textContent));
+  check('completed strips carry receipt chips without the elapsed chip', chips.length > 0 && !chips.some(x => /Worked for/.test(x)), chips.join(' | '));
+
+  /* Two-beat reopen, traced INSIDE the page (a Playwright click round-trip
+     adds ~200ms and cannot anchor a timing claim). The sampled quantity is
+     the panel's AREA: in the side-by-side tier the grid animates the panel's
+     WIDTH, in the stacked tier (which the DEFAULT editor split produces) it
+     animates its HEIGHT — a width-only sample reads a flat 365.4px through
+     the whole stacked transition and calls a working animation a snap. */
+  const trace = await p9.evaluate(async () => {
+    const a = document.querySelectorAll('.transcript-inner .working-card')[0];
+    a.scrollIntoView({ block: 'center', behavior: 'instant' });
+    const disc = a.querySelectorAll('.orbit-strip-item')[1];
+    disc.click();
+    const st = () => a.querySelector('.orbit-stage');
+    const beat1 = { open: st().dataset.orbitOpen, isOpen: st().classList.contains('is-open') };
+    const centred = (() => { const sr = st().getBoundingClientRect(); const dr = a.querySelector('.orbit-dial').getBoundingClientRect(); return Math.abs((dr.left + dr.width / 2) - (sr.left + sr.width / 2)); })();
+    const out = []; const t0 = performance.now();
+    await new Promise(res => { const tick = () => { const p = a.querySelector('.orbit-panel'); const r = p && p.getBoundingClientRect(); out.push(r ? +(r.width * r.height).toFixed(0) : -1); if (performance.now() - t0 < 900) requestAnimationFrame(tick); else res(); }; requestAnimationFrame(tick); });
+    const er = a.querySelector('.orbit-panel').getBoundingClientRect();
+    const end = { open: st().dataset.orbitOpen, focus: st().dataset.orbitFocus, area: +(er.width * er.height).toFixed(0) };
+    return { beat1, centred, first: out[0], samples: out, end };
+  });
+  const areas = trace.samples.filter(x => x >= 0);
+  const spread = Math.max(...areas) - Math.min(...areas);
+  const distinct = new Set(areas).size;
+  check('beat 1: the collapsed pose is real — dial centred, panel at zero area',
+    !trace.beat1.isOpen && trace.beat1.open === '0' && trace.centred <= 2 && trace.first < 500,
+    { beat1: trace.beat1, centred: +trace.centred.toFixed(1), firstArea: trace.first });
+  check('beat 2: the panel opens through intermediate sizes onto the clicked subject',
+    trace.end.open === '1' && trace.end.focus === 'orbitA:1' && trace.end.area > 30000 && spread > 10000 && distinct > 6,
+    { end: trace.end, spread, distinct });
+  const x = await p9.evaluate(() => { const a = document.querySelectorAll('.transcript-inner .working-card')[0]; const c = a.querySelector('.orbit-close'); if (c) c.click(); return !!c; });
+  await p9.waitForTimeout(950);   // the collapse choreography (430ms grid + 240ms lift) must land first
+  const back = await p9.evaluate(() => !!document.querySelectorAll('.transcript-inner .working-card')[0].querySelector('.orbit-strip'));
+  check('the panel X returns the reopened card to its strip', x && back, { x, back });
+  /* The chevron expands WITHOUT picking a subject: it follows the live/last
+     one (here A is completed, so its final subject). */
+  await p9.evaluate(() => { const a = document.querySelectorAll('.transcript-inner .working-card')[0]; a.querySelector('.orbit-strip-chev').click(); });
+  await p9.waitForTimeout(1000);
+  const chevOpen = await p9.evaluate(() => { const st = document.querySelectorAll('.transcript-inner .working-card')[0].querySelector('.orbit-stage'); return { open: st ? st.dataset.orbitOpen : 'gone', focus: st ? st.dataset.orbitFocus : '' }; });
+  check('the strip chevron expands following the last subject', chevOpen.open === '1' && chevOpen.focus === 'orbitA:2', chevOpen);
+  await p9.close();
+});
+
+await safe('Multi-orbit turn: rows stream in over ticks and freeze on pause', async () => {
+  const p10 = await newPage();
+  await p10.evaluate(() => { window.PM56_DEMO.setVariant(2, 1); window.PM56_DEMO.selectThread('orbit-run'); });
+  await p10.waitForTimeout(1000);
+  /* Sample (subject, rowCount, streamWords) on a 400ms grid. The row count
+     RESETS on every subject handover, so growth is only claimed when two
+     consecutive samples share the same panel subject — a coarse grid that
+     straddles handovers reads a constant 1 and proves nothing either way. */
+  const seen = [];
+  for (let i = 0; i < 24; i++) {
+    seen.push(await p10.evaluate(() => {
+      const pin = document.querySelector('.transcript-inner .orbit-panel-in');
+      return {
+        uid: pin ? pin.getAttribute('data-k') : '',
+        count: document.querySelectorAll('.transcript-inner .orbit-rows .wa-row').length,
+        words: document.querySelectorAll('.transcript-inner .orbit-rows .pm-word').length
+      };
+    }));
+    await p10.waitForTimeout(400);
+  }
+  const grew = seen.some((s, i) => i && s.uid === seen[i - 1].uid && s.count > seen[i - 1].count);
+  const words = seen.some(s => s.words > 0);
+  check('the panel row count grows over ticks within a subject (never a full dump on entry)',
+    grew, seen.map(s => s.uid.split(':').pop() + ':' + s.count).join(','));
+  check('a stream row renders as cascading words through M.words()', words,
+    { maxWords: Math.max(...seen.map(s => s.words)) });
+  /* Pausing freezes the clock, so the row set must freeze with it. */
+  await p10.click('.transcript-inner .working-card [data-action="pause-working"]');
+  await p10.waitForTimeout(200);
+  const c1 = await p10.evaluate(() => ({ uid: (document.querySelector('.transcript-inner .orbit-panel-in') || {}).getAttribute?.('data-k'), n: document.querySelectorAll('.transcript-inner .orbit-rows .wa-row').length }));
+  await p10.waitForTimeout(1600);
+  const c2 = await p10.evaluate(() => ({ uid: (document.querySelector('.transcript-inner .orbit-panel-in') || {}).getAttribute?.('data-k'), n: document.querySelectorAll('.transcript-inner .orbit-rows .wa-row').length }));
+  check('pausing the record freezes the row reveal', c1.uid === c2.uid && c1.n === c2.n, { c1, c2 });
+  await p10.close();
+});
+
+await safe('Shell rows open an inline terminal box; Step Rail chevron stays on the card', async () => {
+  const p11 = await newPage();
+  await p11.evaluate(() => {
+    window.PM56_DEMO.setVariant(2, 1);
+    window.PM56_DEMO.selectThread('query');
+    window.PM56_DEMO.setWorkStep(6);
+  });
+  await p11.waitForTimeout(400);
+  const orbitShell = await p11.evaluate(() => {
+    const row = document.querySelector('.transcript-inner .orbit-rows .wa-row.is-shell');
+    if (row) row.click();
+    const box = document.querySelector('.transcript-inner .working-card .work-terminal');
+    return {
+      row: !!row,
+      box: !!box,
+      hasPrompt: !!(box && box.textContent.includes('$')),
+      hasExit: !!(box && /Exit code/i.test(box.textContent)),
+      hasClose: !!document.querySelector('.work-terminal-close')
+    };
+  });
+  check('Orbit bash row opens a Shell box with prompt, exit code, and X',
+    orbitShell.row && orbitShell.box && orbitShell.hasPrompt && orbitShell.hasExit && orbitShell.hasClose, orbitShell);
+  await p11.evaluate(() => {
+    const x = document.querySelector('.work-terminal-close');
+    if (x) x.click();
+  });
+  await p11.waitForTimeout(200);
+  const closed = await p11.evaluate(() => !document.querySelector('.transcript-inner .work-terminal'));
+  check('Shell X closes the box', closed, { closed });
+
+  await p11.evaluate(() => {
+    window.PM56_DEMO.setVariant(2, 8);
+    window.PM56_DEMO.selectThread('query');
+    window.PM56_DEMO.completeWorking();
+  });
+  await p11.waitForTimeout(400);
+  const rail = await p11.evaluate(() => {
+    const card = document.querySelector('.transcript-inner .working-card.working-variant-8');
+    if (!card) return { card: false };
+    const chev = card.querySelector('.rail8-chev');
+    if (chev && chev.getAttribute('aria-expanded') !== 'true') chev.click();
+    return { card: true };
+  });
+  await p11.waitForTimeout(250);
+  await p11.evaluate(() => {
+    const bash = document.querySelector('.transcript-inner .working-variant-8 .rail8-item[data-step-kind="bash"]');
+    if (bash) bash.click();
+  });
+  await p11.waitForTimeout(250);
+  const railShell = await p11.evaluate(() => {
+    const row = document.querySelector('.transcript-inner .working-variant-8 .rail8-row.is-shell');
+    if (row) row.click();
+    const box = document.querySelector('.transcript-inner .working-card .work-terminal');
+    const chev = document.querySelector('.transcript-inner .working-variant-8 .rail8-chev');
+    const card = document.querySelector('.transcript-inner .working-card.working-variant-8');
+    const cr = chev ? chev.getBoundingClientRect() : null;
+    const ar = card ? card.getBoundingClientRect() : null;
+    return {
+      row: !!row,
+      box: !!box,
+      chevInCard: !!(cr && ar && cr.left >= ar.left - 1 && cr.right <= ar.right + 1 && cr.top >= ar.top - 1 && cr.bottom <= ar.bottom + 1),
+      wrap: (() => {
+        const track = document.querySelector('.rail8-track');
+        return track ? getComputedStyle(track).flexWrap : null;
+      })()
+    };
+  });
+  check('Step Rail bash row opens a Shell box', rail.card && railShell.row && railShell.box, { rail, railShell });
+  check('Step Rail discs wrap and the chevron stays inside the card',
+    railShell.wrap === 'wrap' && railShell.chevInCard, railShell);
+
+  await p11.evaluate(() => {
+    window.PM56_DEMO.selectThread('orbit-run');
+    window.PM56_DEMO.setVariant(2, 8);
+  });
+  await p11.waitForTimeout(400);
+  await p11.click('.transcript-inner .working-card [data-action="complete-working"]');
+  await p11.waitForTimeout(1600);
+  const second = p11.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]');
+  if (await second.count()) await second.click();
+  await p11.waitForTimeout(500);
+  const many = await p11.evaluate(() => {
+    const cards = [...document.querySelectorAll('.transcript-inner .working-card.working-variant-8')];
+    let best = null, n = 0;
+    for (const card of cards) {
+      const chev = card.querySelector('.rail8-chev');
+      if (chev && chev.getAttribute('aria-expanded') !== 'true') chev.click();
+      const count = card.querySelectorAll('.rail8-item').length;
+      if (count > n) { n = count; best = card; }
+    }
+    if (!best) return { n: 0 };
+    const chev = best.querySelector('.rail8-chev');
+    const cr = chev ? chev.getBoundingClientRect() : null;
+    const ar = best.getBoundingClientRect();
+    return {
+      n,
+      chevInCard: !!(cr && cr.width > 0 && cr.left >= ar.left - 2 && cr.right <= ar.right + 2),
+      inView: !!(cr && cr.bottom > 0 && cr.top < window.innerHeight)
+    };
+  });
+  check('expanded 25-step Step Rail keeps the chevron on-screen inside the card',
+    many.n >= 14 && many.chevInCard && many.inView, many);
+  await p11.close();
+});
+
+await safe('Clickable work rows open the editor; bash MCP is not a Shell', async () => {
+  const p12 = await newPage();
+  await p12.evaluate(() => {
+    window.PM56_DEMO.setVariant(2, 1);
+    window.PM56_DEMO.selectThread('query');
+    window.PM56_DEMO.setWorkStep(2);
+  });
+  await p12.waitForTimeout(400);
+  const fileClick = await p12.evaluate(() => {
+    const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-change"]');
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    return {
+      row: !!row,
+      path: row && row.dataset.path,
+      isButton: row && row.tagName === 'BUTTON',
+      editor: tab && tab.dataset.id
+    };
+  });
+  check('Read/edit row opens a file: editor tab',
+    fileClick.row && fileClick.isButton && String(fileClick.editor || '').startsWith('file:'), fileClick);
+
+  await p12.evaluate(() => window.PM56_DEMO.setWorkStep(1));
+  await p12.waitForTimeout(250);
+  const stream = await p12.evaluate(() => {
+    const prose = document.querySelector('.transcript-inner .orbit-rows .wa-prose');
+    const row = prose && prose.closest('.wa-row');
+    return { has: !!prose, tag: row && row.tagName, action: row && row.getAttribute('data-action') };
+  });
+  check('streamed reasoning row is not a button', stream.has && stream.tag !== 'BUTTON' && !stream.action, stream);
+
+  await p12.evaluate(() => window.PM56_DEMO.completeWorking());
+  await p12.waitForTimeout(400);
+  await p12.evaluate(() => {
+    const bash = document.querySelector('.transcript-inner .orbit-node[data-step-kind="bash"]');
+    if (bash) bash.click();
+  });
+  await p12.waitForTimeout(250);
+  const mcp = await p12.evaluate(() => {
+    const rows = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')];
+    const row = rows.find(r => /postgres\.explain|MCP ·/.test(r.textContent));
+    return {
+      found: !!row,
+      action: row && row.dataset.action,
+      isShell: !!(row && row.classList.contains('is-shell')),
+      isClick: !!(row && row.classList.contains('is-click')),
+      texts: rows.map(r => r.textContent.slice(0, 48))
+    };
+  });
+  check('MCP row inside a bash subject is not a Shell row',
+    mcp.found && mcp.action === 'open-work-doc' && mcp.isShell === false && mcp.isClick, mcp);
+  await p12.evaluate(() => {
+    const rows = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')];
+    const row = rows.find(r => /postgres\.explain|MCP ·/.test(r.textContent));
+    if (row) row.click();
+  });
+  await p12.waitForTimeout(200);
+  const mcpEd = await p12.evaluate(() => {
+    const tab = document.querySelector('.editor-tab.active');
+    const body = document.querySelector('.editor-body');
+    return { id: tab && tab.dataset.id, text: (body && body.textContent || '').slice(0, 240) };
+  });
+  check('MCP row opens an MCP editor doc',
+    String(mcpEd.id || '').startsWith('mcp:') && /postgres\.explain|MCP/i.test(mcpEd.text || ''), mcpEd);
+
+  await p12.evaluate(() => window.PM56_DEMO.setWorkStep(3));
+  await p12.waitForTimeout(250);
+  const search = await p12.evaluate(() => {
+    const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-work-doc"]');
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    const body = document.querySelector('.editor-body');
+    return { row: !!row, id: tab && tab.dataset.id, hasQuery: !!(body && /Search/i.test(body.textContent)) };
+  });
+  check('Search row opens a search editor doc',
+    search.row && String(search.id || '').startsWith('search:') && search.hasQuery, search);
+
+  await p12.evaluate(() => window.PM56_DEMO.setWorkStep(4));
+  await p12.waitForTimeout(250);
+  const fetch = await p12.evaluate(() => {
+    const row = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')].find(r => r.dataset.action === 'open-work-doc' && String(r.dataset.id || '').startsWith('link:'));
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    const body = document.querySelector('.editor-body');
+    return { row: !!row, id: tab && tab.dataset.id, host: !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
+  });
+  check('Fetch row opens a fetched-page editor doc',
+    fetch.row && String(fetch.id || '').startsWith('link:') && fetch.host, fetch);
+
+  await p12.evaluate(() => window.PM56_DEMO.setWorkStep(12));
+  await p12.waitForTimeout(250);
+  await p12.evaluate(() => {
+    const node = document.querySelector('.transcript-inner .orbit-node[data-step-kind="artifact"]');
+    if (node) node.click();
+  });
+  await p12.waitForTimeout(250);
+  const art = await p12.evaluate(() => {
+    const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-artifact"]');
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    return { row: !!row, id: tab && tab.dataset.id };
+  });
+  check('Artifact row opens dashboard-query or mermaid-runtime',
+    art.row && (art.id === 'dashboard-query' || art.id === 'mermaid-runtime'), art);
+
+  await p12.evaluate(() => window.PM56_DEMO.setWorkStep(7));
+  await p12.waitForTimeout(250);
+  await p12.evaluate(() => {
+    const node = document.querySelector('.transcript-inner .orbit-node[data-step-kind="agents"]');
+    if (node) node.click();
+  });
+  await p12.waitForTimeout(250);
+  const agent = await p12.evaluate(() => {
+    const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-agent"]');
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    return { row: !!row, id: tab && tab.dataset.id, agent: row && row.dataset.id };
+  });
+  check('Agent row opens a child-agent editor tab',
+    agent.row && String(agent.id || '') === 'thread-' + agent.agent, agent);
+
+  await p12.evaluate(() => {
+    window.PM56_DEMO.setVariant(2, 8);
+    window.PM56_DEMO.selectThread('query');
+    window.PM56_DEMO.setWorkStep(2);
+  });
+  await p12.waitForTimeout(400);
+  const railFile = await p12.evaluate(() => {
+    const card = document.querySelector('.transcript-inner .working-card.working-variant-8');
+    const chev = card && card.querySelector('.rail8-chev');
+    if (chev && chev.getAttribute('aria-expanded') !== 'true') chev.click();
+    const files = card && card.querySelector('.rail8-item[data-step-kind="files"]');
+    if (files) files.click();
+    const row = document.querySelector('.transcript-inner .working-variant-8 .rail8-row[data-action="open-change"]');
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    return { row: !!row, editor: tab && tab.dataset.id };
+  });
+  check('Step Rail file row opens a file: editor tab',
+    railFile.row && String(railFile.editor || '').startsWith('file:'), railFile);
+
+  await p12.evaluate(() => {
+    window.PM56_DEMO.setVariant(2, 1);
+    window.PM56_DEMO.selectThread('orbit-run');
+  });
+  await p12.waitForTimeout(500);
+  await p12.click('.transcript-inner .working-card [data-action="complete-working"]');
+  await p12.waitForTimeout(1600);
+  const second = p12.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]');
+  if (await second.count()) await second.click();
+  await p12.waitForTimeout(500);
+  const orbitB = await p12.evaluate(() => {
+    const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
+    let best = null, n = 0;
+    for (const c of cards) {
+      const count = c.querySelectorAll('.orbit-node').length;
+      if (count > n) { n = count; best = c; }
+    }
+    if (!best) return { n: 0 };
+    const files = best.querySelector('.orbit-node[data-step-kind="files"]');
+    if (files) files.click();
+    return { n };
+  });
+  await p12.waitForTimeout(250);
+  const orbitFile = await p12.evaluate(() => {
+    const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-change"]');
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    return { row: !!row, path: row && row.dataset.path, editor: tab && tab.dataset.id };
+  });
+  check('Multi Orbit B file row opens file: editor',
+    orbitB.n >= 14 && orbitFile.row && String(orbitFile.editor || '').startsWith('file:'), { orbitB, orbitFile });
+
+  await p12.evaluate(() => {
+    const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
+    let best = null, n = 0;
+    for (const c of cards) {
+      const count = c.querySelectorAll('.orbit-node').length;
+      if (count > n) { n = count; best = c; }
+    }
+    const fetchNode = best && best.querySelector('.orbit-node[data-step-kind="web-fetch"]');
+    if (fetchNode) fetchNode.click();
+  });
+  await p12.waitForTimeout(250);
+  const orbitFetch = await p12.evaluate(() => {
+    const row = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')].find(r => r.dataset.action === 'open-work-doc' && String(r.dataset.id || '').startsWith('link:'));
+    if (row) row.click();
+    const tab = document.querySelector('.editor-tab.active');
+    return { row: !!row, id: tab && tab.dataset.id };
+  });
+  check('Multi Orbit B fetch row opens a link doc',
+    orbitFetch.row && String(orbitFetch.id || '').startsWith('link:'), orbitFetch);
+
+  await p12.close();
 });
 
 /* ---- verdict -------------------------------------------------------- */

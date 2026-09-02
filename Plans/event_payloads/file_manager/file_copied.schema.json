@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.file_manager_event.file_copied.schema.v1",
+  "$comment": "Static payload schema only. Runtime must prove the source and result refs are distinct, all path refs resolve inside authorized scopes, and the receipt records a committed copy. No append or dispatch authority is granted.",
+  "title": "file.copied payload",
+  "description": "Closed project-scoped receipt payload for copying one file through the File Manager transfer engine without embedding paths or bytes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "project_id", "node_kind", "operation_id",
+    "source_path_ref", "destination_path_ref", "affected_path_refs", "source_node_ref",
+    "result_node_ref", "path_snapshot_revision", "copy_mode", "operation_status", "origin",
+    "handler_target", "command_id", "correlation_id", "receipt_ref", "evidence_refs", "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.file_manager_event.file_copied.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/safe_id"},
+    "node_kind": {"const": "file"},
+    "operation_id": {"$ref": "#/$defs/safe_id"},
+    "source_path_ref": {"$ref": "#/$defs/path_ref"},
+    "destination_path_ref": {"$ref": "#/$defs/path_ref"},
+    "affected_path_refs": {"$ref": "#/$defs/path_ref_array"},
+    "source_node_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "result_node_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "path_snapshot_revision": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "copy_mode": {"const": "clipboard_paste"},
+    "operation_status": {"const": "completed"},
+    "filesafe_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "origin": {"$ref": "#/$defs/origin"},
+    "handler_target": {"const": "handlers::file::paste_nodes"},
+    "command_id": {"const": "cmd.file.paste_nodes"},
+    "correlation_id": {"$ref": "#/$defs/safe_id"},
+    "receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "evidence_refs": {"$ref": "#/$defs/non_empty_ref_array"},
+    "ts": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "safe_id": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "path_ref": {"type": "string", "minLength": 20, "maxLength": 220, "pattern": "^pm-path-ref:v1:[a-z][a-z0-9_-]{0,31}:[A-Za-z0-9][A-Za-z0-9._-]*$", "not": {"pattern": "\\.\\."}},
+    "path_ref_array": {"type": "array", "items": {"$ref": "#/$defs/path_ref"}, "minItems": 1, "maxItems": 256, "uniqueItems": true},
+    "non_empty_ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "minItems": 1, "maxItems": 64, "uniqueItems": true},
+    "origin": {"enum": ["file_manager", "editor", "command_palette", "api"]}
+  }
+}

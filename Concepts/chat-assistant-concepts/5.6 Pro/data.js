@@ -128,6 +128,7 @@
         const m = { id, role:'user', type:'text', body:payload, time:sentAt, sentAt, eligibleForEdit:false };
         if (extra.long) m.long = true;
         if (extra.attachments) m.attachments = extra.attachments;
+        if (extra.revealAfter) m.revealAfter = extra.revealAfter;
         out.push(m);
         continue;
       }
@@ -165,6 +166,10 @@
         }
       };
       if (extra.long) m.long = true;
+      /* `revealAfter` gates a message behind a work run: app.js hides it until
+         state.works[revealAfter] reports completed. Whitelisted here like
+         `long`, because this builder copies nothing it does not know. */
+      if (extra.revealAfter) m.revealAfter = extra.revealAfter;
       if (extra.terminal === 'error') m.runtime.error = extra.error || 'Execution host closed the stream.';
       out.push(m);
       t += Math.round(durationMs / 1000);
@@ -209,7 +214,9 @@
     test:{verb:'Testing',past:'Tested',count:'14 assertions'},
     validate:{verb:'Validating',past:'Validated',count:'42 checks'},
     artifact:{verb:'Rendering',past:'Rendered',count:'2 artifacts'},
-    complete:{verb:'Finishing',past:'Finished',count:'14 tools'}
+    complete:{verb:'Finishing',past:'Finished',count:'14 tools'},
+    mcp:{verb:'Calling MCP tools',past:'Called MCP tools',count:'2 calls'},
+    skill:{verb:'Running a skill',past:'Ran a skill',count:'1 skill'}
   };
 
   /* Concrete rows the chrome shows for each phase: a streamed thought
@@ -221,17 +228,65 @@
   const phaseRows = {
     prepare:{ prepare:[{text:'Resolved thread Query Performance in worktree feature/query-index'},{text:'Execution policy: Auto · local server · browser program available',tag:'ready'},{text:'Loaded 4 tool groups and 2 configured provider accounts'}] },
     thought:{ think:[{stream:true, text:'The bottleneck here is a tenant-scoped read path: 95% reads with an N+1 fan-out across 3 queries. A composite index led by tenant_id should let the planner skip the scan — I should read the schema and the migration history before touching anything, and check what the benchmarks actually show.'}] },
-    files:{ files:[{text:'Read src/analytics/queries.rs'},{text:'Read src/analytics/schema.rs'},{text:'Read migrations/0042_events.sql'}] },
-    'web-search':{ search:[{stream:true, text:'Checking whether a leading tenant_id is still the right choice when created_at carries the range predicate — the planner only skips the sort if the index order matches the ORDER BY direction.'},{text:'PostgreSQL multicolumn index documentation',tag:'primary'},{text:'Concurrent refresh constraints for materialized views'}] },
-    'web-fetch':{ fetch:[{text:'Fetched CREATE INDEX CONCURRENTLY reference',tag:'4 pages'},{text:'Extracted 7 sections on leading-column selectivity'},{stream:true, text:'The concurrent build takes two table passes and cannot run inside a transaction block, so the migration has to be split from the rest of the batch. That is worth saying out loud in the plan rather than discovering during the deploy.'}] },
-    browser:{ browser:[{text:'Opened the Query Performance dashboard'},{text:'Captured p50 118 ms · p95 482 ms',tag:'baseline'},{text:'No console errors across 3 reloads'}] },
-    bash:{ bash:[{text:'Ran EXPLAIN ANALYZE analytics_query',tag:'p95 482 ms'},{text:'Generated 128,400 fixture rows'},{text:'Ran cargo bench analytics_query'}] },
-    agents:{ agents:[{text:'Query Analyzer · comparing index selectivity',tag:'running'},{text:'Schema Reviewer · checking migration history',tag:'stalled'},{text:'Benchmark Runner · queued behind the fixture build',tag:'queued'}] },
-    edit:{ edit:[{text:'Edited migrations/0043_composite_index.sql',add:84,del:17},{text:'Edited src/analytics/queries.rs',add:22,del:6},{text:'Created src/analytics/index_hints.rs',add:41}] },
-    app:{ app:[{text:'Opened the local database inspector'},{text:'Refreshed schema metadata',tag:'ok'},{text:'Planner now selects idx_events_tenant_created',tag:'confirmed'}] },
-    test:{ test:[{text:'Replayed the dashboard workflow at 1440 px',tag:'pass'},{text:'Replayed at 720 px compact assistant width',tag:'pass'},{text:'14 browser assertions · no clipped overlays'}] },
-    validate:{ validate:[{text:'42 tests passed',tag:'green'},{text:'LSP diagnostics clean'},{text:'p95 482 ms → 71 ms',tag:'−86%'}] },
-    artifact:{ render:[{text:'Rendered the benchmark comparison dashboard'},{text:'Rendered the runtime architecture diagram',tag:'mermaid'},{stream:true, text:'The report needs the write-amplification number next to the read win, otherwise the comparison flatters the change: +4.8% on writes is the cost being paid for the 86% read improvement.'}] },
+    files:{ files:[
+      {text:'Read src/analytics/queries.rs', path:'src/analytics/queries.rs'},
+      {text:'Read src/analytics/schema.rs', path:'src/analytics/schema.rs'},
+      {text:'Read migrations/0042_events.sql', path:'migrations/0042_events.sql'}
+    ] },
+    'web-search':{ search:[
+      {text:'Searched "postgres multicolumn index column order"',tag:'8 results', query:'postgres multicolumn index column order'},
+      {stream:true, text:'Checking whether a leading tenant_id is still the right choice when created_at carries the range predicate — the planner only skips the sort if the index order matches the ORDER BY direction.'},
+      {text:'Searched "materialized view concurrent refresh locks"',tag:'6 results', query:'materialized view concurrent refresh locks'},
+      {text:'PostgreSQL multicolumn index documentation',tag:'primary', query:'PostgreSQL multicolumn index documentation'},
+      {text:'Concurrent refresh constraints for materialized views', query:'Concurrent refresh constraints for materialized views'}
+    ] },
+    'web-fetch':{ fetch:[
+      {text:'PostgreSQL 16 · Multicolumn Indexes',url:'postgresql.org'},
+      {text:'PostgreSQL 16 · CREATE INDEX CONCURRENTLY',url:'postgresql.org'},
+      {text:'Extracted 7 sections on leading-column selectivity'},
+      {stream:true, text:'The concurrent build takes two table passes and cannot run inside a transaction block, so the migration has to be split from the rest of the batch. That is worth saying out loud in the plan rather than discovering during the deploy.'}
+    ] },
+    browser:{ browser:[
+      {text:'Opened the Query Performance dashboard', artifactId:'dashboard-query'},
+      {text:'Captured p50 118 ms · p95 482 ms',tag:'baseline', artifactId:'dashboard-query'},
+      {text:'No console errors across 3 reloads'}
+    ] },
+    bash:{ bash:[
+      {text:'Ran EXPLAIN ANALYZE analytics_query',tag:'p95 482 ms',cmd:'EXPLAIN ANALYZE analytics_query',output:['Seq Scan on events  (actual time=0.041..482.012 rows=128400 loops=1)','Planning Time: 0.8 ms','Execution Time: 482.4 ms'],exitCode:0,durationMs:45000},
+      {text:'MCP · postgres.explain — plan captured for the report',tag:'mcp', tool:'postgres.explain'},
+      {text:'Generated 128,400 fixture rows',cmd:'pm fixture generate analytics_query --rows 128400',output:['generated 128400 fixture rows','wrote scratch/analytics_query.sql'],exitCode:0,durationMs:12000},
+      {text:'Ran cargo bench analytics_query',cmd:'cargo bench analytics_query -- --profile',output:['analytics_query  time: [71.2 ms 74.0 ms 76.8 ms]'],exitCode:0,durationMs:105000}
+    ] },
+    agents:{ agents:[
+      {text:'Query Analyzer · comparing index selectivity',tag:'running', agentId:'agent-query'},
+      {text:'Schema Reviewer · checking migration history',tag:'stalled', agentId:'agent-schema'},
+      {text:'Benchmark Runner · queued behind the fixture build',tag:'queued', agentId:'agent-bench'}
+    ] },
+    edit:{ edit:[
+      {text:'Edited migrations/0043_composite_index.sql',add:84,del:17, path:'migrations/0043_tenant_created_index.sql'},
+      {text:'Edited src/analytics/queries.rs',add:22,del:6, path:'src/analytics/queries.rs'},
+      {text:'Created src/analytics/index_hints.rs',add:41, path:'src/analytics/index_hints.rs'}
+    ] },
+    app:{ app:[
+      {text:'Opened the local database inspector', doc:'app:inspector'},
+      {text:'Refreshed schema metadata',tag:'ok', doc:'app:inspector'},
+      {text:'Planner now selects idx_events_tenant_created',tag:'confirmed', doc:'app:inspector'}
+    ] },
+    test:{ test:[
+      {text:'Replayed the dashboard workflow at 1440 px',tag:'pass', artifactId:'test-evidence'},
+      {text:'Replayed at 720 px compact assistant width',tag:'pass', artifactId:'test-evidence'},
+      {text:'14 browser assertions · no clipped overlays', artifactId:'test-evidence'}
+    ] },
+    validate:{ validate:[
+      {text:'42 tests passed',tag:'green',cmd:'cargo test && cargo clippy && pm audit',output:['test result: ok. 42 passed; 0 failed','Finished `test` profile'],exitCode:0,durationMs:82000},
+      {text:'LSP diagnostics clean'},
+      {text:'p95 482 ms → 71 ms',tag:'−86%', artifactId:'dashboard-query'}
+    ] },
+    artifact:{ render:[
+      {text:'Rendered the benchmark comparison dashboard', artifactId:'dashboard-query'},
+      {text:'Rendered the runtime architecture diagram',tag:'mermaid', artifactId:'mermaid-runtime'},
+      {stream:true, text:'The report needs the write-amplification number next to the read win, otherwise the comparison flatters the change: +4.8% on writes is the cost being paid for the 86% read improvement.'}
+    ] },
     complete:{ complete:[{stream:true, text:'Done. The composite index is in, the two N+1 call sites are batched, and the benchmark artifact records both the read win and the write cost so the review does not have to take my word for it.'},{text:'12 files changed · +438 −171',tag:'diff'},{text:'2 subagents completed · 1 stalled on approval'}] }
   };
 
@@ -244,6 +299,127 @@
     'web-search':'web-search', 'web-fetch':'web-search', browser:'web-search',
     bash:'bash', agents:'agents', edit:'edit', app:'edit',
     test:'validate', validate:'validate', artifact:'validate', complete:'validate'
+  };
+
+  /* =====================================================================
+     Scripted multi-card work runs (the Multi Orbit demo thread).
+
+     Each run is ONE working card's private timeline. `steps` are SUBJECT
+     INSTANCES -- duplicates of a kind are allowed and expected -- each with
+     its own start second, duration, hover stat, and streamed rows:
+
+       { ref, startAt, dur, stat?, rows?, label?/verb?/detail?/icon? }
+
+     `ref` names the workSteps entry the instance inherits id/kind/label/
+     verb/detail/icon from; any of those can be overridden per instance.
+     Row shape: {at, text, stream?, tag?, add?, del?, url?, cmd?, output?,
+     exitCode?, durationMs?, path?, artifactId?, agentId?, query?, tool?,
+     doc?} -- `at` is
+     seconds after the instance starts, and app.js reveals rows only once
+     the run's clock passes startAt+at, so panels stream instead of dumping.
+     Dest fields (path/artifactId/agentId/query/url/tool/doc/cmd) make the
+     row a button: files and artifacts open the editor, commands open Shell.
+     `next` chains the following run inside the same assistant turn after
+     `delayMs`; app.js compacts the finished card when the next one starts.
+     ===================================================================== */
+  const workRuns = {
+    orbitA: {
+      title: 'Scoping the rollout',
+      next: { run:'orbitB', delayMs:1400 },
+      receipt: ['3 tools','2 searches','scope confirmed'],
+      steps: [
+        { ref:'think', startAt:0, dur:5, stat:'1 reasoning pass',
+          rows:[
+            {at:0.4, stream:true, text:'Two ways to stage this rollout: index first and batch the fan-out after, or land both together. The index is reversible on its own, so it goes first — but only if the batching change does not depend on a schema detail I have not read yet.'}
+          ]},
+        { ref:'search', startAt:5, dur:5, stat:'2 searches · 9 results',
+          rows:[
+            {at:0.5, text:'Searched "postgres composite index rollout order"', tag:'5 results', query:'postgres composite index rollout order'},
+            {at:1.9, text:'Searched "create index concurrently transaction block"', tag:'4 results', query:'create index concurrently transaction block'},
+            {at:3.3, text:'Migration wrappers and no-transaction exceptions', tag:'primary', query:'Migration wrappers and no-transaction exceptions'}
+          ]},
+        { ref:'complete', startAt:10, dur:4, stat:'scope confirmed', verb:'Scope confirmed',
+          detail:'The index can land first and alone; the batching change follows it safely.',
+          rows:[
+            {at:0.5, stream:true, text:'Confirmed: the index migration must be split out and marked no-transaction, and nothing in the batching change depends on it landing first. Safe to implement in two moves.'}
+          ]}
+      ]
+    },
+    orbitB: {
+      title: 'Implementing the rollout',
+      receipt: ['25 tools','2 MCP calls','1 skill','3 files','4 agents','42 tests','2 artifacts'],
+      steps: [
+        { ref:'prepare', startAt:0, dur:3, stat:'3 checks',
+          rows:[{at:0.4,text:'Resolved worktree feature/query-index'},{at:1.5,text:'Execution policy Auto · local server ready',tag:'ready'}]},
+        { ref:'think', startAt:3, dur:4, stat:'1 reasoning pass',
+          rows:[{at:0.4, stream:true, text:'Landing order is settled; the remaining risk is the concurrent build fighting autovacuum on the events table, so the bench run needs to bracket it.'}]},
+        { ref:'files', startAt:7, dur:4, stat:'3 files read',
+          rows:[{at:0.4,text:'Read src/analytics/queries.rs', path:'src/analytics/queries.rs'},{at:1.6,text:'Read src/analytics/schema.rs', path:'src/analytics/schema.rs'},{at:2.8,text:'Read migrations/0042_events.sql', path:'migrations/0042_events.sql'}]},
+        { ref:'search', startAt:11, dur:4, stat:'2 searches · 11 results',
+          rows:[{at:0.4,text:'Searched "postgres composite index write amplification"',tag:'8 results', query:'postgres composite index write amplification'},{at:2.1,text:'Searched "index only scan visibility map"',tag:'3 results', query:'index only scan visibility map'}]},
+        { ref:'fetch', startAt:15, dur:3.5, stat:'2 pages',
+          rows:[{at:0.4,text:'PostgreSQL 16 · Multicolumn Indexes',url:'postgresql.org'},{at:1.9,text:'PostgreSQL 16 · Index-Only Scans',url:'postgresql.org'}]},
+        { ref:'fetch', startAt:18.5, dur:3.5, stat:'2 pages',
+          rows:[{at:0.4,text:'CREATE INDEX CONCURRENTLY reference',url:'postgresql.org'},{at:1.9,text:'Locking notes for concurrent index builds',url:'wiki.postgresql.org'}]},
+        { ref:'browser', startAt:22, dur:4, stat:'2 traces',
+          rows:[{at:0.5,text:'Opened the Query Performance dashboard', artifactId:'dashboard-query'},{at:2.1,text:'Captured p50 118 ms · p95 482 ms',tag:'baseline', artifactId:'dashboard-query'}]},
+        { id:'mcp', kind:'mcp', label:'MCP', icon:'plug', startAt:26, dur:3.5, stat:'1 MCP call',
+          verb:'Calling grafana.query-range', detail:'Pulling the p95 series over MCP so the report starts from the live baseline.',
+          rows:[{at:0.4,text:'Called grafana.query-range — p95 series, last 24h',tag:'mcp', tool:'grafana.query-range'},{at:2.0,text:'Baseline series captured for the report',tag:'2 series', tool:'grafana.query-range'}]},
+        { ref:'bash', startAt:29.5, dur:4, stat:'2 benchmarks',
+          rows:[{at:0.5,text:'Ran EXPLAIN ANALYZE analytics_query',tag:'p95 482 ms',cmd:'EXPLAIN ANALYZE analytics_query',output:['Seq Scan on events  (actual time=0.041..482.012 rows=128400 loops=1)','Planning Time: 0.8 ms','Execution Time: 482.4 ms'],exitCode:0,durationMs:45000},{at:2.3,text:'Generated 128,400 fixture rows',cmd:'pm fixture generate analytics_query --rows 128400',output:['generated 128400 fixture rows','wrote scratch/analytics_query.sql'],exitCode:0,durationMs:12000}]},
+        { ref:'agents', startAt:33.5, dur:4.5, stat:'2 agents',
+          agents:[{ref:'agent-query',status:'working',current:'Comparing index selectivity'},{ref:'agent-schema',status:'working',current:'Walking migration history'}],
+          rows:[{at:0.5,text:'Query Analyzer · comparing index selectivity',tag:'running', agentId:'agent-query'},{at:2.1,text:'Schema Reviewer · walking migration history',tag:'running', agentId:'agent-schema'}]},
+        { ref:'edit', startAt:38, dur:4, stat:'2 files · +106 −23',
+          rows:[{at:0.5,text:'Edited migrations/0043_composite_index.sql',add:84,del:17, path:'migrations/0043_tenant_created_index.sql'},{at:2.3,text:'Edited src/analytics/queries.rs',add:22,del:6, path:'src/analytics/queries.rs'}]},
+        { ref:'bash', startAt:42, dur:3.5, stat:'1 benchmark',
+          rows:[{at:0.5,text:'Ran cargo bench analytics_query -- --candidate',tag:'p95 74 ms',cmd:'cargo bench analytics_query -- --candidate',output:['analytics_query/candidate  time: [71.2 ms 74.0 ms 76.8 ms]','p95 74 ms'],exitCode:0,durationMs:105000}]},
+        { ref:'search', startAt:45.5, dur:3, stat:'1 search · 6 results',
+          rows:[{at:0.4,text:'Searched "autovacuum analyze threshold after create index"',tag:'6 results', query:'autovacuum analyze threshold after create index'}]},
+        { ref:'fetch', startAt:48.5, dur:3, stat:'1 page',
+          rows:[{at:0.4,text:'PostgreSQL 16 · Routine Vacuuming',url:'postgresql.org'}]},
+        { ref:'edit', startAt:51.5, dur:3.5, stat:'1 file · +41',
+          rows:[{at:0.5,text:'Created src/analytics/index_hints.rs',add:41, path:'src/analytics/index_hints.rs'}]},
+        { ref:'app', startAt:55, dur:3, stat:'1 inspector',
+          rows:[{at:0.5,text:'Refreshed schema metadata in the database inspector', doc:'app:inspector'},{at:1.9,text:'Planner selects idx_events_tenant_created',tag:'confirmed', doc:'app:inspector'}]},
+        { ref:'test', startAt:58, dur:4, stat:'14 assertions',
+          rows:[{at:0.5,text:'Replayed the dashboard workflow at 1440 px',tag:'pass', artifactId:'test-evidence'},{at:2.3,text:'Replayed at 720 px compact width',tag:'pass', artifactId:'test-evidence'}]},
+        { ref:'agents', startAt:62, dur:3.5, stat:'2 agents done',
+          agents:[{ref:'agent-query',status:'complete',current:'Selectivity report returned'},{ref:'agent-schema',status:'complete',current:'No schema conflicts found'}],
+          rows:[{at:0.5,text:'Query Analyzer · returned the selectivity report',tag:'done', agentId:'agent-query'},{at:1.9,text:'Schema Reviewer · no schema conflicts',tag:'done', agentId:'agent-schema'}]},
+        { ref:'validate', startAt:65.5, dur:3.5, stat:'42 checks',
+          rows:[{at:0.5,text:'42 tests passed',tag:'green',cmd:'cargo test && cargo clippy && pm audit',output:['test result: ok. 42 passed; 0 failed','Finished `test` profile'],exitCode:0,durationMs:82000},{at:2.1,text:'LSP diagnostics clean'}]},
+        { id:'skill', kind:'skill', label:'Skill', icon:'wand', startAt:69, dur:3.5, stat:'1 skill run',
+          verb:'Running /benchmark-report', detail:'The report skill assembles the before/after evidence into one artifact.',
+          rows:[{at:0.4, stream:true, text:'The skill pulls the EXPLAIN baselines, the bench numbers, and the write-amplification series into the standard benchmark-report layout — one artifact instead of four screenshots.'},{at:2.2, text:'Opened the Query Optimization Report', artifactId:'report-query'}]},
+        { ref:'render', startAt:72.5, dur:3.5, stat:'2 artifacts',
+          rows:[{at:0.5,text:'Rendered the benchmark comparison dashboard', artifactId:'dashboard-query'},{at:2.1,text:'Rendered the rollout order diagram',tag:'mermaid', artifactId:'mermaid-runtime'}]},
+        { id:'mcp', kind:'mcp', label:'MCP', icon:'plug', startAt:76, dur:3, stat:'1 MCP call',
+          verb:'Calling linear.update-issue', detail:'Closing the loop on the tracking issue over MCP with the artifact attached.',
+          rows:[{at:0.4,text:'Called linear.update-issue — PERF-218 → "index landed"',tag:'mcp', tool:'linear.update-issue'},{at:1.8,text:'Attached the benchmark artifact link', artifactId:'dashboard-query'}]},
+        { ref:'bash', startAt:79, dur:3, stat:'1 profile',
+          rows:[{at:0.5,text:'Re-profiled under concurrent writes',tag:'+4.8% writes',cmd:'cargo bench analytics_query -- --writes concurrent',output:['write amplification +4.8%','p95 still 71 ms under concurrent writes'],exitCode:0,durationMs:88000}]},
+        { ref:'validate', startAt:82, dur:3, stat:'benchmark gate',
+          rows:[{at:0.5,text:'p95 482 ms → 71 ms',tag:'−86%', artifactId:'dashboard-query'}]},
+        { ref:'complete', startAt:85, dur:3, stat:'evidence ready',
+          rows:[{at:0.5, stream:true, text:'Both moves are in: the concurrent index landed outside the transaction wrapper, the fan-out is batched, and the write cost is measured rather than estimated.'}]}
+      ]
+    },
+    queueA: {
+      title: 'Working while follow-ups wait',
+      receipt: ['queue holds 2','Edit · Send now'],
+      steps: [
+        { ref:'think', startAt:0, dur:8, stat:'1 reasoning pass',
+          rows:[{at:0.4, stream:true, text:'The agent is busy. New sends wait in the follow-up queue under the activity bar — FIFO, two deep. Stop does not auto-send the next one.'}]},
+        { ref:'search', startAt:8, dur:8, stat:'2 searches',
+          rows:[{at:0.5, text:'Searched "follow-up queue while agent is working"', query:'follow-up queue while agent is working'},{at:3.2, text:'Send now steers; Edit returns the draft to the composer', query:'follow-up queue while agent is working'}]},
+        { ref:'files', startAt:16, dur:8, stat:'2 files',
+          rows:[{at:0.4, text:'Read composer queue contract', path:'docs/composer-queue.md'},{at:3.1, text:'Confirmed max 2 · Stop does not flush'}]},
+        { ref:'complete', startAt:24, dur:8, stat:'queue still waiting',
+          rows:[{at:0.5, stream:true, text:'When this run completes, the first queued message sends on its own. Stop would leave both rows waiting.'}]}
+      ]
+    }
   };
 
 
@@ -1395,7 +1571,9 @@
 
      Three fields added: `order_index` (stable ordering that survives a
      replan), `dependencies` (todo ids that must finish first), and
-     `goalPhaseId`.
+     `goalPhaseId`. `threadId` is stamped on every todo (`query` for this
+     fixture) so the activity bar can hide Todo on threads that never
+     owned a checklist.
 
      GOAL LINKAGE: the join is a foreign key ON THE TODO and nowhere else.
      `goalPhaseId` records the goal phase that was current when the todo
@@ -1405,7 +1583,7 @@
      no goal at all. The `goal` record itself is authored by the Wave 2
      Goals agent in goals.js, not here.
      ===================================================================== */
-  const todo = (o) => ({ blocker:null, dependencies:[], goalId:null, goalPhaseId:null, ...o, statusLabel:labels.todoStatus[o.status] });
+  const todo = (o) => ({ blocker:null, dependencies:[], goalId:null, goalPhaseId:null, threadId:'query', ...o, statusLabel:labels.todoStatus[o.status] });
 
   const todos = [
     todo({ id:'t1', order_index:1, label:'Measure the current tenant-scoped query path', status:'completed',
@@ -1502,6 +1680,41 @@
     attachments:  { family:'Attachments and images',    colour:'var(--user)' }
   };
 
+  const CONTEXT_RAW_HASHES = {
+    query:'8c0b494b70bea32cf7567ccea7cf753a27558ce5c84a8037e33dc2e4209ed890',
+    plain:'095e01fa850b2d4f0e1260da348d5947c62ba5f957bf3d2a03d25640f8775fb6',
+    subagents:'ea1f682b656f24fd1f68e4f0c05c7529966aed9d3d17366be787fbd5e0cf6019',
+    debug:'cc22190cb57408004b9c365f02482384aa711c58412898fad7df534c4afb09a9',
+    context:'dc297e3426f8fa2e7e868c35ac41d6d30feac70e0cffa9d9ef741e8db00a4660',
+    'no-models':'30e71fd2e57dfe43f84d04abd36ef6a49d4fc0c91e0a9b0760f9d00307298efe'
+  };
+  function providerForConnection(connection) {
+    if (!connection || connection === 'none') return 'unavailable';
+    if (connection.startsWith('anthropic')) return 'Anthropic';
+    if (connection.startsWith('kimi')) return 'Moonshot';
+    if (connection.startsWith('qwen')) return 'Alibaba';
+    if (connection.startsWith('zai')) return 'z.ai';
+    return 'configured provider';
+  }
+  function routeRecord(spec) {
+    const effective = {
+      provider:providerForConnection(spec.connection), product:'Puppet Master Pro',
+      connection:spec.connection, model:spec.model, account:spec.account
+    };
+    const requested = spec.requestedRoute || { ...effective };
+    const history = spec.fallbackHistory || [];
+    return {
+      requested,
+      effective,
+      fallback:{
+        used:history.length > 0,
+        identity:history.length ? `${requested.provider} to ${effective.provider}` : 'none',
+        reason:spec.fallbackReason || (history.length ? 'The requested route was unavailable.' : 'Requested and effective routes match.'),
+        history
+      }
+    };
+  }
+
   /* mix: [familyId, tokens, superseded, detail] */
   function contextRecord(spec) {
     const used = spec.mix.reduce((s, m) => s + m[1], 0);
@@ -1517,7 +1730,9 @@
     });
     const cached = Math.round(used * spec.cacheHitPct / 100);
     return {
+      schemaVersion:1,
       threadId: spec.threadId,
+      contextEpoch:`context:${spec.threadId}:fixture-epoch-1`,
       sources,
       window: {
         limit: spec.limit, used,
@@ -1531,6 +1746,24 @@
         growth: spec.growth.map((g) => ({ at: at(g[0]), tokens: g[1] }))
       },
       compactionPreview: spec.compaction,
+      route: routeRecord(spec),
+      compaction:{ schemaVersion:1, revision:0, state:'idle', history:[] },
+      commandResults:[],
+      dispatchReceipts:[],
+      eventRecords:[],
+      historicalUsageTotals:{
+        fixtureOnly:true, usageRecords:spec.historicalUsageRecords || 12,
+        inputTokens:spec.historicalInputTokens || (used * 3 + spec.inputThisTurn),
+        outputTokens:spec.historicalOutputTokens || (spec.outputThisTurn * 9),
+        settledCostUsd:spec.historicalSettledCostUsd == null ? Number((spec.costApiUsd * 9).toFixed(3)) : spec.historicalSettledCostUsd
+      },
+      rawProjection:{
+        rawPayloadRef:`raw-context:${spec.threadId}:redacted`,
+        redactionStatus:'redacted',
+        providerPayloadHash:CONTEXT_RAW_HASHES[spec.threadId],
+        omittedEvidenceCounts:{secrets:2,credentials:1,accountIdentifiers:1,localPaths:1},
+        permissionState:'redacted_view_allowed'
+      },
       /* u11's plan-limits block: product and connection meters with reset
          times. Invented for this concept, not ported. */
       limits: spec.limits
@@ -1539,7 +1772,7 @@
 
   const contextByThread = {};
   [
-    { threadId:'query', limit:131000, cacheHitPct:78, inputThisTurn:12840, outputThisTurn:1486,
+    { threadId:'query', limit:131000, cacheHitPct:78.34, inputThisTurn:12840, outputThisTurn:1486,
       connection:'anthropic-work', model:'Claude Sonnet 4.6', account:'Work · anthropic-work',
       costApiUsd:0.084, costPlanUsd:0.031,
       mix:[
@@ -1606,6 +1839,9 @@
 
     { threadId:'debug', limit:200000, cacheHitPct:52, inputThisTurn:8600, outputThisTurn:640,
       connection:'kimi-main', model:'Kimi K3', account:'Kimi Coding · kimi-main',
+      requestedRoute:{provider:'Anthropic',product:'Puppet Master Pro',connection:'anthropic-work',model:'Claude Sonnet 4.6',account:'Work · anthropic-work'},
+      fallbackReason:'The requested Anthropic route was unavailable during the browser-debug turn.',
+      fallbackHistory:[{attempt:1,requestedProvider:'Anthropic',effectiveProvider:'Moonshot',reason:'requested route unavailable'}],
       costApiUsd:0.032, costPlanUsd:0.011,
       mix:[
         ['conversation', 12400, 0,    '16 debugging turns, mostly short.'],
@@ -1626,6 +1862,9 @@
 
     { threadId:'context', limit:131000, cacheHitPct:83, inputThisTurn:4200, outputThisTurn:1120,
       connection:'kimi-main', model:'Kimi K3', account:'Kimi Coding · kimi-main',
+      requestedRoute:{provider:'Anthropic',product:'Puppet Master Pro',connection:'anthropic-work',model:'Claude Sonnet 4.6',account:'Work · anthropic-work'},
+      fallbackReason:'The requested route was quota-limited, so the configured Moonshot fallback continued the same thread.',
+      fallbackHistory:[{attempt:1,requestedProvider:'Anthropic',effectiveProvider:'Moonshot',reason:'requested account quota-limited'}],
       costApiUsd:0.014, costPlanUsd:0.006,
       mix:[
         ['conversation', 16800, 3400, '12 turns; 3,400 tokens are already muted and retained for rehydration.'],
@@ -1646,6 +1885,9 @@
 
     { threadId:'no-models', limit:128000, cacheHitPct:0, inputThisTurn:0, outputThisTurn:0,
       connection:'none', model:'No configured model', account:'—',
+      requestedRoute:{provider:'z.ai',product:'Puppet Master Pro',connection:'unavailable',model:'GLM-5',account:'redacted'},
+      fallbackReason:'No configured provider route was authenticated or available.',
+      fallbackHistory:[{attempt:1,requestedProvider:'z.ai',effectiveProvider:'unavailable',reason:'authentication unavailable'}],
       costApiUsd:0, costPlanUsd:0,
       mix:[
         ['conversation',  2100, 0, 'Two turns before the route failed.'],
@@ -1667,17 +1909,19 @@
   const contextWindow = contextByThread.query.window;
   const contextCompaction = contextByThread.query.compactionPreview;
 
-  /* The seven outcomes a Compact Now state machine has to be able to
-     report. "Compact Now" that always succeeds is a placeholder, not a
-     concept. */
+  /* Visible demo outcomes cover every canonical cmd.chat.compact_context
+     command-result status. The UI id preserves the human wording already used
+     by this prototype; `status` is the production-facing result vocabulary. */
   const compactionOutcomes = [
-    { id:'completed', tone:'ok', title:'Context compacted', detail:'Removed 18,420 tokens. 65,480 loaded. Every dropped source kept its rehydration handle.' },
-    { id:'no-gain', tone:'info', title:'Nothing to compact', detail:'No superseded or duplicated sources were found. The window is already minimal.' },
-    { id:'partial', tone:'ok', title:'Partly compacted', detail:'Removed 6,100 of a possible 18,420 tokens. The rest is pinned by active requirements.' },
-    { id:'deferred', tone:'info', title:'Deferred', detail:'A turn is in flight. Compaction will run once it completes rather than mid-stream.' },
-    { id:'timed-out', tone:'warn', title:'Timed out', detail:'The compaction pass exceeded 30s and was abandoned. Nothing was changed.' },
-    { id:'failed', tone:'warn', title:'Compaction failed', detail:'A source could not be re-read, so the pass was rolled back rather than applied partially.' },
-    { id:'declined', tone:'info', title:'Not recommended', detail:'This thread is at 38% of its window. Compaction is available but would cost more provenance than it saves.' }
+    { id:'completed', status:'completed', tone:'ok', title:'Context compacted', detail:'Removed 18,420 tokens. 65,480 loaded. Every dropped source kept its rehydration handle.' },
+    { id:'no-gain', status:'no_op', tone:'info', title:'Nothing to compact', detail:'No superseded or duplicated sources were found. The window is already minimal.' },
+    { id:'partial', status:'degraded', tone:'ok', title:'Partly compacted', detail:'Removed 6,100 of a possible 18,420 tokens. The rest is pinned by active requirements.' },
+    { id:'deferred', status:'retry_scheduled', tone:'info', title:'Retry scheduled', detail:'A turn is in flight. Compaction will run once it completes rather than mid-stream.' },
+    { id:'timed-out', status:'unavailable', tone:'warn', title:'Temporarily unavailable', detail:'The compaction pass exceeded its budget and was abandoned. Nothing was changed.' },
+    { id:'failed', status:'failed', tone:'warn', title:'Compaction failed', detail:'A source could not be re-read, so the pass was rolled back rather than applied partially.' },
+    { id:'declined', status:'cancelled', tone:'info', title:'Not recommended', detail:'This thread is at 38% of its window. Compaction is available but would cost more provenance than it saves.' },
+    { id:'started', status:'started', tone:'info', title:'Compaction started', detail:'The command was admitted and its source-aware pass is now running.' },
+    { id:'already-running', status:'already_running', tone:'info', title:'Already running', detail:'This thread already has an active compaction pass, so no second pass was started.' }
   ];
 
 
@@ -1711,7 +1955,8 @@
     { id:'kimi-main',         provider:'Moonshot',  label:'Kimi Coding',  connection:'kimi-main',         plan:'Coding',      addedAt:at(-10080), default:true },
     { id:'zai-primary',       provider:'z.ai',      label:'Primary',      connection:'zai-primary',       plan:'Pro',         addedAt:at(-7200),  default:true },
     { id:'zai-research',      provider:'z.ai',      label:'Research',     connection:'zai-research',      plan:'Research',    addedAt:at(-1440),  default:false },
-    { id:'cursor-pro',        provider:'Cursor',    label:'Pro',          connection:'cursor-pro',        plan:'Pro seat',    addedAt:at(-5760),  default:true }
+    { id:'cursor-pro',        provider:'Cursor',    label:'Pro',          connection:'cursor-pro',        plan:'Pro seat',    addedAt:at(-5760),  default:true },
+    { id:'openai-work',       provider:'OpenAI',    label:'Work',         connection:'openai-work',       plan:'Team',        addedAt:at(-8640),  default:true }
   ];
 
   const model = (o) => ({
@@ -1738,6 +1983,12 @@
     model({ id:'sonnet45-archive', name:'Claude Sonnet 4.5', provider:'Anthropic', accountId:'anthropic-archive', account:'Archive · anthropic-archive',
       favorite:false, fast:false, efforts:['Low','Medium','High'], context:131000, status:'expired',
       statusDetail:'The stored credential for this account expired 3 days ago. Re-authenticate in Provider Settings; nothing is lost.' }),
+
+    /* OpenAI -- Work account, GPT-5.3 and GPT-5 Mini. */
+    model({ id:'gpt53', name:'GPT-5.3', provider:'OpenAI', accountId:'openai-work', account:'Work · openai-work',
+      favorite:true, fast:true, efforts:['Low','Medium','High','Max'], context:128000, status:'ready' }),
+    model({ id:'gpt5-mini', name:'GPT-5 Mini', provider:'OpenAI', accountId:'openai-work', account:'Work · openai-work',
+      favorite:false, fast:true, efforts:['Low','Medium','High'], context:128000, status:'ready' }),
 
     /* Alibaba -- two accounts, and Qwen 3.8 on both. */
     model({ id:'qwen38', name:'Qwen 3.8', provider:'Alibaba', accountId:'qwen-coder', account:'Coding Plan · qwen-coder',
@@ -1769,6 +2020,16 @@
   ];
 
   const accountsNeedingAttention = accounts.filter((a) => models.some((m) => m.accountId === a.id && m.needsAttention));
+  /* Compact chrome uses the human nickname only. Connection ids stay on
+     the account record and on Context More Details. */
+  function accountNick(accountId, accountStr){
+    const a = accountId && accounts.find((x) => x.id === accountId);
+    if (a && a.label) return a.label;
+    const s = String(accountStr || '');
+    const cut = s.indexOf(' · ');
+    if (cut > 0) return s.slice(0, cut);
+    return s;
+  }
 
 
   /* =====================================================================
@@ -2079,8 +2340,9 @@
 
 
   /* =====================================================================
-     threads[] -- 59 messages across 24 threads (16 of them with two or
-     fewer) -> every thread at 12 or more, and one long-history thread.
+     threads[] -- one conversation per fixture thread, every thread at 12 or
+     more except short demos (Queued Message Demo, Multi Orbit), plus one
+     long-history thread.
 
      TWO BUGS FIXED HERE:
        1. `plainConversation` was ONE array shared by reference between
@@ -2130,6 +2392,31 @@
       ['a','One migration caveat worth catching now: CREATE INDEX CONCURRENTLY takes two table passes and cannot run inside a transaction block. This repository wraps every migration file in a transaction, so 0043 has to be split out and marked no-transaction. That is revision 4 of the plan.'],
       ['e','artifact',{ artifactId:'dashboard-query' }],
       ['u','Good. Add the concurrent-write-load check to the todo list and open the PR once tests are green.']
+    ]) });
+
+  /* One request, several work bursts: the Multi Orbit demo thread. The turn's
+     later messages carry `revealAfter` (a workRuns id) and stay hidden until
+     that run completes; app.js starts orbitA when the thread is entered and
+     chains orbitB through workRuns.orbitA.next, compacting the finished card
+     when its successor spawns. */
+  thread({ id:'orbit-run', title:'Multi Orbit demo', status:'working', pinned:true, updated:'1m',
+    model:'Claude Sonnet 4.6', worktree:'feature/query-index',
+    summary:'One assistant turn with two scripted Orbit work bursts.',
+    messages:turns('orbit-run', { route:'sonnet', startMin:388, mode:'agent', persona:'Product Manager', contextStart:11800 }, [
+      ['u','Roll out the composite-index change end to end. Confirm the scope first, then implement it with verification at every step.'],
+      ['e','working',{ workId:'orbitA', title:'Scoping the rollout' }],
+      ['a','Scope is confirmed and it is a two-move rollout: the concurrent index has to land outside the migration transaction wrapper, and nothing in the batching change depends on it. Implementing now — the burst below is the whole rollout with verification inline.',{ revealAfter:'orbitA' }],
+      ['e','working',{ workId:'orbitB', title:'Implementing the rollout', revealAfter:'orbitA' }],
+      ['a','Done. The composite index landed first as its own no-transaction migration, the N+1 fan-out is batched behind it, and the verification is in the burst above: 42 tests green, p95 482 ms → 71 ms, write cost +4.8% measured over 50,000 inserts. Either work summary reopens its orbit on any subject.',{ revealAfter:'orbitB' }]
+    ]) });
+
+  thread({ id:'queue-demo', title:'Queued Message Demo', status:'working', pinned:true, updated:'now',
+    model:'Claude Sonnet 4.6', worktree:'feature/query-index',
+    summary:'Agent is working; two follow-ups wait in the queue under the activity bar.',
+    messages:turns('queue-demo', { route:'sonnet', startMin:538, mode:'agent', persona:'Product Manager', contextStart:9800 }, [
+      ['u','Keep going on the composite-index rollout. I will send the next two instructions while you work.'],
+      ['e','working',{ workId:'queueA', title:'Working while follow-ups wait' }],
+      ['a','Understood — I will keep this run moving. Your next two messages wait in the follow-up queue until this finishes, unless you Send now or Edit them.',{ revealAfter:'queueA' }]
     ]) });
 
   /* The long-history thread: 26 turns, no tools, no cards, no artifacts.
@@ -2704,7 +2991,7 @@
     /* enum -> human copy; no raw enum value is ever user-facing */
     labels,
     /* working animation */
-    workSteps, phaseMeta, phaseRows, phaseGroups,
+    workSteps, phaseMeta, phaseRows, phaseGroups, workRuns,
     /* activity domains */
     artifacts, subagents, subagentGroups, todos, changes,
     /* conversation */
@@ -2712,7 +2999,7 @@
     /* context (consumed by the Wave 3 Context agent) */
     contextSources, contextWindow, contextCompaction, contextByThread, compactionOutcomes,
     /* configuration */
-    recipes, themes, models, accounts, accountsNeedingAttention,
+    recipes, themes, models, accounts, accountsNeedingAttention, accountNick,
     questions, questionFlows, questionQueueDepth,
     /* operations */
     operational, warnings, scriptedReplies, drafts,
@@ -2738,7 +3025,7 @@
     workingTakes: D0.workingTakes.slice(),
     transcriptTakes: D0.transcriptTakes.slice(),
     decisions: ['Approve', 'Revise', 'Build', 'Questionnaire', 'Permission', 'Conflict'],
-    messageActions: ['Copy', 'Edit and branch', 'Re-answer', 'More details'],
+    messageActions: ['Copy', 'Edit and branch', 'More details'],
     threadActions: ['Pin', 'Rename', 'Fork', 'Archive', 'Restore', 'Search'],
     demoThreads: D0.threads.map((t) => t.title),
     artifactKinds: uniq(D0.artifacts.map((a) => a.kind)).map(cap),

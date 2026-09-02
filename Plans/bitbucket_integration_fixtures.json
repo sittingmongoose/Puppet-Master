@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.bitbucket.integration_fixtures.v1",
+  "owner_schema": "Plans/forge_integration_contracts.schema.json",
+  "valid": [
+    {
+      "name": "bitbucket_cloud_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "bitbucket_cloud",
+        "provider_variant": "bitbucket_cloud",
+        "host_class": "cloud",
+        "account_container_kind": "workspace",
+        "repository_container_kind": "workspace_repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "pipeline",
+        "auth_methods": ["oauth", "pat_ref", "ssh_ref"],
+        "required_capabilities": ["repository", "review", "transport"],
+        "optional_capabilities": ["review_threads", "pipelines", "checks", "issues", "webhooks"],
+        "version_or_tier_gate": "bitbucket_cloud_live_capability_probe",
+        "official_page_route_ref": "official-page:bitbucket-cloud:connect",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": ["workspace_access_denied", "plan_limit", "pipeline_disabled"]
+      }
+    },
+    {
+      "name": "bitbucket_data_center_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "bitbucket_data_center",
+        "provider_variant": "bitbucket_data_center",
+        "host_class": "self_managed",
+        "account_container_kind": "organization",
+        "repository_container_kind": "project_repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "checks",
+        "auth_methods": ["pat_ref", "ssh_ref"],
+        "required_capabilities": ["repository", "review", "transport"],
+        "optional_capabilities": ["review_threads", "checks", "issues", "apps", "webhooks"],
+        "version_or_tier_gate": "signed_bitbucket_data_center_version_license_entry",
+        "official_page_route_ref": "official-page:bitbucket-data-center:connect",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": "catalog:bitbucket-data-center:generation-7",
+        "unsupported_reason_codes": ["host_not_in_signed_catalog", "server_version_unsupported", "license_limit", "pipelines_not_a_data_center_capability"]
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "cloud_and_data_center_are_not_one_provider",
+      "definition": "provider_adapter_profile",
+      "expected_error": "generic bitbucket provider identity is forbidden",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "bitbucket",
+        "provider_variant": "auto",
+        "host_class": "cloud",
+        "account_container_kind": "workspace",
+        "repository_container_kind": "repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "pipeline",
+        "auth_methods": ["oauth"],
+        "required_capabilities": ["repository"],
+        "optional_capabilities": [],
+        "version_or_tier_gate": "none",
+        "official_page_route_ref": "official-page:bitbucket",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": []
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Shard Index: Plans/FileManager.md
 
-Generated: 2026-08-18T03:40:28Z
+Generated: 2026-08-30T00:17:00Z
 
 Source SHA256: `75c16d913e9410c6988a1e4d67c8bd9a03bf60216e0640aea83d5c0db65109bd`
 

@@ -178,22 +178,50 @@ if(REDUCED){
         'All nine motion signatures differ', anims);
 }
 
-/* THE HOVER BUG (styles.css:123): the spinner used to fade to opacity 0 under
-   the cursor.  Assert in pixels, not in computed style: hover the row and prove
-   the glyph is still the element returned at its own centre and still paints. */
-await sec('item3: status survives row hover', async()=>{
+/* Row hover: status slot hides, menu appears in the left lead cell. */
+await sec('item3: row hover swaps status for menu', async()=>{
   const row='.history-flyout .thread-row';
-  const rest = await paint('.history-flyout .thread-row .ph-status');
+  const slot=page.locator('.history-flyout .thread-row .thread-status-slot').first();
+  const more=page.locator('.history-flyout .thread-row .thread-more').first();
+  const restOp=await slot.evaluate(el=>getComputedStyle(el).opacity);
+  const restMore=await more.evaluate(el=>getComputedStyle(el).opacity);
+  check(Number(restOp)===1 && Number(restMore)<0.5,
+        'Status visible at rest; menu hidden',
+        {restOp,restMore});
   await page.locator(row).first().hover();
   await page.waitForTimeout(320);
-  const op = await page.locator('.history-flyout .thread-row .thread-status-slot').first()
-                       .evaluate(el=>getComputedStyle(el).opacity);
-  const hovered = await paint('.history-flyout .thread-row .ph-status');
-  const hit = await hitsSelf('.history-flyout .thread-row .ph-status');
-  check(Number(op)===1 && hit && hovered && hovered.distinct>1,
-        'Status indicator survives row hover (styles.css:123 fade defeated)',
-        {opacity:op,hit,rest:rest&&rest.distinct,hovered:hovered&&hovered.distinct});
+  const hoverOp=await slot.evaluate(el=>getComputedStyle(el).opacity);
+  const hoverMore=await more.evaluate(el=>getComputedStyle(el).opacity);
+  const hitMore=await hitsSelf('.history-flyout .thread-row .thread-more');
+  const pos=await page.locator(row).first().evaluate(el=>{
+    const lead=el.querySelector('.thread-lead');
+    const copy=el.querySelector('.thread-copy');
+    const btn=el.querySelector('.thread-more');
+    return {moreLeft:btn.getBoundingClientRect().left,copyLeft:copy.getBoundingClientRect().left,
+            inLead:!!(lead&&lead.contains(btn))};
+  });
+  check(Number(hoverOp)<0.5 && Number(hoverMore)>0.9 && hitMore && pos.inLead && pos.moreLeft<pos.copyLeft,
+        'Row hover hides status and reveals menu in left lead',
+        {hoverOp,hoverMore,hitMore,pos});
   await page.mouse.move(4,4); await page.waitForTimeout(200);
+});
+
+await sec('item3: narrow hides status and time at rest', async()=>{
+  await page.evaluate(()=>{
+    const f=document.querySelector('.history-flyout');
+    if(f) f.classList.add('is-history-narrow');
+  });
+  const slot=page.locator('.history-flyout .thread-row .thread-status-slot').first();
+  const time=page.locator('.history-flyout .thread-row .thread-time').first();
+  const slotDisp=await slot.evaluate(el=>getComputedStyle(el).display);
+  const timeDisp=await time.evaluate(el=>getComputedStyle(el).display);
+  check(slotDisp==='none' && timeDisp==='none',
+        'Narrow mode hides status slot and timestamp at rest',
+        {slotDisp,timeDisp});
+  await page.evaluate(()=>{
+    const f=document.querySelector('.history-flyout');
+    if(f) f.classList.remove('is-history-narrow');
+  });
 });
 
 /* ROW PADDING actually decreased.  Measured as a real before/after in the same
@@ -508,6 +536,17 @@ await sec('item4: unpin restores the scrim', async()=>{
         'UNPIN restores the scrim (the reference\'s sibling defect, fixed)', u);
   check(u.w>afterPin.w+40 && Math.abs(u.x-u.paneLeft)<2, 'UNPIN widens in place', u);
   check(u.present && u.mode==='open' && (u.gutter||0)<1, 'Gutter collapses on unpin', u);
+});
+await sec('item4: unpin shows chat-header history controls', async()=>{
+  const vis=await page.evaluate(()=>{
+    const hist=document.querySelector('.chat-header [data-action="toggle-history"]');
+    const neu=document.querySelector('.chat-header [data-action="new-thread"]');
+    if(!hist||!neu) return {ok:false,reason:'missing'};
+    const hCs=getComputedStyle(hist), nCs=getComputedStyle(neu);
+    return {ok:hCs.display!=='none'&&nCs.display!=='none'&&hist.offsetWidth>0&&neu.offsetWidth>0,
+            hist:hCs.display,neu:nCs.display};
+  });
+  check(vis.ok,'Unpinned drawer shows history + new-thread in chat header',vis);
 });
 /* Re-pin, then prove the EXPLICIT toggle closes a pinned drawer. */
 await click('[data-action="ph-toggle-pin"]');

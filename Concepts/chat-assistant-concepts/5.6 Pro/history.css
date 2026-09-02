@@ -29,18 +29,35 @@
 .ph-status .ph-ring{ position:absolute; inset:0; border-radius:50%; border:1px solid var(--border-strong); box-sizing:border-box; }
 .ph-status .ph-mark{ position:absolute; left:50%; top:50%; width:5px; height:5px; margin:-2.5px 0 0 -2.5px; border-radius:50%; background:currentColor; }
 
-/* working — unchanged from .status-orbit (styles.css:133).  The requester's
-   current top pick; it matches the Orbit working animation. */
+/* working / reviewing satellites. The 15px ring is centered at 7.5,7.5; the
+   old left:5 / top:-2 / origin 2px 9px orbited around 7,7, so the pip drifted
+   on and off the stroke. Park the 4px pip on the ring center, then
+   translateY(-7.5px) onto the outer edge and rotate — radius stays constant. */
 .ph-s-working{ color:var(--accent); }
-.ph-s-working .ph-mark{ left:5px; top:-2px; margin:0; width:4px; height:4px; transform-origin:2px 9px; animation:spin 1.7s linear infinite; }
+.ph-s-working .ph-mark{
+  left:50%; top:50%; width:4px; height:4px; margin:-2px 0 0 -2px;
+  transform-origin:center; transform:rotate(0deg) translateY(-7.5px);
+  animation:ph-orbit 1.7s linear infinite;
+}
+@keyframes ph-orbit{
+  from{ transform:rotate(0deg) translateY(-7.5px) }
+  to{ transform:rotate(360deg) translateY(-7.5px) }
+}
 
-/* reviewing — the same satellite, but sweeping BACK AND FORTH over the top
+/* reviewing — the same outer satellite, sweeping BACK AND FORTH over the top
    arc instead of running the full circle: going back over ground already
    covered.  `alternate` + a symmetric ease is the whole signature. */
 .ph-s-reviewing{ color:var(--accent-2); }
 .ph-s-reviewing .ph-ring{ border-color:color-mix(in srgb,var(--accent-2) 55%,var(--border-strong)); }
-.ph-s-reviewing .ph-mark{ left:5px; top:-2px; margin:0; width:4px; height:4px; transform-origin:2px 9px; animation:ph-sweep 1.9s cubic-bezier(.42,0,.58,1) infinite alternate; }
-@keyframes ph-sweep{ from{ transform:rotate(-125deg) } to{ transform:rotate(125deg) } }
+.ph-s-reviewing .ph-mark{
+  left:50%; top:50%; width:4px; height:4px; margin:-2px 0 0 -2px;
+  transform-origin:center; transform:rotate(-125deg) translateY(-7.5px);
+  animation:ph-sweep 1.9s cubic-bezier(.42,0,.58,1) infinite alternate;
+}
+@keyframes ph-sweep{
+  from{ transform:rotate(-125deg) translateY(-7.5px) }
+  to{ transform:rotate(125deg) translateY(-7.5px) }
+}
 
 /* waiting — a dashed ring turning slowly (six seconds for one revolution)
    around a dot that breathes.  Patient, not busy. */
@@ -55,26 +72,37 @@
 .ph-s-idle .ph-ring{ border-color:color-mix(in srgb,var(--positive) 40%,var(--border)); animation:ph-breathe 3.2s ease-in-out infinite; }
 @keyframes ph-breathe{ 0%,100%{ transform:scale(.86); opacity:.55 } 50%{ transform:scale(1); opacity:1 } }
 
-/* complete — terminal, so it does NOT loop: the check draws itself once when
-   the status arrives (pmPatch swaps the class on the same keyed node, which
-   restarts the animation).  Two strokes, one 320ms timeline each, the second
-   held at scaleX(0) for its first third — a keyframe offset, NOT an
-   animation-delay, so nothing here can be mistaken for the `--spring`
-   delay defect the orchestrator swept for. */
+/* complete / paused / failed — 15×15 SVGs. Higher specificity than the
+   default .ph-status .ph-mark (left:50% / 5px) so the box cannot drift. */
+.ph-status.ph-s-complete .ph-mark,
+.ph-status.ph-s-paused .ph-mark,
+.ph-status.ph-s-failed .ph-mark{
+  inset:0; left:0; top:0; right:0; bottom:0;
+  width:15px; height:15px; margin:0;
+  background:none; border-radius:0; overflow:visible; line-height:0;
+}
+.ph-status.ph-s-complete .ph-mark svg,
+.ph-status.ph-s-paused .ph-mark svg,
+.ph-status.ph-s-failed .ph-mark svg{
+  display:block; width:15px; height:15px; overflow:visible;
+}
+.ph-status.ph-s-complete .ph-mark::before, .ph-status.ph-s-complete .ph-mark::after,
+.ph-status.ph-s-paused .ph-mark::before, .ph-status.ph-s-paused .ph-mark::after,
+.ph-status.ph-s-failed .ph-mark::before, .ph-status.ph-s-failed .ph-mark::after{
+  content:none; display:none;
+}
+
+/* complete — terminal draw-once check. */
 .ph-s-complete{ color:var(--positive); }
 .ph-s-complete .ph-ring{ border-color:color-mix(in srgb,var(--positive) 62%,var(--border)); background:color-mix(in srgb,var(--positive) 16%,transparent); }
-.ph-s-complete .ph-mark{ left:0; top:0; width:100%; height:100%; margin:0; background:none; border-radius:0; }
-.ph-s-complete .ph-mark::before,.ph-s-complete .ph-mark::after{ content:""; position:absolute; background:var(--positive); border-radius:1px; transform-origin:left center; }
-.ph-s-complete .ph-mark::before{ left:3.4px; top:7.2px; width:4.2px; height:1.7px; transform:rotate(45deg); animation:ph-draw-a 320ms var(--pm-ease-out) both; }
-.ph-s-complete .ph-mark::after{ left:6.2px; top:9.4px; width:6.8px; height:1.7px; transform:rotate(-54deg); animation:ph-draw-b 320ms var(--pm-ease-out) both; }
-@keyframes ph-draw-a{ 0%{ transform:rotate(45deg) scaleX(0) } 34%,100%{ transform:rotate(45deg) scaleX(1) } }
-@keyframes ph-draw-b{ 0%,34%{ transform:rotate(-54deg) scaleX(0) } 100%{ transform:rotate(-54deg) scaleX(1) } }
+.ph-s-complete .ph-mark path{ stroke-dasharray:14; stroke-dashoffset:14; animation:ph-draw-check 320ms var(--pm-ease-out) both; }
+@keyframes ph-draw-check{ to{ stroke-dashoffset:0 } }
 
-/* blocked — a ring with a gap in it and a bar straight across: refused, not
-   broken.  Mostly still, with one short nudge at the end of a 2.8s cycle. */
+/* blocked — full closed danger ring + a centered halt bar (refused, not
+   broken).  Mostly still, with one short nudge at the end of a 2.8s cycle. */
 .ph-s-blocked{ color:var(--danger); }
-.ph-s-blocked .ph-ring{ border-color:color-mix(in srgb,var(--danger) 62%,var(--border)); border-top-color:transparent; animation:ph-nudge 2.8s var(--pm-ease-out) infinite; }
-.ph-s-blocked .ph-mark{ left:2.4px; top:50%; width:10.2px; height:1.8px; margin:-.9px 0 0 0; border-radius:2px; background:var(--danger); }
+.ph-s-blocked .ph-ring{ border-color:color-mix(in srgb,var(--danger) 62%,var(--border)); animation:ph-nudge 2.8s var(--pm-ease-out) infinite; }
+.ph-s-blocked .ph-mark{ left:50%; top:50%; width:9px; height:1.8px; margin:-.9px 0 0 -4.5px; border-radius:2px; background:var(--danger); }
 @keyframes ph-nudge{ 0%,74%,100%{ transform:none } 80%{ transform:translateX(-1.6px) } 86%{ transform:translateX(1.6px) } 92%{ transform:translateX(-1px) } }
 
 /* failed — a filled danger disc with a cross, hard-blinking on steps() so it
@@ -82,20 +110,15 @@
    apart from `blocked`, which moves but does not blink. */
 .ph-s-failed{ color:var(--danger); }
 .ph-s-failed .ph-ring{ border-color:var(--danger); background:color-mix(in srgb,var(--danger) 16%,transparent); }
-.ph-s-failed .ph-mark{ left:0; top:0; width:100%; height:100%; margin:0; background:none; border-radius:0; animation:ph-blink 1.6s steps(1,end) infinite; }
-.ph-s-failed .ph-mark::before,.ph-s-failed .ph-mark::after{ content:""; position:absolute; left:3.2px; top:6.6px; width:8.4px; height:1.7px; background:var(--danger); border-radius:2px; }
-.ph-s-failed .ph-mark::before{ transform:rotate(45deg); }
-.ph-s-failed .ph-mark::after{ transform:rotate(-45deg); }
+.ph-s-failed .ph-mark{ animation:ph-blink 1.6s steps(1,end) infinite; }
 @keyframes ph-blink{ 0%{ opacity:1 } 50%{ opacity:.3 } }
 
 /* paused — the pause glyph, dimming and returning on a slow 2.6s cycle.
    Suspended but still alive; opacity only, nothing moves. */
 .ph-s-paused{ color:var(--muted); }
 .ph-s-paused .ph-ring{ border-color:var(--border-strong); }
-.ph-s-paused .ph-mark{ left:0; top:0; width:100%; height:100%; margin:0; background:none; border-radius:0; animation:ph-dim 2.6s ease-in-out infinite; }
-.ph-s-paused .ph-mark::before,.ph-s-paused .ph-mark::after{ content:""; position:absolute; top:4px; width:2px; height:7px; border-radius:1px; background:var(--accent-2); }
-.ph-s-paused .ph-mark::before{ left:4.4px; }
-.ph-s-paused .ph-mark::after{ left:8.6px; }
+.ph-s-paused .ph-mark{ color:var(--accent-2); animation:ph-dim 2.6s ease-in-out infinite; }
+.ph-s-paused .ph-mark rect{ fill:currentColor; }
 @keyframes ph-dim{ 0%,100%{ opacity:1 } 50%{ opacity:.36 } }
 
 /* recovering — an arc sweeping COUNTER-CLOCKWISE with a stuttering ease: the
@@ -117,19 +140,10 @@
    declared value is its end state, so the nine stay distinguishable. */
 @media (prefers-reduced-motion: reduce){
   .ph-status .ph-ring, .ph-status .ph-ring::after, .ph-status .ph-mark,
-  .ph-status .ph-mark::before, .ph-status .ph-mark::after{ animation:none !important; }
+  .ph-status .ph-mark::before, .ph-status .ph-mark::after, .ph-status .ph-mark path{ animation:none !important; }
+  .ph-s-complete .ph-mark path{ stroke-dashoffset:0; }
+  .ph-s-working .ph-mark, .ph-s-reviewing .ph-mark{ transform:translateY(-7.5px); }
 }
-
-/* =====================================================================
-   ITEM 3b(a) — the spinner vanished under the cursor.
-   styles.css:113 (now :123) fades .thread-status-slot to opacity:0 on row
-   hover to "swap it for" the ... menu.  It never needed to: .thread-row is a
-   three-column grid (18px | 1fr | 28px) and .thread-more has its own column,
-   so the two never collided.  The only thing the fade achieved was hiding the
-   live status of the row you are pointing at.
-   ===================================================================== */
-.thread-row:hover .thread-status-slot,
-.thread-row:focus-within .thread-status-slot{ opacity:1; transform:none; }
 
 /* =====================================================================
    FLAGGED BY WAVE 1B — `.thread-row.active::before` is a coloured left-edge
@@ -149,11 +163,13 @@
    ===================================================================== */
 .thread-row{ transition:background 160ms,color 160ms,transform 160ms,box-shadow 200ms var(--ease); }
 .thread-row.active{
+  box-sizing:border-box;
   background:color-mix(in srgb,var(--accent) 16%,var(--surface-3));
   color:var(--text);
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent);
 }
 .thread-row.active .thread-title{ font-weight:650; color:var(--text); }
+.thread-row.active .thread-copy{ padding-right:4px; }
 .thread-row.active:hover{ background:color-mix(in srgb,var(--accent) 21%,var(--surface-3)); }
 
 /* =====================================================================
@@ -163,7 +179,8 @@
    so the attribute had no rules to match.  Mirrored here for the flyout.
    (Verified by grep and in pixels: see WAVE3_HISTORY_LOG.md, finding F1.)
    ===================================================================== */
-.history-flyout[data-history-variant="1"] .thread-row{ min-height:44px; grid-template-columns:22px minmax(0,1fr) 28px; }
+.history-flyout[data-history-variant="1"] .thread-row{ min-height:44px; grid-template-columns:22px minmax(0,1fr); }
+.history-flyout[data-history-variant="1"] .thread-lead{ width:22px; }
 .history-flyout[data-history-variant="1"] .thread-sub .summary{ display:none; }
 .history-flyout[data-history-variant="1"] .thread-status-slot{ border-right:1px solid var(--border); height:100%; width:22px; }
 .history-flyout[data-history-variant="2"] .thread-row{ margin-left:8px; }
@@ -175,15 +192,15 @@
 .history-flyout[data-history-variant="4"] .thread-row{ margin:4px 2px; border:1px solid var(--border); background:var(--surface); min-height:58px; }
 .history-flyout[data-history-variant="4"] .thread-row.active{ box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent),0 8px 20px rgb(0 0 0/.12); }
 .history-flyout[data-history-variant="5"] .thread-sub{ white-space:normal; }
-.history-flyout[data-history-variant="5"] .thread-sub .summary{ white-space:normal; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
-.history-flyout[data-history-variant="6"] .thread-row{ grid-template-columns:8px minmax(0,1fr) 28px; min-height:43px; }
+.history-flyout[data-history-variant="5"] .thread-sub .summary{ white-space:normal; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; }
+.history-flyout[data-history-variant="6"] .thread-row{ grid-template-columns:8px minmax(0,1fr); min-height:43px; }
+.history-flyout[data-history-variant="6"] .thread-lead{ width:8px; min-width:8px; }
 .history-flyout[data-history-variant="6"] .thread-status-slot{ width:5px; }
 .history-flyout[data-history-variant="6"] .thread-sub .summary{ display:none; }
-.history-flyout[data-history-variant="6"] .thread-unread{ display:none; }
 .history-flyout[data-history-variant="7"]{ font-family:var(--font-mono); }
 .history-flyout[data-history-variant="7"] .thread-row{ border-radius:3px; min-height:46px; }
-.history-flyout[data-history-variant="7"] .thread-title{ font-size:10px; }
-.history-flyout[data-history-variant="7"] .thread-sub{ font-size:8px; }
+.history-flyout[data-history-variant="7"] .thread-title{ font-size:11px; }
+.history-flyout[data-history-variant="7"] .thread-sub{ font-size:9px; }
 
 /* =====================================================================
    ITEM 3b(c) — take 6 row padding.
@@ -196,11 +213,95 @@
    take aligns its grid to `start`.
    ===================================================================== */
 .history-panel[data-history-variant="5"] .thread-row,
-.history-flyout[data-history-variant="5"] .thread-row{ min-height:44px; align-items:start; padding:3px 5px 3px 8px; }
-.history-panel[data-history-variant="5"] .thread-status-slot,
-.history-flyout[data-history-variant="5"] .thread-status-slot{ margin-top:3px; }
-.history-panel[data-history-variant="5"] .thread-more,
-.history-flyout[data-history-variant="5"] .thread-more{ margin-top:1px; }
+.history-flyout[data-history-variant="5"] .thread-row{ min-height:44px; align-items:start; padding:3px 1px 3px 3px; }
+/* Status orbit satellites (ph-mark top:-2 / spin) sit outside the 15px box —
+   row overflow:visible keeps them from clipping. Check / pause / failed marks
+   are optically centered inside the ring. */
+.history-flyout .thread-row,
+.history-panel .thread-row{ overflow:visible; }
+.history-flyout .thread-lead,
+.history-panel .thread-lead,
+.history-flyout .thread-status-slot,
+.history-panel .thread-status-slot{ overflow:visible; }
+.history-panel[data-history-variant="5"] .thread-lead,
+.history-flyout[data-history-variant="5"] .thread-lead{
+  margin-top:1px; padding-top:2px; box-sizing:border-box;
+}
+.history-panel[data-history-variant="5"] .thread-name,
+.history-flyout[data-history-variant="5"] .thread-name{ font-size:11px; }
+.history-flyout .history-scroll{ padding:4px; }
+
+/* Narrow drawer: .history-scroll width ≤ --ph-history-narrow-max (204px).
+   JS toggles .is-history-narrow / .is-hh-compact; CSS @container matches that. */
+.history-flyout,
+.history-panel{ container-type:inline-size; container-name:history-drawer; }
+
+@container history-drawer (max-width:204px){
+  .history-head .hh-new-label{ display:none; }
+  .history-head .hh-new-thread{
+    flex:0 0 28px; width:28px; min-width:28px; max-width:28px;
+    justify-content:center; padding:0; gap:0;
+  }
+  .thread-status-slot,
+  .thread-time{ display:none !important; }
+  .thread-row{ grid-template-columns:minmax(0,1fr) !important; }
+  .thread-lead{
+    display:none !important; width:0 !important; min-width:0 !important;
+    overflow:hidden; margin:0;
+  }
+  .thread-row:hover,
+  .thread-row:focus-within{ grid-template-columns:28px minmax(0,1fr) !important; }
+  .thread-row:hover .thread-lead,
+  .thread-row:focus-within .thread-lead{
+    display:grid !important; width:28px !important; min-width:28px !important; overflow:visible;
+  }
+}
+
+.history-flyout.is-history-narrow .history-head .hh-new-label,
+.history-panel.is-history-narrow .history-head .hh-new-label{ display:none; }
+.history-flyout.is-history-narrow .history-head .hh-new-thread,
+.history-panel.is-history-narrow .history-head .hh-new-thread{
+  flex:0 0 28px; width:28px; min-width:28px; max-width:28px;
+  justify-content:center; padding:0; gap:0;
+}
+.history-flyout.is-history-narrow .thread-status-slot,
+.history-flyout:has(.history-head.is-hh-compact) .thread-status-slot,
+.history-panel.is-history-narrow .thread-status-slot,
+.history-panel:has(.history-head.is-hh-compact) .thread-status-slot,
+.history-flyout.is-history-narrow .thread-time,
+.history-flyout:has(.history-head.is-hh-compact) .thread-time,
+.history-panel.is-history-narrow .thread-time,
+.history-panel:has(.history-head.is-hh-compact) .thread-time{ display:none !important; }
+.history-flyout.is-history-narrow .thread-row,
+.history-flyout:has(.history-head.is-hh-compact) .thread-row,
+.history-panel.is-history-narrow .thread-row,
+.history-panel:has(.history-head.is-hh-compact) .thread-row{ grid-template-columns:minmax(0,1fr) !important; }
+.history-flyout.is-history-narrow .thread-lead,
+.history-flyout:has(.history-head.is-hh-compact) .thread-lead,
+.history-panel.is-history-narrow .thread-lead,
+.history-panel:has(.history-head.is-hh-compact) .thread-lead{
+  display:none !important; width:0 !important; min-width:0 !important; overflow:hidden; margin:0;
+}
+.history-flyout.is-history-narrow .thread-row:hover,
+.history-flyout.is-history-narrow .thread-row:focus-within,
+.history-flyout:has(.history-head.is-hh-compact) .thread-row:hover,
+.history-flyout:has(.history-head.is-hh-compact) .thread-row:focus-within,
+.history-panel.is-history-narrow .thread-row:hover,
+.history-panel.is-history-narrow .thread-row:focus-within,
+.history-panel:has(.history-head.is-hh-compact) .thread-row:hover,
+.history-panel:has(.history-head.is-hh-compact) .thread-row:focus-within{
+  grid-template-columns:28px minmax(0,1fr) !important;
+}
+.history-flyout.is-history-narrow .thread-row:hover .thread-lead,
+.history-flyout.is-history-narrow .thread-row:focus-within .thread-lead,
+.history-flyout:has(.history-head.is-hh-compact) .thread-row:hover .thread-lead,
+.history-flyout:has(.history-head.is-hh-compact) .thread-row:focus-within .thread-lead,
+.history-panel.is-history-narrow .thread-row:hover .thread-lead,
+.history-panel.is-history-narrow .thread-row:focus-within .thread-lead,
+.history-panel:has(.history-head.is-hh-compact) .thread-row:hover .thread-lead,
+.history-panel:has(.history-head.is-hh-compact) .thread-row:focus-within .thread-lead{
+  display:grid !important; width:28px !important; min-width:28px !important; overflow:visible;
+}
 
 /* =====================================================================
    ITEM 4 — the kimi-k3 W1 open/pin choreography.
@@ -233,6 +334,9 @@
                         /* narrowing visible at 5.6 Pro's denser type scale  */
   --ph-min-w: 170px;    /* the floor app.js:1928 already used for the deleted */
                         /* .history-panel column; kept identical on purpose   */
+  /* Measured from the user's pinned drawer: .history-scroll at 204px is the
+     switch point for compact New-thread AND narrow row layout. */
+  --ph-history-narrow-max: 204px;
 }
 /* ---------------------------------------------------------------------------
    WIDTH AND GUTTER ARE ONE EXPRESSION — now a NAMED one, which is what lets the
@@ -344,10 +448,44 @@ body[data-ph-drawer="closing"] .history-flyout{
   transform:translate3d(-102%, 0, 0);
 }
 
-/* Hide leftover clip host from earlier experiments */
-.ph-clip-host{ display:none !important; }
+/* ---- collapsible Pinned / Recent / Archived ---------------------------- */
+.history-scroll .history-section { margin:0; }
+.history-scroll .section-head:focus-visible {
+  outline:2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset:1px; border-radius:6px;
+}
 
-/* ---- the drawer's pin strip -------------------------------------------- */
+/* ---- history head pin (icon-only, between New thread and Close) -------- */
+.history-head { container-type:inline-size; container-name:history-head; }
+.history-head .hh-new-thread {
+  display:inline-flex; align-items:center; gap:6px;
+  min-width:28px; flex:0 1 auto; max-width:calc(100% - 71px);
+  overflow:hidden;
+}
+.history-head .hh-new-label { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+.hh-plus-glyph { stroke-width:2.6; }
+.history-head .ph-head-pin {
+  margin-left:auto; flex:0 0 28px; width:28px; min-width:28px;
+}
+.history-head .icon-button {
+  flex:0 0 28px; width:28px; min-width:28px;
+}
+.history-head.is-hh-compact .hh-new-label { display:none; }
+.history-head.is-hh-compact .hh-new-thread {
+  flex:0 0 28px; width:28px; min-width:28px; max-width:28px;
+  justify-content:center; padding:0; gap:0;
+}
+.history-head .ph-head-pin.is-pinned {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+body[data-ph-drawer="pinned"] .chat-header [data-action="toggle-history"],
+body[data-ph-drawer="pinned"] .chat-header [data-action="new-thread"] { display: none; }
+
+/* Retired worded pin strip — pin lives in the head now. */
+.ph-chrome { display: none; }
+
+/* ---- the drawer's pin strip (retired markup, keep rules harmless) ----- */
 body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ display:none; }
 .ph-chrome{
   display:flex; align-items:center; gap:6px;
@@ -355,12 +493,12 @@ body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ 
   border-bottom:1px solid var(--border);
   background:color-mix(in srgb,var(--surface-3) 55%,transparent);
 }
-.ph-chrome-state{ flex:1; min-width:0; font-size:9px; letter-spacing:.05em; text-transform:uppercase; color:var(--subtle); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ph-chrome-state{ flex:1; min-width:0; font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--subtle); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .ph-pin{
   flex:0 0 auto; display:inline-flex; align-items:center; gap:4px;
   height:21px; padding:0 7px; border-radius:var(--radius-sm);
   background:var(--surface-3); color:var(--muted);
-  font-size:9px; font-weight:600; cursor:pointer;
+  font-size:10px; font-weight:600; cursor:pointer;
   transition:background 160ms,color 160ms,box-shadow 160ms;
 }
 .ph-pin:hover{ background:var(--surface-4); color:var(--text); }
@@ -454,7 +592,7 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
 .history-flyout > .history-scroll, .history-panel > .history-scroll{ flex:1 1 auto; min-height:0; }
 
 /* 2. Timestamp lives on the title row (`.thread-time`) and must never wrap.
-      Take 6 still relaxes `.thread-sub` for a two-line summary clamp. */
+      Take 6 still relaxes `.thread-sub` for a one-line summary clamp. */
 .thread-time{ flex:0 0 auto; white-space:nowrap; }
 .history-panel[data-history-variant="5"] .thread-sub > span:not(.summary),
 .history-flyout[data-history-variant="5"] .thread-sub > span:not(.summary){ flex:0 0 auto; white-space:nowrap; }

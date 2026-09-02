@@ -194,15 +194,15 @@ await safe('Context Ring opens compact menu',async()=>{
      u11's single dense action row, whose minibuttons read "Compact now" /
      "More details". Everything here is scoped to the open menu — "More
      details" is also the label on every message action row (26 of them in the
-     plain thread), and "Source composition"/"83.9K"/"78%" all appear in the
+     plain thread), and "Source composition"/"83.9K"/"78.34%" all appear in the
      drawer too. */
   await page.locator('.context-ring').click();
   const ctxMenu=page.locator('[data-overlay="root-menu"]');
   await ctxMenu.waitFor({state:'visible'});
   await seeIn(ctxMenu,'Compact now',{exact:true});
   await seeIn(ctxMenu,'More details',{exact:true});
-  await seeIn(ctxMenu,'83.9K',{exact:false},2);   // window fraction + the bar's base label
-  await seeIn(ctxMenu,'78%',{exact:false});
+  await seeIn(ctxMenu,'83.9K',{exact:false});   // window used in the head fraction
+  await seeIn(ctxMenu,'78.34%',{exact:false});
   await seeIn(ctxMenu,'Source composition',{exact:false});
   await inViewport('[data-overlay="root-menu"]','Context compact menu');
 });
@@ -224,19 +224,43 @@ await safe('Context More Details contains required metrics',async()=>{
 
 for(const domain of ['goal','todo','subagents','changes','artifacts']){
   await safe(`Activity hover preview: ${domain}`,async()=>{
-    const b=page.locator(`[data-hover-domain="${domain}"]`);await b.hover();await page.locator('.hover-card').waitFor({state:'visible'});await inViewport('.hover-card',`${domain} hover`);
+    const b=page.locator(`[data-hover-domain="${domain}"]`);await b.hover();
+    const preview=page.locator('.hover-card.ab-card[role="dialog"]');
+    await preview.waitFor({state:'visible'});await inViewport('.hover-card.ab-card',`${domain} hover`);
+    if((await preview.getAttribute('data-domain'))!==domain)throw new Error(`Preview did not target ${domain}`);
   });
-  await safe(`Activity click opens all-category detail: ${domain}`,async()=>{
+  await safe(`Activity click opens focused Status Board: ${domain}`,async()=>{
     await page.locator(`[data-hover-domain="${domain}"]`).click();await page.locator('.activity-panel').waitFor({state:'visible'});
-    const cats=await page.locator('.activity-section').count();if(cats!==5)throw new Error(`Expected 5 sections, found ${cats}`);
-    for(const label of ['Goal','Todo','Subagents','Changes','Artifacts'])await page.locator('.activity-section-head').filter({hasText:label}).first().waitFor();
+    const panel=page.locator('.activity-panel');
+    if((await panel.getAttribute('data-variant'))!=='1')throw new Error('Status Board is not the default');
+    if((await panel.getAttribute('data-scope'))!=='focus')throw new Error('Activity bar did not open focused scope');
+    if((await panel.getAttribute('data-domain'))!==domain)throw new Error(`Expected ${domain} focus`);
+    if(await panel.locator('.pmap-tile').count())throw new Error('Focused scope still renders overview tiles');
+    const selected=panel.locator('.activity-filter button[aria-pressed="true"]');
+    if(await selected.count()!==1)throw new Error('Focused scope must expose exactly one selected domain');
   });
 }
 
+await safe('Activity Detail Show all and domain drill-down',async()=>{
+  await page.locator('[data-hover-domain="changes"]').click();
+  const panel=page.locator('.activity-panel');
+  await panel.locator('[data-action="activity-scope"][data-value="all"]').click();
+  const expected=await page.locator('.activity-item[data-hover-domain]').count();
+  const tiles=panel.locator('.pmap-tile');
+  if(await tiles.count()!==expected)throw new Error(`Expected ${expected} domain tiles, found ${await tiles.count()}`);
+  if((await panel.getAttribute('data-scope'))!=='all')throw new Error('Show all did not change panel scope');
+  if(await panel.locator('.activity-filter button[aria-pressed="true"]').count())throw new Error('All scope must not expose a false selected domain');
+  await tiles.filter({hasText:'Todo'}).click();
+  if((await panel.getAttribute('data-domain'))!=='todo'||(await panel.getAttribute('data-scope'))!=='focus')throw new Error('Overview tile did not drill into Todo');
+});
+
 await safe('Activity Detail pin and unpin',async()=>{
-  await page.locator('[data-hover-domain="goal"]').click();await page.locator('[data-action="pin-activity"]').click();
+  await page.locator('[data-hover-domain="goal"]').click();
   const pinned=await page.evaluate(()=>PM56_DEMO.getState().activity.pinned);if(!pinned)throw new Error('not pinned');
   await page.locator('[data-action="unpin-activity"]').click();
+  if(await page.evaluate(()=>PM56_DEMO.getState().activity.pinned))throw new Error('did not unpin');
+  await page.locator('[data-action="pin-activity"]').click();
+  if(!await page.evaluate(()=>PM56_DEMO.getState().activity.pinned))throw new Error('did not pin again');
 });
 
 async function openRootMenu(kind){await page.locator(`[data-action="open-menu"][data-menu="${kind}"]`).click();await page.locator('[data-overlay="root-menu"]').waitFor({state:'visible'});}
@@ -252,17 +276,34 @@ await safe('Plan and Deep Plan hover sidecars',async()=>{
   await openRootMenu('mode');await page.locator('[data-submenu="deep-plan"]').first().hover();await page.locator('[data-overlay="sidecar"]').waitFor();await inViewport('[data-overlay="sidecar"]','Deep Plan sidecar');
 });
 await safe('Capability hover sidecars',async()=>{
-  await openRootMenu('wand');for(const sub of ['goal-menu','bsd-menu','context-lens','thought-menu']){await page.locator(`[data-submenu="${sub}"]`).first().hover();await page.locator('[data-overlay="sidecar"]').waitFor();await inViewport('[data-overlay="sidecar"]',sub);}
+  await openRootMenu('wand');
+  for(const sub of ['goal-menu','crew-menu','bsd-menu','eli5-menu','thought-menu']){
+    await page.locator(`[data-submenu="${sub}"]`).first().hover();
+    await page.locator('[data-overlay="sidecar"]').waitFor();
+    await inViewport('[data-overlay="sidecar"]',sub);
+  }
+});
+await safe('Context Lens header strip',async()=>{
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(320);
+  await page.locator('[data-action="lens-open"]').click();
+  await page.locator('.overlay-menu.lens-strip').waitFor({state:'visible'});
+  await inViewport('.overlay-menu.lens-strip','Context Lens strip');
+  await page.keyboard.press('Escape');
 });
 
 await safe('Working Animation controls and history',async()=>{
   await page.evaluate(()=>PM56_DEMO.resetWorking());await page.locator('[data-action="start-working"]').click();await page.waitForTimeout(1600);await page.locator('[data-action="pause-working"]').click();
   await page.locator('[data-action="step-working"]').click();await page.locator('[data-action="complete-working"]').click();
-  /* item 8: every assistant turn now prints "Worked for Ns" from its own runtime
-     record, so an unscoped match resolves to 9 elements (8 turns + the card).
-     Scoped to the working card, which is what this test was always about. */
-  await seeIn(page.locator('.working-card'),'Worked for',{exact:false});
-  await page.locator('.wa-chrome .pm-roll').first().waitFor();
+  /* Default take is Orbit: elapsed lives in the card head, not a "Worked for"
+     receipt chip (orbit.js passes {elapsed:false} on the strip). Open Orbit
+     stage has no receipt row until collapsed; other takes still emit chips. */
+  await seeIn(page.locator('.working-card .working-head'),'Completed',{exact:false});
+  const elapsedTxt=await page.locator('.working-card .working-head .sub').first().innerText();
+  if(!/\d+m \d{2}s/.test(elapsedTxt))throw new Error(`elapsed missing from working head: ${JSON.stringify(elapsedTxt)}`);
+  const chips=await page.locator('.working-card .work-receipt .receipt-chip').count();
+  const orbitOpen=await page.locator('.working-card .orbit-stage').count();
+  if(!chips && !orbitOpen)throw new Error('receipt chips missing');
   await page.locator('[data-action="toggle-work-history"]').click();
   await seeIn(page.locator('.work-history'),'Organized work stream and evidence',{exact:true});
 });
@@ -409,27 +450,18 @@ await safe('Working-card FLIP travels forward, in steps, and stops',async()=>{
     return out;
   };
   const TOG='function(){document.querySelector(\'[data-action="toggle-work-history"]\').click();}';
-  const NODE='function(){document.querySelectorAll(".orbit-node")[9].click();}';
-  const SHUT='function(){document.querySelector(\'[data-action="orbit-collapse"]\').click();}';
   const rec=(t,ms)=>page.evaluate(([a,b])=>window.__flipRec(a,b),[t,ms]);
   const bad=[];
   for(const v of [1,12,0,7]){
     await page.evaluate(v=>{PM56_DEMO.setVariant(2,v);PM56_DEMO.setWorkStep(7);},v);
     await page.waitForTimeout(700);
-    if(v===1){
-      /* Get to a CLOSED stage through the close button, never by toggling the
-         node we are about to measure — a toggle measured by toggling it is not
-         a fresh trigger. */
-      for(let i=0;i<3;i++){
-        if(await page.evaluate(()=>{const s=document.querySelector('.orbit-stage');return s&&s.dataset.orbitOpen;})!=='1')break;
-        await page.evaluate(()=>document.querySelector('[data-action="orbit-collapse"]').click());
-        await page.waitForTimeout(700);
-      }
-      bad.push(...verdict(await rec(NODE,1200),'take 1 orbit expand'));
-      await page.waitForTimeout(700);
-      bad.push(...verdict(await rec(SHUT,1200),'take 1 orbit collapse'));
-      await page.waitForTimeout(700);
-    }
+    /* Take 1's stage is ALWAYS open now — a live orbit card has no collapse
+       affordance and a node click only re-pins the panel (no height travel),
+       so the old orbit expand/collapse FLIP probes have nothing to trigger.
+       The one surviving orbit grid motion is the two-beat strip reopen, and
+       orbit-verify.mjs section 9 traces that with an in-page rAF sampler.
+       Here take 1 is measured through the same work-history toggle as every
+       other take, which is the height travel it still performs. */
     bad.push(...verdict(await rec(TOG,1000),`take ${v} work-history open`));
     await page.waitForTimeout(500);
     bad.push(...verdict(await rec(TOG,1000),`take ${v} work-history close`));
@@ -444,8 +476,21 @@ await safe('Plan card has View, Revise, Build',async()=>{
   await page.evaluate(()=>PM56_DEMO.selectThread('query'));
   for(const t of ['View Plan','Revise','Build'])await seeIn(page.locator('.plan-card'),t,{exact:true});
 });
+async function waitOpenDecision(){
+  const host=page.locator('.decision-host:not(.empty)');
+  await host.waitFor();
+  await page.waitForFunction(()=>{
+    const el=document.querySelector('.decision-host:not(.empty)');
+    if(!el) return false;
+    return el.getBoundingClientRect().height>40;
+  },null,{timeout:8000});
+  return host;
+}
 await safe('Plan decision is in flow above Activity Bar',async()=>{
-  await page.evaluate(()=>PM56_DEMO.openPlan());const d=await page.locator('.decision-host').boundingBox(),a=await page.locator('.activity-wrap').boundingBox();if(!((d.y+d.height)<=(a.y+2)))throw new Error(JSON.stringify({d,a}));
+  await page.evaluate(()=>PM56_DEMO.openPlan());
+  const hostEl=await waitOpenDecision();
+  const d=await hostEl.boundingBox(),a=await page.locator('.activity-wrap').boundingBox();
+  if(!d||!a||!((d.y+d.height)<=(a.y+2)))throw new Error(JSON.stringify({d,a}));
   /* scoped: "Revise" is on the editor's plan doc, the transcript plan card AND
      the decision surface — three matches. The old test took `.last()`, i.e.
      whichever happened to be latest in the DOM. Name the one it means. */
@@ -455,7 +500,10 @@ await safe('Plan decision is in flow above Activity Bar',async()=>{
   await (await one(host,'Create revision',{exact:true})).click();
 });
 await safe('Questionnaire persists and stays in flow',async()=>{
-  await page.evaluate(()=>PM56_DEMO.openQuestionnaire());const d=await page.locator('.decision-host').boundingBox(),a=await page.locator('.activity-wrap').boundingBox();if(!((d.y+d.height)<=(a.y+2)))throw new Error('question overlays activity');
+  await page.evaluate(()=>PM56_DEMO.openQuestionnaire());
+  const qHost=await waitOpenDecision();
+  const d=await qHost.boundingBox(),a=await page.locator('.activity-wrap').boundingBox();
+  if(!d||!a||!((d.y+d.height)<=(a.y+2)))throw new Error('question overlays activity');
   await page.locator('[data-action="close-decision"]').click();await page.evaluate(()=>PM56_DEMO.openQuestionnaire());
   await seeIn(page.locator('.decision-host'),'Deployment questionnaire',{exact:true});
 });
@@ -544,7 +592,7 @@ for(const vw of [1920,1440,1280,1100]){
 await page.setViewportSize({width:1440,height:900});
 await cleanup('editor split sweep');
 
-await safe('Global reset restores stock state',async()=>{await page.evaluate(()=>{PM56_DEMO.setTheme('friendly-light');PM56_DEMO.setVariant(2,7);PM56_DEMO.selectThread('plain');PM56_DEMO.reset();});await page.waitForTimeout(100);const s=await page.evaluate(()=>PM56_DEMO.snapshot());if(s.theme!=='basic-dark'||s.thread!=='query'||s.variants.some(x=>x!==0))throw new Error(JSON.stringify(s));});
+await safe('Global reset restores stock state',async()=>{await page.evaluate(()=>{PM56_DEMO.setTheme('friendly-light');PM56_DEMO.setVariant(2,7);PM56_DEMO.selectThread('plain');PM56_DEMO.reset();});await page.waitForTimeout(100);const s=await page.evaluate(()=>PM56_DEMO.snapshot());const expected=[7,5,1,0,1,0,8];if(s.theme!=='basic-dark'||s.thread!=='query'||s.variants.some((x,i)=>x!==expected[i]))throw new Error(JSON.stringify(s));});
 
 /* ------------------------------------------------- matcher-hygiene summary */
 check(matchers.length>0,'Matcher hygiene: text assertions were actually exercised',`${matchers.length} matchers`);

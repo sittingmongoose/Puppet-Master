@@ -28,6 +28,26 @@ target/
 dist/
 coverage/
 node_modules/
+
+# Local browser/test capture output and disposable work areas
+.playwright-mcp/
+.tmp/
+scratchpad/
+Plans/.audits/
+tests/
+Concepts/**/evidence/
+**/simulator_runs/
+**/staged_windows_build*/
+**/traces/
+**/frames/
+**/contact-sheets/
+
+# Large generated media/archive artifacts belong in LFS or release storage
+*.mkv
+*.mov
+*.mp4
+*.webm
+*.zip
 # Compiled binaries: the R9 staged Windows builds are ~94MB each and are
 # reproducible build output, not source. No .exe has ever been tracked here.
 *.exe

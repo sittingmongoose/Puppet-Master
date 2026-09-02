@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L5417-L5605
+Source lines: L5426-L5614
 
-Source SHA256: `8d8c2355529ad6e6cc8e01415a8f5e4861f9c8df6b6ff295268f45b5ecbf1164`
+Source SHA256: `4dea9175dadfaebb338bcd2957d53fed33cd25c26d350a63f5169c643f8e78c0`
 
 ---
 
@@ -128,7 +128,7 @@ acceptance_criteria:
   - GUI-USG-008 partial/aborted stream preserves streaming_partial or failed settlement, trace lifecycle partial or aborted, dedupe_key, and accepted partial rollup once without showing final/settled copy.
   - GUI-CBP-001 Antigravity missing commands covers missing or broken `/stats`, `/usage`, `/quota`, and `/credits` as stats unavailable, usage unknown, quota not exposed, and credits not exposed.
   - GUI-CBP-002 Antigravity G1 credits carries provider_id antigravity_cli, route agy, credits status/remaining, and UseG1Credits without populating token, cost, quota, or provider_total fields.
-  - GUI-ROUTE-001 object-first usage route asserts route_target.object_kind = usage_event and object_id from usage_event_ref plus attempt/provider refs, source_class/source_confidence/source_authority, settlement_status, projection_freshness, and projection_health, and fails timestamp/run/thread/tier primary routing.
+  - GUI-ROUTE-001 object-first PMConcept7 Ledger route asserts route_target.object_kind = usage_attempt and object_id from attempt_id, keeps usage_event_ref plus UsageRecord/provider/runtime refs as correlation, carries no OpenSubject, and fails timestamp/run/thread/tier primary routing; event-primary artifact callers retain usage_event/usage_event_ref.
   - GUI-RAW-001 Raw/Curated redaction shows normalized Curated fields including source_class/source_confidence/source_authority plus Raw redacted refs, hashes, omitted counts, and permission state with no credentials, account ids, local paths, or raw provider secrets.
   - GUI-RAP-001 envelope plus per-type validation rejects envelope-only or arbitrary non-empty type_payload artifacts for cost_usage and tool_llm_trace.
 validation_surfaces:

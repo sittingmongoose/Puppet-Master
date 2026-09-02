@@ -4,7 +4,7 @@ Source: `Plans/Architecture_Invariants.md`
 
 Source lines: L104-L113
 
-Source SHA256: `a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543`
+Source SHA256: `6ce7f74c2d708b8bdc9358c3f7e41354630e681db5985087d30bd42654a39c7b`
 
 ---
 

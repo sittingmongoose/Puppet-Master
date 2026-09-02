@@ -37,23 +37,30 @@ owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Puppet Master has a first-class Automated Testing System that is platform-capability-discovery-first. It owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, visual/browser/device evidence policy, fallback policy, and test-gap blocker routing. Testing must not be a thin verificationCommand afterthought and must not be overfit to Slint; Slint is an example for Puppet Master itself while the system works for web, desktop GUI, mobile/device, backend/API, CLI, and library projects.
   The canonical report families are TestCapabilityReport, TestHarnessProbeReport, TestStrategy, and TestRunReceipt.
+  Governance evidence validation distinguishes immutable `historical_snapshot` bundles from `live_current` bundles
+  through the exact-path, hash-bound `Plans/evidence_artifact_binding_modes.json` manifest. Historical bundle bytes
+  and their recorded point-in-time artifact hashes are never rewritten to today's repository bytes; live-current
+  bundles alone compare every declared artifact hash to current files and may be refreshed by the governed helper.
+  Every manifest row pins the evidence bundle's expected Plan Graph `node_id`; a live-current bundle binds both shard
+  generation and shard-check reports and fails closed on manifest-owned implementation-readiness overclaim tokens.
 gui_related: false
 gui_classification_reason: This unit defines backend/test policy and artifact contracts; GUI evidence is consumed but not itself the owner behavior.
 depends_on: []
 unblocks: [PNC-013, EP-101, POA-048, RAP-029, T-159]
 acceptance_criteria:
-  - Automated testing owns discovery, probe, strategy, binding, receipts, oracle, adapter, and gap policy as one system.
+  - Automated testing owns discovery, probe, strategy, binding, receipts, oracle, adapter, gap policy, and fail-closed historical-snapshot versus live-current evidence binding as one system; the manifest covers every repository evidence bundle exactly once, pins each bundle's expected Plan Graph node identity, pins each historical bundle's own bytes, permits live artifact-hash refresh only for declared live-current successors, binds current shard generation and check reports, and rejects forbidden readiness language in live-current evidence.
   - Project type and available automation determine the strategy before WorkNode completion can be certified.
   - Slint is documented as an example only, not the default focus for all user projects.
   - No WorkNodes, NodeSeeds, queues, implementation files, dispatched GoalRuns, or production build tasks are emitted by this doc.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-evidence
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
   - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: unverifiable_completion
 reasoning_tier: high
 context_scope: plans_to_code_testing
-implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/plans_to_code_handoff.schema.json]
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/plans_to_code_handoff.schema.json, Plans/evidence_artifact_binding_modes.json, Plans/evidence_artifact_binding_modes.schema.json, scripts/pm-plans-verify.py, scripts/pm-governance-seal.py, tests/test_pm_evidence_artifact_binding_modes.py]
 node_compile_hint: {mode: testing_contracts_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:atom-0027
@@ -70,9 +77,13 @@ preserved_exact_tokens:
   - "platform-capability-discovery-first"
   - "Slint"
   - "example only"
+  - "historical_snapshot"
+  - "live_current"
 negative_constraints:
   - Do not treat tests as a thin verificationCommand afterthought.
   - Do not hyper-focus automated testing around Slint.
+  - Do not refresh a historical evidence bundle's artifact hashes against mutable current files.
+  - Do not let a live-current evidence bundle claim readiness while PNC-019 or another named runtime-certification blocker remains open.
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/Project_Output_Artifacts.md
@@ -1380,8 +1391,8 @@ owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Compaction acceptance tests cover the chat context circle hover display for Usage, Tokens, Cost, and More Details;
   click reveal/selection of Compact Now before dispatch to `cmd.chat.compact_context`; `/compact` parity;
-  context.compaction.started, context.compaction.completed, and context.compaction.failed or equivalent visible
-  failure/degraded state; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,
+  result/receipt-backed started, completed, failed, and visible failure/degraded state with no unregistered
+  context.compaction.* EventRecord; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,
   retry_scheduled, completed, and failed; Prompt Pipeline
   compaction_immune handling; storage lineage proving manual Compact Now alone does not create new cache lineage; and
   stale Plans/newfeatures.md references remaining source-lineage only.
@@ -1393,7 +1404,7 @@ acceptance_criteria:
   - Compact Now click in the chat context circle is covered by GUI tests, not assumed from slash command support.
   - Tests prove context-circle click does not dispatch until the user chooses Compact Now.
   - Tests cover already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed result states.
-  - Failure/degraded compaction produces a visible user-facing state and event contract.
+  - Failure/degraded compaction produces a visible result/receipt-backed user-facing state and an empty event list.
   - Manual Compact Now does not create a new cache lineage unless logical run lineage changes.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -1440,6 +1451,7 @@ negative_constraints:
   - Do not call compaction implementation-ready without testing the chat context circle Compact Now click.
   - Do not dispatch compaction from hover alone.
   - Do not revive Plans/newfeatures.md as a live owner for compaction.
+  - Do not treat the preserved context.compaction.started, context.compaction.completed, or context.compaction.failed tokens as registered Event Authority families.
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/assistant-chat-design.md
@@ -1622,7 +1634,7 @@ owner_hints:
 
 This addendum compiles first-run onboarding, Doctor/Health, Teacher handoff, and Planning Wizard landing acceptance coverage from bootstrap ledger `pldg-20260701-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
 
-### ATS-020 - First-Run Onboarding Doctor And Planning Wizard Acceptance Tests
+### ATS-020 - Nine-Stage Product Onboarding, Three-Scene Guided Tour, And Doctor Acceptance Tests
 
 ```yaml
 plan_unit_id: ATS-020
@@ -1630,39 +1642,89 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  Automated acceptance coverage for the Doctor/onboarding rework includes the first-run four-screen sequence, accepted
-  copy, skippable setup behavior, paid-provider-before-Free-Models sequencing, compact provider rows, Teacher handoff,
-  structured `onboarding_setup_state`, Planning Wizard limited-state landing, and Doctor/Health no-false-green behavior.
-  Tests cover setup completion, setup skip, provider setup failure, auth/logged-in-but-not-ready state, Free Models review
-  and defer paths, Teacher copy with no provider route, and Health `Set up provider` return routing. Regression coverage
-  also proves MCP/server degraded or unavailable rows remain visible in GUI/Doctor surfaces rather than being silently
-  hidden after transient failure, and FileSafe initialization/readiness follows fail-closed owner canon rather than stale
-  graceful-degradation wording.
+  Automated acceptance coverage enforces the exact nine-stage Product Onboarding main path
+  `welcome`/`simple_path`/`first_project`/`source_control_setup`/`server_storage_client`/`remote_access_setup`/`review_setup_plan`/`automatic_preparation`/`ready`
+  and the exact six-stage connect-existing shortcut
+  `welcome`/`simple_path`/`remote_access_setup`/`review_setup_plan`/`automatic_preparation`/`ready`. Pre-review selections
+  update only the local draft: no external owner work or network probe begins until the person confirms the current
+  Review Setup Plan. Automatic Preparation dispatches the approved plan once through canonical owners and observes real
+  results and receipts. Four-screen/provider-first, five-stage, and superseded seven-stage records migrate with
+  path-correct counts, an unconfirmed Review, and no auto-confirmation or owner-work replay. Guided Tour is an ephemeral,
+  optional, provider-free three-scene film in exact `usage`/`planning_wizard`/`chat_teacher` order. It observes the same
+  Usage card hide and return, advances Try only from that card's exact mounted Options control, advances Planning only
+  from the exact intent-chip handler result, and finishes through far-right Chat's real guide selector, `Teacher`
+  selection, real composer, and deterministic local reply. Its exact ten typed actions exclude the retired
+  restore/keep-layout and tour-owned Reduced Motion actions. Heading focus, clamped callouts, Skip restoration, Finish
+  layout, Doctor/Health no-false-green, MCP/server degraded visibility, and FileSafe fail-closed readiness remain
+  required. Static, browser-concept, native runtime, accessibility, motion-quality, and visual evidence remain distinct.
 gui_related: true
-gui_classification_reason: Validates user-visible first-run screens, copy, row states, Teacher copy, Health states, and Planning Wizard landing presentation.
-depends_on: [F3-411, MS-122, MA-066, ACD-431, UCC-106, CV-305, PWIZ-017, WM-041, T-088, T-089, MI-028, MI-029, F2-155]
+gui_classification_reason: Validates the visible nine-/six-stage modal onboarding, optional three-scene tour, owner-return states, accessibility, errors, and truthful Doctor/Health presentation.
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, T-088, T-089, MI-028, MI-029, F2-155]
 unblocks: []
 acceptance_criteria:
-  - Tests verify the accepted screen order and exact first-run copy/action labels.
-  - Tests verify `Skip for now` opens Planning Wizard in limited setup state and does not mark Health/Doctor Ready.
-  - Tests verify the exact `Fee models` token and Free Models appear only after the paid-provider prompt and do not use recommendation/coding-strength language.
-  - Tests verify `Connected` does not collapse logged-in/auth success into Ready without owner readiness proof.
-  - Tests verify the Teacher handoff copy is visible and degraded provider state is named when no usable provider route exists.
-  - Tests verify onboarding_setup_state contains the accepted minimum fields and excludes raw transcripts, credentials, secrets, and raw diagnostics.
+  - Tests verify the exact nine-stage main order `welcome`, `simple_path`, `first_project`, `source_control_setup`, `server_storage_client`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator nine.
+  - Connect-existing tests verify the exact six-stage shortcut `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator six; `first_project`, `source_control_setup`, and `server_storage_client` are omitted rather than silently executed.
+  - Tests enforce the exact thirteen-action Onboarding census: ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish; `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior, and no missing or extra typed action passes.
+  - Before person confirmation of the current `review_setup_plan` revision, every choice performs a local draft transition or cached read only; tests reject any network probe, owner route, owner operation, mutation, or production receipt before that fence.
+  - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}` through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
+  - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null` and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none|null` axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never have service accounts, Forgejo and Gitea remain distinct products/adapters, and FileSafe complements rather than replaces the selected backend.
+  - Existing-forge and signup selections queue only before Review. After confirmation, existing accounts route through connection and sign-in owners; people without accounts can open only the verified official signup page through protected AuthBrowserSession, then return for owner verification. Repository list/create, Git or Jujutsu clone/publish, and final Project registration follow the exact owner sequence and terminal results; Onboarding never claims to create an account.
+  - Forgejo/Gitea Onboarding fixtures cover distinct named instances and provider-specific variants, HTTPS/API base paths, SSH URL/custom port, scoped private-CA and known-host proof refs, cached product/version/API-schema/Git/API/Actions/currentness refs, PAT by default, OAuth PKCE only with a registered instance flow, and no secret bytes. Pre-Review planning performs no network probe, sign-in, trust decision, credential use, repository operation, filesystem mutation, or automation dispatch.
+  - "`server_storage_client` and `remote_access_setup` remain separate progressive stages on the main path; discovery alone never passes trust, explicit pairing is required, identity/certificate mismatch blocks, and restore preserves preview, preflight, verification, rollback, and default secret-exclusion requirements. Their pre-review selections do not begin owner work."
+  - "`review_setup_plan` shows the current path, revision, queued choices, consequences, and approved-plan hash. `Confirm and prepare` is person-confirmed, rejects stale/unconfirmed/expanded plans, dispatches the approved work at most once, and adds no redundant confirmation step."
+  - Automatic Preparation begins only after that confirmation, uses current owner projections and safe defaults, never silently invents probes or mutations across owner/security boundaries, and leaves provider/tool setup optional and deferrable.
+  - Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v1` across pending/running/waiting/requires-input/blocked/failed/cancelled/recovery-required/ready states, denominator-bearing and indeterminate progress, exact session/path/local-backend/forge/target/current-review-revision/approved-plan-hash/continuation/generation fencing, and stale rejection without state replacement.
+  - Close, Defer, resume, reload, branch return, and retry preserve `owner_operation_id`, `observable_work_id`, and `dedupe_key`; retry observes the same work, timers never invent progress or readiness, and browser-concept projections cannot carry production readiness, native execution, or a production receipt.
+  - Provider tests keep installation separate from authentication, reject Connected or Logged in as Ready without owner proof, preserve credential-owner custody, and prove protected AuthBrowserSession content cannot be captured, persisted, exported, replayed, or exposed to agents/adapters.
+  - First Project covers verified existing Project and start-fresh defaults plus queued open, create, clone, JJ, SSH, restore, skip, and optional Origin Preview selections without treating a path as Project identity; canonical owner routing begins only after Review confirmation.
+  - Pre-review choices cause zero owner dispatches. A current Review confirmation causes at most one deduplicated dispatch per approved operation, and current terminal owner returns advance Automatic Preparation without repeated Continue/confirm clicks.
+  - Ready asserts only completion of the selected Onboarding path, keeps skipped/incomplete owner work named, and makes Guided Tour secondary and optional; Guided Tour Finish keeps Chat at the far right, while Skip restores the exact captured pre-tour layout, composer placeholder, and focus.
+  - Every authored Onboarding control has exactly one typed local ui.onboarding.* action, owner work uses that owner's canonical command and sole handler, and no cmd.onboarding.* command family or generic Onboarding mutation handler exists.
+  - Request/result fixtures validate pm.product_onboarding.action_request.v1 and pm.product_onboarding.action_result.v1 for applied, disabled, and rejected outcomes; disabled/rejected outcomes have local_effect=none, no session/continuation write, no owner route/operation, no production receipt, and exact error/disabled reasons.
+  - Every request keeps local_context closed to intent, review_confirmation, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition; review_confirmation is null outside its gated cases, exact person-confirmed or previously-confirmed proof is required where owner work is admitted, and missing required fields, additional/arbitrary keys, raw payload copies, free-form control payloads, and secret-bearing values are rejected.
+  - Tests separately cover more_ways setup/project disclosure (`toggle_setup_options` plus matching choice/scope and null branch) and branch-local update (`update_branch_state`, null choice, canonical branch), rejecting mixed or ambiguous combinations.
+  - Tests separately cover whole-session Skip (`skip_product_onboarding`, product_onboarding, null choice -> session_skipped/skipped) and optional Project/Remote-Access Skip (`skip_optional_scope` plus matching choice/scope/branch -> optional_scope_skipped/active), rejecting cross-normalization and false global skipped state.
+  - Defer must durably preserve exact path, stage, draft selections, review revision/confirmation state, independent local-backend and forge selections, active branch, bounded history, continuation generation, initiating Client, and return-focus identity before modal dismissal; resume restores that snapshot. Close is a non-completion dismissal with exact focus return, Skip records an explicit skipped session, and Details opens/closes ephemerally on the same stage with no persistence or owner command.
+  - Every inline SVG `?` choice-help control reuses `ui.onboarding.open_details` with `intent=toggle_choice_explanation`, the exact stage scope, a stable help-topic selection ref, and exact expanded state; it is keyboard reachable, accessibility-linked, same-stage, ephemeral, non-persistent, and owner-route-free.
+  - The packet candidates cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are each rejected as commands, aliases, handlers, and production-wiring rows; the eleven UCC-106 command-era tokens retain their separate source-lineage count.
+  - Durable migration tests cover provider-first/four-screen, predecessor-five-stage, and superseded-seven-stage inputs; map unresolved work into the correct nine-stage or six-stage draft; preserve admissible decisions, warnings, selection axes, and valid owner receipts; require an unconfirmed Review; report exact accepted/stale/dropped/quarantined, per-stage, and per-path counts; reference the sole Storage migration receipt; quarantine secret-bearing input; and never auto-confirm or replay installation, authentication, account/repository creation, publication, pairing, restore, Project, provider, Server, Remote Access, or source-control work. Guided Tour state is not persisted or migrated.
+  - Back, Close, Skip, Do this later, Details, stale return, reconnect, interruption, reversal, resize, Reduced Motion, keyboard, focus, and screen-reader cases settle deterministically without false readiness; tests prove automatic first-run return prioritizes the genuinely active non-Home application tab before the Home fallback, exact explicit-initiator return, late-mounted body-sibling inertness and restoration, active stage/branch dialog naming, an inert outgoing layer with no duplicate IDs or focus candidates, transferred-and-cleared close-before-Tour focus ownership plus unavailable/throwing Tour fallback, distinct Basic/Friendly/Glass easing, fixed-bounds modal-window opacity/clipping across live cross-family theme changes, and Retro stepped opacity/translation keyframes with no scale; the flow remains one bounded modal and adds no browser-style Back/breadcrumb chrome.
+  - Guided Tour tests enforce the exact three-scene denominator and order `usage`, `planning_wizard`, `chat_teacher`; the predecessor five-chapter/Chat-first/final-Planning sequence cannot satisfy current acceptance.
+  - Usage Watch observes owner-confirmed hide and return of the same mounted card. Try advances only when the person opens that card's exact mounted Options control; narration, timers, generic Next, look-alike controls, and compact copy about move, resize, change, and hide cannot fabricate a performed checkpoint.
+  - Planning Wizard advances only from the handler result for the exact highlighted plain-language intent chip on the real page; no redundant confirmation click is required.
+  - Assistant Chat is placed at the far right before its scene; the person opens the real guide selector, selects `Teacher`, types and sends a supported message through the real composer, and receives a deterministic local novice reply in the same conversation with zero provider, model, token, network, or AI-plan use.
+  - Tests enforce the exact ten-action Guided Tour census: ui.guided_tour.start, ui.guided_tour.next, ui.guided_tour.back, ui.guided_tour.pause, ui.guided_tour.resume, ui.guided_tour.skip, ui.guided_tour.focus_route, ui.guided_tour.toggle_eli5, ui.guided_tour.finish, and ui.guided_tour.replay. `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` are rejected as current requests, aliases, handlers, or compatibility actions.
+  - The top controls place ELI5 beside Pause and Skip Tour. The opening Usage moment explains ELI5 and Reduced Motion together; the Tour reads the effective Settings-owned `general.visual.reduce-animations` preference and cannot write it or expose a tour-specific motion toggle or separate checkpoint.
+  - Each scene heading receives programmatic focus. Callouts measure, clamp, and remeasure the mounted target across resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
+  - Skip remains available and restores the exact captured layout, original composer placeholder with no partial draft, and return focus. Finish requires completed Teacher prerequisites, offers no restore-or-keep prompt, and keeps Chat at the far right.
+  - Static schema/fixture gates, source-transform assertions, browser-concept verification, native Slint/runtime execution, accessibility certification, motion-quality review, and visual acceptance validate only their declared evidence layers and cannot substitute for one another.
+  - The retained exact 128-row packet denominator (SH 12, ONB 28, TOUR 11, DOC 24, IMP 10, TST 7, PERF 13, SRV 6, RA 17) is predecessor evidence only: its ONB/Tour rows do not prove the current nine-/six-stage, three-scene, or ten-action contracts. Current acceptance uses path denominators nine and six plus Tour denominators three scenes and ten typed actions, with browser, static, native, runtime, accessibility, motion, and visual lanes reported separately.
   - Tests verify MCP/server unavailable rows and FileSafe fail-closed readiness remain visible Health/Doctor concerns when relevant.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future first-run onboarding GUI acceptance fixture suite
+  - python3 scripts/pm-new-contracts-verify.py
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - Plans/guided_tour_contracts.schema.json
+  - Plans/guided_tour_contract_fixtures.json
+  - Concepts/pm7-tools/onboarding_cinematic_source.py static transform assertions
+  - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
+  - Concepts/pm7-tools/guided_tour_source.py static transform assertions
+  - Concepts/pm7-tools/verify/guided_tour.mjs browser-concept verifier
+  - Concepts/pm7-tools/build_pm7.py final generated-artifact static gate
+  - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py predecessor packet audit only, not current Onboarding/Tour acceptance
+  - future native nine-/six-stage Product Onboarding GUI, request/result, review-confirmation fence, owner-return, durable-migration, and no-command-family acceptance suite
+  - future native three-scene Guided Tour exact-control, callout, focus, Skip-restore, and Finish-layout acceptance suite
   - future Doctor/Health no-false-green fixture suite
-  - future onboarding_setup_state contract fixture
 risk_class: first_run_acceptance_gap
 reasoning_tier: high
-context_scope: first_run_onboarding_doctor_acceptance
+context_scope: nine_and_six_stage_onboarding_three_scene_tour_doctor_acceptance
 implementation_surfaces:
   - Plans/Automated_Testing_System.md
-  - future onboarding/Health/Planning Wizard acceptance tests
+  - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py predecessor packet audit only
+  - future Product Onboarding/Guided Tour/Health/Planning Wizard acceptance tests
 node_compile_hint:
-  mode: first_run_onboarding_acceptance_tests
+  mode: nine_and_six_stage_onboarding_three_scene_tour_acceptance_tests
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -1687,6 +1749,77 @@ source_lineage:
 source_atom_ids: [atom-0007, atom-0008, atom-0015, atom-0016, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0005, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:
+  - "welcome"
+  - "simple_path"
+  - "first_project"
+  - "source_control_setup"
+  - "server_setup"
+  - "server_storage_client"
+  - "remote_access_setup"
+  - "review_setup_plan"
+  - "automatic_preparation"
+  - "ready"
+  - "usage"
+  - "planning_wizard"
+  - "chat_teacher"
+  - "scm_backend_selection"
+  - "forge_provider_selection"
+  - "forgejo"
+  - "gitea"
+  - "forge_forgejo"
+  - "forge_gitea"
+  - "Start on this computer"
+  - "Other setup options"
+  - "Take the Guided Tour"
+  - "Planning Wizard"
+  - "ui.onboarding.*"
+  - "ui.onboarding.start"
+  - "ui.onboarding.next"
+  - "ui.onboarding.back"
+  - "ui.onboarding.close"
+  - "ui.onboarding.skip"
+  - "ui.onboarding.defer"
+  - "ui.onboarding.open_details"
+  - "ui.onboarding.more_ways"
+  - "ui.onboarding.choose_simple_path"
+  - "ui.onboarding.open_owner_flow"
+  - "ui.onboarding.run_automatic_preparation"
+  - "ui.onboarding.choose_first_project"
+  - "ui.onboarding.finish"
+  - "ui.guided_tour.start"
+  - "ui.guided_tour.next"
+  - "ui.guided_tour.back"
+  - "ui.guided_tour.pause"
+  - "ui.guided_tour.resume"
+  - "ui.guided_tour.skip"
+  - "ui.guided_tour.focus_route"
+  - "ui.guided_tour.toggle_eli5"
+  - "ui.guided_tour.finish"
+  - "ui.guided_tour.replay"
+  - "ui.guided_tour.restore_layout"
+  - "ui.guided_tour.keep_layout"
+  - "ui.guided_tour.toggle_reduced_motion"
+  - "general.visual.reduce-animations"
+  - "pm.product_onboarding.action_request.v1"
+  - "pm.product_onboarding.action_result.v1"
+  - "pm.guided_tour.action_request.v2"
+  - "pm.guided_tour.terminal_result.v2"
+  - "local_context"
+  - "skip_product_onboarding"
+  - "skip_optional_scope"
+  - "toggle_setup_options"
+  - "update_branch_state"
+  - "session_skipped"
+  - "optional_scope_skipped"
+  - "cmd.onboarding.*"
+  - "cmd.onboarding.back"
+  - "cmd.onboarding.cancel"
+  - "cmd.onboarding.continue"
+  - "cmd.onboarding.defer"
+  - "cmd.onboarding.finish"
+  - "cmd.onboarding.open_details"
+  - "cmd.onboarding.resume"
+  - "cmd.onboarding.skip"
   - "Connect Puppet Master to an AI provider"
   - "Set up a paid provider"
   - "Optional: Free Models"
@@ -1705,11 +1838,32 @@ preserved_exact_tokens:
   - "hide if server fails"
   - "fail-closed"
 negative_constraints:
-  - Do not call this feature acceptance-covered without screen order, skip state, Teacher copy, Free Models sequencing, and Doctor no-false-green tests.
+  - Do not call this feature acceptance-covered without exact nine-stage main and six-stage connect-existing order/denominators, zero external owner work before person-confirmed current Review, independent local-backend/optional-forge coverage, current-review one-dispatch proof, optional/deferrable provider setup, typed choice help, path-correct durable migration, exact three-scene/ten-action Guided Tour coverage, owner-security, and Doctor no-false-green tests.
+  - Do not restore the predecessor four-screen/provider-first, five-stage, seven-stage, or paid-provider-before-Free-Models choreography as current behavior.
+  - Do not hide or bypass current `simple_path`, `server_storage_client`, or `review_setup_plan`, or silently execute stages omitted by the connect-existing shortcut.
+  - Do not dispatch any network probe, owner route, mutation, or external work before person confirmation of the current Review Setup Plan revision.
+  - Do not migrate a predecessor directly into a confirmed Review or Automatic Preparation state, auto-confirm it, replay owner work, or report counts against the wrong current path.
+  - Do not register cmd.onboarding.* or treat a local ui.onboarding.* action as a semantic command.
+  - Do not register, alias, normalize, wire, or assign a handler to any packet candidate cmd.onboarding.* token.
+  - Do not treat Close as completion, Skip as completion, Defer as Skip, or Details as durable state or owner work.
+  - Do not accept open-ended local_context, arbitrary/raw payload copies, secret-bearing values, or ambiguous more_ways/skip intent/scope/choice/branch combinations.
+  - Do not add provider, advanced setup, or Guided Tour as a canonical Onboarding stage or gate.
+  - Do not rerun owner work during migration or persist/migrate Guided Tour session state.
+  - Do not restore the five-chapter or Chat-first Guided Tour, or accept any scene order other than `usage`, `planning_wizard`, `chat_teacher`.
+  - Do not require separate Usage move, resize, change, hide, configure, or focus checkpoints; only the same-card Watch hide/return and exact mounted Options activation satisfy current Usage progression.
+  - Do not advance Planning from narration, timers, generic Next, a look-alike, or anything other than the exact highlighted intent-chip handler result.
+  - Do not complete Chat/Teacher without far-right Chat, the real guide selector, `Teacher`, a real-composer send, and the deterministic local same-conversation reply; do not use a provider, model, token budget, network, or AI plan.
+  - Do not restore `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or `ui.guided_tour.toggle_reduced_motion` as current requests, aliases, handlers, or compatibility actions.
+  - Do not add a Guided Tour-specific Reduced Motion toggle or separate motion scene; the Tour only explains and honors the Settings-owned preference.
+  - Do not let callouts escape the viewport, point at stale geometry, or bypass scene-heading focus.
+  - Do not leave a partial composer draft, changed placeholder, changed layout, or lost focus after Skip; do not restore the old layout or move Chat away from the far right after Finish.
+  - Do not treat the predecessor 128-row packet or its ONB 28/TOUR 11 slices as current nine-/six-stage or three-scene/ten-action acceptance.
   - Do not hide critical blockers just to make onboarding look simpler.
   - Do not treat `Connected` or `Logged in` as equivalent to Ready.
+  - Do not let the Ready screen imply that skipped provider, Server, pairing, restore, Project, Doctor, or runtime work is complete.
   - Do not silently hide MCP/server degraded or unavailable rows from GUI/Doctor surfaces.
   - Do not allow stale FileSafe graceful-degradation wording to permit disabled guards as Ready.
+  - Do not claim native runtime, native Slint, production persistence, accessibility certification, motion quality, or visual acceptance from schema, fixture, static, transform, or browser evidence.
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/FinalGUISpec.md
@@ -2011,7 +2165,7 @@ The `PGF-010` static oracle derives command existence from the live catalog and 
 
 `self-test` must recompute both positive legacy normalizations, canonical JSON and MessagePack bytes, generation-qualified index rows, projection digests/counts, source immutability/deltas, the complete named quarantine matrix, the L-032 six-positive/fourteen-negative matrix, and the L-011 owner-equality negative matrix. L-011 mutations must reject missing reverse wiring, shared/wrong handlers, `confirmation_strength`, missing and wrong command confirmation, missing `actor_ref`, every missing CAS position, export request `manifest_ref`, request-side custody, each retired success token `kept_logical_root | fork_candidate_created | exported`, an omitted required result field, non-null wrong variants, fork/export active-binding changes, a generic receipt placeholder, and an invented EventRecord. In addition, it must reject an unknown extra in each complete primary Catalog Args cell, the exact catalog-owned Commands regression, an appended unknown request suffix in each of the three complete production request declarations, and omission of every one of the 26 `StorageFallbackResolutionReceipt` fields in turn, including `completed_at_utc`. Existing L-020 retry/effect divergence, `PGF-010` event/ghost drift, and comment-only versus semantic registry mutations remain mandatory. `validate` and its wrapper remain fail-closed while `event_denominator_unresolved`, event-family contract-depth obligations, Spec Lock hashes, generated currentness, or PNC-019 executable authority are unresolved. A red result caused by those named residuals is truthful; removing the residual, accepting an unknown family, registering a wildcard/default family, or treating an open `{}` payload/item schema as depth-complete is not an allowed repair.
 
-The historical Known-37 event-family slice is a **KNOWN-KERNEL STATIC contract-depth set at 37/37**: each row in that bounded slice has an exact owner-routed payload contract, closed required spine and applicable enums/conditions, retention authority, and planned positive/negative/replay/quarantine oracles at canonical Plans surfaces. The live registry is revision `2026-08-04.1` with 39 rows; the two later rows do not retroactively enlarge the Known-37 assignment. July Event Authority evidence records the 37-row slice plus at least 248 confirmed persisted-unregistered families, at least 40 unresolved exact rows, and 68 excluded rows. It proves only a source-dated persisted floor of at least 285 with denominator status `UNKNOWN_OPEN`; bulk registration is forbidden and fresh reconciliation is required. The bound external-custody inputs are `EA-27_PRODUCER_UNION_AND_DENOMINATOR.json` (SHA-256 `644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47`; `union_rows_sha256=aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d`) and `EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md` (SHA-256 `17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf`) under `PuppetMaster-AssuranceLab` custody. Static prose/schema presence is not fixture execution, validator or gate success, shard or generated-governance currentness, runtime behavior, harness evidence, certification, buildability, Case L closure, or denominator completion. Unknown/unregistered events still quarantine without checkpoint advance.
+The historical Known-37 event-family slice is a **KNOWN-KERNEL STATIC contract-depth set at 37/37**: each row in that bounded slice has an exact owner-routed payload contract, closed required spine and applicable enums/conditions, retention authority, and planned positive/negative/replay/quarantine oracles at canonical Plans surfaces. The live registry is revision `2026-08-27.1` with 39 rows; the two later rows do not retroactively enlarge the Known-37 assignment, and the 2026-08-27 `workspace.layout_changed` 1.1.0 upgrade changes an existing row rather than adding a family. July Event Authority evidence records the 37-row slice plus at least 248 confirmed persisted-unregistered families, at least 40 unresolved exact rows, and 68 excluded rows. It proves only a source-dated persisted floor of at least 285 with denominator status `UNKNOWN_OPEN`; bulk registration is forbidden and fresh reconciliation is required. The bound external-custody inputs are `EA-27_PRODUCER_UNION_AND_DENOMINATOR.json` (SHA-256 `644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47`; `union_rows_sha256=aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d`) and `EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md` (SHA-256 `17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf`) under `PuppetMaster-AssuranceLab` custody. Static prose/schema presence is not fixture execution, validator or gate success, shard or generated-governance currentness, runtime behavior, harness evidence, certification, buildability, Case L closure, or denominator completion. Unknown/unregistered events still quarantine without checkpoint advance.
 
 These checks are static plan/schema/fixture evidence. The PNC-019 harness must run the non-event validator before constructing a harness result or writing a receipt, then stop fail-closed on the live EventRecord denominator/depth critical. Updating its source-consumer and preflight shape is not a harness execution, runtime lifecycle result, certification receipt, buildability proof, or Case L finding closure.
 
@@ -2263,7 +2417,7 @@ This is canonical acceptance/test-spec prose. `STATICALLY_MATERIALIZED` means th
 
 - `K37-STATIC-01` — `STATICALLY_MATERIALIZED` — The exact 31 authorized new JSON paths exist and parse; the 21 Goal roots and nine standalone schemas are Draft 2020-12 meta-valid; the catalog data validates.
 - `K37-STATIC-02` — `STATICALLY_MATERIALIZED` — All 21 Goal roots are self-contained, closed, select their exact event const and schema ID, and carry mechanically identical common definitions.
-- `K37-STATIC-03` — `STATICALLY_MATERIALIZED` — The historical Known-37 event-family slice validates at 2.0.0 / 2026-07-18.2 / RET-K37-ASSIGNMENT-001@1.0.0; exactly 37 rows in that bounded slice have revision 2.0.0 and the 23/4/5/3/1/1 retention distribution. This is not a currentness claim for the live 39-row revision `2026-08-04.1`.
+- `K37-STATIC-03` — `STATICALLY_MATERIALIZED` — The historical Known-37 event-family slice validates at 2.0.0 / 2026-07-18.2 / RET-K37-ASSIGNMENT-001@1.0.0; exactly 37 rows in that bounded slice have revision 2.0.0 and the 23/4/5/3/1/1 retention distribution. This is not a currentness claim for the live 39-row revision `2026-08-27.1`.
 - `K37-STATIC-04` — `STATICALLY_MATERIALIZED` — The storage registry validates against the unchanged schema, has exactly 24 policy IDs, and contains the exact requested_effective_runtime and recovery_unavailable_resolution_receipt rows once in both required-family arrays.
 - `K37-STATIC-05` — `STATICALLY_MATERIALIZED` — The seven governed v1 reader definitions are byte-semantic deep-equals of the prior active inline definitions, while the seven active roots are v2 writer-only registry selections.
 - `K37-STATIC-06` — `STATICALLY_MATERIALIZED` — The two recovery commands each have one exact wiring row, sole runtime handler, typed request/result reference, receipt effect, empty expected-event set, and blocked-state admission prose.
@@ -2892,6 +3046,7 @@ depends_on: [ATS-028, F3-501, F3-502, F3-503, UIW-010, SP-245]
 unblocks: []
 acceptance_criteria:
 - All four editor and Browser targets and all four File Manager targets are exercised through visible production controls, and each asserts the rendered buffer rather than a dispatch count or a global marker.
+- The factory-state fixture proves Browser Preview and Automation remain owned by Panel 1 in the exact stable `Preview -> Automation -> overflow/actions anchor` group order, Browser Preview is active, inactive Automation is not painted or keyboard-focusable, overflow fitting cannot resurrect it, and a settled multi-frame observation records zero recurring child-list moves involving either owner tab.
 - Every surface host route, resizer, cancellation path, terminal cap, popup fallback, corruption variant, migration, write failure, reload, and second clean reload is executable; host routes are exercised through the grab handle by pointer and by keyboard, and resizers assert changed rendered geometry.
 - Fifth pane and fifth section rejection are visibly disabled with exact reasons and zero dispatch.
 - The visual matrix contains exactly 72 deterministic fresh-context captures and has zero major overlap, clipping, false controls, console errors, page errors, or focus/cursor residue.
@@ -2905,7 +3060,7 @@ validation_surfaces:
 risk_class: false_green_home_certification
 reasoning_tier: standard
 context_scope: home_live_certification
-implementation_surfaces: [Plans/Automated_Testing_System.md, Concepts/pm7-tools/verify/home_workspace_matrix.mjs]
+implementation_surfaces: [Plans/Automated_Testing_System.md, Concepts/pm7-tools/home_workspace_source.py, Concepts/pm7-tools/verify/home_workspace_matrix.mjs]
 node_compile_hint:
   mode: home_executable_matrix
   create_worknodes: false
@@ -3208,4 +3363,501 @@ negative_constraints:
   - Do not promote an external Project dependency into Puppet Master installation, capability, onboarding, Settings, Doctor, support, or browser ownership.
   - Do not claim the absence scan or external-process fixture proves all Browser Program behavior.
 owner_hints: [Plans/Automated_Testing_System.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
+```
+
+## PMConcept7 User-Polished Acceptance Addendum - 2026-08-27
+
+The following PlanUnits own the canonical fixture and audit requirements for the recovered PMConcept7. They do not create implementation work, and they do not substitute fixture presence or machine checks for actual visual and motion review.
+
+Final successor evidence is report-owned. When `audit_report.json` records `status = pass_with_named_residuals`
+and `verdict = successor_scope_verified_with_named_residuals`, the `evidence_ref` entries below prove only their
+named exact-hash PMConcept7 concept/demo slices. They grant no native Slint, production-runtime, PNC-019,
+certification, completeness, or product-readiness credit; every blocked, failed, uncaptured, or residual lane
+retains that classification.
+
+Build8 browser receipts do not establish an all-visuals pass. The protected Settings actual-pixel review retains
+`IVR-T41-B8-XPAGE-001`: the rightmost Settings card column is visibly cropped at 1180, 980, 860, and 680 in all
+eight themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
+keyboard-focus and Arrow-key-navigation defect also remains open, and PNC-019 remains outside this evidence.
+
+### ATS-036 - Canonical Usage GUI Fixture Suite
+
+```yaml
+plan_unit_id: ATS-036
+unit_type: acceptance_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The canonical Usage GUI fixture suite is rooted at tests/fixtures/usage_gui. Its golden matrix preserves the
+  thirteen UF-088 fixture identities, and companion cases plus room/disclosure, curated-size, content-tier,
+  theme/width, persistence-migration, and interaction-transaction matrices statically represent the recovered
+  Usage contract without treating concept demo reports as test authority. Fixtures preserve owner PlanUnits and
+  source lineage and fail closed for unknown, hidden, disabled, unsupported, partial, redacted, and missing data.
+  Fixture presence and `must`/`must_not` lists grant static representation only; runtime, visual, motion, and
+  migration behavior require fresh browser execution, raw receipts, and independent review.
+gui_related: true
+gui_classification_reason: This unit owns the canonical fixtures for visible Usage behavior across PM surfaces.
+depends_on: [UF-088, F3-514, WS-017, WS-018, WS-019, WS-020]
+unblocks: [ATS-038]
+acceptance_criteria:
+  - "The golden matrix contains exactly GUI-USG-001 through GUI-USG-008, GUI-CBP-001, GUI-CBP-002, GUI-ROUTE-001, GUI-RAW-001, and GUI-RAP-001 with no duplicate or unexpected fixture identity."
+  - "Each golden row has surfaces, source_lineage, must, and must_not assertions, and each identity has a matching standalone case fixture."
+  - "Companion matrices cover all thirteen rooms, At a glance/Detailed/Diagnostics, curated semantic sizes, complete-or-hidden tiers, measured physical content/placeholder footprints, stable identity-based insertion intent, Usage live occupied-neighbor pointer-resize preview with accepted-settlement topology parity, and the recovered width families; chart fixture expectations preserve the full ordered accessible series while checking exactly one visible in-plot label for every painted vertical bar, including zero bars, measured direct or vertical-lane placement keeps each label horizontally associated with its own bar, inside the plot, and pairwise non-overlapping without suppression, declared-unit formatting includes exactly two currency decimals for attempt-charge integer cents, and title/Latest/distinct-peak composition remains complete."
+  - "Fresh, migrated, invalid-reference, and prototype-key fixtures encode expected current defaults, settled restore, and preview-state exclusion without claiming that those behaviors executed."
+  - "Fixture expectations forbid unknown, hidden, disabled, unsupported, partial, missing, and redacted values from being represented as zero, success, settled, or authoritative; live rendering remains browser-audit work."
+  - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures and python3 scripts/pm-validate-pm7-gui-fixtures.py validate both pass for static fixture representation; runtime, visual, motion, and migration acceptance still requires fresh browser execution, raw receipts, and independent review."
+validation_surfaces:
+  - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: missing_or_noncanonical_usage_gui_fixture_suite
+reasoning_tier: high
+context_scope: pm7_usage_fixture_suite
+implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/usage_gui]
+node_compile_hint: {mode: usage_gui_fixture_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/usage-feature.md#uf-088---gui-usage-acceptance-fixture-matrix
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [GUI-USG-001, GUI-USG-008, GUI-CBP-001, GUI-CBP-002, GUI-ROUTE-001, GUI-RAW-001, GUI-RAP-001]
+negative_constraints:
+  - "Do not use Concepts/usage-concepts reports as the canonical fixture root."
+  - "Do not let missing or unknown data satisfy a zero-value assertion."
+owner_hints: [Plans/Automated_Testing_System.md, Plans/usage-feature.md]
+```
+
+### ATS-037 - Shared PM7 Surface Interaction And Event Fixtures
+
+```yaml
+plan_unit_id: ATS-037
+unit_type: acceptance_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The shared PM7 fixture suite is rooted at tests/fixtures/pm7_shared and contains the stable surface inventory,
+  Assistant/context continuity, Home transaction, status-bar, theme/surface, motion-frame, and
+  workspace-layout-event fixture families. The suite statically records expected single-node Assistant re-seating;
+  thread, transcript, draft, attachment, activity, detail-drawer, and focus continuity; failed/stale re-seat rollback;
+  open-detail-drawer compaction preservation; settled-only Home and widget operations; no-preview effects; status
+  layout; all-theme inventory; frame health; Dashboard wrapper/host ownership; pointer and keyboard widget
+  manipulation parity; stable identity-based insertion intent; Usage pointer-only live occupied-neighbor resize-preview
+  displacement, Dashboard frozen resize peers, and live reorder-peer displacement; last-painted-intent commit
+  without release retarget; cancellation/no-op cleanup; and the exact
+  workspace.layout_changed payload contract. It is a canonical fixture root; audit-harness and
+  concept-runner artifacts remain additional evidence, not replacement owners. Fixture lists and
+  `must`/`must_not` assertions are not runtime, visual, motion, or migration proof; those require fresh browser
+  execution, raw receipts, and independent review.
+gui_related: true
+gui_classification_reason: This unit owns cross-page visible and interaction fixtures shared by PMConcept7 surfaces.
+depends_on: [F3-513, F3-515, F3-516, F3-517]
+unblocks: [ATS-038, ATS-039, ATS-040]
+acceptance_criteria:
+  - "The shared fixture root contains exactly the seven named fixture families and each names owner PlanUnits, surfaces, must assertions, and must-not assertions."
+  - "Assistant/context fixtures statically encode one node/store identity, Home/global re-seating, active thread and transcript, draft, attachments, activity, detail-drawer identity/tab/scroll, focus continuity, failed/stale re-seat rollback, context metrics, Compact Now, More Details, and zero context.compaction.* events; the open-detail-drawer Compact Now fixture requires one existing cmd.chat.compact_context result and one receipt, zero domain events, a coherent ring/detail revision update, and preservation of drawer identity, selected tab, scroll position, and focus."
+  - "Home transaction fixtures statically encode Dashboard wrapper/host ownership rather than outer-grid mutation ownership, preview-spy emptiness, stable before/after insertion intent, measured placeholder footprint, pointer/keyboard move parity, frozen resize peers, live reorder displacement, last-painted-intent changed-only one-command commit without pointer-up retarget, Escape/pointercancel/lostpointercapture/blur/invalid/no-change rollback, settled persistence, and cleanup."
+  - "Usage interaction and motion fixtures statically encode a real target footprint, live deterministic displacement of only obstructed peers during held pointer resize, stable peer node/paint/DOM-order/entrance state, preview-spy emptiness, exact preview-to-accepted-settlement topology parity, and exact rollback after cancellation, rejection, or adapter failure; Dashboard resize remains frozen-peer."
+  - "Status and theme fixtures statically encode full-width non-overlapping status with no bell plus stable functional inventory in all eight themes and supported desktop widths."
+  - "Motion fixtures statically enumerate blank, black, white-until-hover, clipped, torn, or uniform transition frames and missing final settlement as conditions that fresh browser execution and independent review must reject."
+  - "Workspace event fixtures validate against the current workspace_layout_changed schema and reject preview-bearing, non-persisted, or incomplete events; none of the seven fixture files or their must/must_not lists proves runtime, visual, motion, or migration behavior without fresh browser execution, raw receipts, and independent review."
+validation_surfaces:
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: missing_shared_pm7_fixture_authority
+reasoning_tier: high
+context_scope: pm7_shared_fixture_suite
+implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/pm7_shared, Plans/event_payloads/workspace_layout_changed.schema.json]
+node_compile_hint: {mode: shared_pm7_fixture_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/FinalGUISpec.md#f3-518---pmconcept7-fixture-evidence-and-bootstrap-scope-boundary
+  - Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [surface_inventory, assistant_context_continuity, home_workspace_transaction, status_bar_contract, theme_surface_matrix, motion_frame_matrix, workspace_layout_event_fixtures]
+negative_constraints:
+  - "Do not treat audit evidence under Plans/.audits as the canonical root test suite."
+  - "Do not add a second Assistant, layout store, command family, or event family for fixture convenience."
+owner_hints: [Plans/Automated_Testing_System.md, Plans/FinalGUISpec.md]
+```
+
+### ATS-038 - Exhaustive PM7 Static Visual Matrix
+
+```yaml
+plan_unit_id: ATS-038
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Final PMConcept7 static certification renders every primary page in every built-in theme, every Usage room and
+  disclosure state, every widget kind at every curated semantic size, Home movable surfaces and Dashboard
+  widgets, the shared Assistant/context surfaces, status, panels, menus, and relevant hover/open states at
+  the exact 1440, 1180, 980, 860, and 680 CSS-pixel widths. Geometry, state, and DOM assertions are necessary but not
+  sufficient: reviewers inspect actual pixels and contact sheets, including loaded-font and fallback-font states,
+  fresh persistence, and migrated persistence. The matrix also proves Source authority's exact 4/6/8 disclosure
+  counts, measured physical-width content tiers and reorder placeholder footprints, complete-series ARIA with
+  exactly one visible tiny-chart label for every painted bar including zero bars, measured collision-free
+  in-plot placement horizontally associated with each bar, declared-unit value formatting, complete chart facts,
+  Planning Wizard/Home/Orchestrator/Projects narrow composition, reorder-ghost visibility, and component-scoped
+  contrast without altering Settings or Chat. It also captures the narrow title-bar page-overflow picker open and
+  closed, proving that the picker remains above and hit-testable, the edge-fade mask is removed only through its
+  visible lifecycle, and underlying page controls do not receive the click. Application page and console errors
+  fail the matrix.
+gui_related: true
+gui_classification_reason: This unit defines the comprehensive still-image review of user-visible PMConcept7 surfaces.
+depends_on: [ATS-036, ATS-037, F3-518]
+unblocks: []
+acceptance_criteria:
+  - "Every primary page is rendered in Basic Dark/Light, Friendly Dark/Light, Retro Dark/Light, and Glass Dark/Light."
+  - "Every Usage room, disclosure state, widget type, curated size, hidden/expanded state, and room-specific default board is represented or dynamically enumerated from the current fixture catalog; Source authority is exactly 4/6/8 and all thirteen rooms remain reachable at every matrix width."
+  - "Every required matrix slice runs at exactly 1440, 1180, 980, 860, and 680 CSS pixels; measured physical card width selects content tiers and reorder placeholder spans, preview spans do not become settled layout fields, Planning Wizard, Home, Orchestrator, and Projects have no empty-track or horizontal-overflow narrow failure, and font-ready, fallback-font, fresh-persistence, and migrated older-namespace runs complete without clipping, collisions, hidden required content, stale-layout override, underlaid reorder ghosts, or component-scoped contrast below the applicable threshold while Settings and Chat bytes remain protected; at every width that activates the title-bar page overflow picker, open/closing/closed screenshots and hit-test probes prove the picker is above underlying controls, its complete painted rectangle is interactive, the ancestor edge-fade mask is absent only during the visible lifecycle, and the same click cannot activate a page control beneath it."
+  - "Tiny vertical charts retain the complete ordered accessible series while painting exactly one visible label for every painted bar, including zero bars; measured direct or vertical-lane placement keeps labels horizontally associated with their bars, inside the plot, and pairwise non-overlapping without suppression, attempt-charge integer cents render with exactly two currency decimals, and the title plus Latest and distinct peak remain complete."
+  - "Review evidence includes actual screenshots/contact sheets and reviewer dispositions, not only overflow, bounding-box, or computed-style metrics."
+  - "Application exceptions, attributable console errors, duplicate critical ids, viewport escape, blank/uniform frames, and unreviewed matrix cells fail certification."
+validation_surfaces:
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-all-charts/report.json (SHA-256 673e3c9a033a101b41a28dbc0dffc59397515e2c91ae88abac8970414c722b66; exact Build8 concept/browser chart slice; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-checked-in-width-matrix/report.json (SHA-256 54895af4fb7c7245bbc8c7d5772cd46dace251bfdfa023513fef490aa37e4dd0; exact checked-in Build8 concept/browser width slice; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-cross-page-matrix-clean-tmp/report.json (SHA-256 d310b6ccbe900c4f7845b15e79e92de6ac89487ac258ed82f0116992efc1104b; exact Build8 cross-page concept/browser geometry and state slice; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-cross-page-matrix-clean-tmp/independent_visual_review.json (SHA-256 daac899e74e5e74727ac8ba545441c5a593a3b7a55e39e4be4c2d1c430af2b7c; status=completed_with_visual_finding; IVR-T41-B8-XPAGE-001 retains protected Settings card crop at 1180/980/860/680; readiness_claim=false)"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: incomplete_pm7_static_visual_coverage
+reasoning_tier: high
+context_scope: pm7_static_visual_matrix
+implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/usage_gui, tests/fixtures/pm7_shared]
+node_compile_hint: {mode: pm7_static_visual_matrix_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/FinalGUISpec.md#f3-518---pmconcept7-fixture-evidence-and-bootstrap-scope-boundary
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [1440, 1180, 980, 860, 680, actual pixels, contact sheets, font fallback, local persistence]
+negative_constraints:
+  - "Do not certify a surface solely because its geometry is in bounds."
+  - "Do not omit a state because it was inconvenient to reach manually."
+owner_hints: [Plans/Automated_Testing_System.md]
+```
+
+### ATS-039 - Frame-By-Frame PM7 Motion And Transaction Audit
+
+```yaml
+plan_unit_id: ATS-039
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  PMConcept7 motion certification records and reviews drag, resize, reorder, reflow, page-tab, editor-tab,
+  Usage-nav, menu, drawer, Context, hover, panel, and theme transition frame sequences. The audit watches the
+  complete start-to-settle lifecycle, including pointer capture, measured-footprint placeholders, ghosts,
+  Usage pointer-only live occupied-neighbor resize-peer displacement, Dashboard frozen resize peers, live interruptible reorder-peer displacement, stable two-dimensional Usage candidates
+  including empty same-footprint cavities and lower rows, ghost-anchor targeting with geometric hysteresis,
+  stable before/after correlation, last-painted-intent commit without pointer-up retarget, clip paths, spring/velocity effects, target
+  reconciliation, rollback, and cleanup. Usage reorder films also verify that preview retains the same mounted
+  peer nodes at nonzero opacity, never restarts their entrance animation, and reconciles DOM order only once after
+  an accepted move. Usage pointer-resize films verify that affected occupied peers visibly repack from each supported
+  held target footprint through exact accepted settlement while peer nodes, opacity, entrance state, child list,
+  and scroll stay stable; cancellation and failed settlement restore the baseline exactly. Resize films cover the
+  far right as the primary edge case plus far-left and middle positions, pointer and keyboard expansion/contraction;
+  obstructing-peer held-preview and exact preview-to-settlement parity are pointer-only, while keyboard resize is
+  verified as atomic changed-only settlement. The matrix also covers same-direction overshoot and edge-limited one-step
+  intent. Direct and displaced move/resize-control approaches cover fast and slow magnetic acquisition, pointer-
+  specific rescue, false-positive guards, and complete lease reset. Usage and Home Dashboard pointer and keyboard films exercise the same
+  movement semantics while preserving Dashboard wrapper/host ownership. Transaction spies remain empty during
+  preview and cancellation and show one existing command plus the applicable single result, receipt, event, and
+  settled write only after a changed accepted commit. Hover motion evidence separately exercises startup census,
+  settled live observation, and same-frame pointer/focus acknowledgement; it rejects repeated tag work for exact
+  old/current attribute reassertions while proving real text, state, insertion, removal, and subtree changes remain live.
+  When Product Onboarding is the active modal overlay, the hover campaign first proves a bound, visible tag on an
+  actionable modal control, then closes the modal through its typed local action before exercising underlay fixtures;
+  the harness never bypasses or misreports the modal's intentional pointer-event interception.
+gui_related: true
+gui_classification_reason: This unit governs the visible temporal behavior and transactional correctness of PMConcept7 interactions.
+depends_on: [ATS-037, F3-515, F3-517]
+unblocks: []
+acceptance_criteria:
+  - "Drag, resize, reorder, reflow, page, editor tab, Usage nav, menu, drawer, Context, hover, panel, and theme motion are sampled from start through stable settlement."
+  - "Hover startup and settled-live pacing are measured independently; one frame-bounded startup pass completes, pointer/focus still acknowledges in the same frame, exact old/current attribute reassertions create zero tag invalidation work, and genuine dynamic changes refresh descriptions and visual tags."
+  - "The hover matrix proves an actionable Product Onboarding modal control while that modal legitimately owns pointer input, then releases the modal through its typed close action before underlay fixture checks; force-clicks, synthetic pointer bypasses, and click-through claims are forbidden."
+  - "Frame health rejects black, blank, uniform, white-until-hover, clipped plate, torn layer, one-frame teardown, or excessively accelerated transition states."
+  - "Usage and Home Dashboard pointer and keyboard films show measured pointer placeholder/ghost position, above-workspace ghost visibility, truthful keyboard pickup outline and aria-grabbed state, stable two-dimensional candidate choice including empty same-footprint cavities and lower rows, ghost-anchor targeting with geometric hysteresis, stable before/after correlation, live reorder-peer displacement, Usage pointer-only live occupied-neighbor resize displacement versus Dashboard frozen resize peers, clip path, target animation, and commit of the last painted intent without pointer-up re-hit-testing or retargeting; Usage resize treats the far-right edge as primary and also covers far-left/middle pointer and keyboard expand/contract with requested-axis advance and minimum companion drift, while obstructing-peer held preview, exact held-preview-to-settlement topology parity, stable peer node/opacity/entrance/child-list/scroll state, and cancel/rejection/adapter-failure preview rollback are pointer-only and keyboard resize remains atomic; edge-limited one-step travel and an in-viewport last-painted maximum after same-direction overshoot remain covered; repeated reorder preview retains identical peer nodes on a fully painted board with nonzero opacity, no empty peer rectangle, no entrance-animation restart, no preview child-list churn, and only one post-acceptance DOM-order reconciliation."
+  - "Fast and slow direct or displaced approaches to both Usage move and resize controls preserve body magnetism away from the corner, acquire the intended existing controller with pointer capture, clear the pointer-specific lease on activation, and reject other interactives, foreign pointer ids, expired leases, and points outside the corridor; a pointer-events-auto top-layer occluder receives pointerdown above a remembered control, clears that stale lease, and starts no widget operation, while an active resize/reorder rejects every second pointer, touch, pen, or keyboard controller before mutation and retains sole ownership until cleanup."
+  - "Preview, Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, and popup dismissal produce zero command, result, receipt, event, and persistence deltas; an owner-rejected command or post-dispatch persistence-adapter failure restores authoritative layout and cleanup, retains exactly one attempted command and one rejected/failed receipt, produces zero settled events or successful owner-store writes, and reports attempted adapter calls separately from successful writes."
+  - "A changed owner-accepted release produces exactly one existing command and no duplicate result, receipt, applicable event, or settled write; after commit, cancellation, or no-op there is no leaked capture, preview class, portal, ghost, placeholder, pending animation frame, transient listener, preview-only board minimum height, blank scroll tail, NotFound exception, stuck move state, or mutation through an outer presentation grid instead of the owning Dashboard wrapper/host, and repeated committed reorders do not compound scroll extent."
+validation_surfaces:
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-focused-regression-rerun-2/report.json (SHA-256 4de0320f73010440560c5fed357df8b67f02188b6ca0a07c1ff3875de31485c0; historical Build8 predecessor interaction slice only, superseded for Usage pointer-resize preview timing; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/films/build8/t41-final/independent_visual_review.json (SHA-256 b669c7588b87ecd757addb6cdd0b59b473d9de89e0bd9e53a916ecc484ff559b; historical Build8 predecessor Usage/Home film review only, superseded for Usage pointer-resize preview timing; readiness_claim=false)"
+  - "verification_pending: fresh exact-T43 Usage pointer live-resize preview and settlement film evidence under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: pm7_motion_blackout_or_transaction_leak
+reasoning_tier: high
+context_scope: pm7_motion_transaction_audit
+implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/pm7_shared, Concepts/pm7-tools/global_hover_tags_source.py, Concepts/pm7-tools/verify/hover_tags.mjs, Concepts/pm7-tools/verify/full_thread_performance.mjs]
+node_compile_hint: {mode: pm7_motion_transaction_matrix_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [pointercancel, lostpointercapture, no-change release, frame-by-frame, final-coordinate, last painted intent, transaction spy]
+negative_constraints:
+  - "Do not infer motion quality from the final frame alone."
+  - "Do not allow fixture code to emit a command or event during preview merely to make the test observable."
+  - "Do not let pointer-up retarget a reorder away from its last painted stable intent or let an outer presentation grid become Dashboard widget mutation owner."
+  - "The exact Build8 focused and film evidence binds only captured Chromium concept transactions and reviewed Usage/Home frames; uncaptured transitions, touch, pen, multi-touch, non-Chromium, assistive-technology, native Slint, and production-runtime behavior remain outside the claim, and it does not waive the protected Settings crop, P2 narrow overflow-menu keyboard residual, or PNC-019."
+owner_hints: [Plans/Automated_Testing_System.md, Plans/FinalGUISpec.md]
+```
+
+### ATS-040 - Settled Command Event Receipt And Context Compaction Fixtures
+
+```yaml
+plan_unit_id: ATS-040
+unit_type: acceptance_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Shared runtime command-contract fixtures include PM7 interaction traces for preview, changed commit,
+  cancellation, no-change release, post-dispatch owner rejection, persistence-adapter failure, duplicate commit
+  rejection, and Context compaction. The traces use existing command identities and distinguish local projection,
+  owner-accepted settlement, owner rejection, an attempted adapter call, and a successful owner-store write. The current
+  workspace.layout_changed schema is version 1.1.0, is settled-only and persisted, references the accepted
+  command result and exactly one dispatch receipt, carries interaction/command/correlation identities, prior/new layout
+  revisions, mutation and final-target data, the required nullable semantic-size preset, and no preview state. Context
+  compaction is represented by cmd.chat.compact_context result, receipt, revision, and compaction-history
+  projection with an empty event list. A changed owner-accepted settled commit has exactly one dispatch receipt
+  and may emit only `workspace.layout_changed`; post-dispatch owner rejection or adapter failure retains exactly
+  one command result and receipt, rolls back, records zero successful owner-store writes, and emits no settled event.
+  Preview, cancellation, no-change, and local Assistant compaction are event-silent. The event-family registry contains exactly one workspace.layout_changed family and no
+  context.compaction.started, context.compaction.completed, or context.compaction.failed family.
+gui_related: true
+gui_classification_reason: This unit validates the command/event/receipt traces that drive visible PM7 settlement and context feedback.
+depends_on: [ATS-037, F3-515, F3-516, CS-068, UCC-147, WM-045]
+unblocks: []
+acceptance_criteria:
+  - "The shared schema admits PM7 settled-interaction and Context-compaction trace definitions without adding either trace-only command ids to the canonical 26-command shared-runtime census."
+  - "Preview, cancellation, and no-change fixtures require null command identity, result_outcome=not_dispatched, dispatch_accepted=null, zero dispatch/result/receipt/event/write-attempt/successful-write counts, prior-state preservation, and completed cleanup."
+  - "A changed settled commit fixture requires one existing command, one owner result, exactly one dispatch receipt, exactly one settled write, no duplicate dispatch, and an event list containing either the single applicable workspace.layout_changed event or no event when that family is not applicable; a post-dispatch owner-rejected fixture instead requires one existing command, one rejected result and receipt, dispatch_accepted=false, zero adapter attempts, zero successful writes, authoritative rollback, complete cleanup, and no event, while a persistence-adapter-failed fixture requires one existing command, one failed result and receipt, dispatch_accepted=true, one adapter attempt, zero successful writes, authoritative rollback, complete cleanup, and no event."
+  - "workspace.layout_changed is the only allowed event type for a changed settled commit; valid fixtures satisfy schema_version 1.1.0, settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted command_result_ref, exactly one receipt_ref, prior/new revisions, mutation, final source/target/slot and settled-layout data, and required nullable semantic_size_preset_id."
+  - "The currently supplied invalid workspace-event fixtures cover exactly 13 cases: preview_state_included=true; settled_only=false; persisted=false; missing command_result_ref; empty receipt_refs; missing project_id; missing new_layout_revision; an out-of-set mutation_kind; an out-of-set target_host; an out-of-set semantic_size_preset_id; a new_layout_revision that does not advance; a non-workspace command family; and more than one receipt_ref."
+  - "Preview, cancellation, and no-change traces contain no event; Context compaction requires cmd.chat.compact_context result and receipt projection but remains event-silent with no context.compaction.* type or new event-family registration."
+  - "Fixture validation establishes static representation only, so fresh browser execution, raw receipts, and independent review remain required for runtime behavior; the event registry, shared runtime command validator, PM7 GUI fixture validator, JSON syntax gate, and PlanUnit validation must also pass together."
+  - "The shared runtime command validator resolves the reviewed Shared Integration Runtime expansion schema only from its exact repository path and canonical schema ID; an unknown external reference or any attempted network fallback fails closed, so PM7 fixture validation remains deterministic and offline."
+validation_surfaces:
+  - "python3 scripts/pm-shared-runtime-command-contracts.py validate"
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: preview_event_or_compaction_event_authority_drift
+reasoning_tier: high
+context_scope: pm7_settled_command_event_receipt_fixtures
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/shared_runtime_command_contracts.schema.json
+  - Plans/shared_runtime_command_contract_fixtures.json
+  - Plans/shared_integration_runtime_expansion_contracts.schema.json
+  - scripts/pm-shared-runtime-command-contracts.py
+  - Plans/event_payloads/workspace_layout_changed.schema.json
+  - Plans/event_family_registry.json
+  - tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json
+node_compile_hint: {mode: pm7_command_event_receipt_fixture_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Commands_System.md#cs-068---pmconcept7-settled-interaction-command-reuse-and-local-preview-boundary
+  - Plans/assistant-chat-design.md#acd-448---one-shared-assistant-seat-and-coherent-context-ring-detail-contract
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (T43 Usage pointer-resize preview transform)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [pm.event.workspace_layout_changed.v1, schema_version, 1.1.0, settled_only, preview_state_included, persisted, command_result_ref, receipt_refs, semantic_size_preset_id, result_outcome, dispatch_accepted, persistence_write_attempt_count, persistence_write_count, owner_rejected, persistence_adapter_failed, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
+negative_constraints:
+  - "Do not add a persisted event for pointer-preview or local working-animation frames."
+  - "Do not register Context compaction lifecycle events when the command result and receipt already own the durable outcome."
+  - "Do not expand the canonical shared-runtime command census for PM7 trace-only fixture definitions."
+owner_hints: [Plans/Automated_Testing_System.md, Plans/Commands_System.md, Plans/event_family_registry.json]
+```
+
+### ATS-041 - New Contract Owner-Wave Schema And Fixture Gate
+
+```yaml
+plan_unit_id: ATS-041
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The centrally invoked validate-new-contracts gate fail-closes the authored 23-pair contract manifest plus one
+  shared-integration expansion fixture pack for the
+  Settings, Onboarding, Guided Tour, Doctor, retained Egolite requirement closure, Project, Named Plan, Full Thread Runtime, Server, Remote Access,
+  Backup/Restore, protected AuthBrowserSession, Browser Program, test capture and motion evidence, source control,
+  forge, plugins, shared-runtime command, and Final GUI interaction owner wave. It validates every schema against
+  the JSON Schema Draft 2020-12 metaschema, selects an exact closed definition for every fixture record, accepts
+  every positive, rejects every expected negative, rejects unknown definitions and invalid mutation recipes,
+  rejects fixture-pack IDs used as runtime values, stale aggregate owner IDs, duplicate primary runtime record
+  identities within a closed definition, and mixed puppetmaster.local/puppet-master.local schema hosts. An
+  aggregate runtime schema identity is permitted only when the schema explicitly declares
+  x-runtime-schema-id-policy=aggregate_plus_record_kind and each selected definition supplies the matching unique
+  record_kind discriminator. The gate proves static schema and fixture consistency only.
+gui_related: false
+gui_classification_reason: This unit owns a static contract-validation gate; it does not own or certify a visible GUI implementation.
+depends_on: [ATS-001, SIR-031]
+unblocks: []
+acceptance_criteria:
+  - "python3 scripts/pm-new-contracts-verify.py validates exactly 23 authored schema/fixture pairs plus one shared-integration expansion fixture pack and reports its complete input manifest and counts."
+  - "The current closed corpus accepts 708 positive fixtures, rejects 2606 negative fixtures, accepts 264 expansion command records, 240 owner-compatibility command records, 28 local records, 28 owner-local aliases, and 33 normalizations, and passes all 12 internal negative tests."
+  - "python3 scripts/pm-plans-verify.py run-gates invokes one named validate-new-contracts subcheck and propagates its failures."
+  - "Every positive fixture resolves to exactly one explicit or discriminator-selected definition, and every negative is rejected by that same intended definition or its explicitly authored cross-record invariant."
+  - "Unknown definitions, malformed negative recipes, fixture-pack IDs in runtime records, stale owner identities, duplicate runtime record identities, undocumented aggregate schema identities, and mixed local schema hosts fail closed."
+  - "A passing gate is static schema/fixture evidence only and is never promoted into handler, runtime, native Slint, browser, WAN, restore, security, performance, accessibility, readiness, or certification evidence."
+validation_surfaces:
+  - "python3 scripts/pm-new-contracts-verify.py"
+  - "python3 scripts/pm-plans-verify.py validate-new-contracts"
+  - "python3 scripts/pm-plans-verify.py run-gates"
+risk_class: contract_fixture_drift_or_false_runtime_claim
+reasoning_tier: high
+context_scope: new_contract_owner_wave_static_validation
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - scripts/pm-new-contracts-verify.py
+  - scripts/pm-plans-verify.py
+node_compile_hint: {mode: static_contract_fixture_gate_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/Server_System.md
+  - Plans/Remote_Access_System.md
+  - Plans/Backup_Restore_System.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/Test_Capture_and_Motion_Evidence.md
+  - Plans/Source_Control_System.md
+  - Plans/Forge_Integrations.md
+  - Plans/egolite_retained_requirement_contracts.schema.json
+  - Plans/egolite_retained_requirement_contract_fixtures.json
+preserved_exact_tokens: [validate-new-contracts, 23, shared-integration expansion fixture pack, Draft 2020-12, aggregate_plus_record_kind, static_schema_and_fixture_consistency_only]
+negative_constraints:
+  - "Do not add schemas or fixture pairs to the gate through an ambient glob."
+  - "Do not weaken a failing invariant merely to make current fixtures pass."
+  - "Do not treat gate success as runtime, visual, motion, recovery, security, performance, or readiness proof."
+owner_hints: [Plans/Automated_Testing_System.md]
+```
+
+### ATS-042 - Touch And Server Command Gap Aggregate Gates
+
+```yaml
+plan_unit_id: ATS-042
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  pm-server-command-gap-verify.py and pm-touch-closure-verify.py are independent,
+  fail-closed governance checks with separately callable pm-plans-verify wrappers.
+  Both wrappers run as named, timeout-bounded subchecks in run-gates and
+  audit-governance; neither is buried inside Wiring Matrix validation. The
+  server-gap check freezes the 171-row custody partition, resolves every
+  schema-bearing pointer, and runs negative self-tests. The Touch Closure check
+  verifies exact inventory and denominator coverage, one future handler per
+  actionable primary command, no peer alias wiring, real reverse consumers, and
+  explicit blocked/excluded dispositions. Both checks prove static canonical
+  consistency only.
+gui_related: true
+gui_classification_reason: Touch Closure validates visible control actions, disabled reasons, return routes, and reverse GUI reachability, while the test owner itself remains non-visual.
+split_recommended: false
+depends_on: [ATS-041, C-051, DR-041, CV-326, CS-074, WM-051, UIW-017, SIR-031]
+unblocks: [0PI-068]
+acceptance_criteria:
+  - "python3 scripts/pm-plans-verify.py validate-server-command-gap invokes the dedicated validator with JSON output and propagates timeout, signal, malformed-output, self-test, and contract failures."
+  - "python3 scripts/pm-plans-verify.py validate-touch-closure normalizes valid=true to aggregate status=pass and fail-closes every other result."
+  - "run-gates and audit-governance each report both checks under distinct names with the standard per-subcheck timeout."
+  - "The server check resolves 168 schema-bearing plus 3 rejected rows and runs all 11 negative self-tests; both unresolved reference counts remain zero."
+  - "The Touch check freezes 560 rows, 87 profiles, 55 excluded tokens, 51 alias bindings, and 1041 production-intent entries; all 400 actionable primary commands have wiring and one handler identity while the one blocked primary command has none."
+  - "A passing static gate is not promoted into native runtime, browser, visual, motion, accessibility, performance, recovery, security, readiness, or Slint evidence."
+validation_surfaces:
+  - python3 scripts/pm-server-command-gap-verify.py --json
+  - python3 scripts/pm-touch-closure-verify.py --json
+  - python3 scripts/pm-plans-verify.py validate-server-command-gap
+  - python3 scripts/pm-plans-verify.py validate-touch-closure
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py audit-governance
+  - python3 scripts/pm-plan-index.py validate
+risk_class: aggregate_gate_omission_or_false_static_certification
+reasoning_tier: high
+context_scope: touch_and_server_gap_aggregate_gate_registration
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - scripts/pm-plans-verify.py
+  - scripts/pm-server-command-gap-verify.py
+  - scripts/pm-touch-closure-verify.py
+  - Plans/server_command_gap_adjudication.json
+  - Plans/touch_closure.json
+node_compile_hint: {mode: named_timeout_bounded_static_governance_gates, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Automated_Testing_System.md#ats-041---new-contract-owner-wave-schema-and-fixture-gate
+  - Plans/Crosswalk.md#c-051---touch-closure-authority-and-consumer-routing
+  - Plans/Contracts_V0.md#cv-326---touch-closure-registry-and-static-production-intent-boundary
+preserved_exact_tokens: [validate-server-command-gap, validate-touch-closure, run-gates, audit-governance, valid, status, subcheck_timeout_seconds]
+negative_constraints:
+  - "Do not fold either dedicated check into validate-wiring-matrix or validate-new-contracts."
+  - "Do not accept a killed, timed-out, empty, malformed, or nonzero validator process as a pass."
+  - "Do not claim runtime or readiness from static governance closure."
+owner_hints: [Plans/Automated_Testing_System.md, Plans/Commands_System.md, Plans/Wiring_Matrix.md, Plans/DRY_Rules.md]
+```
+
+### ATS-043 - Forgejo/Gitea, Independent Automation, And Event-Silent Forge Acceptance Matrix
+
+```yaml
+plan_unit_id: ATS-043
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Automated Testing consumes the Forge, Source Control, and Product Onboarding contracts for distinct Forgejo
+  and Gitea identities, independent RepositoryForgeBinding and AutomationBinding authority, and the sole
+  repository_automation / Actions & Pipelines shell. Static schema and fixture validation covers closed types and
+  negative constraints. Runtime integration acceptance separately requires authorized provider instances/accounts,
+  exact versions and capability evidence, direct execution-time currentness and security checks, native owner
+  handlers/receipts, accessibility and visual evidence, and honest NOT_RUN status where those environments do not
+  exist. The nine newly admitted Forge commands remain handler_unavailable and event-silent with
+  expected_event_types=[] until their native and Event Authority evidence exists.
+gui_related: true
+gui_classification_reason: The matrix validates visible Source Control and Actions & Pipelines provider projection, migration, capability, disabled-reason, accessibility, and recovery behavior as well as non-GUI contract/security boundaries.
+depends_on: [ATS-020, ATS-041, FGI-012, FGI-013, SCS-013]
+unblocks: []
+acceptance_criteria:
+  - Distinct Forgejo and Gitea adapter/profile fixtures cover old and new product versions, supported API-schema variance, multiple instances with identical repository names, API disabled while Git transport remains available, read-only credentials, SSH-only transport, custom SSH ports, and instance-scoped private CA.
+  - Provider capability fixtures distinguish API, Git transport, and Actions state; Actions disabled, no runner, no workflow, insufficient permission, unsupported, and unknown never collapse into one unavailable state or disable proven fetch/publish.
+  - RepositoryContext tests cover Git plus Gitea, Jujutsu plus Forgejo, no automation binding, same-forge automation, and automation on a different provider/instance/account/host; AutomationBinding is never inferred from RepositoryForgeBinding, remote origin, repository name, or display label.
+  - The one canonical repository_automation occupant is labeled Actions & Pipelines. github_actions migrates only as route/bookmark/deep-link input; GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions remain provider-native headings, Bitbucket Data Center without CI says Connect automation service, and no fixture fabricates Origin Actions.
+  - Security negatives cover certificate bytes or local paths instead of scoped CA refs, missing or mismatched known-host proof, invalid SSH ports, raw credentials/secrets, Authorization forwarded across redirect-origin change, unapproved localhost/metadata targets, stale provider/binding/catalog/currentness generations, denied permission, and missing FileSafe decision for local writes or downloads.
+  - Product Onboarding fixtures admit forge_forgejo and forge_gitea separately, preserve typed self-host inputs and cached owner refs without probing, and prove all pre-Review choices are draft-only. Only a person-confirmed current Review may dispatch each deduplicated canonical owner action; owner return advances without a second confirmation, and the plan never claims account creation, adapter execution, trust, readiness, or success.
+  - Each of the exact nine admissions cmd.forge.repository.fork, cmd.forge.pipeline.approve, cmd.forge.review.checks, cmd.forge.repository.policy.preview, cmd.forge.repository.policy.apply, cmd.forge.runner.registration.apply, cmd.forge.runner.remove, cmd.forge.release.list, and cmd.forge.release.asset.download receives one valid request plus a rejected permission, guard, or currentness case as required by its owner contract.
+  - Every newly admitted Forge command starts handler_unavailable, has expected_event_types=[], returns only its owner-typed result/receipt/projection, and emits no unregistered forge.* EventRecord. Operation receipts and ObservableWork correlation never count as EventRecord admission.
+  - Repository fork, pipeline-gate approval, review checks, policy preview/apply, runner administration, release list, and release-asset download retain distinct targets, permissions, confirmations, digest/FileSafe/currentness/idempotency guards and cannot pass through aliases or generic settings/connection/pipeline-artifact substitutes.
+  - Static JSON parse, Draft 2020-12 metaschema, fixture, catalog, touch-closure, or planned-handler success is reported only as static contract evidence. Native adapter/runtime, network, provider behavior, security isolation, accessibility, motion, visual, Slint, persistence/recovery, event, readiness, and certification lanes require their own receipts and remain NOT_RUN when absent.
+validation_surfaces:
+  - Plans/forge_integration_contracts.schema.json
+  - Plans/forge_integration_contract_fixtures.json
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 scripts/pm-touch-closure-verify.py --json
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - future authorized Forgejo/Gitea old/new/API-disabled/read-only/SSH-only/private-CA integration matrix
+  - future native repository_automation migration/accessibility/visual acceptance matrix
+risk_class: forge_provider_automation_security_or_evidence_layer_false_pass
+reasoning_tier: high
+context_scope: forgejo_gitea_source_control_onboarding_and_automation_acceptance
+implementation_surfaces: [Plans/Automated_Testing_System.md, future Forge and Source Control contract/integration/security/GUI test harnesses]
+node_compile_hint: {mode: acceptance_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Forge_Integrations.md#FGI-012
+  - Plans/Forge_Integrations.md#FGI-013
+  - Plans/Source_Control_System.md#SCS-013
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+preserved_exact_tokens: [forgejo, gitea, RepositoryForgeBinding, AutomationBinding, repository_automation, "Actions & Pipelines", github_actions, handler_unavailable, "expected_event_types=[]", FileSafe, NOT_RUN]
+negative_constraints:
+  - Do not collapse Forgejo and Gitea, Git/API/Actions state, repository and automation authority, operation receipts and EventRecords, or static and runtime evidence layers.
+  - Do not use real user secrets in fixtures or broaden CA, redirect, localhost, metadata, SSH, permission, FileSafe, or currentness policy to make a test pass.
+  - Do not represent mocks, schemas, fixtures, planned handlers, concept simulations, screenshots, or documentation inspection as native/runtime/provider/security/visual/readiness proof.
+owner_hints: [Plans/Automated_Testing_System.md, Plans/Forge_Integrations.md, Plans/Source_Control_System.md]
 ```

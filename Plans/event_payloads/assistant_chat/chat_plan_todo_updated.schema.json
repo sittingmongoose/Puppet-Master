@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.assistant_chat_event.chat_plan_todo_updated.schema.v1",
+  "$comment": "Static field-shape materialization only. This schema grants no registry admission, EventRecord append or dispatch authority, persistence binding, checkpoint advance, replay certification, or executable-depth credit.",
+  "title": "chat.plan_todo_updated payload",
+  "description": "Closed durable normalized TODO mutation payload. Mutation values are bounded scalars, identifier arrays, or a closed TODO item; transcripts, diffs, arbitrary objects, and credentials cannot be inlined.",
+  "x-event-type": "chat.plan_todo_updated",
+  "x-family-id": "event-family-chat-plan-todo-updated",
+  "x-family-revision": "1.0.0-proposed",
+  "x-scope-policy": "project_only",
+  "x-retention-policy-proposal": "RP-AUTHORITY-INDEFINITE",
+  "x-source-row-id": "ea-successor-row-a74b51e95c9b62d95f01",
+  "x-source-open-index": 23,
+  "x-owner-evidence-lines": [670, 671, 802, 804, 1468, 1751, 8848],
+  "x-event-append-authorized": false,
+  "x-event-dispatch-authorized": false,
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "plan_id",
+    "todo_id",
+    "field",
+    "old_value",
+    "new_value",
+    "source"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.assistant_chat_event.chat_plan_todo_updated.schema.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "plan_id": {
+      "$ref": "#/$defs/stable_id"
+    },
+    "todo_id": {
+      "$ref": "#/$defs/stable_id"
+    },
+    "field": {
+      "type": "string",
+      "enum": [
+        "item_created",
+        "item_removed",
+        "title",
+        "summary",
+        "status",
+        "dependencies",
+        "order_index",
+        "owner_hint",
+        "verification_hint",
+        "notes"
+      ]
+    },
+    "old_value": {
+      "$ref": "#/$defs/todo_value"
+    },
+    "new_value": {
+      "$ref": "#/$defs/todo_value"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["agent", "user"]
+    }
+  },
+  "$defs": {
+    "stable_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "human_safe_text": {
+      "type": "string",
+      "maxLength": 2048,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "todo_status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed", "blocked", "skipped"]
+    },
+    "stable_id_array": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/stable_id"
+      }
+    },
+    "todo_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["todo_id", "title", "status", "dependencies", "order_index"],
+      "properties": {
+        "todo_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "title": {
+          "allOf": [
+            {"$ref": "#/$defs/human_safe_text"},
+            {"minLength": 1, "maxLength": 256}
+          ]
+        },
+        "summary": {
+          "allOf": [
+            {"$ref": "#/$defs/human_safe_text"},
+            {"maxLength": 1024}
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/todo_status"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/stable_id_array"
+        },
+        "order_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "owner_hint": {
+          "allOf": [
+            {"$ref": "#/$defs/human_safe_text"},
+            {"maxLength": 256}
+          ]
+        },
+        "verification_hint": {
+          "allOf": [
+            {"$ref": "#/$defs/human_safe_text"},
+            {"maxLength": 1024}
+          ]
+        },
+        "notes": {
+          "allOf": [
+            {"$ref": "#/$defs/human_safe_text"},
+            {"maxLength": 1024}
+          ]
+        }
+      }
+    },
+    "todo_value": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/human_safe_text"},
+        {"type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991},
+        {"type": "boolean"},
+        {"$ref": "#/$defs/stable_id_array"},
+        {"$ref": "#/$defs/todo_item"}
+      ]
+    }
+  }
+}

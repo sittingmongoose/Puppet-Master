@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31324-L31806
+Source lines: L31330-L31817
 
-Source SHA256: `ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523`
+Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
 
 ---
 
@@ -25,14 +25,18 @@ canonical_text: >-
   scrolls horizontally when tabs overflow its width, and tab labels truncate with an
   ellipsis. Tabs shrink flexibly between a 56px minimum and a 180px maximum width. Editor
   tabs are explicitly excluded from this recipe and keep the width-aware "+N more" overflow
-  chip specified by F3-421.
+  chip specified by F3-421. The recovered PMConcept7 title-bar page strip may use its existing
+  bounded page-overflow picker when physical width cannot keep every named page visible. While
+  that in-tree picker is opening, open, or closing, the strip's decorative edge-fade mask is
+  disabled so the picker stays painted above and hit-testable instead of exposing page controls
+  beneath it; the mask returns immediately after the picker closes.
 gui_related: true
 gui_classification_reason: This unit defines visible tabstrip layout, scrolling, and label truncation for non-editor tab systems.
 split_recommended: false
 depends_on: [F3-421]
 unblocks: []
 acceptance_criteria:
-- "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels."
+- "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels; when the PMConcept7 title-bar page overflow picker is present, every hidden page remains reachable, the picker stays above and owns hit testing across its full painted rectangle, the ancestor edge-fade mask is disabled only for its opening/open/closing lifecycle, and no click falls through to an underlying page control."
 - "Tabs in these systems shrink no narrower than 56px and grow no wider than 180px."
 - "Editor tabs keep the F3-421 +N more overflow chip and do not adopt the scroll-and-ellipsis recipe."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -56,6 +60,7 @@ preserved_exact_tokens:
 - "+N more"
 negative_constraints:
 - "Editor tabs keep the +N more overflow chip; the scroll-and-ellipsis recipe must not replace editor tab overflow behavior."
+- "Do not leave the title-bar edge-fade mask active over an open in-tree page picker or disable that mask after the picker closes."
 compatibility_only_notes:
 - "Slint portability: the tabstrip renders as an opaque horizontally scrollable row of precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []

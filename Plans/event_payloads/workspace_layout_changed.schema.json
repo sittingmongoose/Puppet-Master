@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.0.0",
-  "title": "workspace.layout_changed event payload",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0",
+  "title": "workspace.layout_changed settled event payload",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -10,8 +10,11 @@
     "project_id",
     "workspace_tab_id",
     "command_id",
+    "interaction_transaction_id",
     "origin",
     "correlation_id",
+    "command_result_ref",
+    "receipt_refs",
     "prior_layout_revision",
     "new_layout_revision",
     "mutation_kind",
@@ -21,6 +24,12 @@
     "target_slot_index",
     "target_surface_instance_id",
     "insertion_edge",
+    "commit_origin",
+    "semantic_size_preset_id",
+    "settled_layout_ref",
+    "settled_at_utc",
+    "settled_only",
+    "preview_state_included",
     "persisted"
   ],
   "properties": {
@@ -28,7 +37,7 @@
       "const": "pm.event.workspace_layout_changed.v1"
     },
     "schema_version": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "project_id": {
       "type": "string",
@@ -40,7 +49,24 @@
     },
     "command_id": {
       "type": "string",
-      "pattern": "^cmd\\."
+      "enum": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.editor.close_panel",
+        "cmd.editor.open_panel",
+        "cmd.file.open",
+        "cmd.panel.switch",
+        "cmd.panel.undock",
+        "cmd.terminal.move_workgroup",
+        "cmd.terminal.split_pane",
+        "cmd.workspace_layout.move_surface",
+        "cmd.workspace_layout.reset",
+        "cmd.workspace_layout.resize_surface",
+        "cmd.workspace_layout.set_collapsed"
+      ]
+    },
+    "interaction_transaction_id": {
+      "type": "string",
+      "minLength": 1
     },
     "origin": {
       "const": "home_workspace"
@@ -48,6 +74,20 @@
     "correlation_id": {
       "type": "string",
       "minLength": 1
+    },
+    "command_result_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "receipt_refs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "prior_layout_revision": {
       "type": "integer",
@@ -144,6 +184,47 @@
         "after",
         "inside"
       ]
+    },
+    "commit_origin": {
+      "type": "string",
+      "enum": [
+        "pointer_release",
+        "keyboard_commit",
+        "semantic_preset",
+        "direct_control",
+        "reset",
+        "restore",
+        "migration",
+        "recovery"
+      ]
+    },
+    "semantic_size_preset_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "compact",
+        "standard",
+        "wide",
+        "tall",
+        "focus"
+      ]
+    },
+    "settled_layout_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "settled_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "settled_only": {
+      "const": true
+    },
+    "preview_state_included": {
+      "const": false
     },
     "persisted": {
       "const": true

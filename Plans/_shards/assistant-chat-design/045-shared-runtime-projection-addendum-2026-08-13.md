@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3591-L22194
 
-Source SHA256: `8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9`
+Source SHA256: `4f05884b775e23367a0d722ec0cc8a1392dd703302a694415ff22fd1f92c2b41`
 
 ---
 
@@ -8393,11 +8393,10 @@ canonical_text: >-
   same compaction pipeline as auto-compact when invoked by slash command, menu,
   or the chat context circle's Compact Now action. The entrypoint dispatches
   cmd.chat.compact_context only after explicit user choice, shows clear UI
-  feedback such as "Compacting...", emits context.compaction.started,
-  context.compaction.completed, and context.compaction.failed or an equivalent
-  visible failure/degraded state, reports already_running, cancelled, no_op,
-  degraded, unavailable, retry_scheduled, completed, or failed command results,
-  and treats Plans/newfeatures.md §10 as
+  feedback such as "Compacting...", projects started/completed/failed state from
+  the command result and receipt without emitting unregistered context.compaction.*
+  EventRecords, reports already_running, cancelled, no_op, degraded, unavailable,
+  retry_scheduled, completed, or failed command results, and treats Plans/newfeatures.md §10 as
   source-lineage only rather than live owner prose.
 gui_related: true
 gui_classification_reason: Compact-session command/menu entrypoint and feedback are visible chat UI.
@@ -8409,7 +8408,7 @@ acceptance_criteria:
   - The chat context circle Compact Now click path dispatches cmd.chat.compact_context only after explicit user choice.
   - Visible feedback is shown during compaction.
   - Already-running, cancelled, no-op, degraded, unavailable, retry, reload, completed, and failed outcomes remain visible or receipt-backed.
-  - Failure or unavailable compaction produces context.compaction.failed or an equivalent visible degraded state with next-action copy.
+  - Failure or unavailable compaction produces a visible result/receipt-backed degraded state with next-action copy and no unregistered context.compaction.failed EventRecord.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8451,6 +8450,7 @@ negative_constraints:
   - Do not revive Plans/newfeatures.md as a live implementation surface or owner hint for Compact Now, manual compaction, or auto-compact behavior.
   - Do not dispatch Compact Now from hover alone; explicit click/choice is required.
   - Do not treat manual Compact Now alone as a new cache lineage unless logical run lineage changes.
+  - Do not treat the preserved context.compaction.started, context.compaction.completed, or context.compaction.failed tokens as registered Event Authority families.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Prompt_Pipeline.md

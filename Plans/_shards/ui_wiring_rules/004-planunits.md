@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L72-L423
+Source lines: L72-L424
 
-Source SHA256: `0326db6d67d40c55aa98ecff25961a2d9430e1fa4a56b81544cb27dacc3ac6b0`
+Source SHA256: `1b85ffc05fc50570536d9c60b4a47e0ba1ec018de6b448c626df22858f70ed27`
 
 ---
 
@@ -159,7 +159,7 @@ plan_unit_id: UIW-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, correlation_passthrough, and route_contract, while keeping route, runtime, product semantics, and GUI layout in their owner docs; Usage route/open rows use route_contract to prove route_target/OpenSubject and UsageRecord correlation passthrough.
+canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, correlation_passthrough, and route_contract, while keeping route, runtime, product semantics, and GUI layout in their owner docs; cmd.nav.open_usage_subject route-contract rows prove the applicable event-primary usage_event/usage_event_ref or PMConcept7 attempt-primary usage_attempt/attempt_id selector, no OpenSubject, and correlation passthrough, while the pre-existing artifact route/open rows retain their owner-declared OpenSubject bridge and current aggregate cards remain local inspectors.
 gui_related: true
 gui_classification_reason: The unit governs GUI wiring verification for routed controls, overlays, attachments, and cross-surface interactions.
 split_recommended: false
@@ -167,7 +167,7 @@ depends_on: [UIW-001, UIW-002]
 unblocks: [UIW-006, UIW-007]
 acceptance_criteria:
   - Wiring rows may carry route-aware metadata without becoming route owners.
-  - Usage route/open rows carry route_contract proof for route_target, OpenSubject, usage_event object identity, and UsageRecord correlation passthrough.
+  - Usage drill-through rows carry route_contract proof for the applicable selector and UsageRecord/runtime/provider/account correlation passthrough; cmd.nav.open_usage_subject branches prove absence of OpenSubject, while the pre-existing artifact-wrapper event-primary rows preserve their artifact source-realization bridge and current aggregate cards remain local inspector wiring with no command, receipt, event, or route object id.
   - Concept artifacts are treated as evidence lineage, not live Plans owner paths.
   - Runtime action wiring normalizes stale graph recovery actions to canonical runtime command contracts.
 validation_surfaces:
@@ -186,6 +186,7 @@ negative_constraints:
   - Concept artifacts MUST NOT be copied verbatim into canon or treated as live owner paths.
   - WiringEntry consumes route/open semantics and cannot become the route owner.
   - Stale Tiers vocabulary must not be reintroduced as live route, object, or navigation vocabulary.
+  - Wiring MUST NOT attach OpenSubject to either cmd.nav.open_usage_subject selector branch, remove the separately owned artifact OpenSubject bridge, or substitute a correlation identity for the object_id required by the chosen selector branch.
 owner_hints: [Plans/UI_Wiring_Rules.md]
 consumer_docs: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/Runtime_Artifacts_Panel.md]
 ```

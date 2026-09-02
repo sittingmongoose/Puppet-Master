@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L2073-L2198
 
-Source SHA256: `91fc575972b2d5acdae089906cac29926df5ac7ee89aa70061e955e402038c1f`
+Source SHA256: `cb12a21b6f76385bb48e02a87047d8586b53cb48f51d50da069664cadbf5125d`
 
 ---
 
@@ -58,7 +58,7 @@ resolve only through the command owner as follows:
 | `cmd.debug.session.action` | Rejected generic action; select the exact existing `cmd.run_debug.*` verb. |
 | `cmd.worktree.provision` | Normalize to `cmd.git.worktree.create`; a thread-scoped caller may use only the existing thread wrapper. |
 | `cmd.worktree.release` | Normalize to `cmd.git.worktree.release`. |
-| `cmd.context.receipt.open` | Normalize by subject kind to `cmd.nav.open_subject` or `cmd.nav.open_usage_subject`. |
+| `cmd.context.receipt.open` | Normalize to `cmd.nav.open_subject` for a document/artifact subject, or to `cmd.nav.open_usage_subject` only for event-backed Usage/Ledger identity carrying stable `usage_event_ref`; current PMConcept7 aggregate provider/account/panel cards stay local. |
 | `cmd.remote.reconnect` | Retained exact-`ExecutionEnvironmentId` compatibility wrapper over canonical `cmd.environment.reconnect`; it owns no peer lifecycle. |
 
 The 26 generalized Environment, outbox, installation, Eval, MCP, resource, BSD,

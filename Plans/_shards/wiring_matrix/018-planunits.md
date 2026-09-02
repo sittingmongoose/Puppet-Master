@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L642-L2973
+Source lines: L642-L2975
 
-Source SHA256: `93f469ef5b7514766b8b3704d343c1eb2597132446fc0842f0f83624dd342163`
+Source SHA256: `29b9500b2b14b8ea6eb56ae60091650bb635d556c5fe223a7e2051e590e29256`
 
 ---
 
@@ -1118,7 +1118,7 @@ plan_unit_id: WM-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, context.compaction.failed or equivalent visible degraded-state wiring, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
+canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered context.compaction.* EventRecord, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible project/thread command wiring rows.'
 split_recommended: false
@@ -1167,10 +1167,12 @@ preserved_exact_tokens:
 - 'project'
 - 'shell'
 - 'history'
-negative_constraints: []
+negative_constraints:
+- The preserved context.compaction.failed token is historical source lineage and must not be emitted or registered as an EventRecord family.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The former context.compaction.failed event wording is retired; the production row uses command result/receipt projection and an empty expected_event_types list.
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/assistant-chat-design.md'

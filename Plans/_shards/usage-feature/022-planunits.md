@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L928-L5015
+Source lines: L928-L5024
 
-Source SHA256: `8d8c2355529ad6e6cc8e01415a8f5e4861f9c8df6b6ff295268f45b5ecbf1164`
+Source SHA256: `4dea9175dadfaebb338bcd2957d53fed33cd25c26d350a63f5169c643f8e78c0`
 
 ---
 
@@ -2317,16 +2317,21 @@ owner_hints:
 - Plans/usage-feature.md
 ```
 
-### UF-044 - Deferred Time Window Selector
+### UF-044 - Current Time Window And Scope Selectors
 
 ```yaml
 plan_unit_id: UF-044
-unit_type: deferred_enhancement
+unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage may later add a time-window selector with 5h, 7d, 24h, and custom date range presets; the phase label is v1 optional and fixed 5h/7d can ship first.
-gui_related: false
-gui_classification_reason: The unit is a deferred option-set control requirement rather than current visual layout.
+canonical_text: >-
+  Current Usage projections expose exactly the `5h|24h|7d|30d` time-range set and aggregate only
+  timestamped, identity-bound usage records inside the selected interval. The `all` scope admits every
+  otherwise qualifying record, provider scopes isolate records for the selected provider, and `work` and
+  `personal` scopes filter records by account scope. Changing either selector recomputes the projection from
+  qualifying records and never simulates a range or scope by scaling one scalar.
+gui_related: true
+gui_classification_reason: The unit defines current user-visible Usage time-range and provider/account-scope selector behavior.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -2335,8 +2340,8 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UF-044 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- The only current time-range values are 5h, 24h, 7d, and 30d, in that order, and every projection filters timestamped, identity-bound records before aggregation.
+- The all scope admits every otherwise qualifying record; a provider scope admits only records for that provider, while work and personal scopes admit only accounts with the matching scope, and changing scope or range changes the qualifying record set rather than applying a scalar multiplier or fixed-total relabeling.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2347,23 +2352,27 @@ context_scope: usage_feature_batch_195
 implementation_surfaces:
 - Plans/usage-feature.md
 node_compile_hint:
-  mode: deferred_time_window_selector
+  mode: current_time_window_scope_selectors
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0077
+- Concepts/pm7-tools/build_pm7.py#T34 (current source-owned selector behavior; verification input only)
 preserved_exact_tokens:
+- 5h|24h|7d|30d
 - 5h
-- 7d
 - 24h
-- custom date range
-- dropdown
-- preset buttons
-- v1 optional
-- fixed 5h/7d first
-negative_constraints: []
+- 7d
+- 30d
+- all
+- work
+- personal
+negative_constraints:
+- Do not scale one scalar to simulate different ranges or scopes.
+- Do not aggregate a record that lacks the timestamp and stable identity axes required by the Usage owner.
+stale_retired_dispositions:
+- The deferred custom-range and fixed-5h/7d-first wording is superseded by the current exact 5h, 24h, 7d, and 30d selector contract.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
 ```

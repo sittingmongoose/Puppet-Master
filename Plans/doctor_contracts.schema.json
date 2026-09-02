@@ -1,0 +1,2891 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json",
+  "title": "Puppet Master Doctor registry, router, and projection contracts",
+  "description": "Closed descriptors, action requests, and normalized finding projections. Doctor checks are bounded read-only owner queries.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/doctor_check_descriptor"
+    },
+    {
+      "$ref": "#/$defs/doctor_action_request"
+    },
+    {
+      "$ref": "#/$defs/doctor_finding_projection"
+    },
+    {
+      "$ref": "#/$defs/doctor_scenario_projection"
+    },
+    {
+      "$ref": "#/$defs/doctor_backup_connector_consumer_projection"
+    },
+    {
+      "$ref": "#/$defs/doctor_cache_migration_receipt"
+    },
+    {
+      "$ref": "#/$defs/doctor_action_result"
+    },
+    {
+      "$ref": "#/$defs/DoctorReportExportRequest"
+    },
+    {
+      "$ref": "#/$defs/DoctorReportExportResult"
+    },
+    {
+      "$ref": "#/$defs/DoctorReportExportCommandError"
+    },
+    {
+      "$ref": "#/$defs/DoctorReportExportCommandAvailability"
+    },
+    {
+      "$ref": "#/$defs/DoctorReportExportDisabledReason"
+    },
+    {
+      "$ref": "#/$defs/DoctorReportExportPermissionDecision"
+    },
+    {
+      "$ref": "#/$defs/DoctorReportExportCommandRoundTrip"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "row_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "safe_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:secret|password|passwd|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer|cookie|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_safe_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/safe_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target_kind": {
+      "enum": [
+        "application",
+        "project",
+        "server",
+        "vault",
+        "source_location",
+        "execution_host",
+        "execution_environment",
+        "route",
+        "provider_installation",
+        "provider_authentication",
+        "model_readiness",
+        "usage",
+        "browser",
+        "testing_capture",
+        "plugin",
+        "source_control",
+        "worktree",
+        "container",
+        "permission",
+        "filesafe",
+        "storage",
+        "migration",
+        "named_plan",
+        "runtime_resource",
+        "backup_destination",
+        "backup_repository",
+        "backup_snapshot",
+        "backup_recovery_set",
+        "backup_policy",
+        "backup_source_coverage",
+        "backup_restore_target",
+        "remote_access_connector"
+      ]
+    },
+    "remediation_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_doc_ref",
+        "remediation_action_id",
+        "route_ref",
+        "return_focus_id",
+        "expected_owner_generation"
+      ],
+      "properties": {
+        "owner_doc_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "remediation_action_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "route_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "return_focus_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "expected_owner_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "doctor_check_descriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "check_id",
+        "descriptor_revision",
+        "owner_doc_ref",
+        "target_kinds",
+        "request_schema_ref",
+        "result_schema_ref",
+        "applicability_selector_ref",
+        "cost_class",
+        "cache_ttl_seconds",
+        "timeout_ms",
+        "side_effect_policy",
+        "permission_class",
+        "redaction_profile_ref",
+        "remediation_action_ids",
+        "support_state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.check_descriptor.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^doctor\\.[a-z0-9_.-]+$"
+        },
+        "descriptor_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner_doc_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_kinds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/target_kind"
+          }
+        },
+        "request_schema_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "result_schema_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "applicability_selector_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "cost_class": {
+          "enum": [
+            "instant_cached",
+            "light_local",
+            "network_bounded",
+            "expensive_explicit"
+          ]
+        },
+        "cache_ttl_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 86400
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 50,
+          "maximum": 300000
+        },
+        "side_effect_policy": {
+          "const": "read_only"
+        },
+        "permission_class": {
+          "enum": [
+            "none",
+            "project_read",
+            "host_read",
+            "network_read",
+            "sensitive_metadata_read"
+          ]
+        },
+        "redaction_profile_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "remediation_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "support_state": {
+          "enum": [
+            "active",
+            "deprecated_alias",
+            "unsupported"
+          ]
+        }
+      }
+    },
+    "doctor_action_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "action_id",
+        "doctor_request_id",
+        "project_id",
+        "check_id",
+        "target_kind",
+        "target_id",
+        "expected_descriptor_revision",
+        "expected_owner_generation",
+        "expected_cache_generation",
+        "deadline_utc",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "redaction_profile_ref",
+        "idempotency_key",
+        "remediation",
+        "return_route_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.action_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "action_id": {
+          "enum": [
+            "ui.doctor.open",
+            "ui.doctor.refresh_visible",
+            "ui.doctor.run_check",
+            "ui.doctor.open_details",
+            "ui.doctor.open_logs",
+            "ui.doctor.open_receipt",
+            "ui.doctor.open_remediation",
+            "ui.doctor.copy_diagnostics"
+          ]
+        },
+        "doctor_request_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "check_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^doctor\\.[a-z0-9_.-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_kind": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/target_kind"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_descriptor_revision": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_owner_generation": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_cache_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "deadline_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "redaction_profile_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "remediation": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remediation_route"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_route_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.doctor.open_remediation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "remediation": {
+                "$ref": "#/$defs/remediation_route"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "doctor_finding_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "finding_id",
+        "check_id",
+        "descriptor_revision",
+        "owner_doc_ref",
+        "project_id",
+        "target_kind",
+        "target_id",
+        "status",
+        "severity",
+        "task_impact",
+        "applicability",
+        "reason",
+        "observed_at_utc",
+        "freshness_state",
+        "age_ms",
+        "confidence",
+        "owner_generation",
+        "cache_generation",
+        "last_known_result_ref",
+        "details_ref",
+        "logs_ref",
+        "receipt_refs",
+        "evidence_refs",
+        "remediation",
+        "check_cost_class",
+        "redaction_state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.finding_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "finding_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^doctor\\.[a-z0-9_.-]+$"
+        },
+        "descriptor_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner_doc_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "target_kind": {
+          "$ref": "#/$defs/target_kind"
+        },
+        "target_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "status": {
+          "enum": [
+            "healthy",
+            "needs_attention",
+            "blocked",
+            "unknown",
+            "stale",
+            "interrupted"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "blocked",
+            "critical"
+          ]
+        },
+        "task_impact": {
+          "enum": [
+            "none",
+            "degraded_optional",
+            "blocks_selected_action",
+            "blocks_project_work",
+            "security_critical"
+          ]
+        },
+        "applicability": {
+          "enum": [
+            "required",
+            "optional_on",
+            "optional_off",
+            "required_missing",
+            "not_configured"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "freshness_state": {
+          "enum": [
+            "fresh",
+            "aging",
+            "stale",
+            "unknown"
+          ]
+        },
+        "age_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ]
+        },
+        "owner_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_known_result_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "details_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "logs_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "receipt_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "remediation": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remediation_route"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "check_cost_class": {
+          "enum": [
+            "instant_cached",
+            "light_local",
+            "network_bounded",
+            "expensive_explicit"
+          ]
+        },
+        "redaction_state": {
+          "enum": [
+            "not_required",
+            "redacted",
+            "withheld"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "applicability": {
+                "const": "optional_off"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "healthy"
+              },
+              "task_impact": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "healthy"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "freshness_state": {
+                "enum": [
+                  "fresh",
+                  "aging"
+                ]
+              },
+              "confidence": {
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "applicability": {
+                "enum": [
+                  "required",
+                  "optional_on",
+                  "optional_off",
+                  "not_configured"
+                ]
+              },
+              "task_impact": {
+                "enum": [
+                  "none",
+                  "degraded_optional"
+                ]
+              },
+              "severity": {
+                "enum": [
+                  "info",
+                  "warning"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "applicability": {
+                "const": "required_missing"
+              }
+            },
+            "required": [
+              "applicability"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              },
+              "task_impact": {
+                "enum": [
+                  "blocks_selected_action",
+                  "blocks_project_work"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "task_impact": {
+                "const": "security_critical"
+              }
+            },
+            "required": [
+              "task_impact"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              },
+              "severity": {
+                "const": "critical"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "doctor_scenario_model_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_id",
+        "label",
+        "owner_doc_ref",
+        "subject_kind",
+        "subject_ref",
+        "requested_state",
+        "effective_state",
+        "configured",
+        "selected_task_required",
+        "used_by_selected_task",
+        "applicability",
+        "support_state",
+        "status",
+        "severity",
+        "task_impact",
+        "freshness_state",
+        "owner_generation",
+        "cache_generation",
+        "security_critical",
+        "reason_code"
+      ],
+      "properties": {
+        "row_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "owner_doc_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "subject_kind": {
+          "enum": [
+            "capability",
+            "storage_backend",
+            "server_discovery",
+            "server_identity",
+            "server_claim_pairing",
+            "trusted_client",
+            "server_endpoint",
+            "remote_route",
+            "remote_security",
+            "remediation_return",
+            "diagnostic_redaction"
+          ]
+        },
+        "subject_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "requested_state": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "effective_state": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "configured": {
+          "type": "boolean"
+        },
+        "selected_task_required": {
+          "type": "boolean"
+        },
+        "used_by_selected_task": {
+          "type": "boolean"
+        },
+        "applicability": {
+          "enum": [
+            "required",
+            "optional_on",
+            "optional_off",
+            "required_missing",
+            "not_configured"
+          ]
+        },
+        "support_state": {
+          "enum": [
+            "available",
+            "degraded",
+            "unavailable",
+            "unsupported",
+            "not_applicable"
+          ]
+        },
+        "status": {
+          "enum": [
+            "healthy",
+            "needs_attention",
+            "blocked",
+            "unknown",
+            "stale",
+            "interrupted"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "blocked",
+            "critical"
+          ]
+        },
+        "task_impact": {
+          "enum": [
+            "none",
+            "degraded_optional",
+            "blocks_selected_action",
+            "blocks_project_work",
+            "security_critical"
+          ]
+        },
+        "freshness_state": {
+          "enum": [
+            "fresh",
+            "aging",
+            "stale",
+            "unknown"
+          ]
+        },
+        "owner_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "security_critical": {
+          "type": "boolean"
+        },
+        "reason_code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "applicability": {
+                "const": "optional_off"
+              }
+            },
+            "required": [
+              "applicability"
+            ]
+          },
+          "then": {
+            "properties": {
+              "selected_task_required": {
+                "const": false
+              },
+              "used_by_selected_task": {
+                "const": false
+              },
+              "status": {
+                "const": "healthy"
+              },
+              "task_impact": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "applicability": {
+                "const": "required_missing"
+              }
+            },
+            "required": [
+              "applicability"
+            ]
+          },
+          "then": {
+            "properties": {
+              "selected_task_required": {
+                "const": true
+              },
+              "status": {
+                "const": "blocked"
+              },
+              "task_impact": {
+                "enum": [
+                  "blocks_selected_action",
+                  "blocks_project_work"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "security_critical": {
+                "const": true
+              }
+            },
+            "required": [
+              "security_critical"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              },
+              "severity": {
+                "const": "critical"
+              },
+              "task_impact": {
+                "const": "security_critical"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "doctor_remediation_return_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "finding_id",
+        "finding_revision",
+        "target_id",
+        "remediation_action_id",
+        "owner_route_ref",
+        "return_route_ref",
+        "return_scope",
+        "return_focus_id",
+        "expected_owner_generation",
+        "expected_cache_generation",
+        "owner_result_required",
+        "fresh_owner_result_required",
+        "restore_only_on_currentness_match"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "pattern": "^doctor\\.[a-z0-9_.-]+$"
+        },
+        "finding_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "finding_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "target_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "remediation_action_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "owner_route_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "return_route_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "return_scope": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "return_focus_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "expected_owner_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_cache_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "owner_result_required": {
+          "const": true
+        },
+        "fresh_owner_result_required": {
+          "const": true
+        },
+        "restore_only_on_currentness_match": {
+          "const": true
+        }
+      }
+    },
+    "doctor_redaction_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "redaction_id",
+        "secret_class",
+        "output_state",
+        "display_value",
+        "source_value_persisted",
+        "diagnostic_safe_ref"
+      ],
+      "properties": {
+        "redaction_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "secret_class": {
+          "enum": [
+            "auth_url",
+            "auth_code",
+            "pairing_credential",
+            "recovery_credential",
+            "pre_auth_credential",
+            "relay_credential",
+            "private_key",
+            "access_key",
+            "sensitive_project_path"
+          ]
+        },
+        "output_state": {
+          "enum": [
+            "redacted",
+            "withheld"
+          ]
+        },
+        "display_value": {
+          "const": "[REDACTED]"
+        },
+        "source_value_persisted": {
+          "const": false
+        },
+        "diagnostic_safe_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "doctor_backup_connector_consumer_projection": {
+      "title": "DoctorBackupConnectorConsumerProjection",
+      "description": "Static N2-156 consumer contract for bounded Backup and PM connector owner projections. It is not a probe result, owner receipt, runtime evidence, or authority to mutate owner state.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "plan_unit_ref",
+        "target_kinds",
+        "query_policy",
+        "owner_truth_only",
+        "independent_finding_axes",
+        "protected_projection",
+        "optional_non_degradation",
+        "remediation_policy",
+        "consumer_surfaces",
+        "runtime_evidence_claimed",
+        "event_policy",
+        "expected_event_types"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.backup_connector_consumer_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "plan_unit_ref": {
+          "const": "N2-156"
+        },
+        "target_kinds": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "backup_destination"},
+            {"const": "backup_repository"},
+            {"const": "backup_snapshot"},
+            {"const": "backup_recovery_set"},
+            {"const": "backup_policy"},
+            {"const": "backup_source_coverage"},
+            {"const": "backup_restore_target"},
+            {"const": "remote_access_connector"}
+          ],
+          "items": false,
+          "minItems": 8,
+          "maxItems": 8
+        },
+        "query_policy": {
+          "const": "bounded_read_only_owner_query"
+        },
+        "owner_truth_only": {
+          "const": true
+        },
+        "independent_finding_axes": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "destination_access_auth_tls_path_quota_throttle"},
+            {"const": "repository_unlock_writer_lock_last_complete"},
+            {"const": "snapshot_capture_integrity_read_verification_drill_archive"},
+            {"const": "recovery_set_public_identity_attachment_kit_confirmation"},
+            {"const": "policy_schedule_retention_hold_prune_preview_currentness"},
+            {"const": "source_git_jj_closure"},
+            {"const": "restore_target_preview_recovery_receipt_currentness"},
+            {"const": "connector_binary_protocol_process_state_control_endpoint_product_dedupe_backup_classification"}
+          ],
+          "items": false,
+          "minItems": 8,
+          "maxItems": 8
+        },
+        "protected_projection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "public_recovery_set_status_only",
+            "masked_non_secret_state_only",
+            "recovery_key_or_kit_bytes_exposed",
+            "protected_submission_contents_exposed",
+            "connector_secret_or_raw_state_exposed",
+            "browser_auth_content_exposed",
+            "reusable_authorization_url_exposed",
+            "raw_private_path_exposed"
+          ],
+          "properties": {
+            "public_recovery_set_status_only": {"const": true},
+            "masked_non_secret_state_only": {"const": true},
+            "recovery_key_or_kit_bytes_exposed": {"const": false},
+            "protected_submission_contents_exposed": {"const": false},
+            "connector_secret_or_raw_state_exposed": {"const": false},
+            "browser_auth_content_exposed": {"const": false},
+            "reusable_authorization_url_exposed": {"const": false},
+            "raw_private_path_exposed": {"const": false}
+          }
+        },
+        "optional_non_degradation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["optional_off_is_healthy", "headscale_funnel_is_inapplicable", "unrelated_health_unchanged"],
+          "properties": {
+            "optional_off_is_healthy": {"const": true},
+            "headscale_funnel_is_inapplicable": {"const": true},
+            "unrelated_health_unchanged": {"const": true}
+          }
+        },
+        "remediation_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["exact_owner_route_only", "route_completion_is_owner_success", "doctor_mutation_allowed", "protected_unlock_or_key_action_allowed", "identity_reset_requires_owner_preview_confirmation_generation_fence"],
+          "properties": {
+            "exact_owner_route_only": {"const": true},
+            "route_completion_is_owner_success": {"const": false},
+            "doctor_mutation_allowed": {"const": false},
+            "protected_unlock_or_key_action_allowed": {"const": false},
+            "identity_reset_requires_owner_preview_confirmation_generation_fence": {"const": true}
+          }
+        },
+        "consumer_surfaces": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "Settings > Doctor"},
+            {"const": "Doctor finding/detail/return surfaces"},
+            {"const": "Final GUI Doctor workspace"}
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "runtime_evidence_claimed": {
+          "const": false
+        },
+        "event_policy": {
+          "const": "event_silent_pending_event_authority"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "doctor_scenario_projection": {
+      "title": "DoctorScenarioProjection",
+      "description": "A bounded static/browser-concept scenario projection for cross-row Doctor invariants that cannot be represented by one finding. It is not owner truth, native execution evidence, or a production runtime receipt.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scenario_id",
+        "scenario_kind",
+        "requirement_refs",
+        "title",
+        "source_refs",
+        "coverage_tags",
+        "model_rows",
+        "remediation_return_context",
+        "redaction_rows",
+        "overall_status",
+        "overall_task_impact",
+        "browser_projection_only",
+        "production_runtime_state",
+        "production_owner_feed_attached"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.scenario_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scenario_id": {
+          "type": "string",
+          "pattern": "^doctor-scenario:[a-z0-9_.-]+$"
+        },
+        "scenario_kind": {
+          "enum": [
+            "optional_capability_unused",
+            "optional_capability_required",
+            "remediation_return",
+            "storage_backend",
+            "server_discovery",
+            "remote_access_coverage",
+            "route_health_independence",
+            "security_masking",
+            "diagnostic_redaction"
+          ]
+        },
+        "requirement_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "DOC-005",
+              "DOC-008",
+              "DOC-013",
+              "DOC-020",
+              "DOC-021",
+              "DOC-022",
+              "DOC-023",
+              "DOC-024"
+            ]
+          }
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "coverage_tags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "optional_off_unused_healthy",
+              "selected_task_requirement_blocks",
+              "exact_return_route",
+              "exact_focus_restore",
+              "currentness_fence",
+              "fresh_owner_result_required",
+              "sqlite_detected_blocked",
+              "sqlite_never_available",
+              "server_discovery",
+              "identity_dedupe",
+              "claim_pairing",
+              "trusted_client",
+              "endpoint_currentness",
+              "tailscale",
+              "headscale",
+              "serve",
+              "funnel",
+              "nginx",
+              "traefik",
+              "remote_link_direct",
+              "remote_link_relay",
+              "remote_link_e2e",
+              "remote_link_pairing",
+              "manual_endpoint",
+              "route_failover",
+              "route_resumption",
+              "route_health_independent",
+              "unused_optional_route_non_degrading",
+              "identity_mismatch_security",
+              "public_unclaimed_security",
+              "unsafe_public_surface_security",
+              "untrusted_proxy_headers_security",
+              "auth_url_redaction",
+              "auth_code_redaction",
+              "pairing_credential_redaction",
+              "recovery_credential_redaction",
+              "pre_auth_credential_redaction",
+              "relay_credential_redaction",
+              "private_key_redaction",
+              "access_key_redaction",
+              "sensitive_project_path_redaction"
+            ]
+          }
+        },
+        "model_rows": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_scenario_model_row"
+          }
+        },
+        "remediation_return_context": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/doctor_remediation_return_context"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redaction_rows": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_redaction_row"
+          }
+        },
+        "overall_status": {
+          "enum": [
+            "healthy",
+            "needs_attention",
+            "blocked",
+            "unknown",
+            "stale",
+            "interrupted"
+          ]
+        },
+        "overall_task_impact": {
+          "enum": [
+            "none",
+            "degraded_optional",
+            "blocks_selected_action",
+            "blocks_project_work",
+            "security_critical"
+          ]
+        },
+        "browser_projection_only": {
+          "const": true
+        },
+        "production_runtime_state": {
+          "const": "unavailable"
+        },
+        "production_owner_feed_attached": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scenario_kind": {
+                "const": "remediation_return"
+              }
+            },
+            "required": [
+              "scenario_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remediation_return_context": {
+                "$ref": "#/$defs/doctor_remediation_return_context"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scenario_kind": {
+                "const": "storage_backend"
+              }
+            },
+            "required": [
+              "scenario_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "overall_status": {
+                "const": "blocked"
+              },
+              "overall_task_impact": {
+                "const": "blocks_project_work"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scenario_kind": {
+                "const": "route_health_independence"
+              }
+            },
+            "required": [
+              "scenario_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "overall_status": {
+                "const": "healthy"
+              },
+              "overall_task_impact": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scenario_kind": {
+                "const": "security_masking"
+              }
+            },
+            "required": [
+              "scenario_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "overall_status": {
+                "const": "blocked"
+              },
+              "overall_task_impact": {
+                "const": "security_critical"
+              },
+              "model_rows": {
+                "contains": {
+                  "properties": {
+                    "security_critical": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "security_critical"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scenario_kind": {
+                "const": "diagnostic_redaction"
+              }
+            },
+            "required": [
+              "scenario_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "redaction_rows": {
+                "minItems": 9
+              }
+            }
+          }
+        }
+      ]
+    },
+    "doctor_migration_named_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_ref",
+        "record_kind",
+        "reason_code"
+      ],
+      "properties": {
+        "row_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "record_kind": {
+          "enum": [
+            "descriptor",
+            "finding"
+          ]
+        },
+        "reason_code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        }
+      }
+    },
+    "doctor_descriptor_currentness_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_row_ref",
+        "check_id",
+        "descriptor_revision",
+        "owner_doc_ref",
+        "support_state"
+      ],
+      "properties": {
+        "source_row_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^doctor\\.[a-z0-9_.-]+$"
+        },
+        "descriptor_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner_doc_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "support_state": {
+          "enum": [
+            "active",
+            "deprecated_alias",
+            "unsupported"
+          ]
+        }
+      }
+    },
+    "doctor_finding_currentness_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_row_ref",
+        "finding_id",
+        "check_id",
+        "descriptor_revision",
+        "owner_generation",
+        "cache_generation",
+        "freshness_state",
+        "currentness_sha256"
+      ],
+      "properties": {
+        "source_row_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "finding_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^doctor\\.[a-z0-9_.-]+$"
+        },
+        "descriptor_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "freshness_state": {
+          "enum": [
+            "fresh",
+            "aging",
+            "stale",
+            "unknown"
+          ]
+        },
+        "currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "doctor_cache_migration_receipt": {
+      "title": "DoctorCacheMigrationReceipt",
+      "description": "Domain reconciliation receipt for the one-time Doctor descriptor/finding-cache migration. It preserves currentness metadata, names every dropped or quarantined row, performs no repair, and references the sole terminal durable pm.storage_value.migration_receipt.v1 receipt. The x-puppet-master-assertions rules are mandatory; a consumer that cannot enforce them must reject the receipt.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "migration_receipt_id",
+        "storage_migration_receipt_schema_id",
+        "storage_migration_receipt_ref",
+        "migration_kind",
+        "migration_generation",
+        "source_schema_version",
+        "target_schema_version",
+        "source_record_count",
+        "accepted_record_count",
+        "stale_record_count",
+        "dropped_record_count",
+        "quarantined_record_count",
+        "accepted_descriptor_rows",
+        "accepted_finding_rows",
+        "stale_descriptor_rows",
+        "stale_finding_rows",
+        "dropped_rows",
+        "quarantined_rows",
+        "alias_resolutions",
+        "owner_work_replayed",
+        "private_repair_performed",
+        "migrated_cache_is_fresh_execution_evidence",
+        "secret_handling",
+        "terminal_status",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.cache_migration_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "migration_receipt_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "storage_migration_receipt_schema_id": {
+          "const": "pm.storage_value.migration_receipt.v1"
+        },
+        "storage_migration_receipt_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "migration_kind": {
+          "const": "legacy_registry_and_finding_cache_to_v1"
+        },
+        "migration_generation": {
+          "const": 1
+        },
+        "source_schema_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "target_schema_version": {
+          "const": "1.0.0"
+        },
+        "source_record_count": {
+          "$ref": "#/$defs/row_count"
+        },
+        "accepted_record_count": {
+          "$ref": "#/$defs/row_count"
+        },
+        "stale_record_count": {
+          "$ref": "#/$defs/row_count"
+        },
+        "dropped_record_count": {
+          "$ref": "#/$defs/row_count"
+        },
+        "quarantined_record_count": {
+          "$ref": "#/$defs/row_count"
+        },
+        "accepted_descriptor_rows": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_descriptor_currentness_row"
+          }
+        },
+        "accepted_finding_rows": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_finding_currentness_row"
+          }
+        },
+        "stale_descriptor_rows": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_descriptor_currentness_row"
+          }
+        },
+        "stale_finding_rows": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_finding_currentness_row"
+          }
+        },
+        "dropped_rows": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_migration_named_row"
+          }
+        },
+        "quarantined_rows": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/doctor_migration_named_row"
+          }
+        },
+        "alias_resolutions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "legacy_check_id",
+              "active_check_id"
+            ],
+            "properties": {
+              "legacy_check_id": {
+                "const": "doctor.registry.auth"
+              },
+              "active_check_id": {
+                "const": "doctor.dockerhub.auth.capability"
+              }
+            }
+          }
+        },
+        "owner_work_replayed": {
+          "const": false
+        },
+        "private_repair_performed": {
+          "const": false
+        },
+        "migrated_cache_is_fresh_execution_evidence": {
+          "const": false
+        },
+        "secret_handling": {
+          "const": "redact_and_quarantine"
+        },
+        "terminal_status": {
+          "enum": [
+            "committed",
+            "committed_with_quarantine",
+            "blocked"
+          ]
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "x-puppet-master-assertions": [
+        "source_record_count == accepted_record_count + stale_record_count + dropped_record_count + quarantined_record_count",
+        "accepted_record_count == size(accepted_descriptor_rows) + size(accepted_finding_rows)",
+        "stale_record_count == size(stale_descriptor_rows) + size(stale_finding_rows)",
+        "dropped_record_count == size(dropped_rows)",
+        "quarantined_record_count == size(quarantined_rows)",
+        "each source row has exactly one disposition",
+        "descriptor revision and finding owner/cache generation currentness are preserved without upgrading freshness",
+        "terminal_status == 'committed' implies quarantined_record_count == 0"
+      ]
+    },
+    "doctor_action_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "action_id",
+        "doctor_request_id",
+        "projection_ref",
+        "projection_generation",
+        "currentness",
+        "redacted",
+        "mutated_doctor_domain_state",
+        "doctor_domain_handler_invoked",
+        "domain_event_emitted",
+        "semantic_owner_result_ref",
+        "accessible_focus_target",
+        "return_route_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.action_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "action_id": {
+          "enum": [
+            "ui.doctor.open",
+            "ui.doctor.refresh_visible",
+            "ui.doctor.run_check",
+            "ui.doctor.open_details",
+            "ui.doctor.open_logs",
+            "ui.doctor.open_receipt",
+            "ui.doctor.open_remediation",
+            "ui.doctor.copy_diagnostics"
+          ]
+        },
+        "doctor_request_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale_rejected",
+            "refreshed",
+            "owner_result_applied"
+          ]
+        },
+        "redacted": {
+          "const": true
+        },
+        "mutated_doctor_domain_state": {
+          "const": false
+        },
+        "doctor_domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "semantic_owner_result_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "accessible_focus_target": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "return_route_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "DoctorReportExportNonSecretRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "not": {
+        "pattern": "(^|[._:/-])(raw|password|secret|access_token|refresh_token|api_key|cookie|authorization)([._:/-]|$)"
+      }
+    },
+    "DoctorReportExportSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "DoctorReportExportTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "DoctorReportExportReturnContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "route_id",
+        "focus_target",
+        "invocation_token",
+        "return_generation"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "route_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "focus_target": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "DoctorReportExportIntegrationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "central_registered",
+        "schema_bound",
+        "native_handler_bound",
+        "permission_route_bound",
+        "production_wired",
+        "receipt_or_admitted_event_bound"
+      ],
+      "properties": {
+        "central_registered": {
+          "type": "boolean"
+        },
+        "schema_bound": {
+          "type": "boolean"
+        },
+        "native_handler_bound": {
+          "type": "boolean"
+        },
+        "permission_route_bound": {
+          "type": "boolean"
+        },
+        "production_wired": {
+          "type": "boolean"
+        },
+        "receipt_or_admitted_event_bound": {
+          "type": "boolean"
+        }
+      }
+    },
+    "DoctorReportExportCommandId": {
+      "type": "string",
+      "enum": [
+        "cmd.doctor.export_report"
+      ]
+    },
+    "DoctorReportExportOperation": {
+      "type": "string",
+      "enum": [
+        "export_report"
+      ]
+    },
+    "DoctorReportExportCommandPayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "report_projection_ref",
+            "report_projection_sha256",
+            "redaction_profile_ref",
+            "bounded_selection_ref",
+            "export_destination_ref",
+            "project_filemanager_copy_out"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.doctor.export_report"
+            },
+            "report_projection_ref": {
+              "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+            },
+            "report_projection_sha256": {
+              "$ref": "#/$defs/DoctorReportExportSha256"
+            },
+            "redaction_profile_ref": {
+              "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+            },
+            "bounded_selection_ref": {
+              "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+            },
+            "export_destination_ref": {
+              "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+            },
+            "project_filemanager_copy_out": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "DoctorReportExportCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "idempotency_key",
+        "doctor_report_id",
+        "project_id",
+        "expected_registry_generation",
+        "expected_projection_generation",
+        "permission_snapshot_ref",
+        "return_context",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.command_request.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportCommandRequest"
+        },
+        "command_id": {
+          "$ref": "#/$defs/DoctorReportExportCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/DoctorReportExportOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "doctor_report_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "project_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "expected_registry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/DoctorReportExportReturnContext"
+        },
+        "payload": {
+          "$ref": "#/$defs/DoctorReportExportCommandPayload"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.doctor.export_report"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "export_report"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.doctor.export_report"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DoctorReportExportCommandOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "changed",
+        "state",
+        "currentness",
+        "operation_receipt_ref",
+        "resulting_generation",
+        "restart_disposition",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/DoctorReportExportCommandId"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "running",
+            "paused",
+            "completed",
+            "cancelled",
+            "rolled_back",
+            "blocked",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "conflicted",
+            "unknown"
+          ]
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "resulting_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restart_disposition": {
+          "enum": [
+            "not_applicable",
+            "resume",
+            "rollback",
+            "recovery_required"
+          ]
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "DoctorReportExportCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "status",
+        "doctor_report_id",
+        "project_id",
+        "expected_registry_generation",
+        "expected_projection_generation",
+        "receipt_ref",
+        "observable_work_ref",
+        "return_context",
+        "event_effect_policy",
+        "output",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.command_result.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportCommandResult"
+        },
+        "command_id": {
+          "$ref": "#/$defs/DoctorReportExportCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/DoctorReportExportOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "no_change",
+            "blocked",
+            "cancelled",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "doctor_report_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "project_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "expected_registry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "observable_work_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/DoctorReportExportReturnContext"
+        },
+        "event_effect_policy": {
+          "const": "receipt_only_no_eventrecord_pending_event_authority"
+        },
+        "output": {
+          "$ref": "#/$defs/DoctorReportExportCommandOutput"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/DoctorReportExportTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.doctor.export_report"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "export_report"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.doctor.export_report"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DoctorReportExportCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "code",
+        "retryability",
+        "safe_message",
+        "return_context",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.command_error.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportCommandError"
+        },
+        "command_id": {
+          "$ref": "#/$defs/DoctorReportExportCommandId"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "code": {
+          "enum": [
+            "invalid_request",
+            "handler_unavailable",
+            "permission_denied",
+            "filesafe_denied",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_conflict",
+            "duplicate_conflict",
+            "plan_or_checkpoint_mismatch",
+            "recovery_required",
+            "internal_fail_closed"
+          ]
+        },
+        "retryability": {
+          "enum": [
+            "not_retryable",
+            "retry_after_state_change",
+            "retry_same_idempotent_operation",
+            "manual_recovery_required"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "return_context": {
+          "$ref": "#/$defs/DoctorReportExportReturnContext"
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "DoctorReportExportDisabledReason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "code",
+        "safe_message",
+        "blocking_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.disabled_reason.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportDisabledReason"
+        },
+        "command_id": {
+          "$ref": "#/$defs/DoctorReportExportCommandId"
+        },
+        "code": {
+          "enum": [
+            "central_registration_missing",
+            "schema_binding_missing",
+            "handler_unavailable",
+            "permission_route_missing",
+            "production_wiring_missing",
+            "receipt_or_event_disposition_missing",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_in_progress",
+            "recovery_required",
+            "permission_denied",
+            "filesafe_denied"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "blocking_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+          }
+        }
+      }
+    },
+    "DoctorReportExportCommandAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "available",
+        "integration_evidence",
+        "disabled_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.availability.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportCommandAvailability"
+        },
+        "command_id": {
+          "$ref": "#/$defs/DoctorReportExportCommandId"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "integration_evidence": {
+          "$ref": "#/$defs/DoctorReportExportIntegrationEvidence"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/DoctorReportExportDisabledReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "integration_evidence": {
+                "properties": {
+                  "central_registered": {
+                    "const": true
+                  },
+                  "schema_bound": {
+                    "const": true
+                  },
+                  "native_handler_bound": {
+                    "const": true
+                  },
+                  "permission_route_bound": {
+                    "const": true
+                  },
+                  "production_wired": {
+                    "const": true
+                  },
+                  "receipt_or_admitted_event_bound": {
+                    "const": true
+                  }
+                }
+              },
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/DoctorReportExportDisabledReason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DoctorReportExportPermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "permission_snapshot_ref",
+        "permission_class",
+        "decision",
+        "authority_widening",
+        "secret_material_exposed",
+        "reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.permission_decision.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportPermissionDecision"
+        },
+        "command_id": {
+          "$ref": "#/$defs/DoctorReportExportCommandId"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "permission_class": {
+          "enum": [
+            "doctor.report.export"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "deny",
+                  "prompt_human"
+                ]
+              }
+            },
+            "required": [
+              "decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DoctorReportExportCommandRoundTrip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/DoctorReportExportCommandRequest"
+        },
+        "result": {
+          "$ref": "#/$defs/DoctorReportExportCommandResult"
+        }
+      },
+      "x-semantic-invariants": [
+        "request.command_id == result.command_id",
+        "request.command_instance_id == result.command_instance_id",
+        "request return_context is byte-identical to result return_context",
+        "result generations never regress"
+      ]
+    },
+    "DoctorReportExportLocalActionId": {
+      "type": "string",
+      "enum": []
+    },
+    "DoctorReportExportLocalActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "expected_projection_generation",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.local_action_request.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportLocalActionRequest"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/DoctorReportExportLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "expected_projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context": {
+          "$ref": "#/$defs/DoctorReportExportReturnContext"
+        }
+      }
+    },
+    "DoctorReportExportLocalActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "projection_generation",
+        "redacted",
+        "lazy",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "accessible_focus_target",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor_report_export.local_action_result.v1"
+        },
+        "record_kind": {
+          "const": "DoctorReportExportLocalActionResult"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/DoctorReportExportLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted": {
+          "const": true
+        },
+        "lazy": {
+          "const": true
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "accessible_focus_target": {
+          "$ref": "#/$defs/DoctorReportExportNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/DoctorReportExportReturnContext"
+        }
+      }
+    },
+    "DoctorReportExportRequest": {
+      "$ref": "#/$defs/DoctorReportExportCommandRequest"
+    },
+    "DoctorReportExportResult": {
+      "$ref": "#/$defs/DoctorReportExportCommandResult"
+    }
+  },
+  "x-server-gap-command-contracts": {
+    "cmd.doctor.export_report": {
+      "request_ref": "#/$defs/DoctorReportExportRequest",
+      "result_ref": "#/$defs/DoctorReportExportResult",
+      "error_ref": "#/$defs/DoctorReportExportCommandError",
+      "availability_ref": "#/$defs/DoctorReportExportCommandAvailability",
+      "disabled_reason_ref": "#/$defs/DoctorReportExportDisabledReason",
+      "permission_ref": "#/$defs/DoctorReportExportPermissionDecision",
+      "sole_handler": "handlers::doctor_report::export_report",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Build one bounded, redacted Doctor report projection and export that exact artifact through the Doctor report contract; never reinterpret it as a Project FileManager copy-out request.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:504"
+    }
+  },
+  "x-server-gap-local-action-contracts": {
+    "ui.doctor.copy_diagnostics": {
+      "request_ref": "#/$defs/doctor_action_request",
+      "result_ref": "#/$defs/doctor_action_result",
+      "source_token": "cmd.doctor.copy_diagnostics",
+      "domain_handler": null,
+      "domain_eventrecord": false,
+      "intended_semantics": "Copy only the currently hydrated, bounded, redacted Doctor diagnostics projection.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:498"
+    },
+    "ui.doctor.open": {
+      "request_ref": "#/$defs/doctor_action_request",
+      "result_ref": "#/$defs/doctor_action_result",
+      "source_token": "cmd.doctor.open",
+      "domain_handler": null,
+      "domain_eventrecord": false,
+      "intended_semantics": "Open the exact Doctor local surface or projection and restore its typed return/focus context without invoking unrelated owner work.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:510"
+    },
+    "ui.doctor.open_details": {
+      "request_ref": "#/$defs/doctor_action_request",
+      "result_ref": "#/$defs/doctor_action_result",
+      "source_token": "cmd.doctor.open_finding",
+      "domain_handler": null,
+      "domain_eventrecord": false,
+      "intended_semantics": "Open the exact current Doctor finding and preserve focus/currentness return context.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:516"
+    },
+    "ui.doctor.open_remediation": {
+      "request_ref": "#/$defs/doctor_action_request",
+      "result_ref": "#/$defs/doctor_action_result",
+      "source_token": "cmd.doctor.open_owner",
+      "domain_handler": null,
+      "domain_eventrecord": false,
+      "intended_semantics": "Navigate from Doctor to the exact semantic owner remediation and return only after a fresh owner result.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:522"
+    },
+    "ui.doctor.refresh_visible": {
+      "request_ref": "#/$defs/doctor_action_request",
+      "result_ref": "#/$defs/doctor_action_result",
+      "source_token": "cmd.doctor.refresh",
+      "domain_handler": null,
+      "domain_eventrecord": false,
+      "intended_semantics": "Refresh the bounded currently visible Doctor projection under cache, deadline, and resource-governor rules.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:528"
+    },
+    "ui.doctor.run_check": {
+      "request_ref": "#/$defs/doctor_action_request",
+      "result_ref": "#/$defs/doctor_action_result",
+      "source_token": "cmd.doctor.run_check",
+      "domain_handler": null,
+      "domain_eventrecord": false,
+      "intended_semantics": "Run one exact bounded Doctor check through its domain owner and update only from the fresh result.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:540"
+    }
+  },
+  "x-server-gap-rejected-dispositions": {
+    "cmd.doctor.cancel": {
+      "replacement": "owner-specific cancellable command from remediation result; closing Doctor only detaches the viewer",
+      "reason": "Doctor is a viewer/router; closing detaches the viewer and must not cancel owner ObservableWork. Cancellation remains an exact domain-owner action when that owner exposes it.",
+      "register_command": false,
+      "handler": null,
+      "intended_semantics": "Cancel the exact current Doctor operation only when the semantic owner reports it cancellable.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:492"
+    },
+    "cmd.doctor.run_all": {
+      "replacement": "ui.doctor.refresh_visible | ui.doctor.run_check",
+      "reason": "An unbounded full sweep conflicts with cached-first, relevance-scoped, resource-governed Doctor scheduling. Use ui.doctor.refresh_visible or exact ui.doctor.run_check actions.",
+      "register_command": false,
+      "handler": null,
+      "intended_semantics": "Run every Doctor check as one global sweep.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:534"
+    }
+  },
+  "x-server-gap-source-adjudication-rows": {
+    "42": {
+      "source_token": "cmd.doctor.cancel",
+      "canonical_target": "owner-specific cancellable command from remediation result; closing Doctor only detaches the viewer",
+      "disposition": "rejected_with_reason",
+      "intended_semantics": "Cancel the exact current Doctor operation only when the semantic owner reports it cancellable.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:492",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "none",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "not_actionable",
+      "event_receipt_rule": "no dispatch or receipt"
+    },
+    "43": {
+      "source_token": "cmd.doctor.copy_diagnostics",
+      "canonical_target": "ui.doctor.copy_diagnostics",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Copy only the currently hydrated, bounded, redacted Doctor diagnostics projection.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:498",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    },
+    "44": {
+      "source_token": "cmd.doctor.export_report",
+      "canonical_target": "cmd.doctor.export_report",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Build one bounded, redacted Doctor report projection and export that exact artifact through the Doctor report contract; never reinterpret it as a Project FileManager copy-out request.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:504",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorReportProjectionOwner",
+      "sole_handler": "handlers::doctor_report::export_report",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "45": {
+      "source_token": "cmd.doctor.open",
+      "canonical_target": "ui.doctor.open",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Open the exact Doctor local surface or projection and restore its typed return/focus context without invoking unrelated owner work.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:510",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    },
+    "46": {
+      "source_token": "cmd.doctor.open_finding",
+      "canonical_target": "ui.doctor.open_details",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Open the exact current Doctor finding and preserve focus/currentness return context.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:516",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    },
+    "47": {
+      "source_token": "cmd.doctor.open_owner",
+      "canonical_target": "ui.doctor.open_remediation",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Navigate from Doctor to the exact semantic owner remediation and return only after a fresh owner result.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:522",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    },
+    "48": {
+      "source_token": "cmd.doctor.refresh",
+      "canonical_target": "ui.doctor.refresh_visible",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Refresh the bounded currently visible Doctor projection under cache, deadline, and resource-governor rules.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:528",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    },
+    "49": {
+      "source_token": "cmd.doctor.run_all",
+      "canonical_target": "ui.doctor.refresh_visible | ui.doctor.run_check",
+      "disposition": "rejected_with_reason",
+      "intended_semantics": "Run every Doctor check as one global sweep.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:534",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "none",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "not_actionable",
+      "event_receipt_rule": "no dispatch or receipt"
+    },
+    "50": {
+      "source_token": "cmd.doctor.run_check",
+      "canonical_target": "ui.doctor.run_check",
+      "disposition": "typed_local_ui_action",
+      "intended_semantics": "Run one exact bounded Doctor check through its domain owner and update only from the fresh result.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:540",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "DoctorRegistryRouter",
+      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "gui_consumers": [
+        "Settings > Doctor",
+        "Doctor finding/detail/return surfaces"
+      ],
+      "availability_until_native_proof": "local action state",
+      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+    }
+  },
+  "x-server-gap-claim-boundary": "static owner contract only; export remains handler_unavailable; six local actions have no Doctor-domain handler/EventRecord; two rejected commands remain unregistered"
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L5078-L5767
+Source lines: L5081-L5771
 
-Source SHA256: `5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb`
+Source SHA256: `7fcd6ef30a113ac13345c458296b99bfabdabd08bcb1a291d38000ba648327fc`
 
 ---
 
@@ -525,8 +525,9 @@ changes:
   dashboard tab strip enrolls in the same connected-surface system (F3-464
   page-tab boundary unchanged; editor scrollbar excluded from the frosted
   band). F3-421: the dedicated pane-close glyph is retired (kebab Close Panel
-  is the single close affordance). §3.1/§3.2: the app status bar is removed
-  from the PM7 shell (F3-448 remains the chip-inventory owner); 4 px spacing.
+  is the single close affordance). Historical §3.1/§3.2 status-bar removal is
+  superseded on 2026-08-27: the full-width F3-448 no-bell status bar remains;
+  the 4 px shell-spacing decision remains applicable.
   F3-HOME-003 also records the move-workgroup source reseed and reset
   reconstitution semantics.
 - `Plans/UI_Command_Catalog.md` — UCC-144: top-bar collapse row toggles on

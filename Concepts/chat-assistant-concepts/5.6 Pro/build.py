@@ -35,7 +35,7 @@ def read(name):
 def join(names): return '\n'.join(read(n) for n in names)
 
 css=join(['styles.css','motion.css','variants-a.css','variants-b.css','variants-c.css',
-          'transcripts.css']+[f'{m}.css' for m in MODULES])
+          'transcripts.css']+[f'{m}.css' for m in MODULES]+['composer.css'])
 
 # Minimal collector shim.  The full registry (render slots, action dispatch, the
 # context object) is implemented in app.js, which upgrades this object in place;

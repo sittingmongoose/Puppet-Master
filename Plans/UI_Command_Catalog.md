@@ -102,8 +102,8 @@ These commands normalize through the dev-preview test harness and capability-pro
 ### Canonical route payload and route/open tail rules
 
 UI commands that route or open MUST preserve:
-- `route_target`: destination for output or side-effect (file path, GitHub issue URL, workspace concern, etc.)
-- `OpenSubject`: resource being opened (file, concern, help entry, project state)
+- `route_target`: destination for output or side-effect (file path, GitHub issue URL, workspace concern, object identity, etc.)
+- `OpenSubject` when and only when document/artifact source realization is required (document, artifact, generated output, or report). Object routes, including Usage events, use `route_target.object_kind` plus `route_target.object_id` and do not fabricate `OpenSubject`.
 - `execution_unit_context`: which run, seam, package, or node is executing the command
 - `approval_scope_key`: reusable approval join key
 - `operational_identity`: attribution
@@ -115,14 +115,14 @@ Route side-effect rules:
 - Route completion refs are immutable once recorded; they form an audit trail of what was actually modified.
 - If route_target becomes unreachable between command build and execution, the UI displays an error and does not attempt fallback mutation.
 - field-placement for UI command records is frozen at the command wrapper: command routing fields stay here, while provider/runtime identity and `/runtime` resolution fields stay in the runtime/provider owner contracts instead of being reintroduced by stale planning docs.
-- The common panel-context payload contract lets wrapper commands carry shared `panel-context` vocabulary for deep-link and cross-surface focus: `project_id`, `repo_id?`, `worktree_id?`, `branch_ref?`, `workflow_ref?`, `job_ref?`, `container_ref?`, `image_ref?`, `kubernetes_context?`, `run_id?`, `attempt_id?`, and `subview?`. This is shared wrapper vocabulary only; it is not a new `cmd.nav.*` family and does not replace `route_target` or `OpenSubject`.
+- The common panel-context payload contract lets wrapper commands carry shared `panel-context` vocabulary for deep-link and cross-surface focus: `project_id`, `repo_id?`, `worktree_id?`, `branch_ref?`, `workflow_ref?`, `job_ref?`, `container_ref?`, `image_ref?`, `kubernetes_context?`, `run_id?`, `attempt_id?`, and `subview?`. This is shared wrapper vocabulary only; it is not a new `cmd.nav.*` family and does not replace `route_target` or the document/artifact-only `OpenSubject` when applicable.
 - Route `tab_id` is stable page-tab focus only; the Orchestrator tab family is the first canonical enum set for tab-focused command payloads: `progress`, `plan_compile`, `seams`, `node_graph`, `evidence`, `history`, and `ledger`. Retired `tiers` labels are import/search compatibility aliases only, not valid active `tab_id` values.
-- Route-shaped payloads carry `route_target`, `OpenSubject`, and `panel-context` identity for cross-surface focus. Pure shell/view-state commands may carry `/view-state`, `/switch_subview`, or selected-subview hints, but those hints are not primary navigation identity and must not be used as `/runtime-local` mutation payloads.
+- Route-shaped payloads carry `route_target` and `panel-context` identity for cross-surface focus; document/artifact-like opens additionally carry `OpenSubject`. Pure object routes do not. Pure shell/view-state commands may carry `/view-state`, `/switch_subview`, or selected-subview hints, but those hints are not primary navigation identity and must not be used as `/runtime-local` mutation payloads.
 - Object-targeting payload semantics move out of `cmd.panel.switch`: it remains a side-panel shell/view command, and any context that becomes object-targeting must become a route-consuming wrapper command or normalized `route_target` argument. Do not promote a broad public `cmd.nav` / `cmd.nav.*` family merely to avoid owner-specific or domain-specific wrappers, and do not let domain wrappers invent private route args; `cmd.project.open`, `cmd.artifacts.show_in_usage`, `cmd.artifacts.show_in_ledger`, chat Usage wrappers, and cross-surface Orchestrator pivots are `navigation_wrapper` commands over canonical route targeting rather than generic layout toggles.
 - Routing split cleanup treats `resume_url`, command IDs plus ad hoc args, artifact / `/usage/search` deep links, and the `FinalGUISpec.md` file-open contract as consumers of the same route/open model rather than four competing mechanisms.
-- Compact navigation aliases, if adopted, are limited to `cmd.nav.open_subject`, `cmd.nav.open_usage_subject`, and `cmd.nav.focus_route` or an equivalent compact family that normalizes to `route_target` and `OpenSubject`; they must not expand into a second catalog language.
+- Compact navigation aliases, if adopted, are limited to `cmd.nav.open_subject`, `cmd.nav.open_usage_subject`, and `cmd.nav.focus_route` or an equivalent compact family that normalizes to `route_target`; `OpenSubject` accompanies only document/artifact-like opens. They must not expand into a second catalog language.
 - `cmd.nav.open_subject` or an equivalent compact wrapper resolves file, document, artifact, generated, and report subjects by carrying normalized `route_target` plus `OpenSubject`; `/document/artifact/generated/report` is shorthand for those subject families, not a fourth command-payload language.
-- Public `cmd.nav` / `cmd.nav.*` IDs are optional migration aliases, not a replacement target language; wrapper-style `/focus` and open commands may remain user-facing when they normalize to `route_target` and `OpenSubject`.
+- Public `cmd.nav` / `cmd.nav.*` IDs are optional migration aliases, not a replacement target language; wrapper-style `/focus` and open commands may remain user-facing when they normalize to `route_target` and, for document/artifact source realization only, `OpenSubject`.
 - Navigation compatibility is not a winner/loser or `/loser` alias table: legacy names can point to wrapper commands, but wrapper classification, route payload, and owner command IDs stay visible instead of hiding route ownership behind a preferred alias.
 
 ### Command normalization model
@@ -464,7 +464,7 @@ Rules:
 - commands that pivot into Source Control or Usage remain public wrapper commands and normalize internally to canonical route/open contracts
 - The listed Orchestrator open pivots above are compatibility aliases for owner-surface route opens; runtime mutation recovery still maps through `allowed_action_ids[]` to `cmd.runtime.*`, including `restore_safe_point_then_retry`.
 - Legacy cross-surface pivot names `cmd.orchestrator.open_in_github_actions` and `cmd.orchestrator.open_in_docker_manager` are compatibility aliases for `cmd.orchestrator.open_github_actions` and `cmd.orchestrator.open_docker_manager`. They remain `navigation_wrapper` commands and normalize through `route_target` rather than carrying owner-doc state themselves.
-- `cmd.artifacts.show_in_usage`, `cmd.artifacts.show_in_ledger`, `cmd.source_control.select_worktree`, and `cmd.orchestrator.open_in_source_control` are object-targeting route actions, not `layout/UI state only` toggles. They carry `project_id`, route/OpenSubject identity, object kind, and scope evidence when they open Usage, Ledger, Source Control, worktree, artifact, receipt, or run context.
+- `cmd.artifacts.show_in_usage`, `cmd.artifacts.show_in_ledger`, and `cmd.orchestrator.open_in_source_control` are object-targeting route actions, not `layout/UI state only` toggles. They carry `project_id`, route/OpenSubject identity, object kind, and scope evidence when they open Usage, Ledger, Source Control, artifact, receipt, or run context. The historical `cmd.source_control.select_worktree` input is not a primary route action: it normalizes before policy and dispatch to `cmd.source_control.workspace.switch` with `backend=git`, and it has no independent handler or production-wiring row.
 - HITL and runtime route `/addressing` use `blocked_sequence`, `cmd.runtime.*`, and shared route identity. Page specs that still describe `node-only`, tier-era, or `/receipt/worktree/workflow` addressing are consumers that must migrate to the catalog route contract rather than invent local action payloads.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
@@ -773,7 +773,7 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integrat
 
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
-| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed`, `context.compaction.failed`; result status `started | already_running | cancelled | no_op | degraded | unavailable | retry_scheduled | completed | failed` | Chat context circle Compact Now action, command palette |
+| `cmd.chat.compact_context` | `{ thread_id }` | No persisted EventRecord family is currently registered; result/receipt projection reports `started | already_running | cancelled | no_op | degraded | unavailable | retry_scheduled | completed | failed` | Chat context circle Compact Now action, command palette |
 | `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |
 | `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
 | `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
@@ -783,6 +783,7 @@ Rules:
 - choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
 - clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action
 - the command result must surface already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed outcomes through visible status or receipt-backed detail
+- the historical `context.compaction.started`, `context.compaction.completed`, and `context.compaction.failed` tokens are not current Event Authority registrations; PM7 must project the command result/receipt and compaction history without fabricating those event families
 - `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs
 - Legacy callers that still cite `cmd.chat.open_thread_usage` or `cmd.chat.focus_thread_usage` normalize to route/open Usage context and are not pure shell or layout toggles.
 
@@ -1109,8 +1110,8 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 
 | Command ID | Payload | Behavior |
 |---|---|---|
-| `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/usage subject using object-first route/open identity; `route_target.object_kind = usage_event` is required when `usage_event_ref` is available. |
-| `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, ledger_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, usage event, or run context using shared route/open identity. |
+| `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/Usage subject through the pre-existing artifact route/open bridge; `route_target.object_kind = usage_event` is required when `usage_event_ref` is available, while `OpenSubject` retains artifact source-realization identity. This row is not the PMConcept7 Ledger attempt branch. |
+| `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, ledger_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, Usage event, or run context through the existing artifact route/open bridge. It remains event-primary when `usage_event_ref` is present and is not widened into the PMConcept7 attempt-primary branch. |
 
 
 ### Search Command Catalog
@@ -4539,7 +4540,7 @@ plan_unit_id: UCC-060
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, emit context.compaction.started, context.compaction.completed, and context.compaction.failed or an equivalent visible failure/degraded state, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
+canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, project started/completed/failed and visible failure/degraded state from the command result and receipt without emitting unregistered context.compaction.* EventRecords, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4590,11 +4591,13 @@ negative_constraints:
 - Hover-summary disclosure is passive UI and does not require its own stable command ID.
 - Compact Now must not dispatch from hover alone; it requires explicit click or command choice.
 - cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded and must not remain canonical IDs.
+- The preserved context.compaction.started, context.compaction.completed, and context.compaction.failed tokens are historical source lineage, not registered Event Authority families.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md'
 compatibility_only_notes:
 - Legacy callers that cite open/focus thread usage normalize to route/open Usage context and are not pure shell/layout toggles.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The former instruction to emit context.compaction.started, context.compaction.completed, or context.compaction.failed is retired; current wiring projects command result, receipt, and compaction history with no context.compaction.* EventRecord.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -7535,7 +7538,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Notifications and Sounds commands include `cmd.settings.open_notifications`, destination create/update/delete/toggle/test,
+  Notifications and Sounds navigation uses the current `cmd.settings.open` typed Settings route. The historical
+  `cmd.settings.open_notifications` spelling is retained only as non-alias local-affordance lineage and receives no
+  primary handler or production-wiring row. Domain commands include destination create/update/delete/toggle/test,
   notification mapping update, runtime override set, and sound preview/upload/pack import/asset delete/asset restore/asset
   export/mapping set. Destination test commands require explicit user action, enabled destination authority, rate limiting,
   masking, and receipt recording. Destination create/update payloads carry provider-specific profile fields from CV-298
@@ -7546,7 +7551,8 @@ gui_classification_reason: Defines user-visible settings, destination, mapping, 
 depends_on: [CV-298, PS-124]
 unblocks: [WM-039, ATS-016]
 acceptance_criteria:
-  - Every Notifications & Sounds GUI control routes through a stable command ID.
+  - The Notifications & Sounds navigation affordance emits cmd.settings.open with a Settings-owned typed target; cmd.settings.open_notifications is not a command or alias.
+  - Every Notifications & Sounds domain control routes through its stable owner command ID.
   - Destination create/update commands accept provider-specific profile payloads without exposing raw URLs or tokens.
   - Test-send commands are separate from local preview and cannot mutate alert state.
   - Sound asset commands distinguish user-uploaded assets, imported packs, built-ins, hide/disable, restore, and export behavior.
@@ -7571,6 +7577,7 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0069
 source_atom_ids: [atom-0064, atom-0068, atom-0069]
 preserved_exact_tokens:
+  - "cmd.settings.open"
   - "cmd.settings.open_notifications"
   - "cmd.notifications.destination.create"
   - "cmd.notifications.destination.update"
@@ -7587,9 +7594,14 @@ preserved_exact_tokens:
   - "cmd.sound.asset.export"
   - "cmd.sound.mapping.set"
 negative_constraints:
+  - Do not register, alias, or wire cmd.settings.open_notifications; retain it only as local-affordance source lineage.
   - Do not route local sound preview through external notification delivery.
   - Do not make test-send implicit from saving settings.
   - Do not create visualizer bridge aliases as UI command IDs unless they dispatch outside the iframe host bridge.
+compatibility_only_notes:
+  - "cmd.settings.open_notifications is a retired local-affordance spelling with no alias; the current affordance emits cmd.settings.open with the typed Settings target."
+stale_retired_dispositions:
+  - "cmd.settings.open_notifications: retained source lineage only; no primary handler, production-wiring row, or alias."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md
@@ -7660,9 +7672,9 @@ owner_hints:
 
 ## Ledger Compile Addendum - pldg-20260701-001-feature-intake
 
-This addendum compiles first-run onboarding command obligations from bootstrap ledger `pldg-20260701-001-feature-intake` into UI_Command_Catalog ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+This addendum preserves the first-run onboarding command-era source obligations compiled from bootstrap ledger `pldg-20260701-001-feature-intake`. Current Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-023 and supersedes the command-era behavior below with typed owner-local UI actions. This addendum does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
 
-### UCC-106 - First-Run Onboarding Command Family
+### UCC-106 - First-Run Onboarding Command-Era Lineage And Current Typed Local Actions
 
 ```yaml
 plan_unit_id: UCC-106
@@ -7670,38 +7682,51 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  First-run onboarding GUI actions use a registered onboarding command family rather than page-local button payloads.
-  Required commands include `cmd.onboarding.first_run.open`, `cmd.onboarding.provider_setup.open`,
-  `cmd.onboarding.provider_setup.use_provider`, `cmd.onboarding.skip_to_planning_wizard`,
-  `cmd.onboarding.free_models.review`, `cmd.onboarding.free_models.defer`, `cmd.onboarding.review_setup`,
-  `cmd.onboarding.open_planning_wizard`, and `cmd.health.provider_setup.open`. Payloads carry source surface, current
-  onboarding step, selected provider/account/profile refs when applicable, return route, idempotency key, and
-  `onboarding_setup_state` refs where relevant. Results include step transition, setup flow launched, setup skipped,
-  Free Models review opened or deferred, Planning Wizard opened, and Health provider-setup route opened. Teacher links
-  from onboarding normalize to the existing Teacher/Teach command routes from UCC-102 and CS-053 rather than creating a
-  second Teacher command language.
+  UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage only; none is
+  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly thirteen typed
+  owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close,
+  ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
+  ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
+  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish. These are local
+  UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v1
+  and pm.product_onboarding.action_result.v1 contracts. Every request requires closed, normalized, secret-free
+  local_context fields for intent, scope, branch, selection, owner-operation, disclosure, tour, and recovery identity;
+  arbitrary/raw payload fields and secret-bearing values are rejected. An action that launches owner work carries a typed owner
+  route or intent and maps to that owner's existing canonical command and sole handler. The command-era reference to
+  cmd.health.provider_setup.open does not give Product Onboarding a Health/Doctor handler. Teacher links continue to use
+  the existing Teacher/Teach command routes from UCC-102 and CS-053. The packet candidates cmd.onboarding.back,
+  cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish,
+  cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are source-lineage candidate tokens only;
+  each is rejected as a command, alias, and handler because its semantics are owned by typed local ui.onboarding.* actions.
 gui_related: true
-gui_classification_reason: Defines user-visible button/route command IDs and command results for first-run onboarding and Health setup actions.
-depends_on: [F3-411, MA-066, CV-305, ACD-431, UCC-102, CS-053]
-unblocks: [WM-041, PWIZ-017, ATS-020]
+gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
+unblocks: []
 acceptance_criteria:
-  - Every accepted first-run onboarding action has a stable UI command route.
-  - Skip routing writes or references limited `onboarding_setup_state` and opens Planning Wizard without marking Health Ready.
-  - Provider setup commands preserve return context and cannot bypass Multi-Account/provider readiness semantics.
-  - Free Models review/defer commands are reachable only after the paid-provider prompt has occurred.
+  - The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration, alias, primary handler, or production-wiring row.
+  - Every current Product Onboarding control emits exactly one of the thirteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
+  - The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set.
+  - Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free.
+  - OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons.
+  - Required local_context accepts only the schema's normalized intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition fields; additional/raw/free-form/secret-bearing values are rejected.
+  - "more_ways setup/project disclosure and branch-local state updates have distinct intent/scope/choice/branch combinations; Skip whole-session and optional Project/Remote-Access variants have distinct intent/scope/choice/branch plus session_skipped versus optional_scope_skipped results."
+  - Skip and Close never mark Health, Doctor, provider, Server, Project, backup, or any other owner Ready.
+  - Owner-flow actions carry typed owner route or intent and map to the target owner's existing canonical command and sole handler without replaying owner work.
   - Teacher actions reuse existing Teacher/Teach command contracts and preserve current-surface context.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future first-run onboarding UICommand fixture
-  - future skip-to-Planning-Wizard command idempotency fixture
-risk_class: onboarding_command_gap
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
+  - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
+risk_class: onboarding_command_lineage_revival
 reasoning_tier: high
-context_scope: first_run_onboarding_commands
+context_scope: product_onboarding_local_actions_and_command_lineage
 implementation_surfaces:
   - Plans/UI_Command_Catalog.md
-  - future command registry and first-run onboarding controls
+  - Plans/Planning_Wizard.md
 node_compile_hint:
-  mode: first_run_onboarding_command_catalog
+  mode: product_onboarding_local_action_lineage
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -7724,6 +7749,38 @@ source_lineage:
 source_atom_ids: [atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:
+  - "cmd.onboarding.first_run.open"
+  - "cmd.onboarding.provider_setup.open"
+  - "cmd.onboarding.provider_setup.use_provider"
+  - "cmd.onboarding.skip_to_planning_wizard"
+  - "cmd.onboarding.free_models.review"
+  - "cmd.onboarding.free_models.defer"
+  - "cmd.onboarding.review_setup"
+  - "cmd.onboarding.open_planning_wizard"
+  - "cmd.onboarding.free_models.refresh"
+  - "cmd.onboarding.free_models.retry"
+  - "cmd.onboarding.free_models.setup"
+  - "cmd.health.provider_setup.open"
+  - "ui.onboarding.start"
+  - "ui.onboarding.next"
+  - "ui.onboarding.back"
+  - "ui.onboarding.close"
+  - "ui.onboarding.skip"
+  - "ui.onboarding.defer"
+  - "ui.onboarding.open_details"
+  - "ui.onboarding.more_ways"
+  - "ui.onboarding.choose_simple_path"
+  - "ui.onboarding.open_owner_flow"
+  - "ui.onboarding.run_automatic_preparation"
+  - "ui.onboarding.choose_first_project"
+  - "ui.onboarding.finish"
+  - "local_context"
+  - "skip_product_onboarding"
+  - "skip_optional_scope"
+  - "toggle_setup_options"
+  - "update_branch_state"
+  - "session_skipped"
+  - "optional_scope_skipped"
   - "Set up a paid provider"
   - "Skip for now"
   - "Use this provider"
@@ -7738,13 +7795,32 @@ preserved_exact_tokens:
   - "onboarding_setup_state"
   - "Teacher"
   - "/teach"
+  - "cmd.onboarding.back"
+  - "cmd.onboarding.cancel"
+  - "cmd.onboarding.continue"
+  - "cmd.onboarding.defer"
+  - "cmd.onboarding.finish"
+  - "cmd.onboarding.open_details"
+  - "cmd.onboarding.resume"
+  - "cmd.onboarding.skip"
 negative_constraints:
-  - Do not route onboarding actions through uncataloged local command IDs.
-  - Do not let skip-to-Planning-Wizard mark Doctor/Health as Ready.
-  - Do not open Free Models before the paid-provider prompt has occurred.
+  - Do not register, alias, normalize, or wire any retained cmd.onboarding.* token into the current Product Onboarding flow.
+  - Do not register, alias, normalize, wire, or assign a handler to any of the eight packet candidate cmd.onboarding.* tokens.
+  - Do not treat ui.onboarding.* typed local actions as semantic commands or catalog rows.
+  - Do not let Skip, Close, Defer, Details, or Ready-screen arrival mark Doctor/Health or any owner subsystem Ready.
+  - Do not create an Onboarding-owned backend or replay owner work through a generic wrapper.
+  - Do not accept an absent/open-ended local_context, arbitrary/raw payload copy, secret-bearing value, or ambiguous more_ways/skip variant.
+  - Do not turn Product Onboarding into a routed page or add browser/route Back or breadcrumb chrome; typed Back remains local modal choreography.
+  - Do not claim native dispatcher, native Slint controller, persistence adapter, or runtime proof from schemas, fixtures, static gates, PMConcept7, or browser verification.
   - Do not make Teacher discovery depend on slash-command knowledge.
   - Do not create a second Teacher command payload language separate from UCC-102 and CS-053.
   - Do not generate wiring JSON, WorkNodes, NodeSeeds, or executable queues during this compile phase.
+compatibility_only_notes:
+  - The eleven cmd.onboarding.* identifiers are retained for source search, audit, and one-time migration only; they are not aliases for ui.onboarding.* actions or owner commands.
+  - The eight packet candidate cmd.onboarding.* tokens are separate source-lineage candidates rejected as commands, aliases, and handlers because typed local ui.onboarding.* actions own their semantics.
+  - The command-era cmd.health.provider_setup.open reference grants Product Onboarding no Health/Doctor ownership; current owner work is launched only through typed owner route or intent.
+stale_retired_dispositions:
+  - The registered onboarding command-family interpretation, provider-first choreography, legacy onboarding_setup_state mutation path, and generic Onboarding handler are retired by PWIZ-021 through PWIZ-023.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md
@@ -8014,9 +8090,36 @@ Every command in this addendum returns the `UICommandResponse` envelope from `Pl
 | `cmd.orchestrator.resume` | `run_id`, `resume_scope`, `expected_goal_revision`, `wake_reason`, `idempotency_key` | `run_id`, `scheduler_pass_ref?`, `resumed` | `blocked_state_required`, `stale_projection`, `permission_denied` | `scheduler.pass` |
 | `cmd.dashboard.add_widget` | `project_id`, `dashboard_id`, `widget_id`, `layout_slot`, `expected_layout_revision`, `idempotency_key` | `widget_instance_id`, `layout_revision` | `invalid_args`, `stale_projection` | `dashboard.widget_added` |
 | `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
-| `cmd.onboarding.free_models.refresh` | `project_id?`, `provider_filter?`, `account_id?`, `idempotency_key` | `free_model_catalog_revision`, `model_ids[]` | `handler_unavailable`, `permission_denied` | `onboarding.free_models_refreshed` |
-| `cmd.onboarding.free_models.retry` | `project_id?`, `failed_refresh_id`, `retry_reason`, `idempotency_key` | `free_model_catalog_revision?`, `retry_receipt_ref` | `blocked_state_required`, `handler_unavailable` | `onboarding.free_models_refresh_retried` |
-| `cmd.onboarding.free_models.setup` | `project_id?`, `provider_id`, `return_route`, `setup_intent`, `idempotency_key` | `setup_route_ref`, `return_route` | `invalid_route`, `permission_denied` | `onboarding.provider_setup_opened` |
+
+### Retained Product Onboarding command-era row lineage
+
+The following former rows are preserved verbatim enough for search, audit, and one-time migration lineage.
+They are not members of the active GUI command table above, are not aliases, and receive no primary handler
+or production-wiring row. Current Product Onboarding uses the thirteen typed local `ui.onboarding.*` actions
+enumerated by UCC-106 and routes owner work to the target owner's existing canonical command.
+
+| Historical token | Retained command-era payload/result/error/effect lineage | Current disposition |
+|---|---|---|
+| `cmd.onboarding.free_models.refresh` | Payload `project_id?`, `provider_filter?`, `account_id?`, `idempotency_key`; result `free_model_catalog_revision`, `model_ids[]`; errors `handler_unavailable`, `permission_denied`; former effect `onboarding.free_models_refreshed`. | Source lineage only; no command or alias. |
+| `cmd.onboarding.free_models.retry` | Payload `project_id?`, `failed_refresh_id`, `retry_reason`, `idempotency_key`; result `free_model_catalog_revision?`, `retry_receipt_ref`; errors `blocked_state_required`, `handler_unavailable`; former effect `onboarding.free_models_refresh_retried`. | Source lineage only; no command or alias. |
+| `cmd.onboarding.free_models.setup` | Payload `project_id?`, `provider_id`, `return_route`, `setup_intent`, `idempotency_key`; result `setup_route_ref`, `return_route`; errors `invalid_route`, `permission_denied`; former effect `onboarding.provider_setup_opened`. | Source lineage only; no command or alias. |
+
+The packet candidate tokens `cmd.onboarding.back`, `cmd.onboarding.cancel`, `cmd.onboarding.continue`,
+`cmd.onboarding.defer`, `cmd.onboarding.finish`, `cmd.onboarding.open_details`, `cmd.onboarding.resume`, and
+`cmd.onboarding.skip` are also source-lineage only, but they are not part of the eleven retained command-era rows above.
+Each candidate is rejected as a command, alias, primary handler, and production-wiring row because its behavior is
+already represented by the closed typed-local action request/result contract. Every request carries the required closed
+`local_context` with normalized `intent`, `scope`, branch/selection/target, owner-operation/branch, disclosure/tour, and
+recovery fields; arbitrary/raw payloads, additional fields, and secret-bearing values are excluded. Setup/project
+disclosure versus branch-local `more_ways`, and whole-session versus optional-scope `skip`, are distinguished by their
+exact intent/scope/choice/branch combinations and by `session_skipped` versus `optional_scope_skipped` results.
+`ui.onboarding.defer` durably writes the
+exact resumable continuation before dismissal; `ui.onboarding.close` dismisses without completion;
+`ui.onboarding.skip` records an explicit skipped session; and `ui.onboarding.open_details` toggles only ephemeral,
+same-stage, non-persistent Details with no owner route or command. Disabled or rejected local results dispatch and write
+nothing, carry no owner/production receipt, and expose their exact error and disabled reason. These catalog/static
+statements and browser-concept verification do not prove a native dispatcher, Slint controller, persistence adapter,
+or runtime handler.
 
 ### Existing launch, recovery, and FileManager command contracts
 
@@ -8102,16 +8205,16 @@ owner_hints:
 
 This addendum repairs non-runtime UI command catalog rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-ddc264cdea296caf349adecd`: UCC-049 through UCC-106 now inherit the strict schema overlay below. Each row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text.
+- Repairs `sfk-ddc264cdea296caf349adecd`: active semantic-command rows UCC-049 through UCC-105 inherit the strict schema overlay below. Each active row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete current `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text. UCC-106 is now an explicit lineage exclusion: its eleven retained `cmd.onboarding.*` command-era tokens are not active commands or aliases; its separate eight packet candidates are rejected as commands, aliases, and handlers; and its current thirteen `ui.onboarding.*` tokens are typed local UI actions rather than command-schema rows.
 - Repairs `sfk-ed92df2325332306b2463b50`: browser production command IDs keep `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent`; `cmd.browser.run_code`, `cmd.browser.evaluate`, legacy `browser_run_code`, and legacy `browser_evaluate` are compatibility-only diagnostic/page-evaluation lineage, not default production browser commands.
 
-### UCC-049 through UCC-106 strict schema overlay
+### UCC-049 through UCC-105 strict schema overlay and UCC-106 lineage exclusion
 
-This overlay is the owner reference for every command row from UCC-049 through UCC-106. It keeps the catalog as the command-ID SSOT while avoiding 58 duplicated payload tables. Implementers MUST resolve each row through the row range below, then through the row's concrete `cmd.*` tokens or compatibility alias notes.
+This overlay is the owner reference for every active command row from UCC-049 through UCC-105. It keeps the catalog as the command-ID SSOT while avoiding duplicated payload tables. Implementers MUST resolve each active row through the row range below, then through the row's concrete current `cmd.*` tokens or compatibility notes. UCC-106 does not inherit this command schema; its retained command-era tokens and current typed local actions have the closed disposition stated in the final row below.
 
 Common fields for every covered row:
 
-- `command_id`: every concrete `cmd.*` token in the row's `preserved_exact_tokens`; grouped or wildcard tokens are family aliases and must normalize to a concrete `cmd.*` row before dispatch.
+- `command_id`: every concrete current `cmd.*` token in the row's `preserved_exact_tokens`, except a token expressly marked retired, source-lineage-only, or non-alias in `compatibility_only_notes` or `stale_retired_dispositions`; grouped or wildcard tokens are family aliases and must normalize to a concrete active `cmd.*` row before dispatch.
 - `payload_required`: `dispatch_id`, `command_id`, `source_surface`, `actor_ref`, and the row-specific identity listed below.
 - `payload_optional`: `route_target?`, `OpenSubject?`, `project_id?`, `repo_id?`, `worktree_id?`, `run_id?`, `attempt_id?`, `node_id?`, `thread_id?`, `usage_event_ref?`, `usage_record_id?`, `provider_attempt_ref?`, `tool_call_id?`, `trace_ref?`, `receipt_ref?`, `receipt_refs[]?`, `raw_payload_ref?`, `query_session_id?`, `selection_ref?`, `confirmation_ref?`, `idempotency_key?`, and family-specific refs allowed by the owner row.
 - `result_fields`: the shared `UICommandResponse` envelope fields `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`.
@@ -8131,9 +8234,10 @@ Common fields for every covered row:
 | `UCC-084` through `UCC-088` | Memory, artifact side-panel, and search command families in this catalog. | `memory_item_id?`, `artifact_id?`, `ledger_ref?`, `query_session_id?`, `replacement?`, and `index_scope?` as required by the concrete command. |
 | `UCC-089` through `UCC-095` | Runtime recovery command family in this catalog. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
 | `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families in this catalog. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
-| `UCC-101` through `UCC-106` | Vision bridge, Teach, notification/sound, DRY settings, containerized host, and onboarding command families in this catalog. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, `host_profile_id?`, and `onboarding_step_id?` for the concrete command. |
+| `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families in this catalog. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
+| `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-023. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its thirteen `ui.onboarding.*` identifiers are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions carry the Planning Wizard-owned typed route or intent to the target owner's existing command; local action requests/results use `pm.product_onboarding.action_request.v1` and `pm.product_onboarding.action_result.v1`. |
 
-Compatibility-only source tokens in these rows remain searchable lineage. They do not become command IDs until the row's `command_id` rule maps them to a concrete `cmd.*` value or to an explicit `alias_of_command_id`.
+Compatibility-only and retired source tokens in these rows remain searchable lineage. They do not become command IDs unless the row's `command_id` rule maps them to a concrete active `cmd.*` value or an explicit `alias_of_command_id`; tokens expressly marked non-alias never normalize or dispatch.
 
 ## Usage GUI Propagation Addendum - 2026-07-09
 
@@ -8147,14 +8251,14 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Usage navigation commands normalize to object-first route/open identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target and OpenSubject plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. When usage_event_ref is present, route_target.object_kind is `usage_event` and route_target.object_id is the canonical usage event id. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize to `cmd.nav.open_usage_subject` or the thread Context Detail Pane command family before dispatch.
+  Usage navigation commands normalize to typed object-first route identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. The two pre-existing artifact wrapper rows retain their artifact route/open `OpenSubject` bridge and remain event-primary in this bounded recovery; they are not part of the PMConcept7 row enrichment. Event-primary `cmd.nav.open_usage_subject` callers use `usage_event` plus object_id from `usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt` plus object_id from `attempt_id`, repeats attempt_id at top level, retains usage_event_ref as correlation, and carries no OpenSubject. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize before dispatch.
 gui_related: true
 gui_classification_reason: Usage route/open commands determine user-visible navigation from chat, artifacts, ledger, and command palette surfaces.
 depends_on: [UCC-060, UCC-086, ACD-434, F3-418, UF-087, RAP-043, CV-316]
 unblocks: [WM-043]
 acceptance_criteria:
   - "`cmd.nav.open_usage_subject` and artifact Usage/Ledger commands preserve usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health when present."
-  - Payload validation fails when a Usage route with usage_event_ref does not normalize to route_target.object_kind = usage_event and a stable object_id.
+  - Payload validation is primary-selector aware: an event-primary cmd.nav.open_usage_subject route requires usage_event/usage_event_ref, while its PMConcept7 Ledger attempt-primary route requires usage_attempt/attempt_id and retains usage_event_ref as correlation; both cmd.nav selector branches require route_target and set open_subject_required false. The two pre-existing artifact wrapper rows remain event-primary, preserve their owner-declared artifact OpenSubject bridge, and do not admit the attempt-primary selector in this bounded recovery.
   - Legacy callers citing `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` normalize before dispatch and never emit those IDs as canonical production command_id values.
   - "`cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, and `cmd.chat.close_thread_context_details` remain the thread Context Detail Pane commands; they are not aliases for app-wide Usage."
   - Timestamp, run-only, thread-only, or tier-only payloads may narrow filters but cannot satisfy the primary Usage route identity when usage_event_ref is available.
@@ -8193,12 +8297,14 @@ preserved_exact_tokens:
   - cmd.chat.close_thread_usage
   - route_target.object_kind
   - usage_event
-  - OpenSubject
+  - 'open_subject_required: false'
+  - 'open_subject_required: true'
   - raw_payload_ref
 negative_constraints:
   - Do not register retired chat usage IDs as canonical production UICommands.
   - Do not route Usage by timestamp, run-only, thread-only, or tier-only filters when usage_event_ref is available.
   - Do not drop provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, or raw_payload_ref during artifact/usage drill-through.
+  - Do not attach OpenSubject to either cmd.nav.open_usage_subject selector branch or remove the pre-existing artifact source-realization bridge from cmd.artifacts.show_in_usage/cmd.artifacts.show_in_ledger without a separately owned migration.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md
@@ -8347,17 +8453,28 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
-### Settings home bloom and suggestion commands
+### Settings route and transaction commands
 
-These rows do not alter the registry-owned non-command convention for setting mutations (F3-438/F3-439/F3-441): `bloom.open` is an open/deep-link surface command in the mold of `cmd.settings.open_notifications`, `category.reset` is a command-shaped bulk action behind the F3-434 two-step confirmation, and `suggestion.dismiss` is the F3-437 per-card dismiss control.
+`Plans/Settings_System.md` SSYS-018 owns exactly five Settings semantic commands. Presentation actions and
+bulk/reset/dismiss affordances must compose these typed route and transaction commands; they never mint a
+second Settings mutation family.
 
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
-| `cmd.settings.bloom.open` | Open Category Bloom | Opens a category bloom modal, optionally deep-linked via `open(category, focusSettingId)`; a focus target scrolls into view and flash-highlights; reduced motion opens without the morph. | `settings_registry_loaded` | `shell_view` |
-| `cmd.settings.category.reset` | Reset Settings Category | Resets every setting in a category to registry defaults; two-step: first activation arms confirmation, second activation within the timeout resets, timeout expiry disarms without resetting. | `category_bloom_open` | `domain_action` |
-| `cmd.settings.suggestion.dismiss` | Dismiss Suggested Setting | Dismisses a Suggested-shelf entry; persists at `settings_suggestions_dismissed:v1`, project-scoped when the driving signal was project-scoped, 90-day expiry, fully local. | `suggestion_visible` | `domain_action` |
+| `cmd.settings.open` | Open Settings Target | Opens the exact Settings setting or manager/detail target carried by `pm.settings_route_request.v1`, preserving the typed return contract and current context. The K3 host chooses the presentation; the command does not encode a bloom or other obsolete layout. | `settings_registry_loaded && route_target_current` | `navigation_wrapper` |
+| `cmd.settings.transaction.preview` | Preview Settings Transaction | Validates and expands stable target IDs, requested values, owner routes, permissions, currentness, migration impact, and rollback eligibility without committing. | `settings_snapshot_current && target_set_nonempty` | `domain_action` |
+| `cmd.settings.transaction.apply` | Apply Settings Transaction | Applies exactly one current preview under revision/CAS and idempotency guards, performs owner readback, and returns a typed committed/refused/failed/rollback-required result. | `preview_current && permission_allowed && owner_routes_available` | `domain_action` |
+| `cmd.settings.transaction.rollback` | Roll Back Settings Transaction | Restores an eligible committed transaction from its exact rollback snapshot and verifies owner readback; it never invents rollback where none was created. | `rollback_snapshot_current && rollback_allowed` | `domain_action` |
+| `cmd.settings.export` | Export Settings | Exports the selected non-secret Settings snapshot and explicit exclusions through `pm.settings_export_request.v1`; credentials and protected session material never enter the manifest. | `settings_snapshot_current && export_destination_allowed` | `domain_action` |
 
-ContractRef: ContractName:Plans/FinalGUISpec.md
+Historical `cmd.settings.open_notifications`, `cmd.settings.category.reset`, and
+`cmd.settings.suggestion.dismiss` spellings are retired, non-alias local-affordance lineage. Opening the
+Notifications destination emits `cmd.settings.open` with the Settings-owned typed target. Category reset
+and suggestion dismissal each compose `cmd.settings.transaction.preview` followed by
+`cmd.settings.transaction.apply`; neither bypasses the preview/currentness/confirmation/readback contract.
+The three historical spellings receive no primary handler, production-wiring row, or alias.
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, SchemaID:pm.settings_system.contracts.v1, ContractName:Plans/FinalGUISpec.md
 
 ### Docker container start and Unraid template commands
 
@@ -8371,16 +8488,18 @@ ContractRef: ContractName:Plans/FinalGUISpec.md
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md
 
-### Source Control pull request commands
+### Forge review commands and Source Control compatibility inputs
 
-Panel-scoped PR actions are first-class Source Control route commands with exact SCM context payload (repo, worktree, compare target, baseline, run/attempt lineage) per the 2.5A operational wiring requirements. They are distinct from the thread-bound `cmd.chat.worktree.pr` / `cmd.chat.worktree.merge` rows (UCC-058), which stay assistant-thread-scoped.
+Panel review actions consume the common Forge owner with exact SCM/forge context (provider, repository, workspace/revision, compare target, baseline, run/attempt lineage). The historical Source Control PR spellings normalize before availability, permission, telemetry, receipt, and dispatch; they never own a second review handler. Thread-bound `cmd.chat.worktree.pr` / `cmd.chat.worktree.merge` remain separate assistant-thread wrappers.
 
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
-| `cmd.source_control.pr.create` | Create Pull Request | Creates a pull request from the Source Control panel with repo, source worktree/branch, target branch, and compare payload; deterministic disabled state for missing scopes, expired auth, or no GitHub remote. | `github_auth_valid && github_remote_present` | `domain_action` |
-| `cmd.source_control.pr.merge` | Merge Pull Request | Merges the selected pull request; protected-branch mutation routes the `domain.git_destructive_remote` permission class. | `pr_open && merge_allowed && github_auth_valid` | `domain_action` |
+| `cmd.forge.review.create` | Create Review | Creates a provider-discriminated review through the Forge owner with repository, source workspace/revision, target revision, compare payload, and exact return route. | `forge_capability_current && auth_valid && repository_current` | `domain_action` |
+| `cmd.forge.review.merge` | Merge Review | Merges the selected provider review through the Forge owner; protected-branch mutation routes the applicable destructive-remote permission class. | `review_open && merge_allowed && auth_valid` | `domain_action` |
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+Compatibility inputs: `cmd.source_control.pr.create` normalizes to `cmd.forge.review.create {provider: github}` and `cmd.source_control.pr.merge` normalizes to `cmd.forge.review.merge {provider: github}`. Neither compatibility spelling receives a primary catalog or production-wiring row.
+
+ContractRef: ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
 
 ## Case L command registration and storage-gate propagation - 2026-07-17
 
@@ -9063,7 +9182,7 @@ owner_hints:
   - Plans/Wiring_Matrix.md
 ```
 
-### UCC-120 - Settings Home Bloom And Suggestion Commands
+### UCC-120 - Settings Route And Transaction Composition
 
 ```yaml
 plan_unit_id: UCC-120
@@ -9071,29 +9190,34 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Settings home commands are `cmd.settings.bloom.open` (opens a category bloom modal with the F3-434 deep-link
-  contract open(category, focusSettingId); focus targets scroll into view and flash-highlight; reduced motion
-  skips the morph), `cmd.settings.category.reset` (two-step per-category reset: first activation arms
-  confirmation, second activation within the timeout resets to registry defaults, timeout expiry disarms), and
-  `cmd.settings.suggestion.dismiss` (per-card Suggested-shelf dismiss persisting at
-  settings_suggestions_dismissed:v1 with project-or-global scoping and 90-day expiry, fully local). These rows do
-  not change the F3-438/F3-439/F3-441 convention that individual setting mutations are registry-owned and
-  command-less.
+  Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target and
+  exact-return contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the
+  command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications,
+  cmd.settings.category.reset, and cmd.settings.suggestion.dismiss spellings are retained only as retired,
+  non-alias local-affordance lineage. Notifications navigation emits cmd.settings.open. Category reset and
+  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply.
+  The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
+  80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
+  seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
 gui_related: true
-gui_classification_reason: Registers user-visible settings bloom open, category reset, and suggestion dismiss commands.
-depends_on: [F3-434, F3-436, F3-437, F3-441]
+gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used by reset and dismissal affordances.
+depends_on: [SSYS-018, SSYS-023, F3-436, F3-437, F3-441]
 unblocks: []
 acceptance_criteria:
-  - bloom.open honors the deep-link contract and reduced-motion behavior.
-  - category.reset never resets without the two-step confirmation completing inside the timeout.
-  - suggestion.dismiss persists at settings_suggestions_dismissed:v1 with the F3-437 scoping and expiry and makes no network calls.
-  - Individual setting mutations remain registry-owned and command-less.
+  - cmd.settings.open accepts only the Settings-owned typed setting or manager/detail target and preserves its exact-return contract; presentation and motion remain Final GUI concerns.
+  - The local Notifications affordance emits cmd.settings.open with the typed Settings target; cmd.settings.open_notifications is neither registered nor aliased.
+  - Category reset never applies without a current preview, the required confirmation, and exact owner readback.
+  - Suggestion dismissal previews and then applies a typed Settings transaction with the F3-437 scoping and expiry and makes no network calls.
+  - All three retired local-affordance spellings receive no primary handler, wiring row, or alias.
+  - "The exact 41 canonical reuses, seven typed local actions, one retired bakeoff token, and 31 rejected tokens remain the complete Settings packet partition."
+  - "Every canonical replacement target has one existing catalog identity or remains explicitly blocked; none of the 72 replaced, superseded, retired, or rejected source spellings becomes a command or alias."
+  - "`cmd.artifacts.open_panel` remains command_not_registered until Runtime Artifacts and Commands admit an exact typed route, sole handler, and production-intent row."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: settings_command_catalog_gap
 reasoning_tier: standard
-context_scope: settings_home_commands
+context_scope: settings_route_and_home_commands
 implementation_surfaces:
   - Plans/UI_Command_Catalog.md
   - Plans/FinalGUISpec.md
@@ -9104,16 +9228,39 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/FinalGUISpec.md:28854-28900 (F3-434)"
+  - "Plans/Settings_System.md#SSYS-018 (current typed route owner; supersedes bloom-specific routing)"
+  - "Plans/Settings_System.md#SSYS-023 (exact 80-token transitive disposition registry)"
+  - "Plans/settings_system_contract_fixtures.json#/packet_command_dispositions"
   - "Plans/FinalGUISpec.md:29031-29080 (F3-437)"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-  - "cmd.settings.bloom.open"
+  - "cmd.settings.open"
+  - "cmd.settings.transaction.preview"
+  - "cmd.settings.transaction.apply"
+  - "cmd.settings.open_notifications"
   - "cmd.settings.category.reset"
   - "cmd.settings.suggestion.dismiss"
   - "settings_suggestions_dismissed:v1"
+  - "settings.search.focus"
+  - "settings.search.result.activate"
+  - "settings.category.select"
+  - "settings.subcategory.select"
+  - "settings.setting.focus"
+  - "settings.scope.details.open"
+  - "settings.provider.installation.select"
 negative_constraints:
-  - Do not convert registry-owned setting mutations into commands via these rows.
+  - Do not mint a second Settings mutation command for reset, dismissal, or presentation behavior.
   - Do not perform a category reset without the completed two-step confirmation.
+  - Do not encode a bloom, breadcrumb, Back control, or other presentation geometry into cmd.settings.open.
+  - Do not register or alias any of the three retired local-affordance spellings.
+  - Do not copy packet replacement spellings into the catalog or promote typed local actions into domain commands.
+  - Do not treat a prose mention of cmd.artifacts.open_panel as catalog admission or handler evidence.
+compatibility_only_notes:
+  - The retired open-notifications, category-reset, and suggestion-dismiss spellings are searchable local-affordance lineage only and never normalize to current commands.
+stale_retired_dispositions:
+  - "cmd.settings.open_notifications: local affordance emits cmd.settings.open with a typed target; no alias or handler."
+  - "cmd.settings.category.reset: local affordance composes transaction preview then apply; no alias or handler."
+  - "cmd.settings.suggestion.dismiss: local affordance composes transaction preview then apply; no alias or handler."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/FinalGUISpec.md
@@ -9173,7 +9320,7 @@ owner_hints:
   - Plans/Permissions_System.md
 ```
 
-### UCC-122 - Source Control Pull Request Commands
+### UCC-122 - Forge Review Commands And Source Control Compatibility
 
 ```yaml
 plan_unit_id: UCC-122
@@ -9181,29 +9328,32 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Source Control pull request commands are `cmd.source_control.pr.create` and `cmd.source_control.pr.merge`.
-  Both are panel-scoped first-class route commands carrying exact SCM context payload (repo, worktree, compare
-  target, baseline, run/attempt lineage) per the 2.5A operational wiring requirements, with deterministic
-  disabled-state behavior for missing scopes, expired auth, or no GitHub remote. They are distinct from the
-  thread-bound cmd.chat.worktree.pr and cmd.chat.worktree.merge rows, which remain assistant-thread-scoped.
-  PR merge of protected branches routes the domain.git_destructive_remote permission class.
+  Panel review actions use the canonical Forge-owned cmd.forge.review.create and cmd.forge.review.merge
+  commands with a typed provider discriminator and exact SCM/forge context. The historical
+  cmd.source_control.pr.create and cmd.source_control.pr.merge spellings are compatibility inputs that
+  normalize to the Forge commands with provider github before availability, permission, telemetry, receipt,
+  and dispatch; they receive no primary catalog or production-wiring rows. Thread-bound
+  cmd.chat.worktree.pr and cmd.chat.worktree.merge remain assistant-thread wrappers. Protected-branch merge
+  retains the applicable destructive-remote permission class.
 gui_related: true
-gui_classification_reason: Registers user-visible Source Control panel PR create and merge commands.
-depends_on: [UCC-044, UCC-058]
+gui_classification_reason: Registers user-visible Forge review create/merge commands and the Source Control compatibility normalization.
+depends_on: [UCC-044, UCC-058, FGI-004, SCS-004]
 unblocks: []
 acceptance_criteria:
-  - PR create and merge carry the exact SCM context payload and GitHub auth disabled-state behavior.
-  - Panel PR commands never impersonate or replace the thread-bound worktree PR commands.
+  - Forge review create and merge carry the exact provider, repository, revision, SCM context, permission, and disabled-state contract.
+  - Source Control PR compatibility inputs normalize before dispatch and never receive a second handler or primary wiring row.
+  - Panel review commands never impersonate or replace the thread-bound worktree PR commands.
   - Protected-branch merges are blocked without a domain.git_destructive_remote approval.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-risk_class: source_control_command_catalog_gap
+risk_class: forge_source_control_command_owner_drift
 reasoning_tier: high
-context_scope: source_control_pr_commands
+context_scope: forge_review_source_control_compatibility
 implementation_surfaces:
   - Plans/UI_Command_Catalog.md
-  - Plans/GitHub_Integration.md
+  - Plans/Forge_Integrations.md
+  - Plans/Source_Control_System.md
   - Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: source_control_pr_command_catalog
@@ -9216,13 +9366,17 @@ source_lineage:
 preserved_exact_tokens:
   - "cmd.source_control.pr.create"
   - "cmd.source_control.pr.merge"
+  - "cmd.forge.review.create"
+  - "cmd.forge.review.merge"
   - "domain.git_destructive_remote"
 negative_constraints:
   - Do not reuse thread-bound cmd.chat.worktree.pr or cmd.chat.worktree.merge for panel-scoped PR actions.
+  - Do not register Source Control compatibility inputs as primary commands or route them to Source Control-owned review handlers.
   - Do not merge protected branches without the domain-sensitive approval.
 owner_hints:
   - Plans/UI_Command_Catalog.md
-  - Plans/GitHub_Integration.md
+  - Plans/Forge_Integrations.md
+  - Plans/Source_Control_System.md
   - Plans/Permissions_System.md
 ```
 
@@ -9698,7 +9852,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Worktr
 
 ### Worktree and GitHub PR rows
 
-`cmd.git.worktree.merge` mints the project-scope worktree merge the UCC-054 family lacked; per UCC-122's negative constraint it never reuses the thread-bound `cmd.chat.worktree.merge`. Lock and unlock register the worktree lock flags from the worktree research and W-doc lineage. `cmd.github.pr.create` is the GitHub-domain, API-only PR creation command (per GitHub_API_Auth_and_Flows) that the prototype token `git.create_pr` retires into; it is distinct from, and does not alias or replace, the panel-scoped `cmd.source_control.pr.create` route command (UCC-122) or the thread-bound `cmd.chat.worktree.pr`. All three PR-creation scopes stay live with wiring recording which surface dispatches which.
+`cmd.git.worktree.merge` mints the project-scope worktree merge the UCC-054 family lacked; per UCC-122's negative constraint it never reuses the thread-bound `cmd.chat.worktree.merge`. Lock and unlock register the worktree lock flags from the worktree research and W-doc lineage. `cmd.github.pr.create` remains the narrow GitHub-domain API action owned by the existing GitHub integration. A provider-neutral panel review instead uses `cmd.forge.review.create`; the historical `cmd.source_control.pr.create` spelling is only a compatibility input to that Forge command. The GitHub-domain action, Forge panel action, and thread-bound `cmd.chat.worktree.pr` remain distinct scopes with explicit wiring.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -10067,11 +10221,12 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked; per the UCC-122
   negative constraint it never reuses the thread-bound cmd.chat.worktree.merge. cmd.git.worktree.lock and
-  cmd.git.worktree.unlock register worktree lock flags. cmd.github.pr.create is the GitHub-domain API-only
-  PR creation command that the prototype token git.create_pr retires into, gated on github_auth_valid and
-  github_remote_present; it is distinct from, and neither aliases nor replaces, the panel-scoped
-  cmd.source_control.pr.create route command and the thread-bound cmd.chat.worktree.pr. All three PR-creation
-  scopes stay live and wiring records which surface dispatches which.
+  cmd.git.worktree.unlock register worktree lock flags. cmd.github.pr.create is the narrow GitHub-domain API
+  command that the prototype token git.create_pr retires into, gated on github_auth_valid and
+  github_remote_present. Provider-neutral panel review creation uses cmd.forge.review.create;
+  cmd.source_control.pr.create is only its provider-github compatibility input. The GitHub-domain action,
+  Forge panel action, and thread-bound cmd.chat.worktree.pr stay distinct and wiring records which surface
+  dispatches which.
 gui_related: true
 gui_classification_reason: Registers user-visible worktree merge, lock, unlock, and GitHub PR creation controls.
 depends_on: [UCC-054, UCC-055, UCC-058, UCC-122]
@@ -10079,7 +10234,7 @@ unblocks: []
 acceptance_criteria:
   - Worktree merge is project-scoped, two-step confirmed, and blocked with a reason on dirty, conflicted, or merge-locked worktrees.
   - Lock and unlock mutate only worktree lock state.
-  - cmd.github.pr.create, cmd.source_control.pr.create, and cmd.chat.worktree.pr remain three distinct live commands with recorded scope boundaries.
+  - cmd.github.pr.create, cmd.forge.review.create, and cmd.chat.worktree.pr remain three distinct live commands with recorded scope boundaries; cmd.source_control.pr.create is compatibility-only.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -10106,7 +10261,7 @@ preserved_exact_tokens:
   - "cmd.github.pr.create"
 negative_constraints:
   - Do not reuse thread-bound cmd.chat.worktree.merge or cmd.chat.worktree.pr for panel-scoped actions.
-  - Do not alias cmd.github.pr.create to cmd.source_control.pr.create or collapse the two rows.
+  - Do not alias cmd.github.pr.create to cmd.forge.review.create, register cmd.source_control.pr.create as a primary row, or collapse the domain, Forge-panel, and thread-bound scopes.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/WorktreeGitImprovement.md
@@ -10666,6 +10821,218 @@ owner_hints:
   - Plans/Commands_System.md
 ```
 
+## Guided Tour local focus-route catalog disposition - 2026-09-01
+
+The Guided Tour's `Open Usage` step binds to
+`ui.guided_tour.focus_route`, a closed typed local action carrying
+`route_target.page_id=usage`. The local controller checks the mounted shell
+router, moves only visible page/focus state, and returns the closed
+`pm.guided_tour.focus_route_result.v1` no-domain/no-persistence result. When unavailable, the control remains keyboard
+focusable with `aria-disabled=true`, its exact reason, and the shared themed
+hover tag; activation dispatches nothing.
+
+The historical `cmd.nav.focus_route` token is an optional migration candidate,
+not an adopted alias or catalog identity. It is recorded in
+`Plans/Wiring_Matrix.production.exclusions.json` and has no primary catalog
+row, fake `handlers::nav::focus_route` target, or production wiring row.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-072, ContractName:Plans/Planning_Wizard.md#PWIZ-023, SchemaID:pm.guided_tour.contracts.v1, ContractName:Plans/Wiring_Matrix.md#WM-049
+
+### UCC-150 - Guided Tour focus route is catalog-external local presentation
+
+```yaml
+plan_unit_id: UCC-150
+unit_type: command_disposition
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  ui.guided_tour.focus_route is a typed local presentation action with
+  route_target.page_id, mounted-router availability, accessible disabled
+  reason, and an exact no-domain/no-persistence result. cmd.nav.focus_route is
+  an unadopted migration candidate with no catalog registration, alias,
+  handler, EventRecord, or production wiring row.
+gui_related: true
+gui_classification_reason: Binds the visible Guided Tour route control to its exact local action and accessible unavailable behavior.
+depends_on: [CS-072, PWIZ-023, UCC-147]
+unblocks: [WM-049]
+acceptance_criteria:
+  - The Guided Tour control carries exactly data-ui-action-id=ui.guided_tour.focus_route and no data-command-id.
+  - route_target.page_id is required by the closed action schema.
+  - Missing router state remains focusable, described, hover-bound, and non-activating.
+  - cmd.nav.focus_route is exclusions-only and absent from the production matrix.
+validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Concepts/pm7-tools/verify/guided_tour.mjs]
+risk_class: guided_tour_catalog_alias_or_inaccessible_unavailable_state
+reasoning_tier: high
+context_scope: guided_tour_shell_focus_route
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json]
+node_compile_hint: {mode: guided_tour_local_action_catalog_disposition, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Planning_Wizard.md#PWIZ-023
+  - Concepts/pm7-tools/guided_tour_source.py
+preserved_exact_tokens: [ui.guided_tour.focus_route, route_target.page_id, pm.guided_tour.focus_route_result.v1, cmd.nav.focus_route, aria-disabled=true]
+negative_constraints:
+  - Do not add a primary catalog or wiring row for cmd.nav.focus_route.
+  - Do not make an unavailable action unfocusable or activatable.
+  - Do not claim native or production execution from concept evidence.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Planning_Wizard.md, Plans/Wiring_Matrix.md]
+```
+
+## Agent plugin lifecycle UI catalog addendum - 2026-09-01
+
+The catalog registers the twelve exact CS-071 identities once and projects the Plugins-owned typed
+availability and disabled reason into Plugins, Settings, Doctor, and palette consumers. Every row is
+currently disabled with `handler_unavailable`: the future handler target is specified for one-way routing
+and uniqueness checks, but no native dispatcher or handler is evidenced. All effects are typed results and
+receipts only; no `plugin.*` or `agent_plugin.*` EventRecord is admitted.
+
+| Command ID | Label | Sole specified target | Visible reverse consumers |
+|---|---|---|---|
+| `cmd.agent_plugin.scan` | Scan Plugins | `handlers::plugins::scan` | Plugins inventory; Settings Plugins manager; Doctor owner recheck; palette |
+| `cmd.agent_plugin.install` | Install Plugin | `handlers::plugins::install` | Plugins catalog/add-local; Settings Plugins manager; palette |
+| `cmd.agent_plugin.update` | Update Plugin | `handlers::plugins::update` | Plugins update review; Settings Plugins manager; Doctor owner remediation |
+| `cmd.agent_plugin.enable` | Enable Plugin | `handlers::plugins::enable` | Plugins row/details; Settings Plugins manager |
+| `cmd.agent_plugin.disable` | Disable Plugin | `handlers::plugins::disable` | Plugins row/details; Settings Plugins manager; Doctor owner remediation |
+| `cmd.agent_plugin.reload` | Reload Plugin | `handlers::plugins::reload` | Plugins details/update review; Settings Plugins manager |
+| `cmd.agent_plugin.remove` | Remove Plugin | `handlers::plugins::remove` | Plugins details; Settings Plugins manager |
+| `cmd.agent_plugin.validate` | Validate Plugin | `handlers::plugins::validate` | Plugins details; Settings Plugins manager; Doctor plugin checks |
+| `cmd.agent_plugin.review_changes` | Review Plugin Changes | `handlers::plugins::review_changes` | Plugins update review; Settings Plugins manager; Doctor permission/update review |
+| `cmd.agent_plugin.rollback` | Roll Back Plugin | `handlers::plugins::rollback` | Plugins recovery; Settings Plugins manager; Doctor rollback health |
+| `cmd.agent_plugin.open_details` | Open Plugin Details | `handlers::plugins::open_details` | Plugins row/card; Settings Plugins manager; Doctor bounded Details |
+| `cmd.agent_plugin.open_logs` | Open Plugin Logs | `handlers::plugins::open_logs` | Plugins details; Settings Plugins manager; Doctor bounded Logs |
+
+Each consumer reads the same package/plugin identity, package/permission/topology generations, manifest
+lane and separate hashes, component isolation, three conformance classes and freshness, containment and
+supply-chain state, complete update diff, approval/reapproval, rollback, crash/log bounds, stale promoted
+routine, and exact owner reason. Details, Logs, and Receipt are bounded and redacted. A disabled control
+remains keyboard reachable and announces `handler_unavailable` plus the action consequence. Doctor only
+routes to the owner; it never privately scans, validates, installs, updates, enables, disables, reloads,
+removes, rolls back, grants permission, or accepts migration.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-071, ContractName:Plans/Plugins_System.md#PLUG-069, ContractName:Plans/Plugins_System.md#PLUG-070, ContractName:Plans/Wiring_Matrix.md#WM-048
+
+### UCC-149 - Agent plugin command rows and reverse consumers
+
+```yaml
+plan_unit_id: UCC-149
+unit_type: command_catalog
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The UI catalog registers exactly twelve agent-plugin rows with Plugins-owned contracts, one specified
+  target, truthful handler_unavailable projection, accessible disabled behavior, exact return, and complete
+  reverse coverage across Plugins, Settings, Doctor, and the palette. Settings and Doctor remain consumers,
+  no browser concept simulates owner success, and receipt-only effects admit no EventRecord.
+gui_related: true
+gui_classification_reason: Registers visible plugin lifecycle, review, recovery, details, logs, disabled, and return behavior.
+depends_on: [UCC-148, CS-071]
+unblocks: [WM-048]
+acceptance_criteria:
+  - Exactly the twelve CS-071 identities each have one catalog row, one Plugins owner, one specified target, and every intended visible consumer.
+  - Every row uses the shared PluginCommandRequest/Result availability, permission, disabled-reason, error, and return contracts without a copied Settings or Doctor schema.
+  - All controls remain disabled with handler_unavailable until a source-hashed native dispatcher/handler and production runtime evidence exist.
+  - Details, Logs, and Receipt are bounded/redacted; mutating controls preserve confirmation, currentness, update-diff, conformance, provenance, permission, rollback, and recovery gates.
+  - Doctor routes to the exact owner command and never mutates privately; no alias, second handler, success simulation, or EventRecord family is admitted.
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
+risk_class: plugin_catalog_or_reverse_consumer_gap
+reasoning_tier: high
+context_scope: agent_plugin_ui_catalog
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py]
+node_compile_hint: {mode: agent_plugin_ui_catalog, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Commands_System.md#CS-071
+  - scratchpad/pm-integration-20260831/authority-repairs/plugin-contract-closure/central-settings-doctor-delta-proposal.md
+preserved_exact_tokens: [cmd.agent_plugin.scan, cmd.agent_plugin.install, cmd.agent_plugin.update, cmd.agent_plugin.enable, cmd.agent_plugin.disable, cmd.agent_plugin.reload, cmd.agent_plugin.remove, cmd.agent_plugin.validate, cmd.agent_plugin.review_changes, cmd.agent_plugin.rollback, cmd.agent_plugin.open_details, cmd.agent_plugin.open_logs, handler_unavailable]
+negative_constraints:
+  - Do not enable controls or simulate Plugins-owner success before native/runtime closure.
+  - Do not create Settings-local, Doctor-local, palette-local, or concept-local lifecycle commands or handlers.
+  - Do not expose raw secrets, private absolute paths, AuthBrowserSession data, internal sockets, or unbounded logs.
+  - Do not infer or emit a plugin.* or agent_plugin.* EventRecord family.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Plugins_System.md, Plans/Wiring_Matrix.md]
+```
+
+## Cross-owner Product Onboarding and Settings consumer catalog addendum - 2026-09-01
+
+This catalog consumes the packet-owner semantics registered by CS-070. The `Sole specified target` values
+are dispatch destinations only; every new row remains disabled with `handler_unavailable` until a native
+dispatcher and handler are evidenced. All rows use their exact `state.commands.<id>.availability` and
+`.disabled_reason` projections, keyboard/pointer parity, deterministic focus return, a typed owner result,
+and receipt/projection-only effects with an empty EventRecord set.
+
+| Command ID | Label | Owner request -> result | Sole specified target | Visible reverse consumers |
+|---|---|---|---|---|
+| `cmd.source_control.repository.clone` | Clone Git Repository | `source_control_command_request` -> `source_control_command_result` | `handlers::source_control::repository_clone` | Product Onboarding first-project branch; Settings SCM/Origin manager |
+| `cmd.jujutsu.git.clone` | Clone with Jujutsu | `command_request` -> `command_result` | `handlers::jujutsu::git_clone` | Product Onboarding first-project branch; Settings SCM/Origin manager |
+| `cmd.restore.preview` | Preview Restore | `backup_restore_command_request` -> `backup_restore_command_result` | `handlers::backup_restore::preview_restore` | Product Onboarding restore branch; Settings Backup/Restore manager; Doctor recovery route |
+| `cmd.server.connect` | Connect Server | `command_payload` -> `command_result` | `handlers::server::connect` | Product Onboarding discovered/known Server branch; Settings Server manager; Doctor connectivity route |
+| `cmd.server.bootstrap.start` | Start Server Bootstrap | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::server::bootstrap_start` | Product Onboarding post-claim standalone/container branch; Settings Server manager |
+| `cmd.client.pair.start` | Start Client Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::start` | Product Onboarding pairing methods; Settings paired-clients manager |
+| `cmd.client.pair.approve` | Approve Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::approve` | Settings pairing-request detail; Product Onboarding exact owner return |
+| `cmd.client.pair.reject` | Reject Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::reject` | Settings pairing-request detail; Product Onboarding exact owner return |
+| `cmd.client.pair.cancel` | Cancel Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::cancel` | Settings pairing-progress detail; Product Onboarding exact owner return |
+| `cmd.client.revoke` | Revoke Client Trust | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_trust::revoke` | Settings paired-client detail; Doctor trust remediation route |
+
+The three existing Project rows now bind exactly to
+`Plans/project_system_contracts.schema.json#/$defs/project_action_request` and
+`#/$defs/project_action_result`. Their payload/result coverage includes stable Project, Server, Source
+Location, repository, revision/generation/hash, receipt, and byte-exact caller
+surface/route/focus/invocation/continuation context. Closing the Product Onboarding modal returns focus and
+does not cancel dispatched owner work.
+
+The three existing Authentication rows continue to use the shared-runtime request/result definitions and
+sole `handlers::authentication::*` targets. Protected-auth start, cancel, and resume require the exact
+initiating Client/session generation, same authentication operation/revision, protected session and return
+target, continuation where applicable, and a redacted cancel/timeout/success disposition. No fallback
+Client, protected content, capture, recording, persistence, or caller navigation is allowed.
+
+`cmd.server.reconnect`, `cmd.server.resume`, `cmd.git.clone`, `cmd.scm.clone`, `cmd.project.clone`,
+`cmd.project.jj_clone`, `cmd.client.pair.qr.import`, and `cmd.server.peer_candidate.select` receive no
+catalog row or alias. Remote Access retains its visible adapter IDs while routing the same protected
+operation through `cmd.authentication.start|resume|cancel`; it owns no parallel auth lifecycle.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-070, ContractName:Plans/Project_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Wiring_Matrix.md
+
+### UCC-148 - Exact owner command rows and reverse consumer routes
+
+```yaml
+plan_unit_id: UCC-148
+unit_type: command_catalog
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The UI catalog adds exactly ten owner-backed command rows for ordinary Git clone, Jujutsu clone,
+  restore preview, Server connect/bootstrap, pairing start/approve/reject/cancel, and Client trust
+  revocation; strengthens the existing Project and shared Authentication rows; and enumerates every
+  PMConcept7, Settings, Onboarding, and Doctor reverse consumer. Every specified handler target remains a
+  contract target rather than implementation evidence and is unavailable until native proof exists.
+gui_related: true
+gui_classification_reason: Registers the labels, disabled behavior, exact return, accessibility, and reverse routes for visible setup and management controls.
+depends_on: [UCC-147, CS-070]
+unblocks: [WM-047]
+acceptance_criteria:
+  - The ten new command IDs each have one catalog row, one owner request/result pair, one specified target, one availability selector, and all intended GUI consumers.
+  - Existing Project and Authentication rows are strengthened in place; no duplicate primary identities or handlers are created.
+  - Product Onboarding remains typed local choreography and dispatches owner commands directly without a cmd.onboarding namespace.
+  - Clone families, Server connection modes, pairing methods, and protected-auth lifecycle remain semantically distinct exactly as their owners require.
+  - Disabled controls announce the exact owner reason including handler_unavailable; caller/modal close does not silently cancel owner work.
+  - No rejected alias or unregistered EventRecord is admitted, and static/browser evidence is not native-runtime proof.
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
+risk_class: catalog_or_reverse_route_gap
+reasoning_tier: high
+context_scope: cross_owner_product_onboarding_catalog
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/systems_integration_source.py]
+node_compile_hint: {mode: cross_owner_catalog_closure, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Commands_System.md#CS-070
+  - scratchpad/pm-integration-20260831/authority-repairs/central-owner-merge/merged-central-owner-delta-manifest.json
+preserved_exact_tokens: [cmd.source_control.repository.clone, cmd.jujutsu.git.clone, cmd.restore.preview, cmd.server.connect, cmd.server.bootstrap.start, cmd.client.pair.start, cmd.client.pair.approve, cmd.client.pair.reject, cmd.client.pair.cancel, cmd.client.revoke, handler_unavailable]
+negative_constraints:
+  - Do not add rejected aliases or concept-local owner commands.
+  - Do not interpret a catalog target as a native handler claim.
+  - Do not route protected authentication to a fallback Client or expose protected content.
+  - Do not omit a GUI reverse consumer or exact focus-return route.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.md]
+```
+
 ### UCC-140 - Orchestrator Run-Control Trio Catalog Registration
 
 ```yaml
@@ -11183,16 +11550,17 @@ in two of its own rows. Hundreds of certified catalog rows already carry three o
 
 | Token | Disposition | Canonical target and notes |
 |---|---|---|
-| `cmd.provider.usage.open_management` | rejected candidate; not registered | `cmd.nav.open_usage_subject` already owns usage-subject opens per the `Plans/DRY_Rules.md` normalization boundary, so a second opener duplicates an existing canonical command. The token is recorded in `Plans/Wiring_Matrix.production.exclusions.json` alongside the other adjudicated non-commands and must not receive a primary production wiring row. |
+| `cmd.provider.usage.open_management` | rejected candidate; not registered and no alias | Provider/account/panel aggregate details are local projections and dispatch nothing. Provider setup or management opens the owning Settings destination through `cmd.settings.open`; this rejected token does not normalize to `cmd.nav.open_usage_subject` or any other command. The token is recorded in `Plans/Wiring_Matrix.production.exclusions.json` and must receive neither a primary production wiring row nor an alias. |
 
 ### Settings destination identity
 
 Usage never owns a Settings value. A Usage affordance that would change one deep-links to the owning
-Settings surface through the existing `cmd.settings.bloom.open` row, whose canonical envelope is F3-434's
-`open(category, focusSettingId)` and whose certified production row is `catalog.settings_bloom_open`. The
-category is one of the twelve in `Plans/settings_inventory.json` and the focus target is a real setting id
-from the same inventory. The concept's earlier destination envelope, and its manager, section, and
-focus-reason vocabulary, were unregistered inventions and carry no catalog standing.
+Settings surface through the existing `cmd.settings.open` row, whose canonical envelope is
+`pm.settings_route_request.v1` and whose production-intent row is `catalog.settings_open`. The provider
+setup/management destination uses `target_type=setting` and
+`setting_id=ai.accounts.provider-connections` from `Plans/settings_inventory.json`. The former
+`open(category, focusSettingId)` envelope and the concept's manager/section/focus-reason vocabulary are
+superseded inputs; they must migrate before dispatch and carry no primary catalog standing.
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/FinalGUISpec.md
 
@@ -11209,11 +11577,13 @@ canonical_text: >-
   receipt or projection effect that carries the missing-event-registration disposition while the Event
   Authority denominator remains UNKNOWN_OPEN. Its dotted shape is legal under UCC-006, which sets no segment
   cap and is machine-enforced by an unbounded dotted pattern. cmd.provider.usage.open_management is
-  adjudicated as a rejected candidate rather than an alias because cmd.nav.open_usage_subject already owns
-  usage-subject opens; it receives no primary row and is recorded as an excluded token. Usage-initiated
-  Settings navigation registers no new command: it reuses cmd.settings.bloom.open with a real Settings
-  category and a real setting id from the canonical Settings inventory, and the concept's earlier manager,
-  section, and focus-reason destination vocabulary is retired as unregistered.
+  adjudicated as a rejected candidate with no alias: provider, account, and presentation-panel aggregate
+  details are local projections that dispatch no UICommand, while provider setup or management reuses
+  cmd.settings.open. It receives no primary row and is recorded as an excluded token. Usage-initiated
+  Settings navigation registers no new command: it reuses cmd.settings.open with the typed setting target
+  ai.accounts.provider-connections from the canonical Settings inventory, and the concept's earlier
+  category/focusSettingId, manager, section, and focus-reason destination vocabulary is superseded and must
+  migrate before dispatch.
 gui_related: true
 gui_classification_reason: Catalog metadata governs the visible label, availability, disabled announcement, handler dispatch, and accessible activation of the Usage forecast affordance and the Usage-to-Settings deep link.
 depends_on: [UCC-006, UCC-109, UCC-116, CS-067, UF-092]
@@ -11221,9 +11591,9 @@ unblocks: []
 acceptance_criteria:
   - cmd.usage.forecast.request has typed request and result references, a state selector, a closed disabled-reason set, a sole handler, and normalization metadata, and is the only new canonical id in this addendum.
   - Its effect is receipt or projection only and carries the missing-event-registration disposition; no event family is named while the Event Authority denominator remains UNKNOWN_OPEN.
-  - cmd.provider.usage.open_management receives no primary catalog row and is recorded as an excluded token whose canonical target is cmd.nav.open_usage_subject.
-  - Every Usage-initiated Settings destination resolves to cmd.settings.bloom.open with a category and setting id that exist in the canonical Settings inventory.
-  - The retired destination vocabulary is recorded as unregistered and never appears as catalog metadata.
+  - Provider/account/presentation-panel aggregate details remain local and dispatch no UICommand; cmd.provider.usage.open_management receives no primary catalog row and no alias, and is recorded only as an excluded token.
+  - Every provider setup or management destination resolves to cmd.settings.open with target_type setting and setting_id ai.accounts.provider-connections from the canonical Settings inventory.
+  - Superseded destination vocabulary is accepted only by an explicit pre-dispatch migrator and never appears as primary catalog metadata.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -11249,12 +11619,13 @@ preserved_exact_tokens:
   - cmd.usage.forecast.request
   - cmd.provider.usage.open_management
   - cmd.nav.open_usage_subject
-  - cmd.settings.bloom.open
-  - catalog.settings_bloom_open
+  - cmd.settings.open
+  - catalog.settings_open
   - missing_event_registration
   - UNKNOWN_OPEN
 negative_constraints:
   - Do not give the rejected candidate a primary catalog or production wiring row.
+  - Do not alias or normalize cmd.provider.usage.open_management to cmd.nav.open_usage_subject or any other command.
   - Do not name or emit an event family for the new command while the Event Authority denominator remains UNKNOWN_OPEN.
   - Do not mint a Usage-specific Settings navigation command; reuse the canonical Settings deep-link identity.
   - Do not restore the retired manager, section, or focus-reason destination vocabulary as catalog metadata.
@@ -11262,4 +11633,594 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md
   - Plans/FinalGUISpec.md
+```
+
+## PMConcept7 command reuse and view-local disposition addendum - 2026-08-27
+
+The recovered PMConcept7 controls bind to existing catalog rows. The table below is a consumer-surface
+census, not a new command family.
+
+| PMConcept7 producer/action | Canonical command/disposition | Required result |
+|---|---|---|
+| Usage widget show/hide/configure | `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.configure` | One settled widget-layout mutation and receipt. |
+| Usage or Dashboard resize release | `cmd.widget.resize` | One command only when committed dimensions changed; preview and cancel are `view_only`. |
+| Usage or Dashboard reorder release | `cmd.widget.move` | One command only when committed order changed; ghost/placeholder preview and cancel are `view_only`. |
+| Usage/Dashboard reset | `cmd.widget.reset_layout` | One reset command to the selected host namespace. |
+| Home surface move/resize/collapse/reset | `cmd.workspace_layout.move_surface`, `cmd.workspace_layout.resize_surface`, `cmd.workspace_layout.set_collapsed`, `cmd.workspace_layout.reset` | One revision-checked settled command. |
+| Home preset-size control | resolve the historical PM7 semantic preset alias through `cmd.workspace_layout.resize_surface` | Resolve `preset_id` to committed size values before dispatch; the alias is documentation-only and is not cataloged. |
+| Usage Refresh | `cmd.usage.refresh` | One explicit refresh request; background refresh remains separately owner-driven. |
+| Usage Ledger attempt drill-through | `cmd.nav.open_usage_subject` | One Usage object route with `route_target.object_kind = usage_attempt`, `route_target.object_id = attempt_id`, top-level `attempt_id`, and `usage_event_ref` correlation; no `OpenSubject`. |
+| Usage provider/account/presentation-panel details | `view_only` local projection | Stable local identity opens the existing local inspector; no UICommand, route receipt, or domain event. |
+| Provider setup or management | `cmd.settings.open` | Open the typed setting target `ai.accounts.provider-connections`; do not alias the rejected provider-management token. |
+| Usage room/scope/range/disclosure/filter/More-menu selection | `view_only` local projection | No command; settled preference persistence remains storage-owned. |
+| Context ring popup/hover | `view_only` local projection | No compaction and no detail-open dispatch. |
+| Context ring `Compact Now` | `cmd.chat.compact_context` | Explicit click/choice only; visible result/receipt projection and no fabricated event family. |
+| Context ring `More Details` | `cmd.chat.open_thread_context_details` | Opens or focuses the existing shared thread Context Detail Pane. |
+| Context detail focus/close | `cmd.chat.focus_thread_context_details`, `cmd.chat.close_thread_context_details` | Reuses the existing pane and shared Assistant state. |
+| Chat/side-panel visibility | `cmd.panel.switch` | Shows/hides the same Assistant/panel identity; does not clone it. |
+
+The rejected `cmd.provider.usage.open_management` token remains exclusions-only with no alias. Provider
+setup or management reuses `cmd.settings.open`; no provider-management command is revived by this
+addendum.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/assistant-chat-design.md
+
+### UCC-147 - PMConcept7 Existing Command Census And View-Local Dispositions
+
+```yaml
+plan_unit_id: UCC-147
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Every PMConcept7 producer resolves to an existing catalog command or an explicit
+  view_only disposition. Widget commits use cmd.widget.*, Home commits use the existing
+  workspace_layout and panel commands, Usage refresh and subject opens use
+  cmd.usage.refresh and, for Ledger usage-attempt drill-through only, cmd.nav.open_usage_subject.
+  Provider, account, and presentation-panel aggregate details remain local and dispatch
+  nothing; provider setup or management reuses cmd.settings.open. Context-ring explicit actions use
+  cmd.chat.compact_context plus the thread Context Detail Pane family. Local preview,
+  popup, hover, room, scope, range, disclosure, filter, ghost, placeholder, and animation
+  state dispatch nothing. The concept-only semantic preset alias normalizes to
+  cmd.workspace_layout.resize_surface; cmd.provider.usage.open_management
+  remains rejected with no alias, and no PM7-only or duplicate primary command row is created.
+gui_related: true
+gui_classification_reason: The catalog census binds visible PMConcept7 controls to canonical commands or explicit view-only behavior.
+split_recommended: false
+depends_on: [CS-068, UCC-060, UCC-144, UCC-146]
+unblocks: [WM-045, UIW-012, DR-039, ACD-448]
+acceptance_criteria:
+  - Every listed PMConcept7 control maps to exactly one existing command or view_only disposition; Ledger attempt drill-through uses cmd.nav.open_usage_subject with route_target.object_kind usage_attempt, route_target.object_id attempt_id, top-level attempt_id, usage_event_ref correlation, and no OpenSubject, while provider, account, and presentation-panel aggregate details use stable local identities and dispatch no UICommand.
+  - Resize and move previews dispatch nothing; a changed release dispatches exactly one cmd.widget.resize, cmd.widget.move, cmd.workspace_layout.resize_surface, or cmd.workspace_layout.move_surface command as appropriate.
+  - Compact Now dispatches only after explicit choice; More Details uses cmd.chat.open_thread_context_details and does not route through app-wide Usage.
+  - The historical semantic preset alias is not registered as a primary command and normalizes to cmd.workspace_layout.resize_surface.
+  - cmd.provider.usage.open_management remains rejected, has no alias, and is absent from production wiring; provider setup or management instead dispatches cmd.settings.open with target_type setting and setting_id ai.accounts.provider-connections.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: pm7_catalog_duplicate_or_view_state_command_drift
+reasoning_tier: high
+context_scope: pm7_commands_wiring_dry_assistant
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: pm7_existing_command_census
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+preserved_exact_tokens:
+  - view_only
+  - cmd.workspace_layout.resize_surface
+  - Compact Now
+  - More Details
+  - cmd.provider.usage.open_management
+negative_constraints:
+  - Do not register commands for popup disclosure, hover, pointer preview, or cancellation.
+  - Do not dispatch cmd.nav.open_usage_subject for provider, account, or presentation-panel aggregate details.
+  - Do not attach OpenSubject to a Usage object route.
+  - Do not create a PM7 command namespace or duplicate primary command row.
+  - Do not revive or alias a rejected provider-management command.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+```
+## Server/Egolite Exact Command And Reverse-Consumer Catalog Addendum - 2026-09-01
+
+
+The exact machine partition is 171 packet rows: 86 new canonical commands, 43 pre-policy aliases, 39 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 103 obligation references collapse to **102 unique primary command/catalog/production-intent rows**; the packet primary denominator remains 92 (`86 + 6`). Denominators must never be silently substituted for one another.
+
+Every primary row below is static central intent. A named `handler_location` is the sole future dispatch target, not evidence that Rust code, registration, provider execution, persistence, native Slint wiring, security behavior, or runtime success exists. Initial availability remains `handler_unavailable`; the exact disabled reason is projected accessibly. All rows use receipt/projection-only effects and `expected_event_types=[]` until Event Authority separately admits an exact family. `ObservableWork` applies only where the owner contract declares asynchronous work. Exact owner permissions, generations, currentness, idempotency, cancellation, reconciliation, and exact-return rules remain intact.
+
+
+### Exact 102 primary catalog rows
+
+| Exact primary command | Human label | Owner / PlanUnit | Sole future handler target | Complete intended GUI consumers |
+|---|---|---|---|---|
+| `cmd.auth_profile.rename` | Auth Profile Rename | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::rename` | Settings > Integrations > Profiles; Product Onboarding owner handoff; Doctor remediation; authentication handoff surface; palette/API |
+| `cmd.auth_profile.revoke` | Auth Profile Revoke | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::revoke` | Settings > Integrations > Profiles; Product Onboarding owner handoff; Doctor remediation; authentication handoff surface; palette/API |
+| `cmd.auth_profile.transfer.apply` | Auth Profile Transfer Apply | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::transfer_apply` | Settings > Integrations > Profiles; Product Onboarding owner handoff; Doctor remediation; authentication handoff surface; palette/API |
+| `cmd.auth_profile.transfer.preview` | Auth Profile Transfer Preview | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::transfer_preview` | Settings > Integrations > Profiles; Product Onboarding owner handoff; Doctor remediation; authentication handoff surface; palette/API |
+| `cmd.browser.program.inspect` | Browser Program Inspect | `Plans/Section15_MVP_Promoted_Features_Spec.md` / `SMPFS-156` | `handlers::browser_program::inspect` | Browser Program details; Testing; Watch; Runtime Artifacts; palette/API |
+| `cmd.client.access.update` | Client Access Update | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::access_update` | Settings > Servers > Clients; pairing/trust surface; Server permanent web UI; Doctor |
+| `cmd.client.remove` | Client Remove | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::remove` | Settings > Servers > Clients; pairing/trust surface; Server permanent web UI; Doctor |
+| `cmd.client.rename` | Client Rename | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::rename` | Settings > Servers > Clients; pairing/trust surface; Server permanent web UI; Doctor |
+| `cmd.client.session.revoke` | Client Session Revoke | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::session_revoke` | Settings > Servers > Clients; pairing/trust surface; Server permanent web UI; Doctor |
+| `cmd.credential_attachment.revoke` | Credential Attachment Revoke | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_revoke` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_attachment.revoke_active` | Credential Attachment Revoke Active | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_revoke_active` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_attachment.test` | Credential Attachment Test | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_test` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_attachment.transfer.apply` | Credential Attachment Transfer Apply | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_transfer_apply` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_attachment.transfer.preview` | Credential Attachment Transfer Preview | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_transfer_preview` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_source.add` | Credential Source Add | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_add` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_source.remove` | Credential Source Remove | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_remove` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_source.test` | Credential Source Test | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_test` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.doctor.export_report` | Doctor Export Report | `Plans/newtools.md` / `N2-155` | `handlers::doctor_report::export_report` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.execution_environment.attach` | Execution Environment Attach | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_attach` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.discover` | Execution Environment Discover | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_discover` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.provision` | Execution Environment Provision | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_provision` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.remove` | Execution Environment Remove | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_remove` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.repair` | Execution Environment Repair | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_repair` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.resource_policy.apply` | Execution Environment Resource Policy Apply | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_resource_policy_apply` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.resource_policy.preview` | Execution Environment Resource Policy Preview | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_resource_policy_preview` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.restart` | Execution Environment Restart | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_restart` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.rollback` | Execution Environment Rollback | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_rollback` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.select` | Execution Environment Select | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_select` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.start` | Execution Environment Start | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_start` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.stop` | Execution Environment Stop | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_stop` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.update` | Execution Environment Update | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_update` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.verify` | Execution Environment Verify | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_verify` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.capabilities.refresh` | Execution Host Capabilities Refresh | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_capabilities_refresh` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.disable` | Execution Host Disable | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_disable` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.drain` | Execution Host Drain | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_drain` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.enable` | Execution Host Enable | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_enable` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.register` | Execution Host Register | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_register` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.remove` | Execution Host Remove | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_remove` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.set_default` | Execution Host Set Default | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_set_default` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.test` | Execution Host Test | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_test` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.forge.repository.create` | Forge Repository Create | `Plans/Forge_Integrations.md` / `FGI-008` | `handlers::forge::repository_create` | Projects > New from Forge; Source Control; Settings > Integrations; Product Onboarding; palette/API |
+| `cmd.goal.checkpoint` | Goal Checkpoint | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::checkpoint` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.goal.continue_on_host` | Goal Continue On Host | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::continue_on_host` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.goal.handoff.cancel` | Goal Handoff Cancel | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::handoff_cancel` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.goal.handoff.retry` | Goal Handoff Retry | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::handoff_retry` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.goal.pause` | Goal Pause | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::pause` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.goal.resume_here` | Goal Resume Here | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::resume_here` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.installation.attach_external` | Installation Attach External | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::attach_external` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.installation.detach_external` | Installation Detach External | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::detach_external` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.installation.remove` | Installation Remove | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::remove` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.project.duplicate_configuration` | Project Duplicate Configuration | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_configuration` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project.duplicate_with_history` | Project Duplicate With History | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_with_history` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project.execution_host.select` | Project Execution Host Select | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_host_select` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.execution_policy.set` | Project Execution Policy Set | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_policy_set` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.home_server.set` | Project Home Server Set | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::home_server_set` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.move.cancel` | Project Move Cancel | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::cancel` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.move.pause` | Project Move Pause | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::pause` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.move.preflight` | Project Move Preflight | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::preflight` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.move.resume` | Project Move Resume | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::resume` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.move.retry` | Project Move Retry | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::retry` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.move.rollback` | Project Move Rollback | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::rollback` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.move.start` | Project Move Start | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::start` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.source_location.add` | Project Source Location Add | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_add` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.source_location.remove` | Project Source Location Remove | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_remove` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.source_location.set_primary` | Project Source Location Set Primary | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_set_primary` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.source_location.test` | Project Source Location Test | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_test` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.source_location.update` | Project Source Location Update | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_update` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project_template.create_project` | Project Template Create Project | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_create_project` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project_template.delete` | Project Template Delete | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_delete` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project_template.rename` | Project Template Rename | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_rename` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project_template.save` | Project Template Save | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_save` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.provider_binding.copy` | Provider Binding Copy | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::binding_copy` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.provider_binding.resolve_on_destination` | Provider Binding Resolve On Destination | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::binding_resolve_on_destination` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.source_control.backend.detect` | Source Control Backend Detect | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::backend_detect` | Source Control panel; Settings > Source Control; Projects checkout/worktree flow; Doctor; palette/API |
+| `cmd.source_control.backend.select` | Source Control Backend Select | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::backend_select` | Source Control panel; Settings > Source Control; Projects checkout/worktree flow; Doctor; palette/API |
+| `cmd.source_control.checkpoint.create` | Source Control Checkpoint Create | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_create` | Source Control panel; Settings > Source Control; Projects checkout/worktree flow; Doctor; palette/API |
+| `cmd.source_control.checkpoint.inspect` | Source Control Checkpoint Inspect | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_inspect` | Source Control panel; Settings > Source Control; Projects checkout/worktree flow; Doctor; palette/API |
+| `cmd.source_control.checkpoint.restore` | Source Control Checkpoint Restore | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_restore` | Source Control panel; Settings > Source Control; Projects checkout/worktree flow; Doctor; palette/API |
+| `cmd.source_control.workspace.create` | Source Control Workspace Create | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::workspace_create` | Source Control panel; Settings > Source Control; Projects checkout/worktree flow; Doctor; palette/API |
+| `cmd.source_control.workspace.switch` | Source Control Workspace Switch | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::workspace_switch` | Source Control panel; Settings > Source Control; Projects checkout/worktree flow; Doctor; palette/API |
+| `cmd.tool_package.approve_license` | Tool Package Approve License | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::package_approve_license` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.update.app.automatic.set_enabled` | App Automatic Set Enabled | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::automatic_set_enabled` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.cancel_download` | Update App Cancel Download | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::cancel_download` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.check` | Update App Check | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::check` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.download` | Update App Download | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::download` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.install_restart` | Update App Install Restart | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::install_restart` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.remind_later` | Update App Remind Later | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::remind_later` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.rollback` | Update App Rollback | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::rollback` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.content.activate` | Update Content Activate | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::activate` | Settings > Updates > Content; content attention/status; Doctor |
+| `cmd.update.content.check` | Update Content Check | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::check` | Settings > Updates > Content; content attention/status; Doctor |
+| `cmd.update.content.download` | Update Content Download | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::download` | Settings > Updates > Content; content attention/status; Doctor |
+| `cmd.update.content.rollback` | Update Content Rollback | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::rollback` | Settings > Updates > Content; content attention/status; Doctor |
+
+### Compatibility normalization metadata
+
+| Packet/source spelling | Exact target | Target handler | Rule |
+|---|---|---|---|
+| `cmd.auth_session.cancel` | `cmd.authentication.cancel` | `handlers::authentication::cancel` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.open_official_page` | `cmd.auth_profile.open_official_page` | `handlers::multi_account::open_official_page` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.open_secure_browser` | `cmd.authentication.start` | `handlers::authentication::start` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.open_secure_cli` | `cmd.authentication.start` | `handlers::authentication::start` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.resume_callback` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.retry` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.start` | `cmd.authentication.start` | `handlers::authentication::start` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.submit_redirect` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.submit_returned_code` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.add` | `cmd.integration.connection.add` | `handlers::integration_connection::add` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.disable` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.edit` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.open_details` | `cmd.integration.connection.open_details` | `handlers::integration_connection::open_details` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.refresh_capabilities` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.remove` | `cmd.integration.connection.remove` | `handlers::integration_connection::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.select` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.git_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.installation.rescan` | `cmd.tool.discover` | `handlers::tool::discover` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.add_worktree` | `cmd.source_control.workspace.create` | `handlers::source_control::workspace_create` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.connect_existing` | `cmd.source_control.repository.bind` | `handlers::source_control::repository_bind` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.create` | `cmd.source_control.workspace.create` | `handlers::source_control::workspace_create` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.remove` | `cmd.source_control.workspace.remove` | `handlers::source_control::workspace_remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.verify` | `cmd.source_control.status.refresh` | `handlers::source_control::status_refresh` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.remove_registration` | `cmd.project.remove` | `handlers::project::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.settings_copy.apply` | `cmd.settings.transaction.apply` | `handlers::settings::transaction_apply` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.settings_copy.preview` | `cmd.settings.transaction.preview` | `handlers::settings::transaction_preview` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.settings_copy.rollback` | `cmd.settings.transaction.rollback` | `handlers::settings::transaction_rollback` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.add` | `cmd.integration.connection.add` | `handlers::integration_connection::add` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.edit` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.open_details` | `cmd.integration.connection.open_details` | `handlers::integration_connection::open_details` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.remove` | `cmd.integration.connection.remove` | `handlers::integration_connection::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.remote_access.remote_link.test` | `cmd.remote_access.route.test` | `handlers::remote_access::route_test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.add` | `cmd.integration.connection.add` | `handlers::integration_connection::add` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.disable` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.edit` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.open_details` | `cmd.integration.connection.open_details` | `handlers::integration_connection::open_details` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.remove` | `cmd.integration.connection.remove` | `handlers::integration_connection::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.select` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.ssh_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+
+### Typed local presentation metadata
+
+| Command-shaped packet spelling | Exact typed local UI action | Complete intended GUI consumers |
+|---|---|---|
+| `cmd.auth_profile.open_details` | `ui.auth_profile.open_details` | Settings > Integrations > Profiles; Product Onboarding owner handoff; Doctor remediation; authentication handoff surface; palette/API |
+| `cmd.auth_session.close_secure_browser` | `ui.auth_session.close_secure_browser` | authentication handoff surface; Product Onboarding owner handoff; Settings > Integrations; Doctor remediation |
+| `cmd.auth_session.copy_device_code` | `ui.auth_session.copy_device_code` | authentication handoff surface; Product Onboarding owner handoff; Settings > Integrations; Doctor remediation |
+| `cmd.auth_session.open_details` | `ui.auth_session.open_details` | authentication handoff surface; Product Onboarding owner handoff; Settings > Integrations; Doctor remediation |
+| `cmd.client.open_details` | `ui.client.open_details` | Settings > Servers > Clients; pairing/trust surface; Server permanent web UI; Doctor |
+| `cmd.credential_attachment.open_consumers` | `ui.credential_attachment.open_consumers` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_attachment.open_details` | `ui.credential_attachment.open_details` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_source.open_details` | `ui.credential_source.open_details` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.doctor.copy_diagnostics` | `ui.doctor.copy_diagnostics` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.open` | `ui.doctor.open` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.open_finding` | `ui.doctor.open_details` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.open_owner` | `ui.doctor.open_remediation` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.refresh` | `ui.doctor.refresh_visible` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.run_check` | `ui.doctor.run_check` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.execution_environment.open_details` | `ui.execution_environment.open_details` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.open_logs` | `ui.execution_environment.open_logs` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.open_details` | `ui.execution_host.open_details` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.goal.handoff.open_details` | `ui.goal.handoff.open_details` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.installation.open_details` | `ui.installation.open_details` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.installation.open_logs` | `ui.installation.open_logs` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.onboarding.back` | `ui.onboarding.back` | Product Onboarding modal |
+| `cmd.onboarding.cancel` | `ui.onboarding.close` | Product Onboarding modal |
+| `cmd.onboarding.continue` | `ui.onboarding.next` | Product Onboarding modal |
+| `cmd.onboarding.defer` | `ui.onboarding.defer` | Product Onboarding modal |
+| `cmd.onboarding.finish` | `ui.onboarding.finish` | Product Onboarding modal |
+| `cmd.onboarding.open_details` | `ui.onboarding.open_details` | Product Onboarding modal |
+| `cmd.onboarding.resume` | `ui.onboarding.start` | Product Onboarding modal |
+| `cmd.onboarding.skip` | `ui.onboarding.skip` | Product Onboarding modal |
+| `cmd.project.move.open_details` | `ui.project.move.open_details` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.open_details` | `ui.project.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project.source_location.open_details` | `ui.project.source_location.open_details` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.unarchive` | `ui.project.restore_archived` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project_template.open_details` | `ui.project_template.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.tool_package.open_provenance` | `ui.tool_package.open_provenance` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.tool_package.review_license` | `ui.tool_package.review_license` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.update.app.open_details` | `ui.update.app.open_details` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.open_logs` | `ui.update.app.open_logs` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.open_release_notes` | `ui.update.app.open_release_notes` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.content.open_details` | `ui.update.content.open_details` | Settings > Updates > Content; content attention/status; Doctor |
+
+### Rejected source spellings
+
+| Rejected spelling | Reason | Replacement guidance |
+|---|---|---|
+| `cmd.doctor.cancel` | Doctor is a viewer/router; closing detaches the viewer and must not cancel owner ObservableWork. Cancellation remains an exact domain-owner action when that owner exposes it. | owner-specific cancellable command from remediation result; closing Doctor only detaches the viewer |
+| `cmd.doctor.run_all` | An unbounded full sweep conflicts with cached-first, relevance-scoped, resource-governed Doctor scheduling. Use ui.doctor.refresh_visible or exact ui.doctor.run_check actions. | ui.doctor.refresh_visible \| ui.doctor.run_check |
+| `cmd.project.create` | A generic create command would erase the current required split among new-local, forge-created, existing, Git, Jujutsu, SSH, restore, and migration registrations. Call the exact owner path instead. | cmd.project.new_local \| cmd.project.new_github_repo \| cmd.project.add_existing \| exact Source Control/Jujutsu/Restore owner command followed by cmd.project.add_existing |
+
+### UCC-151 - Exact Server And Egolite Catalog Rows
+
+```yaml
+plan_unit_id: UCC-151
+unit_type: gui_command_catalog
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: The server/Egolite closure catalogs 102 unique primary commands with exact owner, sole future target, typed contracts, handler-unavailable projection, and complete intended consumers while keeping 43 aliases normalization-only, 39 predecessor spellings typed-local-only, and three rejections non-dispatchable.
+gui_related: true
+depends_on: [CS-073]
+unblocks: [WM-050, UIW-016]
+acceptance_criteria:
+  - Each exact primary appears once in the catalog and at least once in production-intent wiring with the same command and sole target.
+  - Every intended GUI consumer is preserved in the catalog and receives exact availability, disabled reason, keyboard semantics, focus return, and receipt/result projection.
+  - Alias, typed-local predecessor, and rejected tokens have no primary catalog or production row.
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-plans-verify.py, scripts/pm-touch-closure-verify.py]
+risk_class: catalog_reverse_coverage_or_alias_promotion_drift
+reasoning_tier: high
+context_scope: server_egolite_ui_command_catalog
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: catalog_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
+negative_constraints: [No alias primary row., No typed-local domain command., No rejected dispatch., No native-handler claim from a target string.]
+```
+
+## Central Touch Reverse-GUI Catalog Addendum - 2026-09-01
+
+These 227 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
+
+| Command | Label | Owner binding | Sole future handler | Intended GUI consumers / return |
+|---|---|---|---|---|
+| `cmd.artifacts.create_demonstration_video` | Artifacts Create Demonstration Video | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::artifacts_create_demonstration_video` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.artifacts.inspect_capture_provenance` | Artifacts Inspect Capture Provenance | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::artifacts_inspect_capture_provenance` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.auth_profile.cancel` | Auth Profile Cancel | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::cancel` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.retry` | Auth Profile Retry | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::retry` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.select` | Auth Profile Select | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::select` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.sign_in` | Auth Profile Sign In | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_in` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.sign_out` | Auth Profile Sign Out | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_out` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.submit_code` | Auth Profile Submit Code | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::submit_code` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.verify` | Auth Profile Verify | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::verify` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.backup.browse` | Backup Browse | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_browse` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.cancel` | Backup Cancel | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_cancel` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.delete` | Backup Delete | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_delete` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.destination.add` | Backup Destination Add | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_add` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.destination.remove` | Backup Destination Remove | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_remove` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.destination.test` | Backup Destination Test | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_test` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.destination.update` | Backup Destination Update | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_update` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.open_details` | Backup Open Details | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_open_details` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.open_history` | Backup Open History | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_open_history` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.policy.update` | Backup Policy Update | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_policy_update` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.project.create` | Backup Project Create | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_project_create` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.protect` | Backup Protect | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_protect` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.retry` | Backup Retry | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_retry` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.server.create` | Backup Server Create | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_server_create` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.test_restore` | Backup Test Restore | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_test_restore` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.backup.verify` | Backup Verify | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_verify` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.browser.page.activate` | Browser Page Activate | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_activate` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.page.close` | Browser Page Close | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_close` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.page.create` | Browser Page Create | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_create` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.page.evaluate` | Browser Page Evaluate | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_evaluate` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.page.representation.capture` | Browser Page Representation Capture | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_representation_capture` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.page.representation.delta` | Browser Page Representation Delta | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_representation_delta` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.page.representation.query` | Browser Page Representation Query | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_representation_query` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.program.cancel` | Browser Program Cancel | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_cancel` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.program.pause` | Browser Program Pause | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_pause` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.program.resume` | Browser Program Resume | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_resume` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.program.run` | Browser Program Run | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_run` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.workspace.close` | Browser Workspace Close | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_close` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.workspace.create` | Browser Workspace Create | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_create` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.browser.workspace.reset` | Browser Workspace Reset | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_reset` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact workspace/page/generation and caller focus. |
+| `cmd.forge.connection.reauthorize` | Forge Connection Reauthorize | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::connection_reauthorize` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.connect` | Forge Mirror Connect | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_connect` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.detach` | Forge Mirror Detach | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_detach` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.inspect` | Forge Mirror Inspect | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_inspect` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.sync` | Forge Mirror Sync | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_sync` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.cancel` | Forge Pipeline Cancel | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_cancel` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.list` | Forge Pipeline List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.open_in_browser` | Forge Pipeline Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.open_job` | Forge Pipeline Open Job | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_job` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.open_logs` | Forge Pipeline Open Logs | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_logs` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.refresh` | Forge Pipeline Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.retry` | Forge Pipeline Retry | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_retry` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.run` | Forge Pipeline Run | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_run` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.list` | Forge Repository List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.open_in_browser` | Forge Repository Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.refresh` | Forge Repository Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.approve` | Forge Review Approve | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_approve` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.checkout` | Forge Review Checkout | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.close` | Forge Review Close | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.comment` | Forge Review Comment | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.mark_ready` | Forge Review Mark Ready | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.open` | Forge Review Open | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.open_in_browser` | Forge Review Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.refresh` | Forge Review Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.reopen` | Forge Review Reopen | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_reopen` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.request_changes` | Forge Review Request Changes | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_request_changes` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.list` | Forge Review Thread List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.reopen` | Forge Review Thread Reopen | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reopen` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.reply` | Forge Review Thread Reply | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reply` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.resolve` | Forge Review Thread Resolve | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_resolve` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.version.compare` | Forge Review Version Compare | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_compare` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.version.open` | Forge Review Version Open | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_open` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.webhook.delivery.list` | Forge Webhook Delivery List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_delivery_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.webhook.redeliver` | Forge Webhook Redeliver | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_redeliver` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.installation.select` | Installation Select | `Plans/Shared_Integration_Runtime.md#SIR-030` | `handlers::installation::select` | Settings provider actions, Cursor Origin setup, Forge setup, Doctor owner-routed remediation; Plans/Settings_System.md; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Release_Supply_Chain.md; return: Plans/shared_integration_runtime.schema.json#/$defs/ReturnSettlement plus exact continuation; runtime activation/focus/continuation settlement unproved. |
+| `cmd.jujutsu.bookmark.create` | Jujutsu Bookmark Create | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_create` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.bookmark.delete` | Jujutsu Bookmark Delete | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_delete` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.bookmark.move` | Jujutsu Bookmark Move | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_move` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.bookmark.rename` | Jujutsu Bookmark Rename | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_rename` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.bookmark.track` | Jujutsu Bookmark Track | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_track` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.bookmark.untrack` | Jujutsu Bookmark Untrack | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_untrack` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.abandon` | Jujutsu Change Abandon | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_abandon` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.describe` | Jujutsu Change Describe | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_describe` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.edit` | Jujutsu Change Edit | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_edit` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.new` | Jujutsu Change New | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_new` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.rebase` | Jujutsu Change Rebase | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_rebase` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.restore` | Jujutsu Change Restore | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_restore` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.split` | Jujutsu Change Split | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_split` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.change.squash` | Jujutsu Change Squash | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_squash` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.diff.open` | Jujutsu Diff Open | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::diff_open` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.git.export` | Jujutsu Git Export | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_export` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.git.fetch` | Jujutsu Git Fetch | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_fetch` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.git.import` | Jujutsu Git Import | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_import` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.git.push` | Jujutsu Git Push | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_push` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.history.open` | Jujutsu History Open | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::history_open` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.operation.log` | Jujutsu Operation Log | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_log` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.operation.restore` | Jujutsu Operation Restore | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_restore` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.operation.show` | Jujutsu Operation Show | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_show` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.operation.undo` | Jujutsu Operation Undo | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_undo` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.status.refresh` | Jujutsu Status Refresh | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::status_refresh` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.workspace.create` | Jujutsu Workspace Create | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_create` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.workspace.list` | Jujutsu Workspace List | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_list` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.workspace.open` | Jujutsu Workspace Open | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_open` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.workspace.remove` | Jujutsu Workspace Remove | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_remove` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.jujutsu.workspace.switch` | Jujutsu Workspace Switch | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_switch` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
+| `cmd.named_plan.archive` | Named Plan Archive | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::archive` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
+| `cmd.named_plan.create` | Named Plan Create | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::create` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
+| `cmd.named_plan.open` | Named Plan Open | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::open` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
+| `cmd.named_plan.rename` | Named Plan Rename | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::rename` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
+| `cmd.named_plan.restore` | Named Plan Restore | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::restore` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
+| `cmd.named_plan.set_priority` | Named Plan Set Priority | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::set_priority` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
+| `cmd.remote_access.funnel.disable` | Remote Access Funnel Disable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_disable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.funnel.enable` | Remote Access Funnel Enable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_enable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.funnel.preflight` | Remote Access Funnel Preflight | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_preflight` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.funnel.restore` | Remote Access Funnel Restore | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_restore` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.funnel.test` | Remote Access Funnel Test | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_test` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.open` | Remote Access Open | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::open` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.open_logs` | Remote Access Open Logs | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::open_logs` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.private_endpoint.add` | Remote Access Private Endpoint Add | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_add` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.private_endpoint.remove` | Remote Access Private Endpoint Remove | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_remove` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.private_endpoint.test` | Remote Access Private Endpoint Test | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_test` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.private_endpoint.update` | Remote Access Private Endpoint Update | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_update` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.disable` | Remote Access Proxy Disable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_disable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.export` | Remote Access Proxy Export | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_export` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.generate` | Remote Access Proxy Generate | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_generate` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.open_details` | Remote Access Proxy Open Details | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_open_details` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.preview` | Remote Access Proxy Preview | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_preview` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.set_external_origin` | Remote Access Proxy Set External Origin | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_set_external_origin` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.set_trusted_proxies` | Remote Access Proxy Set Trusted Proxies | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_set_trusted_proxies` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.proxy.test` | Remote Access Proxy Test | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_test` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.configure_gateway` | Remote Access Remote Link Configure Gateway | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_configure_gateway` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.copy_address` | Remote Access Remote Link Copy Address | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_copy_address` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.disable` | Remote Access Remote Link Disable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_disable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.enable` | Remote Access Remote Link Enable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_enable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.open` | Remote Access Remote Link Open | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_open` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.open_details` | Remote Access Remote Link Open Details | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_open_details` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.retry` | Remote Access Remote Link Retry | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_retry` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.rotate_recovery_key` | Remote Access Remote Link Rotate Recovery Key | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_rotate_recovery_key` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.remote_link.setup` | Remote Access Remote Link Setup | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_setup` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.route.open_details` | Remote Access Route Open Details | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::route_open_details` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.route.retry` | Remote Access Route Retry | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::route_retry` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.route.set_policy` | Remote Access Route Set Policy | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::route_set_policy` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.set_enabled` | Remote Access Set Enabled | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::set_enabled` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.disable` | Remote Access Tailscale Disable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_disable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.headscale.start` | Remote Access Tailscale Headscale Start | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_headscale_start` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.headscale.submit_registration` | Remote Access Tailscale Headscale Submit Registration | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_headscale_submit_registration` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.login.resume` | Remote Access Tailscale Login Resume | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_login_resume` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.login.start` | Remote Access Tailscale Login Start | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_login_start` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.setup.start` | Remote Access Tailscale Setup Start | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_setup_start` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.sign_out` | Remote Access Tailscale Sign Out | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_sign_out` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.remote_access.tailscale.test` | Remote Access Tailscale Test | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_test` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
+| `cmd.restore.cancel` | Restore Cancel | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_cancel` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.restore.open_details` | Restore Open Details | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_open_details` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.restore.project_as_new` | Restore Project As New | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_project_as_new` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.restore.project_in_place` | Restore Project In Place | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_project_in_place` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.restore.retry` | Restore Retry | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_retry` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.restore.rollback` | Restore Rollback | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_rollback` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.restore.selective` | Restore Selective | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_selective` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.restore.server_full` | Restore Server Full | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_server_full` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
+| `cmd.server.add` | Server Add | `Plans/Server_System.md#SRV-012` | `handlers::server::add` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.capabilities.refresh` | Server Capabilities Refresh | `Plans/Server_System.md#SRV-012` | `handlers::server::capabilities_refresh` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.claim` | Server Claim | `Plans/Server_System.md#SRV-012` | `handlers::server::claim` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.discovery.open_nearby` | Server Discovery Open Nearby | `Plans/Server_System.md#SRV-012` | `handlers::server::discovery_open_nearby` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.discovery.refresh` | Server Discovery Refresh | `Plans/Server_System.md#SRV-012` | `handlers::server::discovery_refresh` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.discovery.set_enabled` | Server Discovery Set Enabled | `Plans/Server_System.md#SRV-012` | `handlers::server::discovery_set_enabled` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.add_manual` | Server Endpoint Add Manual | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_add_manual` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.copy` | Server Endpoint Copy | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_copy` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.open` | Server Endpoint Open | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_open` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.open_details` | Server Endpoint Open Details | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_open_details` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.remove` | Server Endpoint Remove | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_remove` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.set_preferred` | Server Endpoint Set Preferred | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_set_preferred` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.test` | Server Endpoint Test | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_test` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.endpoint.update` | Server Endpoint Update | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_update` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.open_details` | Server Open Details | `Plans/Server_System.md#SRV-012` | `handlers::server::open_details` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.open_logs` | Server Open Logs | `Plans/Server_System.md#SRV-012` | `handlers::server::open_logs` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.open_web` | Server Open Web | `Plans/Server_System.md#SRV-012` | `handlers::server::open_web` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.processing.set_enabled` | Server Processing Set Enabled | `Plans/Server_System.md#SRV-012` | `handlers::server::processing_set_enabled` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.remove` | Server Remove | `Plans/Server_System.md#SRV-012` | `handlers::server::remove` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.rename` | Server Rename | `Plans/Server_System.md#SRV-012` | `handlers::server::rename` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.restart` | Server Restart | `Plans/Server_System.md#SRV-012` | `handlers::server::restart` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.select` | Server Select | `Plans/Server_System.md#SRV-012` | `handlers::server::select` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.stop` | Server Stop | `Plans/Server_System.md#SRV-012` | `handlers::server::stop` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.test_connection` | Server Test Connection | `Plans/Server_System.md#SRV-012` | `handlers::server::test_connection` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.server.update_policy` | Server Update Policy | `Plans/Server_System.md#SRV-012` | `handlers::server::update_policy` | Server manager, Settings, Onboarding, Doctor, cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Concepts/pm7-tools/systems_integration_source.py; return: Exact Server manager/card route and focus. |
+| `cmd.source_control.diff.open` | Source Control Diff Open | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::diff_open` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.source_control.history.open` | Source Control History Open | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::history_open` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.source_control.remote.fetch` | Source Control Remote Fetch | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::remote_fetch` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.source_control.remote.publish` | Source Control Remote Publish | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::remote_publish` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.source_control.remote.sync` | Source Control Remote Sync | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::remote_sync` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.source_control.repository.unbind` | Source Control Repository Unbind | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::repository_unbind` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.source_control.workspace.list` | Source Control Workspace List | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::workspace_list` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.source_control.workspace.open` | Source Control Workspace Open | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::workspace_open` | Source Control workbench, Settings, Project, palette, forge consumers; Plans/Jujutsu_Integration.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/backend/workspace and caller focus. |
+| `cmd.testing.capture.bookmark` | Testing Capture Bookmark | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_bookmark` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.testing.capture.health.inspect` | Testing Capture Health Inspect | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_health_inspect` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.testing.capture.pause` | Testing Capture Pause | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_pause` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.testing.capture.resume` | Testing Capture Resume | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_resume` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.testing.capture.save_clip` | Testing Capture Save Clip | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_save_clip` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.testing.capture.start` | Testing Capture Start | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_start` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.testing.capture.stop` | Testing Capture Stop | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_stop` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.testing.capture.target.update` | Testing Capture Target Update | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_target_update` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
+| `cmd.forge.repository.fork` | Forge Repository Fork | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::repository_fork` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.policy.preview` | Forge Repository Policy Preview | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::repository_policy_preview` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.policy.apply` | Forge Repository Policy Apply | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::repository_policy_apply` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.checks` | Forge Review Checks | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::review_checks` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.approve` | Forge Pipeline Approve | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::pipeline_approve` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.runner.registration.apply` | Forge Runner Registration Apply | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::runner_registration_apply` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.runner.remove` | Forge Runner Remove | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::runner_remove` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.release.list` | Forge Release List | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::release_list` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.release.asset.download` | Forge Release Asset Download | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::release_asset_download` | Source Control Actions & Pipelines or provider-neutral forge workspace, Settings Source Control, Project setup, palette/API; Plans/Forge_Integrations.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.backup.destination.discover` | Backup Destination Discover | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_discover` | Settings Backup destinations, Onboarding restore, Backup workspace, Doctor; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; return: Exact discovered destination set and caller focus. |
+| `cmd.backup.retention.preview` | Backup Retention Preview | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_retention_preview` | Settings Backup retention, Backup workspace, Doctor; Plans/Settings_System.md; Plans/newtools.md; return: Exact repository/policy revision, candidate hash, and caller focus. |
+| `cmd.backup.prune` | Backup Prune | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_prune` | Settings Backup retention confirmation, Backup workspace, Doctor; Plans/Settings_System.md; Plans/newtools.md; return: Exact prune receipt, candidate hash, and caller focus. |
+| `cmd.backup.unlock` | Backup Unlock | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_unlock` | Protected Backup/Restore unlock prompts, Onboarding restore, Settings Backup, Doctor; Plans/Planning_Wizard.md; Plans/Settings_System.md; Plans/newtools.md; return: Protected submission result and caller focus without secret projection. |
+| `cmd.backup.file.download` | Backup File Download | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_file_download` | Backup snapshot browser, Files, Projects, Backup workspace; Plans/FileManager.md; Plans/Project_System.md; return: Exact FileSafe result and source snapshot route. |
+| `cmd.backup.extract` | Backup Extract | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_extract` | Backup snapshot browser, Files, Projects, Backup workspace; Plans/FileManager.md; Plans/Project_System.md; return: Exact FileSafe extraction result and source snapshot route. |
+| `cmd.backup.file.compare` | Backup File Compare | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_file_compare` | Backup snapshot browser, Files comparison, Projects, Backup workspace; Plans/FileManager.md; Plans/Project_System.md; return: Exact immutable/current file identities and caller focus. |
+| `cmd.backup.export` | Backup Export | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_export` | Backup snapshot/details, Files, Projects, Backup workspace; Plans/FileManager.md; Plans/Project_System.md; return: Exact disclosed non-restore artifact and caller focus. |
+| `cmd.backup.archive.retrieve` | Backup Archive Retrieve | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_archive_retrieve` | Backup history/archive retrieval, Settings Backup, Doctor; Plans/Settings_System.md; Plans/newtools.md; return: Exact archive work/receipt and caller focus. |
+| `cmd.backup.recovery_key.export` | Backup Recovery Key Export | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_export` | Settings Backup recovery-key manager, protected Bootstrap recovery, Doctor; Plans/Settings_System.md; Plans/newtools.md; return: Protected no-store delivery ref and caller focus. |
+| `cmd.backup.recovery_key.copy` | Backup Recovery Key Copy | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_copy` | Settings Backup recovery-key manager and protected Bootstrap recovery; Plans/Settings_System.md; return: Protected initiating-Client delivery ref and caller focus. |
+| `cmd.backup.recovery_key.print` | Backup Recovery Key Print | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_print` | Settings Backup recovery-key manager and protected Bootstrap recovery; Plans/Settings_System.md; return: Protected no-spool print-session ref and caller focus. |
+| `cmd.backup.recovery_key.test` | Backup Recovery Key Test | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_test` | Settings Backup recovery-key manager, protected Bootstrap recovery, Doctor; Plans/Settings_System.md; Plans/newtools.md; return: Redacted test receipt and caller focus. |
+| `cmd.backup.recovery_key.acknowledge_saved` | Backup Recovery Key Acknowledge Saved | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_acknowledge_saved` | Settings Backup recovery-key manager and protected Bootstrap recovery; Plans/Settings_System.md; return: Redacted exact-RecoverySet acknowledgement and caller focus. |
+| `cmd.backup.recovery_key.rotate` | Backup Recovery Key Rotate | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_rotate` | Settings Backup recovery-key rotation and Doctor; Plans/Settings_System.md; Plans/newtools.md; return: Redacted add/verify-before-remove rotation receipt and caller focus. |
+| `cmd.backup.recovery_key.reencrypt` | Backup Recovery Key Reencrypt | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_reencrypt` | Settings Backup recovery-key rotation, Backup workspace, Doctor; Plans/Settings_System.md; Plans/newtools.md; return: Exact preview/confirmation/ObservableWork result and caller focus. |
+| `cmd.remote_access.tailscale.connector.check` | Remote Access Tailscale Connector Check | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_connector_check` | Settings Remote Access built-in connector, Onboarding, Doctor, Server cards, palette/API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact built-in connector identity/state and caller focus. |
+| `cmd.remote_access.tailscale.connector.restart` | Remote Access Tailscale Connector Restart | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_connector_restart` | Settings Remote Access built-in connector, Onboarding, Doctor, Server cards, palette/API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact built-in connector identity/state and caller focus. |
+| `cmd.remote_access.tailscale.identity.reset` | Remote Access Tailscale Identity Reset | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_identity_reset` | Settings Remote Access built-in connector, Onboarding, Doctor, Server cards, palette/API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact built-in connector identity/state and caller focus. |
+
+The four RAS-015 component/Serve spellings are compatibility inputs only and therefore receive no UI catalog row or visible control. Any retained deep link normalizes to its canonical built-in-connector target before availability, permission, policy, dispatch, receipt, or event handling.
+
+### UCC-152 - Remaining Touch Reverse-GUI Closure
+
+```yaml
+plan_unit_id: UCC-152
+unit_type: gui_command_catalog
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: The 227 CS-074 commands have exact intended GUI consumers, typed availability and disabled-reason behavior, sole future handler routes, deterministic returns, and no synthetic-control requirement.
+gui_related: true
+gui_classification_reason: This PlanUnit is the exact GUI reverse-coverage catalog for the remaining Touch commands.
+depends_on: [UCC-151, CS-074, FGI-013, RAS-015]
+unblocks: []
+acceptance_criteria:
+- All 227 CS-074 commands appear exactly once in this table with owner binding, handler, consumers, and return semantics.
+- Existing same-intent controls are rebound; nearby non-equivalent controls are not relabeled and no synthetic control is invented merely for coverage.
+- Disabled, keyboard, focus, accessibility, result/error, and exact-return behavior is evidenced before production certification.
+validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+risk_class: reverse_gui_command_closure
+reasoning_tier: high
+context_scope: remaining_touch_gui_consumers
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Concepts/pm7-tools/systems_integration_source.py]
+node_compile_hint: {mode: touch_reverse_gui_closure, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Commands_System.md#CS-074, Plans/touch_closure.json]
+negative_constraints:
+- Do not claim that every command requires a dedicated always-visible control.
+- Do not make PMConcept7 a runtime owner.
+compile_disposition: extend_existing_owner
 ```

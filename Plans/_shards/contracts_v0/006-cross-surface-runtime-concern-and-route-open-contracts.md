@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L368-L893
 
-Source SHA256: `09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd`
+Source SHA256: `8c7a1cfb06b9002436190af12a1dcdccdc2913bbb7c6ffe13118bc081fa33613`
 
 ---
 
@@ -292,7 +292,7 @@ Persisted destination state is subordinate to the requested route target. `/view
 
 The route/open split is structural. `route_target` gets the user to the correct app surface, project `/run/thread` scope, object, and focus context, and may reference `subject_id`, `object_kind/object_id`, `object_kind`, `/object_id`, `tab_id`, `inspector_target`, and related scope fields. `OpenSubject` takes the canonical `subject_id` and resolves it to a workspace-backed file or `/document` open, a transient `generated://<artifact_id>` source buffer keyed by `artifact_id`, or another subject-native preview/open path defined by the subject contract; it does not own broad shell routing, panel selection, or the whole `/open` route envelope. When run scope or exact resumption matters, route payloads carry `focused_run_id` plus narrow anchor details such as wizard-step focus rather than relying on remembered shell state.
 
-Usage deep links are object routes, not top-level route aliases. Cost or usage rows normalize through `object_kind = usage_event` and `object_id = <canonical usage event id>`; `usage_event_ref` may remain a storage/projection reference, but it must not survive as a top-level route field that bypasses the canonical `object_kind` and `object_id` selector model.
+Usage deep links are object routes, not top-level route aliases. Event-primary cost or usage rows normalize through `object_kind = usage_event` and `object_id = <canonical usage event id>`. PMConcept7 Ledger attempt rows instead normalize through `object_kind = usage_attempt` and `object_id = attempt_id`, while `usage_event_ref` remains correlation/accounting identity. Neither reference may bypass the canonical `object_kind` and `object_id` selector model as an independent top-level route selector.
 
 Route validation rejects invalid-combination payloads before any surface-specific open behavior runs. `route_target` requires `project_id` and one primary selector; it must reject a missing primary selector, competing `subject_id` and `object_kind/object_id` selectors, `object_kind` without `object_id`, `object_id` without `object_kind`, `inspector_target` without an object selector, `tab_id` that conflicts with `target_kind`, `line` or `range` inside `route_target`, and any per-surface state inside `route_target`. `/object_id`, `subject_id`, `object_kind`, `object_id`, `target_kind`, `tab_id`, and `inspector_target` are route contract fields only when these selector rules are satisfied.
 
@@ -392,7 +392,7 @@ Blocked episodes are the canonical unit for waiting and recovery. A blocked epis
 
 The runtime packet set requires `execution_role`, and receipt-style operation bridges are where `operational_identity` belongs. One shared attribution family is available to `tool.invoked`, `tool.denied`, `runtime_artifact.*`, `runtime_artifact`, runtime receipts, `usage_record` / `cost_usage`, and relevant evidence or trace views so tool, receipt, usage, artifact, and evidence pivots do not fork attribution semantics.
 
-Usage routing treats `usage_event_ref` as canonical when present. `usage-feature` / `usage-feature.md` may retain timestamp or `/run/thread` fallback only as degraded compatibility, not as the preferred routing path when canonical usage identity exists.
+Usage routing treats `usage_event_ref` as canonical accounting and event identity when present. Event-primary callers select `usage_event` by `usage_event_ref`; the PMConcept7 Ledger attempt-primary caller selects `usage_attempt` by `attempt_id` and retains `usage_event_ref` as correlation. `usage-feature` / `usage-feature.md` may retain timestamp or `/run/thread` fallback only as degraded compatibility, not as a replacement for either typed identity branch.
 
 Runtime open contracts include attempt-scoped and generated-object opens. Evidence opens by `attempt_id`, safe-point manifests or restore logs by `safe_point_id`, remediation lineage summaries by `remediation_root_id`, generated non-repo drafts, and runtime artifacts by `artifact_id` are valid second-category opens distinct from repository file opens.
 
@@ -448,7 +448,7 @@ The command-definition layer carries minimal command-classification and normaliz
 
 Route serialization and source opening stay separate from destination semantics. `resume_url` is a derived serialization of `route_target` with decoding rules anchored back to `Contracts_V0.md`; `Contracts_V0` owns the route/object contract, and canonical route/object identity remains primary over `/object` transport links. `OpenSubject` is identity plus open intent, not storage metadata and not shell routing. If `OpenSubject` carries panel/tab/shell destination semantics or `/tab/shell` state, it collapses into a second route contract; destination class stays in required `target_kind`, while transport/open realization detail and shell/view persistence detail stay outside `route_target`.
 
-Route normalization happens before special identifiers enter the canonical route layer. Restore `project_id` first, then route scope such as `focused_run_id` and `thread_id` when present. Normalize every special-case id into `subject_id` or `object_kind` + `object_id`; `subject_id` is not a second generic object taxonomy. Usage routes normalize `usage_event_ref` into `object_kind = usage_event` with the canonical usage event as `object_id`. Graph/detail pivots and `/detail` opens are canonical route restoration, not tab switches plus local state.
+Route normalization happens before special identifiers enter the canonical route layer. Restore `project_id` first, then route scope such as `focused_run_id` and `thread_id` when present. Normalize every special-case id into `subject_id` or `object_kind` + `object_id`; `subject_id` is not a second generic object taxonomy. Event-primary Usage routes normalize `usage_event_ref` into `object_kind = usage_event`; PMConcept7 Ledger attempt routes normalize `attempt_id` into `object_kind = usage_attempt` while retaining `usage_event_ref` only as correlation. Graph/detail pivots and `/detail` opens are canonical route restoration, not tab switches plus local state.
 
 `artifact_id` and `document_id` normalize into `subject_id`; `document_id` or `artifact_id` prose in navigation should name `subject_id` directly when the target is a content subject. `wizard_id`, `message_id`, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, and similar domain/runtime identities normalize into `object_kind` + `object_id`. `subject_id` wins for openable/renderable content subjects; `object_kind` + `object_id` wins for domain/runtime/governance objects.
 
@@ -456,7 +456,7 @@ Route normalization happens before special identifiers enter the canonical route
 
 Do not add `thread:`, `run:`, `wizard:`, `safe_point:`, or similar runtime/governance families as new `subject_id` prefixes. Those identities are modeled as `object_kind/object_id`, with `thread`, `run`, `wizard`, and `safe_point` values carried through route object identity.
 
-Inspection and usage refs do not become route identity. `Orchestrator_Page.md` may use `evidence_ref` for summary/evidence surfaces because that is record inspection, not routing; `resume_url` remains serialized transport derived from canonical route identity. Usage may keep `usage_event_ref` as canonical usage identity for accounting and evidence joins, while `tier_id` cross-surface node usage is compatibility or projection context rather than the primary usage route key.
+Inspection and correlation refs do not become competing route identity. `Orchestrator_Page.md` may use `evidence_ref` for summary/evidence surfaces because that is record inspection, not routing; `resume_url` remains serialized transport derived from canonical route identity. Usage keeps `usage_event_ref` as canonical accounting/evidence identity and as the event-primary selector, while a PMConcept7 Ledger attempt route uses `attempt_id` as the `usage_attempt` selector and retains the event ref as correlation. `tier_id` cross-surface node usage is compatibility or projection context rather than a primary Usage route key.
 
 Approval and dispatch proof stay runtime-command aware. `allowed_action_ids[]` has won at the runtime-command layer, so approval targeting resolves through `blocked_sequence` while any retained `request_id` is lineage or lookup metadata. `GATE-010` must eventually validate more than flat wiring coverage: command wrapper normalization, `route_target` pass-through, `OpenSubject` subject-open binding, and deprecated alias versus stable wrapper semantics are part of the Contracts-owned proof shape.
 

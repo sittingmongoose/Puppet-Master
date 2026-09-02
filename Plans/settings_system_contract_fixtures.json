@@ -1,0 +1,2012 @@
+{
+  "schema_id": "pm.settings_system_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_doc": "Plans/Settings_System.md",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "command_contracts": {
+    "cmd.settings.open": {
+      "semantic_owner": "Plans/Settings_System.md",
+      "ui_action_id": "settings.open",
+      "request_schema_ref": "#/$defs/settings_route_request",
+      "result_schema_ref": "#/$defs/settings_route_return",
+      "availability_selector_ref": "settings.route.open.allowed",
+      "disabled_reason_set": ["route_stale", "target_missing", "currentness_expired"],
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
+      "concept_simulation_allowed": true
+    },
+    "cmd.settings.transaction.preview": {
+      "semantic_owner": "Plans/Settings_System.md",
+      "ui_action_id": "settings.transaction.preview",
+      "request_schema_ref": "#/$defs/settings_transaction_preview_request",
+      "result_schema_ref": "#/$defs/settings_transaction_preview",
+      "availability_selector_ref": "settings.transaction.preview.allowed",
+      "disabled_reason_set": ["no_project_context", "stale_revision", "invalid_value", "permission_required", "policy_denied", "managed_by_policy", "secret_excluded", "owner_unavailable", "owner_contract_missing"],
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
+      "concept_simulation_allowed": true
+    },
+    "cmd.settings.transaction.apply": {
+      "semantic_owner": "Plans/Settings_System.md",
+      "ui_action_id": "settings.transaction.apply",
+      "request_schema_ref": "#/$defs/settings_transaction_apply_request",
+      "result_schema_ref": "#/$defs/settings_transaction_result",
+      "availability_selector_ref": "settings.transaction.apply.allowed",
+      "disabled_reason_set": ["no_project_context", "stale_revision", "stale_preview", "permission_required", "policy_denied", "managed_by_policy", "operation_in_progress", "target_changed", "readback_failed", "rollback_required"],
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
+      "concept_simulation_allowed": true
+    },
+    "cmd.settings.transaction.rollback": {
+      "semantic_owner": "Plans/Settings_System.md",
+      "ui_action_id": "settings.transaction.rollback",
+      "request_schema_ref": "#/$defs/settings_transaction_rollback_request",
+      "result_schema_ref": "#/$defs/settings_transaction_result",
+      "availability_selector_ref": "settings.transaction.rollback.allowed",
+      "disabled_reason_set": ["no_project_context", "stale_revision", "permission_required", "policy_denied", "target_changed", "readback_failed", "rollback_required"],
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
+      "concept_simulation_allowed": true
+    },
+    "cmd.settings.export": {
+      "semantic_owner": "Plans/Settings_System.md",
+      "ui_action_id": "settings.export",
+      "request_schema_ref": "#/$defs/settings_export_request",
+      "result_schema_ref": "#/$defs/settings_export_manifest",
+      "availability_selector_ref": "settings.export.allowed",
+      "disabled_reason_set": ["no_project_context", "stale_revision", "permission_required", "policy_denied", "secret_excluded", "owner_unavailable"],
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
+      "concept_simulation_allowed": true
+    }
+  },
+  "ui_action_contracts": {
+    "settings.onboarding.open": {
+      "command_id": "cmd.settings.open",
+      "request_schema_id": "pm.settings_route_request.v1",
+      "result_schema_id": "pm.settings_route_return.v1",
+      "target_manager_id": "onboarding-guided-tour",
+      "target_detail_id": "overview",
+      "effect": "route_only",
+      "owner_operation_authorized": false
+    },
+    "settings.onboarding.run_again": {
+      "command_id": "cmd.settings.open",
+      "request_schema_id": "pm.settings_route_request.v1",
+      "result_schema_id": "pm.settings_route_return.v1",
+      "target_manager_id": "onboarding-guided-tour",
+      "target_detail_id": "run-onboarding-again",
+      "effect": "route_only",
+      "owner_operation_authorized": false
+    },
+    "settings.guided_tour.replay": {
+      "command_id": "cmd.settings.open",
+      "request_schema_id": "pm.settings_route_request.v1",
+      "result_schema_id": "pm.settings_route_return.v1",
+      "target_manager_id": "onboarding-guided-tour",
+      "target_detail_id": "replay-guided-tour",
+      "effect": "route_only",
+      "owner_operation_authorized": false
+    },
+    "settings.doctor.open": {
+      "command_id": "cmd.settings.open",
+      "request_schema_id": "pm.settings_route_request.v1",
+      "result_schema_id": "pm.settings_route_return.v1",
+      "target_manager_id": "doctor",
+      "target_detail_id": "overview",
+      "effect": "route_only",
+      "owner_operation_authorized": false
+    },
+    "settings.doctor.remediation.open": {
+      "command_id": "cmd.settings.open",
+      "request_schema_id": "pm.settings_route_request.v1",
+      "result_schema_id": "pm.settings_route_return.v1",
+      "target_manager_id": "doctor",
+      "target_detail_id": "check:{check_id}",
+      "effect": "route_only",
+      "owner_operation_authorized": false
+    }
+  },
+  "packet_command_dispositions": {
+    "cmd.account.select_profile": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.account.select_profile"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.switch_route": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.provider.switch_route"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.usage.refresh": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.usage.refresh"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.usage.export": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.usage.export"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.bloom.open": {
+      "disposition": "retired_bakeoff_only",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Retired with the obsolete bloom/chip bakeoff architecture; no compatibility alias or replacement handler is permitted.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.open": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.open"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.navigate": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.open"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Settings navigation uses canonical cmd.settings.open with an exact stable target and return contract.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.search.focus": {
+      "disposition": "superseded_by_typed_local_ui_action",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": "settings.search.focus",
+      "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "reason": "This token represents reversible Settings presentation state only; the named typed local UI action authorizes no domain mutation, persistence write, or owner operation.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.search.select_result": {
+      "disposition": "superseded_by_typed_local_ui_action",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": "settings.search.result.activate",
+      "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "reason": "This token represents reversible Settings presentation state only; the named typed local UI action authorizes no domain mutation, persistence write, or owner operation.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.category.select": {
+      "disposition": "superseded_by_typed_local_ui_action",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": "settings.category.select",
+      "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "reason": "This token represents reversible Settings presentation state only; the named typed local UI action authorizes no domain mutation, persistence write, or owner operation.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.subcategory.select": {
+      "disposition": "superseded_by_typed_local_ui_action",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": "settings.subcategory.select",
+      "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "reason": "This token represents reversible Settings presentation state only; the named typed local UI action authorizes no domain mutation, persistence write, or owner operation.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.setting.focus": {
+      "disposition": "superseded_by_typed_local_ui_action",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": "settings.setting.focus",
+      "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "reason": "This token represents reversible Settings presentation state only; the named typed local UI action authorizes no domain mutation, persistence write, or owner operation.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.manager.open": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.open"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Settings navigation uses canonical cmd.settings.open with an exact stable target and return contract.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.value.set": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Direct mutation is replaced by the canonical preview/apply transaction sequence so validation, revision binding, atomicity, read-back, receipt, and rollback remain mandatory.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.default.restore": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Direct mutation is replaced by the canonical preview/apply transaction sequence so validation, revision binding, atomicity, read-back, receipt, and rollback remain mandatory.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.scope.inspect": {
+      "disposition": "superseded_by_typed_local_ui_action",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": "settings.scope.details.open",
+      "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "reason": "This token represents reversible Settings presentation state only; the named typed local UI action authorizes no domain mutation, persistence write, or owner operation.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.export": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.export"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.import.preview": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.preview"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet-specific lifecycle spelling is replaced by the corresponding canonical Settings transaction phase; no alias or second handler is created.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.import.apply": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.apply"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet-specific lifecycle spelling is replaced by the corresponding canonical Settings transaction phase; no alias or second handler is created.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.import.rollback": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.rollback"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet-specific lifecycle spelling is replaced by the corresponding canonical Settings transaction phase; no alias or second handler is created.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.reset.preview": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.preview"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet-specific lifecycle spelling is replaced by the corresponding canonical Settings transaction phase; no alias or second handler is created.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.reset.apply": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.apply"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet-specific lifecycle spelling is replaced by the corresponding canonical Settings transaction phase; no alias or second handler is created.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.copy_from_project.preview": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.preview"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet-specific lifecycle spelling is replaced by the corresponding canonical Settings transaction phase; no alias or second handler is created.",
+      "native_handler_claim": false
+    },
+    "cmd.settings.copy_from_project.apply": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.apply"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet-specific lifecycle spelling is replaced by the corresponding canonical Settings transaction phase; no alias or second handler is created.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.installation.scan": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.installation.select": {
+      "disposition": "superseded_by_typed_local_ui_action",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": "settings.provider.installation.select",
+      "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "reason": "This token represents reversible Settings presentation state only; the named typed local UI action authorizes no domain mutation, persistence write, or owner operation.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.installation.install": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.installation.install"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The provider-prefixed spelling is replaced by the existing shared Installation owner command; Settings remains a consumer and claims no handler.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.installation.update": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.installation.update"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The provider-prefixed spelling is replaced by the existing shared Installation owner command; Settings remains a consumer and claims no handler.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.installation.repair": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.installation.repair"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The provider-prefixed spelling is replaced by the existing shared Installation owner command; Settings remains a consumer and claims no handler.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.installation.rollback": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.installation.rollback"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The provider-prefixed spelling is replaced by the existing shared Installation owner command; Settings remains a consumer and claims no handler.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.installation.verify": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.installation.verify"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The provider-prefixed spelling is replaced by the existing shared Installation owner command; Settings remains a consumer and claims no handler.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.connection.add": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.connection.authenticate": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.connection.reconnect": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.provider.catalog.refresh": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.model.favorite.set": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.model.alias.set": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.model.priority.set": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.model.visibility.set": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact owner command with equivalent semantics is admitted; Settings must show an unavailable owner projection instead of inventing provider, connection, catalog, or model mutation authority.",
+      "native_handler_claim": false
+    },
+    "cmd.memory.open": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.open"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet token is replaced by the existing exact Settings route or Assistant Memory owner command; Settings does not create a Memory handler.",
+      "native_handler_claim": false
+    },
+    "cmd.memory.verify": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.chat.memory.verify"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet token is replaced by the existing exact Settings route or Assistant Memory owner command; Settings does not create a Memory handler.",
+      "native_handler_claim": false
+    },
+    "cmd.memory.edit": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.chat.memory.edit"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet token is replaced by the existing exact Settings route or Assistant Memory owner command; Settings does not create a Memory handler.",
+      "native_handler_claim": false
+    },
+    "cmd.memory.delete": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because delete/restore semantics cannot safely alias the current Assistant Memory edit, discard, or verification commands; an exact owner contract is required.",
+      "native_handler_claim": false
+    },
+    "cmd.memory.restore": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because delete/restore semantics cannot safely alias the current Assistant Memory edit, discard, or verification commands; an exact owner contract is required.",
+      "native_handler_claim": false
+    },
+    "cmd.persona.manage": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.open"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Management entry is an exact Settings route through cmd.settings.open; Persona mutations remain with their admitted owner commands.",
+      "native_handler_claim": false
+    },
+    "cmd.crew.template.create": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because Crew template mutation remains with the Goal/Orchestrator owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.crew.template.update": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because Crew template mutation remains with the Goal/Orchestrator owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.crew.template.delete": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because Crew template mutation remains with the Goal/Orchestrator owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.permissions.rule.add": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.permissions.create_project_rule"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The generic packet spelling is replaced by the current-Project Permissions owner command with its typed scope and rule identity.",
+      "native_handler_claim": false
+    },
+    "cmd.permissions.rule.update": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.permissions.update_rule"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The generic packet spelling is replaced by the current-Project Permissions owner command with its typed scope and rule identity.",
+      "native_handler_claim": false
+    },
+    "cmd.permissions.rule.reorder": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.permissions.reorder_rule"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The generic packet spelling is replaced by the current-Project Permissions owner command with its typed scope and rule identity.",
+      "native_handler_claim": false
+    },
+    "cmd.permissions.rule.delete": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.permissions.delete_rule"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The generic packet spelling is replaced by the current-Project Permissions owner command with its typed scope and rule identity.",
+      "native_handler_claim": false
+    },
+    "cmd.permissions.rule.test": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.permissions.validate_rule"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The generic packet spelling is replaced by the current-Project Permissions owner command with its typed scope and rule identity.",
+      "native_handler_claim": false
+    },
+    "cmd.notifications.sound.upload": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.sound.upload"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet spelling is replaced by the admitted Sound owner command; Settings only projects availability and result.",
+      "native_handler_claim": false
+    },
+    "cmd.notifications.sound.import_pack": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.sound.pack.import"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet spelling is replaced by the admitted Sound owner command; Settings only projects availability and result.",
+      "native_handler_claim": false
+    },
+    "cmd.notifications.sound.preview": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.sound.preview"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet spelling is replaced by the admitted Sound owner command; Settings only projects availability and result.",
+      "native_handler_claim": false
+    },
+    "cmd.notifications.sound.delete": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.sound.asset.delete"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet spelling is replaced by the admitted Sound owner command; Settings only projects availability and result.",
+      "native_handler_claim": false
+    },
+    "cmd.notifications.sound.export": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.sound.asset.export"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet spelling is replaced by the admitted Sound owner command; Settings only projects availability and result.",
+      "native_handler_claim": false
+    },
+    "cmd.notifications.destination.test": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.notifications.destination.test"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.theme.create": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers.",
+      "native_handler_claim": false
+    },
+    "cmd.theme.import": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers.",
+      "native_handler_claim": false
+    },
+    "cmd.theme.export": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers.",
+      "native_handler_claim": false
+    },
+    "cmd.theme.preview": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.theme.preview"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "native_handler_claim": false
+    },
+    "cmd.theme.apply": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Direct mutation is replaced by the canonical preview/apply transaction sequence so validation, revision binding, atomicity, read-back, receipt, and rollback remain mandatory.",
+      "native_handler_claim": false
+    },
+    "cmd.commands.custom.create": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.commands.custom.update": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.commands.custom.delete": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.commands.custom.dry_run": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.shortcuts.bind": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.shortcuts.reset": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.shortcuts.import": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.shortcuts.export": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "native_handler_claim": false
+    },
+    "cmd.mcp.server.add": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because add/restart semantics are not equivalent to the current MCP connect/reconnect commands; Settings cannot create a compatibility handler.",
+      "native_handler_claim": false
+    },
+    "cmd.mcp.server.restart": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because add/restart semantics are not equivalent to the current MCP connect/reconnect commands; Settings cannot create a compatibility handler.",
+      "native_handler_claim": false
+    },
+    "cmd.lsp.server.add": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact LSP owner command admits server-definition creation.",
+      "native_handler_claim": false
+    },
+    "cmd.lsp.server.restart": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.lsp.restart_server"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The rejected historical spelling is replaced by canonical cmd.lsp.restart_server; no compatibility handler is claimed.",
+      "native_handler_claim": false
+    },
+    "cmd.formatter.add": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact Formatter owner command admits add/test behavior.",
+      "native_handler_claim": false
+    },
+    "cmd.formatter.test": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because no exact Formatter owner command admits add/test behavior.",
+      "native_handler_claim": false
+    },
+    "cmd.storage.backup.open": {
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "Rejected because generic backup-open is ambiguous across Project Backup, Full Server Backup, Settings transfer, and internal recovery; use cmd.settings.open with an exact manager target.",
+      "native_handler_claim": false
+    },
+    "cmd.artifact.manager.open": {
+      "disposition": "reuse_canonical_command",
+      "replacement_command_ids": [
+        "cmd.artifacts.open_panel"
+      ],
+      "typed_local_ui_action_id": null,
+      "typed_local_payload_schema_ref": null,
+      "reason": "The packet spelling is replaced by canonical cmd.artifacts.open_panel.",
+      "native_handler_claim": false
+    }
+  },
+  "manager_registry": {
+    "all-settings": {
+      "title": "All Settings",
+      "purpose": "Search, facet, inspect, and route all 828 ordinary setting IDs.",
+      "owner_refs": ["Plans/Settings_System.md", "Plans/settings_inventory.json"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/all-settings",
+      "search_aliases": ["all", "search", "settings"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.settings.open"],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "general-appearance-input": {
+      "title": "General, Appearance, Accessibility, and Input",
+      "purpose": "Project appearance, accessibility, interaction, input, and spellcheck settings.",
+      "owner_refs": ["Plans/Settings_System.md", "Plans/FinalGUISpec.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/general-appearance-input",
+      "search_aliases": ["theme", "glass", "tooltip", "motion", "input"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.settings.transaction.preview", "cmd.settings.transaction.apply", "cmd.settings.transaction.rollback"],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "providers-accounts-models": {
+      "title": "Providers, Accounts, Models, and Installations",
+      "purpose": "Provider routes, account/auth state, model choices, installation readiness, and owner actions.",
+      "owner_refs": ["Plans/Models_System.md", "Plans/Multi-Account.md", "Plans/Shared_Integration_Runtime.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/providers-accounts-models",
+      "search_aliases": ["provider", "account", "model", "install", "auth"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.installation.install", "cmd.installation.repair", "cmd.installation.verify"],
+      "required_target_fields": ["project_id", "host_id", "environment_id", "provider_id", "provider_route_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "web-routes": {
+      "title": "Web Routes",
+      "purpose": "Web operation routes, provider setup, privacy, cost, and effective availability.",
+      "owner_refs": ["Plans/Tools.md", "Plans/Models_System.md", "Plans/Multi-Account.md", "Plans/usage-feature.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/web-routes",
+      "search_aliases": ["web", "search", "fetch", "crawl", "research"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "provider_id", "provider_route_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "media-routes": {
+      "title": "Media Routes",
+      "purpose": "Image, video, audio, speech, and generated-media route projections.",
+      "owner_refs": ["Plans/Models_System.md", "Plans/Multi-Account.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/media-routes",
+      "search_aliases": ["image", "video", "audio", "speech", "media"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "provider_id", "provider_route_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "back-seat-driver": {
+      "title": "Back Seat Driver",
+      "purpose": "Requested and effective Back Seat Driver policy and owner-routed runtime state.",
+      "owner_refs": ["Plans/Run_Modes.md", "Plans/Shared_Integration_Runtime.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/back-seat-driver",
+      "search_aliases": ["back seat driver", "bsd", "automation"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.bsd.set"],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "memory-context-instructions": {
+      "title": "Memory, Context, and Instructions",
+      "purpose": "Assistant memory, prompt context, rules, retention, and history policy.",
+      "owner_refs": ["Plans/assistant-memory-subsystem.md", "Plans/Prompt_Pipeline.md", "Plans/storage-plan.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/memory-context-instructions",
+      "search_aliases": ["memory", "context", "instructions", "history"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "goals-crew-personas": {
+      "title": "Goals, Crew, Personas, and Roles",
+      "purpose": "Goal, orchestration, Persona, role, and worker defaults and owner routes.",
+      "owner_refs": ["Plans/Goal_Runtime_System.md", "Plans/Personas.md", "Plans/Orchestrator_Page.md", "Plans/Models_System.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/goals-crew-personas",
+      "search_aliases": ["goal", "crew", "persona", "role", "worker"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "permissions-filesafe": {
+      "title": "Permissions and FileSafe",
+      "purpose": "Permission policy, approvals, safe-edit guards, and managed effective state.",
+      "owner_refs": ["Plans/Permissions_System.md", "Plans/FileSafe.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/permissions-filesafe",
+      "search_aliases": ["permissions", "approval", "filesafe", "policy"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "commands-shortcuts": {
+      "title": "Commands and Shortcuts",
+      "purpose": "User commands, command palette parity, shortcuts, conflicts, and reset routes.",
+      "owner_refs": ["Plans/Commands_System.md", "Plans/UI_Command_Catalog.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/commands-shortcuts",
+      "search_aliases": ["commands", "shortcuts", "hotkeys", "palette"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "tools-integrations": {
+      "title": "Tools and Integrations",
+      "purpose": "Tools, MCP, Skills, Plugins, LSP, Formatters, and toolchain integration routes.",
+      "owner_refs": ["Plans/Tools.md", "Plans/MCP_Integration.md", "Plans/Skills_System.md", "Plans/Plugins_System.md", "Plans/LSPSupport.md", "Plans/Formatters_System.md", "Plans/Shared_Integration_Runtime.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/tools-integrations",
+      "search_aliases": ["tools", "mcp", "skills", "plugins", "lsp", "formatters"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "testing-debug-capture": {
+      "title": "Testing, Debug, and Capture",
+      "purpose": "Automated testing, Debug policy, Browser capture, and evidence-routing preferences.",
+      "owner_refs": ["Plans/Automated_Testing_System.md", "Plans/Commands_System.md", "Plans/Section15_MVP_Promoted_Features_Spec.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/testing-debug-capture",
+      "search_aliases": ["testing", "debug", "capture", "evidence"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "files-editor-terminal": {
+      "title": "Files, Editor, and Terminal",
+      "purpose": "Project file, editor, terminal, and related durable preference routes.",
+      "owner_refs": ["Plans/FileManager.md", "Plans/Section15_MVP_Promoted_Features_Spec.md", "Plans/storage-plan.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/files-editor-terminal",
+      "search_aliases": ["files", "editor", "terminal", "shell"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "notifications-sounds": {
+      "title": "Notifications and Sounds",
+      "purpose": "Notification destinations, event mappings, sounds, quiet windows, and diagnostics routes.",
+      "owner_refs": ["Plans/FinalGUISpec.md", "Plans/Permissions_System.md", "Plans/storage-plan.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/notifications-sounds",
+      "search_aliases": ["notifications", "alerts", "sounds", "quiet"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "source-control": {
+      "title": "Source Control",
+      "purpose": "Git, JJ, forge, account, environment, worktree, safety, and repair projections and routes.",
+      "owner_refs": ["Plans/Forge_Integrations.md", "Plans/WorktreeGitImprovement.md", "Plans/GitHub_Integration.md", "Plans/GitHub_API_Auth_and_Flows.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/source-control",
+      "search_aliases": ["source control", "git", "jj", "github", "forge", "origin"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "browser-policy": {
+      "title": "Browser Policy",
+      "purpose": "PM-native Browser readiness, capture/retention policy, sharing policy, and owner routes.",
+      "owner_refs": ["Plans/Section15_MVP_Promoted_Features_Spec.md", "Plans/FinalGUISpec.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/browser-policy",
+      "search_aliases": ["browser", "capture", "auth browser", "privacy"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "containers-registries": {
+      "title": "Containers and Registries",
+      "purpose": "Container settings redirects and Docker Manager or Docker/Hosts readiness routes.",
+      "owner_refs": ["Plans/Containers_Registry_and_Unraid.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/containers-registries",
+      "search_aliases": ["docker", "podman", "kubernetes", "containers", "registries"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "storage-retention-recovery": {
+      "title": "Storage, Retention, Recovery, and Cleanup",
+      "purpose": "Persistence, retention, holds, quarantine, recovery, compaction, and cleanup owner routes.",
+      "owner_refs": ["Plans/storage-plan.md", "Plans/MiscPlan.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/storage-retention-recovery",
+      "search_aliases": ["storage", "retention", "recovery", "cleanup", "quarantine"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "vault_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "project-history-artifacts": {
+      "title": "Project History, Sessions, Artifacts, and Outputs",
+      "purpose": "History, session, runtime artifact, and project output policy and routes.",
+      "owner_refs": ["Plans/storage-plan.md", "Plans/Runtime_Artifacts_Panel.md", "Plans/Project_Output_Artifacts.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/project-history-artifacts",
+      "search_aliases": ["history", "sessions", "artifacts", "outputs"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "settings-transfer": {
+      "title": "Settings Transfer",
+      "purpose": "One-time exact-ID Project-to-Project Settings preview, apply, and rollback.",
+      "owner_refs": ["Plans/Settings_System.md", "Plans/storage-plan.md", "Plans/Permissions_System.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/settings-transfer",
+      "search_aliases": ["copy settings", "transfer", "project settings"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.settings.transaction.preview", "cmd.settings.transaction.apply", "cmd.settings.transaction.rollback"],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "settings-export-migration": {
+      "title": "Settings Export and Migration",
+      "purpose": "Secret-free detached export and explicit previewed legacy/import migration into one Project.",
+      "owner_refs": ["Plans/Settings_System.md", "Plans/storage-plan.md", "Plans/Permissions_System.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/settings-export-migration",
+      "search_aliases": ["export", "import", "migration", "legacy settings"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.settings.export", "cmd.settings.transaction.preview", "cmd.settings.transaction.apply", "cmd.settings.transaction.rollback"],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "server-claim-bootstrap": {
+      "title": "Server Claim and Bootstrap",
+      "purpose": "Server claim/bootstrap status, exact target, work, receipts, and owner routes.",
+      "owner_refs": ["Plans/Shared_Integration_Runtime.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/server-claim-bootstrap",
+      "search_aliases": ["server", "claim", "bootstrap"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "servers-hosts-environments": {
+      "title": "Servers, Hosts, and Environments",
+      "purpose": "Exact Server, Execution Host, and Execution Environment identity and readiness projections.",
+      "owner_refs": ["Plans/Shared_Integration_Runtime.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/servers-hosts-environments",
+      "search_aliases": ["servers", "hosts", "environments", "topology"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "clients-continuity": {
+      "title": "Clients and Continuity",
+      "purpose": "Client identity, continuity, currentness, and exact return context.",
+      "owner_refs": ["Plans/Shared_Integration_Runtime.md", "Plans/storage-plan.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/clients-continuity",
+      "search_aliases": ["clients", "continuity", "devices"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "client_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "project-hosting-files": {
+      "title": "Project Hosting, Location, and Files",
+      "purpose": "Project/Vault placement, source location, files, exact topology, and owner routes.",
+      "owner_refs": ["Plans/Project_Sync_and_Backbone.md", "Plans/FileManager.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/project-hosting-files",
+      "search_aliases": ["project hosting", "location", "vault", "files"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "vault_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "project-sync-move-copy": {
+      "title": "Project Sync, Move, and Copy",
+      "purpose": "Project-content movement preview, progress, recovery, and owner routes.",
+      "owner_refs": ["Plans/Project_Sync_and_Backbone.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/project-sync-move-copy",
+      "search_aliases": ["project sync", "move", "copy", "backbone"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "vault_id", "host_id", "environment_id", "operation_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "ssh-remote": {
+      "title": "SSH Remotes",
+      "purpose": "SSH remote identity, non-secret profile references, readiness, and owner CRUD/test routes.",
+      "owner_refs": ["Plans/GitHub_Integration.md", "Plans/GitHub_API_Auth_and_Flows.md", "Plans/Permissions_System.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/ssh-remote",
+      "search_aliases": ["ssh", "remote", "profile", "connection"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "remote-access": {
+      "title": "Remote Access",
+      "purpose": "Private/public reachability, pairing, reverse proxy, secure-link, and owner route projections.",
+      "owner_refs": ["Plans/Remote_Access_System.md", "Plans/Section15_MVP_Promoted_Features_Spec.md", "Plans/Shared_Integration_Runtime.md", "Plans/Permissions_System.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/remote-access",
+      "search_aliases": ["remote access", "tailscale", "headscale", "proxy", "vpn", "pairing"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "host_id", "environment_id", "client_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "server-backup-restore": {
+      "title": "Full Server Backup and Restore",
+      "purpose": "Canonical Full Server Backup scope, readiness, exact target, progress, receipts, and recovery routes; executable integration remains separately gated.",
+      "owner_refs": ["Plans/Backup_Restore_System.md", "Plans/Server_System.md", "Plans/storage-plan.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/server-backup-restore",
+      "search_aliases": ["full server backup", "server restore", "disaster recovery"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.backup.destination.add", "cmd.backup.destination.update", "cmd.backup.destination.test", "cmd.backup.destination.remove", "cmd.backup.policy.update", "cmd.backup.server.create", "cmd.backup.cancel", "cmd.backup.retry", "cmd.backup.verify", "cmd.backup.test_restore", "cmd.backup.browse", "cmd.backup.delete", "cmd.backup.protect", "cmd.backup.open_history", "cmd.backup.open_details", "cmd.restore.preview", "cmd.restore.server_full", "cmd.restore.cancel", "cmd.restore.retry", "cmd.restore.rollback", "cmd.restore.open_details"],
+      "required_target_fields": ["project_id", "server_id", "vault_id", "host_id", "environment_id", "operation_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "project-backup": {
+      "title": "Project Backup",
+      "purpose": "Project-level backup destination kept distinct from Settings transfer, internal recovery, and Full Server Backup.",
+      "owner_refs": ["Plans/Backup_Restore_System.md", "Plans/Project_Output_Artifacts.md", "Plans/storage-plan.md"],
+      "owner_disposition": "canonical_owner_registered",
+      "route_ref": "route:settings/project-backup",
+      "search_aliases": ["project backup", "project restore"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.backup.destination.add", "cmd.backup.destination.update", "cmd.backup.destination.test", "cmd.backup.destination.remove", "cmd.backup.policy.update", "cmd.backup.project.create", "cmd.backup.cancel", "cmd.backup.retry", "cmd.backup.verify", "cmd.backup.test_restore", "cmd.backup.browse", "cmd.backup.delete", "cmd.backup.protect", "cmd.backup.open_history", "cmd.backup.open_details", "cmd.restore.preview", "cmd.restore.project_in_place", "cmd.restore.project_as_new", "cmd.restore.selective", "cmd.restore.cancel", "cmd.restore.retry", "cmd.restore.rollback", "cmd.restore.open_details"],
+      "required_target_fields": ["project_id", "server_id", "vault_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "updates": {
+      "title": "Updates",
+      "purpose": "Puppet Master, content, provider, tool, and integration update policy and owner routes.",
+      "owner_refs": ["Plans/Release_Supply_Chain.md", "Plans/Shared_Integration_Runtime.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/updates",
+      "search_aliases": ["updates", "automatic updates", "check for updates", "rollback"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "project-defaults-templates": {
+      "title": "Project Defaults and Templates",
+      "purpose": "Project creation defaults and reusable template settings without cross-Project inheritance.",
+      "owner_refs": ["Plans/Settings_System.md", "Plans/Planning_Wizard.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/project-defaults-templates",
+      "search_aliases": ["project defaults", "templates", "new project"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.settings.transaction.preview", "cmd.settings.transaction.apply"],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": "Template application must remain a detached previewed transaction and cannot create live inheritance."
+    },
+    "onboarding-guided-tour": {
+      "title": "Onboarding and Guided Tour",
+      "purpose": "Run or resume Product Onboarding and replay Guided Tour through exact owner continuations.",
+      "owner_refs": ["Plans/Planning_Wizard.md", "Plans/Section15_MVP_Promoted_Features_Spec.md"],
+      "owner_disposition": "deferred_gui_owner_registered",
+      "route_ref": "route:settings/onboarding-guided-tour",
+      "search_aliases": ["onboarding", "guided tour", "setup", "resume"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "host_id", "environment_id", "client_id", "operation_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": "Settings destination and exact continuation are current; full Onboarding and Guided Tour GUI implementation remains deferred."
+    },
+    "doctor": {
+      "title": "Doctor",
+      "purpose": "Cached currentness-aware findings and domain-owner remediation routes only.",
+      "owner_refs": ["Plans/newtools.md"],
+      "owner_disposition": "deferred_gui_owner_registered",
+      "route_ref": "route:settings/doctor",
+      "search_aliases": ["doctor", "diagnostics", "health", "repair"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "server_id", "host_id", "environment_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": "Doctor is an ongoing Settings destination, but Settings runs no probe and owns no repair; full Doctor GUI remains deferred."
+    },
+    "usage-budgets": {
+      "title": "Usage and Budgets",
+      "purpose": "Usage, cost, quota, budget, and provider pressure projections and owner routes.",
+      "owner_refs": ["Plans/usage-feature.md", "Plans/Multi-Account.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/usage-budgets",
+      "search_aliases": ["usage", "cost", "quota", "budget"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": [],
+      "required_target_fields": ["project_id", "provider_id", "provider_route_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": null
+    },
+    "teacher-help": {
+      "title": "Teacher and Help",
+      "purpose": "Context-aware Help entry, Teacher-mode availability, requested/effective teaching identity, sources, and continuation state without a second chat owner.",
+      "owner_refs": ["Plans/FinalGUISpec.md", "Plans/assistant-chat-design.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/teacher-help",
+      "search_aliases": ["teacher", "help", "eli5", "explain", "guided help"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.chat.open_thread"],
+      "required_target_fields": ["project_id", "thread_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": "Settings projects entry and state only; Assistant Chat owns the Teacher thread and help interaction."
+    },
+    "project-search-index": {
+      "title": "Project Search Index",
+      "purpose": "Index policy, freshness, generation, coverage, disk use, exclusions, remote-cache state, active work, and Search-owner actions.",
+      "owner_refs": ["Plans/FinalGUISpec.md", "Plans/storage-plan.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/project-search-index",
+      "search_aliases": ["project search", "index", "rebuild index", "search cache", "exclusions"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.search.rebuild_index", "cmd.search.evict_remote_cache"],
+      "required_target_fields": ["project_id", "operation_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": "Settings projects Search-owner state and availability; it does not build, cancel, evict, or repair an index locally."
+    },
+    "dry-method": {
+      "title": "DRY Method",
+      "purpose": "Requested/effective reuse-first default guard, origin, scope, owner evidence, exceptions, consequences, and availability.",
+      "owner_refs": ["Plans/DRY_Rules.md", "Plans/FinalGUISpec.md"],
+      "owner_disposition": "owner_route_aggregate",
+      "route_ref": "route:settings/dry-method",
+      "search_aliases": ["dry method", "reuse first", "duplication guard", "agent rules"],
+      "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+      "owner_action_ids": ["cmd.settings.agent_rules.dry_method_default_guard.set"],
+      "required_target_fields": ["project_id"],
+      "hydration_policy": "cached_bounded_summary_then_selected_details",
+      "owner_gap_reason": "The visible default guard cannot weaken instructions, safety, secrets, source authority, governance, permissions, or source-control rules."
+    }
+  },
+  "named_visible_state_projections": {
+    "teacher-help": {
+      "record_type": "settings_named_visible_state_projection",
+      "schema_id": "pm.settings_named_visible_state_projection.v1",
+      "schema_version": "1.0.0",
+      "manager_id": "teacher-help",
+      "projection_kind": "teacher_help",
+      "owner_refs": ["Plans/FinalGUISpec.md", "Plans/assistant-chat-design.md"],
+      "visible_state_fields": ["availability", "entry_point", "teacher_mode", "context_source", "requested_persona", "effective_persona", "requested_model", "effective_model", "source_disclosure", "continuation_state", "disabled_reason"],
+      "route_ref": "route:settings/teacher-help",
+      "owner_action_policy": "owner_admitted_command_or_typed_route_only",
+      "settings_is_runtime_owner": false,
+      "raw_logs_included": false,
+      "negative_constraints": ["do_not_create_a_second_chat_owner", "do_not_launch_without_current_surface_context", "do_not_hide_requested_effective_identity_or_sources"]
+    },
+    "project-search-index": {
+      "record_type": "settings_named_visible_state_projection",
+      "schema_id": "pm.settings_named_visible_state_projection.v1",
+      "schema_version": "1.0.0",
+      "manager_id": "project-search-index",
+      "projection_kind": "project_search_index",
+      "owner_refs": ["Plans/FinalGUISpec.md", "Plans/storage-plan.md"],
+      "visible_state_fields": ["requested_enabled", "effective_enabled", "freshness", "status", "generation", "last_indexed_at", "indexed_file_count", "disk_usage", "large_file_threshold", "exclusion_patterns", "follow_symlinks", "partial_remote_cache", "active_operation", "disabled_reason"],
+      "route_ref": "route:settings/project-search-index",
+      "owner_action_policy": "owner_admitted_command_or_typed_route_only",
+      "settings_is_runtime_owner": false,
+      "raw_logs_included": false,
+      "negative_constraints": ["do_not_build_or_cancel_an_index_in_settings", "do_not_claim_freshness_from_a_cached_row", "do_not_expose_secret_paths_or_unbounded_file_lists"]
+    },
+    "dry-method": {
+      "record_type": "settings_named_visible_state_projection",
+      "schema_id": "pm.settings_named_visible_state_projection.v1",
+      "schema_version": "1.0.0",
+      "manager_id": "dry-method",
+      "projection_kind": "dry_method",
+      "owner_refs": ["Plans/DRY_Rules.md", "Plans/FinalGUISpec.md"],
+      "visible_state_fields": ["requested_default_guard", "effective_default_guard", "origin", "scope", "availability", "disabled_reason", "owner_evidence", "exceptions", "consequence_disclosure"],
+      "route_ref": "route:settings/dry-method",
+      "owner_action_policy": "owner_admitted_command_or_typed_route_only",
+      "settings_is_runtime_owner": false,
+      "raw_logs_included": false,
+      "negative_constraints": ["do_not_weaken_instructions_or_safety", "do_not_weaken_secrets_source_authority_governance_permissions_or_source_control", "do_not_present_the_default_guard_as_a_universal_runtime_override"]
+    }
+  },
+  "valid_cases": [
+    {
+      "case_id": "valid-project-settings-snapshot",
+      "schema_ref": "#/$defs/project_settings_snapshot",
+      "record": {
+        "record_type": "project_settings_snapshot",
+        "schema_id": "pm.project_settings_snapshot.v1",
+        "schema_version": "1.0.0",
+        "snapshot_id": "snapshot:settings/42",
+        "project_id": "project:demo",
+        "revision": 42,
+        "inventory_schema_version": "1.0.0",
+        "values_by_setting_id": {
+          "general.visual.theme": "Glass",
+          "general.visual.theme-mode": "Light",
+          "general.visual.glass-background-mode": "Mesh",
+          "general.visual.glass-transparency": 0.55,
+          "general.interaction.show-tooltips": true,
+          "general.visual.reduce-animations": false
+        },
+        "source_by_setting_id": {
+          "general.visual.theme": "explicit",
+          "general.visual.theme-mode": "explicit",
+          "general.visual.glass-background-mode": "default",
+          "general.visual.glass-transparency": "explicit",
+          "general.interaction.show-tooltips": "default",
+          "general.visual.reduce-animations": "explicit"
+        },
+        "appearance_projection": {
+          "theme_pair": {"family": "Glass", "presentation_mode": "Light"},
+          "effective_theme_variant": "Glass Light",
+          "glass": {
+            "background_mode": "Mesh",
+            "alpha": 0.55,
+            "availability": {"state": "available", "reason_code": null, "human_reason": null, "selector_ref": "settings.appearance.glass.available", "evaluated_at_utc": "2026-08-31T12:00:00Z", "projection_generation": 7}
+          },
+          "tooltips": {"hover_tooltips_enabled": true, "focus_accessible_description_retained": true, "help_details_retained": true},
+          "reduced_motion": {"project_requested": false, "platform_requested": false, "effective": false, "policy": "calm_nonessential_motion_preserve_state_feedback"},
+          "derived_from_setting_ids": ["general.visual.theme", "general.visual.theme-mode", "general.visual.glass-background-mode", "general.visual.glass-transparency", "general.interaction.show-tooltips", "general.visual.reduce-animations"]
+        },
+        "owner_validation_refs": ["owner-validation:appearance/42"],
+        "projection_generation": 7,
+        "committed_at_utc": "2026-08-31T12:00:00Z",
+        "content_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "migration_receipt_ref": null
+      }
+    },
+    {
+      "case_id": "valid-transaction-preview-request",
+      "schema_ref": "#/$defs/settings_transaction_preview_request",
+      "record": {
+        "record_type": "settings_transaction_preview_request",
+        "schema_id": "pm.settings_transaction_preview_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "request_id": "request:preview/1",
+        "project_id": "project:demo",
+        "idempotency_key": "idempotency:preview/1",
+        "actor_ref": "actor:user/1",
+        "permission_snapshot_ref": "permission:snapshot/1",
+        "requested_at_utc": "2026-08-31T12:01:00Z",
+        "operation_kind": "set",
+        "source_project_id": null,
+        "expected_source_revision": null,
+        "expected_destination_revision": 42,
+        "selector_ids": [],
+        "exact_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "proposed_values_by_setting_id": {"general.visual.theme": "Friendly", "general.visual.theme-mode": "Dark"},
+        "intent": "Preview an atomic theme-pair change."
+      }
+    },
+    {
+      "case_id": "valid-transaction-preview",
+      "schema_ref": "#/$defs/settings_transaction_preview",
+      "record": {
+        "record_type": "settings_transaction_preview",
+        "schema_id": "pm.settings_transaction_preview.v1",
+        "schema_version": "1.0.0",
+        "preview_id": "preview:settings/1",
+        "operation_kind": "set",
+        "destination_project_id": "project:demo",
+        "source_project_id": null,
+        "source_revision": null,
+        "expected_destination_revision": 42,
+        "inventory_schema_version": "1.0.0",
+        "exact_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "proposed_values_by_setting_id": {"general.visual.theme": "Friendly", "general.visual.theme-mode": "Dark"},
+        "excluded_settings": [],
+        "conflict_classes": ["compatible"],
+        "before_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "after_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "restore_point_plan_ref": "restore-plan:settings/1",
+        "owner_validation_refs": ["owner-validation:appearance/43"],
+        "effect_requirements": ["instant"],
+        "preview_generation": 1,
+        "preview_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "created_at_utc": "2026-08-31T12:01:01Z",
+        "expires_at_utc": "2026-08-31T12:11:01Z",
+        "confirmation_required": true,
+        "availability": {"state": "available", "reason_code": null, "human_reason": null, "selector_ref": "settings.transaction.apply.allowed", "evaluated_at_utc": "2026-08-31T12:01:01Z", "projection_generation": 8}
+      }
+    },
+    {
+      "case_id": "valid-transaction-apply-request",
+      "schema_ref": "#/$defs/settings_transaction_apply_request",
+      "record": {
+        "record_type": "settings_transaction_apply_request",
+        "schema_id": "pm.settings_transaction_apply_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.apply",
+        "request_id": "request:apply/1",
+        "project_id": "project:demo",
+        "idempotency_key": "idempotency:apply/1",
+        "actor_ref": "actor:user/1",
+        "permission_snapshot_ref": "permission:snapshot/1",
+        "requested_at_utc": "2026-08-31T12:02:00Z",
+        "preview_id": "preview:settings/1",
+        "preview_generation": 1,
+        "preview_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "expected_project_revision": 42
+      }
+    },
+    {
+      "case_id": "valid-transaction-apply-result",
+      "schema_ref": "#/$defs/settings_transaction_result",
+      "record": {
+        "record_type": "settings_transaction_result",
+        "schema_id": "pm.settings_transaction_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.apply",
+        "request_id": "request:apply/1",
+        "project_id": "project:demo",
+        "transaction_id": "transaction:settings/43",
+        "outcome": "applied",
+        "previous_revision": 42,
+        "current_revision": 43,
+        "changed_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "snapshot_ref": "snapshot:settings/43",
+        "receipt_ref": "receipt:settings/43",
+        "rollback_token_ref": "rollback:settings/43",
+        "disabled_reasons": [],
+        "replayed": false,
+        "settled_at_utc": "2026-08-31T12:02:01Z"
+      }
+    },
+    {
+      "case_id": "valid-transaction-rollback-request",
+      "schema_ref": "#/$defs/settings_transaction_rollback_request",
+      "record": {
+        "record_type": "settings_transaction_rollback_request",
+        "schema_id": "pm.settings_transaction_rollback_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.rollback",
+        "request_id": "request:rollback/1",
+        "project_id": "project:demo",
+        "idempotency_key": "idempotency:rollback/1",
+        "actor_ref": "actor:user/1",
+        "permission_snapshot_ref": "permission:snapshot/1",
+        "requested_at_utc": "2026-08-31T12:03:00Z",
+        "transaction_id": "transaction:settings/43",
+        "rollback_token_ref": "rollback:settings/43",
+        "expected_project_revision": 43,
+        "reason": "Restore the last valid settings revision."
+      }
+    },
+    {
+      "case_id": "valid-transaction-rollback-result",
+      "schema_ref": "#/$defs/settings_transaction_result",
+      "record": {
+        "record_type": "settings_transaction_result",
+        "schema_id": "pm.settings_transaction_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.rollback",
+        "request_id": "request:rollback/1",
+        "project_id": "project:demo",
+        "transaction_id": "transaction:settings/44",
+        "outcome": "rolled_back",
+        "previous_revision": 43,
+        "current_revision": 44,
+        "changed_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "snapshot_ref": "snapshot:settings/44",
+        "receipt_ref": "receipt:settings/44",
+        "rollback_token_ref": null,
+        "disabled_reasons": [],
+        "replayed": false,
+        "settled_at_utc": "2026-08-31T12:03:01Z"
+      }
+    },
+    {
+      "case_id": "valid-settings-export-request",
+      "schema_ref": "#/$defs/settings_export_request",
+      "record": {
+        "record_type": "settings_export_request",
+        "schema_id": "pm.settings_export_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.export",
+        "request_id": "request:export/1",
+        "project_id": "project:demo",
+        "idempotency_key": "idempotency:export/1",
+        "actor_ref": "actor:user/1",
+        "permission_snapshot_ref": "permission:snapshot/1",
+        "requested_at_utc": "2026-08-31T12:04:00Z",
+        "expected_project_revision": 44,
+        "exact_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "format": "pm-settings-export-json-v1",
+        "destination_artifact_ref": "artifact:settings-export/1"
+      }
+    },
+    {
+      "case_id": "valid-settings-export-manifest",
+      "schema_ref": "#/$defs/settings_export_manifest",
+      "record": {
+        "record_type": "settings_export_manifest",
+        "schema_id": "pm.settings_export_manifest.v1",
+        "schema_version": "1.0.0",
+        "export_id": "export:settings/1",
+        "project_id": "project:demo",
+        "source_revision": 44,
+        "exact_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "excluded_settings": [{"setting_id": "providers.auth.openai-key", "reason_code": "secret_excluded", "human_reason": "Credentials are never included in a Settings export."}],
+        "format": "pm-settings-export-json-v1",
+        "artifact_ref": "artifact:settings-export/1",
+        "content_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "byte_length": 2048,
+        "credential_material_included": false,
+        "detached": true,
+        "created_at_utc": "2026-08-31T12:04:01Z",
+        "receipt_ref": "receipt:settings-export/1"
+      }
+    },
+    {
+      "case_id": "valid-settings-route-request",
+      "schema_ref": "#/$defs/settings_route_request",
+      "record": {
+        "record_type": "settings_route_request",
+        "schema_id": "pm.settings_route_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.open",
+        "route_id": "route-instance:settings/1",
+        "project_id": "project:demo",
+        "target": {"target_type": "manager", "setting_id": null, "manager_id": "providers-accounts-models", "detail_id": "provider:openai"},
+        "return_contract": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "assistant-chat",
+          "origin_route": "route:chat/thread-1",
+          "origin_focus_id": "focus:provider-card",
+          "origin_query": "provider setup",
+          "origin_scroll_anchor": "anchor:message-12",
+          "close_behavior": "return_to_opener",
+          "escape_order": ["close_transient", "close_details", "clear_query", "return_to_opener"],
+          "exact_context": {"project_id": "project:demo", "server_id": "server:home", "vault_id": "vault:demo", "host_id": "host:local", "environment_id": "environment:desktop", "client_id": "client:one", "provider_id": "provider:openai", "provider_route_id": "provider-route:direct", "thread_id": "thread:one", "operation_id": "operation:setup/1", "topology_generation": 9, "expected_revision": 44},
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context"
+        },
+        "requested_at_utc": "2026-08-31T12:05:00Z"
+      }
+    },
+    {
+      "case_id": "valid-settings-route-return",
+      "schema_ref": "#/$defs/settings_route_return",
+      "record": {
+        "record_type": "settings_route_return",
+        "schema_id": "pm.settings_route_return.v1",
+        "schema_version": "1.0.0",
+        "route_id": "route-instance:settings/1",
+        "continuation_id": "continuation:settings/1",
+        "continuation_generation": 2,
+        "outcome": "returned",
+        "restored_focus_id": "focus:provider-card",
+        "restored_query": "provider setup",
+        "restored_scroll_anchor": "anchor:message-12",
+        "disabled_reason": null,
+        "returned_at_utc": "2026-08-31T12:06:00Z"
+      }
+    },
+    {
+      "case_id": "valid-owner-projection",
+      "schema_ref": "#/$defs/settings_owner_projection",
+      "record": {
+        "record_type": "settings_owner_projection",
+        "schema_id": "pm.settings_owner_projection.v1",
+        "schema_version": "1.0.0",
+        "projection_id": "projection:provider/1",
+        "manager_id": "providers-accounts-models",
+        "owner_refs": ["Plans/Models_System.md", "Plans/Multi-Account.md"],
+        "owner_contract_ref": "contract:provider-readiness/1",
+        "projection_generation": 5,
+        "captured_at_utc": "2026-08-31T12:07:00Z",
+        "expires_at_utc": "2026-08-31T12:12:00Z",
+        "requested_state": "configured",
+        "effective_state": "setup_required",
+        "health": "attention",
+        "availability": {"state": "disabled", "reason_code": "setup_required", "human_reason": "Finish provider setup before selecting this route.", "selector_ref": "provider.route.available", "evaluated_at_utc": "2026-08-31T12:07:00Z", "projection_generation": 5},
+        "active_operation_ref": null,
+        "receipt_refs": [],
+        "evidence_refs": ["evidence:provider/1"],
+        "summary": "Provider route requires setup.",
+        "details_route_ref": "route:provider/details",
+        "raw_logs_included": false,
+        "settings_is_runtime_owner": false
+      }
+    },
+    {
+      "case_id": "valid-doctor-projection",
+      "schema_ref": "#/$defs/settings_doctor_projection",
+      "record": {
+        "record_type": "settings_doctor_projection",
+        "schema_id": "pm.settings_doctor_projection.v1",
+        "schema_version": "1.0.0",
+        "manager_id": "doctor",
+        "check_id": "doctor-check:provider-auth",
+        "domain_owner_ref": "Plans/Multi-Account.md",
+        "projection_generation": 4,
+        "captured_at_utc": "2026-08-31T12:08:00Z",
+        "expires_at_utc": "2026-08-31T12:13:00Z",
+        "severity": "warning",
+        "status": "finding",
+        "evidence_refs": ["evidence:doctor/provider-auth"],
+        "remediation_action": {
+          "owner_command_id": null,
+          "owner_route_ref": "route:provider/auth",
+          "availability": {"state": "disabled", "reason_code": "command_not_registered", "human_reason": "Open the provider owner because no Doctor remediation command is registered.", "selector_ref": "doctor.remediation.available", "evaluated_at_utc": "2026-08-31T12:08:00Z", "projection_generation": 4}
+        },
+        "probe_execution_owner": "domain_owner_only",
+        "settings_authority": "cached_projection_and_owner_route_only",
+        "readiness_claim": false,
+        "dedupe_key": "doctor:provider-auth/project-demo"
+      }
+    },
+    {
+      "case_id": "valid-migration-preview",
+      "schema_ref": "#/$defs/settings_migration_preview",
+      "record": {
+        "record_type": "settings_migration_preview",
+        "schema_id": "pm.settings_migration_preview.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "migration:settings/1",
+        "source_kind": "legacy_global_snapshot",
+        "source_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "destination_project_id": "project:demo",
+        "expected_destination_revision": 44,
+        "detected_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "mappable_setting_ids": ["general.visual.theme", "general.visual.theme-mode"],
+        "excluded_settings": [],
+        "unmapped_legacy_keys": ["legacy.global.theme-cache"],
+        "theme_pair_after_migration": {"family": "Basic", "presentation_mode": "Dark"},
+        "transaction_preview_ref": "preview:settings-migration/1",
+        "confirmation_required": true,
+        "auto_apply": false,
+        "legacy_source_authoritative": false,
+        "created_at_utc": "2026-08-31T12:09:00Z"
+      }
+    },
+    {
+      "case_id": "valid-appearance-preview",
+      "schema_ref": "#/$defs/settings_appearance_preview",
+      "record": {
+        "record_type": "settings_appearance_preview",
+        "schema_id": "pm.settings_appearance_preview.v1",
+        "schema_version": "1.0.0",
+        "preview_id": "preview:appearance/1",
+        "project_id": "project:demo",
+        "base_revision": 44,
+        "appearance_projection": {
+          "theme_pair": {"family": "Basic", "presentation_mode": "Dark"},
+          "effective_theme_variant": "Basic Dark",
+          "glass": {"background_mode": null, "alpha": null, "availability": {"state": "disabled", "reason_code": "not_applicable", "human_reason": "Glass controls apply only to the Glass theme family.", "selector_ref": "settings.appearance.glass.available", "evaluated_at_utc": "2026-08-31T12:10:00Z", "projection_generation": 9}},
+          "tooltips": {"hover_tooltips_enabled": false, "focus_accessible_description_retained": true, "help_details_retained": true},
+          "reduced_motion": {"project_requested": true, "platform_requested": false, "effective": true, "policy": "calm_nonessential_motion_preserve_state_feedback"},
+          "derived_from_setting_ids": ["general.visual.theme", "general.visual.theme-mode", "general.visual.glass-background-mode", "general.visual.glass-transparency", "general.interaction.show-tooltips", "general.visual.reduce-animations"]
+        },
+        "preview_only": true,
+        "persistent_write_performed": false,
+        "revert_trigger": "close",
+        "apply_command_id": "cmd.settings.transaction.apply",
+        "created_at_utc": "2026-08-31T12:10:00Z",
+        "expires_at_utc": "2026-08-31T12:20:00Z"
+      }
+    },
+    {
+      "case_id": "valid-ui-action-projection",
+      "schema_ref": "#/$defs/settings_ui_action_projection",
+      "record": {
+        "record_type": "settings_ui_action_projection",
+        "schema_id": "pm.settings_ui_action_projection.v1",
+        "schema_version": "1.0.0",
+        "ui_action_id": "settings.transaction.apply",
+        "command_id": "cmd.settings.transaction.apply",
+        "target": {"project_id": "project:demo", "server_id": null, "vault_id": null, "host_id": null, "environment_id": null, "client_id": null, "provider_id": null, "provider_route_id": null, "thread_id": null, "operation_id": "transaction:settings/43", "topology_generation": 0, "expected_revision": 44},
+        "owner_ref": "Plans/Settings_System.md",
+        "availability": {"state": "available", "reason_code": null, "human_reason": null, "selector_ref": "settings.transaction.apply.allowed", "evaluated_at_utc": "2026-08-31T12:11:00Z", "projection_generation": 10},
+        "requested_state": "apply_preview",
+        "effective_state": "ready",
+        "active_operation_ref": null,
+        "receipt_refs": []
+      }
+    },
+    {
+      "case_id": "valid-teacher-help-visible-state",
+      "schema_ref": "#/$defs/settings_named_visible_state_projection",
+      "record": {
+        "record_type": "settings_named_visible_state_projection",
+        "schema_id": "pm.settings_named_visible_state_projection.v1",
+        "schema_version": "1.0.0",
+        "manager_id": "teacher-help",
+        "projection_kind": "teacher_help",
+        "owner_refs": ["Plans/FinalGUISpec.md", "Plans/assistant-chat-design.md"],
+        "visible_state_fields": ["availability", "teacher_mode", "context_source", "effective_persona"],
+        "route_ref": "route:settings/teacher-help",
+        "owner_action_policy": "owner_admitted_command_or_typed_route_only",
+        "settings_is_runtime_owner": false,
+        "raw_logs_included": false,
+        "negative_constraints": ["do_not_create_a_second_chat_owner"]
+      }
+    },
+    {
+      "case_id": "valid-project-search-index-visible-state",
+      "schema_ref": "#/$defs/settings_named_visible_state_projection",
+      "record": {
+        "record_type": "settings_named_visible_state_projection",
+        "schema_id": "pm.settings_named_visible_state_projection.v1",
+        "schema_version": "1.0.0",
+        "manager_id": "project-search-index",
+        "projection_kind": "project_search_index",
+        "owner_refs": ["Plans/FinalGUISpec.md", "Plans/storage-plan.md"],
+        "visible_state_fields": ["requested_enabled", "effective_enabled", "freshness", "active_operation"],
+        "route_ref": "route:settings/project-search-index",
+        "owner_action_policy": "owner_admitted_command_or_typed_route_only",
+        "settings_is_runtime_owner": false,
+        "raw_logs_included": false,
+        "negative_constraints": ["do_not_claim_freshness_from_a_cached_row"]
+      }
+    },
+    {
+      "case_id": "valid-dry-method-visible-state",
+      "schema_ref": "#/$defs/settings_named_visible_state_projection",
+      "record": {
+        "record_type": "settings_named_visible_state_projection",
+        "schema_id": "pm.settings_named_visible_state_projection.v1",
+        "schema_version": "1.0.0",
+        "manager_id": "dry-method",
+        "projection_kind": "dry_method",
+        "owner_refs": ["Plans/DRY_Rules.md", "Plans/FinalGUISpec.md"],
+        "visible_state_fields": ["requested_default_guard", "effective_default_guard", "origin", "consequence_disclosure"],
+        "route_ref": "route:settings/dry-method",
+        "owner_action_policy": "owner_admitted_command_or_typed_route_only",
+        "settings_is_runtime_owner": false,
+        "raw_logs_included": false,
+        "negative_constraints": ["do_not_weaken_instructions_or_safety"]
+      }
+    },
+    {
+      "case_id": "valid-settings-local-ui-action",
+      "schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "record": {
+        "record_type": "settings_local_ui_action_payload",
+        "schema_id": "pm.settings_local_ui_action_payload.v1",
+        "schema_version": "1.0.0",
+        "action_id": "settings.search.result.activate",
+        "project_id": "project:demo",
+        "target_ref": "setting:general.visual.theme",
+        "projection_generation": 12,
+        "domain_mutation_authorized": false,
+        "persistence_write_authorized": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "valid-packet-command-disposition",
+      "schema_ref": "#/$defs/packet_command_disposition",
+      "record": {
+        "disposition": "superseded_by_typed_local_ui_action",
+        "replacement_command_ids": [],
+        "typed_local_ui_action_id": "settings.search.focus",
+        "typed_local_payload_schema_ref": "#/$defs/settings_local_ui_action_payload",
+        "reason": "Search focus is reversible local presentation state and authorizes no domain operation.",
+        "native_handler_claim": false
+      }
+    },
+    {
+      "case_id": "valid-concept-boundary",
+      "schema_ref": "#/$defs/settings_concept_boundary",
+      "record": {
+        "record_type": "settings_concept_boundary",
+        "schema_id": "pm.settings_concept_boundary.v1",
+        "schema_version": "1.0.0",
+        "artifact_ref": "Concepts/PMConcept7.html",
+        "authored_source_ref": "Concepts/pm7-tools/settings_tome_source.py",
+        "builder_ref": "Concepts/pm7-tools/build_pm7.py",
+        "evidence_level": "concept_fixture_only",
+        "handlers_simulated": true,
+        "persistence_mode": "fixture_local_non_authoritative",
+        "direct_generated_edit_allowed": false,
+        "allowed_claims": ["geometry_demonstration", "content_projection_demonstration", "interaction_prototype"],
+        "prohibited_claims": ["production_runtime", "production_persistence", "handler_wiring", "visual_acceptance", "performance_acceptance", "accessibility_acceptance", "certification"],
+        "native_runtime_executed": false
+      }
+    },
+    {
+      "case_id": "valid-cross-owner-group-projection",
+      "schema_ref": "#/$defs/settings_cross_owner_group_projection",
+      "record": {
+        "record_type": "settings_cross_owner_group_projection",
+        "schema_id": "pm.settings_cross_owner_group_projection.v1",
+        "plan_unit_ref": "Plans/Settings_System.md#SSYS-026",
+        "layout_authority": "K3 Tome Tabs",
+        "manager_count": 38,
+        "visible_group": "Data Backup and Retention",
+        "stable_manager_keys": ["storage-retention-recovery", "server-backup-restore", "project-backup"],
+        "detail_role": "typed_child_detail_descriptors_under_one_visible_group",
+        "scope_selector": "server|project:{id}",
+        "compatibility_routes": ["route:settings/storage-retention-recovery", "route:settings/server-backup-restore", "route:settings/project-backup"],
+        "protected_actions": {"actions": ["save", "export", "copy", "print", "test", "acknowledge", "rotate", "reencrypt", "unlock"], "human_only": true, "step_up_required": true, "no_store_delivery_required": true, "agent_or_automation_allowed": false, "capture_allowed": false, "secret_bytes_exposed": false},
+        "source_control": {"manager_key": "source-control", "routing_targets": ["source_control", "repository_automation"], "providers": ["Forgejo", "Gitea"], "repository_hosting_independent": true, "automation_binding_independent": true, "credential_values_stored": false},
+        "remote_access": {"manager_key": "remote-access", "normal_title": "Tailscale", "normal_subtitle": "Built into Puppet Master", "detail_title": "Connection engine", "connector_owner_ref": "Plans/Remote_Access_System.md#RAS-015", "hosted_tailscale_and_headscale_distinct": true, "headscale_funnel_available": false, "secret_material_exposed": false},
+        "command_availability": "handler_unavailable",
+        "expected_event_types": [],
+        "runtime_claim": false
+      }
+    }
+  ],
+  "negative_cases": [
+    {
+      "case_id": "invalid-cross-owner-group-manager-count",
+      "schema_ref": "#/$defs/settings_cross_owner_group_projection",
+      "record": {"record_type": "settings_cross_owner_group_projection", "schema_id": "pm.settings_cross_owner_group_projection.v1", "plan_unit_ref": "Plans/Settings_System.md#SSYS-026", "layout_authority": "K3 Tome Tabs", "manager_count": 39},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-snapshot-missing-project",
+      "schema_ref": "#/$defs/project_settings_snapshot",
+      "record": {"record_type": "project_settings_snapshot", "schema_id": "pm.project_settings_snapshot.v1", "schema_version": "1.0.0"},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-preview-extra-property",
+      "schema_ref": "#/$defs/settings_transaction_preview",
+      "record": {"record_type": "settings_transaction_preview", "schema_id": "pm.settings_transaction_preview.v1", "schema_version": "1.0.0", "unexpected": true},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-apply-wrong-command",
+      "schema_ref": "#/$defs/settings_transaction_apply_request",
+      "record": {"record_type": "settings_transaction_apply_request", "schema_id": "pm.settings_transaction_apply_request.v1", "schema_version": "1.0.0", "command_id": "cmd.settings.transaction.rollback"},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-export-includes-credentials",
+      "schema_ref": "#/$defs/settings_export_manifest",
+      "record": {"record_type": "settings_export_manifest", "schema_id": "pm.settings_export_manifest.v1", "schema_version": "1.0.0", "credential_material_included": true},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-route-short-escape-order",
+      "schema_ref": "#/$defs/settings_route_request",
+      "record": {"record_type": "settings_route_request", "schema_id": "pm.settings_route_request.v1", "schema_version": "1.0.0", "command_id": "cmd.settings.open", "route_id": "route-instance:bad", "project_id": null, "target": {"target_type": "manager", "setting_id": null, "manager_id": "doctor", "detail_id": null}, "return_contract": {"escape_order": ["return_to_opener"]}, "requested_at_utc": "2026-08-31T12:00:00Z"},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-owner-projection-runtime-owner",
+      "schema_ref": "#/$defs/settings_owner_projection",
+      "record": {"record_type": "settings_owner_projection", "schema_id": "pm.settings_owner_projection.v1", "schema_version": "1.0.0", "settings_is_runtime_owner": true},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-doctor-readiness-claim",
+      "schema_ref": "#/$defs/settings_doctor_projection",
+      "record": {"record_type": "settings_doctor_projection", "schema_id": "pm.settings_doctor_projection.v1", "schema_version": "1.0.0", "manager_id": "doctor", "readiness_claim": true},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-migration-auto-apply",
+      "schema_ref": "#/$defs/settings_migration_preview",
+      "record": {"record_type": "settings_migration_preview", "schema_id": "pm.settings_migration_preview.v1", "schema_version": "1.0.0", "auto_apply": true},
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-visible-state-runtime-owner",
+      "schema_ref": "#/$defs/settings_named_visible_state_projection",
+      "record": {
+        "record_type": "settings_named_visible_state_projection",
+        "schema_id": "pm.settings_named_visible_state_projection.v1",
+        "schema_version": "1.0.0",
+        "manager_id": "teacher-help",
+        "projection_kind": "teacher_help",
+        "owner_refs": ["Plans/assistant-chat-design.md"],
+        "visible_state_fields": ["availability", "teacher_mode", "context_source", "effective_persona"],
+        "route_ref": "route:settings/teacher-help",
+        "owner_action_policy": "owner_admitted_command_or_typed_route_only",
+        "settings_is_runtime_owner": true,
+        "raw_logs_included": false,
+        "negative_constraints": ["do_not_create_a_second_chat_owner"]
+      },
+      "expected_keyword": "const"
+    },
+    {
+      "case_id": "invalid-local-ui-action-domain-mutation",
+      "schema_ref": "#/$defs/settings_local_ui_action_payload",
+      "record": {
+        "record_type": "settings_local_ui_action_payload",
+        "schema_id": "pm.settings_local_ui_action_payload.v1",
+        "schema_version": "1.0.0",
+        "action_id": "settings.category.select",
+        "project_id": "project:demo",
+        "target_ref": "category:general",
+        "projection_generation": 3,
+        "domain_mutation_authorized": true,
+        "persistence_write_authorized": false,
+        "owner_operation_authorized": false
+      },
+      "expected_keyword": "const"
+    },
+    {
+      "case_id": "invalid-packet-command-native-handler-claim",
+      "schema_ref": "#/$defs/packet_command_disposition",
+      "record": {
+        "disposition": "reuse_canonical_command",
+        "replacement_command_ids": ["cmd.settings.open"],
+        "typed_local_ui_action_id": null,
+        "typed_local_payload_schema_ref": null,
+        "reason": "Invalid fixture attempts to promote canonical reuse into a native handler claim.",
+        "native_handler_claim": true
+      },
+      "expected_keyword": "const"
+    },
+    {
+      "case_id": "invalid-packet-command-denominator-incomplete",
+      "schema_ref": "#/$defs/packet_command_disposition_registry",
+      "record": {},
+      "expected_keyword": "minProperties"
+    },
+    {
+      "case_id": "invalid-concept-native-runtime-claim",
+      "schema_ref": "#/$defs/settings_concept_boundary",
+      "record": {"record_type": "settings_concept_boundary", "schema_id": "pm.settings_concept_boundary.v1", "schema_version": "1.0.0", "native_runtime_executed": true},
+      "expected_keyword": "required"
+    }
+  ]
+}

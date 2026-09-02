@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28983-L29060
+Source lines: L28987-L29066
 
-Source SHA256: `ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523`
+Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord identity and usage_event_ref normalized to object_kind = usage_event are the primary navigation and rollup identity; thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total.
+  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord and usage_event_ref remain the accounting and rollup identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total.
 gui_related: true
 gui_classification_reason: Defines visible Usage, Dashboard, settings, graph, orchestrator, and artifact rendering behavior.
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
@@ -72,12 +72,14 @@ preserved_exact_tokens:
   - hidden_subscription
   - usage_event_ref
   - object_kind = usage_event
+  - object_kind = usage_attempt
+  - attempt_id
   - antigravity_cli
   - agy
   - G1 credits
 negative_constraints:
   - Do not render missing, unknown, hidden, stale, disabled, not exposed, partial, failed, or unsupported values as zero.
-  - Do not treat thread_id, tier_id, timestamp, or run_id as primary Usage identity when usage_event_ref is available.
+  - Do not treat thread_id, tier_id, timestamp, or run_id as primary Usage identity when a canonical event or attempt selector is available.
   - Do not infer Antigravity usage, quota, credits, or countdowns from status/login/model probes.
   - Do not expose unredacted raw provider payloads in GUI debug views.
 owner_hints:

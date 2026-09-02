@@ -6,51 +6,140 @@
  *
  * Usage:
  *   node home_workspace_matrix.mjs --file PMConcept7.html \
- *     --outdir <evidence-dir> --modules <dir-with-playwright-core> \
- *     --server http://127.0.0.1:8765/
+ *     --outdir <evidence-dir> --modules <staged-module-root> \
+ *     --chromium <expected-direct-executable> \
+ *     --expected-artifact-sha256 <sha256> --expected-verifier-sha256 <sha256> \
+ *     --expected-helper-sha256 <sha256>
  *
- * The default transport is an http server, but --server also accepts a
- * file:// base (e.g. --server file:///abs/path/to/Concepts) for sandboxes
- * where Chromium's network service cannot run. Optional launch overrides:
- *   --chromium <path>   explicit Chromium executable; when given, the
- *                       sandbox-safe flags (--no-sandbox --disable-gpu
- *                       --disable-dev-shm-usage) are passed automatically.
- *   --video off         skip per-case video recording and tracing (the
- *                       ffmpeg encoders are the largest optional memory
- *                       consumers; use on memory-constrained runners).
+ * `--focused-smoke on` selects a separate noncertifying diagnostic schema.
+ * It uses the same seven bound inputs but can never emit passing admission.
  */
 
-import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
+import {
+  BROWSER_ONLY_BOUNDARY,
+  assertProvenanceAdmission,
+  parseStrictVerifierArgs,
+  prepareProvenanceRun
+} from './browser_verifier_provenance.mjs';
 
-const args = {};
-for (let index = 2; index < process.argv.length; index += 2) {
-  args[process.argv[index].replace(/^--/, '')] = process.argv[index + 1];
-}
-for (const required of ['file', 'outdir', 'modules']) {
-  if (!args[required]) {
-    console.error('missing --' + required);
-    process.exit(2);
-  }
-}
-
-const requireFromRuntime = createRequire(join(args.modules, 'noop.js'));
-const { chromium } = requireFromRuntime('playwright-core');
-const server = (args.server || 'http://127.0.0.1:8765/').replace(/\/$/, '');
-const url = server + '/' + args.file.replace(/^\//, '');
-const screenshotsDir = join(args.outdir, 'screenshots');
-const tracesDir = join(args.outdir, 'traces');
-const recordingsDir = join(args.outdir, 'recordings');
+const focusedSmokeRequested = process.argv.slice(2).includes('--focused-smoke');
+const digest = value => /^[0-9a-f]{64}$/.test(value);
+const optionSpec = {
+  file: { required: true },
+  outdir: { required: true },
+  modules: { required: true },
+  chromium: { required: true },
+  'expected-artifact-sha256': { required: true, validate: digest },
+  'expected-verifier-sha256': { required: true, validate: digest },
+  'expected-helper-sha256': { required: true, validate: digest },
+  'provenance-launch-receipt': { required: true },
+  'expected-launch-receipt-sha256': { required: true, validate: digest }
+};
+if (focusedSmokeRequested) optionSpec['focused-smoke'] = { required: true, enum: ['on'] };
+const cli = parseStrictVerifierArgs(process.argv, optionSpec);
+const args = cli.parsed_args;
+const focusedSmoke = focusedSmokeRequested && args['focused-smoke'] === 'on';
+const artifactPath = resolve(args.file);
+const bootTimeoutMs = 90000;
+const screenshotTimeoutMs = 120000;
+const screenshotPerformanceBudgetMs = 30000;
+const outputDir = resolve(args.outdir);
+const outputPath = join(outputDir, focusedSmoke ? 'home-workspace-focused-smoke-noncertifying.json' : 'home-workspace-matrix-results.json');
+const screenshotsDir = join(outputDir, 'screenshots');
+const tracesDir = join(outputDir, 'traces');
+const recordingsDir = join(outputDir, 'recordings');
 mkdirSync(screenshotsDir, { recursive: true });
 mkdirSync(tracesDir, { recursive: true });
 mkdirSync(recordingsDir, { recursive: true });
 
+let provenanceRun;
+let browser;
+try {
+  provenanceRun = await prepareProvenanceRun({
+    verifierUrl: import.meta.url,
+    artifactPath,
+    expectedArtifactSha256: args['expected-artifact-sha256'],
+    expectedVerifierSha256: args['expected-verifier-sha256'],
+    expectedHelperSha256: args['expected-helper-sha256'],
+    launchReceiptPath: args['provenance-launch-receipt'],
+    expectedLaunchReceiptSha256: args['expected-launch-receipt-sha256'],
+    modulesPath: args.modules,
+    chromiumPath: args.chromium,
+    command: cli,
+    effectiveConfig: {
+      verifier: 'home_workspace_matrix',
+      artifact_path: artifactPath,
+      outdir: outputDir,
+      mode: focusedSmoke ? 'focused_smoke_noncertifying' : 'full_certifying_matrix',
+      boot_timeout_ms: bootTimeoutMs,
+      screenshot_timeout_ms: screenshotTimeoutMs,
+      screenshot_performance_budget_ms: screenshotPerformanceBudgetMs,
+      video_recording: true,
+      service_workers: 'block',
+      certification_mode: !focusedSmoke
+    }
+  });
+  const { chromium } = provenanceRun.loadPlaywright();
+  if (!chromium) throw new Error('bound Playwright Chromium implementation is unavailable');
+  ({ browser } = await provenanceRun.launchChromium());
+} catch (error) {
+  let failureProvenance = provenanceRun?.envelope || null;
+  if (provenanceRun) {
+    try { failureProvenance = await provenanceRun.fail('bootstrap', error); }
+    catch (_failureError) {}
+  }
+  const failure = {
+    schema_id: focusedSmoke ? 'pm.home_workspace_focused_smoke_noncertifying_failure.v1' : 'pm.home_workspace_provenance_failure.v1',
+    disposition: 'provenance_preparation_failed',
+    generated_at_utc: new Date().toISOString(),
+    certification_boundary: focusedSmoke ? null : { ...BROWSER_ONLY_BOUNDARY },
+    execution_boundary: focusedSmoke ? {
+      evidence_class: 'noncertifying_focused_smoke',
+      browser_concept_exercised: false,
+      provenance_admission_eligible: false
+    } : { ...BROWSER_ONLY_BOUNDARY },
+    command: cli,
+    error: { kind: 'provenance-preparation', text: String(error?.stack || error) },
+    provenance: failureProvenance
+  };
+  writeFileSync(outputPath, JSON.stringify(failure, null, 2) + '\n');
+  console.log(JSON.stringify({ disposition: failure.disposition, result: outputPath }));
+  process.exit(1);
+}
+const url = provenanceRun.artifactUrl();
+
 const result = {
-  schema_id: 'pm.home_workspace_live_matrix.v1',
+  schema_id: focusedSmoke ? 'pm.home_workspace_focused_smoke_noncertifying.v1' : 'pm.home_workspace_live_matrix.v1',
   generated_at_utc: new Date().toISOString(),
   url,
   generated_artifact: args.file,
+  certification_boundary: focusedSmoke ? null : { ...BROWSER_ONLY_BOUNDARY },
+  execution_boundary: focusedSmoke ? {
+    evidence_class: 'noncertifying_focused_smoke',
+    browser_concept_exercised: true,
+    native_runtime_exercised: false,
+    provenance_admission_eligible: false,
+    production_receipt: null
+  } : { ...BROWSER_ONLY_BOUNDARY },
+  provenance_admission_eligible: !focusedSmoke,
+  provenance: provenanceRun.envelope,
+  run_identity: {
+    exercised_artifact_path: provenanceRun.envelope.artifact.resolved_path,
+    exercised_artifact_sha256: provenanceRun.envelope.artifact.sha256,
+    verifier_path: provenanceRun.envelope.verifier.resolved_path,
+    verifier_sha256: provenanceRun.envelope.verifier.sha256,
+    chrome_executable: provenanceRun.envelope.browser.executable.resolved_path,
+    chrome_version: provenanceRun.envelope.browser.cli_version,
+    command_argv: [process.execPath, provenanceRun.envelope.verifier.resolved_path, ...process.argv.slice(2)],
+    boot_timeout_ms: bootTimeoutMs,
+    screenshot_timeout_ms: screenshotTimeoutMs,
+    screenshot_performance_budget_ms: screenshotPerformanceBudgetMs,
+    focused_smoke: focusedSmoke,
+    execution_boundary: focusedSmoke ? 'noncertifying_focused_smoke' : 'deterministic_browser_concept_only'
+  },
   deterministic_context: {
     device_scale_factor: 1,
     locale: 'en-US',
@@ -60,6 +149,12 @@ const result = {
     clean_storage_per_case: true
   },
   checks: {},
+  preconditions: {
+    onboarding_dismissal: {
+      pass: null,
+      cases: []
+    }
+  },
   matrix: [],
   runtime_errors: [],
   visual_observations: []
@@ -77,41 +172,166 @@ function safeName(value) {
   return String(value).replace(/[^a-z0-9_-]+/gi, '-').toLowerCase();
 }
 
-const launchOptions = { headless: true };
-if (args.chromium) {
-  launchOptions.executablePath = args.chromium;
-  launchOptions.args = ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'];
+function boundedCaseId(value) {
+  const normalized = safeName(value).replace(/^-+|-+$/g, '') || 'home-case';
+  if (normalized.length <= 64) return normalized;
+  const suffix = createHash('sha256').update(String(value)).digest('hex').slice(0, 12);
+  return `${normalized.slice(0, 51)}-${suffix}`;
 }
-const videoDisabled = args.video === 'off';
-const browser = await chromium.launch(launchOptions);
+
+const pageProvenance = new WeakMap();
+function provenanceForPage(page) {
+  const binding = pageProvenance.get(page);
+  if (!binding) throw new Error('Home page is missing its pre-page provenance attachment');
+  return binding;
+}
+
+const videoDisabled = false;
+
+let browserFinalized = false;
+async function finalizeBrowserProvenance(noncertifyingReason = null) {
+  if (browserFinalized) return result.provenance;
+  try {
+    await provenanceRun.finalizeBeforeBrowserClose(browser);
+    await browser.close();
+    result.provenance = await provenanceRun.finalizeAfterBrowserClose();
+  } catch (error) {
+    result.runtime_errors.push({ case: 'provenance-finalize', errors: [{ kind: 'provenance', text: String(error?.stack || error) }] });
+    try { result.provenance = await provenanceRun.fail('finalize', error); }
+    catch (failureError) {
+      result.runtime_errors.push({ case: 'provenance-fail', errors: [{ kind: 'provenance', text: String(failureError?.stack || failureError) }] });
+      result.provenance = provenanceRun.envelope;
+    }
+  }
+  if (noncertifyingReason) {
+    result.provenance.admission = {
+      pass: false,
+      failures: [...new Set([...(result.provenance.admission?.failures || []), noncertifyingReason])]
+    };
+  }
+  browserFinalized = true;
+  return result.provenance;
+}
+
+async function navigateAndWaitForHome(page, phase, navigate) {
+  const startedAt = Date.now();
+  try {
+    await navigate(bootTimeoutMs);
+  } catch (error) {
+    throw new Error(phase + ' navigation failed before Home became ready within ' + bootTimeoutMs + 'ms: ' + String(error && error.message || error));
+  }
+  const remainingMs = bootTimeoutMs - (Date.now() - startedAt);
+  if (remainingMs <= 0) {
+    throw new Error(phase + ' exhausted the ' + bootTimeoutMs + 'ms boot deadline before Home readiness could be checked');
+  }
+  try {
+    await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: remainingMs });
+  } catch (error) {
+    throw new Error(phase + ' did not expose window.PM_HOME_WORKSPACE within the total ' + bootTimeoutMs + 'ms boot deadline: ' + String(error && error.message || error));
+  }
+  const ready = await page.evaluate(() => Boolean(window.PM_HOME_WORKSPACE));
+  if (!ready) throw new Error(phase + ' readiness probe returned false');
+  return { phase, elapsed_ms: Date.now() - startedAt, timeout_ms: bootTimeoutMs };
+}
+
+async function dismissProductOnboarding(page, caseName, phase) {
+  const before = await page.evaluate(() => {
+    const root = document.getElementById('pm7-onboarding');
+    const api = window.PM7_ONBOARDING_CINEMATIC;
+    return {
+      present: Boolean(root),
+      hidden: root ? root.hidden : true,
+      data_open: root ? root.getAttribute('data-open') : null,
+      snapshot: api && typeof api.snapshot === 'function' ? api.snapshot() : null
+    };
+  });
+  let action = 'already_inactive';
+  if (before.present && (!before.hidden || before.data_open === 'true' || (before.snapshot && before.snapshot.open))) {
+    const close = page.locator('#pm7-onboarding [data-ui-action-id="ui.onboarding.close"]');
+    if (await close.count() !== 1) throw new Error(caseName + ' onboarding close control is not uniquely available');
+    await close.click({ timeout: Math.min(bootTimeoutMs, 30000) });
+    action = 'ui.onboarding.close';
+    await page.waitForFunction(() => {
+      const root = document.getElementById('pm7-onboarding');
+      const api = window.PM7_ONBOARDING_CINEMATIC;
+      const snapshot = api && typeof api.snapshot === 'function' ? api.snapshot() : null;
+      return Boolean(root && root.hidden && root.getAttribute('data-open') !== 'true' && (!snapshot || snapshot.open === false));
+    }, null, { timeout: Math.min(bootTimeoutMs, 30000) });
+  }
+  const after = await page.evaluate(() => {
+    const root = document.getElementById('pm7-onboarding');
+    const resume = document.getElementById('pm7-onboarding-resume');
+    const api = window.PM7_ONBOARDING_CINEMATIC;
+    return {
+      present: Boolean(root),
+      hidden: root ? root.hidden : true,
+      data_open: root ? root.getAttribute('data-open') : null,
+      resume_visible: Boolean(resume && !resume.hidden && resume.offsetParent),
+      snapshot: api && typeof api.snapshot === 'function' ? api.snapshot() : null
+    };
+  });
+  const pass = after.hidden && after.data_open !== 'true' && (!after.snapshot || after.snapshot.open === false) &&
+    (action !== 'ui.onboarding.close' || (after.snapshot && after.snapshot.suspended === true));
+  const evidence = { case: caseName, phase, action, before, after, pass };
+  result.preconditions.onboarding_dismissal.cases.push(evidence);
+  if (!pass) throw new Error(caseName + ' onboarding dismissal/suspension precondition failed during ' + phase);
+  return evidence;
+}
+
+async function gotoHome(page, caseName) {
+  const binding = provenanceForPage(page);
+  const navigation = await navigateAndWaitForHome(page, 'initial_load', timeout =>
+    binding.guard.gotoBound(page, {
+      navigation_id: `${binding.caseId}:initial`,
+      url: provenanceRun.artifactUrl({ case: binding.caseId }),
+      wait_until: 'load',
+      timeout_ms: timeout
+    })
+  );
+  const onboarding = await dismissProductOnboarding(page, caseName, 'initial_load');
+  return { navigation, onboarding };
+}
+
+async function reloadHome(page, caseName, phase = 'reload') {
+  const binding = provenanceForPage(page);
+  const navigation = await navigateAndWaitForHome(page, phase, timeout => binding.guard.reloadBound(page, {
+    navigation_id: `${binding.caseId}:${safeName(phase)}`,
+    wait_until: 'load',
+    timeout_ms: timeout
+  }));
+  const onboarding = await dismissProductOnboarding(page, caseName, phase);
+  return { navigation, onboarding };
+}
+
+async function triggerNavigationAndWaitForHome(page, caseName, phase, trigger) {
+  const binding = provenanceForPage(page);
+  const navigation = await navigateAndWaitForHome(page, phase, timeout => binding.guard.triggerBoundNavigation(page, {
+    navigation_id: `${binding.caseId}:${safeName(phase)}`,
+    target_url: provenanceRun.artifactUrl({ case: binding.caseId }),
+    trigger,
+    wait_until: 'load',
+    timeout_ms: timeout
+  }));
+  const onboarding = await dismissProductOnboarding(page, caseName, phase);
+  return { navigation, onboarding };
+}
 
 async function newCase(name, options = {}) {
   const contextErrors = [];
-  const context = await browser.newContext({
+  const contextConfig = {
     viewport: options.viewport || { width: 1280, height: 800 },
     deviceScaleFactor: 1,
     locale: 'en-US',
     timezoneId: 'America/New_York',
     colorScheme: options.colorScheme || 'dark',
     reducedMotion: options.reducedMotion ? 'reduce' : 'no-preference',
-    recordVideo: options.recordVideo ? { dir: recordingsDir, size: options.viewport || { width: 1280, height: 800 } } : undefined
-  });
-  await context.route('**/*', async route => {
-    const requestUrl = route.request().url();
-    if (requestUrl.startsWith(server) || requestUrl.startsWith('data:') || requestUrl.startsWith('blob:') || requestUrl === 'about:blank') {
-      await route.continue();
-    } else {
-      await route.fulfill({ status: 204, contentType: 'text/plain', body: '' });
-    }
-  });
-  const page = await context.newPage();
-  page.on('console', message => {
-    if (message.type() === 'error') contextErrors.push({ kind: 'console', text: message.text().slice(0, 500) });
-  });
-  page.on('pageerror', error => {
-    contextErrors.push({ kind: 'pageerror', text: String(error).slice(0, 500) });
-  });
-  await page.addInitScript(seed => {
+    ...(options.recordVideo ? { recordVideo: { dir: recordingsDir, size: options.viewport || { width: 1280, height: 800 } } } : {}),
+    serviceWorkers: 'block',
+    acceptDownloads: false
+  };
+  const caseId = boundedCaseId(name);
+  const { context, guard } = await provenanceRun.createBoundContext(browser, { case_id: caseId, context_config: contextConfig });
+  await context.addInitScript(seed => {
     try {
       if (sessionStorage.getItem('__pm_home_case_seeded') !== '1') {
         localStorage.clear();
@@ -128,13 +348,18 @@ async function newCase(name, options = {}) {
     layout: options.layout || null,
     legacyLayout: options.legacyLayout || null
   });
-  /* 180s: the artifact loads in ~1s normally, but memory-contended runners
-     (concurrent harness runs + the long-lived driver) can stall first paint
-     far past 60s; a taller cap turns a fatal crash into a slow case */
-  await page.goto(url + '?pm-home-case=' + encodeURIComponent(name), { waitUntil: 'load', timeout: 180000 });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+  const page = await context.newPage();
+  await guard.instrumentPage(page);
+  pageProvenance.set(page, { guard, caseId });
+  page.on('console', message => {
+    if (message.type() === 'error') contextErrors.push({ kind: 'console', text: message.text().slice(0, 500) });
+  });
+  page.on('pageerror', error => {
+    contextErrors.push({ kind: 'pageerror', text: String(error).slice(0, 500) });
+  });
+  const boot = await gotoHome(page, name);
   await page.waitForTimeout(350);
-  return { context, page, errors: contextErrors };
+  return { context, page, guard, caseId, errors: contextErrors, boot };
 }
 
 async function closeCase(caseState, name) {
@@ -202,9 +427,15 @@ async function clickTerminalAction(page, action) {
 }
 
 async function ensureAllOpen(page) {
-  await openPanel(page, 3);
-  await openPanel(page, 4);
-  const chatVisible = await page.evaluate(() => window.PM_HOME_WORKSPACE.layout.surfaces.find(surface => surface.surface_instance_id === 'chat').visible);
+  const hiddenPanels = await page.evaluate(() => [2, 3, 4].filter(number => {
+    const surface = window.PM_HOME_WORKSPACE.layout.surfaces.find(item => item.surface_instance_id === 'editor_panel_' + number);
+    return !surface || !surface.visible;
+  }));
+  for (const panel of hiddenPanels) await openPanel(page, panel);
+  const chatVisible = await page.evaluate(() => {
+    const surface = window.PM_HOME_WORKSPACE.layout.surfaces.find(item => item.surface_instance_id === 'chat');
+    return Boolean(surface && surface.visible);
+  });
   if (!chatVisible) await page.locator('.activity-bar .icon[title="Chat"]').click();
   await page.waitForTimeout(100);
 }
@@ -248,6 +479,17 @@ function handleStartPoint(box) {
   return { x: box.x + box.width * 0.72, y: box.y + box.height * 0.28 };
 }
 
+/* A committed/cancelled move deliberately keeps its lifted clone for the
+   release animation (up to the 420ms fallback in settleClone). Starting the
+   next gesture while that clone still exists races the post-drop chrome/
+   geometry settle and also contaminates broad [data-pm-home-surface] reads:
+   the clone retains the source surface attribute on its root. */
+async function waitForMoveReleaseSettle(page) {
+  await page.waitForFunction(() =>
+    !document.querySelector('.pm-home-lifted, #pm-home-drop-placeholder') &&
+    !document.body.classList.contains('pm-home-dragging'), null, { timeout: 2000 });
+}
+
 async function pointerGesture(page, selector, target, finish = 'up') {
   const box = await page.locator(selector).first().boundingBox();
   if (!box) throw new Error('missing pointer target ' + selector);
@@ -271,6 +513,7 @@ async function pointerGesture(page, selector, target, finish = 'up') {
     await page.mouse.up();
   }
   await page.waitForTimeout(130);
+  await waitForMoveReleaseSettle(page);
 }
 
 /* Drag onto the LIVE layout. The centre-screen drop-target rail is retired --
@@ -309,6 +552,7 @@ async function pointerGestureToDropTarget(page, selector, host) {
   await page.waitForTimeout(160);
   await page.mouse.up();
   await page.waitForTimeout(150);
+  await waitForMoveReleaseSettle(page);
 }
 
 /* Deterministic layout setup drives the grip's KEYBOARD path. That path is now
@@ -376,6 +620,80 @@ async function runInteraction(name, body, options = {}) {
     trace: tracePath
   }));
   await closeCase(caseState, name);
+}
+
+try {
+if (focusedSmoke) {
+  let caseState = null;
+  let proof = null;
+  let errorText = null;
+  try {
+    caseState = await newCase('focused-onboarding-home');
+    const page = caseState.page;
+    await page.locator('#pm-home-more-btn').click({ timeout: 30000 });
+    const menuVisible = await page.locator('#pm-home-more-menu').isVisible();
+    await page.keyboard.press('Escape');
+    const reload = await reloadHome(page, 'focused-onboarding-home', 'focused_reload');
+    const afterReload = await page.evaluate(() => {
+      const root = document.getElementById('pm7-onboarding');
+      const api = window.PM7_ONBOARDING_CINEMATIC;
+      return {
+        home_ready: Boolean(window.PM_HOME_WORKSPACE),
+        onboarding_hidden: root ? root.hidden : true,
+        onboarding_open: api && typeof api.snapshot === 'function' ? api.snapshot().open : null
+      };
+    });
+    await page.locator('#pm-home-more-btn').click({ timeout: 30000 });
+    await page.waitForTimeout(360);
+    const resetRow = page.locator('#pm-home-more-menu [data-pm-home-top-action="reset-layout"]');
+    const resetRowAvailable = await resetRow.count() === 1;
+    const commandTriggeredReset = resetRowAvailable ? await triggerNavigationAndWaitForHome(
+      page,
+      'focused-onboarding-home',
+      'focused_command_triggered_reset_reload',
+      () => resetRow.click()
+    ) : null;
+    const afterReset = await page.evaluate(() => {
+      const root = document.getElementById('pm7-onboarding');
+      const api = window.PM7_ONBOARDING_CINEMATIC;
+      return {
+        home_ready: Boolean(window.PM_HOME_WORKSPACE),
+        onboarding_hidden: root ? root.hidden : true,
+        onboarding_open: api && typeof api.snapshot === 'function' ? api.snapshot().open : null
+      };
+    });
+    proof = {
+      initial_boot: caseState.boot,
+      home_menu_reachable: menuVisible,
+      reload,
+      after_reload: afterReload,
+      reset_row_available: resetRowAvailable,
+      command_triggered_reset: commandTriggeredReset,
+      after_reset: afterReset,
+      pass: menuVisible && afterReload.home_ready && afterReload.onboarding_hidden && afterReload.onboarding_open !== true &&
+        resetRowAvailable && afterReset.home_ready && afterReset.onboarding_hidden && afterReset.onboarding_open !== true
+    };
+  } catch (error) {
+    errorText = String(error && error.stack || error);
+    proof = { pass: false, error: errorText };
+  }
+  if (caseState) await closeCase(caseState, 'focused-onboarding-home');
+  result.preconditions.onboarding_dismissal.pass = result.preconditions.onboarding_dismissal.cases.length >= 3 &&
+    result.preconditions.onboarding_dismissal.cases.every(item => item.pass);
+  await finalizeBrowserProvenance('focused_smoke_noncertifying_mode');
+  result.focused_smoke = proof;
+  result.browser_admission = { pass: false, failures: ['focused_smoke_noncertifying_mode'] };
+  result.summary = {
+    mode: 'focused_smoke_noncertifying',
+    status: proof && proof.pass && result.preconditions.onboarding_dismissal.pass && result.runtime_errors.length === 0 ? 'PASS' : 'FAIL',
+    full_matrix_executed: false,
+    provenance_admission_eligible: false,
+    browser_admission_pass: false,
+    preserved_full_contract: { check_count: 32, matrix_count: 72 }
+  };
+  writeFileSync(outputPath, JSON.stringify(result, null, 2) + '\n');
+  console.log(JSON.stringify(result.summary));
+  process.exit(result.summary.status === 'PASS' ? 0 : 1);
 }
 
 await runInteraction('compact_menu_exact_inventory_and_geometry', async page => {
@@ -455,6 +773,7 @@ await runInteraction('compact_menu_keyboard_hover_bridge_and_focus_restore', asy
 
 await runInteraction('four_editor_panels_idempotent_stable_identity', async page => {
   const before = await state(page);
+  await openPanel(page, 2);
   await openPanel(page, 3);
   await openPanel(page, 4);
   await openPanel(page, 3);
@@ -498,20 +817,83 @@ await runInteraction('browser_visible_routing_all_four_panels_one_session', asyn
   }
   const finalState = await state(page);
   const createdEvents = targets.flatMap(item => item.event_types).filter(eventType => eventType === 'browser.session.created');
+  const intentionalNoop = targets.find(item => item.panel === 1);
+  const changedTargets = targets.filter(item => item.panel !== 1);
   return {
     pass: targets.every(item => item.mounted === 'editor_panel_' + item.panel &&
       item.target_panel === 'editor_panel_' + item.panel &&
-      item.command_delta === 1 && item.persist_delta === 1 &&
-      item.event_types.includes('workspace.layout_changed') &&
+      item.command_delta === 1 &&
       item.event_types.includes('browser.session.state_changed') &&
-      item.event_types.every(eventType => ['workspace.layout_changed', 'browser.session.created', 'browser.session.state_changed'].includes(eventType))) &&
-      createdEvents.length === 1 &&
+      item.event_types.every(eventType => ['workspace.layout_changed', 'browser.session.state_changed'].includes(eventType))) &&
+      intentionalNoop && intentionalNoop.persist_delta === 0 &&
+      !intentionalNoop.event_types.includes('workspace.layout_changed') &&
+      changedTargets.every(item => item.persist_delta === 1 &&
+      item.event_types.includes('workspace.layout_changed') &&
+      item.event_types.includes('browser.session.state_changed')) &&
+      createdEvents.length === 0 && finalState.browser.created_event_emitted === true &&
       new Set(targets.map(item => item.browser_session_id)).size === 1 &&
       finalState.identity_integrity.ok,
     targets,
+    intentional_already_active_noop: intentionalNoop,
     browser: finalState.browser,
     identity_integrity: finalState.identity_integrity
   };
+});
+
+await runInteraction('browser_owner_tab_group_settles_without_reseat_churn', async page => {
+  return page.evaluate(async () => {
+    const preview = document.querySelector('[data-pm-home-browser-tab="editor_panel_1"]');
+    const automation = document.querySelector('[data-pm-home-automation-tab="editor_panel_1"]');
+    const strip = preview && preview.closest('.editor-tabs');
+    const anchor = strip && (strip.querySelector('.pm-ed-overflow') || strip.querySelector('.pane-tabbar-actions'));
+    const labels = node => Array.from(node ? node.children : []).map(child => {
+      if (child === preview) return 'Preview';
+      if (child === automation) return 'Automation';
+      if (child === anchor) return 'overflow/actions anchor';
+      return child.id || child.getAttribute('data-file') || child.className || child.tagName;
+    });
+    const orderBefore = labels(strip);
+    const stableBefore = Boolean(strip && preview && automation && anchor &&
+      preview.parentNode === strip && automation.parentNode === strip &&
+      preview.nextElementSibling === automation && automation.nextElementSibling === anchor);
+    const relevantMutations = [];
+    const observer = strip ? new MutationObserver(records => {
+      records.forEach(record => {
+        const added = Array.from(record.addedNodes);
+        const removed = Array.from(record.removedNodes);
+        if (added.includes(preview) || added.includes(automation) ||
+            removed.includes(preview) || removed.includes(automation)) {
+          relevantMutations.push({
+            added_preview: added.includes(preview),
+            added_automation: added.includes(automation),
+            removed_preview: removed.includes(preview),
+            removed_automation: removed.includes(automation)
+          });
+        }
+      });
+    }) : null;
+    if (observer) observer.observe(strip, { childList: true });
+    for (let frame = 0; frame < 24; frame += 1) {
+      await new Promise(resolve => requestAnimationFrame(resolve));
+    }
+    await new Promise(resolve => setTimeout(resolve, 80));
+    if (observer) observer.disconnect();
+    const orderAfter = labels(strip);
+    const stableAfter = Boolean(strip && preview && automation && anchor &&
+      preview.parentNode === strip && automation.parentNode === strip &&
+      preview.nextElementSibling === automation && automation.nextElementSibling === anchor);
+    return {
+      pass: stableBefore && stableAfter && relevantMutations.length === 0,
+      stable_before: stableBefore,
+      stable_after: stableAfter,
+      relevant_child_list_mutation_count: relevantMutations.length,
+      relevant_child_list_mutations: relevantMutations.slice(0, 12),
+      order_before: orderBefore,
+      order_after: orderAfter,
+      observed_frames: 24,
+      settle_tail_ms: 80
+    };
+  });
 });
 
 await runInteraction('file_manager_open_in_panel_visible_submenu_all_four', async page => {
@@ -725,6 +1107,11 @@ await runInteraction('surface_move_all_hosts_via_grip_keyboard', async page => {
 });
 
 await runInteraction('drag_one_commit_and_all_cancellation_paths', async page => {
+  const panel2WasVisible = await page.evaluate(() => {
+    const surface = window.PM_HOME_WORKSPACE.layout.surfaces.find(item => item.surface_instance_id === 'editor_panel_2');
+    return Boolean(surface && surface.visible);
+  });
+  if (!panel2WasVisible) await openPanel(page, 2);
   const handle = '[data-pm-home-handle][data-pm-home-surface-id="dashboard"]';
   const beforeMove = await state(page);
   await pointerGestureToDropTarget(page, handle, 'dock_left');
@@ -742,6 +1129,25 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
   const reflow = await (async () => {
     const box = await page.locator(handle).first().boundingBox();
     const pick = handleStartPoint(box);
+    const gripHit = await page.evaluate(({ selector, x, y }) => {
+      const grip = document.querySelector(selector);
+      const hit = document.elementFromPoint(x, y);
+      const host = grip?.closest('[data-pm-home-host]');
+      const surface = grip?.closest('[data-pm-home-surface]');
+      const hostRect = host?.getBoundingClientRect();
+      const surfaceRect = surface?.getBoundingClientRect();
+      return {
+        unoccluded: hit === grip || Boolean(hit && hit.closest('[data-pm-home-handle]') === grip),
+        hit_tag: hit?.tagName || null,
+        hit_class: String(hit?.className || ''),
+        hit_surface: hit?.closest?.('[data-pm-home-surface]')?.getAttribute('data-pm-home-surface') || null,
+        grip_surface: surface?.getAttribute('data-pm-home-surface') || null,
+        host: host?.getAttribute('data-pm-home-host') || null,
+        host_right: hostRect?.right || null,
+        surface_right: surfaceRect?.right || null,
+        overflow_right_px: hostRect && surfaceRect ? Math.max(0, surfaceRect.right - hostRect.right) : null
+      };
+    }, { selector: handle, x: pick.x, y: pick.y });
     await page.mouse.move(pick.x, pick.y);
     await page.mouse.down();
     await page.mouse.move(pick.x + 3, pick.y + 3);
@@ -750,7 +1156,7 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     // move. The board reflowing is the claim; which surface moves is not.
     const readAll = () => page.evaluate(() => {
       const out = {};
-      document.querySelectorAll('[data-pm-home-surface]').forEach(el => {
+      document.querySelectorAll('#pm-home-workspace [data-pm-home-host] > [data-pm-home-surface]').forEach(el => {
         out[el.getAttribute('data-pm-home-surface')] = { left: el.offsetLeft, top: el.offsetTop };
       });
       return out;
@@ -764,7 +1170,7 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
       const ph = document.getElementById('pm-home-drop-placeholder');
       const positions = {};
       let flipped = false;
-      document.querySelectorAll('[data-pm-home-surface]').forEach(el => {
+      document.querySelectorAll('#pm-home-workspace [data-pm-home-host] > [data-pm-home-surface]').forEach(el => {
         positions[el.getAttribute('data-pm-home-surface')] = { left: el.offsetLeft, top: el.offsetTop };
         if (getComputedStyle(el).transform !== 'none') flipped = true;
       });
@@ -875,7 +1281,9 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     await page.keyboard.press('Escape');
     await page.mouse.up();
     await page.waitForTimeout(150);
+    await waitForMoveReleaseSettle(page);
     return {
+      grip_hit: gripHit,
       lifted: during.lifted,
       placeholder_in_host: during.placeholder_in_host,
       flip_transform: during.flip_transform,
@@ -890,6 +1298,10 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
       same_point_childlist_mutations: jitterMutations
     };
   })();
+  /* The extra sibling exists only to make the positional placeholder probe
+     meaningful. Restore the original case topology before exercising the
+     unchanged-drop and cancellation contracts. */
+  if (!panel2WasVisible) await surfaceAction(page, 'editor_panel_2', 'close-panel');
 
   const beforeUnchanged = await state(page);
   await pointerGestureToDropTarget(page, handle, 'dock_left');
@@ -997,6 +1409,7 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
   return {
     pass: moveProof.host === 'dock_left' && moveProof.command_delta === 1 && moveProof.persist_delta === 1 && moveProof.preview_delta > 0 &&
       focusedDragPass &&
+      reflow.grip_hit.unoccluded && reflow.grip_hit.overflow_right_px <= 1 &&
       reflow.lifted === 1 && reflow.placeholder_in_host && reflow.neighbour_reflowed &&
       reflow.placeholder_follow.followed && (!reflow.gap_never_floats || reflow.gap_never_floats.ok) &&
       reflow.same_point_childlist_mutations === 0 &&
@@ -1016,8 +1429,9 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
 }, { recordVideo: true });
 
 await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async page => {
-  /* -- Adjacent-PAIR pixel transfer, on the roomy default layout (three
-     home_main surfaces). Dragging the divider between A and B by +200px must
+  /* -- Adjacent-PAIR pixel transfer. Open panel 2 to establish the roomy
+     three-surface row, then derive A, B, and the non-adjacent sibling from the
+     live DOM instead of assuming a factory ordering. A +200px drag must
      move exactly that pair (+200/-200), leave the non-adjacent surface where
      it was, and commit ONE skip_render resize naming BOTH pair members. The
      pre-rebuild defect diluted the same drag across every flex sibling
@@ -1029,9 +1443,22 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
     });
     return out;
   });
+  const panel2Visible = await page.evaluate(() => {
+    const surface = window.PM_HOME_WORKSPACE.layout.surfaces.find(item => item.surface_instance_id === 'editor_panel_2');
+    return Boolean(surface && surface.visible);
+  });
+  if (!panel2Visible) await openPanel(page, 2);
+  const liveRow = await page.evaluate(() => window.PM_HOME_WORKSPACE.layout.surfaces
+    .filter(surface => surface.visible && surface.host === 'home_main')
+    .sort((a, b) => a.slot_index - b.slot_index)
+    .map(surface => surface.surface_instance_id));
+  if (liveRow.length < 3) throw new Error('adjacent-pair resize needs at least three live home_main siblings');
+  const pairA = liveRow[0];
+  const pairB = liveRow[1];
+  const otherIds = liveRow.slice(2);
   const pairBefore = await mainWidths();
   const pairState = await state(page);
-  const divider = page.locator('[data-pm-home-resizer="editor_panel_1"]:not([data-pm-home-resizer-corner])');
+  const divider = page.locator('[data-pm-home-resizer="' + pairA + '"]:not([data-pm-home-resizer-corner])');
   const dividerBox = await divider.boundingBox();
   await page.mouse.move(dividerBox.x + dividerBox.width / 2, dividerBox.y + dividerBox.height / 2);
   await page.mouse.down();
@@ -1045,22 +1472,25 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
   const pairAfterState = await state(page);
   const pairCommand = pairAfterState.commands.at(-1);
   const pairCheck = {
+    live_row: liveRow,
+    adjacent_pair: [pairA, pairB],
+    non_adjacent: otherIds,
     before: pairBefore,
     at_mouseup: pairAtMouseup,
     settled: pairSettled,
-    delta_a: pairAtMouseup.editor_panel_1 - pairBefore.editor_panel_1,
-    delta_b: pairAtMouseup.editor_panel_2 - pairBefore.editor_panel_2,
-    delta_other: pairAtMouseup.dashboard - pairBefore.dashboard,
+    delta_a: pairAtMouseup[pairA] - pairBefore[pairA],
+    delta_b: pairAtMouseup[pairB] - pairBefore[pairB],
+    delta_others: Object.fromEntries(otherIds.map(id => [id, pairAtMouseup[id] - pairBefore[id]])),
     command_delta: pairAfterState.metrics.commandCount - pairState.metrics.commandCount,
     command_id: pairCommand && pairCommand.command_id,
     command_affected: pairCommand && pairCommand.affected_surface_instance_ids,
     settle_drift: Math.max(...Object.keys(pairAtMouseup).map(id => Math.abs(pairSettled[id] - pairAtMouseup[id])))
   };
   const pairPass = Math.abs(pairCheck.delta_a - 200) <= 2 && Math.abs(pairCheck.delta_b + 200) <= 2 &&
-    Math.abs(pairCheck.delta_other) <= 2 && pairCheck.settle_drift <= 1 &&
+    Object.values(pairCheck.delta_others).every(delta => Math.abs(delta) <= 2) && pairCheck.settle_drift <= 1 &&
     pairCheck.command_delta === 1 && pairCheck.command_id === 'cmd.workspace_layout.resize_surface' &&
     Array.isArray(pairCheck.command_affected) &&
-    pairCheck.command_affected.includes('editor_panel_1') && pairCheck.command_affected.includes('editor_panel_2');
+    pairCheck.command_affected.includes(pairA) && pairCheck.command_affected.includes(pairB);
 
   await ensureAllOpen(page);
   const selectors = await page.locator('[data-pm-home-resizer]:visible').evaluateAll(elements => elements.map(element => ({
@@ -1101,14 +1531,46 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
        right to record the intent anyway (it applies once room returns). Such a
        surface is excused, but at least one surface must demonstrate real
        movement or the case has proved nothing. */
-    const atFloor = await page.evaluate(id => {
+    const floorEvidence = await page.evaluate(({ id, orientation }) => {
       const el = document.querySelector('[data-pm-home-surface="' + id + '"]');
-      if (!el || !el.parentElement) return false;
+      if (!el || !el.parentElement) return {
+        at_floor: false,
+        rendered_main_axis_px: null,
+        computed_min_main_axis_css: null,
+        computed_min_main_axis_px: null,
+        rendered_at_computed_minimum: false,
+        host_oversubscribed: false
+      };
       const host = el.parentElement;
+      const rect = el.getBoundingClientRect();
+      const styles = getComputedStyle(el);
+      const changesWidth = orientation === 'vertical';
+      const renderedPx = changesWidth ? rect.width : rect.height;
+      const computedMinCss = changesWidth ? styles.minWidth : styles.minHeight;
+      let computedMinPx = parseFloat(computedMinCss);
+      /* Chromium normally resolves min(100%, 260px) to px here. Keep the
+         evidence correct if an engine preserves the functional notation. */
+      if (!Number.isFinite(computedMinPx)) {
+        const candidates = Array.from(computedMinCss.matchAll(/(-?\d+(?:\.\d+)?)(px|%)/g), match =>
+          match[2] === '%' ? Number(match[1]) / 100 * (changesWidth ? host.clientWidth : host.clientHeight) : Number(match[1]));
+        if (candidates.length) {
+          computedMinPx = /^\s*max\(/.test(computedMinCss) ? Math.max(...candidates) : Math.min(...candidates);
+        }
+      }
+      const renderedAtComputedMinimum = Number.isFinite(computedMinPx) && computedMinPx > 0 &&
+        renderedPx <= computedMinPx + 2;
       /* An over-subscribed host has no free space to redistribute, so nothing in
          it can grow or shrink no matter what the model records. */
-      return host.scrollWidth > host.clientWidth + 2 || host.scrollHeight > host.clientHeight + 2;
-    }, item.surface_id);
+      const hostOversubscribed = host.scrollWidth > host.clientWidth + 2 || host.scrollHeight > host.clientHeight + 2;
+      return {
+        at_floor: renderedAtComputedMinimum || hostOversubscribed,
+        rendered_main_axis_px: Math.round(renderedPx),
+        computed_min_main_axis_css: computedMinCss,
+        computed_min_main_axis_px: Number.isFinite(computedMinPx) ? computedMinPx : null,
+        rendered_at_computed_minimum: renderedAtComputedMinimum,
+        host_oversubscribed: hostOversubscribed
+      };
+    }, { id: item.surface_id, orientation: item.orientation });
     checks.push({
       surface_id: item.surface_id,
       orientation: item.orientation,
@@ -1118,7 +1580,8 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
       geometry_before: geomBefore,
       geometry_after: geomAfter,
       geometry_changed: moved,
-      clamped_at_minimum: atFloor
+      clamped_at_minimum: floorEvidence.at_floor,
+      minimum_evidence: floorEvidence
     });
   }
   const firstSelector = selectors.length ? '[data-pm-home-resizer][data-pm-home-surface-id="' + selectors[0].surface_id + '"]' : null;
@@ -1278,8 +1741,7 @@ await runInteraction('topbar_reset_layout_row', async page => {
       } catch (error) {}
     });
   });
-  await row.click();
-  await page.waitForFunction(() => !window.__pm_pre_reset && Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 20000 });
+  await triggerNavigationAndWaitForHome(page, 'topbar_reset_layout_row', 'command_triggered_reset_reload', () => row.click());
   await page.waitForTimeout(350);
   const preReload = await page.evaluate(() => ({
     last_command_id: sessionStorage.getItem('__pm_reset_case_cmd')
@@ -1450,8 +1912,7 @@ await runInteraction('boot_never_floating', async page => {
     const record = JSON.parse(localStorage.getItem(window.PM_HOME_WORKSPACE.storage_key));
     return record.surfaces.filter(surface => surface.host === 'floating').map(surface => surface.surface_instance_id);
   });
-  await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+  await reloadHome(page, 'boot_never_floating', 'boot_demotion_reload');
   await page.waitForTimeout(350);
   const after = await state(page);
   const demoteReceipt = after.receipts.find(record => record.command_id === 'storage.boot_demote_floating');
@@ -1496,6 +1957,7 @@ await runInteraction('boot_never_floating', async page => {
    persisted layout (tiny committed bases) to the container at boot -- the row
    self-heals instead of rendering an unclaimable void. */
 await runInteraction('dead_space_self_heal', async page => {
+  await ensureAllOpen(page);
   await page.evaluate(() => {
     const home = window.PM_HOME_WORKSPACE;
     const record = JSON.parse(localStorage.getItem(home.storage_key)) || home.layout;
@@ -1504,8 +1966,7 @@ await runInteraction('dead_space_self_heal', async page => {
     });
     localStorage.setItem(home.storage_key, JSON.stringify(record));
   });
-  await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+  await reloadHome(page, 'dead_space_self_heal', 'normalization_reload');
   await page.waitForTimeout(350);
   const geometry = await page.evaluate(() => {
     const host = document.querySelector('[data-pm-home-host="home_main"]');
@@ -1557,11 +2018,7 @@ await runInteraction('dead_space_self_heal', async page => {
    (grid areas "top top right" / "left main right" / "bottom bottom right");
    the top and bottom docks end left of the right column. */
 await runInteraction('chat_full_height', async page => {
-  const chatVisible = await page.evaluate(() => window.PM_HOME_WORKSPACE.layout.surfaces.find(surface => surface.surface_instance_id === 'chat').visible);
-  if (!chatVisible) {
-    await page.locator('.activity-bar .icon[title="Chat"]').click();
-    await page.waitForTimeout(250);
-  }
+  await ensureAllOpen(page);
   await moveSurfaceTo(page, 'editor_panel_2', 'dock_top');
   const geometry = await page.evaluate(() => {
     const ws = document.getElementById('pm-home-workspace').getBoundingClientRect();
@@ -1618,16 +2075,27 @@ await runInteraction('panel34_open_renders_content', async page => {
     const laid = Array.from(pane.querySelectorAll('.editor-tabs .tab[data-file]')).filter(tab => tab.style.display !== 'none' && tab.getBoundingClientRect().width > 0);
     return laid.length >= 2;
   }, null, { timeout: 10000 });
-  const beforeSwitch = await page.evaluate(() => {
+  const panelOneOwner = await state(page);
+  const ownerBufferId = panelOneOwner.identities.editors.editor_panel_1.active_buffer_id;
+  const ownerFile = String(ownerBufferId || '').replace(/^buffer:/, '');
+  const beforeSwitch = await page.evaluate(ownerPath => {
     const pane = document.querySelector('#editorPane1');
     const active = pane.querySelector('.editor-tabs .tab.active');
-    return { file: active && active.getAttribute('data-file'), text: (pane.querySelector('.editor-code') || {}).textContent ? pane.querySelector('.editor-code').textContent.slice(0, 120) : '' };
-  });
-  await page.evaluate(() => {
+    return {
+      dom_active_file: active && active.getAttribute('data-file'),
+      owner_file: ownerPath,
+      text: (pane.querySelector('.editor-code') || {}).textContent ? pane.querySelector('.editor-code').textContent.slice(0, 120) : ''
+    };
+  }, ownerFile);
+  const targetFile = await page.evaluate(ownerPath => {
     const pane = document.querySelector('#editorPane1');
-    const target = Array.from(pane.querySelectorAll('.editor-tabs .tab[data-file]')).find(tab => !tab.classList.contains('active') && tab.getBoundingClientRect().width > 0);
+    const target = Array.from(pane.querySelectorAll('.editor-tabs .tab[data-file]')).find(tab =>
+      tab.getAttribute('data-file') !== ownerPath && tab.getBoundingClientRect().width > 0
+    );
+    if (!target) return null;
     target.click();
-  });
+    return target.getAttribute('data-file');
+  }, ownerFile);
   await page.waitForTimeout(300);
   const afterSwitch = await page.evaluate(() => {
     const pane = document.querySelector('#editorPane1');
@@ -1637,9 +2105,10 @@ await runInteraction('panel34_open_renders_content', async page => {
   return {
     pass: panels.every(item => item.code_children > 3) &&
       panels.find(item => item.panel === 4).active_tab === 'src/routes/auth.rs' &&
-      afterSwitch.file !== beforeSwitch.file && afterSwitch.text !== beforeSwitch.text,
+      Boolean(targetFile) && targetFile !== beforeSwitch.owner_file &&
+      afterSwitch.file === targetFile && afterSwitch.text !== beforeSwitch.text,
     panels,
-    tab_switch: { before: beforeSwitch, after: afterSwitch }
+    tab_switch: { owner_buffer_id: ownerBufferId, target_file: targetFile, before: beforeSwitch, after: afterSwitch }
   };
 });
 
@@ -1730,8 +2199,7 @@ await runInteraction('terminal_repair_corrupt_paneless_ref', async page => {
     terminal.domain_ref.terminal_session_ids = '';
     localStorage.setItem(home.storage_key, JSON.stringify(record));
   });
-  await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+  await reloadHome(page, 'terminal_repair_corrupt_paneless_ref', 'owner_ref_repair_reload');
   await page.waitForTimeout(400);
   const repaired = await page.evaluate(() => {
     const home = window.PM_HOME_WORKSPACE;
@@ -1831,6 +2299,11 @@ async function recoveryProbe(name, mutation) {
   await runInteraction(name, async page => {
     const key = await page.evaluate(() => window.PM_HOME_WORKSPACE.storage_key);
     const before = await state(page);
+    const expectedSchema = {
+      schema_id: before.layout.schema_id,
+      schema_version: before.layout.schema_version,
+      storage_key: key
+    };
     await page.evaluate(({ storageKey, kind }) => {
       if (kind === 'corrupt') {
         localStorage.setItem(storageKey, '{not-json');
@@ -1846,24 +2319,26 @@ async function recoveryProbe(name, mutation) {
       }
       localStorage.setItem(storageKey, JSON.stringify(value));
     }, { storageKey: key, kind: mutation });
-    await page.reload({ waitUntil: 'load' });
-    await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+    await reloadHome(page, name, 'recovery_reload');
     await page.waitForTimeout(100);
     const recovered = await state(page);
     const toastVisible = await page.locator('#pm-home-recovery-toast').isVisible();
     const quarantineKeys = await page.evaluate(() => Object.keys(localStorage).filter(keyName => keyName.indexOf('pm.homeWorkspaceLayout:quarantine:v1:') === 0));
     const persisted = await page.evaluate(storageKey => JSON.parse(localStorage.getItem(storageKey)), key);
-    await page.reload({ waitUntil: 'load' });
-    await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+    await reloadHome(page, name, 'clean_second_reload');
     const clean = await state(page);
     return {
-      pass: recovered.layout.schema_id === 'pm.home_workspace_layout.v1' &&
-        recovered.layout.schema_version === '1.0.0' &&
+      pass: recovered.storage_key === expectedSchema.storage_key &&
+        recovered.layout.schema_id === expectedSchema.schema_id &&
+        recovered.layout.schema_version === expectedSchema.schema_version &&
         recovered.layout.validation.last_validation_errors.length > 0 &&
         toastVisible && quarantineKeys.length >= 1 &&
-        persisted.schema_id === 'pm.home_workspace_layout.v1' &&
+        persisted.schema_id === expectedSchema.schema_id &&
+        persisted.schema_version === expectedSchema.schema_version &&
+        clean.storage_key === expectedSchema.storage_key &&
         clean.layout.validation.status === 'valid' &&
         clean.layout.validation.last_validation_errors.length === 0,
+      expected_schema: expectedSchema,
       initial_revision: before.layout.layout_revision,
       recovered_validation: recovered.layout.validation,
       recovered_migration: recovered.layout.migration,
@@ -1885,22 +2360,27 @@ await runInteraction('legacy_storage_key_copy_forward_migration', async page => 
   const current = await state(page);
   const legacy = current.layout;
   legacy.schema_version = '0.9.0';
-  await page.evaluate(value => {
+  const legacyKey = 'home_workspace_layout.v1:tastebook:home';
+  await page.evaluate(({ value, sourceKey }) => {
     localStorage.clear();
-    localStorage.setItem('home_workspace_layout.v1:tastebook:home', JSON.stringify(value));
-  }, legacy);
-  await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+    localStorage.setItem(sourceKey, JSON.stringify(value));
+  }, { value: legacy, sourceKey: legacyKey });
+  await reloadHome(page, 'legacy_storage_key_copy_forward_migration', 'migration_reload');
   const migrated = await state(page);
-  const storage = await page.evaluate(() => ({
-    canonical: localStorage.getItem('pm.homeWorkspaceLayout:v1:tastebook:home'),
-    legacy: localStorage.getItem('home_workspace_layout.v1:tastebook:home')
-  }));
+  const storage = await page.evaluate(({ canonicalKey, sourceKey }) => ({
+    canonical_key: canonicalKey,
+    canonical: localStorage.getItem(canonicalKey),
+    legacy_key: sourceKey,
+    legacy: localStorage.getItem(sourceKey)
+  }), { canonicalKey: migrated.storage_key, sourceKey: legacyKey });
   return {
-    pass: migrated.layout.migration.disposition === 'copy_forward' &&
+    pass: migrated.layout.migration.disposition === 'copy_forward_customized' &&
       migrated.layout.migration.from_schema_version === '0.9.0' &&
+      migrated.layout.migration.source_key === legacyKey &&
       Boolean(storage.canonical) && storage.legacy === null,
     migration: migrated.layout.migration,
+    canonical_key: storage.canonical_key,
+    legacy_key: storage.legacy_key,
     canonical_written: Boolean(storage.canonical),
     legacy_removed: storage.legacy === null
   };
@@ -2041,19 +2521,22 @@ await runInteraction('settings_reset_visible_location_and_identity_preservation'
   const beforeReset = await state(page);
   await page.locator('#tab-settings').click();
   await page.waitForTimeout(180);
-  await page.locator('#s4-chips .s4-chip').filter({ hasText: 'General & Appearance' }).click();
-  await page.waitForTimeout(500);
-  const row = page.locator('.s4-row[data-sid="general.startup.reset-home-layout"]');
-  const label = (await row.locator('.s4-label, .s4-name, [class*="label"]').first().textContent().catch(() => row.textContent())).trim();
-  await row.locator('.s4-action').click();
+  await page.locator('#panel-settings [data-action="navigate-domain"][data-domain="general"]').first().click();
+  const action = page.locator('#panel-settings [data-action="run-setting-action"][data-setting="general.startup.reset-home-layout"]');
+  await action.waitFor({ state: 'visible', timeout: 10000 });
+  const row = action.locator('xpath=ancestor::*[contains(concat(" ", normalize-space(@class), " "), " setting-row ")]').first();
+  const label = (await row.locator('.setting-label').textContent()).trim();
+  const section = (await row.locator('xpath=ancestor::section[contains(concat(" ", normalize-space(@class), " "), " settings-section ")]').first().locator('.section-title').textContent()).trim();
+  await action.click();
   await page.waitForTimeout(100);
   const after = await state(page);
   return {
-    pass: await row.count() === 1 && label.indexOf('Reset Home Layout') !== -1 &&
+    pass: await action.count() === 1 && label.indexOf('Reset Home Layout') !== -1 && section === 'Startup & Recovery' &&
       after.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard').host === 'home_main' &&
       same(beforeReset.identities.editors, after.identities.editors) &&
       beforeReset.identities.browser.browser_session_id === after.identities.browser.browser_session_id,
     row_label: label,
+    settings_route: { domain: 'General & Appearance', section, setting_id: 'general.startup.reset-home-layout' },
     before_dashboard: beforeReset.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard'),
     after_dashboard: after.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard'),
     identity_integrity: after.identity_integrity
@@ -2078,21 +2561,34 @@ await runInteraction('theme_auto_reduced_motion_and_four_edge_dissolve', async p
   await page.locator('#themeSelect').click();
   await page.locator('#themeMenu [data-mode-value="auto"]').click();
   await page.waitForTimeout(80);
-  const autoDark = await page.evaluate(() => ({
-    mode: window.PM_THEME.getMode(),
-    theme: document.documentElement.getAttribute('data-theme'),
-    stored_mode: localStorage.getItem('pm.themeMode'),
-    stored_family: localStorage.getItem('pm.themeFamily'),
-    stored_slug: localStorage.getItem('pm.theme')
-  }));
+  const autoDark = await page.evaluate(() => {
+    const project = window.PM7_SETTINGS_TOME.project();
+    const snapshot = project ? window.PM7_SETTINGS_TOME.projectSnapshot(project.id) : null;
+    return {
+      project_id: project && project.id,
+      project_theme: snapshot && snapshot.settings && snapshot.settings['general.visual.theme'],
+      project_mode: snapshot && snapshot.settings && snapshot.settings['general.visual.theme-mode'],
+      effective_mode: window.PM_THEME.getMode(),
+      effective_theme: window.PM_THEME.get(),
+      dom_theme: document.documentElement.getAttribute('data-theme')
+    };
+  });
   await page.emulateMedia({ reducedMotion: 'no-preference', colorScheme: 'light' });
   /* the auto-mode flip reliably lands but takes 100-400ms after this case's
      manual data-theme writes -- poll for it instead of racing a fixed wait */
   await page.waitForFunction(() => (document.documentElement.getAttribute('data-theme') || '').endsWith('-light'), null, { timeout: 5000 }).catch(() => {});
-  const autoLight = await page.evaluate(() => ({
-    mode: window.PM_THEME.getMode(),
-    theme: document.documentElement.getAttribute('data-theme')
-  }));
+  const autoLight = await page.evaluate(() => {
+    const project = window.PM7_SETTINGS_TOME.project();
+    const snapshot = project ? window.PM7_SETTINGS_TOME.projectSnapshot(project.id) : null;
+    return {
+      project_id: project && project.id,
+      project_theme: snapshot && snapshot.settings && snapshot.settings['general.visual.theme'],
+      project_mode: snapshot && snapshot.settings && snapshot.settings['general.visual.theme-mode'],
+      effective_mode: window.PM_THEME.getMode(),
+      effective_theme: window.PM_THEME.get(),
+      dom_theme: document.documentElement.getAttribute('data-theme')
+    };
+  });
   await page.emulateMedia({ reducedMotion: 'reduce', colorScheme: 'light' });
   const motion = await page.evaluate(() => {
     document.documentElement.setAttribute('data-motion', 'reduced');
@@ -2111,9 +2607,11 @@ await runInteraction('theme_auto_reduced_motion_and_four_edge_dissolve', async p
   return {
     pass: themeResults.every(item => item.theme && item.background && item.text) &&
       new Set(themeResults.map(item => item.background + '|' + item.text)).size === 8 &&
-      autoDark.mode === 'auto' && autoDark.theme.endsWith('-dark') && autoDark.stored_mode === 'auto' &&
-      Boolean(autoDark.stored_family) && autoDark.stored_slug === autoDark.theme &&
-      autoLight.mode === 'auto' && autoLight.theme.endsWith('-light') &&
+      Boolean(autoDark.project_id) && autoDark.project_id === autoLight.project_id &&
+      autoDark.project_mode === 'Auto' && autoDark.effective_mode === 'auto' &&
+      autoDark.effective_theme === autoDark.dom_theme && autoDark.dom_theme.endsWith('-dark') &&
+      autoLight.project_mode === 'Auto' && autoLight.project_theme === autoDark.project_theme &&
+      autoLight.effective_mode === 'auto' && autoLight.effective_theme === autoLight.dom_theme && autoLight.dom_theme.endsWith('-light') &&
       motion.media && (motion.duration === '0s' || motion.duration === '0ms') &&
       motion.color_scheme_light && edge.controller && edge.enrolled === edge.total && edge.total >= 5,
     themes: themeResults,
@@ -2148,8 +2646,201 @@ async function captureCase(id, theme, layoutName, viewport, reducedMotion) {
       else document.documentElement.removeAttribute('data-motion');
     }, { nextTheme: theme, reduced: reducedMotion });
     await caseState.page.waitForTimeout(90);
+    const reducedMotionProof = await caseState.page.evaluate(async reduced => {
+      if (!reduced) return { applicable: false, active_animation_count: 0, active_animations: [] };
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const describeAnimation = animation => ({
+        play_state: animation.playState,
+        animation_name: animation.animationName || null,
+        transition_property: animation.transitionProperty || null,
+        target: animation.effect && animation.effect.target ? {
+          tag: animation.effect.target.tagName,
+          id: animation.effect.target.id || null,
+          class_name: typeof animation.effect.target.className === 'string' ? animation.effect.target.className.slice(0, 160) : null
+        } : null
+      });
+      const active = document.getAnimations({ subtree: true }).filter(animation =>
+        animation.playState === 'running' || animation.playState === 'pending'
+      );
+      const proof = {
+        applicable: true,
+        data_motion: document.documentElement.getAttribute('data-motion'),
+        media_matches: matchMedia('(prefers-reduced-motion: reduce)').matches,
+        active_animation_count: active.length,
+        active_animations: active.slice(0, 24).map(describeAnimation)
+      };
+      /* Install the capture-window monitor in this same task as the pre-census:
+         no timer/microtask can create motion in an unobserved gap between the
+         zero proof and monitor installation. RAF samples cover live CSS/WAAPI
+         state; DOM events cover sub-frame CSS starts; the temporary API hooks
+         cover WAAPI animations created or replayed between RAF samples. */
+      const monitor = {
+        installed_at_performance_ms: performance.now(),
+        raf_sample_count: 0,
+        max_active_animation_count: 0,
+        active_sample_count: 0,
+        active_samples: [],
+        css_start_event_count: 0,
+        css_start_events: [],
+        waapi_start_count: 0,
+        waapi_starts: [],
+        stopped: false,
+        raf_id: null,
+        original_element_animate: Element.prototype.animate,
+        original_animation_play: typeof Animation === 'function' ? Animation.prototype.play : null
+      };
+      const describeTarget = target => target && target.nodeType === Node.ELEMENT_NODE ? {
+        tag: target.tagName,
+        id: target.id || null,
+        class_name: typeof target.className === 'string' ? target.className.slice(0, 160) : null
+      } : null;
+      monitor.onCssStart = event => {
+        monitor.css_start_event_count += 1;
+        if (monitor.css_start_events.length < 48) monitor.css_start_events.push({
+          type: event.type,
+          animation_name: event.animationName || null,
+          property_name: event.propertyName || null,
+          target: describeTarget(event.target),
+          at_performance_ms: performance.now()
+        });
+      };
+      monitor.sample = () => {
+        if (monitor.stopped) return;
+        const live = document.getAnimations({ subtree: true }).filter(animation =>
+          animation.playState === 'running' || animation.playState === 'pending'
+        );
+        monitor.raf_sample_count += 1;
+        monitor.max_active_animation_count = Math.max(monitor.max_active_animation_count, live.length);
+        if (live.length) {
+          monitor.active_sample_count += 1;
+          if (monitor.active_samples.length < 24) monitor.active_samples.push({
+            at_performance_ms: performance.now(),
+            active_animation_count: live.length,
+            active_animations: live.slice(0, 12).map(describeAnimation)
+          });
+        }
+        monitor.raf_id = requestAnimationFrame(monitor.sample);
+      };
+      document.addEventListener('animationstart', monitor.onCssStart, true);
+      document.addEventListener('transitionrun', monitor.onCssStart, true);
+      if (typeof monitor.original_element_animate === 'function') {
+        Element.prototype.animate = function (...args) {
+          monitor.waapi_start_count += 1;
+          if (monitor.waapi_starts.length < 48) monitor.waapi_starts.push({
+            kind: 'Element.animate', target: describeTarget(this), at_performance_ms: performance.now()
+          });
+          return monitor.original_element_animate.apply(this, args);
+        };
+      }
+      if (monitor.original_animation_play) {
+        Animation.prototype.play = function (...args) {
+          monitor.waapi_start_count += 1;
+          if (monitor.waapi_starts.length < 48) monitor.waapi_starts.push({
+            kind: 'Animation.play',
+            target: describeTarget(this.effect && this.effect.target),
+            at_performance_ms: performance.now()
+          });
+          return monitor.original_animation_play.apply(this, args);
+        };
+      }
+      window.__pmHomeCaptureMotionMonitor = monitor;
+      monitor.sample();
+      return proof;
+    }, reducedMotion);
+    const reducedMotionPreAdmission = !reducedMotion || (
+      reducedMotionProof.applicable === true &&
+      reducedMotionProof.data_motion === 'reduced' &&
+      reducedMotionProof.media_matches === true &&
+      reducedMotionProof.active_animation_count === 0 &&
+      Array.isArray(reducedMotionProof.active_animations) &&
+      reducedMotionProof.active_animations.length === 0
+    );
+    if (!reducedMotionPreAdmission) {
+      await caseState.page.evaluate(() => {
+        const monitor = window.__pmHomeCaptureMotionMonitor;
+        if (!monitor) return;
+        monitor.stopped = true;
+        if (monitor.raf_id !== null) cancelAnimationFrame(monitor.raf_id);
+        document.removeEventListener('animationstart', monitor.onCssStart, true);
+        document.removeEventListener('transitionrun', monitor.onCssStart, true);
+        if (monitor.original_element_animate) Element.prototype.animate = monitor.original_element_animate;
+        if (monitor.original_animation_play && typeof Animation === 'function') Animation.prototype.play = monitor.original_animation_play;
+        delete window.__pmHomeCaptureMotionMonitor;
+      });
+      throw new Error('reduced-motion screenshot pre-admission proof failed: ' + JSON.stringify(reducedMotionProof));
+    }
     const screenshotPath = join(screenshotsDir, safeName(id) + '.png');
-    await caseState.page.screenshot({ path: screenshotPath, fullPage: false, animations: 'disabled' });
+    const screenshotStartedAt = Date.now();
+    /* In reduced mode the authored global contract has already reduced every
+       transition/animation to an effectively immediate terminal state.  The
+       active-animation census above proves that contract before capture.
+       Asking Playwright to disable animations again rewrites animation state
+       for the entire 3k+ node document and can take tens of seconds despite
+       there being no live motion.  Preserve that authored terminal paint;
+       keep Playwright's deterministic fast-forward for full-motion rows. */
+    const screenshotAnimationPolicy = reducedMotion ? 'allow' : 'disabled';
+    await caseState.page.screenshot({
+      path: screenshotPath,
+      fullPage: false,
+      animations: screenshotAnimationPolicy,
+      timeout: screenshotTimeoutMs
+    });
+    const screenshotElapsedMs = Date.now() - screenshotStartedAt;
+    const captureWindowMotionProof = await caseState.page.evaluate(async reduced => {
+      if (!reduced) return { applicable: false };
+      const monitor = window.__pmHomeCaptureMotionMonitor;
+      if (!monitor) return { applicable: true, monitor_present: false };
+      /* Extend monitoring through one paint after screenshot completion, then
+         take the post-capture census before restoring the instrumented APIs. */
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      monitor.stopped = true;
+      if (monitor.raf_id !== null) cancelAnimationFrame(monitor.raf_id);
+      document.removeEventListener('animationstart', monitor.onCssStart, true);
+      document.removeEventListener('transitionrun', monitor.onCssStart, true);
+      if (monitor.original_element_animate) Element.prototype.animate = monitor.original_element_animate;
+      if (monitor.original_animation_play && typeof Animation === 'function') Animation.prototype.play = monitor.original_animation_play;
+      const postActive = document.getAnimations({ subtree: true }).filter(animation =>
+        animation.playState === 'running' || animation.playState === 'pending'
+      );
+      const proof = {
+        applicable: true,
+        monitor_present: true,
+        raf_sample_count: monitor.raf_sample_count,
+        max_active_animation_count: monitor.max_active_animation_count,
+        active_sample_count: monitor.active_sample_count,
+        active_samples: monitor.active_samples,
+        css_start_event_count: monitor.css_start_event_count,
+        css_start_events: monitor.css_start_events,
+        waapi_start_count: monitor.waapi_start_count,
+        waapi_starts: monitor.waapi_starts,
+        post_active_animation_count: postActive.length,
+        post_active_animations: postActive.slice(0, 24).map(animation => ({
+          play_state: animation.playState,
+          animation_name: animation.animationName || null,
+          transition_property: animation.transitionProperty || null,
+          target: animation.effect && animation.effect.target ? {
+            tag: animation.effect.target.tagName,
+            id: animation.effect.target.id || null,
+            class_name: typeof animation.effect.target.className === 'string' ? animation.effect.target.className.slice(0, 160) : null
+          } : null
+        }))
+      };
+      delete window.__pmHomeCaptureMotionMonitor;
+      return proof;
+    }, reducedMotion);
+    const screenshotAnimationAdmission = !reducedMotion || (
+      reducedMotionPreAdmission &&
+      captureWindowMotionProof.applicable === true &&
+      captureWindowMotionProof.monitor_present === true &&
+      captureWindowMotionProof.raf_sample_count > 0 &&
+      captureWindowMotionProof.max_active_animation_count === 0 &&
+      captureWindowMotionProof.active_sample_count === 0 &&
+      captureWindowMotionProof.css_start_event_count === 0 &&
+      captureWindowMotionProof.waapi_start_count === 0 &&
+      captureWindowMotionProof.post_active_animation_count === 0 &&
+      Array.isArray(captureWindowMotionProof.post_active_animations) &&
+      captureWindowMotionProof.post_active_animations.length === 0
+    );
     const current = await state(caseState.page);
     const visual = await caseState.page.evaluate(() => {
       const viewportWidth = window.innerWidth;
@@ -2212,6 +2903,16 @@ async function captureCase(id, theme, layoutName, viewport, reducedMotion) {
       viewport,
       reduced_motion: Boolean(reducedMotion),
       screenshot: screenshotPath,
+      screenshot_capture: {
+        elapsed_ms: screenshotElapsedMs,
+        timeout_ms: screenshotTimeoutMs,
+        performance_budget_ms: screenshotPerformanceBudgetMs,
+        within_performance_budget: screenshotElapsedMs <= screenshotPerformanceBudgetMs,
+        animation_policy: screenshotAnimationPolicy,
+        animation_policy_admitted: screenshotAnimationAdmission,
+        reduced_motion_proof: reducedMotionProof,
+        capture_window_motion_proof: captureWindowMotionProof
+      },
       layout_revision: current.layout.layout_revision,
       visible_surface_count: current.layout.surfaces.filter(surface => surface.visible).length,
       identity_integrity: current.identity_integrity,
@@ -2259,9 +2960,33 @@ for (const theme of ['friendly-dark', 'glass-light']) {
 const matrixFailures = result.matrix.filter(row =>
   row.error || row.runtime_errors.length ||
   !row.identity_integrity || !row.identity_integrity.ok ||
+  (row.reduced_motion && (!row.screenshot_capture ||
+    row.screenshot_capture.animation_policy !== 'allow' ||
+    row.screenshot_capture.animation_policy_admitted !== true ||
+    !row.screenshot_capture.reduced_motion_proof ||
+    row.screenshot_capture.reduced_motion_proof.applicable !== true ||
+    row.screenshot_capture.reduced_motion_proof.data_motion !== 'reduced' ||
+    row.screenshot_capture.reduced_motion_proof.media_matches !== true ||
+    row.screenshot_capture.reduced_motion_proof.active_animation_count !== 0 ||
+    !Array.isArray(row.screenshot_capture.reduced_motion_proof.active_animations) ||
+    row.screenshot_capture.reduced_motion_proof.active_animations.length !== 0 ||
+    !row.screenshot_capture.capture_window_motion_proof ||
+    row.screenshot_capture.capture_window_motion_proof.applicable !== true ||
+    row.screenshot_capture.capture_window_motion_proof.monitor_present !== true ||
+    row.screenshot_capture.capture_window_motion_proof.raf_sample_count <= 0 ||
+    row.screenshot_capture.capture_window_motion_proof.max_active_animation_count !== 0 ||
+    row.screenshot_capture.capture_window_motion_proof.active_sample_count !== 0 ||
+    row.screenshot_capture.capture_window_motion_proof.css_start_event_count !== 0 ||
+    row.screenshot_capture.capture_window_motion_proof.waapi_start_count !== 0 ||
+    row.screenshot_capture.capture_window_motion_proof.post_active_animation_count !== 0 ||
+    !Array.isArray(row.screenshot_capture.capture_window_motion_proof.post_active_animations) ||
+    row.screenshot_capture.capture_window_motion_proof.post_active_animations.length !== 0)) ||
   row.visual.invalid_rectangles.length ||
   row.visual.floating_overlap_pairs.length ||
   row.visual.cross_host_overlap_pairs.length
+);
+const screenshotPerformanceFailures = result.matrix.filter(row =>
+  row.screenshot_capture && !row.screenshot_capture.within_performance_budget
 );
 recordCheck('visual_matrix_exact_72_cases', result.matrix.length === 72, { actual: result.matrix.length, expected: 72 });
 recordCheck('visual_matrix_no_runtime_or_geometry_failures', matrixFailures.length === 0, {
@@ -2273,7 +2998,19 @@ recordCheck('visual_matrix_no_runtime_or_geometry_failures', matrixFailures.leng
     invalid_rectangles: row.visual && row.visual.invalid_rectangles,
     floating_overlap_pairs: row.visual && row.visual.floating_overlap_pairs,
     cross_host_overlap_pairs: row.visual && row.visual.cross_host_overlap_pairs,
-    identity_integrity: row.identity_integrity
+    identity_integrity: row.identity_integrity,
+    reduced_motion_proof: row.screenshot_capture && row.screenshot_capture.reduced_motion_proof,
+    capture_window_motion_proof: row.screenshot_capture && row.screenshot_capture.capture_window_motion_proof
+  }))
+});
+recordCheck('visual_matrix_screenshot_capture_within_30s', screenshotPerformanceFailures.length === 0, {
+  performance_budget_ms: screenshotPerformanceBudgetMs,
+  capture_timeout_ms: screenshotTimeoutMs,
+  failure_count: screenshotPerformanceFailures.length,
+  failures: screenshotPerformanceFailures.map(row => ({
+    id: row.id,
+    elapsed_ms: row.screenshot_capture.elapsed_ms,
+    performance_budget_ms: row.screenshot_capture.performance_budget_ms
   }))
 });
 recordCheck('no_home_widget_commands', Object.values(result.checks).every(check => {
@@ -2281,6 +3018,37 @@ recordCheck('no_home_widget_commands', Object.values(result.checks).every(check 
   return encoded.indexOf('cmd.widget.') === -1;
 }), { prohibited_prefix: 'cmd.widget.' });
 
+result.preconditions.onboarding_dismissal.pass = result.preconditions.onboarding_dismissal.cases.length > 0 &&
+  result.preconditions.onboarding_dismissal.cases.every(item => item.pass);
+await finalizeBrowserProvenance();
+let provenanceAdmissionError = null;
+try { assertProvenanceAdmission(result.provenance); }
+catch (error) { provenanceAdmissionError = String(error?.stack || error); }
+recordCheck('shared_browser_provenance_admission', provenanceAdmissionError === null && result.provenance.admission?.pass === true, {
+  admission: result.provenance.admission,
+  error: provenanceAdmissionError,
+  artifact: result.provenance.artifact,
+  verifier: result.provenance.verifier,
+  helper: result.provenance.helper,
+  browser: result.provenance.browser,
+  command: result.provenance.command,
+  navigation_count: result.provenance.navigations?.length,
+  network: result.provenance.network,
+  certification_boundary: result.provenance.certification_boundary
+});
+recordCheck('exact_browser_only_certification_boundary',
+  JSON.stringify(result.provenance.certification_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY) &&
+    JSON.stringify(result.certification_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY) &&
+    JSON.stringify(result.execution_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY),
+  {
+    provenance_boundary: result.provenance.certification_boundary,
+    certification_boundary: result.certification_boundary,
+    execution_boundary: result.execution_boundary
+  });
+recordCheck('shared_provenance_runtime_clean', result.runtime_errors.length === 0 && result.provenance.runtime_errors.count === 0, {
+  verifier: result.runtime_errors,
+  provenance: result.provenance.runtime_errors
+});
 result.summary = {
   check_count: Object.keys(result.checks).length,
   passed_checks: Object.values(result.checks).filter(check => check.pass).length,
@@ -2288,9 +3056,60 @@ result.summary = {
   matrix_count: result.matrix.length,
   matrix_failures: matrixFailures.length,
   runtime_error_case_count: result.runtime_errors.length,
-  status: Object.values(result.checks).every(check => check.pass) && result.runtime_errors.length === 0 ? 'PASS' : 'FAIL'
+  precondition_failures: result.preconditions.onboarding_dismissal.pass ? [] : ['onboarding_dismissal'],
+  status: Object.values(result.checks).every(check => check.pass) && result.runtime_errors.length === 0 &&
+    result.preconditions.onboarding_dismissal.pass ? 'PASS' : 'FAIL'
 };
 
-writeFileSync(join(args.outdir, 'home_workspace_matrix.json'), JSON.stringify(result, null, 2) + '\n');
-await browser.close();
+writeFileSync(outputPath, JSON.stringify(result, null, 2) + '\n');
 if (result.summary.status !== 'PASS') process.exitCode = 1;
+} catch (error) {
+  const failureText = String(error?.stack || error);
+  result.runtime_errors.push({ case: 'harness', errors: [{ kind: 'uncaught', text: failureText }] });
+  await finalizeBrowserProvenance(focusedSmoke ? 'focused_smoke_noncertifying_mode' : null);
+  recordCheck('harness_completed_without_uncaught_error', false, { error: failureText });
+  if (focusedSmoke) {
+    result.provenance_admission_eligible = false;
+    result.browser_admission = { pass: false, failures: ['focused_smoke_noncertifying_mode', 'uncaught_harness_error'] };
+    result.summary = {
+      mode: 'focused_smoke_noncertifying',
+      status: 'FAIL',
+      full_matrix_executed: false,
+      provenance_admission_eligible: false,
+      browser_admission_pass: false,
+      error: failureText
+    };
+  } else {
+    let provenanceAdmissionError = null;
+    try { assertProvenanceAdmission(result.provenance); }
+    catch (admissionError) { provenanceAdmissionError = String(admissionError?.stack || admissionError); }
+    recordCheck('shared_browser_provenance_admission',
+      provenanceAdmissionError === null && result.provenance?.admission?.pass === true,
+      { admission: result.provenance?.admission, error: provenanceAdmissionError });
+    recordCheck('exact_browser_only_certification_boundary',
+      JSON.stringify(result.provenance?.certification_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY) &&
+        JSON.stringify(result.certification_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY) &&
+        JSON.stringify(result.execution_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY),
+      {
+        provenance_boundary: result.provenance?.certification_boundary,
+        certification_boundary: result.certification_boundary,
+        execution_boundary: result.execution_boundary
+      });
+    recordCheck('shared_provenance_runtime_clean', false, {
+      verifier: result.runtime_errors,
+      provenance: result.provenance?.runtime_errors
+    });
+    const failedChecks = Object.entries(result.checks).filter(([, check]) => !check.pass).map(([name]) => name);
+    result.summary = {
+      check_count: Object.keys(result.checks).length,
+      passed_checks: Object.keys(result.checks).length - failedChecks.length,
+      failed_checks: failedChecks,
+      matrix_count: result.matrix.length,
+      runtime_error_case_count: result.runtime_errors.length,
+      status: 'FAIL'
+    };
+  }
+  writeFileSync(outputPath, JSON.stringify(result, null, 2) + '\n');
+  console.log(JSON.stringify({ result: outputPath, summary: result.summary }));
+  process.exitCode = 1;
+}

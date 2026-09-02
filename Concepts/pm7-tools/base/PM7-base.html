@@ -140,12 +140,9 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
       } catch (e) { /* storage unavailable - keep markup defaults */ }
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- Non-blocking fonts: a blocking stylesheet here delayed first paint and contributed to the double white flash on reload. -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <!-- PM7 is self-contained and portable: typography resolves through the
+       theme-authored local/system fallback stacks below. No external font
+       request may alter first paint, offline behavior, or evidence bytes. -->
   <!-- PM7 SECTION 2/32: core-css - PM4-era core stylesheet: tokens for all 8 themes, glass one-pane composition + pre-baked wallpaper stage (T16), shell chrome, editor/terminal/bento components (style, no id) -->
   <style>
     .wizard-doc-pill { cursor: pointer; }

@@ -8,6 +8,11 @@
   const clone = (v) => JSON.parse(JSON.stringify(v));
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
   const esc = (v='') => String(v).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  /* Stylized hover label (not a native title tooltip). Unique key anchors the card. */
+  function hoverAttrs(key, text){
+    return ` data-hover-key="${esc(key)}" data-hover-tip="${esc(text)}" aria-label="${esc(text)}"`;
+  }
+  const CAP_HOVER = {goal:'Goal', crew:'Crew', bsd:'Back Seat Driver', context:'Context Lens', eli5:'ELI5'};
   const safeStorage = {
     get(k){ try { return localStorage.getItem(k); } catch { return null; } },
     set(k,v){ try { localStorage.setItem(k,v); } catch {} },
@@ -24,10 +29,11 @@
     more:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
     chevron:'<path d="m9 18 6-6-6-6"/>', down:'<path d="m6 9 6 6 6-6"/>', up:'<path d="m18 15-6-6-6 6"/>', left:'<path d="m15 18-6-6 6-6"/>',
     check:'<path d="m5 12 4 4L19 6"/>', plus:'<path d="M12 5v14M5 12h14"/>', minus:'<path d="M5 12h14"/>',
-    pin:'<path d="m12 17 0 5M5 3l14 0M7 3l1 8-3 3h14l-3-3 1-8"/>', unpin:'<path d="m5 3 14 18M7 3l1 8-3 3h9M17 3l-1 6M12 17v5"/>',
+    pin:'<path d="M12 17v5"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>',
+    unpin:'<path d="M2 2l20 20"/><path d="M12 17v5"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/>',
     archive:'<path d="M4 7v13h16V7M3 3h18v4H3zM9 11h6"/>', restore:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>', edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>', fork:'<circle cx="6" cy="4" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="20" r="2"/><path d="M6 6v12M8 9c5 0 5-3 8-3"/>',
     copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>', branch:'<path d="M6 3v12a4 4 0 0 0 4 4h8"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 9h7a4 4 0 0 0 4-4V3"/><circle cx="17" cy="3" r="2"/>',
-    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>', play:'<path d="m8 5 11 7-11 7Z"/>', pause:'<path d="M9 5v14M15 5v14"/>', step:'<path d="m7 5 9 7-9 7zM18 5v14"/>', stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>',
+    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>', play:'<path d="m8 5 11 7-11 7Z"/>', pause:'<path d="M9 5v14M15 5v14"/>', step:'<path d="m7 5 9 7-9 7zM18 5v14"/>',     stop:'<rect x="7.5" y="7.5" width="9" height="9" rx="1.75"/>',
     send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>', attach:'<path d="m21 11-8.5 8.5a6 6 0 0 1-8.5-8.5L13 2a4 4 0 0 1 5.7 5.7l-9 9a2 2 0 0 1-2.8-2.8L15 5.8"/>', wand:'<path d="m15 4 5 5L8 21H3v-5Z"/><path d="m14 5 5 5M6 4V2M5 3H3M20 17v-2M21 16h2M19 3V1M18 2h-2"/>',
     sparkles:'<path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2Z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8Z"/><path d="m5 14 .8 1.7L8 16.5l-2.2.8L5 19l-.8-1.7L2 16.5l2.2-.8Z"/>',
     goal:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M20 4 15 9"/>', todo:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/>', users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>', changes:'<path d="M4 7h11M4 17h16M15 4l3 3-3 3M9 14l-3 3 3 3"/>', artifact:'<path d="M4 3h12l4 4v14H4z"/><path d="M16 3v5h5M8 13h8M8 17h6"/>',
@@ -35,29 +41,61 @@
     'folder-search':'<path d="M3 5h6l2 2h10v12H3z"/><circle cx="12" cy="13" r="3"/><path d="m14.5 15.5 2 2"/>', download:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>', globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>', terminal:'<path d="m4 7 5 5-5 5M11 17h9"/>', 'file-edit':'<path d="M4 3h11l5 5v13H4z"/><path d="M15 3v5h5M9 17l1-4 6-6 3 3-6 6Z"/>', 'monitor-play':'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M10 7l5 3-5 3Z"/>', flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 14h8"/>', 'check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
     eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>', eyeoff:'<path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.5 5.2A9.8 9.8 0 0 1 12 5c6 0 10 7 10 7a18 18 0 0 1-2.1 2.8M6.6 6.6C3.8 8.4 2 12 2 12s4 7 10 7a9.8 9.8 0 0 0 4.4-1"/>',
     filter:'<path d="M3 5h18l-7 8v6l-4 2v-8Z"/>', collapse:'<path d="m8 3 4 4 4-4M8 21l4-4 4 4"/>', expand:'<path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/>',
-    lightning:'<path d="M13 2 4 14h7l-1 8 10-13h-7Z"/>', star:'<path d="m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z"/>',
+    lightning:'<path d="M13 2 4 14h7l-1 8 10-13h-7Z"/>', plug:'<path d="M9 7V2M15 7V2"/><path d="M6 7h12v4a6 6 0 0 1-12 0Z"/><path d="M12 17v5"/>', star:'<path d="m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z"/>',
     document:'<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/>', image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>', code:'<path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 4l-4 16"/>',
-    warning:'<path d="M12 3 2 21h20Z"/><path d="M12 9v5M12 17h.01"/>', lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>', refresh:'<path d="M20 11a8 8 0 1 0-2 5.3M20 4v7h-7"/>'
+    warning:'<path d="M12 3 2 21h20Z"/><path d="M12 9v5M12 17h.01"/>', lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>', refresh:'<path d="M20 11a8 8 0 1 0-2 5.3M20 4v7h-7"/>',
+    lens:'<circle cx="12" cy="12" r="7"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="15" x2="16" y2="15"/>',
+    effort:'<circle cx="12" cy="12" r="7"/>'
   };
   function icon(name, size=15, cls='') {
     const paths = PATHS[name] || PATHS.info;
+    /* Stop is a filled media-player square (not a stroked Lucide rect). */
+    if(name==='stop'){
+      return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${PATHS.stop}</svg>`;
+    }
     return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+  }
+  /* Filled provider marks (rail + model rows). Stroke `icon()` cannot draw
+     brand silhouettes; these are SVG-only, currentColor, viewBox 24. */
+  const PROVIDER_MARKS = {
+    OpenAI:'<path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.182a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.778-2.758a.795.795 0 0 0 .393-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.758a.771.771 0 0 0 .78 0l5.843-3.368v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.972V11.6a.766.766 0 0 0 .388.676l5.814 3.354-2.02 1.168a.076.076 0 0 1-.071.01l-4.83-2.787A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855-5.833-3.387 2.015-1.164a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.104v-5.677a.79.79 0 0 0-.407-.667zm2.01-3.023-.142-.085-4.773-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zM8.306 12.863l-2.02-1.164a.08.08 0 0 1-.038-.052V6.075a4.5 4.5 0 0 1 7.376-3.453l-.142.08L8.704 5.459a.795.795 0 0 0-.393.681zm1.098-2.365 2.602-1.5 2.607 1.5v3l-2.597 1.5-2.607-1.5z"/>',
+    Anthropic:'<path d="M12 3.2 13.15 8.4 18.8 7 15.2 12 18.8 17 13.15 15.6 12 20.8 10.85 15.6 5.2 17 8.8 12 5.2 7 10.85 8.4Z"/>',
+    Alibaba:'<path d="M4.2 10.2c0-3.4 2.9-6.2 7.8-6.2 4.9 0 7.8 2.8 7.8 6.2 0 .6-.1 1.2-.2 1.7 1.6.7 2.6 1.9 2.6 3.4 0 2.3-2.4 4.1-7.2 4.1H8.2C4.6 19.4 2 17.4 2 14.8c0-1.6 1.1-2.9 2.8-3.6-.2-.6-.6-1.3-.6-1zM8 13.6v2.6h8v-2.6H8zm1.4-4.2h5.2v1.6H9.4V9.4z"/>',
+    Moonshot:'<path d="M16.2 3.4A9 9 0 1 0 20.6 16.4 7.2 7.2 0 0 1 16.2 3.4z"/>',
+    'z.ai':'<path d="M6 5h12l-8.8 11.2H18V18.6H6l8.8-11.2H6z"/>',
+    Cursor:'<path d="M5 3.2 19.5 12.1l-7.6 1.6-2.2 6.6z"/>'
+  };
+  function providerMark(p, size=16){
+    const d=PROVIDER_MARKS[p];
+    if(!d) return icon('sparkles', size);
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d}</svg>`;
+  }
+  function modeGlyph(mode, size=13){
+    if(mode==='Ask') return icon('info', size);
+    if(String(mode).includes('Plan')) return icon('document', size);
+    if(mode==='Debug') return icon('warning', size);
+    return icon('sparkles', size);
   }
 
   const DEFAULT = {
-    theme:'basic-dark', recipe:0, variants:[0,0,0,0,0,0,0], selectedThread:'query',
+    theme:'basic-dark', recipe:-1, variants:[7,5,1,0,1,0,8], selectedThread:'query',
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
-    historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:310,
-    activity:{open:false,pinned:false,domain:'goal',filterVisible:true,expanded:['goal','todo','subagents','changes','artifacts']},
-    context:{compact:false,details:false,compacted:false},
+    historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
+    historySections:{pinned:true, recent:true, archived:false},
+    activity:{open:false,pinned:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
+    context:{
+      compact:false,details:false,compacted:false,drawerView:'curated',dispatchSeq:0,
+      projections:clone(D.contextByThread||{})
+    },
     menu:null, hover:null, dialog:null, toast:[],
-    model:'sonnet46', modelProvider:'all', modelSearch:'', effort:'High', fast:true,
+    model:'sonnet46', modelProvider:'all', modelSearch:'', effort:'', fast:true,
     favorites:D.models.filter(m=>m.favorite).map(m=>m.id),
     persona:'Product Manager', mode:'Agent', thoroughness:'Thorough', permissions:'Auto', worktree:'feature/query-index',
     capabilities:{goal:true,crew:false,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto'},
-    messageExpanded:{}, messageDetails:{}, work:{step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null},
+    activityCaps:{goal:{},crew:{}},
+    messageExpanded:{}, messageDetails:{}, copyFlashId:null, workTerminal:{}, work:{step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null}, works:{},
     decision:null, questionIndex:0, questions:clone(D.questions), questionQueue:2,
-    composer:'', drafts:{}, draftHistory:{}, planRevision:((D.artifacts||[]).find(x=>x.id==='plan-query')||{}).version||3 /* one quantity,
+    composer:'', sendQueue:{}, drafts:{}, draftHistory:{}, planRevision:((D.artifacts||[]).find(x=>x.id==='plan-query')||{}).version||3 /* one quantity,
       one source: the durable plan artifact's version. A separate literal here drifted to 3
       while the artifact said 4, so the card and the artifact disagreed about the same plan. */, planStatus:'ready',
     artifactState:{quizAnswer:null,dataFilter:'all',mermaidSource:false,chartMetric:'p95',retrying:false},
@@ -73,7 +111,9 @@
 
   let state = clone(DEFAULT);
   let workTimer = null;
+  let seqTimer = null;
   let hoverTimer = null;
+  let copyFlashTimer = null;
   let submenuTimer = null;
   let dragState = null;
   let lastDemoGeom = null;
@@ -119,9 +159,9 @@
      1. RENDER SLOTS -- named points in the markup.
           window.PM56_EXT.slot('activityPanelBody', ctx => `<div ...>`);
         Several modules may register the same slot; their output is
-        concatenated in registration order. An "append" slot (headerExtras,
-        historyChrome, messageMeta, messageAffordance, messageOverflow,
-        threadMenu, planEditorActions) adds to what is already there. A
+        concatenated in registration order. An "append" slot (headerLeading,
+        headerExtras, historyChrome, messageMeta, messageAffordance, messageOverflow,
+        messageOverflowPanel, threadMenu, planEditorActions) adds to what is already there. A
         "replace" slot (activityPanelBody, activityHoverCard, threadRowStatus,
         goalSection, contextCompactMenu, contextDrawer, questionSurface,
         workingTake:N) substitutes the built-in markup entirely -- but only if
@@ -154,8 +194,8 @@
      render helpers, and the mutators that trigger the correct re-render --
      never write to the DOM directly and never re-render by hand.
      ===================================================================== */
-  const EXT_SLOTS = ['headerExtras','activityPanelBody','activityHoverCard','threadRowStatus',
-    'historyChrome','messageMeta','messageAffordance','messageOverflow','threadMenu','goalSection','goalEditor',
+  const EXT_SLOTS = ['headerLeading','headerExtras','activityPanelBody','activityHoverCard','threadRowStatus',
+    'historyChrome','messageMeta','messageAffordance','messageOverflow','messageOverflowPanel','threadMenu','goalSection','goalEditor',
     'contextCompactMenu','contextLensMenu','contextDrawer','dialog','systemCardActions','threadSearchMenu','planEditorActions','questionSurface','workingTake:N'];
 
   function ensureExt(){
@@ -201,7 +241,7 @@
       /* data */
       state, D, M, clone, clamp, esc, uid, icon,
       thread: activeThread(), model: selectedModel(),
-      activeThread, selectedModel, statusLabel, activityDefs, workStep,
+      activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
       /* mutators -- each triggers the render the change actually needs */
       renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
@@ -298,12 +338,40 @@
   function workStep() { return D.workSteps[clamp(state.work.step,0,D.workSteps.length-1)]; }
   function isNarrow() { return window.innerWidth < 821; }
   function isPhone() { return window.innerWidth < 591; }
+  function assistantLayoutWidth() {
+    const pane=document.querySelector('.assistant-pane');
+    const measured=pane?.getBoundingClientRect().width;
+    if(measured>0) return measured;
+    if(isNarrow()) return window.innerWidth;
+    return Math.max(0,window.innerWidth*(1-state.editorWidth/100)-5);
+  }
+  function activityPinnedInLayout() {
+    return !!(state.activity.open && state.activity.pinned && !isPhone() && assistantLayoutWidth()>=540);
+  }
+  function focusActivityControl(selector) {
+    requestAnimationFrame(() => {
+      const el=document.querySelector(selector);
+      if(el && typeof el.focus==='function') el.focus({preventScroll:true});
+    });
+  }
+  function focusActivityBarDomain(domain) {
+    if(window.PM56_AB) window.PM56_AB.suppressNextFocusPreview=true;
+    focusActivityControl(`[data-hover-domain="${CSS.escape(domain||'')}"]`);
+  }
+  let phoneLayout=isPhone();
+  let activityPinLayout=activityPinnedInLayout();
   function savePrefs() {
-    safeStorage.set('pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort,fast:state.fast,capabilities:state.capabilities}));
+    safeStorage.set('pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,capabilities:state.capabilities}));
   }
   function loadPrefs() {
     const raw = safeStorage.get('pm56-prefs'); if (!raw) return;
-    try { Object.assign(state, JSON.parse(raw)); } catch {}
+    try {
+      const p = JSON.parse(raw);
+      const chosen = !!p.effortChosen;
+      delete p.effortChosen;
+      Object.assign(state, p);
+      if (!chosen) state.effort = '';
+    } catch {}
   }
   loadPrefs();
 
@@ -332,10 +400,42 @@
     </header>`;
   }
 
+  function parseWorkDoc(id){
+    const i=String(id||'').indexOf(':');
+    const kind=i<0?id:id.slice(0,i);
+    const rest=i<0?'':id.slice(i+1);
+    const pipe=rest.indexOf('|');
+    const dec=s=>{ try { return decodeURIComponent(s); } catch { return s; } };
+    const a=dec(pipe<0?rest:rest.slice(0,pipe));
+    const b=pipe<0?'':dec(rest.slice(pipe+1));
+    return {kind, a, b};
+  }
+  function editorTabLabel(id){
+    const a=D.artifacts.find(x=>x.id===id);
+    if(a) return a.title;
+    const ag=D.subagents.find(x=>`thread-${x.id}`===id);
+    if(ag) return ag.name;
+    if(id==='goal-artifact') return 'Active Goal';
+    if(String(id).startsWith('file:')){
+      const p=id.slice(5);
+      return p.split('/').pop()||p||'File';
+    }
+    if(String(id).startsWith('search:')){
+      const q=parseWorkDoc(id).a;
+      return q.length>28?q.slice(0,27)+'\u2026':(q||'Search');
+    }
+    if(String(id).startsWith('link:')){
+      const d=parseWorkDoc(id);
+      return d.b||d.a||'Fetched page';
+    }
+    if(String(id).startsWith('mcp:')) return parseWorkDoc(id).a||'MCP';
+    if(String(id).startsWith('app:')) return 'Database inspector';
+    return 'Untitled';
+  }
   function renderEditor() {
     return `<section class="editor-pane">
       <div class="editor-tabs">${state.editorTabs.map(id => {
-        const a=D.artifacts.find(x=>x.id===id); const ag=D.subagents.find(x=>`thread-${x.id}`===id); const label=a?.title || ag?.name || (id==='goal-artifact'?'Active Goal':'Untitled');
+        const label=editorTabLabel(id);
         return `<button class="editor-tab ${state.activeEditor===id?'active':''}" data-action="select-editor" data-id="${esc(id)}" title="${esc(label)}"><span class="editor-tab-label">${esc(label)}</span><span class="close" data-action="close-editor" data-id="${esc(id)}">${icon('close',12)}</span></button>`;
       }).join('')}</div>
       <div class="editor-body" data-scroll-key="editor">${renderEditorBody()}</div>
@@ -351,7 +451,29 @@
     const art=D.artifacts.find(a=>a.id===id);
     if (art) return renderArtifactEditor(art);
     if (id.startsWith('file:')) return renderFileEditor(id.slice(5));
+    if (/^(search|link|mcp|app):/.test(id)) return renderWorkDoc(id);
     return `<article class="editor-doc"><h1>${esc(id)}</h1><p>This editor tab demonstrates a durable Puppet Master file-editor destination.</p></article>`;
+  }
+
+  function renderWorkDoc(id){
+    const d=parseWorkDoc(id);
+    if(d.kind==='search'){
+      const tag=d.b||'results';
+      return `<article class="editor-doc" data-k="${esc(id)}"><h1>Search</h1><div class="editor-meta"><span class="meta-pill">Web search</span><span class="meta-pill">${esc(tag)}</span></div><p>Query: <strong>${esc(d.a)}</strong></p><p>This is the search-results destination opened from a working-activity row. Live web results are not fetched in this concept.</p><div class="code-block">${esc(d.a)}\n${esc(tag)}</div></article>`;
+    }
+    if(d.kind==='link'){
+      const host=d.a||'fetched page';
+      const title=d.b||host;
+      return `<article class="editor-doc" data-k="${esc(id)}"><h1>${esc(title)}</h1><div class="editor-meta"><span class="meta-pill">Fetched page</span><span class="meta-pill">${esc(host)}</span></div><p>Opened from a working-activity fetch row. The live document is not retrieved in this concept; the host and title are the durable record.</p></article>`;
+    }
+    if(d.kind==='mcp'){
+      const tool=d.a||'MCP';
+      return `<article class="editor-doc" data-k="${esc(id)}"><h1>MCP · ${esc(tool)}</h1><div class="editor-meta"><span class="meta-pill">MCP call</span><span class="meta-pill">${esc(tool)}</span></div><p>${esc(d.b||'Tool call record opened from a working-activity row.')}</p><div class="code-block">${esc(tool)}</div></article>`;
+    }
+    if(d.kind==='app'){
+      return `<article class="editor-doc" data-k="${esc(id)}"><h1>Database inspector</h1><div class="editor-meta"><span class="meta-pill">App control</span><span class="meta-pill">local</span></div><p>Schema metadata refreshed. The planner selects <strong>idx_events_tenant_created</strong>.</p><div class="code-block">index idx_events_tenant_created (tenant_id, created_at)\nplanner: index-only capable on the tenant-scoped analytics path</div></article>`;
+    }
+    return `<article class="editor-doc"><h1>${esc(id)}</h1><p>Opened from a working-activity row.</p></article>`;
   }
 
   function renderGoalEditor(){
@@ -408,14 +530,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderDashboardEditor(){
     const metrics=[['p50','31 ms','−79%'],['p95','71 ms','−86%'],['Throughput','1,840/s','+164%'],['Cache hit','78%','+21 pt'],['Write overhead','4.8%','within gate'],['Rows scanned','1.2k','−98%']];
-    return `<div class="plan-actions"><button class="soft-button" data-action="chart-metric" data-value="p95">p95</button><button class="soft-button" data-action="chart-metric" data-value="throughput">Throughput</button><button class="soft-button" data-action="chart-metric" data-value="cache">Cache</button></div><div class="metric-grid" style="grid-template-columns:repeat(3,1fr)">${metrics.map(m=>`<div class="metric-card"><label>${m[0]}</label><strong>${m[1]}</strong><span style="color:var(--positive);font-size:9px">${m[2]}</span></div>`).join('')}</div><h2>${esc(state.artifactState.chartMetric)} comparison</h2><div class="artifact-preview" style="min-height:280px"><div class="mini-graph" style="height:260px">${[38,62,45,82,56,91,68,43,77,100,72,88].map((h,i)=>`<i style="height:${h}%;animation-delay:${i*35}ms" title="Run ${i+1}: ${h}"></i>`).join('')}</div></div>`;
+    return `<div class="plan-actions"><button class="soft-button" data-action="chart-metric" data-value="p95">p95</button><button class="soft-button" data-action="chart-metric" data-value="throughput">Throughput</button><button class="soft-button" data-action="chart-metric" data-value="cache">Cache</button></div><div class="metric-grid" style="grid-template-columns:repeat(3,1fr)">${metrics.map(m=>`<div class="metric-card"><label>${m[0]}</label><strong>${m[1]}</strong><span style="color:var(--positive);font-size:10px">${m[2]}</span></div>`).join('')}</div><h2>${esc(state.artifactState.chartMetric)} comparison</h2><div class="artifact-preview" style="min-height:280px"><div class="mini-graph" style="height:260px">${[38,62,45,82,56,91,68,43,77,100,72,88].map((h,i)=>`<i style="height:${h}%;animation-delay:${i*35}ms" title="Run ${i+1}: ${h}"></i>`).join('')}</div></div>`;
   }
 
   function renderDataExplorer(){
     const rows=[['tenant-084','dashboard','71 ms','hit','Index Scan'],['tenant-021','export','83 ms','miss','Index Scan'],['tenant-084','cohort','52 ms','hit','Index Only'],['tenant-103','dashboard','109 ms','miss','Index Scan'],['tenant-021','events','41 ms','hit','Index Only']];
     const filter=state.artifactState.dataFilter;
     const shown=filter==='all'?rows:rows.filter(r=>r[3]===filter);
-    return `<div class="plan-actions"><button class="soft-button" data-action="data-filter" data-value="all">All</button><button class="soft-button" data-action="data-filter" data-value="hit">Cache hits</button><button class="soft-button" data-action="data-filter" data-value="miss">Cache misses</button></div><div class="code-block" style="white-space:normal;padding:0;overflow:auto"><table style="width:100%;border-collapse:collapse;font:11px var(--font-mono)"><thead><tr>${['Tenant','Route','Duration','Cache','Plan'].map(h=>`<th style="text-align:left;padding:9px;border-bottom:1px solid var(--border)">${h}</th>`).join('')}</tr></thead><tbody>${shown.map(r=>`<tr>${r.map(c=>`<td style="padding:9px;border-bottom:1px solid var(--border);color:${c==='hit'?'var(--positive)':c==='miss'?'var(--warning)':'inherit'}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    return `<div class="plan-actions"><button class="soft-button" data-action="data-filter" data-value="all">All</button><button class="soft-button" data-action="data-filter" data-value="hit">Cache hits</button><button class="soft-button" data-action="data-filter" data-value="miss">Cache misses</button></div><div class="code-block" style="white-space:normal;padding:0;overflow:auto"><table style="width:100%;border-collapse:collapse;font:12px var(--font-mono)"><thead><tr>${['Tenant','Route','Duration','Cache','Plan'].map(h=>`<th style="text-align:left;padding:9px;border-bottom:1px solid var(--border)">${h}</th>`).join('')}</tr></thead><tbody>${shown.map(r=>`<tr>${r.map(c=>`<td style="padding:9px;border-bottom:1px solid var(--border);color:${c==='hit'?'var(--positive)':c==='miss'?'var(--warning)':'inherit'}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   }
 
   function renderQuizEditor(){
@@ -425,7 +547,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderPeriodicEditor(){
     const cells=[['FE','Frontend','A'],['BE','Backend','A'],['DB','Database','S'],['BR','Browser','A'],['MO','Motion','S'],['PL','Planning','A'],['AU','Audit','S'],['RS','Rust','A'],['SL','Slint','A'],['SE','Security','B'],['DX','Developer UX','A'],['ML','Models','S']];
-    return `<p>Capability cells combine qualification, freshness, specialty, model cost, and current availability.</p><div style="display:grid;grid-template-columns:repeat(6,1fr);gap:7px">${cells.map((c,i)=>`<button class="choice" data-action="periodic-cell" data-value="${esc(c[1])}" style="aspect-ratio:1;display:grid;place-items:center;text-align:center;background:${i%3===0?'color-mix(in srgb,var(--accent) 12%,var(--surface-3))':'var(--surface-3)'}"><strong style="font-size:18px">${c[0]}</strong><span style="font-size:8px;color:var(--muted)">${c[1]}</span><b style="font-size:9px;color:var(--positive)">${c[2]}</b></button>`).join('')}</div>`;
+    return `<p>Capability cells combine qualification, freshness, specialty, model cost, and current availability.</p><div style="display:grid;grid-template-columns:repeat(6,1fr);gap:7px">${cells.map((c,i)=>`<button class="choice" data-action="periodic-cell" data-value="${esc(c[1])}" style="aspect-ratio:1;display:grid;place-items:center;text-align:center;background:${i%3===0?'color-mix(in srgb,var(--accent) 12%,var(--surface-3))':'var(--surface-3)'}"><strong style="font-size:18px">${c[0]}</strong><span style="font-size:9px;color:var(--muted)">${c[1]}</span><b style="font-size:10px;color:var(--positive)">${c[2]}</b></button>`).join('')}</div>`;
   }
 
   function renderArchitectureEditor(){
@@ -487,12 +609,29 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderHistoryContent(flyout=false){
     const q=state.historySearch.trim().toLowerCase();
     const filtered=state.threads.filter(t=>!q || `${t.title} ${t.summary} ${t.messages.map(m=>m.body||m.title||m.detail||'').join(' ')}`.toLowerCase().includes(q));
-    const groups=[['Pinned',filtered.filter(t=>!t.archived&&t.pinned)],['Recent',filtered.filter(t=>!t.archived&&!t.pinned)],['Archived',filtered.filter(t=>t.archived)]];
-    return `<div class="history-head"><button class="soft-button" data-action="new-thread">${icon('plus',13)} New thread</button><button class="icon-button" data-action="${flyout?'pin-history':'unpin-history'}" title="${flyout?'Pin history':'Unpin history'}">${icon(flyout?'pin':'unpin',13)}</button><button class="icon-button" data-action="close-history" title="Close history">${icon('close',13)}</button></div>${extRender('historyChrome',{flyout,groups})}<div class="history-search"><label class="input-wrap">${icon('search',13)}<input data-input="history-search" value="${esc(state.historySearch)}" placeholder="Search active and archived threads…"></label></div><div class="history-scroll" data-scroll-key="history">${groups.map(([name,items])=>`<section><div class="section-head"><span>${name}</span><span class="count">${items.length}</span></div>${items.length?items.map(renderThreadRow).join(''):`<div style="padding:7px;color:var(--subtle);font-size:10px">No matching ${name.toLowerCase()} threads.</div>`}</section>`).join('')}</div>`;
+    const groups=[
+      ['pinned','Pinned',filtered.filter(t=>!t.archived&&t.pinned)],
+      ['recent','Recent',filtered.filter(t=>!t.archived&&!t.pinned)],
+      ['archived','Archived',filtered.filter(t=>t.archived)]
+    ];
+    const histPinned=document.body.dataset.phDrawer==='pinned';
+    const pinTitle=histPinned?'Unpin — float the drawer over the chat again':'Pin left — reserve a gutter so the transcript stays usable';
+    const sections=state.historySections||{pinned:true,recent:true,archived:false};
+    const sectionHtml=groups.map(([key,name,items])=>{
+      const open=sections[key]!==false;
+      return `<section class="history-section" data-section="${key}" data-collapsed="${open?'false':'true'}">`+
+        `<button type="button" class="section-head" data-action="toggle-history-section" data-section="${key}" aria-expanded="${open?'true':'false'}">`+
+        `<span class="section-chev" aria-hidden="true">${icon('down',11)}</span>`+
+        `<span class="section-label">${name}</span></button>`+
+        `<div class="section-body">${items.length?items.map(renderThreadRow).join(''):`<div class="section-empty">No matching ${name.toLowerCase()} threads.</div>`}</div></section>`;
+    }).join('');
+    /* historyChrome still receives [name,items] pairs for any extension chrome. */
+    const chromeGroups=groups.map(([,name,items])=>[name,items]);
+    return `<div class="history-head"><button class="soft-button hh-new-thread" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}<span class="hh-new-label">New thread</span></button><button class="icon-button ph-head-pin ${histPinned?'is-pinned':''}" data-action="ph-toggle-pin" aria-pressed="${histPinned}"${hoverAttrs('hist-pin',pinTitle)}>${icon(histPinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-history"${hoverAttrs('hist-close','Close history')}>${icon('close',13)}</button></div>${extRender('historyChrome',{flyout,groups:chromeGroups})}<div class="history-search"><label class="input-wrap"${hoverAttrs('hist-search','Search active and archived threads')}>${icon('search',13)}<input data-input="history-search" value="${esc(state.historySearch)}" placeholder="Search active and archived threads…" aria-label="Search active and archived threads"></label></div><div class="history-scroll" data-scroll-key="history">${sectionHtml}</div>`;
   }
 
   function renderThreadRow(t){
-    return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span>${t.unread?`<span class="thread-unread">${t.unread}</span>`:''}</div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}" title="Thread options">${icon('more',14)}</button></div>`;
+    return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"${hoverAttrs('thread-st-'+t.id,statusLabel(t.status))}><span class="thread-lead"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}"${hoverAttrs('thread-more-'+t.id,'Thread options')}>${icon('more',14)}</button></span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span></div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div></div>`;
   }
 
   function renderHistory(){ return `<aside class="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
@@ -504,36 +643,44 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const t=activeThread();
     return `<section class="chat-stage" data-shell="${state.variants[0]}">
       ${renderChatHeader(t)}
-      <div class="transcript" data-variant="${state.variants[5]}" data-scroll-key="transcript"><div class="transcript-inner">${t.messages.map(m=>renderMessage(m,t)).join('')}</div></div>
+      <div class="transcript" data-variant="${state.variants[5]}" data-scroll-key="transcript"><div class="transcript-inner">${t.messages.filter(messageVisible).map(m=>renderMessage(m,t)).join('')}</div></div>
       ${renderDecisionHost()}
-      ${renderActivityBar()}
+      ${renderChatFloat()}
       ${renderComposer()}
-      ${state.activity.open&&!state.activity.pinned?renderActivityPanel(true):''}
+      ${state.activity.open&&!activityPinnedInLayout()?renderActivityPanel(true):''}
     </section>`;
   }
 
   function renderChatHeader(t){
-    const m=selectedModel();
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
        module stylesheet can reach it -- it has to be resolved here. PM56_CTX comes from
        context.js; the fallback is the historical literal, so this line is a no-op when
        that module is absent. */
     const cp=(window.PM56_CTX&&window.PM56_CTX.ringPct)?window.PM56_CTX.ringPct():64;
     return `<div class="chat-header">
-      ${state.historyMode!=='pinned'?`<button class="icon-button" data-action="toggle-history" title="Open thread history">${icon('history',14)}</button>`:''}
-      <button class="icon-button" data-action="new-thread" title="Start a new thread">${icon('plus',14)}</button>
+      <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
+      <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
       <div class="chat-title"><span>${esc(t.title)}</span><span class="chat-state"><i class="status-dot ${t.status}"></i>${esc(statusLabel(t.status))}</span></div>
-      <span class="chat-meta">${esc(m.name)} · ${esc(state.mode)} · ${esc(state.worktree)}</span>
       <span class="chat-head-spacer"></span>
-      <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search" title="Search this thread or every thread">${icon('search',14)}</button>
+      ${extRender('headerLeading',{thread:t})}
+      <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>
       ${extRender('headerExtras',{thread:t})}
-      <button class="context-ring" style="--context-pct:${cp}" data-action="context-menu" data-menu-anchor="context-ring" data-value="${cp}" title="Context ${cp}% used"></button>
+      <button class="context-ring" style="--context-pct:${cp}" data-action="context-menu" data-menu-anchor="context-ring" data-value="${cp}"${hoverAttrs('context-ring','Context '+cp+'% used')}></button>
     </div>`;
   }
 
+  /* Turn playback gating: a message with `revealAfter` waits for that work
+     run to complete, and a working card with a `workId` waits for its record
+     to exist (the sequencer creates the record when the burst actually
+     starts, so the card appears the moment its work begins). */
+  function messageVisible(m){
+    if(m.revealAfter&&!(state.works[m.revealAfter]&&state.works[m.revealAfter].completed)) return false;
+    if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
+    return true;
+  }
   function renderMessage(m,t){
     if(m.type==='text') return renderTextMessage(m);
-    if(m.type==='working') return renderWorkingAnimation();
+    if(m.type==='working') return renderWorkingAnimation(m);
     if(m.type==='plan-card') return renderPlanCard(m);
     if(m.type==='artifact') return renderArtifactMessage(m);
     if(m.type==='live-agents') return renderLiveAgentsCard();
@@ -567,7 +714,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderTextMessage(m){
     const expanded=!!state.messageExpanded[m.id], details=!!state.messageDetails[m.id];
     const isLong=m.long || String(m.body).length>460;
-    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}">${extRender('messageAffordance',{message:m})}<div class="message-surface">${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}<div class="message-body ${isLong&&!expanded?'long-fade':''}">${formatText(m.body)}</div>${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}">${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${extRender('messageMeta',{message:m})}<div class="message-actions"><button class="text-button" data-action="copy-message" data-id="${esc(m.id)}" title="Copy this message without changing the thread">${icon('copy',11)}<span>Copy</span></button>${m.role==='user'?(m.eligibleForEdit?`<button class="text-button" data-action="edit-message" data-id="${esc(m.id)}" title="Edit this user message and create a new branch from here">${icon('edit',11)}<span>Edit & branch</span></button>`:''):`<button class="text-button" data-action="reanswer-message" data-id="${esc(m.id)}" title="Create a new branch and answer again from the preceding user message">${icon('branch',11)}<span>Re-answer</span></button>`}<button class="text-button" data-action="message-details" data-id="${esc(m.id)}" title="Show model, provider, timing, context, cache, token, and cost details">${icon('info',11)}<span>More details</span></button>${extRender('messageOverflow',{message:m})}</div>${details?renderMessageDetails(m):''}</div></article>`;
+    const expandTip=expanded?'Collapse the response':'Expand the full response';
+    const copied=state.copyFlashId===m.id;
+    const copyBtn=`<button class="text-button icon-only${copied?' is-copied':''}" data-action="copy-message" data-id="${esc(m.id)}"${hoverAttrs('msg-copy-'+m.id,copied?'Copied':'Copy this message without changing the thread')}>${icon(copied?'check':'copy',13)}<span>Copy</span></button>`;
+    const editBtn=m.role==='user'&&m.eligibleForEdit?`<button class="text-button" data-action="edit-message" data-id="${esc(m.id)}"${hoverAttrs('msg-edit-'+m.id,'Edit this user message and create a new branch from here')}>${icon('edit',11)}<span>Edit & branch</span></button>`:'';
+    const detailsBtn=`<button class="text-button icon-only" data-action="message-details" data-id="${esc(m.id)}"${hoverAttrs('msg-details-'+m.id,'Show model, provider, timing, context, cache, token, and cost details')}>${icon('info',13)}<span>More details</span></button>`;
+    const overflowBtn=extRender('messageOverflow',{message:m});
+    const overflowPanel=extRender('messageOverflowPanel',{message:m});
+    const actions=`<div class="message-actions">${copyBtn}${editBtn}${detailsBtn}${overflowBtn}</div>`;
+    const overflowOpen=window.PM56_MSG_OVERFLOW&&window.PM56_MSG_OVERFLOW.isOpen(m.id);
+    const chromeCls=`message-chrome${m.role==='user'?' message-chrome-user':''}${overflowOpen?' is-overflow-open':''}`;
+    const chrome=`<div class="${chromeCls}">${extRender('messageMeta',{message:m})}${actions}${overflowPanel}</div>`;
+    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}">${extRender('messageAffordance',{message:m})}<div class="message-surface">${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}<div class="message-body ${isLong&&!expanded?'long-fade':''}">${formatText(m.body)}</div>${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
   }
 
   function renderMessageDetails(m){
@@ -631,7 +789,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(art.kind==='dashboard'||art.kind==='chart') preview=`<div class="artifact-preview"><div class="mini-graph">${[35,58,42,76,51,91,67,84].map((h,i)=>`<i style="height:${h}%;animation-delay:${i*45}ms"></i>`).join('')}</div></div>`;
     else if(art.kind==='image') preview=`<div class="artifact-preview"><div class="generated-scene"></div></div>`;
     else preview=`<div class="artifact-preview" style="display:grid;place-items:center;color:var(--accent)">${icon(art.kind==='document'?'document':'chart',36)}</div>`;
-    return `<article class="system-card" data-artifact-id="${esc(art.id)}"><div class="system-card-head"><span class="event-icon">${icon(art.kind==='image'?'image':art.kind==='mermaid'?'code':'artifact',14)}</span><div><span class="title">${esc(art.title)}</span><span class="sub"> · ${esc(art.kind)}</span></div><span class="spacer"></span><span class="meta-pill">${esc(lblOf('artifactStatus',art.status))}</span></div><div class="system-card-body">${preview}<div class="artifact-card"><div><strong>${esc(art.title)}</strong><p style="margin:3px 0 0;color:var(--muted);font-size:10px">${esc(art.summary)}</p></div><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('expand',13)} Open</button></div></div></article>`;
+    return `<article class="system-card" data-artifact-id="${esc(art.id)}"><div class="system-card-head"><span class="event-icon">${icon(art.kind==='image'?'image':art.kind==='mermaid'?'code':'artifact',14)}</span><div><span class="title">${esc(art.title)}</span><span class="sub"> · ${esc(art.kind)}</span></div><span class="spacer"></span><span class="meta-pill">${esc(lblOf('artifactStatus',art.status))}</span></div><div class="system-card-body">${preview}<div class="artifact-card"><div><strong>${esc(art.title)}</strong><p style="margin:3px 0 0;color:var(--muted);font-size:11px">${esc(art.summary)}</p></div><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('expand',13)} Open</button></div></div></article>`;
   }
 
   function renderLiveAgentsCard(){
@@ -656,25 +814,35 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
-    return `<article class="event-card ${d[2]}"><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><strong>${esc(m.title||d[1])}</strong><p>${esc(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><strong>${esc(m.title||d[1])}</strong><p>${esc(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
-  function renderWorkingAnimation(){
-    const v=state.variants[2], step=workStep(), pct=Math.round((state.work.step/(D.workSteps.length-1))*100);
-    const co=CHROME_OPTS[v]||{}, ctx=makeWorkCtx(step,pct), shut=state.work.completed&&state.work.openPhase==null;
-    return `<article class="working-card ${state.work.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-k="workcard"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${state.work.completed?'Completed work':'Working'}</strong><span class="sub"> · ${formatElapsed(state.work.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${state.work.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset to Preparing">${icon('reset',13)}</button><button class="icon-button ${state.work.expanded?'active':''}" data-action="toggle-work-history" title="${state.work.expanded?'Hide':'Show'} organized work history and evidence">${icon(state.work.expanded?'collapse':'expand',13)}</button></div></div><div class="working-body" data-flip data-k="wv:${v}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct)}${renderLiveAgentInline(step)}${state.work.expanded?renderWorkHistory():''}</div></article>`;
+  function renderWorkingAnimation(m){
+    const rec=workRecFor(m)||state.work;
+    const v=state.variants[2];
+    const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
+    const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
+    const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.completed?'Completed':'Working'}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset this work run">${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history" title="${rec.expanded?'Hide':'Show'} organized work history and evidence">${icon(rec.expanded?'collapse':'expand',13)}</button></div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
   }
 
   /* Everything a working-animation take needs, so takes can live outside
      this IIFE (see motion.js / variants-*.js) and still reach state, the
      fixtures and the shared render helpers. */
-  /* Families are 8 options wide except Working Animation, whose length is
-     whatever data.js declares. */
+  /* Families are 8 options wide except Working Animation (data.js),
+     Transcript (data.js), and Question & decision (nine takes). */
   /* Takes that already render child agents themselves must not also get
      the shared inline list appended underneath. */
   const AGENT_OWNING_TAKES=new Set([6]);
   function takeOwnsAgents(v){ return AGENT_OWNING_TAKES.has(v) || !!(window.PM56_WORKING&&window.PM56_WORKING[v]&&window.PM56_WORKING[v].ownsAgents); }
-  const FAMILY_SIZES={2:()=>D.workingTakes.length, 5:()=>D.transcriptTakes.length};
+  const FAMILY_SIZES={2:()=>D.workingTakes.length, 5:()=>D.transcriptTakes.length, 6:()=>(window.PM56_QUESTIONS&&window.PM56_QUESTIONS.takes)||9};
   function familyMax(f){ const g=FAMILY_SIZES[f]; return (g?g():8) - 1; }
+  function questionFilled(q){
+    if(!q) return false;
+    if(Array.isArray(q.attachments)&&q.attachments.length) return true;
+    if(String(q.other||'').trim()) return true;
+    if(Array.isArray(q.answer)) return q.answer.length>0;
+    return String(q.answer||'').trim().length>0;
+  }
   /* Shared working-chrome opts per take. Take 8 (Step Rail) implements the
      full reference mechanic privately — trail, rows, compaction and
      per-step reopen — so it gets neither the chrome nor the shut-body
@@ -683,19 +851,197 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      4/6 end on a meaningful final stage that should stay visible after
      compaction. */
   const CHROME_OPTS={0:{noRows:true},1:{noChrome:true,keepBody:true},4:{keepBody:true},6:{keepBody:true},8:{noChrome:true,keepBody:true},11:{noRows:true},15:{noRows:true}};
-  function makeWorkCtx(step,pct){
+  /* ---- multi-card work records --------------------------------------
+     state.work stays the PRIMARY record every historic consumer targets
+     (demo triggers, PM56_DEMO, the status bar, transcript.js). A message
+     that names a workId -- the Multi Orbit demo fixtures, /debug, /web --
+     gets its own record in state.works. A record may carry a float `clock`
+     in demo seconds; a record without one derives clock from step*2, so
+     every writer that assigns `step` wholesale keeps working untouched.
+     Records with a `runId` follow a scripted timeline from D.workRuns whose
+     steps are SUBJECT INSTANCES (duplicates allowed); everything else
+     synthesizes the classic 14-step timeline so all other takes keep their
+     historic cadence. */
+  function workRecFor(m){ return m&&m.workId?state.works[m.workId]:state.work; }
+  function workClock(rec){ return rec.clock!=null?rec.clock:rec.step*2; }
+  const RUN_CACHE={};
+  function rowsFromPhase(s){ return (D.phaseRows[s.kind]&&D.phaseRows[s.kind][s.id])||(s.evidence||[]).slice(0,3).map(t=>({text:t})); }
+  function workInstancesFor(rec){
+    const runId=rec&&rec.runId, key=runId||'__legacy';
+    if(RUN_CACHE[key]) return RUN_CACHE[key];
+    let list;
+    if(runId&&D.workRuns&&D.workRuns[runId]){
+      list=D.workRuns[runId].steps.map((s,i)=>{
+        /* `ref` inherits a workSteps base; a ref-less instance (the mcp/skill
+           subjects) defines id/kind/label/icon/verb/detail inline. */
+        const base=s.ref?(D.workSteps.find(x=>x.id===s.ref)||D.workSteps[0]):{};
+        const inst={...base,...s,id:(base.id||s.id||s.kind),uid:`${runId}:${i}`};
+        inst.rows=(s.rows||rowsFromPhase(base)).map((r,k)=>({at:r.at!=null?r.at:k*0.55,...r}));
+        inst.stat=s.stat||((D.phaseMeta[base.kind]||{}).count||'');
+        return inst;
+      });
+    }else{
+      list=D.workSteps.map((s,i)=>({...s,uid:s.id,startAt:i*2,dur:2,
+        rows:rowsFromPhase(s).map((r,k)=>({at:k*0.55,...r})),
+        stat:(D.phaseMeta[s.kind]||{}).count||''}));
+    }
+    RUN_CACHE[key]=list; return list;
+  }
+  function workLiveIndex(rec){
+    const list=workInstancesFor(rec), c=workClock(rec);
+    let i=0;
+    for(let k=0;k<list.length;k++){ if(list[k].startAt<=c+1e-6) i=k; else break; }
+    return i;
+  }
+  function workRunEnd(list){ const last=list[list.length-1]; return last.startAt+(last.dur!=null?last.dur:2); }
+  function makeWorkCtx(rec,m){
+    rec=rec||state.work;
+    const steps=workInstancesFor(rec);
+    const index=clamp(workLiveIndex(rec),0,steps.length-1);
+    const step=steps[index], total=steps.length;
+    const pct=Math.round((index/Math.max(1,total-1))*100);
     return {
-      state, D, step, pct,
-      steps: D.workSteps,
-      index: state.work.step,
-      total: D.workSteps.length,
-      running: state.work.running,
-      completed: state.work.completed,
-      elapsed: state.work.elapsed,
-      icon, esc, formatElapsed, commandForStep,
-      workReceipt: renderWorkReceipt,
+      state, D, step, pct, steps, index, total,
+      running:rec.running, completed:rec.completed, elapsed:rec.elapsed,
+      rec, cardId:(m&&m.id)||'work', clock:workClock(rec),
+      rowVisible:(inst,r)=>rec.completed||workClock(rec)>=inst.startAt+((r&&r.at)||0),
+      icon, esc, formatElapsed, commandForStep, isShellRow, shellRowWrap, workRowWrap, workRowDest,
+      workReceipt:(opts)=>renderWorkReceipt(rec,opts),
       M: window.PM56_MOTION
     };
+  }
+
+  /* Working-activity detail rows: streamed prose is never a button.
+     Destinations come from explicit row fields first, then text/kind
+     inference. Bash-kind alone is not a shell row — only `cmd` or a
+     "Ran …" command line opens the inline Shell box. */
+  function workDocId(kind, a, b){
+    return kind+':'+encodeURIComponent(String(a||''))+(b?'|'+encodeURIComponent(String(b)):'');
+  }
+  function inferPathFromText(text){
+    const m=String(text||'').match(/^(?:Read|Edited|Created|Wrote)\s+(\S+)/i);
+    return m?m[1]:null;
+  }
+  function inferSearchQuery(text){
+    const m=String(text||'').match(/^Searched\s+"([^"]+)"/i);
+    return m?m[1]:null;
+  }
+  function inferMcpTool(text){
+    const t=String(text||'');
+    let m=t.match(/^Called\s+([A-Za-z0-9_.:-]+)/i);
+    if(m) return m[1];
+    m=t.match(/^MCP\s*·\s*([A-Za-z0-9_.:-]+)/i);
+    return m?m[1]:null;
+  }
+  function inferAgentId(text){
+    const t=String(text||'');
+    const map=[['Query Analyzer','agent-query'],['Schema Reviewer','agent-schema'],['Benchmark Runner','agent-bench']];
+    for(const [name,id] of map) if(t.includes(name)) return id;
+    return null;
+  }
+  function workRowDest(step, row){
+    if(!row || row.stream) return null;
+    const text=String(row.text||'');
+    const kind=(step&&step.kind)||'';
+    if(row.cmd) return {kind:'shell'};
+    if(row.path) return {kind:'file', path:row.path};
+    if(row.artifactId) return {kind:'artifact', id:row.artifactId};
+    if(row.agentId) return {kind:'agent', id:row.agentId};
+    if(row.url) return {kind:'doc', id:workDocId('link', row.url, text)};
+    if(row.query) return {kind:'doc', id:workDocId('search', row.query, row.tag||'')};
+    if(row.tool) return {kind:'doc', id:workDocId('mcp', row.tool, text)};
+    if(row.doc) return {kind:'doc', id:row.doc};
+    if(/^Ran\s+/i.test(text)) return {kind:'shell'};
+    const mcpTool=inferMcpTool(text);
+    if(mcpTool || kind==='mcp') return {kind:'doc', id:workDocId('mcp', mcpTool||text, text)};
+    const path=inferPathFromText(text);
+    if(path) return {kind:'file', path};
+    const q=inferSearchQuery(text);
+    if(q) return {kind:'doc', id:workDocId('search', q, row.tag||'')};
+    if(kind==='web-search') return {kind:'doc', id:workDocId('search', text, row.tag||'')};
+    if(/^Rendered\s+/i.test(text) || kind==='artifact'){
+      if(/mermaid|diagram|architecture|rollout/i.test(text)) return {kind:'artifact', id:'mermaid-runtime'};
+      return {kind:'artifact', id:'dashboard-query'};
+    }
+    const agent=inferAgentId(text);
+    if(agent) return {kind:'agent', id:agent};
+    if(/console errors/i.test(text)) return null;
+    if(kind==='browser' || /^(Opened|Captured)\b/i.test(text)){
+      if(/dashboard|p50|p95|trace/i.test(text) || kind==='browser') return {kind:'artifact', id:'dashboard-query'};
+    }
+    if(/p95\s+\d+/i.test(text) && /→/.test(text)) return {kind:'artifact', id:'dashboard-query'};
+    if(kind==='app' || /inspector/i.test(text) || /schema metadata/i.test(text)) return {kind:'doc', id:'app:inspector'};
+    if(kind==='test' || /^Replayed\s+/i.test(text)) return {kind:'artifact', id:'test-evidence'};
+    if(kind==='skill') return {kind:'artifact', id:'report-query'};
+    if(/Attached the benchmark artifact/i.test(text)) return {kind:'artifact', id:'dashboard-query'};
+    return null;
+  }
+  function isShellRow(step, row){
+    const d=workRowDest(step, row);
+    return !!(d && d.kind==='shell');
+  }
+  function workRowWrap(cardId, step, row, j, inner, key, extraClass, stagger){
+    const dest=workRowDest(step, row);
+    const shell=!!(dest && dest.kind==='shell');
+    const t=state.workTerminal[cardId];
+    const on=!!(shell && t && t.stepUid===step.uid && Number(t.rowIndex)===j);
+    const click=!!dest;
+    const cls=`${extraClass||'wa-row'} pm-materialize${click?' is-click':''}${shell?' is-shell':''}${on?' is-open':''}`;
+    const st=stagger!=null?stagger:j;
+    if(!dest) return `<span class="${cls}" data-k="${key}" style="--pm-stagger:${st}">${inner}</span>`;
+    let attrs='';
+    if(shell){
+      attrs=`data-action="work-terminal-open" data-card-ui="${esc(cardId)}" data-step="${esc(step.uid)}" data-row="${j}" aria-expanded="${on?'true':'false'}"`;
+    }else if(dest.kind==='file'){
+      attrs=`data-action="open-change" data-path="${esc(dest.path)}"`;
+    }else if(dest.kind==='artifact'){
+      attrs=`data-action="open-artifact" data-id="${esc(dest.id)}" data-artifact-id="${esc(dest.id)}"`;
+    }else if(dest.kind==='agent'){
+      attrs=`data-action="open-agent" data-id="${esc(dest.id)}"`;
+    }else{
+      attrs=`data-action="open-work-doc" data-id="${esc(dest.id)}"`;
+    }
+    return `<button type="button" class="${cls}" data-k="${key}" ${attrs} style="--pm-stagger:${st}">${inner}</button>`;
+  }
+  function shellRowWrap(cardId, step, row, j, inner, key, extraClass, stagger){
+    return workRowWrap(cardId, step, row, j, inner, key, extraClass, stagger);
+  }
+  function inferShellCmd(step, row){
+    if(row && row.cmd) return row.cmd;
+    const t=String((row&&row.text)||'');
+    if(/^Ran\s+/i.test(t)) return t.replace(/^Ran\s+/i,'');
+    return commandForStep(step);
+  }
+  function formatTermDuration(ms){
+    const s=Math.max(1, Math.round((ms||0)/1000));
+    const m=Math.floor(s/60), sec=s%60;
+    return m?`${m}m ${String(sec).padStart(2,'0')}s`:`${s}s`;
+  }
+  function renderWorkTerminal(cardId, step, row){
+    const cmd=inferShellCmd(step, row);
+    const raw=row.output!=null?row.output:(row.tag||row.text||'');
+    const lines=Array.isArray(raw)?raw:[raw];
+    const exit=row.exitCode!=null?row.exitCode:0;
+    const ms=row.durationMs!=null?row.durationMs:(step&&step.dur?step.dur*1000:45000);
+    const out=lines.filter(Boolean).map(line=>`<div class="work-terminal-out">${esc(String(line))}</div>`).join('');
+    return `<div class="work-terminal" data-k="wterm:${esc(cardId)}">`+
+      `<div class="work-terminal-head">${icon('terminal',14)}<span class="work-terminal-ran">Ran command in ${esc(formatTermDuration(ms))}</span></div>`+
+      `<div class="work-terminal-box">`+
+      `<button type="button" class="icon-button work-terminal-close" data-action="work-terminal-close" data-card-ui="${esc(cardId)}" aria-label="Close the shell output">${icon('close',12)}</button>`+
+      `<span class="work-terminal-label">Shell</span>`+
+      `<div class="work-terminal-cmd"><span class="work-terminal-prompt">$</span> ${esc(cmd)}</div>`+
+      out+
+      `<div class="work-terminal-exit">Exit code ${esc(String(exit))}</div>`+
+      `</div></div>`;
+  }
+  function renderOpenWorkTerminal(cardId, rec){
+    const t=state.workTerminal[cardId];
+    if(!t) return '';
+    const steps=workInstancesFor(rec);
+    const st=steps.find(s=>s.uid===t.stepUid);
+    const row=st&&(st.rows||[])[t.rowIndex];
+    if(!st||!row) return '';
+    return renderWorkTerminal(cardId, st, row);
   }
 
   /* The reference-video chrome shared by every take: an icon trail of
@@ -707,10 +1053,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      replay their entrance animation. */
   function renderPhaseChrome(ctx,opts){
     const {D,step,index,running,completed,M,esc,icon}=ctx;
-    const open=state.work.openPhase;
+    const open=ctx.rec.openPhase;
     const shut=completed&&open==null;
     const phases=[];
-    for(const s of D.workSteps){
+    for(const s of ctx.steps){
       const p=D.phaseGroups[s.kind]||s.kind;
       const g=phases[phases.length-1];
       if(g&&g.phase===p){g.steps.push(s);}else{phases.push({phase:p,first:s,steps:[s]});}
@@ -721,18 +1067,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const meta=D.phaseMeta[g.first.kind]||{};
       const cls='pm-rail-item wa-disc '+(completed||i<activeIdx?'done':i===activeIdx?'current enter':'')+(open===g.phase?' open':'');
       const act=completed?` data-action="toggle-work-phase" data-value="${g.phase}"`:'';
-      return `<button type="button" class="${cls}" data-k="wa:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,11)}</button>`;
+      return `<button type="button" class="${cls}" data-k="wa:${i}:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,11)}</button>`;
     }).join('');
     /* `off` continues the entrance cascade across the steps of one opened
        phase, so rows always land top-to-bottom in document order. */
     const rowsFor=(s,off=0)=>{
-      const rows=(D.phaseRows[s.kind]&&D.phaseRows[s.kind][s.id])||s.evidence.slice(0,3).map(t=>({text:t}));
+      const rows=(s.rows&&s.rows.length)?s.rows:rowsFromPhase(s);
       let w=off;
       return rows.map((r,j)=>{
         const body=r.stream?`<span class="wa-prose pm-stream">${M.words(r.text,w)}</span>`:`<span class="wa-rowtext">${esc(r.text)}</span>`;
         if(r.stream)w+=M.wordCount(r.text);
-        const metaBit=r.add!=null?`<span class="wa-meta"><b class="wa-add">+${r.add}</b>${r.del!=null?` <b class="wa-del">−${r.del}</b>`:''}</span>`:r.tag?`<span class="wa-meta"><b class="wa-tag">${esc(r.tag)}</b></span>`:'';
-        return `<span class="wa-row pm-materialize" data-k="war:${s.id}:${j}" style="--pm-stagger:${off+j}">${body}${metaBit}</span>`;
+        const metaBit=r.add!=null?`<span class="wa-meta"><b class="wa-add">+${r.add}</b>${r.del!=null?` <b class="wa-del">−${r.del}</b>`:''}</span>`:r.url?`<span class="wa-meta"><b class="wa-tag">${esc(r.url)}</b></span>`:r.tag?`<span class="wa-meta"><b class="wa-tag">${esc(r.tag)}</b></span>`:'';
+        return workRowWrap(ctx.cardId,s,r,j,body+metaBit,`war:${s.id}:${j}`,'wa-row',off+j);
       }).join('');
     };
     let label;
@@ -745,32 +1091,33 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const meta=D.phaseMeta[cur.first.kind]||{};
       label=`<b class="wa-verb ${running?'pm-shimmer':'pm-shimmer pm-settled'}" data-k="wv2:${cur.phase}">${esc(meta.verb)}</b><i class="wa-count" data-k="wc2:${cur.phase}">${esc(meta.count)}</i>`;
     }
-    const chev=completed?`<button type="button" class="wa-chev${open?' open':''}" data-k="wchev" data-action="toggle-work-phase" data-value="${open||(D.phaseGroups[step.kind]||step.kind)}" title="${open?'Collapse phase details':'Show phase details'}">${icon('down',12)}</button>`:'';
+    const chev=completed?`<button type="button" class="wa-chev ${open?'open':''}" data-k="wchev" data-action="toggle-work-phase" data-value="${open||(D.phaseGroups[step.kind]||step.kind)}" title="${open?'Collapse phase details':'Show phase details'}">${icon('down',12)}</button>`:'';
     let under='';
     if(shut){ under=`<div class="wa-under wa-shut" data-k="wau">${ctx.workReceipt()}</div>`; }
     else if(!opts.noRows){
       const g=open?phases.find(x=>x.phase===open):null;
-      let off=0;const rows=(g?g.steps:[step]).map(st=>{const h=rowsFor(st,off);off+=((D.phaseRows[st.kind]&&D.phaseRows[st.kind][st.id])||st.evidence.slice(0,3)).length;return h;}).join('');
+      let off=0;const rows=(g?g.steps:[step]).map(st=>{const h=rowsFor(st,off);off+=((st.rows&&st.rows.length)?st.rows:rowsFromPhase(st)).length;return h;}).join('');
       under=`<div class="wa-under pm-rows pm-materialize" data-k="wau:${open||cur.phase}">${rows}</div>`;
     }
     return `<div class="wa-chrome" data-k="wac"><div class="wa-head" data-k="wah"><span class="pm-rail wa-track" data-k="wat">${trail}</span><span class="wa-label" data-k="wal">${label}</span><span class="wa-spacer"></span>${chev}</div>${under}</div>`;
   }
-  function renderWorkingVariant(v,step,pct){
+  function renderWorkingVariant(v,step,pct,ctx){
     /* A module may replace a whole take without touching this file or
        PM56_WORKING: slot 'workingTake:1' is the Orbit override Wave 4 uses. */
-    const slotted = extEach(`workingTake:${v}`, {v,step,pct,ctx:makeWorkCtx(step,pct)});
+    ctx=ctx||makeWorkCtx();
+    const slotted = extEach(`workingTake:${v}`, {v,step,pct,ctx});
     if(slotted) return slotted;
     const take = window.PM56_WORKING && window.PM56_WORKING[v];
-    if(typeof take==='function') return take(makeWorkCtx(step,pct));
-    if(v===0) return `<div class="reference-stage" data-k="stage"><span class="work-phase-icon" data-k="wicon:${step.id}">${icon(step.icon,14)}</span><div><div class="morph-slot" data-k="morph:${step.id}"><div class="work-verb${state.work.running?' pm-shimmer':''}">${esc(step.verb)}</div><div class="work-detail">${esc(step.detail)}</div></div><div class="work-progress" data-k="prog"><i style="width:${pct}%"></i></div><div class="work-evidence" data-k="ev">${step.evidence.slice(0,3).map((x,i)=>`<div class="evidence-line pm-materialize" style="--pm-stagger:${i}" data-k="ev:${step.id}:${i}">${icon('check',10)}<span>${esc(x)}</span></div>`).join('')}</div><div class="phase-list" data-k="dots">${D.workSteps.map((s,i)=>`<i class="phase-dot ${i<state.work.step?'done':i===state.work.step?'current':''}" data-k="dot:${i}" title="${esc(s.label)}"></i>`).join('')}</div></div></div>${state.work.completed?renderWorkReceipt():''}`;
+    if(typeof take==='function') return take(ctx);
+    if(v===0) return `<div class="reference-stage" data-k="stage"><span class="work-phase-icon" data-k="wicon:${step.id}">${icon(step.icon,14)}</span><div><div class="morph-slot" data-k="morph:${step.id}"><div class="work-verb${ctx.running?' pm-shimmer':''}">${esc(step.verb)}</div><div class="work-detail">${esc(step.detail)}</div></div><div class="work-progress" data-k="prog"><i style="width:${pct}%"></i></div><div class="work-evidence" data-k="ev">${step.evidence.slice(0,3).map((x,i)=>`<div class="evidence-line pm-materialize" style="--pm-stagger:${i}" data-k="ev:${step.id}:${i}">${icon('check',10)}<span>${esc(x)}</span></div>`).join('')}</div><div class="phase-list" data-k="dots">${ctx.steps.map((s,i)=>`<i class="phase-dot ${i<ctx.index?'done':i===ctx.index?'current':''}" data-k="dot:${i}" title="${esc(s.label)}"></i>`).join('')}</div></div></div>${ctx.completed?ctx.workReceipt():''}`;
     if(v===1){
       /* Every step gets a station, not just steps 1-8: the old slice(1,9)
          left steps 0 and 9-13 with no node at all, so the ring sat frozen
          through the whole last third of a run. The ring itself counter-
          rotates so the active station always arrives at the top -- that
          travel is the animation. */
-      const nodes=D.workSteps, seg=360/nodes.length;
-      return `<div class="orbit-stage" data-k="orbit" style="--seg:${seg}deg;--orbit-rot:${-state.work.step*seg}deg"><i class="orbit-track"></i><div class="orbit-ring" data-k="ring">${nodes.map((sx,i)=>`<span class="orbit-node ${i<state.work.step?'done':i===state.work.step?'current':''}" data-k="node:${sx.id}" data-action="inspect-work-step" data-value="${i}" role="button" tabindex="0" style="--angle:${i*seg}deg;pointer-events:auto;cursor:pointer" title="${esc(sx.label)}">${icon(sx.icon,13)}</span>`).join('')}</div><div class="orbit-core" data-k="core"><div><span class="orbit-core-icon" data-k="coreicon:${step.id}">${icon(step.icon,22)}</span><strong data-k="corelabel:${step.id}">${esc(step.label)}</strong><div class="work-detail">${pct}%</div></div></div></div><div class="orbit-caption work-detail" data-k="cap:${step.id}">${esc(step.detail)}</div>${state.work.completed?renderWorkReceipt():''}`;
+      const nodes=ctx.steps, seg=360/nodes.length;
+      return `<div class="orbit-stage" data-k="orbit" style="--seg:${seg}deg;--orbit-rot:${-ctx.index*seg}deg"><i class="orbit-track"></i><div class="orbit-ring" data-k="ring">${nodes.map((sx,i)=>`<span class="orbit-node ${i<ctx.index?'done':i===ctx.index?'current':''}" data-k="node:${sx.id}" data-action="inspect-work-step" data-value="${i}" role="button" tabindex="0" style="--angle:${i*seg}deg;pointer-events:auto;cursor:pointer" title="${esc(sx.label)}">${icon(sx.icon,13)}</span>`).join('')}</div><div class="orbit-core" data-k="core"><div><span class="orbit-core-icon" data-k="coreicon:${step.id}">${icon(step.icon,22)}</span><strong data-k="corelabel:${step.id}">${esc(step.label)}</strong><div class="work-detail">${pct}%</div></div></div></div><div class="orbit-caption work-detail" data-k="cap:${step.id}">${esc(step.detail)}</div>${ctx.completed?ctx.workReceipt():''}`;
     }
     if(v===2){
       /* A real deck. Cards share one origin and differ only by depth, so
@@ -779,60 +1126,73 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          overlapping siblings, three titles printed on top of each other).
          Keying by step id means the card that was current *transitions*
          back to depth 1 as the run advances, instead of being rebuilt. */
-      const win=[state.work.step-2,state.work.step-1,state.work.step,state.work.step+1].filter(i=>i>=0&&i<D.workSteps.length);
-      return `<div class="step-stack" data-k="deck">${win.map(idx=>{const sx=D.workSteps[idx],rel=idx-state.work.step;
-        return `<div class="stack-card ${rel===0?'current':rel<0?'done':'next'}" data-k="card:${sx.id}" style="--depth:${Math.abs(rel)};--dir:${rel<0?-1:1}"><div class="stack-label">${idx+1} / ${D.workSteps.length} · ${esc(sx.label)}</div><div class="stack-body"><span class="work-phase-icon">${icon(sx.icon,13)}</span><div><div class="work-verb${rel===0&&state.work.running?' pm-shimmer':''}">${esc(sx.verb)}</div><div class="work-detail">${esc(sx.detail)}</div></div></div></div>`;}).join('')}</div>${state.work.completed?renderWorkReceipt():''}`;
+      const win=[ctx.index-2,ctx.index-1,ctx.index,ctx.index+1].filter(i=>i>=0&&i<ctx.total);
+      return `<div class="step-stack" data-k="deck">${win.map(idx=>{const sx=ctx.steps[idx],rel=idx-ctx.index;
+        return `<div class="stack-card ${rel===0?'current':rel<0?'done':'next'}" data-k="card:${sx.id}" style="--depth:${Math.abs(rel)};--dir:${rel<0?-1:1}"><div class="stack-label">${idx+1} / ${ctx.total} · ${esc(sx.label)}</div><div class="stack-body"><span class="work-phase-icon">${icon(sx.icon,13)}</span><div><div class="work-verb${rel===0&&ctx.running?' pm-shimmer':''}">${esc(sx.verb)}</div><div class="work-detail">${esc(sx.detail)}</div></div></div></div>`;}).join('')}</div>${ctx.completed?ctx.workReceipt():''}`;
     }
     if(v===3){
       /* All 14 tools, and the track slides so the active one stays centred
          -- the old slice(1,12) meant steps 0, 12 and 13 highlighted nothing.
          The command line types itself with a steps() reveal sized to the
          string, and keeps a block caret while the run is live. */
-      const items=D.workSteps, cmd=commandForStep(step);
-      return `<div class="tool-ribbon" data-k="ribbon"><i class="ribbon-spot"></i><div class="ribbon-track" data-k="track" style="--active:${state.work.step}">${items.map((sx,i)=>`<span class="ribbon-item ${i<state.work.step?'done':i===state.work.step?'current':''}" data-k="tool:${sx.id}" title="${esc(sx.label)}">${icon(sx.icon,12)}<span>${esc(sx.label)}</span></span>`).join('')}</div></div><div class="ribbon-focus" data-k="focus"><div class="ribbon-command${state.work.running?' typing':''}" data-k="cmd:${step.id}" style="--ch:${cmd.length}">${esc(cmd)}</div><div class="ribbon-output" data-k="out">${step.evidence.slice(0,3).map((x,i)=>`<span class="ribbon-line pm-materialize" style="--pm-stagger:${i}" data-k="ol:${step.id}:${i}">${esc(x)}</span>`).join('')}</div><div class="work-progress" data-k="prog"><i style="width:${pct}%"></i></div></div>${state.work.completed?renderWorkReceipt():''}`;
+      const items=ctx.steps, cmd=commandForStep(step);
+      return `<div class="tool-ribbon" data-k="ribbon"><i class="ribbon-spot"></i><div class="ribbon-track" data-k="track" style="--active:${ctx.index}">${items.map((sx,i)=>`<span class="ribbon-item ${i<ctx.index?'done':i===ctx.index?'current':''}" data-k="tool:${sx.id}" title="${esc(sx.label)}">${icon(sx.icon,12)}<span>${esc(sx.label)}</span></span>`).join('')}</div></div><div class="ribbon-focus" data-k="focus"><div class="ribbon-command${ctx.running?' typing':''}" data-k="cmd:${step.id}" style="--ch:${cmd.length}">${esc(cmd)}</div><div class="ribbon-output" data-k="out">${step.evidence.slice(0,3).map((x,i)=>`<span class="ribbon-line pm-materialize" style="--pm-stagger:${i}" data-k="ol:${step.id}:${i}">${esc(x)}</span>`).join('')}</div><div class="work-progress" data-k="prog"><i style="width:${pct}%"></i></div></div>${ctx.completed?ctx.workReceipt():''}`;
     }
     if(v===4){
       /* The receipt prints itself: every metric rolls to its new value
          rather than snapping, and the build bar is a real element whose
          width transitions -- the old ::after animated a gradient, which
          does not interpolate, so it jumped. */
-      const tools=Math.min(14,Math.max(0,state.work.step)); const files=Math.min(3,Math.floor(state.work.step/3)); const agents=state.work.step>=7?Math.min(2,state.work.step-6):0; const tests=state.work.step>=10?(state.work.step-9)*7:0;
-      const cells=[['Elapsed',formatElapsed(state.work.elapsed)],['Tools',tools],['Files',files],['Agents',agents],['Tests',Math.min(42,tests)],['Evidence',Math.min(18,state.work.step+1)],['p95',`${Math.max(71,482-state.work.step*32)} ms`],['State',state.work.completed?'Ready':step.label]];
-      return `<div class="receipt-stage" data-k="receipt">${cells.map(([k,val],i)=>`<div class="receipt-metric ${k==='State'?'rc-state':''} pm-materialize" style="--pm-stagger:${i}" data-k="metric:${k}"><label>${esc(k)}</label><strong>${M.roll(val)}</strong></div>`).join('')}<div class="receipt-building" data-k="building"><span class="work-phase-icon" data-k="ricon:${step.id}">${icon(step.icon,13)}</span><div class="receipt-copy"><div class="work-verb${state.work.running?' pm-shimmer':''}">${esc(step.verb)}</div><div class="work-detail">The completion receipt is assembling as evidence arrives.</div></div><span class="receipt-bar" data-k="rbar"><i style="width:${pct}%"></i></span></div></div>`;
+      const tools=Math.min(14,Math.max(0,ctx.index)); const files=Math.min(3,Math.floor(ctx.index/3)); const agents=ctx.index>=7?Math.min(2,ctx.index-6):0; const tests=ctx.index>=10?(ctx.index-9)*7:0;
+      const cells=[['Elapsed',formatElapsed(ctx.elapsed)],['Tools',tools],['Files',files],['Agents',agents],['Tests',Math.min(42,tests)],['Evidence',Math.min(18,ctx.index+1)],['p95',`${Math.max(71,482-ctx.index*32)} ms`],['State',ctx.completed?'Ready':step.label]];
+      return `<div class="receipt-stage" data-k="receipt">${cells.map(([k,val],i)=>`<div class="receipt-metric ${k==='State'?'rc-state':''} pm-materialize" style="--pm-stagger:${i}" data-k="metric:${k}"><label>${esc(k)}</label><strong>${M.roll(val)}</strong></div>`).join('')}<div class="receipt-building" data-k="building"><span class="work-phase-icon" data-k="ricon:${step.id}">${icon(step.icon,13)}</span><div class="receipt-copy"><div class="work-verb${ctx.running?' pm-shimmer':''}">${esc(step.verb)}</div><div class="work-detail">The completion receipt is assembling as evidence arrives.</div></div><span class="receipt-bar" data-k="rbar"><i style="width:${pct}%"></i></span></div></div>`;
     }
     if(v===5){
       /* The panels hand off: what was the current operation becomes Next,
          so each panel is keyed by the step it describes and slides through
          the bench rather than being rebuilt in place. */
-      const next=D.workSteps[Math.min(D.workSteps.length-1,state.work.step+1)];
+      const next=ctx.steps[Math.min(ctx.total-1,ctx.index+1)];
       const panels=[
         ['Current operation', step.verb, step.detail, 'active', `cur:${step.id}`],
         ['Next', next.label, next.verb, '', `next:${next.id}`],
         ['Evidence', step.evidence[0], step.evidence[1]||'Collecting supporting evidence', '', `ev:${step.id}`],
-        ['Resources', state.work.step>=8?'3 files changed':'Reading safely', state.work.step>=7?'2 agents participating':'No mutations yet', '', `res:${state.work.step>=8?'a':'b'}`]
+        ['Resources', ctx.index>=8?'3 files changed':'Reading safely', ctx.index>=7?'2 agents participating':'No mutations yet', '', `res:${ctx.index>=8?'a':'b'}`]
       ];
-      return `<div class="workbench" data-k="bench">${panels.map(([lab,head,sub,cls,k],i)=>`<div class="bench-panel ${cls}" data-k="bench:${i}">${cls?'<i class="bench-scan"></i>':''}<label>${esc(lab)}</label><span class="bench-slot pm-materialize" style="--pm-stagger:${i}" data-k="${k}"><strong class="${cls&&state.work.running?'pm-shimmer':''}">${esc(head)}</strong><p>${esc(sub)}</p></span></div>`).join('')}</div><div class="work-progress" data-k="prog"><i style="width:${pct}%"></i></div>${state.work.completed?renderWorkReceipt():''}`;
+      return `<div class="workbench" data-k="bench">${panels.map(([lab,head,sub,cls,k],i)=>`<div class="bench-panel ${cls}" data-k="bench:${i}">${cls?'<i class="bench-scan"></i>':''}<label>${esc(lab)}</label><span class="bench-slot pm-materialize" style="--pm-stagger:${i}" data-k="${k}"><strong class="${cls&&ctx.running?'pm-shimmer':''}">${esc(head)}</strong><p>${esc(sub)}</p></span></div>`).join('')}</div><div class="work-progress" data-k="prog"><i style="width:${pct}%"></i></div>${ctx.completed?ctx.workReceipt():''}`;
     }
     if(v===6){
       /* Lanes promote and demote with a spring, and a blocked lane shakes
          once when it becomes blocked -- keyed on the status so the shake
          fires on the transition, not on every render. */
-      const parentStatus=state.work.completed?'done':'';
-      return `<div class="agent-stage" data-k="stage"><div class="agent-lane parent ${parentStatus}" data-k="lane:parent"><span class="lane-avatar">PM</span><span class="lane-copy"><strong class="${state.work.running?'pm-shimmer':''}">Parent · ${esc(step.label)}</strong><span data-k="pverb:${step.id}">${esc(step.verb)}</span></span>${state.work.running?`<span class="lane-wave"><i></i><i></i><i></i></span>`:icon(state.work.completed?'check':'pause',13)}${state.work.running?'<i class="lane-pulse"></i>':''}</div>${(()=>{const pool=D.subagents.slice(0,4);const able=pool.filter(x=>x.status!=='blocked');const baton=able.length?able[state.work.step%able.length].id:null;const lead=pool.filter(x=>x.id===baton);return lead.concat(pool.filter(x=>x.id!==baton));})().map((a,i)=>{const able=D.subagents.slice(0,4).filter(x=>x.status!=='blocked');const baton=able.length?able[state.work.step%able.length].id:null;const live=a.status!=='blocked'&&a.id===baton&&!state.work.completed;const st=a.status==='blocked'?'blocked':state.work.completed?'done':'';const line=live?(step.evidence[i%step.evidence.length]||a.current):a.current;const lanePct=live?Math.max(6,Math.min(100,pct+(i%2?-9:7))):(state.work.completed?100:0);return `<button class="agent-lane ${st} ${live?'live':''}" data-flip-move style="--lane-pct:${lanePct}%" data-k="lane:${esc(a.id)}" data-action="open-agent" data-id="${esc(a.id)}"><span class="lane-avatar">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="lane-copy"><strong>${esc(a.name)}</strong><span class="pm-materialize ${live&&state.work.running?'pm-shimmer':''}" data-k="ln:${esc(a.id)}:${esc(line)}">${esc(line)}</span></span>${live&&state.work.running?`<span class="lane-wave"><i></i><i></i><i></i></span>`:(()=>{const lbl=a.status==='blocked'?'blocked':state.work.completed?'done':live?'working':'queued';return `<span class="agent-state ${lbl}">${esc(lbl)}</span>`;})()}<i class="lane-track"><b></b></i>${state.work.running&&!state.work.completed?'<i class="lane-pulse"></i>':''}</button>`;}).join('')}</div>${state.work.completed?renderWorkReceipt():''}`;
+      const parentStatus=ctx.completed?'done':'';
+      return `<div class="agent-stage" data-k="stage"><div class="agent-lane parent ${parentStatus}" data-k="lane:parent"><span class="lane-avatar">PM</span><span class="lane-copy"><strong class="${ctx.running?'pm-shimmer':''}">Parent · ${esc(step.label)}</strong><span data-k="pverb:${step.id}">${esc(step.verb)}</span></span>${ctx.running?`<span class="lane-wave"><i></i><i></i><i></i></span>`:icon(ctx.completed?'check':'pause',13)}${ctx.running?'<i class="lane-pulse"></i>':''}</div>${(()=>{const pool=D.subagents.slice(0,4);const able=pool.filter(x=>x.status!=='blocked');const baton=able.length?able[ctx.index%able.length].id:null;const lead=pool.filter(x=>x.id===baton);return lead.concat(pool.filter(x=>x.id!==baton));})().map((a,i)=>{const able=D.subagents.slice(0,4).filter(x=>x.status!=='blocked');const baton=able.length?able[ctx.index%able.length].id:null;const live=a.status!=='blocked'&&a.id===baton&&!ctx.completed;const st=a.status==='blocked'?'blocked':ctx.completed?'done':'';const line=live?(step.evidence[i%step.evidence.length]||a.current):a.current;const lanePct=live?Math.max(6,Math.min(100,pct+(i%2?-9:7))):(ctx.completed?100:0);return `<button class="agent-lane ${st} ${live?'live':''}" data-flip-move style="--lane-pct:${lanePct}%" data-k="lane:${esc(a.id)}" data-action="open-agent" data-id="${esc(a.id)}"><span class="lane-avatar">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="lane-copy"><strong>${esc(a.name)}</strong><span class="pm-materialize ${live&&ctx.running?'pm-shimmer':''}" data-k="ln:${esc(a.id)}:${esc(line)}">${esc(line)}</span></span>${live&&ctx.running?`<span class="lane-wave"><i></i><i></i><i></i></span>`:(()=>{const lbl=a.status==='blocked'?'blocked':ctx.completed?'done':live?'working':'queued';return `<span class="agent-state ${lbl}">${esc(lbl)}</span>`;})()}<i class="lane-track"><b></b></i>${ctx.running&&!ctx.completed?'<i class="lane-pulse"></i>':''}</button>`;}).join('')}</div>${ctx.completed?ctx.workReceipt():''}`;
     }
     /* The calmest take: nothing arrives, it simply becomes. The glyph
        breathes, the palette drifts with --pm-step as phases change, and a
        single travelling marker slides along the dot track. */
-    return `<div class="calm-stage" data-k="calm"><div><span class="calm-glyph" data-k="glyph:${step.id}">${icon(step.icon,20)}</span><div class="calm-verb${state.work.running?' pm-shimmer':''}" data-k="cverb:${step.id}">${esc(step.verb)}</div><div class="calm-detail pm-stream" data-k="cdet:${step.id}">${M.words(step.detail)}</div><div class="calm-dots" data-k="cdots" style="--travel:${state.work.step}"><i class="calm-marker"></i>${D.workSteps.map((s,i)=>`<i class="${i<state.work.step?'done':''}" data-k="cdot:${i}"></i>`).join('')}</div></div></div>${state.work.completed?renderWorkReceipt():''}`;
+    return `<div class="calm-stage" data-k="calm"><div><span class="calm-glyph" data-k="glyph:${step.id}">${icon(step.icon,20)}</span><div class="calm-verb${ctx.running?' pm-shimmer':''}" data-k="cverb:${step.id}">${esc(step.verb)}</div><div class="calm-detail pm-stream" data-k="cdet:${step.id}">${M.words(step.detail)}</div><div class="calm-dots" data-k="cdots" style="--travel:${ctx.index}"><i class="calm-marker"></i>${ctx.steps.map((s,i)=>`<i class="${i<ctx.index?'done':''}" data-k="cdot:${i}"></i>`).join('')}</div></div></div>${ctx.completed?ctx.workReceipt():''}`;
   }
 
   function renderLiveAgentInline(step){
     if(step.kind!=='agents'||takeOwnsAgents(state.variants[2])) return '';
     return `<div style="margin-top:10px;padding-top:9px;border-top:1px solid var(--border)"><div class="section-head" style="padding:0 0 5px"><span>Live child agents</span><span class="count">2</span></div><div class="live-agent-list">${D.subagents.slice(0,2).map(renderLiveAgentRow).join('')}</div></div>`;
   }
-  function renderWorkReceipt(){ return `<div class="work-receipt"><span class="receipt-chip">Worked for ${formatElapsed(state.work.elapsed)}</span><span class="receipt-chip">14 tools</span><span class="receipt-chip">${(D.changes||[]).length} files</span><span class="receipt-chip">${(D.subagents||[]).length} agents</span><span class="receipt-chip">42 tests</span><span class="receipt-chip">${(D.artifacts||[]).length} artifacts</span></div>`; }
-  function renderWorkHistory(){
-    return `<div class="work-history"><div class="section-head" style="padding:0 2px 3px"><span>Organized work stream and evidence</span><span class="count">${state.work.step+1}</span></div>${D.workSteps.slice(0,state.work.step+1).map((s,i)=>`<button class="history-step ${i===state.work.step?'current':'done'}" data-action="inspect-work-step" data-value="${i}"><span class="work-phase-icon" style="width:20px;height:20px;border-radius:6px">${icon(i<state.work.step?'check':s.icon,10)}</span><span><strong style="display:block;font-size:9px">${esc(s.label)} · ${esc(s.verb)}</strong><span style="font-size:9px;color:var(--muted)">${esc(s.evidence.join(' · '))}</span></span><span class="time">${i===state.work.step?'now':`${Math.max(1,(state.work.step-i)*8)}s ago`}</span></button>`).join('')}</div>`;
+  function renderWorkReceipt(rec,opts){
+    rec=rec||state.work; opts=opts||{};
+    const run=rec.runId&&D.workRuns&&D.workRuns[rec.runId];
+    const chips=[];
+    /* The elapsed chip is redundant wherever the card head already prints the
+       time -- the compact strips and the rails summary pass {elapsed:false}. */
+    if(opts.elapsed!==false) chips.push(`Worked for ${formatElapsed(rec.elapsed)}`);
+    if(run&&run.receipt) chips.push(...run.receipt);
+    else chips.push('14 tools',`${(D.changes||[]).length} files`,`${(D.subagents||[]).length} agents`,'42 tests',`${(D.artifacts||[]).length} artifacts`);
+    return `<div class="work-receipt">${chips.map(c=>`<span class="receipt-chip">${esc(c)}</span>`).join('')}</div>`;
+  }
+  function renderWorkHistory(rec){
+    rec=rec||state.work;
+    const list=workInstancesFor(rec);
+    const n=clamp(rec.step,0,list.length-1);
+    return `<div class="work-history"><div class="section-head" style="padding:0 2px 3px"><span>Organized work stream and evidence</span><span class="count">${n+1}</span></div>${list.slice(0,n+1).map((s,i)=>`<button class="history-step ${i===n?'current':'done'}" data-action="inspect-work-step" data-value="${i}"><span class="work-phase-icon" style="width:20px;height:20px;border-radius:6px">${icon(i<n?'check':s.icon,10)}</span><span><strong style="display:block;font-size:10px">${esc(s.label)} · ${esc(s.verb)}</strong><span style="font-size:10px;color:var(--muted)">${esc((s.rows||[]).map(r=>r.text).slice(0,3).join(' · ')||(s.evidence||[]).join(' · '))}</span></span><span class="time">${i===n?'now':`${Math.max(1,(n-i)*8)}s ago`}</span></button>`).join('')}</div>`;
   }
   function commandForStep(step){
     const map={prepare:'pm resolve --thread query-performance',thought:'reasoning: compare index selectivity and write pressure',files:'read src/analytics/{queries,schema}.rs', 'web-search':'web search "PostgreSQL multicolumn index leading column"','web-fetch':'fetch docs/postgresql/indexes-multicolumn','browser':'browser control dashboard/query-performance','bash':'cargo bench analytics_query -- --profile','agents':'spawn query-analyzer schema-reviewer','edit':'apply migration 0043 + batch query patch','app':'control database-inspector --refresh-schema','test':'browser test query-dashboard --widths all','validate':'cargo test && cargo clippy && pm audit','artifact':'render benchmark-dashboard + mermaid','complete':'complete: evidence package ready'};
@@ -841,28 +1201,32 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function formatElapsed(s){ const m=Math.floor(s/60),sec=String(s%60).padStart(2,'0');return `${m}m ${sec}s`; }
 
   /* ---------------------------------------------------------------------
-     activityDefs() is DERIVED, not authored.
-     It used to be five object literals, and they had already drifted from the
-     fixtures they describe: Subagents said "2" while data.js holds 5, and four
-     separate renderers printed four different subagent counts. Everything here
-     is computed from whatever collections D actually has, each field with a
-     fallback, so the Wave 2 Demo Data agent can enrich or add a collection and
-     these headline rows follow automatically -- no circular dependency, and no
-     second place to keep in step. Field shapes are in FIXTURE_SCHEMA.md.
+     activityDefs() is DERIVED, not authored, and it is PER THREAD.
+     Counts come from the selected thread's owned collections plus artifacts
+     the transcript actually invoked. A domain with nothing on this thread is
+     omitted from the returned object, so the bar, filter, and panel cannot
+     show Query Performance's Goal 3/6 on a conversation that never ran a goal.
+     Field shapes are in FIXTURE_SCHEMA.md.
 
      `state` stays in the vocabulary styles.css already understands
-     (live | changed | anything-else-is-idle). `tone` is the richer signal
-     (working | blocked | done | idle) for the Wave 2 Activity Bar agent, which
-     lights the icons instead of the .state-mark dot.
+     (live | changed | anything-else-is-idle). `tone` is the richer shared
+     signal (blocked | attention | working | changed | done | idle) consumed by
+     the Activity Bar and Activity Detail renderers.
      --------------------------------------------------------------------- */
   const DONE_STATES=['done','completed'];
   const ACTIVE_STATES=['doing','in_progress','running','next','pending','verifying','replanned'];
   const RUNNING_STATES=['doing','in_progress','running','working','verifying'];
+  const ACTIVITY_ORDER=['goal','todo','subagents','crew','changes','artifacts'];
   const plural=(n,one,many)=>`${n} ${n===1?one:many}`;
-  /* Until data.js grows a `goal` record (Wave 2, item 2) the Goal row has no
-     fixture to derive from. One clearly-labelled fallback beats five literals
-     scattered through the renderers; delete it when D.goal lands. */
+  /* Used only when a thread HAS an attached goal but D.goal fields are thin.
+     It does not create Goal presence on threads that do not own one. */
   const GOAL_FALLBACK={title:'Optimize analytics query performance',status:'active',phasesDone:1,phasesTotal:4,blocker:'Production schema modification requires explicit approval.'};
+  const CREW_FALLBACK=[
+    {id:'crew-planner', name:'Planner', status:'waiting', current:'Holding the next slice'},
+    {id:'crew-impl', name:'Implementer', status:'working', current:'Applying the agreed change'},
+    {id:'crew-review', name:'Reviewer', status:'waiting', current:'Waiting on the implementer'},
+    {id:'crew-browser', name:'Browser auditor', status:'blocked', current:'Needs a live page'}
+  ];
 
   function goalSummary(){
     const g=D.goal;
@@ -877,12 +1241,95 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       derived:true
     };
   }
-  function mostRecentArtifact(){
-    const list=D.artifacts||[];
+  function mostRecentArtifact(list){
+    list=list||D.artifacts||[];
     if(!list.length) return null;
     const dated=list.filter(a=>a.updatedAt);
     if(!dated.length) return list[0];
     return dated.slice().sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt)))[0];
+  }
+  function threadById(tid){
+    return (state.threads||[]).find(t=>t.id===tid) || (D.threads||[]).find(t=>t.id===tid) || null;
+  }
+  /* Owned collections for `tid`, plus artifacts the transcript invoked
+     (`artifact` / `plan-card`). Goal stays when attached (D.goal.thread or
+     thread.goalId), when the thread has a goal-receipt / durable goal artifact,
+     or when Goal Mode is On with a per-thread stamp (stub, count —). Off
+     drops only that stamp; it does not wipe other threads or erase receipts.
+     Crew stays when the thread has a `crew` event, or when Crew Mode is On
+     on the selected thread (stub). A `crew` event is not Subagents. */
+  function crewMembers(tid, msgs){
+    const ev=(msgs||[]).find(m=>m.type==='crew');
+    const raw=ev&&String(ev.detail||'').replace(/\.$/,'');
+    const names=raw?raw.split(/\s*,\s*|\s+and\s+/).map(s=>s.trim()).filter(Boolean):[];
+    const src=names.length?names.map((name,i)=>{
+      const fb=CREW_FALLBACK[i]||CREW_FALLBACK[CREW_FALLBACK.length-1];
+      return {id:`crew-${tid}-${i}`, name:name.replace(/^./,c=>c.toUpperCase()), status:fb.status, current:fb.current};
+    }):CREW_FALLBACK.map(x=>({...x, id:`${x.id}-${tid}`}));
+    return src;
+  }
+  function activityScope(tid){
+    tid=tid||state.selectedThread;
+    const thread=threadById(tid);
+    const msgs=(thread&&thread.messages)||[];
+    const g=D.goal;
+    const hasAttachedGoal=!!(g&&g.status!=='cleared'&&(g.thread===tid||(thread&&thread.goalId&&g.id&&thread.goalId===g.id)));
+    const hasGoalReceipt=msgs.some(m=>m.type==='goal-receipt');
+    const hasGoalArtifact=(D.artifacts||[]).some(a=>a.threadId===tid&&(a.id==='goal-artifact'||a.kind==='goal'||a.type==='goal'));
+    const hasGoalHistory=hasAttachedGoal||hasGoalReceipt||hasGoalArtifact;
+    const capGoal=!!(state.activityCaps&&state.activityCaps.goal&&state.activityCaps.goal[tid]);
+    const hasGoal=hasGoalHistory||(!!state.capabilities.goal&&capGoal);
+    const todos=(D.todos||[]).filter(t=>t.threadId===tid);
+    const subagents=(D.subagents||[]).filter(a=>a.parentThreadId===tid);
+    const hasSubagents=subagents.length>0||msgs.some(m=>m.type==='live-agents');
+    const hasCrewEvent=msgs.some(m=>m.type==='crew');
+    const hasCrew=hasCrewEvent||(!!state.capabilities.crew&&tid===state.selectedThread);
+    const crew=hasCrew?crewMembers(tid, msgs):[];
+    const changes=(D.changes||[]).filter(c=>c.threadId===tid);
+    const invoked=new Set();
+    msgs.forEach(m=>{ if((m.type==='artifact'||m.type==='plan-card')&&m.artifactId) invoked.add(m.artifactId); });
+    const artifacts=(D.artifacts||[]).filter(a=>a.threadId===tid||invoked.has(a.id));
+    return {
+      tid, hasAttachedGoal, hasGoalReceipt, hasGoalHistory, capGoal, hasGoal,
+      todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
+      live:{
+        goal:hasGoal,
+        todo:todos.length>0,
+        subagents:hasSubagents,
+        crew:hasCrew,
+        changes:changes.length>0,
+        artifacts:artifacts.length>0
+      }
+    };
+  }
+  function revealActivityDomain(id){
+    if(!state.activity.expanded.includes(id)) state.activity.expanded.push(id);
+    state.activity.open=true;
+    state.activity.domain=id;
+    state.activity.scope='focus';
+  }
+  function stampActivityCap(kind, on){
+    state.activityCaps=state.activityCaps||{goal:{},crew:{}};
+    state.activityCaps[kind]=state.activityCaps[kind]||{};
+    const tid=state.selectedThread;
+    if(on) state.activityCaps[kind][tid]=true;
+    else delete state.activityCaps[kind][tid];
+  }
+  function liveDomainIds(tid){
+    const live=activityScope(tid).live;
+    return ACTIVITY_ORDER.filter(id=>live[id]);
+  }
+  function syncActivityDomain(){
+    const live=liveDomainIds();
+    if(!live.length){
+      if(state.activity.open) state.activity.open=false;
+      return live;
+    }
+    if(!live.includes(state.activity.domain)){
+      state.activity.domain=live[0];
+      if(state.activity.selected&&!live.includes(state.activity.selected.domain)) state.activity.selected=null;
+    }
+    return live;
   }
   /* Display label from one of D.labels' 11 maps. The MAP MATTERS: artifactStatus maps
      error -> 'Needs retry', subagentStatus maps blocked -> 'Stalled'. Passing a subagent
@@ -891,84 +1338,143 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function lblOf(map,v){const m=(D.labels&&D.labels[map])||null;return (m&&m[v])||v;}
 
   function activityDefs(){
-    const g=goalSummary();
-    const todos=D.todos||[];
-    const tDone=todos.filter(x=>DONE_STATES.includes(x.status)).length;
-    const tActive=todos.filter(x=>RUNNING_STATES.includes(x.status)).length;
-    const tOpen=todos.filter(x=>ACTIVE_STATES.includes(x.status)).length;
-    const tBlocked=todos.filter(x=>x.status==='blocked').length;
-    const tSkipped=todos.filter(x=>x.status==='skipped').length;
-    const tNow=todos.find(x=>RUNNING_STATES.includes(x.status))||todos.find(x=>ACTIVE_STATES.includes(x.status))||todos[0];
-
-    const agents=D.subagents||[];
-    const aWorking=agents.filter(a=>a.status==='working').length;
-    const aBlocked=agents.filter(a=>a.status==='blocked').length;
-    const aWaiting=agents.filter(a=>a.status==='waiting').length;
-
-    const changes=D.changes||[];
-    const cAdd=changes.reduce((s,c)=>s+(Number(c.add)||0),0);
-    const cDel=changes.reduce((s,c)=>s+(Number(c.del)||0),0);
-
-    const arts=D.artifacts||[];
-    const artReady=arts.filter(a=>a.status==='ready').length;
-    const artStale=arts.filter(a=>a.status==='stale').length;
-    const artError=arts.filter(a=>a.status==='error').length;
-    const artLoading=arts.filter(a=>a.status==='loading').length;
-    const recent=mostRecentArtifact();
-
-    return {
-      goal:{icon:'goal',label:'Goal',
-        count:g.phasesTotal?`${g.phasesDone}/${g.phasesTotal}`:'—',
-        state:g.status==='active'?'live':'changed',
-        tone:g.blocker?'blocked':g.status==='active'?'working':g.status==='complete'?'done':'idle',
-        summary:g.title,
-        detail:[g.status.replace(/^./,c=>c.toUpperCase()),g.phasesTotal?`phase ${Math.min(g.phasesDone+1,g.phasesTotal)} of ${g.phasesTotal}`:null,g.blocker?'one blocker':null].filter(Boolean).join(' · ')},
-      todo:{icon:'todo',label:'Todo',
+    const scope=activityScope();
+    const out={};
+    if(scope.live.goal){
+      if(scope.hasAttachedGoal){
+        const g=goalSummary();
+        out.goal={icon:'goal',label:'Goal', attached:true,
+          count:g.phasesTotal?`${g.phasesDone}/${g.phasesTotal}`:'—',
+          state:g.status==='active'?'live':'changed',
+          tone:g.blocker?'blocked':g.status==='active'?'working':g.status==='complete'?'done':'idle',
+          summary:g.title,
+          detail:[g.status.replace(/^./,c=>c.toUpperCase()),g.phasesTotal?`phase ${Math.min(g.phasesDone+1,g.phasesTotal)} of ${g.phasesTotal}`:null,g.blocker?'one blocker':null].filter(Boolean).join(' · ')};
+      } else {
+        const title=(threadById(scope.tid)||{}).title||'this thread';
+        const rec=((threadById(scope.tid)||{}).messages||[]).find(m=>m.type==='goal-receipt');
+        const stub=!!(state.capabilities.goal&&scope.capGoal);
+        out.goal={icon:'goal',label:'Goal', attached:false,
+          count:'—', state:stub?'live':'changed', tone:'idle',
+          summary:stub?'Goal Mode is on':((rec&&rec.title)||'Goal history'),
+          detail:stub?`No durable goal on ${title} yet · invoke with /goal or Activity Detail`:((rec&&rec.detail)||'Goal receipts remain on this thread')};
+      }
+    }
+    if(scope.live.todo){
+      const todos=scope.todos;
+      const tDone=todos.filter(x=>DONE_STATES.includes(x.status)).length;
+      const tActive=todos.filter(x=>RUNNING_STATES.includes(x.status)).length;
+      const tOpen=todos.filter(x=>ACTIVE_STATES.includes(x.status)).length;
+      const tBlocked=todos.filter(x=>x.status==='blocked').length;
+      const tSkipped=todos.filter(x=>x.status==='skipped').length;
+      const tNow=todos.find(x=>RUNNING_STATES.includes(x.status))||todos.find(x=>ACTIVE_STATES.includes(x.status))||todos[0];
+      out.todo={icon:'todo',label:'Todo',
         count:`${tDone}/${todos.length}`,
         state:tActive?'live':'changed',
         tone:tBlocked?'blocked':tActive?'working':tOpen?'idle':'done',
         summary:tNow?tNow.label:'No todos recorded',
-        detail:`${tDone} done · ${tActive} active · ${tBlocked} blocked · ${tSkipped} skipped`},
-      subagents:{icon:'users',label:'Subagents',
+        detail:`${tDone} done · ${tActive} active · ${tBlocked} blocked · ${tSkipped} skipped`};
+    }
+    if(scope.live.subagents){
+      const agents=scope.subagents;
+      const aWorking=agents.filter(a=>a.status==='working').length;
+      const aBlocked=agents.filter(a=>a.status==='blocked').length;
+      const aWaiting=agents.filter(a=>a.status==='waiting').length;
+      out.subagents={icon:'users',label:'Subagents',
         count:String(agents.length),
         state:aWorking?'live':'changed',
         tone:aBlocked?'blocked':aWorking?'working':aWaiting?'idle':'done',
         summary:agents.length?`${plural(aWorking,'agent','agents')} working, ${aBlocked} blocked`:'No child agents',
-        detail:agents.slice(0,2).map(a=>`${a.name} ${a.status}`).join(' · ')||'No child agents'},
-      changes:{icon:'changes',label:'Changes',
+        detail:agents.slice(0,2).map(a=>`${a.name} ${a.status}`).join(' · ')||'No child agents'};
+    }
+    if(scope.live.crew){
+      const crew=scope.crew;
+      const cWorking=crew.filter(c=>c.status==='working').length;
+      const cBlocked=crew.filter(c=>c.status==='blocked').length;
+      const cWaiting=crew.filter(c=>c.status==='waiting').length;
+      out.crew={icon:'users',label:'Crew',
+        count:String(crew.length),
+        state:cWorking?'live':'changed',
+        tone:cBlocked?'blocked':cWorking?'working':cWaiting?'idle':'done',
+        summary:crew.length?crew.map(c=>c.name).slice(0,3).join(' · '):'Crew Mode is on',
+        detail:`${plural(cWorking,'member','members')} working · ${cBlocked} blocked`};
+    }
+    if(scope.live.changes){
+      const changes=scope.changes;
+      const cAdd=changes.reduce((s,c)=>s+(Number(c.add)||0),0);
+      const cDel=changes.reduce((s,c)=>s+(Number(c.del)||0),0);
+      out.changes={icon:'changes',label:'Changes',
         count:String(changes.length),
-        state:'changed', tone:changes.length?'working':'idle',
+        state:'changed', tone:changes.length?'changed':'idle',
         summary:`${plural(changes.length,'file','files')} changed`,
-        detail:`+${cAdd} −${cDel} · exact ranges available in the editor`},
-      artifacts:{icon:'artifact',label:'Artifacts',
+        detail:`+${cAdd} −${cDel} · exact ranges available in the editor`};
+    }
+    if(scope.live.artifacts){
+      const arts=scope.artifacts;
+      const artReady=arts.filter(a=>a.status==='ready').length;
+      const artStale=arts.filter(a=>a.status==='stale').length;
+      const artError=arts.filter(a=>a.status==='error').length;
+      const artLoading=arts.filter(a=>a.status==='loading').length;
+      const recent=mostRecentArtifact(arts);
+      out.artifacts={icon:'artifact',label:'Artifacts',
         count:String(arts.length),
         state:artLoading?'live':'changed',
-        tone:artError?'blocked':artLoading?'working':'done',
+        tone:artError||artStale?'attention':artLoading?'working':'done',
         summary:recent?recent.title:'No artifacts',
-        detail:[`${artReady} ready`,artStale?`${artStale} stale`:null,artError?`${plural(artError,'recoverable renderer error','recoverable renderer errors')}`:null,artLoading?`${artLoading} loading`:null].filter(Boolean).join(' · ')}
-    };
+        detail:[`${artReady} ready`,artStale?`${artStale} stale`:null,artError?`${plural(artError,'recoverable renderer error','recoverable renderer errors')}`:null,artLoading?`${artLoading} loading`:null].filter(Boolean).join(' · ')};
+    }
+    return out;
   }
 
   function renderActivityBar(){
-    return `<div class="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}">${Object.entries(activityDefs()).map(([id,d])=>`<button class="activity-item ${state.activity.open&&state.activity.domain===id?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}"><i class="state-mark ${d.state}"></i>${icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`).join('')}</div></div>`;
+    const defs=activityDefs();
+    const items=Object.entries(defs);
+    if(!items.length) return '';
+    return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
+  }
+  function renderJumpBottom(){
+    const working=runningRecs().length>0;
+    const tip=working?'Scroll to latest':'Scroll to bottom';
+    const cls=`jump-bottom${jumpBottomVisible?' is-visible':''}${working?' is-working':''}`;
+    return `<button type="button" class="${cls}" data-k="jump-bottom" data-action="scroll-to-bottom"${hoverAttrs('jump-bottom',tip)} aria-label="${esc(tip)}">${icon('down',12)}</button>`;
+  }
+  function renderChatFloat(){
+    const bar=renderActivityBar();
+    const q=renderSendQueue();
+    const jump=renderJumpBottom();
+    if(!bar&&!q&&!jump) return '';
+    return `<div class="chat-float" data-k="chat-float">${jump}${bar}${q}</div>`;
   }
 
   function renderActivityPanel(transient=false){
-    const d=state.activity.domain, defs=activityDefs(), recent=mostRecentArtifact();
-    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}"><div class="activity-panel-head"><span class="event-icon">${icon((defs[d]||defs.goal).icon,13)}</span><strong>Activity Detail</strong><span class="spacer"></span><button class="icon-button" data-action="toggle-activity-filter" title="Show or hide category filter">${icon('filter',13)}</button><button class="icon-button" data-action="${state.activity.pinned?'unpin-activity':'pin-activity'}" title="${state.activity.pinned?'Unpin':'Pin'} Activity Detail">${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity" title="Close Activity Detail">${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}">${Object.entries(defs).map(([id,x])=>`<button class="${d===id?'active':''}" data-action="focus-activity" data-domain="${id}" title="Focus ${x.label}">${icon(x.icon,11)}<span>${x.label}</span></button>`).join('')}</div><div class="activity-scroll" data-scroll-key="activity"><div class="activity-summary-card"><strong>${esc(recent?recent.title:'No artifacts')}</strong><p>${esc(recent?recent.summary:'')}</p>${recent?`<button class="soft-button" data-action="open-artifact" data-id="${esc(recent.id)}">${icon('eye',12)} Open ${esc(recent.kind==='plan'?'full plan':recent.kind)}</button>`:''}</div>${extReplace('activityPanelBody',{domain:d,transient},['goal','todo','subagents','changes','artifacts'].map(renderActivitySection).join(''))}</div><div class="panel-resize" data-resize="activity"></div></aside>`;
+    const defs=activityDefs();
+    const live=ACTIVITY_ORDER.filter(id=>defs[id]);
+    if(!live.length) return '';
+    const d=defs[state.activity.domain]?state.activity.domain:live[0];
+    const allScope=state.activity.scope!=='focus';
+    const sections=allScope?live:[d];
+    const n=live.length;
+    const headDef=defs[d]||defs[live[0]];
+    const pinAction=state.activity.pinned?'unpin-activity':'pin-activity';
+    const pinLabel=(state.activity.pinned?'Unpin':'Pin')+' Activity Detail';
+    const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
+    const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
+    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13)}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="${pinAction}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13)}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
-    const d=activityDefs()[id], open=state.activity.expanded.includes(id);
-    return `<section class="activity-section" data-domain-section="${id}"><button class="activity-section-head" data-action="toggle-activity-section" data-domain="${id}"><span class="event-icon" style="width:24px;height:24px">${icon(d.icon,12)}</span><strong>${d.label}</strong><span style="font-size:9px;color:var(--muted)">${esc(d.summary)}</span><span class="spacer"></span><span class="meta-pill">${d.count}</span>${icon(open?'up':'down',11)}</button>${open?`<div class="activity-section-body">${renderActivitySectionBody(id)}</div>`:''}</section>`;
+    const d=activityDefs()[id]; if(!d) return '';
+    const open=state.activity.expanded.includes(id);
+    return `<section class="activity-section" data-domain-section="${id}"><button class="activity-section-head" data-action="toggle-activity-section" data-domain="${id}"><span class="event-icon" style="width:24px;height:24px">${icon(d.icon,12)}</span><strong>${d.label}</strong><span style="font-size:10px;color:var(--muted)">${esc(d.summary)}</span><span class="spacer"></span><span class="meta-pill">${d.count}</span>${icon(open?'up':'down',11)}</button>${open?`<div class="activity-section-body">${renderActivitySectionBody(id)}</div>`:''}</section>`;
   }
 
   function renderActivitySectionBody(id){
+    const scope=activityScope();
     if(id==='goal') return extReplace('goalSection',{}, `<div class="activity-line"><span class="status-dot working"></span><div class="copy"><strong>Optimize analytics query performance</strong><span>Running · Phase 2/4 · 68% · Revision 4</span></div><span class="right">2m 06s</span></div><div class="activity-line"><span class="event-icon" style="width:20px;height:20px">${icon('warning',10)}</span><div class="copy"><strong>Exact blocker</strong><span>Production schema modification requires explicit approval.</span></div></div><div class="plan-actions"><button class="soft-button" data-action="open-goal">View Goal</button><button class="soft-button" data-action="edit-goal">Edit</button><button class="soft-button" data-action="pause-goal">Pause</button><button class="soft-button" data-action="resume-goal">Resume</button><button class="soft-button" data-action="stop-goal">Stop</button><button class="text-button danger" data-action="clear-goal">Clear</button></div>`);
-    if(id==='todo') return D.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px;color:${x.status==='done'?'var(--positive)':x.status==='blocked'?'var(--danger)':'var(--accent)'}">${icon(x.status==='done'?'check':x.status==='blocked'?'lock':'todo',10)}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
-    if(id==='subagents') return D.subagents.map(a=>`<button class="activity-line" data-action="open-agent" data-id="${esc(a.id)}"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(a.name)} · ${esc(a.model)}</strong><span>${esc(a.current)}${a.blocker?` · ${esc(a.blocker)}`:''}</span></span><span class="right">${esc(lblOf('subagentStatus',a.status))} · ${esc(a.elapsed)}</span></button>`).join('');
-    if(id==='changes') return D.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" style="color:var(--positive)">+${c.add} <i style="color:var(--danger)">−${c.del}</i></span></button>`).join('');
-    return D.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px;color:${a.status==='error'?'var(--danger)':a.status==='stale'?'var(--warning)':'var(--accent)'}">${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
+    if(id==='todo') return scope.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px;color:${x.status==='done'?'var(--positive)':x.status==='blocked'?'var(--danger)':'var(--accent)'}">${icon(x.status==='done'?'check':x.status==='blocked'?'lock':'todo',10)}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
+    if(id==='subagents') return scope.subagents.map(a=>`<button class="activity-line" data-action="open-agent" data-id="${esc(a.id)}"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(a.name)} · ${esc(a.model)}</strong><span>${esc(a.current)}${a.blocker?` · ${esc(a.blocker)}`:''}</span></span><span class="right">${esc(lblOf('subagentStatus',a.status))} · ${esc(a.elapsed)}</span></button>`).join('');
+    if(id==='crew') return scope.crew.map(c=>`<div class="activity-line"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(c.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(c.name)}</strong><span>${esc(c.current||lblOf('subagentStatus',c.status))}</span></span><span class="right">${esc(lblOf('subagentStatus',c.status))}</span></div>`).join('');
+    if(id==='changes') return scope.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" style="color:var(--positive)">+${c.add} <i style="color:var(--danger)">−${c.del}</i></span></button>`).join('');
+    return scope.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px;color:${a.status==='error'?'var(--danger)':a.status==='stale'?'var(--warning)':'var(--accent)'}">${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
   }
   /* D1: .decision-host.empty transitions max-height, but only if children stay
      mounted for the collapse. Snapshot the last surface, render it under .empty,
@@ -1028,8 +1534,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="decision-host" data-k="decision-host" data-variant="${state.variants[6]}">${body}</div>`;
   }
 
-  function renderPreparingDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('sparkles',13)}</span><strong>Preparing questions…</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="work-progress"><i style="width:72%;animation:activity-scan 1.6s linear infinite"></i></div><p style="color:var(--muted);font-size:10px;margin:9px 0 0">Resolving what is already known so the assistant asks only material questions.</p></div></section>`; }
-  function renderSubmittingDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('send',13)}</span><strong>Submitting answers…</strong></div><div class="decision-body"><div class="work-progress"><i style="width:100%"></i></div><p style="color:var(--muted);font-size:10px;margin:9px 0 0">Answers are being attached to the durable thread and planning context.</p></div></section>`; }
+  function renderPreparingDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('sparkles',13)}</span><strong>Preparing questions…</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="work-progress"><i style="width:72%;animation:activity-scan 1.6s linear infinite"></i></div><p style="color:var(--muted);font-size:11px;margin:9px 0 0">Resolving what is already known so the assistant asks only material questions.</p></div></section>`; }
+  function renderSubmittingDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('send',13)}</span><strong>Submitting answers…</strong></div><div class="decision-body"><div class="work-progress"><i style="width:100%"></i></div><p style="color:var(--muted);font-size:11px;margin:9px 0 0">Answers are being attached to the durable thread and planning context.</p></div></section>`; }
   function renderQuestionDecision(){
     const q=state.questions[state.questionIndex];
     const answered=state.questions.filter(x=>Array.isArray(x.answer)?x.answer.length:String(x.answer||'').trim()).length;
@@ -1038,17 +1544,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(q.type==='multi') input=`<div class="choice-grid">${q.options.map(o=>`<button class="choice ${Array.isArray(q.answer)&&q.answer.includes(o)?'selected':''}" data-action="answer-multi" data-value="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
     else if(q.type==='text') input=`<textarea class="decision-textarea" data-input="question-text" placeholder="Optional constraints…">${esc(q.answer||'')}</textarea>`;
     else input=`<div class="decision-evidence" style="display:block"><strong>Resolved deployment</strong><p>Server: ${esc(state.questions[0].answer||'Not answered')}</p><p>Windows execution: ${esc((state.questions[1].answer||[]).join(', ')||'Not answered')}</p><p>Fallback: ${esc(state.questions[2].answer||'Not answered')}</p></div>`;
-    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('todo',13)}</span><strong>Deployment questionnaire</strong><span class="meta-pill">${answered}/${state.questions.length} answered</span>${state.questionQueue?`<span class="meta-pill">${state.questionQueue} queued</span>`:''}<span class="spacer"></span><button class="text-button" data-action="skip-question">Skip</button><button class="icon-button" data-action="close-decision" title="Close and return later; answers are preserved">${icon('close',12)}</button></div><div class="decision-body"><div class="question-progress">${state.questions.map((x,i)=>`<i class="${i<state.questionIndex?'done':i===state.questionIndex?'current':''}"></i>`).join('')}</div><div class="question-prompt">${esc(q.prompt)} ${q.required?'<span style="color:var(--danger)">*</span>':''}</div>${input}<div class="decision-evidence"><strong>Why this matters</strong><p>This answer changes host selection, fallback routing, and the resulting Plan artifact.</p></div><div class="decision-actions"><button class="soft-button" data-action="cancel-questionnaire">Cancel questionnaire</button><span style="flex:1"></span><button class="soft-button" data-action="prev-question" ${state.questionIndex===0?'disabled':''}>${icon('left',12)} Back</button>${state.questionIndex===state.questions.length-1?`<button class="primary-button" data-action="submit-questionnaire">Submit answers ${icon('send',12)}</button>`:`<button class="primary-button" data-action="next-question">Next ${icon('chevron',12)}</button>`}</div></div></section>`;
+    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('todo',13)}</span><strong>Deployment questionnaire</strong><span class="meta-pill">${answered}/${state.questions.length} answered</span><span class="spacer"></span><button class="text-button" data-action="skip-question">Skip</button><button class="icon-button" data-action="close-decision" title="Close and return later; answers are preserved">${icon('close',12)}</button></div><div class="decision-body"><div class="question-progress">${state.questions.map((x,i)=>`<i class="${i<state.questionIndex?'done':i===state.questionIndex?'current':''}"></i>`).join('')}</div><div class="question-prompt">${esc(q.prompt)} ${q.required?'<span style="color:var(--danger)">*</span>':''}</div>${input}<div class="decision-evidence"><strong>Why this matters</strong><p>This answer changes host selection, fallback routing, and the resulting Plan artifact.</p></div><div class="decision-actions"><button class="soft-button" data-action="cancel-questionnaire">Cancel questionnaire</button><span style="flex:1"></span><button class="soft-button" data-action="prev-question" ${state.questionIndex===0?'disabled':''}>${icon('left',12)} Back</button>${state.questionIndex===state.questions.length-1?`<button class="primary-button" data-action="submit-questionnaire">Submit answers ${icon('send',12)}</button>`:`<button class="primary-button" data-action="next-question">Next ${icon('chevron',12)}</button>`}</div></div></section>`;
   }
 
   function renderPlanDecision(){
     const revise=state.decision.mode==='revise';
-    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('document',13)}</span><strong>${revise?'Revise the Plan':'Plan ready for review'}</strong><span class="meta-pill">Revision ${state.planRevision}</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><strong>${esc(D.artifacts[0].title)}</strong><p style="color:var(--muted);font-size:10px;margin:4px 0 8px">${esc(D.artifacts[0].summary)}</p>${revise?`<textarea class="decision-textarea" data-input="plan-feedback" placeholder="Describe what the next immutable Plan revision should change…">${esc(state.decision.feedback||'')}</textarea>`:`<div class="decision-evidence"><strong>Material evidence</strong><p>p95 482 → 71 ms · 42 tests passed · write overhead +4.8% · rollback gate included</p></div>`}<div class="decision-actions"><button class="text-button" data-action="cancel-plan">Cancel</button><button class="soft-button" data-action="open-artifact" data-id="plan-query">${icon('eye',12)} View full Plan</button>${revise?`<button class="primary-button" data-action="submit-plan-revision">Create revision</button>`:`<button class="soft-button" data-action="revise-plan">${icon('edit',12)} Revise</button><button class="primary-button" data-action="approve-plan">Approve And Build</button>`}</div></div></section>`;
+    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('document',13)}</span><strong>${revise?'Revise the Plan':'Plan ready for review'}</strong><span class="meta-pill">Revision ${state.planRevision}</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><strong>${esc(D.artifacts[0].title)}</strong><p style="color:var(--muted);font-size:11px;margin:4px 0 8px">${esc(D.artifacts[0].summary)}</p>${revise?`<textarea class="decision-textarea" data-input="plan-feedback" placeholder="Describe what the next immutable Plan revision should change…">${esc(state.decision.feedback||'')}</textarea>`:`<div class="decision-evidence"><strong>Material evidence</strong><p>p95 482 → 71 ms · 42 tests passed · write overhead +4.8% · rollback gate included</p></div>`}<div class="decision-actions"><button class="text-button" data-action="cancel-plan">Cancel</button><button class="soft-button" data-action="open-artifact" data-id="plan-query">${icon('eye',12)} View full Plan</button>${revise?`<button class="primary-button" data-action="submit-plan-revision">Create revision</button>`:`<button class="soft-button" data-action="revise-plan">${icon('edit',12)} Revise</button><button class="primary-button" data-action="approve-plan">Approve And Build</button>`}</div></div></section>`;
   }
 
-  function renderPermissionDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('lock',13)}</span><strong>Permission required</strong><span class="meta-pill">Execution host</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Reconnect to Windows execution host and resume browser control?</div><p style="color:var(--muted);font-size:10px">The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.</p><div class="decision-evidence"><strong>Command scope</strong><p>Reconnect host · restore browser session · continue from checkpoint · no schema mutation</p></div><div class="decision-actions"><button class="soft-button" data-action="deny-permission">Deny</button><button class="primary-button" data-action="approve-permission">Approve once</button></div></div></section>`; }
+  function renderPermissionDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('lock',13)}</span><strong>Permission required</strong><span class="meta-pill">Execution host</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Reconnect to Windows execution host and resume browser control?</div><p style="color:var(--muted);font-size:11px">The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.</p><div class="decision-evidence"><strong>Command scope</strong><p>Reconnect host · restore browser session · continue from checkpoint · no schema mutation</p></div><div class="decision-actions"><button class="soft-button" data-action="deny-permission">Deny</button><button class="primary-button" data-action="approve-permission">Approve once</button></div></div></section>`; }
 
-  function renderConflictDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('warning',13)}</span><strong>Resolve agent recommendation</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Choose the next safe implementation path</div><div class="choice-grid"><button class="choice" data-action="resolve-conflict" data-value="indexes"><strong>Approve indexes</strong><br><span style="font-size:9px;color:var(--muted)">Fast, reversible first step</span></button><button class="choice" data-action="resolve-conflict" data-value="views"><strong>Use materialized views</strong><br><span style="font-size:9px;color:var(--muted)">Faster reads, refresh state</span></button><button class="choice" data-action="resolve-conflict" data-value="override"><strong>Override policy</strong><br><span style="font-size:9px;color:var(--muted)">Permit schema reviewer changes</span></button></div><div class="decision-evidence"><strong>Parent mediation</strong><p>Given the 95% read workload and modest write rate, the composite index is the safer first step. Materialized views remain a follow-up after measuring index performance.</p></div></div></section>`; }
+  function renderConflictDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('warning',13)}</span><strong>Resolve agent recommendation</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Choose the next safe implementation path</div><div class="choice-grid"><button class="choice" data-action="resolve-conflict" data-value="indexes"><strong>Approve indexes</strong><br><span style="font-size:10px;color:var(--muted)">Fast, reversible first step</span></button><button class="choice" data-action="resolve-conflict" data-value="views"><strong>Use materialized views</strong><br><span style="font-size:10px;color:var(--muted)">Faster reads, refresh state</span></button><button class="choice" data-action="resolve-conflict" data-value="override"><strong>Override policy</strong><br><span style="font-size:10px;color:var(--muted)">Permit schema reviewer changes</span></button></div><div class="decision-evidence"><strong>Parent mediation</strong><p>Given the 95% read workload and modest write rate, the composite index is the safer first step. Materialized views remain a follow-up after measuring index performance.</p></div></div></section>`; }
 
   function renderComposer(){
     const m=selectedModel();
@@ -1060,11 +1566,178 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const drafts=state.draftHistory[state.selectedThread]||[];
     const showDrafts=drafts.length&&!state.composer.trim();
     const caps=[];
-    if(state.capabilities.goal)caps.push(['goal','goal']); if(state.capabilities.crew)caps.push(['users','crew']); if(state.capabilities.bsd!=='Off')caps.push(['warning','bsd']); if(state.capabilities.context!=='Off')caps.push(['filter','context']); if(state.capabilities.eli5)caps.push(['sparkles','eli5']);
-    return `<div class="composer"><div class="composer-box"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-tools"><button class="icon-button" data-action="attach" title="Attach files or images">${icon('attach',14)}</button>${showDrafts?`<button class="icon-button" data-action="restore-draft" title="Restore the most recent of ${drafts.length} draft${drafts.length===1?'':'s'} sent from this thread">${icon('history',14)}</button>`:''}<span class="capability-indicators">${caps.slice(0,5).map(c=>`<span class="capability-dot ${c[1]}" title="${esc(c[1])} active">${icon(c[0],11)}</span>`).join('')}</span><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"><span>${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"><span>${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"><span>${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"><span>${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand" title="Capabilities and Goal Mode">${icon('wand',14)}</button><span style="flex:1"></span><button class="send-button" data-action="send" title="Send message">${icon('send',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)} · ⌘↵ to send</div></div></div>`;
+    if(state.capabilities.goal)caps.push(['goal','goal']); if(state.capabilities.crew)caps.push(['users','crew']); if(state.capabilities.bsd!=='Off')caps.push(['warning','bsd']); if(state.capabilities.context!=='Off')caps.push(['lens','context']); if(state.capabilities.eli5)caps.push(['sparkles','eli5']);
+    const sendBtn=sendButtonHtml();
+    return `<div class="composer"><div class="composer-box" data-k="composer-box"><div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button>${showDrafts?`<button class="icon-button" data-action="restore-draft"${hoverAttrs('restore-draft','Restore the most recent of '+drafts.length+' draft'+(drafts.length===1?'':'s')+' sent from this thread')}>${icon('history',16)}</button>`:''}<span class="capability-indicators">${caps.slice(0,5).map(c=>`<span class="capability-dot ${c[1]}"${hoverAttrs('cap-'+c[1],(CAP_HOVER[c[1]]||c[1])+' active')}>${icon(c[0],16)}</span>`).join('')}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('users',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('lock',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
+  }
+
+  function queueOf(){
+    state.sendQueue[state.selectedThread] ??= [];
+    return state.sendQueue[state.selectedThread];
+  }
+  function renderSendQueue(){
+    const q=queueOf();
+    if(!q.length) return '';
+    return `<div class="send-queue" data-k="send-queue">${q.map(e=>`<div class="send-queue-row" data-k="q:${esc(e.id)}"><span class="send-queue-text"${hoverAttrs('q-text-'+e.id,e.text)}>${esc(e.text)}</span><button class="icon-button" data-action="queue-edit" data-id="${esc(e.id)}"${hoverAttrs('q-edit-'+e.id,'Edit')}>${icon('edit',13)}</button><button class="icon-button" data-action="queue-send-now" data-id="${esc(e.id)}"${hoverAttrs('q-send-'+e.id,'Send now')}>${icon('send',13)}</button></div>`).join('')}</div>`;
+  }
+  function sendButtonHtml(){
+    const busy=runningRecs().length>0;
+    const qlen=(state.sendQueue[state.selectedThread]||[]).length;
+    const queueFull=busy&&qlen>=2;
+    if(busy && !state.composer.trim()){
+      return `<button class="send-button is-stop" data-k="send-btn" data-action="stop-run"${hoverAttrs('send-btn','Stop the current run')}>${icon('stop',13)}</button>`;
+    }
+    return `<button class="send-button" data-k="send-btn" data-action="send"${hoverAttrs('send-btn','Send message')} ${queueFull?'disabled':''}>${icon('send',13)}</button>`;
+  }
+  function syncSendStop(){
+    const host=document.querySelector('.composer-infield');
+    if(!host) return;
+    const cur=host.querySelector('[data-k="send-btn"]');
+    if(!cur) return;
+    const wrap=document.createElement('div');
+    wrap.innerHTML=sendButtonHtml();
+    const neu=wrap.firstElementChild;
+    if(cur.getAttribute('data-action')===neu.getAttribute('data-action') && cur.className===neu.className && cur.disabled===neu.disabled) return;
+    cur.replaceWith(neu);
   }
 
   function renderStatusBar(){ return `<footer class="status-bar"><span>${icon('check-circle',10)} Agent · ${esc(selectedModel().name)} · ${formatElapsed(state.work.elapsed)}</span><span class="center">${esc(state.worktree)} · Local server</span><span class="right">Ready · ${state.context.compacted?'Context compacted':`Context ${(window.PM56_CTX&&window.PM56_CTX.ringPct)?window.PM56_CTX.ringPct():64}%`} ${icon('info',10)}</span></footer>`; }
+
+  let composerRO=null, composerCompact=false, labeledToolsMin=0, measuringCompact=false;
+  let abCompactTier=0, abMeasuring=false;
+  function toolsContentWidth(tools){
+    const kids=[...tools.children];
+    if(!kids.length) return 0;
+    const gap=parseFloat(getComputedStyle(tools).gap)||0;
+    return kids.reduce((n,el)=>n+el.getBoundingClientRect().width,0)+gap*Math.max(0,kids.length-1);
+  }
+  function measureLabeledTools(box, tools){
+    measuringCompact=true;
+    box.classList.add('is-measuring');
+    const w=toolsContentWidth(tools);
+    box.classList.remove('is-measuring');
+    measuringCompact=false;
+    return w;
+  }
+  function syncComposerCompact(){
+    if(measuringCompact) return;
+    const box=document.querySelector('.composer-box');
+    const tools=document.querySelector('.composer-tools');
+    if(!box||!tools) return;
+    const slack=8;
+    if(box.clientWidth<=320){
+      composerCompact=true;
+      box.classList.add('is-compact');
+      return;
+    }
+    const avail=tools.clientWidth||box.clientWidth;
+    const need=measureLabeledTools(box, tools);
+    if(need>0) labeledToolsMin=need;
+    if(composerCompact) composerCompact=avail<labeledToolsMin+slack;
+    else composerCompact=labeledToolsMin>0 && avail<labeledToolsMin+slack;
+    box.classList.toggle('is-compact', composerCompact);
+  }
+  function setStageVar(stage, name, px){
+    const v=`${Math.max(0, Math.round(px))}px`;
+    if(stage.style.getPropertyValue(name)!==v) stage.style.setProperty(name, v);
+  }
+  let lensStripObserved=null;
+  function observeLensStrip(strip){
+    if(!composerRO||!strip) return;
+    if(lensStripObserved===strip) return;
+    if(lensStripObserved) composerRO.unobserve(lensStripObserved);
+    composerRO.observe(strip);
+    lensStripObserved=strip;
+  }
+  function syncChatDock(){
+    const stage=document.querySelector('.chat-stage');
+    if(!stage) return;
+    const composer=stage.querySelector('.composer');
+    const dock=composer?composer.getBoundingClientRect().height:0;
+    setStageVar(stage, '--chat-dock-h', dock);
+    /* Bar is in-flow; do not pad the transcript as if the float overlayed it. */
+    setStageVar(stage, '--thread-float-h', 0);
+    const host=stage.querySelector('.decision-host');
+    const decisionH=(host && !host.classList.contains('empty') && host.offsetHeight)?host.getBoundingClientRect().height:0;
+    setStageVar(stage, '--decision-h', decisionH);
+    const lensOn=!!(state.menu&&state.menu.type==='lens');
+    const strip=lensOn?document.querySelector('.overlay-menu.lens-strip'):null;
+    /* offsetHeight is transform-safe; getBoundingClientRect shrinks mid-sprout. */
+    const lensH=strip?strip.offsetHeight+8:0;
+    setStageVar(stage, '--lens-strip-h', lensH);
+    if(lensOn&&strip) observeLensStrip(strip);
+    else if(lensStripObserved&&composerRO){ composerRO.unobserve(lensStripObserved); lensStripObserved=null; }
+  }
+  function activityRowWidth(bar){
+    const kids=[...bar.querySelectorAll(':scope > .activity-item')];
+    if(!kids.length) return 0;
+    const gap=parseFloat(getComputedStyle(bar).columnGap||getComputedStyle(bar).gap)||0;
+    return kids.reduce((n,el)=>n+el.getBoundingClientRect().width,0)+gap*Math.max(0,kids.length-1);
+  }
+  function measureActivityTier(wrap, bar, tier){
+    abMeasuring=true;
+    wrap.classList.add('is-measuring');
+    wrap.classList.toggle('is-ab-compact', tier>=1);
+    wrap.classList.toggle('is-ab-icon-only', tier>=2);
+    const w=activityRowWidth(bar);
+    wrap.classList.remove('is-measuring');
+    abMeasuring=false;
+    return w;
+  }
+  function syncActivityCompact(){
+    if(abMeasuring) return;
+    const wrap=document.querySelector('.activity-wrap');
+    const bar=wrap&&wrap.querySelector('.activity-bar');
+    if(!wrap||!bar||!bar.querySelector('.activity-item')){
+      abCompactTier=0;
+      return;
+    }
+    const cs=getComputedStyle(wrap);
+    const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+    const slack=8;
+    const labeled=measureActivityTier(wrap, bar, 0);
+    const compact=measureActivityTier(wrap, bar, 1);
+    let tier=abCompactTier;
+    if(tier===0){
+      if(avail+0.5<labeled) tier=avail+0.5<compact?2:1;
+    } else if(tier===1){
+      if(avail>=labeled+slack) tier=0;
+      else if(avail+0.5<compact) tier=2;
+    } else if(avail>=labeled+slack) tier=0;
+    else if(avail>=compact+slack) tier=1;
+    abCompactTier=tier;
+    wrap.classList.toggle('is-ab-compact', tier>=1);
+    wrap.classList.toggle('is-ab-icon-only', tier>=2);
+  }
+  function syncChatChrome(){
+    syncComposerCompact();
+    syncChatDock();
+    syncActivityCompact();
+    syncJumpBottom();
+  }
+  function armComposerObserver(){
+    const box=document.querySelector('.composer-box');
+    const stage=document.querySelector('.chat-stage');
+    syncChatChrome();
+    requestAnimationFrame(syncChatChrome);
+    if(composerRO) composerRO.disconnect();
+    composerRO=new ResizeObserver(()=>{ if(!measuringCompact&&!abMeasuring) syncChatChrome(); });
+    if(box){
+      composerRO.observe(box);
+      const tools=document.querySelector('.composer-tools');
+      if(tools) composerRO.observe(tools);
+    }
+    if(stage){
+      const composer=stage.querySelector('.composer');
+      const decision=stage.querySelector('.decision-host');
+      const wrap=stage.querySelector('.activity-wrap');
+      const float=stage.querySelector('.chat-float');
+      if(composer) composerRO.observe(composer);
+      if(decision) composerRO.observe(decision);
+      if(wrap) composerRO.observe(wrap);
+      if(float) composerRO.observe(float);
+    }
+  }
 
   /* ---------------------------------------------------------------------
      Keyed DOM patch.
@@ -1165,12 +1838,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     renderApp();
   }
   function renderApp(preserve=true){
+    syncActivityDomain();
     const positions=preserve?captureScroll():{};
     /* T6: a working-card height change moves every message below it under a
        stationary cursor unless scrollTop absorbs the delta. Browser scroll
        anchoring is unreliable here (card is overflow:hidden; restores fight
        the anchor), so measure the card before the patch and compensate after. */
-    const workBefore=document.querySelector('.working-card');
+    const workBefore=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
     const workH=workBefore?workBefore.getBoundingClientRect().height:null;
     const flipTargets=[...document.querySelectorAll('[data-flip]')];
     const flipBefore=new Map(flipTargets.map(el=>[el, el.getBoundingClientRect().height]));
@@ -1179,7 +1853,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
     document.body.dataset.theme=state.theme;
     const historyPinned=state.historyMode==='pinned'&&!isNarrow();
-    const activityPinned=state.activity.open&&state.activity.pinned&&!isPhone();
+    const activityPinned=activityPinnedInLayout();
+    activityPinLayout=activityPinned;
     const gridClass=`assistant-grid ${historyPinned?'':'history-closed'} ${activityPinned?'activity-pinned':''}`;
     document.documentElement.style.setProperty('--editor-w',`${state.editorWidth}%`);
     document.documentElement.style.setProperty('--history-w',`${state.historyWidth}px`);
@@ -1191,6 +1866,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     rollDigits(rollBefore);
     restoreScroll(positions,{workH});
     renderOverlays();
+    retainHoverAfterRender();
+    armComposerObserver();
+    armJumpBottomListener();
+    syncJumpBottom();
   }
 
   /* G2: goal mutations project into a handful of in-tree islands. Patch those
@@ -1326,7 +2005,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(!el.isConnected) continue;
       const h0=before.get(el); if(h0==null) continue;
       const h1=el.getBoundingClientRect().height;
-      if(Math.abs(h1-h0)<4) continue;
+      /* Clock-only work ticks change elapsed text / ring rotation but not
+         card height — skip FLIP so messages below do not jitter. */
+      if(Math.abs(h1-h0)<1) continue;
       const prevOverflow=el.style.overflow;
       el.style.overflow='hidden';
       const a=el.animate([{height:`${h0}px`},{height:`${h1}px`}],
@@ -1407,7 +2088,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const at0=content();
     const t0=performance.now();
     let hold=null, dir=0, grace=0;
-    const pin=()=>el.animate([{height:`${h0}px`},{height:`${h0}px`}],{duration:800});
+    const pinAt=h=>el.animate([{height:`${h}px`},{height:`${h}px`}],{duration:800});
+    const pin=()=>pinAt(h0);
     /* A PAUSED animation still applies its effect, so `a` has to be cancelled
        before the live height can be read -- otherwise every measurement comes
        back as h0 and the guard concludes layout has caught up on its very
@@ -1436,7 +2118,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const st=a.playState;
       if(st==='finished'){ letGo(); return; }
       if(st!=='running' && st!=='paused') return; // cancelled by someone else
-      if(Math.abs(moved)>1){ dir=moved; a.cancel(); hold=pin(); requestAnimationFrame(tick); return; }
+      if(Math.abs(moved)>1){
+        dir=moved; a.cancel();
+        /* Direction-aware pin. Pinning at h0 when the content GREW painted
+           one frame clipped to the old height -- measured as the reopen's
+           black flicker (repro R1: a strip-height band for exactly one
+           frame). The cancel+measure happens inside this same rAF callback,
+           before style and paint, so pinning at the live height is seamless;
+           a SHRINK (the dip this guard exists for) still holds at h0. */
+        hold=pinAt(moved>0?el.getBoundingClientRect().height:h0);
+        requestAnimationFrame(tick); return;
+      }
       if(st==='paused') a.play();                 // clock starts on the SECOND frame
       requestAnimationFrame(tick);
     };
@@ -1459,12 +2151,44 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      a race the fast path happens to win: the same CSS property has now broken
      two measuring instruments on this project as well as this feature. */
   const scrollIntents=new Map();
+  let jumpBottomVisible=false;
+  let jumpScrollEl=null;
+  let jumpResizeRO=null;
   /* A reader who scrolls owns the scroller. keydown is deliberately NOT in
      this list: typing in the composer is not scrolling, and Ctrl+Enter would
      cancel the very intent the send it triggered had just registered. */
   for(const ev of ['wheel','touchstart'])
     document.addEventListener(ev,()=>scrollIntents.clear(),{passive:true,capture:true});
   function scrollKeyEl(key){ return document.querySelector(`[data-scroll-key="${key}"]`); }
+  function transcriptAwayFromBottom(){
+    const el=scrollKeyEl('transcript');
+    if(!el) return false;
+    const max=el.scrollHeight-el.clientHeight;
+    if(max<=4) return false;
+    return max-el.scrollTop>24;
+  }
+  function syncJumpBottom(){
+    const on=transcriptAwayFromBottom();
+    jumpBottomVisible=on;
+    const btn=document.querySelector('.jump-bottom');
+    if(btn) btn.classList.toggle('is-visible', on);
+  }
+  function onTranscriptScroll(){
+    syncJumpBottom();
+    requestAnimationFrame(syncJumpBottom);
+  }
+  function armJumpBottomListener(){
+    const tr=scrollKeyEl('transcript');
+    if(tr===jumpScrollEl) return;
+    if(jumpScrollEl) jumpScrollEl.removeEventListener('scroll', onTranscriptScroll);
+    if(jumpResizeRO){ jumpResizeRO.disconnect(); jumpResizeRO=null; }
+    jumpScrollEl=tr;
+    if(tr){
+      tr.addEventListener('scroll', onTranscriptScroll, {passive:true});
+      jumpResizeRO=new ResizeObserver(()=>syncJumpBottom());
+      jumpResizeRO.observe(tr);
+    }
+  }
   function scrollToEnd(key,instant=false){
     scrollIntents.set(key,{to:'end',at:performance.now()});
     requestAnimationFrame(()=>{
@@ -1474,6 +2198,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto';
         el.scrollTop=el.scrollHeight; el.style.scrollBehavior=prev;
       } else el.scrollTop=el.scrollHeight;
+      if(key==='transcript') syncJumpBottom();
       const settle=()=>{
         const cur=scrollIntents.get(key); if(!cur||cur.to!=='end') return;   // reader took over
         const e2=scrollKeyEl(key);
@@ -1482,7 +2207,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
            this transcript can run; an intent that outlived its own animation
            would keep dragging the reader back to the bottom. */
         if(e2.scrollHeight-e2.clientHeight-e2.scrollTop<=2 || performance.now()-cur.at>1600){
-          scrollIntents.delete(key); return;
+          scrollIntents.delete(key); if(key==='transcript') syncJumpBottom(); return;
         }
         requestAnimationFrame(settle);
       };
@@ -1520,8 +2245,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       /* T6: .working-body[data-flip] animates height over ~320ms, so a one-shot
          delta (measured while the FLIP is paused at h0) under-absorbs. Follow
          the live card height for one FLIP window and fold each frame's growth
-         into scrollTop so a hovered message stays under the cursor. */
-      followWorkCardHeight(opts&&opts.workH);
+         into scrollTop so a hovered message stays under the cursor.
+         Clock-only ticks (|Δh| < 1px) must NOT start a new 420ms follower —
+         that fights the user's wheel for nearly the entire 500ms tick period. */
+      const startH=opts&&opts.workH;
+      if(startH!=null){
+        const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+        const hNow=card?card.getBoundingClientRect().height:startH;
+        if(Math.abs(hNow-startH)>=1) followWorkCardHeight(startH);
+      }
+      syncJumpBottom();
     });
   }
   function followWorkCardHeight(startH){
@@ -1542,7 +2275,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(cancelled||scrollIntents.has('transcript')||!tr.isConnected){
         tr.style.overflowAnchor=prevAnchor; return;
       }
-      const card=document.querySelector('.working-card');
+      const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
       if(!card){ tr.style.overflowAnchor=prevAnchor; return; }
       const h=card.getBoundingClientRect().height;
       const cr=card.getBoundingClientRect(), vr=tr.getBoundingClientRect();
@@ -1560,6 +2293,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     };
     requestAnimationFrame(tick);
   }
+  let lastOverlayPayload='';
   function renderOverlays(){
     const root=document.getElementById('pmOverlayRoot');
     const parts=[];
@@ -1567,10 +2301,93 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.context.details) parts.push(renderContextDrawer());
     if(state.dialog) parts.push(renderDialog());
     if(state.menu) parts.push(renderMenu());
-    if(state.hover) parts.push(renderHoverCard());
+    /* Hover tips are synced after the patch so tip-only updates can avoid
+       re-patching menus/drawers (which live in this same overlay root). */
     if(state.toast.length) parts.push(`<div class="toast-stack">${state.toast.slice(-3).map(t=>`<div class="toast"><strong>${esc(t.title)}</strong><span>${esc(t.detail||'')}</span></div>`).join('')}</div>`);
-    pmPatch(root,parts.join(''));
+    const payload=parts.join('');
+    /* Work ticks re-enter renderApp every 500ms. Re-patching an unchanged
+       overlay root fires pointerout on hovered chrome and blinks tips. */
+    if(payload!==lastOverlayPayload){
+      lastOverlayPayload=payload;
+      pmPatch(root,payload);
+    }
+    syncHoverCard();
     requestAnimationFrame(positionOverlays);
+  }
+
+  /* Text hover tips stay available while a menu/drawer is open (those surfaces
+     carry tip anchors). Activity hover cards still yield to an open menu. */
+  function hoverCardAllowed(){
+    if(!state.hover) return false;
+    if(state.hover.type==='text') return true;
+    if(state.hover.type==='activity') return !state.menu;
+    return false;
+  }
+  function syncHoverCard(){
+    const root=document.getElementById('pmOverlayRoot');
+    if(!root) return;
+    let el=root.querySelector(':scope > [data-overlay="hover"]');
+    if(!hoverCardAllowed()){
+      if(el) el.remove();
+      return;
+    }
+    const html=renderHoverCard();
+    if(!html){ if(el) el.remove(); return; }
+    const wrap=document.createElement('div');
+    wrap.innerHTML=html;
+    const next=wrap.firstElementChild;
+    if(!next){ if(el) el.remove(); return; }
+    /* Remount only when the tip identity changes. Same key with updated copy
+       (e.g. live Orbit disc status) patches text in place so the card does
+       not blink across work ticks. */
+    const idSig=(state.hover.type||'')+'|'+(state.hover.key||state.hover.domain||'');
+    next.dataset.hoverSig=idSig;
+    if(!el){
+      root.appendChild(next);
+      el=next;
+    } else if(el.dataset.hoverSig!==idSig){
+      el.replaceWith(next);
+      el=next;
+    } else {
+      /* Same tip identity: refresh copy without remounting the card. */
+      el.innerHTML=next.innerHTML;
+    }
+    positionHoverCard(el);
+  }
+  let lastPointer={x:0,y:0};
+  function retainHoverAfterRender(){
+    if(!state.hover||state.hover.type!=='text') return;
+    const under=document.elementFromPoint(lastPointer.x,lastPointer.y);
+    const tip=under&&under.closest&&under.closest('[data-hover-tip]');
+    if(tip&&(tip.dataset.hoverKey||'')===(state.hover.key||'')){
+      state.hover.tip=tip.dataset.hoverTip||state.hover.tip;
+      syncHoverCard();
+      requestAnimationFrame(()=>positionHoverCard());
+    } else {
+      /* The hovered control may have moved or been replaced by a layout
+         transition (notably pin/unpin). A text tip without the pointer over
+         its matching anchor is stale and must not follow the new control. */
+      state.hover=null;
+      syncHoverCard();
+    }
+  }
+  function positionHoverCard(el){
+    el=el||document.querySelector('#pmOverlayRoot > [data-overlay="hover"]');
+    if(!el||!hoverCardAllowed()) return;
+    const anchor=state.hover.type==='text'
+      ? document.querySelector(`[data-hover-key="${CSS.escape(state.hover.key||'')}"]`)
+      : document.querySelector(`[data-hover-domain="${CSS.escape(state.hover.domain)}"]`);
+    if(anchor&&el){
+      const ar=anchor.getBoundingClientRect(),r=el.getBoundingClientRect();
+      let left=clamp(ar.left+ar.width/2-r.width/2,8,window.innerWidth-r.width-8);
+      let top=ar.top-r.height-8;
+      if(top<8) top=ar.bottom+8;
+      el.style.left=`${left}px`;
+      el.style.top=`${clamp(top,8,window.innerHeight-r.height-8)}px`;
+    } else if(!anchor&&el&&state.hover.type==='text'){
+      state.hover=null;
+      el.remove();
+    }
   }
 
   function renderMenu(){
@@ -1600,9 +2417,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(m.type==='context') content=renderContextCompactMenu();
     else if(m.type==='thread') content=renderThreadMenu(m.threadId);
     else if(m.type==='thread-search') content=renderThreadSearchMenu();
-    const cls=`overlay-menu ${m.type==='model'?'model-menu':''} ${['context','thread-search'].includes(m.type)?'compact':''}`;
+    else if(m.type==='lens') content=extReplace('contextLensMenu',{}, '');
+    const cls=`overlay-menu ${m.type==='model'?'model-menu':''} ${['context','thread-search'].includes(m.type)?'compact':''} ${m.type==='lens'?'lens-strip':''}`;
     const root=`<div class="${cls}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
-    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
+    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
     return root+side;
   }
 
@@ -1620,7 +2438,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       ['goal','Goal Mode','Create and manage a durable goal','goal-menu',state.capabilities.goal?'On':'Off','goal'],
       ['crew','Crew','Coordinate a role-based group of agents','crew-menu',state.capabilities.crew?'On':'Off','users'],
       ['bsd','Back Seat Driver','Independent review and intervention','bsd-menu',state.capabilities.bsd,'warning'],
-      ['context','Context Lens','Focus, Mute, and staged Subcompact','context-lens',state.capabilities.context,'filter'],
       ['eli5','ELI5','Explain selected output more simply','eli5-menu',state.capabilities.eli5?'On':'Off','sparkles'],
       ['thought','Thought Stream','Control permitted reasoning visibility','thought-menu',state.capabilities.thought,'brain']
     ];
@@ -1658,13 +2475,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
            modelMenuHeight() so the two cannot disagree.
        Measured, not assumed: verified in-browser that .model-scroll's
        scrollHeight exceeds its clientHeight and that it really scrolls. */
-    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites" title="Favorites">${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all" title="All configured providers">${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}" title="${esc(p)}">${providerInitial(p)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:10px">No configured model matches this view.</div>`}</div></div></div>`;
+    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites" title="Favorites">${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all" title="All configured providers">${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}" title="${esc(p)}">${providerMark(p,16)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:11px">No configured model matches this view.</div>`}</div></div></div>`;
+  }
+  function effortWords(m){
+    return `<span class="effort-words">${m.efforts.map((e,i)=>{
+      const lit=!!state.effort && state.model===m.id && state.effort===e;
+      return `${i?'<span class="effort-sep"> / </span>':''}<span class="effort-word${lit?' is-lit':''}">${esc(e)}</span>`;
+    }).join('')}</span>`;
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${state.model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerInitial(m.provider)}</span><span class="model-copy"><strong>${esc(m.name)} ${state.model===m.id&&state.fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span>${esc(m.account)} · ${esc(m.efforts.join(' / '))}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${state.model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${state.model===m.id&&state.fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
   }
-  function providerInitial(p){ return esc(p.split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase()); }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a
      .menu-section-label is 22.6, the sticky search header is 47.0, and
@@ -1682,7 +2504,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderContextCompactMenu(){
-    return extReplace('contextCompactMenu',{}, `<div class="menu-head"><strong>Context</strong><span class="spacer"></span><span class="meta-pill">64%</span></div><div style="padding:9px"><div class="context-big"><strong>83.9K</strong><span>of 131K tokens loaded</span></div><div class="context-bar"><i></i></div><div class="metric-grid" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="metric-card"><label>Cache hit</label><strong>78%</strong></div><div class="metric-card"><label>Available</label><strong>47.1K</strong></div></div><div class="composition-bar" style="margin-top:8px"><i></i><i></i><i></i><i></i><i></i></div><div style="display:flex;justify-content:space-between;color:var(--subtle);font-size:8px;margin-top:4px"><span>Source composition</span><span>5 source groups</span></div></div><div class="menu-divider"></div><button class="menu-item" data-action="compact-now"><span class="menu-icon">${icon('collapse',13)}</span><span class="menu-copy"><strong>Compact Now</strong><span>Preview and apply a source-aware compaction</span></span></button><button class="menu-item" data-action="context-details"><span class="menu-icon">${icon('info',13)}</span><span class="menu-copy"><strong>More Details</strong><span>Window, tokens, cache, composition, cost, and raw projection</span></span>${icon('chevron',11)}</button>`);
+    return extReplace('contextCompactMenu',{}, `<div class="menu-head"><strong>Context</strong><span class="spacer"></span><span class="meta-pill">64%</span></div><div style="padding:9px"><div class="context-big"><strong>83.9K</strong><span>of 131K tokens loaded</span></div><div class="context-bar"><i></i></div><div class="metric-grid" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="metric-card"><label>Cache hit</label><strong>78%</strong></div><div class="metric-card"><label>Available</label><strong>47.1K</strong></div></div><div class="composition-bar" style="margin-top:8px"><i></i><i></i><i></i><i></i><i></i></div><div style="display:flex;justify-content:space-between;color:var(--subtle);font-size:9px;margin-top:4px"><span>Source composition</span><span>5 source groups</span></div></div><div class="menu-divider"></div><button class="menu-item" data-action="compact-now"><span class="menu-icon">${icon('collapse',13)}</span><span class="menu-copy"><strong>Compact Now</strong><span>Preview and apply a source-aware compaction</span></span></button><button class="menu-item" data-action="context-details"><span class="menu-icon">${icon('info',13)}</span><span class="menu-copy"><strong>More Details</strong><span>Window, tokens, cache, composition, cost, and raw projection</span></span>${icon('chevron',11)}</button>`);
   }
 
   function renderThreadMenu(id){
@@ -1692,12 +2514,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderThreadSearchMenu(){
     const q=state.menu.query||'';const lq=q.toLowerCase();const results=q?state.threads.flatMap(t=>t.messages.filter(m=>`${m.body||''} ${m.title||''} ${m.detail||''}`.toLowerCase().includes(lq)).map(m=>({thread:t,msg:m}))).slice(0,12):[];
-    return extReplace('threadSearchMenu',{menu:state.menu}, `<div class="menu-head"><strong>Search threads</strong><span class="spacer"></span><span class="chat-meta">Current + archived</span></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="thread-global-search" value="${esc(q)}" placeholder="Search exact message text…"></label></div>${q?(results.length?results.map(r=>`<button class="menu-item" data-action="jump-search-result" data-thread="${esc(r.thread.id)}" data-message="${esc(r.msg.id)}"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>${esc(r.thread.title)}</strong><span>${esc((r.msg.body||r.msg.title||r.msg.detail||'').slice(0,110))}</span></span></button>`).join(''):`<div style="padding:15px;text-align:center;color:var(--muted);font-size:10px">No active or archived message matches.</div>`):`<button class="menu-item" data-action="search-current-demo"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>Search current thread</strong><span>Find and jump to exact messages without losing your draft</span></span></button><button class="menu-item" data-action="show-archived"><span class="menu-icon">${icon('archive',12)}</span><span class="menu-copy"><strong>Browse archived threads</strong><span>Archived threads remain searchable and restorable</span></span></button>`}`);
+    return extReplace('threadSearchMenu',{menu:state.menu}, `<div class="menu-head"><strong>Search threads</strong><span class="spacer"></span><span class="chat-meta">Current + archived</span></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="thread-global-search" value="${esc(q)}" placeholder="Search exact message text…"></label></div>${q?(results.length?results.map(r=>`<button class="menu-item" data-action="jump-search-result" data-thread="${esc(r.thread.id)}" data-message="${esc(r.msg.id)}"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>${esc(r.thread.title)}</strong><span>${esc((r.msg.body||r.msg.title||r.msg.detail||'').slice(0,110))}</span></span></button>`).join(''):`<div style="padding:15px;text-align:center;color:var(--muted);font-size:11px">No active or archived message matches.</div>`):`<button class="menu-item" data-action="search-current-demo"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>Search current thread</strong><span>Find and jump to exact messages without losing your draft</span></span></button><button class="menu-item" data-action="show-archived"><span class="menu-icon">${icon('archive',12)}</span><span class="menu-copy"><strong>Browse archived threads</strong><span>Archived threads remain searchable and restorable</span></span></button>`}`);
   }
   function renderSubmenu(id){
     if(id.startsWith('model:')){
       const model=D.models.find(x=>x.id===id.slice(6))||selectedModel();
-      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${state.model===model.id&&state.effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${state.model===model.id&&state.effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="menu-item" data-action="toggle-fast" data-model="${esc(model.id)}"><span class="menu-icon">${icon('lightning',13)}</span><span class="menu-copy"><strong>Fast mode</strong><span>Use the configured provider’s faster route when eligible</span></span><span class="check">${state.model===model.id&&state.fast?icon('check',11):''}</span></button>`:''}`;
+      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${state.model===model.id&&state.effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${state.model===model.id&&state.effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${state.model===model.id&&state.fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${state.model===model.id&&state.fast?icon('check',11):''}</button>`:''}`;
     }
     if(id==='plan'||id==='deep-plan'){
       const opts=id==='plan'?[['Quick','Concise implementation route'],['Thorough','Detailed plan and acceptance gates'],['Exhaustive','Full evidence and edge-case pass']]:[['Thorough','Deep analysis with dependencies'],['Exhaustive','Maximum evidence and adversarial review']];
@@ -1706,7 +2528,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(id==='goal-menu')return renderCapabilitySub('Goal Mode',[['On','Enable natural-language, /goal, and button invocation'],['Off','Disable the visible Goal Mode capability']],state.capabilities.goal?'On':'Off','set-goal-cap');
     if(id==='crew-menu')return renderCapabilitySub('Crew',[['On','Allow role-based agent crews'],['Off','Keep crew coordination disabled']],state.capabilities.crew?'On':'Off','set-crew-cap');
     if(id==='bsd-menu')return renderCapabilitySub('Back Seat Driver',[['Off','Never run independent review'],['Auto','Intervene only when material'],['On','Review every substantial turn']],state.capabilities.bsd,'set-bsd-cap');
-    if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:9px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
+    if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:10px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
     if(id==='eli5-menu')return renderCapabilitySub('ELI5',[['On','Show a simpler explanation after selected responses'],['Off','Keep standard response depth']],state.capabilities.eli5?'On':'Off','set-eli5-cap');
     if(id==='thought-menu')return renderCapabilitySub('Thought Stream',[['Auto','Expand only when permitted and useful'],['Expanded','Keep the permitted live thought stream open']],state.capabilities.thought,'set-thought-cap');
     return '';
@@ -1715,13 +2537,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderCompactSubmenu(id){ return `<div class="menu-head"><button class="icon-button" data-action="submenu-back">${icon('left',12)}</button><strong>Back</strong></div>${renderSubmenu(id)}`; }
 
   function renderContextDrawer(){
-    return extReplace('contextDrawer',{}, `<aside class="drawer"><div class="drawer-head"><span class="event-icon">${icon('info',13)}</span><strong>Context More Details</strong><span class="meta-pill">Curated</span><span class="spacer"></span><button class="icon-button" data-action="close-context-details">${icon('close',13)}</button></div><div class="drawer-scroll"><div class="context-hero"><div class="context-big"><strong>64%</strong><span>current window used · 83,900 / 131,000 tokens</span></div><div class="context-bar"><i></i></div></div><div class="metric-grid"><div class="metric-card"><label>Tokens loaded</label><strong>83.9K</strong></div><div class="metric-card"><label>Cache hit</label><strong>78%</strong></div><div class="metric-card"><label>Cached tokens</label><strong>65.4K</strong></div><div class="metric-card"><label>Available</label><strong>47.1K</strong></div><div class="metric-card"><label>Input this turn</label><strong>12.8K</strong></div><div class="metric-card"><label>Output this turn</label><strong>1.5K</strong></div></div><section class="context-section"><h3>Source composition</h3><div class="context-section-body"><div class="composition-bar"><i></i><i></i><i></i><i></i><i></i></div><div class="composition-key">${[['Conversation','34%','var(--accent)'],['Plans and specifications','22%','var(--accent-2)'],['Files and code','18%','var(--positive)'],['Tool and browser evidence','14%','var(--warning)'],['System and provider','12%','var(--subtle)']].map(x=>`<div><i style="background:${x[2]}"></i><span>${x[0]}</span><b style="margin-left:auto">${x[1]}</b></div>`).join('')}</div></div></section><section class="context-section"><h3>Context growth</h3><div class="context-section-body"><div class="growth-chart"><svg viewBox="0 0 420 90" preserveAspectRatio="none"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs><path d="M0 82 C50 78 52 70 95 68 S150 58 185 60 238 42 275 46 325 26 360 31 400 17 420 12V90H0Z" fill="url(#cg)"/><path d="M0 82 C50 78 52 70 95 68 S150 58 185 60 238 42 275 46 325 26 360 31 400 17 420 12" fill="none" stroke="var(--accent)" stroke-width="2"/></svg></div></div></section><section class="context-section"><h3>Effective route</h3><div class="context-section-body"><div class="activity-line"><div class="copy"><strong>${esc(selectedModel().provider)} · ${esc(selectedModel().account)}</strong><span>${esc(selectedModel().name)} · ${esc(state.effort)} effort · ${state.fast?'Fast eligible route':'Standard route'}</span></div></div><div class="activity-line"><div class="copy"><strong>${esc(state.mode)} · ${esc(state.persona)}</strong><span>Worker route: ${esc(state.worktree)} · local execution server</span></div></div></div></section><section class="context-section"><h3>Cost and cache</h3><div class="context-section-body"><div class="metric-grid"><div class="metric-card"><label>API billed</label><strong>$0.084</strong></div><div class="metric-card"><label>Plan estimated</label><strong>$0.031</strong></div><div class="metric-card"><label>Combined est.</label><strong>$0.115</strong></div></div><p style="font-size:9px;color:var(--muted)">65.4K cached tokens avoided repeat input billing. Local browser context contributes 4.8K tokens.</p></div></section><section class="context-section"><h3>Compaction preview</h3><div class="context-section-body"><p style="font-size:10px;color:var(--muted)">A source-aware compaction would remove 18.4K tokens, retain all active requirements, preserve provenance, and leave 65.5K tokens loaded.</p><div class="context-actions"><button class="soft-button" data-action="compact-now">${icon('collapse',12)} Preview Compact</button><button class="soft-button" data-action="export-context">${icon('download',12)} Redacted JSON</button><button class="soft-button" data-action="raw-context">${icon('code',12)} Raw projection</button></div></div></section></div></aside>`);
+    return extReplace('contextDrawer',{}, `<aside class="drawer"><div class="drawer-head"><span class="event-icon">${icon('info',13)}</span><strong>Context More Details</strong><span class="meta-pill">Curated</span><span class="spacer"></span><button class="icon-button" data-action="close-context-details">${icon('close',13)}</button></div><div class="drawer-scroll"><div class="context-hero"><div class="context-big"><strong>64%</strong><span>current window used · 83,900 / 131,000 tokens</span></div><div class="context-bar"><i></i></div></div><div class="metric-grid"><div class="metric-card"><label>Tokens loaded</label><strong>83.9K</strong></div><div class="metric-card"><label>Cache hit</label><strong>78%</strong></div><div class="metric-card"><label>Cached tokens</label><strong>65.4K</strong></div><div class="metric-card"><label>Available</label><strong>47.1K</strong></div><div class="metric-card"><label>Input this turn</label><strong>12.8K</strong></div><div class="metric-card"><label>Output this turn</label><strong>1.5K</strong></div></div><section class="context-section"><h3>Source composition</h3><div class="context-section-body"><div class="composition-bar"><i></i><i></i><i></i><i></i><i></i></div><div class="composition-key">${[['Conversation','34%','var(--accent)'],['Plans and specifications','22%','var(--accent-2)'],['Files and code','18%','var(--positive)'],['Tool and browser evidence','14%','var(--warning)'],['System and provider','12%','var(--subtle)']].map(x=>`<div><i style="background:${x[2]}"></i><span>${x[0]}</span><b style="margin-left:auto">${x[1]}</b></div>`).join('')}</div></div></section><section class="context-section"><h3>Context growth</h3><div class="context-section-body"><div class="growth-chart"><svg viewBox="0 0 420 90" preserveAspectRatio="none"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs><path d="M0 82 C50 78 52 70 95 68 S150 58 185 60 238 42 275 46 325 26 360 31 400 17 420 12V90H0Z" fill="url(#cg)"/><path d="M0 82 C50 78 52 70 95 68 S150 58 185 60 238 42 275 46 325 26 360 31 400 17 420 12" fill="none" stroke="var(--accent)" stroke-width="2"/></svg></div></div></section><section class="context-section"><h3>Effective route</h3><div class="context-section-body"><div class="activity-line"><div class="copy"><strong>${esc(selectedModel().provider)} · ${esc(selectedModel().account)}</strong><span>${esc(selectedModel().name)} · ${esc(state.effort)} effort · ${state.fast?'Fast eligible route':'Standard route'}</span></div></div><div class="activity-line"><div class="copy"><strong>${esc(state.mode)} · ${esc(state.persona)}</strong><span>Worker route: ${esc(state.worktree)} · local execution server</span></div></div></div></section><section class="context-section"><h3>Cost and cache</h3><div class="context-section-body"><div class="metric-grid"><div class="metric-card"><label>API billed</label><strong>$0.084</strong></div><div class="metric-card"><label>Plan estimated</label><strong>$0.031</strong></div><div class="metric-card"><label>Combined est.</label><strong>$0.115</strong></div></div><p style="font-size:10px;color:var(--muted)">65.4K cached tokens avoided repeat input billing. Local browser context contributes 4.8K tokens.</p></div></section><section class="context-section"><h3>Compaction preview</h3><div class="context-section-body"><p style="font-size:11px;color:var(--muted)">A source-aware compaction would remove 18.4K tokens, retain all active requirements, preserve provenance, and leave 65.5K tokens loaded.</p><div class="context-actions"><button class="soft-button" data-action="compact-now">${icon('collapse',12)} Preview Compact</button><button class="soft-button" data-action="export-context">${icon('download',12)} Redacted JSON</button><button class="soft-button" data-action="raw-context">${icon('code',12)} Raw projection</button></div></div></section></div></aside>`);
   }
 
   function renderHoverCard(){
     const h=state.hover;
+    if(h.type==='text'){
+      const parts=String(h.tip||'').split('\n').filter(Boolean);
+      if(!parts.length) return '';
+      const one=parts.length===1;
+      return `<div class="hover-card hover-tip ${one?'hover-label':''}" data-overlay="hover"><strong>${esc(parts[0])}</strong>${one?'':`<p>${esc(parts.slice(1).join(' '))}</p>`}</div>`;
+    }
     if(h.type==='activity'){
-      const d=activityDefs()[h.domain];return extReplace('activityHoverCard',{domain:h.domain,def:d}, `<div class="hover-card" data-overlay="hover"><strong>${esc(d.label)} · ${esc(d.summary)}</strong><p>${esc(d.detail)}</p><div class="hover-stats"><span class="hover-stat">${esc(d.count)}</span></div></div>`);
+      const d=activityDefs()[h.domain]; if(!d) return '';
+      return extReplace('activityHoverCard',{domain:h.domain,def:d}, `<div class="hover-card" data-overlay="hover"><strong>${esc(d.label)} · ${esc(d.summary)}</strong><p>${esc(d.detail)}</p><div class="hover-stats"><span class="hover-stat">${esc(d.count)}</span></div></div>`);
     }
     return '';
   }
@@ -1745,12 +2574,12 @@ recommended path                  migration 0043 + rollback</div></div></section
      hand-maintained duplicate that had drifted 29 entries behind it. */
   function demoTriggerGroups(){
     return {
-      'Work lifecycle':['Start complete work','Pause work','Step work','Complete work','Reset work','Show work history','Live subagents','Blocked subagent','Conflict mediation','Crew coordination'],
+      'Work lifecycle':['Start complete work','Multi-orbit turn','Pause work','Step work','Complete work','Reset work','Show work history','Live subagents','Blocked subagent','Conflict mediation','Crew coordination'],
       'Every Working Animation state':D.workSteps.map(x=>`Work · ${x.label}`),
       'Questions and decisions':['Prepare questions','Open questionnaire','Queue questionnaire','Plan approval','Plan revision','Plan cancellation','Permission request','Permission denial','Conflict resolution','Cancel and return'],
       'Artifacts':['Mermaid artifact','Interactive dashboard','Data explorer','Architecture map','Interactive quiz','Periodic table','Flowchart','Interactive chart','Generated image','Test evidence','Document artifact','Deep Plan artifact','Artifact stale','Artifact failure'],
       'Capabilities':['BSD intervention','BSD silent check','BSD timeout','BSD unavailable','BSD quota limited','Context Focus','Context Mute','Subcompact preview','Subcompact applied','Subcompact cancelled','ELI5 receipt','Goal replanning','Goal paused','Goal blocked'],
-      'Thread and message states':['Plain text conversation','Archived threads','Cross-thread search','Long response','Message details','Edit and branch','Restore from point','Draft history','New message anchor'],
+      'Thread and message states':['Plain text conversation','Queued Message Demo','Archived threads','Cross-thread search','Long response','Message details','Edit and branch','Restore from point','Draft history','New message anchor'],
       'System states':['Browser debug','Web search','Web fetch','Bash','App control','Browser testing','Program testing','LSP analysis','MCP tool','Offline queue','Reconnect replay','Attachment upload','Unsupported attachment','Provider route change','Provider auth failure','Provider quota','No models']
     };
   }
@@ -1765,49 +2594,86 @@ recommended path                  migration 0043 + rollback</div></div></section
       ['Extended PM7','Segmented Pill','Icon Dock','Domain Grid','Capsule Stack','Technical Strip','Pulse Rail','Minimal Command'],
       ['Accordion Inspector','Status Board','Goal Tree','Split Master/Detail','Agent Board','File Ledger','Live Work Feed','Overview Dashboard'],
       D.transcriptTakes.slice(),
-      ['Stable Card','Morphing Composer','Anchored Sheet','Side Inspector','Step Sequence','Technical Decision','Queue Stack','Evidence Split']
+      ['Stable Card','Morphing Composer','Anchored Sheet','Side Inspector','Step Sequence','Technical Decision','Queue Stack','Evidence Split','Ask Card']
     ];
     const triggerGroups=demoTriggerGroups();
     const g=clampDemoGeom(state.dialog.geom||lastDemoGeom||defaultDemoGeom());
     state.dialog.geom=g;
-    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe">${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:10px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section><div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
+    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail · Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Orbit is the default working activity; Step Rail is the simplified option. Every lab take stays available below.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section><div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
   }
 
   function positionOverlays(){
     if(state.menu){
       const anchor=document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`), root=document.querySelector('[data-overlay="root-menu"]');
       if(anchor&&root){
-        const ar=anchor.getBoundingClientRect(), rr=root.getBoundingClientRect(), gap=7;
-        let left=state.menu.side==='right'?ar.right-rr.width:ar.left;
-        if(state.menu.type==='model'||state.menu.type==='context'||state.menu.type==='thread-search') left=ar.right-rr.width;
-        left=clamp(left,8,window.innerWidth-rr.width-8);
+        if(state.menu.type==='lens'){
+          const header=document.querySelector('.chat-header');
+          const tr=document.querySelector('.transcript')||header;
+          const hr=(header||anchor).getBoundingClientRect();
+          const trr=tr.getBoundingClientRect();
+          const w=Math.max(280, Math.min(trr.width-16, window.innerWidth-16));
+          const left=clamp(trr.left+8, 8, window.innerWidth-w-8);
+          const top=clamp(hr.bottom+4, 8, window.innerHeight-8);
+          root.style.left=`${left}px`; root.style.top=`${top}px`; root.style.width=`${w}px`;
+          root.style.maxWidth='none';
+          root.style.setProperty('--origin-x', `${clamp(anchor.getBoundingClientRect().left+anchor.offsetWidth/2-left, 18, w-18)}px`);
+          root.style.setProperty('--origin-y','0px');
+        } else {
+        const ar=anchor.getBoundingClientRect(), gap=3;
+        const rootW=root.offsetWidth, rootH=root.offsetHeight;
+        let left=state.menu.side==='right'?ar.right-rootW:ar.left;
+        if(state.menu.type==='model'||state.menu.type==='context'||state.menu.type==='thread-search') left=ar.right-rootW;
+        left=clamp(left,8,window.innerWidth-rootW-8);
         const below=window.innerHeight-ar.bottom-8, above=ar.top-8;
-        let top=below>=rr.height+gap?ar.bottom+gap:Math.max(8,ar.top-rr.height-gap);
-        top=clamp(top,8,window.innerHeight-rr.height-8);
-        root.style.left=`${left}px`;root.style.top=`${top}px`;root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rr.width-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
+        let top=below>=rootH+gap?ar.bottom+gap:Math.max(8,ar.top-rootH-gap);
+        top=clamp(top,8,window.innerHeight-rootH-8);
+        root.style.left=`${left}px`;root.style.top=`${top}px`;root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rootW-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
         const side=document.querySelector('[data-overlay="sidecar"]');
         if(side){
-          const sr=side.getBoundingClientRect();let sl=state.menu.side==='right'?left+rr.width+gap:left-sr.width-gap;
-          if(sl<8||sl+sr.width>window.innerWidth-8){state.menu.side=state.menu.side==='right'?'left':'right';sl=state.menu.side==='right'?left+rr.width+gap:left-sr.width-gap;}
-          sl=clamp(sl,8,window.innerWidth-sr.width-8);let st=clamp(top,8,window.innerHeight-sr.height-8);side.style.left=`${sl}px`;side.style.top=`${st}px`;
+          const sideW=side.offsetWidth, sideH=side.offsetHeight;
+          const rootRight=left+rootW;
+          let sl=state.menu.side==='right'?rootRight+gap:left-sideW-gap;
+          sl=clamp(sl,8,window.innerWidth-sideW-8);
+          const overlap=sl<rootRight && sl+sideW>left;
+          if(overlap){
+            sl=state.menu.side==='right'
+              ? Math.min(window.innerWidth-sideW-8, rootRight+gap)
+              : Math.max(8, left-sideW-gap);
+          }
+          const row=document.querySelector(`.overlay-menu[data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu.sub||'')}"]`);
+          const rowR=row&&row.getBoundingClientRect();
+          let st=rowR?rowR.bottom-sideH:top;
+          st=clamp(st,8,window.innerHeight-sideH-8);
+          side.style.left=`${sl}px`;side.style.top=`${st}px`;
+          side.style.setProperty('--origin-x', state.menu.side==='right'?'0%':'100%');
+          side.style.setProperty('--origin-y','28%');
+        }
         }
       }
     }
     if(state.hover){
-      const anchor=document.querySelector(`[data-hover-domain="${CSS.escape(state.hover.domain)}"]`), el=document.querySelector('[data-overlay="hover"]');
-      if(anchor&&el){const ar=anchor.getBoundingClientRect(),r=el.getBoundingClientRect();let left=clamp(ar.left+ar.width/2-r.width/2,8,window.innerWidth-r.width-8);let top=ar.top-r.height-8;if(top<8)top=ar.bottom+8;el.style.left=`${left}px`;el.style.top=`${clamp(top,8,window.innerHeight-r.height-8)}px`;}
+      positionHoverCard();
     }
+    syncChatDock();
   }
   function openMenu(type,anchor,extra={}){
     const anchorEl=document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`);
     const rect=anchorEl?.getBoundingClientRect();
     const side=rect&&rect.left<window.innerWidth*.53?'right':'left';
     state.menu={type,anchor,side,sub:null,compactSub:null,query:'',...extra};state.hover=null;renderOverlays();
+    if(type==='lens'){
+      requestAnimationFrame(()=>{ syncChatDock(); requestAnimationFrame(syncChatDock); });
+    }
+  }
+  function toggleMenu(type,anchor,extra={}){
+    if(state.menu&&state.menu.type===type&&state.menu.anchor===anchor){ closeMenu(); return; }
+    openMenu(type,anchor,extra);
   }
   function closeMenu(){state.menu=null;renderOverlays();}
   function setSubmenu(id){
     if(!state.menu)return;
     clearTimeout(submenuTimer);
+    if(!id){ state.menu.sub=null; state.menu.compactSub=null; renderOverlays(); return; }
     if(isPhone()){state.menu.compactSub=id;state.menu.sub=null;} else {state.menu.sub=id;state.menu.compactSub=null;}
     renderOverlays();
   }
@@ -1824,8 +2690,23 @@ recommended path                  migration 0043 + rollback</div></div></section
        stopping the clock is the leak described above. state.work.running is
        cleared with it so the two never disagree -- a card that says "running"
        with no timer behind it is the next bug report. */
-    stopWorkTimer(); state.work.running=false;
+    stopWorkTimer(true); state.work.running=false;
+    for(const k in state.works) state.works[k].running=false;
     renderApp(false);scrollTranscriptToEnd();
+    /* The Multi Orbit demo thread plays its turn on entry: the first scripted
+       run spawns just after the switch settles, and the chain does the rest. */
+    if(id==='orbit-run'&&!state.works.orbitA){ setTimeout(()=>{ if(state.selectedThread==='orbit-run'&&!state.works.orbitA) startWorkingRec('orbitA'); },350); }
+    if(id==='queue-demo'){
+      setTimeout(()=>{
+        if(state.selectedThread!=='queue-demo') return;
+        if(!state.works.queueA || state.works.queueA.completed) startWorkingRec('queueA');
+        state.sendQueue['queue-demo']=[
+          {id:'q-demo-1', text:'After this run, add the concurrent-write-load check to the todo list.'},
+          {id:'q-demo-2', text:'Then open the PR once the 42 tests are green.'}
+        ];
+        renderApp();
+      },350);
+    }
   }
   function mutateThread(id,fn){const t=state.threads.find(x=>x.id===id);if(t)fn(t);renderApp();}
   /* T1. The scroll-to-bottom appendMessage has always done, given a name so
@@ -1836,53 +2717,155 @@ recommended path                  migration 0043 + rollback</div></div></section
   function scrollTranscriptToEnd(instant=false){ scrollToEnd('transcript',instant); }
   function appendMessage(msg,thread=activeThread()){thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();}
 
-  function startWorking(reset=false){
-    if(reset||state.work.completed){state.work={step:0,running:false,expanded:false,started:true,completed:false,elapsed:0,openPhase:null};}
-    state.work.started=true;state.work.running=true;clearInterval(workTimer);renderApp();
+  function startWorking(reset=false,rec=state.work){
+    if(reset||rec.completed){
+      if(rec===state.work){ state.work={step:0,running:false,expanded:false,started:true,completed:false,elapsed:0,openPhase:null}; rec=state.work; }
+      else { rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.openPhase=null; delete rec.supersededBy; }
+    }
+    rec.started=true;rec.running=true;renderApp();
     armWorkTimer();
   }
-  /* The ONE place that installs the work sequence's interval, so a caller
-     that wants a live sequence gets a real timer instead of inheriting a
-     leaked one. switchThread() abandoned a running sequence WITHOUT clearing
-     it, while every other path that abandons it -- pauseWorking, stepWorking,
-     completeWorking, resetWorking, globalReset, inspect-work-step,
-     PM56_DEMO.setWorkStep -- already did. So the app re-rendered itself every
-     2s, unprompted, for ~28s in whatever thread the reader had switched to
-     (9 mutations/5s as booted, 0 after pauseWorking()).
-     That is not only noise: every one of those renders runs
-     captureScroll/restoreScroll across a scroller that may be mid
-     smooth-scroll, which is what turned T2 from "a render CAN land inside a
-     scroll" into "a render is GUARANTEED to, every two seconds". */
+  function runningRecs(){
+    const out=[]; if(state.work.running) out.push(state.work);
+    for(const k in state.works){ if(state.works[k].running) out.push(state.works[k]); }
+    return out;
+  }
+  /* The ONE place that installs the work interval (same leak contract as
+     before: every path that abandons a run either pauses its record or lets
+     this tick observe "nothing running" and stop itself). One 500ms tick
+     advances EVERY running record: the primary keeps its historic
+     one-step-per-2s cadence through the clock->step derivation, scripted
+     records follow their own instance timelines, and rows land one at a
+     time because renderers gate them on the half-second clock. */
   function armWorkTimer(){
     clearInterval(workTimer);
-    workTimer=setInterval(()=>{state.work.elapsed+=2;if(state.work.step<D.workSteps.length-1){state.work.step++;if(state.work.step===D.workSteps.length-1){state.work.completed=true;state.work.running=false;clearInterval(workTimer);}}else{state.work.completed=true;state.work.running=false;clearInterval(workTimer);}renderApp();},2000);
+    workTimer=setInterval(workTick,500);
   }
-  function stopWorkTimer(){ clearInterval(workTimer); workTimer=null; }
-  function pauseWorking(){state.work.running=false;clearInterval(workTimer);renderApp();}
-  function stepWorking(){clearInterval(workTimer);state.work.running=false;state.work.started=true;state.work.elapsed+=3;state.work.step=clamp(state.work.step+1,0,D.workSteps.length-1);state.work.completed=state.work.step===D.workSteps.length-1;renderApp();}
-  function completeWorking(){clearInterval(workTimer);state.work.running=false;state.work.started=true;state.work.step=D.workSteps.length-1;state.work.elapsed=Math.max(state.work.elapsed,134);state.work.completed=true;state.work.expanded=false;state.work.openPhase=null;renderApp();}
-  function resetWorking(){clearInterval(workTimer);state.work=clone(DEFAULT.work);renderApp();}
+  function workTick(){
+    const live=runningRecs();
+    if(!live.length){ stopWorkTimer(); return; }
+    for(const rec of live){
+      const list=workInstancesFor(rec);
+      rec.clock=workClock(rec)+0.5;
+      rec.elapsed=Math.floor(rec.clock);
+      rec.step=workLiveIndex(rec);
+      if(rec.clock>=workRunEnd(list)-1e-6){
+        rec.clock=workRunEnd(list); rec.step=list.length-1;
+        rec.completed=true; rec.running=false;
+        onRecComplete(rec);
+      }
+    }
+    renderApp();
+    if(!runningRecs().length){ stopWorkTimer(); maybeFlushQueue(); }
+  }
+  function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; } }
+  /* Sequencer. A finished scripted run reveals its gated messages (the
+     renderChat filter reads `completed`), then either spawns the next run in
+     the chain -- compacting this card via supersededBy -- or, as the turn's
+     last burst, compacts itself after a beat. The timeout survives the tick
+     stopping (stopWorkTimer() without the kill flag keeps it); only
+     switchThread/reset/globalReset kill the chain. */
+  function onRecComplete(rec){
+    const def=rec.runId&&D.workRuns&&D.workRuns[rec.runId];
+    if(!def) return;                 // a PRIMARY record completing must not scroll the reader
+    scrollTranscriptToEnd();
+    clearTimeout(seqTimer);
+    /* A finished card NEVER compacts itself: the LAST work activity in a
+       turn stays expanded indefinitely, and an earlier one collapses only
+       when its successor actually enters the thread — startWorkingRec sets
+       supersededBy at spawn time, which drives the collapse choreography. */
+    if(def.next&&D.workRuns[def.next.run]){
+      const nid=def.next.run, pid=rec.runId;
+      seqTimer=setTimeout(()=>{ startWorkingRec(nid,pid); },def.next.delayMs||1200);
+    }
+  }
+  function startWorkingRec(runId,prevId){
+    if(!(D.workRuns&&D.workRuns[runId])) return;
+    state.works[runId]={step:0,running:true,expanded:false,started:true,completed:false,elapsed:0,openPhase:null,clock:0,runId};
+    if(prevId&&state.works[prevId]){ state.works[prevId].supersededBy=runId; state.works[prevId].expanded=false; }
+    armWorkTimer(); renderApp(); scrollTranscriptToEnd();
+  }
+  function chainRootOf(runId){
+    let cur=runId, guard=0;
+    while(guard++<12){
+      const prev=Object.keys(D.workRuns||{}).find(k=>D.workRuns[k].next&&D.workRuns[k].next.run===cur);
+      if(!prev) return cur;
+      cur=prev;
+    }
+    return runId;
+  }
+  function resetChain(runId){
+    clearTimeout(seqTimer); seqTimer=null;
+    const root=chainRootOf(runId);
+    let cur=root, guard=0;
+    while(cur&&guard++<12){ delete state.works[cur]; const d=D.workRuns[cur]; cur=d&&d.next&&d.next.run; }
+    state.workTerminal={};
+    startWorkingRec(root);
+  }
+  /* Scrub a record to a subject index. A scripted record keeps its clock
+     (parked on the subject's start second, or the run end when completed);
+     the primary DROPS its clock so the historic step-writers -- demo
+     triggers, PM56_DEMO.setWorkStep, whole-object assignments -- stay exact
+     through the clock->step*2 fallback. Scrubbing a scripted run to its end
+     fires the sequencer exactly like a natural completion. */
+  function scrubTo(rec,idx){
+    const was=rec.completed;
+    const list=workInstancesFor(rec);
+    idx=clamp(Number(idx)||0,0,list.length-1);
+    rec.step=idx; rec.completed=idx===list.length-1;
+    if(rec.runId){ rec.clock=rec.completed?workRunEnd(list):list[idx].startAt; rec.elapsed=Math.floor(rec.clock); }
+    else delete rec.clock;
+    if(rec.runId&&rec.completed&&!was) onRecComplete(rec);
+  }
+  function pauseWorking(rec=state.work){ rec.running=false; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function stepWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function completeWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,1e9); if(!rec.runId) rec.elapsed=Math.max(rec.elapsed,134); rec.expanded=false; rec.openPhase=null; if(!runningRecs().length) stopWorkTimer(); renderApp(); if(!runningRecs().length) maybeFlushQueue(); }
+  function resetWorking(rec=state.work){ if(rec.runId){ resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
 
   function globalReset(){
-    clearInterval(workTimer);safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);state=clone(DEFAULT);state.threads=clone(D.threads);state.questions=clone(D.questions);renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
+    stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);state=clone(DEFAULT);state.threads=clone(D.threads);state.questions=clone(D.questions);renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
   }
 
-  function applyRecipe(i){i=Number(i);const r=D.recipes[i];if(!r)return;state.recipe=i;state.variants=[...r.choices];renderApp();}
+  function applyRecipe(i){i=Number(i);if(i<0){state.recipe=-1;renderApp();return;}const r=D.recipes[i];if(!r)return;state.recipe=i;state.variants=[...r.choices];renderApp();}
   function addReceipt(type,title,detail){appendMessage({id:uid(type),role:'system',type,title,detail,time:new Date().toISOString()});}
 
   function handleSend(){
     const raw=state.composer.trim();if(!raw)return;
+    if(runningRecs().length){
+      const q=queueOf();
+      if(q.length>=2){ toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
+      q.push({id:uid('q'), text:raw});
+      state.composer='';
+      renderApp();
+      return;
+    }
+    deliverSend(raw);
+  }
+  function maybeFlushQueue(){
+    if(runningRecs().length || seqTimer) return;
+    const q=queueOf();
+    if(!q.length) return;
+    const next=q.shift();
+    deliverSend(next.text);
+  }
+  function stopCurrentWork(){
+    stopWorkTimer(true);
+    if(state.work.running) state.work.running=false;
+    for(const k in state.works) if(state.works[k].running) state.works[k].running=false;
+    renderApp();
+  }
+  function deliverSend(raw){
     const t=activeThread();state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
     t.messages.push({id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()});
     const low=raw.toLowerCase();
-    if(low.startsWith('/goal')||/create|start|set/.test(low)&&low.includes('goal')){state.capabilities.goal=true;addReceipt('goal-receipt','Goal Mode started','A durable goal artifact was created. View, edit, pause, resume, stop, clear, and inspect evidence in Activity Detail.');openEditor('goal-artifact');}
+    if(low.startsWith('/goal')||/create|start|set/.test(low)&&low.includes('goal')){state.capabilities.goal=true;stampActivityCap('goal',true);revealActivityDomain('goal');addReceipt('goal-receipt','Goal Mode started','A durable goal artifact was created. View, edit, pause, resume, stop, clear, and inspect evidence in Activity Detail.');openEditor('goal-artifact');}
     else if(low.startsWith('/deep-plan')||low.includes('deep plan')){state.mode='Deep Plan';state.decision={type:'plan',mode:'review'};t.messages.push({id:uid('plan'),role:'system',type:'plan-card',artifactId:'plan-query',deep:true});openEditor('plan-query');}
     else if(low.startsWith('/plan')||/make|create|write/.test(low)&&low.includes('plan')){state.mode='Plan';state.decision={type:'plan',mode:'review'};t.messages.push({id:uid('plan'),role:'system',type:'plan-card',artifactId:'plan-query'});openEditor('plan-query');}
     else if(low.startsWith('/ask')){state.mode='Ask';t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'Ask mode is active. I will answer and explain without making changes.',time:new Date().toISOString()});}
-    else if(low.startsWith('/debug')||low.includes('debug')){state.mode='Debug';t.messages.push({id:uid('work'),role:'system',type:'working',title:'Debugging'});state.work=clone(DEFAULT.work);startWorking(true);}
+    else if(low.startsWith('/debug')||low.includes('debug')){state.mode='Debug';const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Debugging',workId:wid});state.works[wid]={step:0,running:true,expanded:false,started:true,completed:false,elapsed:0,openPhase:null,clock:0};armWorkTimer();}
     else if(low.startsWith('/compact')){state.dialog={type:'compact'};}
     else if(low.startsWith('/todo')){state.activity={...state.activity,open:true,domain:'todo'};}
-    else if(low.startsWith('/web')){state.work.step=3;state.work.started=true;state.work.running=false;t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research'});}
+    else if(low.startsWith('/web')){const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research',workId:wid});state.works[wid]={step:3,running:false,expanded:false,started:true,completed:false,elapsed:6,openPhase:null};}
     else{t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString()});}
     renderApp();
     scrollTranscriptToEnd();
@@ -1946,6 +2929,8 @@ recommended path                  migration 0043 + rollback</div></div></section
     const threadMap={'Crew coordination':'crew','Browser debug':'debug','New message anchor':'new-message','Artifact failure':'artifact-error','Goal replanning':'goal-replan'};
     if(threadMap[name])switchThread(threadMap[name]);
     if(name==='Start complete work'){switchThread('query');startWorking(true);return;}
+    if(name==='Multi-orbit turn'){stopWorkTimer(true);delete state.works.orbitA;delete state.works.orbitB;switchThread('orbit-run');return;}
+    if(name==='Queued Message Demo'){stopWorkTimer(true);delete state.works.queueA;switchThread('queue-demo');return;}
     if(name==='Pause work'){pauseWorking();return;}
     if(name==='Step work'){stepWorking();return;}
     if(name==='Complete work'){completeWorking();return;}
@@ -1981,10 +2966,10 @@ recommended path                  migration 0043 + rollback</div></div></section
     const a=btn.dataset.action;
     /* Feature modules first, so a module can add an action or override one. */
     if(extRun(a,btn,e))return;
-    if(a==='open-menu'){e.stopPropagation();const type=btn.dataset.menu,anchor=btn.dataset.menuAnchor;if(state.menu?.type===type)closeMenu();else openMenu(type,anchor);return;}
-    if(a==='context-menu'){e.stopPropagation();openMenu('context','context-ring');return;}
-    if(a==='thread-menu'){e.stopPropagation();openMenu('thread',`thread-${btn.dataset.id}`,{threadId:btn.dataset.id});return;}
-    if(a==='thread-search'){e.stopPropagation();openMenu('thread-search','thread-search');return;}
+    if(a==='open-menu'){e.stopPropagation();const type=btn.dataset.menu,anchor=btn.dataset.menuAnchor;toggleMenu(type,anchor);return;}
+    if(a==='context-menu'){e.stopPropagation();toggleMenu('context','context-ring');return;}
+    if(a==='thread-menu'){e.stopPropagation();toggleMenu('thread',`thread-${btn.dataset.id}`,{threadId:btn.dataset.id});return;}
+    if(a==='thread-search'){e.stopPropagation();toggleMenu('thread-search','thread-search');return;}
     if(a==='open-demo'){openDemoDialog();return;}
     if(a==='close-dialog'){if(state.dialog?.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
     if(a==='reset-all'){globalReset();return;}
@@ -1992,32 +2977,67 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='unpin-history'){state.historyMode='floating';renderApp();savePrefs();return;}
     if(a==='pin-history'){state.historyMode='pinned';renderApp();savePrefs();return;}
     if(a==='close-history'){state.historyMode='closed';renderApp();savePrefs();return;}
-    if(a==='new-thread'){const id=uid('thread');state.threads.unshift({id,title:'Untitled thread',status:'idle',pinned:false,archived:false,updated:'now',unread:0,model:selectedModel().name,summary:'New assistant conversation',messages:[]});switchThread(id);return;}
+    if(a==='toggle-history-section'){
+      const key=btn.dataset.section;
+      if(!key) return;
+      state.historySections=state.historySections||{pinned:true,recent:true,archived:false};
+      state.historySections[key]=state.historySections[key]===false;
+      renderApp();
+      return;
+    }
+    if(a==='new-thread'){const id=uid('thread');state.threads.unshift({id,title:'Untitled thread',status:'idle',pinned:false,archived:false,updated:'now',unread:0,model:selectedModel().name,summary:'New assistant conversation',messages:[]});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id);switchThread(id);return;}
     if(a==='select-thread'){if(e.target.closest('.thread-more'))return;switchThread(btn.dataset.id);return;}
     if(a==='toggle-thread-pin'){mutateThread(btn.dataset.id,t=>t.pinned=!t.pinned);state.menu=null;return;}
     if(a==='archive-thread'){mutateThread(btn.dataset.id,t=>{t.archived=true;t.pinned=false});state.menu=null;return;}
     if(a==='restore-thread'){mutateThread(btn.dataset.id,t=>{t.archived=false;t.updated='now'});state.menu=null;return;}
     if(a==='rename-thread'){const t=state.threads.find(x=>x.id===btn.dataset.id);state.dialog={type:'rename',threadId:t.id,value:t.title};state.menu=null;renderOverlays();return;}
     if(a==='save-thread-name'){const t=state.threads.find(x=>x.id===state.dialog.threadId);if(t)t.title=state.dialog.value.trim()||t.title;state.dialog=null;renderApp();return;}
-    if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');state.threads.unshift({...clone(src),id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
+    if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');state.threads.unshift({...clone(src),id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id,src.id,'fork');state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
     if(a==='select-editor'){if(e.target.closest('[data-action="close-editor"]'))return;state.activeEditor=btn.dataset.id;renderApp();return;}
     if(a==='close-editor'){e.stopPropagation();closeEditor(btn.dataset.id);return;}
     if(a==='open-artifact'){decisionExit=null;state.decision=null;openEditor(btn.dataset.id);return;}
     if(a==='open-agent'){openEditor(`thread-${btn.dataset.id}`);return;}
     if(a==='open-change'){openEditor(`file:${btn.dataset.path}`);return;}
+    if(a==='open-work-doc'){openEditor(btn.dataset.id);return;}
     if(a==='toggle-message'){state.messageExpanded[btn.dataset.id]=!state.messageExpanded[btn.dataset.id];renderApp();return;}
-    if(a==='message-details'){state.messageDetails[btn.dataset.id]=!state.messageDetails[btn.dataset.id];renderApp();return;}
-    if(a==='copy-message'){const msg=activeThread().messages.find(x=>x.id===btn.dataset.id);copyText(msg?(msg.body||msg.title||msg.detail||''):'','Message copied','The visible message text was copied without thread mutation.');return;}
+    if(a==='message-details'){state.messageDetails[btn.dataset.id]=!state.messageDetails[btn.dataset.id];btn.blur();renderApp();return;}
+    if(a==='copy-message'){const msg=activeThread().messages.find(x=>x.id===btn.dataset.id);copyText(msg?(msg.body||msg.title||msg.detail||''):'','Message copied','The visible message text was copied without thread mutation.');state.copyFlashId=btn.dataset.id;btn.blur();renderApp();if(copyFlashTimer)clearTimeout(copyFlashTimer);copyFlashTimer=setTimeout(()=>{state.copyFlashId=null;copyFlashTimer=null;renderApp();},1200);return;}
     if(a==='edit-message'){toast('Edit and branch','A new child branch would open with the user message editable.');return;}
-    if(a==='reanswer-message'){toast('Re-answer branch','A new branch would answer again from the preceding user turn.');return;}
-    if(a==='start-working'){startWorking();return;}if(a==='pause-working'){pauseWorking();return;}if(a==='step-working'){stepWorking();return;}if(a==='complete-working'){completeWorking();return;}if(a==='reset-working'){resetWorking();return;}if(a==='toggle-work-history'){state.work.expanded=!state.work.expanded;renderApp();return;}if(a==='inspect-work-step'){state.work.step=Number(btn.dataset.value);state.work.running=false;clearInterval(workTimer);renderApp();return;}if(a==='toggle-work-phase'){const k=btn.dataset.value;state.work.openPhase=(state.work.openPhase===k?null:k);renderApp();return;}
-    if(a==='open-activity'){state.activity.open=true;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();return;}
-    if(a==='focus-activity'){state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
+    if(a==='work-terminal-open'){
+      const cardUi=btn.dataset.cardUi;
+      const stepUid=btn.dataset.step;
+      const rowIndex=Number(btn.dataset.row);
+      const cur=state.workTerminal[cardUi];
+      if(cur && cur.stepUid===stepUid && Number(cur.rowIndex)===rowIndex) delete state.workTerminal[cardUi];
+      else state.workTerminal[cardUi]={stepUid, rowIndex};
+      renderApp();
+      return;
+    }
+    if(a==='work-terminal-close'){delete state.workTerminal[btn.dataset.cardUi];renderApp();return;}
+    if(['start-working','pause-working','step-working','complete-working','reset-working','toggle-work-history','inspect-work-step','toggle-work-phase'].includes(a)){
+      /* Card-scoped work controls: a button inside a working card resolves
+         that card's record through data-card (a workId or 'primary'); the
+         ambient Demo Studio buttons carry no card and fall through to the
+         primary, exactly as before. */
+      const cardEl=btn.closest('[data-card]');
+      const wid=cardEl?cardEl.dataset.card:'primary';
+      const rec=(wid&&wid!=='primary'&&state.works[wid])||state.work;
+      if(a==='start-working'){startWorking(false,rec);return;}
+      if(a==='pause-working'){pauseWorking(rec);return;}
+      if(a==='step-working'){stepWorking(rec);return;}
+      if(a==='complete-working'){completeWorking(rec);return;}
+      if(a==='reset-working'){resetWorking(rec);return;}
+      if(a==='toggle-work-history'){rec.expanded=!rec.expanded;renderApp();return;}
+      if(a==='inspect-work-step'){rec.running=false;scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
+      if(a==='toggle-work-phase'){const k=btn.dataset.value;rec.openPhase=(rec.openPhase===k?null:k);renderApp();return;}
+    }
+    if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!isPhone())state.activity.pinned=true;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
+    if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
     if(a==='toggle-activity-section'){const id=btn.dataset.domain;state.activity.expanded=state.activity.expanded.includes(id)?state.activity.expanded.filter(x=>x!==id):[...state.activity.expanded,id];renderApp();return;}
     if(a==='toggle-activity-filter'){state.activity.filterVisible=!state.activity.filterVisible;renderApp();return;}
-    if(a==='pin-activity'){state.activity.pinned=true;state.activity.open=true;renderApp();return;}
-    if(a==='unpin-activity'){state.activity.pinned=false;renderApp();return;}
-    if(a==='close-activity'){state.activity.open=false;state.activity.pinned=false;renderApp();return;}
+    if(a==='pin-activity'){state.activity.pinned=true;state.activity.open=true;renderApp();focusActivityControl('.activity-panel [data-action="unpin-activity"]');return;}
+    if(a==='unpin-activity'){state.activity.pinned=false;renderApp();focusActivityControl('.activity-panel [data-action="pin-activity"]');return;}
+    if(a==='close-activity'){const domain=state.activity.domain;state.activity.open=false;state.activity.pinned=false;renderApp();focusActivityBarDomain(domain);return;}
     if(a==='context-details'){state.context.details=true;state.menu=null;renderApp();return;}
     if(a==='close-context-details'){state.context.details=false;renderOverlays();return;}
     if(a==='compact-now'){state.menu=null;state.dialog={type:'compact'};renderOverlays();return;}
@@ -2031,26 +3051,26 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='set-mode'){state.mode=btn.dataset.value;if(!['Plan','Deep Plan'].includes(state.mode)){closeMenu();renderApp();}else{setSubmenu(state.mode==='Plan'?'plan':'deep-plan');}return;}
     if(a==='set-thoroughness'){state.mode=btn.dataset.mode;state.thoroughness=btn.dataset.value;closeMenu();renderApp();return;}
     if(a==='model-provider'){state.modelProvider=btn.dataset.value;renderOverlays();return;}
-    if(a==='set-model'){state.model=btn.dataset.value;const model=selectedModel();if(!model.efforts.includes(state.effort))state.effort=model.efforts[model.efforts.length-1];setSubmenu(`model:${model.id}`);renderApp();return;}
+    if(a==='set-model'){state.model=btn.dataset.value;const model=selectedModel();if(state.effort && !model.efforts.includes(state.effort))state.effort='';setSubmenu(`model:${model.id}`);renderApp();return;}
     if(a==='toggle-favorite'){e.stopPropagation();const id=btn.dataset.value;state.favorites=isFavorite(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];renderOverlays();return;}
     if(a==='set-effort'){state.model=btn.dataset.model;state.effort=btn.dataset.value;renderApp();renderOverlays();savePrefs();return;}
     if(a==='toggle-fast'){state.model=btn.dataset.model;state.fast=!state.fast;renderApp();renderOverlays();savePrefs();return;}
     if(a==='submenu-back'){state.menu.compactSub=null;state.menu.sub=null;renderOverlays();return;}
-    if(a==='set-goal-cap'){state.capabilities.goal=btn.dataset.value==='On';closeMenu();renderApp();savePrefs();return;}
-    if(a==='set-crew-cap'){state.capabilities.crew=btn.dataset.value==='On';closeMenu();renderApp();savePrefs();return;}
+    if(a==='set-goal-cap'){state.capabilities.goal=btn.dataset.value==='On';stampActivityCap('goal',state.capabilities.goal);if(state.capabilities.goal)revealActivityDomain('goal');closeMenu();renderApp();savePrefs();return;}
+    if(a==='set-crew-cap'){state.capabilities.crew=btn.dataset.value==='On';stampActivityCap('crew',state.capabilities.crew);if(state.capabilities.crew)revealActivityDomain('crew');closeMenu();renderApp();savePrefs();return;}
     if(a==='set-bsd-cap'){state.capabilities.bsd=btn.dataset.value;closeMenu();renderApp();savePrefs();return;}
     if(a==='set-context-cap'){state.capabilities.context=btn.dataset.value;if(btn.dataset.value==='Subcompact'){state.menu.sub='context-lens';renderOverlays();}else{closeMenu();addReceipt(btn.dataset.value==='Focus'?'context-focus':'context-mute',`Context Lens · ${btn.dataset.value}`,btn.dataset.value==='Focus'?'Current files and final references prioritized.':'Selected superseded sources omitted from the active projection.');}return;}
     if(a==='set-eli5-cap'){state.capabilities.eli5=btn.dataset.value==='On';closeMenu();renderApp();return;}
     if(a==='set-thought-cap'){state.capabilities.thought=btn.dataset.value;closeMenu();renderApp();return;}
     if(a==='open-questionnaire'){decisionExit=null;state.decision={type:'question'};renderApp();return;}
     if(a==='prev-question'){state.questionIndex=Math.max(0,state.questionIndex-1);renderApp();return;}
-    if(a==='next-question'){const q=state.questions[state.questionIndex];if(q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim())){toast('Answer required','Complete this question or use Skip to return later.');return;}state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);renderApp();return;}
-    if(a==='answer-choice'){state.questions[state.questionIndex].answer=btn.dataset.value;renderApp();return;}
+    if(a==='next-question'){const q=state.questions[state.questionIndex];if(q.required&&!questionFilled(q)){toast('Answer required','Complete this question or use Skip to return later.');return;}state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);renderApp();return;}
+    if(a==='answer-choice'){const q=state.questions[state.questionIndex];q.answer=btn.dataset.value;q.other='';renderApp();return;}
     if(a==='answer-multi'){const q=state.questions[state.questionIndex];q.answer=Array.isArray(q.answer)?q.answer:[];q.answer=q.answer.includes(btn.dataset.value)?q.answer.filter(x=>x!==btn.dataset.value):[...q.answer,btn.dataset.value];renderApp();return;}
     if(a==='skip-question'){state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);toast('Question skipped','It remains queued and can be answered later.');renderApp();return;}
     if(a==='close-decision'){closeDecision();return;}
     if(a==='cancel-questionnaire'){closeDecision(false);addReceipt('question-receipt','Questionnaire cancelled','The explicit cancellation is recorded. Existing answers remain in thread history.');return;}
-    if(a==='submit-questionnaire'){const missing=state.questions.find(q=>q.required&&!(Array.isArray(q.answer)?q.answer.length:String(q.answer||'').trim()));if(missing){toast('Required answers remain',missing.prompt);return;}decisionExit=null;state.decision={type:'question-submitting'};renderApp();setTimeout(()=>{closeDecision(false);state.questionQueue=Math.max(0,state.questionQueue-1);addReceipt('question-receipt','Questionnaire submitted','5 answers attached to the deployment planning context.');},950);return;}
+    if(a==='submit-questionnaire'){const missing=state.questions.find(q=>q.required&&!questionFilled(q));if(missing){toast('Required answers remain',missing.prompt);return;}decisionExit=null;state.decision={type:'question-submitting'};renderApp();setTimeout(()=>{closeDecision(false);state.questionQueue=Math.max(0,state.questionQueue-1);addReceipt('question-receipt','Questionnaire submitted','5 answers attached to the deployment planning context.');},950);return;}
     if(a==='revise-plan'){decisionExit=null;state.decision={type:'plan',mode:'revise',feedback:''};renderApp();return;}
     if(a==='build-plan'){decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();return;}
     if(a==='cancel-plan'){state.planStatus='cancelled';toast('Plan decision closed','The durable plan card remains in the transcript with View, Revise, and Build.');closeDecision();return;}
@@ -2058,7 +3078,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='approve-plan'){closeDecision(false);state.planStatus='building';state.mode='Agent';addReceipt('goal-receipt','Plan approved · Build started','The assistant switched from planning to execution and preserved the Plan artifact.');startWorking(true);return;}
     if(a==='open-permission'){decisionExit=null;state.decision={type:'permission'};renderApp();return;}
     if(a==='deny-permission'){closeDecision(false);addReceipt('permission','Permission denied','The checkpoint remains available; no action was replayed.');return;}
-    if(a==='approve-permission'){closeDecision(false);state.work.step=5;startWorking();return;}
+    if(a==='approve-permission'){closeDecision(false);scrubTo(state.work,5);startWorking();return;}
     if(a==='resolve-conflict'){closeDecision(false);addReceipt('route-change','Parent mediation resolved',btn.dataset.value==='indexes'?'Composite indexes approved as the reversible first step.':btn.dataset.value==='views'?'Materialized-view follow-up selected.':'Explicit schema-policy override recorded.');return;}
     if(a==='trigger-work-recovery'){decisionExit=null;state.decision={type:'permission'};renderApp();return;}
     if(a==='open-goal'){openEditor('goal-artifact');return;}
@@ -2073,6 +3093,16 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='restore-draft'){const list=state.draftHistory[state.selectedThread]||[];if(!list.length){toast('No earlier draft','Nothing has been sent from this thread yet.');return;}state.composer=list[list.length-1];state.drafts[state.selectedThread]=state.composer;renderApp();toast('Draft restored',`Restored the most recent of ${list.length} saved drafts.`);return;}
     if(a==='attach'){addReceipt('attachment','Uploading design-reference.png','82% · image preview and artifact registration in progress.');return;}
     if(a==='send'){handleSend();return;}
+    if(a==='scroll-to-bottom'){scrollTranscriptToEnd();return;}
+    if(a==='stop-run'){stopCurrentWork();return;}
+    if(a==='queue-edit'){
+      const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
+      const [entry]=q.splice(i,1); state.composer=entry.text; renderApp(); return;
+    }
+    if(a==='queue-send-now'){
+      const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
+      const [entry]=q.splice(i,1); deliverSend(entry.text); return;
+    }
     if(a==='demo-trigger'){runDemoTrigger(btn.dataset.trigger);return;}
     if(a==='jump-search-result'){state.menu=null;switchThread(btn.dataset.thread);setTimeout(()=>{const el=document.querySelector(`[data-message-id="${CSS.escape(btn.dataset.message)}"]`);el?.scrollIntoView({block:'center',behavior:'smooth'});},50);return;}
     if(a==='show-archived'){state.historySearch='';state.historyMode=isNarrow()?'floating':'pinned';state.menu=null;renderApp();requestAnimationFrame(()=>{const hs=document.querySelector('[data-scroll-key="history"]');if(hs)hs.scrollTop=hs.scrollHeight;});return;}
@@ -2090,12 +3120,13 @@ recommended path                  migration 0043 + rollback</div></div></section
 
   document.addEventListener('input',e=>{
     const k=e.target.dataset.input;if(!k)return;
-    if(k==='composer'){state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;return;}
+    if(k==='composer'){state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;syncSendStop();return;}
         if(k==='history-search'){state.historySearch=e.target.value;renderApp();return;}
         if(k==='model-search'){state.modelSearch=e.target.value;renderOverlays();return;}
         if(k==='thread-global-search'){state.menu.query=e.target.value;renderOverlays();return;}
     if(k==='rename-thread'){state.dialog.value=e.target.value;return;}
     if(k==='question-text'){state.questions[state.questionIndex].answer=e.target.value;return;}
+    if(k==='question-other'){const q=state.questions[state.questionIndex];if(!q)return;q.other=e.target.value;if(q.type==='choice')q.answer='';if(q.type==='text')q.answer=e.target.value;return;}
     if(k==='plan-feedback'){state.decision.feedback=e.target.value;return;}
   });
 
@@ -2110,25 +3141,85 @@ recommended path                  migration 0043 + rollback</div></div></section
     if((e.metaKey||e.ctrlKey)&&e.key==='Enter'&&document.activeElement?.matches('[data-input="composer"]')){e.preventDefault();handleSend();}
     if(e.key==='Escape'){
       if(state.menu){closeMenu();return;}
-      if(state.dialog){if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
+      if(state.dialog){if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
       if(state.context.details){state.context.details=false;renderOverlays();return;}
-      if(state.historyMode==='floating'){state.historyMode='closed';renderApp();return;}
+      if(state.activity.open&&!activityPinnedInLayout()){const domain=state.activity.domain;state.hover=null;state.activity.open=false;state.activity.pinned=false;renderApp();focusActivityBarDomain(domain);return;}
+      if(state.hover){state.hover=null;syncHoverCard();return;}
+      if(state.historyMode==='floating'&&document.body.dataset.phDrawer!=='pinned'){state.historyMode='closed';renderApp();return;}
       if(state.decision||decisionExit){closeDecision();}
     }
   });
 
+  document.addEventListener('pointermove',e=>{ lastPointer={x:e.clientX,y:e.clientY}; },{passive:true});
   document.addEventListener('pointerover',e=>{
-    const sub=e.target.closest('[data-submenu]');
-    if(sub&&state.menu){clearTimeout(submenuTimer);setSubmenu(sub.dataset.submenu);return;}
+    /* Plain-text hover tips first so they still work inside open menus and
+       drawers (those surfaces live under state.menu / overlay root). Instant
+       tips feel twitchy while scanning dense chrome, so tip cards dwell. */
+    const tip=e.target.closest('[data-hover-tip]');
+    if(tip){
+      const key=tip.dataset.hoverKey||'';
+      if(state.hover && state.hover.type==='text' && state.hover.key===key) return;
+      clearTimeout(hoverTimer);
+      const tipText=tip.dataset.hoverTip||'';
+      hoverTimer=setTimeout(()=>{
+        if(!tip.isConnected) return;
+        state.hover={type:'text',tip:tipText,key};
+        /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
+        syncHoverCard();
+        requestAnimationFrame(()=>positionHoverCard());
+      },400);
+      return;
+    }
+    if(state.menu){
+      if(e.target.closest('[data-overlay="sidecar"]')) return;
+      const sub=e.target.closest('[data-submenu]');
+      if(sub){clearTimeout(submenuTimer);setSubmenu(sub.dataset.submenu);return;}
+      const item=e.target.closest('[data-overlay="root-menu"] .menu-item, [data-overlay="root-menu"] .model-row');
+      if(item && !item.hasAttribute('data-submenu') && (state.menu.sub||state.menu.compactSub)){
+        setSubmenu(null);
+      }
+      return;
+    }
     const act=e.target.closest('[data-hover-domain]');
-    if(act){clearTimeout(hoverTimer);state.hover={type:'activity',domain:act.dataset.hoverDomain};renderOverlays();}
+    if(act){
+      const domain=act.dataset.hoverDomain;
+      if(state.hover && state.hover.type==='activity'){
+        clearTimeout(hoverTimer);
+        if(state.hover.domain!==domain){ state.hover={type:'activity',domain}; syncHoverCard(); requestAnimationFrame(()=>positionHoverCard()); }
+        return;
+      }
+      clearTimeout(hoverTimer);
+      hoverTimer=setTimeout(()=>{ state.hover={type:'activity',domain}; syncHoverCard(); requestAnimationFrame(()=>positionHoverCard()); },220);
+      return;
+    }
   });
   document.addEventListener('pointerout',e=>{
-    const act=e.target.closest('[data-hover-domain]');
-    if(act&&!act.contains(e.relatedTarget)){clearTimeout(hoverTimer);hoverTimer=setTimeout(()=>{if(!document.querySelector('.hover-card:hover')){state.hover=null;renderOverlays();}},160);}
+    /* pmPatch during work ticks disconnects the old node and fires pointerout.
+       Ignore those — the replacement node is still under the cursor. */
+    if(!e.target||!e.target.isConnected) return;
+    const act=e.target.closest('[data-hover-domain],[data-hover-tip]');
+    if(act&&!act.contains(e.relatedTarget)){
+      clearTimeout(hoverTimer);
+      hoverTimer=setTimeout(()=>{
+        if(!document.querySelector('.hover-card:hover')){
+          state.hover=null;
+          syncHoverCard();
+        }
+      },160);
+    }
   });
 
   document.addEventListener('pointerdown',e=>{
+    const actBtn=e.target.closest('[data-action="open-activity"]');
+    /* A preview footer must survive through click. Removing its overlay on
+       pointerdown disconnects the button before click can dispatch. Bar
+       triggers are in the patched app tree and can still dismiss eagerly. */
+    if(actBtn&&!actBtn.closest('.ab-card')){
+      clearTimeout(hoverTimer);
+      if(window.PM56_AB&&window.PM56_AB.dismissActivityHover)window.PM56_AB.dismissActivityHover();
+      state.hover=null;
+      renderOverlays();
+    }
     const resizeHandle=e.target.closest('[data-dialog-resize]');
     if(resizeHandle&&state.dialog?.type==='demo'){
       e.preventDefault();
@@ -2175,7 +3266,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     const dx=e.clientX-dragState.startX;
     if(dragState.kind==='editor')state.editorWidth=clamp(dragState.editor+(dx/window.innerWidth)*100,25,72);
     if(dragState.kind==='history')state.historyWidth=clamp(dragState.history+dx,170,360);
-    if(dragState.kind==='activity')state.activityWidth=clamp(dragState.activity+dx,240,470);
+    if(dragState.kind==='activity')state.activityWidth=clamp(dragState.activity+dx,240,480);
     document.documentElement.style.setProperty('--editor-w',`${state.editorWidth}%`);document.documentElement.style.setProperty('--history-w',`${state.historyWidth}px`);document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
   });
   document.addEventListener('pointerup',()=>{
@@ -2186,15 +3277,24 @@ recommended path                  migration 0043 + rollback</div></div></section
       if(state.dialog?.geom)lastDemoGeom={...state.dialog.geom};
       dragState=null;return;
     }
+    const settledKind=dragState.kind;
     document.querySelectorAll('.dragging').forEach(x=>x.classList.remove('dragging'));dragState=null;savePrefs();
+    if(settledKind==='editor'&&state.activity.open&&state.activity.pinned)renderApp();
   });
 
   window.addEventListener('resize',()=>{
+    const nextPhone=isPhone();
+    const phoneChanged=nextPhone!==phoneLayout;
+    phoneLayout=nextPhone;
+    const nextActivityPin=activityPinnedInLayout();
+    const activityPinChanged=nextActivityPin!==activityPinLayout;
+    activityPinLayout=nextActivityPin;
     if(state.dialog?.type==='demo'&&state.dialog.geom){
       state.dialog.geom=clampDemoGeom(state.dialog.geom);lastDemoGeom={...state.dialog.geom};
       applyDemoGeomStyles(document.querySelector('.demo-dialog'),state.dialog.geom);
     }
-    if(state.menu||state.hover)renderOverlays();if(isNarrow()&&state.historyMode==='pinned')renderApp();
+    if(state.menu||state.hover)renderOverlays();if(phoneChanged||activityPinChanged||(isNarrow()&&state.historyMode==='pinned'))renderApp();
+    else syncJumpBottom();
   });
 
   // Public deterministic concept API used by the Demo Studio and automated inspection.
@@ -2205,18 +3305,18 @@ recommended path                  migration 0043 + rollback</div></div></section
     setRecipe:(i)=>applyRecipe(i),
     setVariant:(family,option)=>{const f=Number(family);state.variants[f]=clamp(Number(option),0,familyMax(f));state.recipe=-1;renderApp();},
     selectThread:switchThread,
-    openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;renderApp();}},
+    openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';renderApp();}},
     pinActivity:()=>{state.activity.open=true;state.activity.pinned=true;renderApp();},
     openContext:()=>{state.context.details=true;renderOverlays();},
     openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
     openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
     openPermission:()=>{decisionExit=null;state.decision={type:'permission'};renderApp();},
     startWorking:()=>startWorking(true),pauseWorking,stepWorking,completeWorking,resetWorking,
-    setWorkStep:(i)=>{clearInterval(workTimer);state.work.step=clamp(Number(i),0,D.workSteps.length-1);state.work.started=true;state.work.running=false;state.work.completed=state.work.step===D.workSteps.length-1;renderApp();},
+    setWorkStep:(i)=>{state.work.started=true;state.work.running=false;scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
     trigger:runDemoTrigger,
     listTriggers:allDemoTriggers,
     openArtifact:openEditor,
-    snapshot:()=>({theme:state.theme,recipe:state.recipe,variants:[...state.variants],thread:state.selectedThread,work:{...state.work},decision:state.decision?.type||null,activity:clone(state.activity)})
+    snapshot:()=>({theme:state.theme,recipe:state.recipe,variants:[...state.variants],thread:state.selectedThread,work:{...state.work},works:clone(state.works),decision:state.decision?.type||null,activity:clone(state.activity)})
   };
 
   // Initial full render and a real, one-shot working sequence so the first open is not static.

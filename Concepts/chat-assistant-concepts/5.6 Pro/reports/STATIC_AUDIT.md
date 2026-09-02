@@ -1,6 +1,6 @@
 # Static audit
 
-**FAIL — 121/122 passed**
+**FAIL — 117/122 passed**
 
 - [x] file exists: shell.html
 - [ ] file nontrivial: shell.html — `480 bytes`
@@ -29,12 +29,12 @@
 - [x] standalone is byte-identical to index
 - [x] direct-open boot watchdog present
 - [x] runtime diagnostics present
-- [x] hidden attribute hardened
+- [ ] hidden attribute hardened
 - [x] Inter font requested
 - [x] Poppins font requested
-- [x] reduced motion equivalence
-- [x] custom popup animation
-- [x] custom sidecar animation
+- [ ] reduced motion equivalence
+- [ ] custom popup animation
+- [ ] custom sidecar animation
 - [x] feature token: Context compact menu
 - [x] feature token: Context More Details
 - [x] feature token: context current-window metric

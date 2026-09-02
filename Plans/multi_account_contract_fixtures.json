@@ -1,0 +1,1331 @@
+{
+  "schema_id": "pm.multi_account.auth_profile_command_contract_fixtures.v1",
+  "owner_schema": "Plans/multi_account_contracts.schema.json",
+  "fixture_format": "materialize request_template, apply dot-path patch, then validate target_def",
+  "request_template": {
+    "schema_id": "pm.multi_account.auth_profile_command_request.v1",
+    "record_kind": "AuthProfileCommandRequest",
+    "command_id": "cmd.auth_profile.sign_in",
+    "operation": "sign_in",
+    "command_instance_id": "command:auth-profile:sign-in:1",
+    "idempotency_key": "idempotency:auth-profile:sign-in:1",
+    "origin": "human_gui",
+    "provider_id": "provider:codex",
+    "route_id": "route:codex:subscription",
+    "profile_id": "profile:codex:primary",
+    "account_id": "account:codex:primary",
+    "connection_id": "connection:codex:primary",
+    "installation_id": "installation:codex:verified",
+    "project_id": "project:alpha",
+    "home_server_id": "server:home:alpha",
+    "execution_host_id": "host:alpha:mac",
+    "execution_environment_id": "environment:alpha:native",
+    "initiating_client_id": "client:desktop:active",
+    "expected_auth_revision": 7,
+    "expected_profile_generation": 11,
+    "topology_generation": 19,
+    "permission_snapshot_ref": "permission:snapshot:auth:7",
+    "observable_work_ref": "work:auth:sign-in:1",
+    "return_context_ref": "return:settings:accounts",
+    "payload": {
+      "auth_surface": "protected_auth_browser",
+      "authentication_operation_id": null,
+      "continuation_ref": "continuation:auth:1",
+      "credential_ref": null,
+      "protected_input_ref": null,
+      "official_route_ref": "official-route:codex:login",
+      "domain_policy_ref": "domain-policy:codex:official",
+      "verification_policy_ref": "verification-policy:codex:identity",
+      "retry_budget_ref": "retry-budget:auth:1",
+      "credential_disposition": "not_applicable",
+      "dependent_connection_disposition": "not_applicable",
+      "human_confirmation_ref": "confirmation:human:auth:1",
+      "protected_auth_boundary": {
+        "owner_contract_ref": "SchemaID:pm.protected_auth_browser_contracts.schema.v1#/$defs/protected_auth_browser_lifecycle_projection",
+        "human_only": true,
+        "ephemeral": true,
+        "content_observation_allowed": false,
+        "persistence_allowed": false,
+        "recording_allowed": false,
+        "inspection_allowed": false,
+        "export_allowed": false,
+        "agent_access_allowed": false,
+        "adapter_access_allowed": false,
+        "tool_access_allowed": false,
+        "automation_allowed": false,
+        "browser_program_access_allowed": false,
+        "capture_allowed": false,
+        "ordinary_browser_navigation_allowed": false,
+        "storage_state_access_allowed": false,
+        "initiating_client_policy": "initiating_active_client_only"
+      },
+      "protected_input_contract": null,
+      "official_source_proof_ref": null,
+      "official_source_currentness": null,
+      "profile_eligibility_proof_ref": null,
+      "installation_eligibility_proof_ref": null,
+      "new_display_name": null,
+      "dependent_use_disposition": null,
+      "destination_host_id": null,
+      "destination_environment_id": null,
+      "transfer_plan_ref": null,
+      "transfer_plan_sha256": null,
+      "compatibility_snapshot_ref": null,
+      "approved_preview_receipt_ref": null,
+      "encrypted_transfer_authorization_ref": null,
+      "secret_transfer_disposition": null
+    }
+  },
+  "request_cases": [
+    {
+      "name": "sign_in_protected_human_only",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {}
+    },
+    {
+      "name": "sign_out_exact_profile_with_explicit_dispositions",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.sign_out",
+        "operation": "sign_out",
+        "command_instance_id": "command:auth-profile:sign-out:1",
+        "idempotency_key": "idempotency:auth-profile:sign-out:1",
+        "observable_work_ref": "work:auth:sign-out:1",
+        "payload.auth_surface": "not_applicable",
+        "payload.authentication_operation_id": null,
+        "payload.continuation_ref": null,
+        "payload.official_route_ref": null,
+        "payload.domain_policy_ref": null,
+        "payload.verification_policy_ref": null,
+        "payload.retry_budget_ref": null,
+        "payload.credential_disposition": "revoke",
+        "payload.dependent_connection_disposition": "retain_and_mark_auth_required",
+        "payload.protected_auth_boundary": null
+      }
+    },
+    {
+      "name": "verify_with_owner_reconciler_and_no_secret_projection",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.verify",
+        "operation": "verify",
+        "command_instance_id": "command:auth-profile:verify:1",
+        "idempotency_key": "idempotency:auth-profile:verify:1",
+        "origin": "owner_reconciler",
+        "observable_work_ref": "work:auth:verify:1",
+        "payload.auth_surface": "noninteractive_verification",
+        "payload.authentication_operation_id": null,
+        "payload.continuation_ref": null,
+        "payload.official_route_ref": null,
+        "payload.domain_policy_ref": null,
+        "payload.retry_budget_ref": null,
+        "payload.credential_disposition": "not_applicable",
+        "payload.dependent_connection_disposition": "not_applicable",
+        "payload.human_confirmation_ref": null,
+        "payload.protected_auth_boundary": null
+      }
+    },
+    {
+      "name": "cancel_same_protected_operation",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.cancel",
+        "operation": "cancel",
+        "command_instance_id": "command:auth-profile:cancel:1",
+        "idempotency_key": "idempotency:auth-profile:cancel:1",
+        "payload.authentication_operation_id": "auth-operation:codex:1",
+        "payload.protected_input_ref": null
+      }
+    },
+    {
+      "name": "retry_same_operation_with_bounded_continuation",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.retry",
+        "operation": "retry",
+        "command_instance_id": "command:auth-profile:retry:1",
+        "idempotency_key": "idempotency:auth-profile:retry:1",
+        "payload.authentication_operation_id": "auth-operation:codex:1",
+        "payload.protected_input_ref": null
+      }
+    },
+    {
+      "name": "submit_code_by_one_use_protected_input_reference",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.submit_code",
+        "operation": "submit_code",
+        "command_instance_id": "command:auth-profile:submit-code:1",
+        "idempotency_key": "idempotency:auth-profile:submit-code:1",
+        "payload.authentication_operation_id": "auth-operation:codex:1",
+        "payload.protected_input_ref": "protected-input:one-use:1",
+        "payload.protected_input_contract": {
+          "generation": 1,
+          "expires_at_utc": "2026-09-01T00:45:00Z",
+          "input_currentness": "current",
+          "replay_status": "fresh",
+          "use_policy": "one_use_consume_and_zeroize",
+          "replay_policy": "reject_replay",
+          "binding_ref": "binding:auth-operation:codex:1",
+          "persistence_allowed": false
+        }
+      }
+    },
+    {
+      "name": "open_verified_official_page_as_human_handoff",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.open_official_page",
+        "operation": "open_official_page",
+        "command_instance_id": "command:auth-profile:official-page:1",
+        "idempotency_key": "idempotency:auth-profile:official-page:1",
+        "payload.authentication_operation_id": null,
+        "payload.protected_input_ref": null,
+        "payload.official_source_proof_ref": "official-source-proof:codex:current:1",
+        "payload.official_source_currentness": "current"
+      }
+    },
+    {
+      "name": "select_exact_eligible_profile_without_credential_copy",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.select",
+        "operation": "select",
+        "command_instance_id": "command:auth-profile:select:1",
+        "idempotency_key": "idempotency:auth-profile:select:1",
+        "observable_work_ref": null,
+        "payload.auth_surface": "not_applicable",
+        "payload.authentication_operation_id": null,
+        "payload.continuation_ref": null,
+        "payload.official_route_ref": null,
+        "payload.domain_policy_ref": null,
+        "payload.verification_policy_ref": null,
+        "payload.retry_budget_ref": null,
+        "payload.human_confirmation_ref": null,
+        "payload.protected_auth_boundary": null,
+        "payload.profile_eligibility_proof_ref": "profile-eligibility-proof:codex:primary:1",
+        "payload.installation_eligibility_proof_ref": "installation-eligibility-proof:codex:verified:1"
+      }
+    },
+    {
+      "name": "server_gap_rename_request",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.rename",
+        "operation": "rename",
+        "command_instance_id": "command:auth-profile:rename:1",
+        "idempotency_key": "idempotency:auth-profile:rename:1",
+        "payload.new_display_name": "Primary Codex",
+        "observable_work_ref": null
+      },
+      "row_index": 2
+    },
+    {
+      "name": "server_gap_revoke_request",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.revoke",
+        "operation": "revoke",
+        "command_instance_id": "command:auth-profile:revoke:1",
+        "idempotency_key": "idempotency:auth-profile:revoke:1",
+        "payload.dependent_use_disposition": "settled",
+        "observable_work_ref": "work:auth-profile:revoke:1"
+      },
+      "row_index": 3
+    },
+    {
+      "name": "server_gap_transfer_apply_request",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.transfer.apply",
+        "operation": "transfer_apply",
+        "command_instance_id": "command:auth-profile:transfer_apply:1",
+        "idempotency_key": "idempotency:auth-profile:transfer_apply:1",
+        "payload.destination_host_id": "host:destination",
+        "payload.destination_environment_id": "environment:destination",
+        "payload.transfer_plan_ref": "transfer-plan:auth-profile:1",
+        "payload.transfer_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "payload.approved_preview_receipt_ref": "receipt:auth-profile:preview:1",
+        "payload.encrypted_transfer_authorization_ref": "encrypted-path-admission:1",
+        "payload.secret_transfer_disposition": "encrypted_admitted",
+        "observable_work_ref": "work:auth-profile:transfer-apply:1"
+      },
+      "row_index": 4
+    },
+    {
+      "name": "server_gap_transfer_preview_request",
+      "target_def": "AuthProfileCommandRequest",
+      "patch": {
+        "command_id": "cmd.auth_profile.transfer.preview",
+        "operation": "transfer_preview",
+        "command_instance_id": "command:auth-profile:transfer_preview:1",
+        "idempotency_key": "idempotency:auth-profile:transfer_preview:1",
+        "payload.destination_host_id": "host:destination",
+        "payload.destination_environment_id": "environment:destination",
+        "payload.compatibility_snapshot_ref": "compatibility:auth-profile:1",
+        "payload.secret_transfer_disposition": "excluded",
+        "observable_work_ref": "work:auth-profile:transfer-preview:1"
+      },
+      "row_index": 5
+    }
+  ],
+  "other_positive_cases": [
+    {
+      "name": "unregistered_exact_command_is_unavailable",
+      "target_def": "AuthProfileCommandAvailability",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_availability.v1",
+        "record_kind": "AuthProfileCommandAvailability",
+        "command_id": "cmd.auth_profile.sign_in",
+        "command_registered": false,
+        "native_handler_available": false,
+        "available": false,
+        "disabled_reason": "command_not_registered",
+        "expected_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "permission_snapshot_ref": "permission:snapshot:auth:7",
+        "safe_user_message": "This authentication action is not registered in the command catalog."
+      }
+    },
+    {
+      "name": "protected_input_permission_never_exposes_or_widens",
+      "target_def": "AuthProfilePermissionDecision",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_permission_decision.v1",
+        "record_kind": "AuthProfilePermissionDecision",
+        "command_id": "cmd.auth_profile.submit_code",
+        "decision": "allow",
+        "required_scopes": [
+          "protected_input_submit",
+          "auth_operation_control"
+        ],
+        "granted_scopes": [
+          "protected_input_submit",
+          "auth_operation_control"
+        ],
+        "permission_snapshot_ref": "permission:snapshot:auth:7",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "authority_widening": false,
+        "reason_code": "exact_human_operation_binding"
+      }
+    },
+    {
+      "name": "redacted_receipt_only_result",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.verify",
+        "command_instance_id": "command:auth-profile:verify:1",
+        "operation": "verify",
+        "outcome": "completed",
+        "effect_kind": "no_effect",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": "auth-proof:codex:current:1",
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "verified",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": "2026-09-01T00:20:00Z",
+        "authentication_proof_expires_at_utc": "2026-09-01T01:20:00Z",
+        "proof_currentness": "current",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:verify:1",
+        "permission_decision_ref": "permission:decision:auth:verify:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth:verify:1",
+        "receipt_ref": "receipt:auth:verify:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "result_sign_in_settles_return_context",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.sign_in",
+        "command_instance_id": "command:auth-profile:sign-in:1",
+        "operation": "sign_in",
+        "outcome": "accepted",
+        "effect_kind": "external_handoff_started",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "awaiting_human",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:sign_in:1",
+        "permission_decision_ref": "permission:decision:auth:sign_in:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth:sign-in:1",
+        "receipt_ref": "receipt:auth:sign_in:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "result_sign_out_settles_return_context",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.sign_out",
+        "command_instance_id": "command:auth-profile:sign-out:1",
+        "operation": "sign_out",
+        "outcome": "completed",
+        "effect_kind": "authentication_state_changed",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 8,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "signed_out",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:sign_out:1",
+        "permission_decision_ref": "permission:decision:auth:sign_out:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth:sign-out:1",
+        "receipt_ref": "receipt:auth:sign_out:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "result_cancel_settles_return_context",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.cancel",
+        "command_instance_id": "command:auth-profile:cancel:1",
+        "operation": "cancel",
+        "outcome": "cancelled",
+        "effect_kind": "no_effect",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": "auth-operation:codex:1",
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "sign_in_required",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:cancel:1",
+        "permission_decision_ref": "permission:decision:auth:cancel:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth:sign-in:1",
+        "receipt_ref": "receipt:auth:cancel:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "result_retry_settles_return_context",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.retry",
+        "command_instance_id": "command:auth-profile:retry:1",
+        "operation": "retry",
+        "outcome": "accepted",
+        "effect_kind": "external_handoff_started",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": "auth-operation:codex:1",
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "awaiting_human",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:retry:1",
+        "permission_decision_ref": "permission:decision:auth:retry:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth:sign-in:1",
+        "receipt_ref": "receipt:auth:retry:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "result_submit_code_settles_return_context",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.submit_code",
+        "command_instance_id": "command:auth-profile:submit-code:1",
+        "operation": "submit_code",
+        "outcome": "completed",
+        "effect_kind": "authentication_state_changed",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": "auth-operation:codex:1",
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 8,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "authenticated_unverified",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "consumed_and_zeroized",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:submit_code:1",
+        "permission_decision_ref": "permission:decision:auth:submit_code:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth:sign-in:1",
+        "receipt_ref": "receipt:auth:submit_code:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "result_open_official_page_settles_return_context",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.open_official_page",
+        "command_instance_id": "command:auth-profile:official-page:1",
+        "operation": "open_official_page",
+        "outcome": "accepted",
+        "effect_kind": "external_handoff_started",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "awaiting_human",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": "official-source-proof:codex:current:1",
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:open_official_page:1",
+        "permission_decision_ref": "permission:decision:auth:open_official_page:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth:sign-in:1",
+        "receipt_ref": "receipt:auth:open_official_page:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "result_select_settles_return_context",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.select",
+        "command_instance_id": "command:auth-profile:select:1",
+        "operation": "select",
+        "outcome": "completed",
+        "effect_kind": "profile_selection_changed",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 12,
+        "projected_auth_state": "verified",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": "selection-eligibility-proof:codex:primary:1",
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:select:1",
+        "permission_decision_ref": "permission:decision:auth:select:1",
+        "error_ref": null,
+        "observable_work_ref": null,
+        "receipt_ref": "receipt:auth:select:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z"
+      }
+    },
+    {
+      "name": "server_gap_rename_result",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.rename",
+        "command_instance_id": "command:auth-profile:rename:1",
+        "operation": "rename",
+        "outcome": "completed",
+        "effect_kind": "profile_metadata_changed",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "verified",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:verify:1",
+        "permission_decision_ref": "permission:decision:auth:verify:1",
+        "error_ref": null,
+        "observable_work_ref": null,
+        "receipt_ref": "receipt:auth:verify:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z",
+        "profile_display_name": "Primary Codex",
+        "dependent_use_disposition": null,
+        "transfer_plan_ref": null,
+        "transfer_plan_sha256": null,
+        "destination_profile_ref": null,
+        "secret_transfer_disposition": null,
+        "secret_material_exposed": false
+      },
+      "row_index": 2
+    },
+    {
+      "name": "server_gap_rename_handler_unavailable",
+      "target_def": "AuthProfileCommandAvailability",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_availability.v1",
+        "record_kind": "AuthProfileCommandAvailability",
+        "command_id": "cmd.auth_profile.rename",
+        "command_registered": false,
+        "native_handler_available": false,
+        "available": false,
+        "disabled_reason": "command_not_registered",
+        "expected_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "permission_snapshot_ref": "permission:snapshot:auth:7",
+        "safe_user_message": "The sole native handler is unavailable."
+      },
+      "row_index": 2
+    },
+    {
+      "name": "server_gap_revoke_result",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.revoke",
+        "command_instance_id": "command:auth-profile:revoke:1",
+        "operation": "revoke",
+        "outcome": "completed",
+        "effect_kind": "profile_revoked",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "revoked",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:verify:1",
+        "permission_decision_ref": "permission:decision:auth:verify:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth-profile:revoke:1",
+        "receipt_ref": "receipt:auth:verify:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z",
+        "profile_display_name": null,
+        "dependent_use_disposition": "settled",
+        "transfer_plan_ref": null,
+        "transfer_plan_sha256": null,
+        "destination_profile_ref": null,
+        "secret_transfer_disposition": null,
+        "secret_material_exposed": false
+      },
+      "row_index": 3
+    },
+    {
+      "name": "server_gap_revoke_handler_unavailable",
+      "target_def": "AuthProfileCommandAvailability",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_availability.v1",
+        "record_kind": "AuthProfileCommandAvailability",
+        "command_id": "cmd.auth_profile.revoke",
+        "command_registered": false,
+        "native_handler_available": false,
+        "available": false,
+        "disabled_reason": "command_not_registered",
+        "expected_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "permission_snapshot_ref": "permission:snapshot:auth:7",
+        "safe_user_message": "The sole native handler is unavailable."
+      },
+      "row_index": 3
+    },
+    {
+      "name": "server_gap_transfer_apply_result",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.transfer.apply",
+        "command_instance_id": "command:auth-profile:transfer_apply:1",
+        "operation": "transfer_apply",
+        "outcome": "completed",
+        "effect_kind": "transfer_applied",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "verified",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:verify:1",
+        "permission_decision_ref": "permission:decision:auth:verify:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth-profile:transfer_apply:1",
+        "receipt_ref": "receipt:auth:verify:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z",
+        "profile_display_name": null,
+        "dependent_use_disposition": null,
+        "transfer_plan_ref": "transfer-plan:auth-profile:1",
+        "transfer_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "destination_profile_ref": "profile:destination:codex",
+        "secret_transfer_disposition": "encrypted_admitted",
+        "secret_material_exposed": false
+      },
+      "row_index": 4
+    },
+    {
+      "name": "server_gap_transfer_apply_handler_unavailable",
+      "target_def": "AuthProfileCommandAvailability",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_availability.v1",
+        "record_kind": "AuthProfileCommandAvailability",
+        "command_id": "cmd.auth_profile.transfer.apply",
+        "command_registered": false,
+        "native_handler_available": false,
+        "available": false,
+        "disabled_reason": "command_not_registered",
+        "expected_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "permission_snapshot_ref": "permission:snapshot:auth:7",
+        "safe_user_message": "The sole native handler is unavailable."
+      },
+      "row_index": 4
+    },
+    {
+      "name": "server_gap_transfer_preview_result",
+      "target_def": "AuthProfileCommandResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_result.v1",
+        "record_kind": "AuthProfileCommandResult",
+        "command_id": "cmd.auth_profile.transfer.preview",
+        "command_instance_id": "command:auth-profile:transfer_preview:1",
+        "operation": "transfer_preview",
+        "outcome": "completed",
+        "effect_kind": "transfer_previewed",
+        "provider_id": "provider:codex",
+        "route_id": "route:codex:subscription",
+        "profile_id": "profile:codex:primary",
+        "account_id": "account:codex:primary",
+        "authentication_operation_ref": null,
+        "authentication_proof_ref": null,
+        "expected_auth_revision": 7,
+        "resulting_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "resulting_profile_generation": 11,
+        "projected_auth_state": "verified",
+        "credential_material_exposed": false,
+        "protected_content_exposed": false,
+        "protected_input_persisted": false,
+        "protected_input_disposition": "not_applicable",
+        "authentication_proof_issued_at_utc": null,
+        "authentication_proof_expires_at_utc": null,
+        "proof_currentness": "not_applicable",
+        "remediation_ref": null,
+        "official_source_proof_ref": null,
+        "selection_eligibility_proof_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "availability_ref": "availability:auth:verify:1",
+        "permission_decision_ref": "permission:decision:auth:verify:1",
+        "error_ref": null,
+        "observable_work_ref": "work:auth-profile:transfer_preview:1",
+        "receipt_ref": "receipt:auth:verify:1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:20:00Z",
+        "profile_display_name": null,
+        "dependent_use_disposition": null,
+        "transfer_plan_ref": "transfer-plan:auth-profile:1",
+        "transfer_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "destination_profile_ref": null,
+        "secret_transfer_disposition": "excluded",
+        "secret_material_exposed": false
+      },
+      "row_index": 5
+    },
+    {
+      "name": "server_gap_transfer_preview_handler_unavailable",
+      "target_def": "AuthProfileCommandAvailability",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_command_availability.v1",
+        "record_kind": "AuthProfileCommandAvailability",
+        "command_id": "cmd.auth_profile.transfer.preview",
+        "command_registered": false,
+        "native_handler_available": false,
+        "available": false,
+        "disabled_reason": "command_not_registered",
+        "expected_auth_revision": 7,
+        "expected_profile_generation": 11,
+        "permission_snapshot_ref": "permission:snapshot:auth:7",
+        "safe_user_message": "The sole native handler is unavailable."
+      },
+      "row_index": 5
+    },
+    {
+      "name": "server_gap_open_details_local_request",
+      "target_def": "AuthProfileLocalActionRequest",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_local_action_request.v1",
+        "record_kind": "AuthProfileLocalActionRequest",
+        "local_action_id": "ui.auth_profile.open_details",
+        "profile_id": "profile:codex:primary",
+        "expected_profile_generation": 11,
+        "projection_ref": "projection:auth-profile:details:1",
+        "return_context_ref": "return:settings:accounts"
+      },
+      "row_index": 1
+    },
+    {
+      "name": "server_gap_open_details_local_result",
+      "target_def": "AuthProfileLocalActionResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_local_action_result.v1",
+        "record_kind": "AuthProfileLocalActionResult",
+        "local_action_id": "ui.auth_profile.open_details",
+        "profile_id": "profile:codex:primary",
+        "projection_ref": "projection:auth-profile:details:1",
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "protected_content_exposed": false,
+        "credential_material_exposed": false,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        }
+      },
+      "row_index": 1
+    }
+  ],
+  "negative_cases": [
+    {
+      "name": "agent_cannot_start_protected_auth",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "sign_in_protected_human_only",
+      "patch": {
+        "origin": "agent"
+      },
+      "expected_invalid_reason": "agents are not request origins"
+    },
+    {
+      "name": "raw_code_property_is_rejected",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "submit_code_by_one_use_protected_input_reference",
+      "patch": {
+        "payload.raw_code": "123456"
+      },
+      "expected_invalid_reason": "raw code is not a command field"
+    },
+    {
+      "name": "raw_code_reference_is_rejected",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "submit_code_by_one_use_protected_input_reference",
+      "patch": {
+        "payload.protected_input_ref": "raw_code:123456"
+      },
+      "expected_invalid_reason": "raw code cannot masquerade as a non-secret reference"
+    },
+    {
+      "name": "recording_protected_auth_is_rejected",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "sign_in_protected_human_only",
+      "patch": {
+        "payload.protected_auth_boundary.recording_allowed": true
+      },
+      "expected_invalid_reason": "protected auth is non-recordable"
+    },
+    {
+      "name": "inspection_protected_auth_is_rejected",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "sign_in_protected_human_only",
+      "patch": {
+        "payload.protected_auth_boundary.inspection_allowed": true
+      },
+      "expected_invalid_reason": "protected auth is non-inspectable"
+    },
+    {
+      "name": "persistence_protected_auth_is_rejected",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "sign_in_protected_human_only",
+      "patch": {
+        "payload.protected_auth_boundary.persistence_allowed": true
+      },
+      "expected_invalid_reason": "protected auth is ephemeral"
+    },
+    {
+      "name": "adapter_access_protected_auth_is_rejected",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "sign_in_protected_human_only",
+      "patch": {
+        "payload.protected_auth_boundary.adapter_access_allowed": true
+      },
+      "expected_invalid_reason": "protected auth is unavailable to adapters"
+    },
+    {
+      "name": "command_operation_mismatch_is_rejected",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "sign_in_protected_human_only",
+      "patch": {
+        "operation": "select"
+      },
+      "expected_invalid_reason": "exact command and operation must agree"
+    },
+    {
+      "name": "submit_code_requires_one_use_reference",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "submit_code_by_one_use_protected_input_reference",
+      "patch": {
+        "payload.protected_input_ref": null
+      },
+      "expected_invalid_reason": "submit_code requires a protected input reference"
+    },
+    {
+      "name": "official_page_requires_verified_route_reference",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "open_verified_official_page_as_human_handoff",
+      "patch": {
+        "payload.official_route_ref": null
+      },
+      "expected_invalid_reason": "official page handoff requires an owner-verified route reference"
+    },
+    {
+      "name": "owner_reconciler_cannot_select_human_profile",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "select_exact_eligible_profile_without_credential_copy",
+      "patch": {
+        "origin": "owner_reconciler"
+      },
+      "expected_invalid_reason": "profile selection is an explicit human action"
+    },
+    {
+      "name": "permission_cannot_expose_protected_content",
+      "target_def": "AuthProfilePermissionDecision",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_permission_decision.v1",
+        "record_kind": "AuthProfilePermissionDecision",
+        "command_id": "cmd.auth_profile.submit_code",
+        "decision": "allow",
+        "required_scopes": [
+          "protected_input_submit"
+        ],
+        "granted_scopes": [
+          "protected_input_submit"
+        ],
+        "permission_snapshot_ref": "permission:snapshot:auth:7",
+        "credential_material_exposed": false,
+        "protected_content_exposed": true,
+        "authority_widening": false,
+        "reason_code": "invalid_exposure"
+      },
+      "expected_invalid_reason": "permission cannot expose protected content"
+    },
+    {
+      "name": "auth_request_requires_return_context",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "sign_in_protected_human_only",
+      "patch": {
+        "return_context_ref": null
+      },
+      "expected_invalid_reason": "exact caller return context"
+    },
+    {
+      "name": "completed_verify_requires_authentication_proof",
+      "target_def": "AuthProfileCommandResult",
+      "base_positive_case": "redacted_receipt_only_result",
+      "patch": {
+        "authentication_proof_ref": null
+      },
+      "expected_invalid_reason": "completed verification proof"
+    },
+    {
+      "name": "completed_verify_requires_current_proof",
+      "target_def": "AuthProfileCommandResult",
+      "base_positive_case": "redacted_receipt_only_result",
+      "patch": {
+        "proof_currentness": "stale"
+      },
+      "expected_invalid_reason": "verification proof currentness"
+    },
+    {
+      "name": "submit_code_rejects_expired_input_contract",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "submit_code_by_one_use_protected_input_reference",
+      "patch": {
+        "payload.protected_input_contract.input_currentness": "expired"
+      },
+      "expected_invalid_reason": "expired protected input"
+    },
+    {
+      "name": "submit_code_rejects_replayed_input_contract",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "submit_code_by_one_use_protected_input_reference",
+      "patch": {
+        "payload.protected_input_contract.replay_status": "replayed"
+      },
+      "expected_invalid_reason": "replayed protected input"
+    },
+    {
+      "name": "submit_code_requires_consume_and_zeroize_policy",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "submit_code_by_one_use_protected_input_reference",
+      "patch": {
+        "payload.protected_input_contract.use_policy": "reusable"
+      },
+      "expected_invalid_reason": "one-use consume and zeroize"
+    },
+    {
+      "name": "completed_submit_code_requires_consumed_receipt",
+      "target_def": "AuthProfileCommandResult",
+      "base_positive_case": "result_submit_code_settles_return_context",
+      "patch": {
+        "protected_input_disposition": "rejected_replay"
+      },
+      "expected_invalid_reason": "completed input consumption receipt"
+    },
+    {
+      "name": "official_page_requires_current_source_proof",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "open_verified_official_page_as_human_handoff",
+      "patch": {
+        "payload.official_source_proof_ref": null
+      },
+      "expected_invalid_reason": "official source proof"
+    },
+    {
+      "name": "official_page_rejects_stale_source",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "open_verified_official_page_as_human_handoff",
+      "patch": {
+        "payload.official_source_currentness": "stale"
+      },
+      "expected_invalid_reason": "official source currentness"
+    },
+    {
+      "name": "select_requires_profile_eligibility",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "select_exact_eligible_profile_without_credential_copy",
+      "patch": {
+        "payload.profile_eligibility_proof_ref": null
+      },
+      "expected_invalid_reason": "profile eligibility proof"
+    },
+    {
+      "name": "select_requires_installation_eligibility",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "select_exact_eligible_profile_without_credential_copy",
+      "patch": {
+        "payload.installation_eligibility_proof_ref": null
+      },
+      "expected_invalid_reason": "verified installation eligibility proof"
+    },
+    {
+      "name": "auth_return_restoration_must_be_consistent",
+      "target_def": "AuthProfileCommandResult",
+      "base_positive_case": "result_sign_in_settles_return_context",
+      "patch": {
+        "return_settlement.initiating_surface_restored": false
+      },
+      "expected_invalid_reason": "return settlement consistency"
+    },
+    {
+      "name": "completed_verify_requires_verified_state",
+      "target_def": "AuthProfileCommandResult",
+      "base_positive_case": "redacted_receipt_only_result",
+      "patch": {
+        "projected_auth_state": "authenticated_unverified"
+      },
+      "expected_invalid_reason": "completed verification state"
+    },
+    {
+      "name": "server_gap_transfer_apply_requires_current_plan",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "server_gap_transfer_apply_request",
+      "patch": {
+        "payload.transfer_plan_ref": null
+      },
+      "expected_invalid_reason": "apply requires approved plan"
+    },
+    {
+      "name": "server_gap_transfer_rejects_raw_secret",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "server_gap_transfer_apply_request",
+      "patch": {
+        "payload.raw_secret": "forbidden"
+      },
+      "expected_invalid_reason": "closed payload forbids raw secret"
+    },
+    {
+      "name": "server_gap_local_action_cannot_emit_event",
+      "target_def": "AuthProfileLocalActionResult",
+      "instance": {
+        "schema_id": "pm.multi_account.auth_profile_local_action_result.v1",
+        "record_kind": "AuthProfileLocalActionResult",
+        "local_action_id": "ui.auth_profile.open_details",
+        "profile_id": "profile:codex:primary",
+        "projection_ref": "projection:auth-profile:details:1",
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "protected_content_exposed": false,
+        "credential_material_exposed": false,
+        "return_settlement": {
+          "return_context_ref": "return:settings:accounts",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        }
+      },
+      "expected_invalid_reason": "local action emits no domain event"
+    }
+  ],
+  "coverage": {
+    "exact_command_ids": [
+      "cmd.auth_profile.sign_in",
+      "cmd.auth_profile.sign_out",
+      "cmd.auth_profile.verify",
+      "cmd.auth_profile.cancel",
+      "cmd.auth_profile.retry",
+      "cmd.auth_profile.submit_code",
+      "cmd.auth_profile.open_official_page",
+      "cmd.auth_profile.select",
+      "cmd.auth_profile.rename",
+      "cmd.auth_profile.revoke",
+      "cmd.auth_profile.transfer.apply",
+      "cmd.auth_profile.transfer.preview"
+    ],
+    "request_case_count": 12,
+    "negative_case_count": 28,
+    "human_only_boundary_covered": true,
+    "non_recordable_boundary_covered": true,
+    "non_inspectable_boundary_covered": true,
+    "agent_and_adapter_unavailable_covered": true,
+    "raw_code_absence_covered": true,
+    "native_runtime_claimed": false,
+    "event_registration_claimed": false,
+    "positive_result_case_count": 12,
+    "all_commands_have_positive_request_and_result": true,
+    "exact_return_settlement_covered": true,
+    "completed_verification_proof_covered": true,
+    "protected_input_one_use_expiry_replay_covered": true,
+    "official_source_currentness_covered": true,
+    "profile_and_installation_eligibility_covered": true,
+    "server_gap_new_command_count": 4,
+    "server_gap_local_action_count": 1,
+    "server_gap_rows": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+}

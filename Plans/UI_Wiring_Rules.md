@@ -21,7 +21,7 @@ ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ### 0.1 GUI concept reconciliation input
 
-When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` (PMConcept7 demo rev 9.2 lineage, built by `Concepts/pm7-tools/build_pm7.py` from `Concepts/pm6-build` parts) is the primary concept input for wiring review, with `Concepts/ChatGuiUpdates2.md` as its concept change ledger, until superseded by a newer explicit concept artifact in the same packet. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, and the contact-aware editor tab silhouette. As of 2026-08-13 it additionally carries the explicit-float-only movement rebuild (window exit is invalid_target, boot never restores floating), adjacent-pair pixel resize with fair-share minimums and the no-dead-space invariant, the top-left corner triangle grip, the dual-surface Reset Layout row in the four-row top-bar Home menu, the single in-canvas chat float system (the base full-screen overlay is retired), all-pane editor tab reorder persistence with the portal-family overflow chip, and the frosted-rail silhouette; the title-bar notification stack sits between the page tabs and the search field again (the 2026-08-12 after-search placement is retired per F3-460). The same-day tweak wave further carries the top-right lines-only grip (the corner triangle is retired), the toggling top-bar Collapse/Expand Bottom Terminal row, the full-height dock_right grid, target-geometry drop previews with the pickup-band and preview-capture guards, the row-dock cross_basis_px track handle, the progress-driven silhouette redesign extended to the dashboard tab strip, the retired pane-close glyph, the removed app status bar, and the move-workgroup source reseed. Wave 3 (2026-08-13) additionally carries the right-edge vertical-dots kebab below the grip (out of the head rows), two-frame drop-target hysteresis with mid-FLIP hit-test exclusion and the proportional-width placeholder, the live-fitting overflow chip beside the actions cluster with animated tab reorder, the theme-token silhouette skins with the minimap as the only code-pane scrollbar, 2 px vertical workspace padding, and the truth-gated terminal empty state. Wave 4 (2026-08-13) additionally carries latch-based geometric drop targeting (elementsFromPoint retired from resolution), the pointer-capture tab reorder (HTML5 DnD retired), and model-first browser-in-panel deactivation. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
+When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` is the generated PM7 concept input for wiring review and `Concepts/ChatGuiUpdates2.md` remains historical change lineage. The active source chain is the current pinned PM7 base through source-owned T33-T43 transforms in `Concepts/pm7-tools/build_pm7.py`; generated HTML is never an authored owner, and terminal artifact hashes remain audit-owned. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, and the contact-aware editor tab silhouette. As of 2026-08-13 it additionally carries the explicit-float-only movement rebuild (window exit is invalid_target, boot never restores floating), adjacent-pair pixel resize with fair-share minimums and the no-dead-space invariant, the top-left corner triangle grip, the dual-surface Reset Layout row in the four-row top-bar Home menu, the single in-canvas chat float system (the base full-screen overlay is retired), all-pane editor tab reorder persistence with the portal-family overflow chip, and the frosted-rail silhouette; the title-bar notification stack sits between the page tabs and the search field again (the 2026-08-12 after-search placement is retired per F3-460). The same-day tweak wave further carries the top-right lines-only grip (the corner triangle is retired), the toggling top-bar Collapse/Expand Bottom Terminal row, the full-height dock_right grid, target-geometry drop previews with the pickup-band and preview-capture guards, the row-dock cross_basis_px track handle, the progress-driven silhouette redesign extended to the dashboard tab strip, the retired pane-close glyph, and the move-workgroup source reseed. Its app-status-bar removal is superseded on 2026-08-27 by the full-width F3-448 no-bell status bar. Wave 3 (2026-08-13) additionally carries the right-edge vertical-dots kebab below the grip (out of the head rows), two-frame drop-target hysteresis with mid-FLIP hit-test exclusion and the proportional-width placeholder, the live-fitting overflow chip beside the actions cluster with animated tab reorder, the theme-token silhouette skins with the minimap as the only code-pane scrollbar, 2 px vertical workspace padding, and the truth-gated terminal empty state. Wave 4 (2026-08-13) additionally carries latch-based geometric drop targeting (elementsFromPoint retired from resolution), the pointer-capture tab reorder (HTML5 DnD retired), and model-first browser-in-panel deactivation. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`. Current repo-local successor status is owned by `Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/audit_report.json`; incomplete or failed rows remain `verification_pending` and this paragraph is not a verdict.
 
 `Concepts/PuppetMasterDashComp.html` and `Concepts/PMConcept.html` are prior concept inputs retained as historical concept lineage when cited by a transfer source; the path tokens `/PuppetMasterDashComp.html` and `/PMConcept.html` remain evidence lineage for reconciliation targeting of their own packets and MUST NOT be copied verbatim into canon or treated as live owner paths.
 
@@ -33,7 +33,7 @@ Annotation and targeted-revision work is a cross-surface GUI feature, not just a
 
 Cross-surface wiring reviews for Debug Mode and similar features must verify command IDs, overlays, attachments, and route/open wiring against non-derived owner-doc clusters, including `/runtime/permissions/storage/browser/artifacts/tools/UI`, `/prompt/command`, and `/index/terminology`, while keeping product semantics in the owner docs rather than in wiring rows.
 
-Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, `correlation_passthrough?`, and `route_contract?`. For Usage route/open rows, `route_contract` is a validation proof packet: it requires `route_target`, `OpenSubject`, `route_target.object_kind = usage_event` when `usage_event_ref` exists, and passthrough for UsageRecord/runtime/provider refs. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.
+Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, `correlation_passthrough?`, and `route_contract?`. Usage route proof is selector-variant aware: event-primary rows require `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row requires `usage_attempt`/`attempt_id` and retains `usage_event_ref` as correlation. Both carry no `OpenSubject` and preserve applicable UsageRecord/runtime/provider/account refs. Current PMConcept7 aggregate provider/account/panel cards are local inspectors and have no route-contract row. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.
 
 The wiring layer remains deliberately small: rows key off `ui_command_id`, handler location, expected events, and evidence, while gate logic understands command-normalization metadata and keeps `wiring-schema` expansion minimal instead of duplicating command-owner contracts.
 
@@ -220,7 +220,7 @@ plan_unit_id: UIW-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, correlation_passthrough, and route_contract, while keeping route, runtime, product semantics, and GUI layout in their owner docs; Usage route/open rows use route_contract to prove route_target/OpenSubject and UsageRecord correlation passthrough.
+canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, correlation_passthrough, and route_contract, while keeping route, runtime, product semantics, and GUI layout in their owner docs; cmd.nav.open_usage_subject route-contract rows prove the applicable event-primary usage_event/usage_event_ref or PMConcept7 attempt-primary usage_attempt/attempt_id selector, no OpenSubject, and correlation passthrough, while the pre-existing artifact route/open rows retain their owner-declared OpenSubject bridge and current aggregate cards remain local inspectors.
 gui_related: true
 gui_classification_reason: The unit governs GUI wiring verification for routed controls, overlays, attachments, and cross-surface interactions.
 split_recommended: false
@@ -228,7 +228,7 @@ depends_on: [UIW-001, UIW-002]
 unblocks: [UIW-006, UIW-007]
 acceptance_criteria:
   - Wiring rows may carry route-aware metadata without becoming route owners.
-  - Usage route/open rows carry route_contract proof for route_target, OpenSubject, usage_event object identity, and UsageRecord correlation passthrough.
+  - Usage drill-through rows carry route_contract proof for the applicable selector and UsageRecord/runtime/provider/account correlation passthrough; cmd.nav.open_usage_subject branches prove absence of OpenSubject, while the pre-existing artifact-wrapper event-primary rows preserve their artifact source-realization bridge and current aggregate cards remain local inspector wiring with no command, receipt, event, or route object id.
   - Concept artifacts are treated as evidence lineage, not live Plans owner paths.
   - Runtime action wiring normalizes stale graph recovery actions to canonical runtime command contracts.
 validation_surfaces:
@@ -247,6 +247,7 @@ negative_constraints:
   - Concept artifacts MUST NOT be copied verbatim into canon or treated as live owner paths.
   - WiringEntry consumes route/open semantics and cannot become the route owner.
   - Stale Tiers vocabulary must not be reintroduced as live route, object, or navigation vocabulary.
+  - Wiring MUST NOT attach OpenSubject to either cmd.nav.open_usage_subject selector branch, remove the separately owned artifact OpenSubject bridge, or substitute a correlation identity for the object_id required by the chosen selector branch.
 owner_hints: [Plans/UI_Wiring_Rules.md]
 consumer_docs: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/Runtime_Artifacts_Panel.md]
 ```
@@ -728,4 +729,406 @@ negative_constraints:
   - Do not register compatibility candidates, the generic debug action, or surface-local command clones as primary production rows.
   - Do not treat accepted dispatch or UI acknowledgement as terminal domain success.
 owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Shared_Integration_Runtime.md]
+```
+
+## PMConcept7 transactional interaction and shared-seat wiring addendum - 2026-08-27
+
+The recovered PMConcept7 direct-manipulation controls use one transactional UI sequence:
+
+1. Snapshot the owner projection and acquire pointer capture or the equivalent keyboard transaction.
+2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize keeps peers frozen.
+3. Resolve the final pointer/keyboard coordinate and committed semantic target on release.
+4. Dispatch exactly one existing command only when the semantic result changed.
+5. Reconcile owner result/event/receipt, persist settled state once, then release capture and clear every preview class, portal, placeholder, ghost, pending animation frame, and transient listener.
+6. On Escape, `pointercancel`, invalid target, stale revision, or no-change result, restore the snapshot and clean up without a command, receipt, persisted event, or storage write.
+
+Home preset buttons are not a reason to add `cmd.workspace_layout.size_surface`: the UI resolves the
+semantic `preset_id` to committed dimensions and dispatches `cmd.workspace_layout.resize_surface`.
+Usage room/scope/range/disclosure/filter and popup state remain local projection; explicit refresh,
+object-backed Usage/Ledger drill-through, widget commit, Context `Compact Now`, and Context `More Details`
+actions use the existing catalog rows. Event-primary callers normalize to usage_event/usage_event_ref; a
+PMConcept7 Ledger attempt row normalizes to usage_attempt/attempt_id without `OpenSubject` and retains
+usage_event_ref plus provider/account/runtime refs as correlation.
+Current PMConcept7 aggregate provider/account/panel cards open local inspectors with no command, receipt, event, or
+invented route kind.
+
+The shared Assistant has one DOM/native component identity and one thread/context store. Shell wiring may
+re-seat that same node between its saved Home host and the right-side global host for other primary pages.
+`cmd.panel.switch` controls visibility; re-parenting is local shell projection and must preserve node
+identity, active thread, draft, transcript, attachments, context state, Context Detail Pane state, and
+focus-return target. A second `chatPanel`, `chatResizer`, Assistant controller, transcript store, or context
+store is a wiring failure.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/assistant-chat-design.md
+
+### UIW-012 - Transactional Preview Commit Cancel Cleanup And Shared Assistant Re-Seating
+
+```yaml
+plan_unit_id: UIW-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  PMConcept7 pointer and keyboard interactions snapshot owner state, project preview
+  locally, resolve the final semantic target, dispatch exactly one existing command only
+  for a changed commit, reconcile the owner result, persist once, and clear all capture,
+  ghost, placeholder, portal, animation-frame, and listener state. Escape, pointercancel,
+  invalid, stale, and no-change paths roll back and dispatch nothing. Usage view choices,
+  popup state, and current PMConcept7 aggregate provider/account/panel inspectors remain local; event-primary
+  callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row dispatches
+  cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains the
+  event ref as correlation. Home preset sizing normalizes to resize_surface, and shell
+  wiring re-seats one shared Assistant node/store between Home and global hosts without
+  cloning or losing thread/context continuity. Usage card body magnetism remains active, but
+  move/resize acquisition uses the controls' measured base-coordinate zones, continuous
+  translation attenuation, and at most one pointer-id/time/bounds-scoped document-capture
+  handoff to the existing controller. Direct and rescued activation clear that lease before
+  pointer capture. Rescue additionally requires the current top hit to remain inside the
+  remembered card, so an intervening overlay owns its pointerdown and clears the stale lease.
+  Concurrent resize/reorder entry is rejected before mutation; unrelated interactives, expired
+  or foreign-pointer leases, cancellation, no-op, and settlement cannot leave a latent activation path.
+  Usage pointer-resize preview uses the shared target-first slot projection to advance the real placeholder
+  footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order,
+  and effect-spy silence. An accepted release retains the exact last-painted topology once; rollback restores
+  the snapshot. Dashboard resize retains frozen peers.
+gui_related: true
+gui_classification_reason: The unit governs direct manipulation, cleanup, cross-page Assistant seating, and visible state continuity.
+split_recommended: false
+depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045]
+unblocks: [DR-039, ACD-448]
+acceptance_criteria:
+  - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition preserves body magnetism, neutralizes translation continuously only around measured control zones, uses no synthetic pointerdown or second controller, requires rescued pointerdown top-hit ownership by the remembered card, lets an intervening overlay receive the event while clearing that stale lease, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and clears the short pointer-specific acquisition lease on every direct/rescued activation and terminal path.
+  - A changed pointer release dispatches exactly one canonical command after final-coordinate resolution, a changed keyboard reorder drop dispatches one move command for its selected insertion intent, and each supported keyboard-resize activation settles atomically through one resize command; no-change and cancel paths dispatch nothing. Event-primary Usage callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses cmd.nav.open_usage_subject with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate cards remain local with no command, receipt, event, or route identity.
+  - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
+  - Home preset sizing uses cmd.workspace_layout.resize_surface after preset resolution and does not register cmd.workspace_layout.size_surface.
+  - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: pm7_preview_cleanup_or_shared_assistant_identity_drift
+reasoning_tier: high
+context_scope: pm7_commands_wiring_dry_assistant
+implementation_surfaces:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: pm7_transactional_wiring_and_shared_seat
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+preserved_exact_tokens:
+  - pointercancel
+  - cmd.workspace_layout.resize_surface
+  - cmd.panel.switch
+  - chatPanel
+  - chatResizer
+negative_constraints:
+  - Do not dispatch or persist pointer-preview frames.
+  - Do not leave pointer capture, pending animation frames, portals, ghosts, placeholders, or transient listeners after commit or cancel.
+  - Do not let magnet translation move a Usage handle away during acquisition or let an occluded, stale, expired, foreign-pointer, or other-interactive lease start a widget transaction; do not allow two widget-operation controllers to coexist.
+  - Do not clone the Assistant node, controller, transcript store, or context store.
+  - Do not route aggregate Usage cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt object_id.
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Wiring_Matrix.md
+  - Plans/assistant-chat-design.md
+```
+
+## Typed controls, exact owner routes, and shared hover-overlay addendum - 2026-08-31
+
+Every actionable or focusable control on a touched surface carries exactly one canonical `data-command-id` or typed local `data-ui-action-id`. It also exposes current availability, a machine-readable disabled reason when unavailable, one owner/handler destination, and a deterministic result/error/return route. A command-required control cannot degrade into page-local mutation. A presentation-only control cannot manufacture a domain command. PMConcept7 controls remain simulation-marked until the native dispatcher and owner handler are observed.
+
+`PMHoverTag`/`HoverTagController` is one shared Final GUI overlay consumer. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, and uses the shared overlay root without changing document layout.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/touch_closure.json, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json
+
+### UIW-013 - Typed control, owner route, and accessible hover binding
+
+```yaml
+plan_unit_id: UIW-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action, one availability and disabled-reason contract, one owner route, one tested response and exact return, and a Touch Closure reverse-consumer row. The shared PMHoverTag overlay supplies stable accessible descriptions and theme-native pointer/focus presentation without changing accessible names, enabling disabled actions, dispatching domain work, or changing layout. Native title-only behavior, orphan controls, duplicate keys, missing bindings, inaccessible disabled controls, clipping, stale text, and undocumented exemptions fail the generated census.
+gui_related: true
+gui_classification_reason: Defines visible control activation, disabled behavior, hover tags, keyboard access, and exact return.
+split_recommended: false
+depends_on: [UIW-012, DR-040, F3-523]
+unblocks: [WM-046]
+acceptance_criteria:
+  - Every touched control has exactly one command or typed local action and one owner route or explicit view-only presentation disposition.
+  - Guided Tour page/focus presentation uses `ui.guided_tour.focus_route` with `route_target.page_id`; it never dispatches or promotes `cmd.nav.focus_route`.
+  - Disabled controls expose a stable reason, remain accessible to focus/description, and cannot activate.
+  - Pointer and keyboard-focus hover opening, Escape, 160 ms departure grace, edge flip/clamp, theme changes, glass transparency, Retro 140 ms, standard 240 ms, and reduced-motion immediate behavior are tested.
+  - A generated census rejects missing bindings, duplicate keys, stale text, native-title-only behavior, clipping, inaccessible disabled controls, and undocumented exemptions.
+  - PMConcept7 remains simulation-only until native dispatcher and handler evidence exists.
+validation_surfaces:
+  - node Concepts/pm7-tools/verify/hover_tags.mjs
+  - node Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs
+  - python3 scripts/pm-touch-closure-verify.py
+risk_class: orphan_control_or_inaccessible_hover_overlay
+reasoning_tier: high
+context_scope: typed_controls_and_hover_overlay
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/touch_closure.json, Concepts/pm7-tools/global_hover_tags_source.py]
+node_compile_hint: {mode: typed_control_and_hover_binding, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
+  - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+preserved_exact_tokens: [PMHoverTag, HoverTagController, aria-describedby, role=tooltip, general.interaction.show-tooltips]
+negative_constraints:
+  - Do not rely on native title as the user-facing tooltip.
+  - Do not enable a disabled control merely to make it focusable.
+  - Do not create commands for hover open, close, positioning, or paint.
+  - Do not claim native accessibility or Slint runtime proof from browser checks.
+owner_hints: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/Wiring_Matrix.md]
+```
+
+## Settings command and route-only action wiring addendum - 2026-08-31
+
+Settings wiring has exactly five canonical commands and five specialized route-only UI actions. `Plans/Settings_System.md` owns target, mutation, export, and exact-return semantics; `Plans/Commands_System.md` owns central command-family registration; this document owns the UI action-to-command boundary. A handler-location string is a required sole destination, not evidence that the dispatcher or handler exists. Until native executable evidence observes that path, the action remains unavailable with `handler_unavailable` or another exact Settings-owned disabled reason.
+
+| canonical command | Settings semantic owner | UI action boundary | result/return boundary |
+|---|---|---|---|
+| `cmd.settings.open` | `Plans/Settings_System.md` SSYS-018/SSYS-019 | Dispatch exactly once for one stable `setting_id` or one `manager_id` plus optional `detail_id`; never route by label, search text, or presentation selector. | `pm.settings_route_request.v1` -> `pm.settings_route_return.v1`; restores the opener only when route, continuation, context, and generations remain current; writes no setting value. |
+| `cmd.settings.transaction.preview` | `Plans/Settings_System.md` SSYS-007/SSYS-009/SSYS-018 | Resolve one immutable exact-ID proposal. Preview/cancel is not apply and dispatches no owner mutation. | `pm.settings_transaction_preview_request.v1` -> `pm.settings_transaction_preview.v1`; no write and no domain event. |
+| `cmd.settings.transaction.apply` | `Plans/Settings_System.md` SSYS-009/SSYS-018 | Dispatch only from the matching current preview with expected Project revision, preview generation/hash, permission, and idempotency identity. | `pm.settings_transaction_apply_request.v1` -> `pm.settings_transaction_result.v1`; terminal UI requires owner readback/receipt, not acknowledgement. |
+| `cmd.settings.transaction.rollback` | `Plans/Settings_System.md` SSYS-009/SSYS-018 | Dispatch only for one eligible transaction and rollback token after required confirmation; stale, expired, or already-used recovery dispatches nothing. | `pm.settings_transaction_rollback_request.v1` -> `pm.settings_transaction_result.v1`; failed readback remains failed or recovery-required. |
+| `cmd.settings.export` | `Plans/Settings_System.md` SSYS-008/SSYS-018/SSYS-021 | Dispatch one detached exact-ID export under FileSafe/permission policy; credential and protected-session bytes are excluded. | `pm.settings_export_request.v1` -> `pm.settings_export_manifest.v1`; changes no setting value and returns only non-secret artifact/receipt identity. |
+
+| route-only ui_action_id | exact `cmd.settings.open` target | retained owner/action boundary | exact return boundary |
+|---|---|---|---|
+| `settings.onboarding.open` | `manager_id=onboarding-guided-tour`, `detail_id=overview` | Opens the Settings dependency/entry projection. Product Onboarding remains owned by Planning Wizard/its retained owners; this action starts no onboarding run. | `pm.settings_route_return.v1`; current origin context/focus only. |
+| `settings.onboarding.run_again` | `manager_id=onboarding-guided-tour`, `detail_id=run-onboarding-again` | Opens the owner-routed run-again choice. It does not itself restart, reset, or mutate Onboarding. | `pm.settings_route_return.v1`; current origin context/focus only. |
+| `settings.guided_tour.replay` | `manager_id=onboarding-guided-tour`, `detail_id=replay-guided-tour` | Opens the retained Guided Tour owner route. It does not itself replay or persist tour state. | `pm.settings_route_return.v1`; current origin context/focus only. |
+| `settings.doctor.open` | `manager_id=doctor`, `detail_id=overview` | Opens the cached/currentness-labelled Doctor projection. Doctor and domain owners retain checks; no probe runs. | `pm.settings_route_return.v1`; current origin context/focus only. |
+| `settings.doctor.remediation.open` | `manager_id=doctor`, `detail_id=check:{check_id}` | Opens one exact owner remediation route. It does not execute a probe, repair, permission change, install, or mutation. | `pm.settings_route_return.v1`; current origin context/focus only. |
+
+Each route-only action carries `effect=route_only` and `owner_operation_authorized=false`. All ten rows require stable role/name, keyboard and pointer parity, current availability and disabled-reason projection, one dispatch at most, deterministic focus return, stale-generation rejection, and a bounded receipt/result assertion with no unexpected persisted EventRecord. A disabled action dispatches zero commands. Concept simulation remains simulation and earns no handler or native-wiring credit.
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-019, ContractName:Plans/Commands_System.md#CS-069, ContractName:Plans/settings_system_contract_fixtures.json, ContractName:Plans/Wiring_Matrix.production.json
+
+### UIW-014 - Complete Settings Command And Route-Only Wiring Family
+
+```yaml
+plan_unit_id: UIW-014
+unit_type: wiring_contract
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  The Settings UI exposes exactly five canonical command boundaries and five route-only Onboarding, Guided Tour,
+  and Doctor actions. Every row binds one Settings-owned target, one central command, one request/result or exact-return
+  contract, one availability/disabled projection, deterministic focus return, and no fabricated owner operation,
+  EventRecord, dispatcher, or handler claim.
+gui_related: true
+gui_classification_reason: The unit governs visible Settings activation, disabled state, route destinations, transaction outcomes, accessibility, and exact focus return.
+depends_on: [CS-069, SSYS-018, SSYS-019, SSYS-022, UIW-013]
+unblocks: []
+acceptance_criteria:
+  - The command census is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export with their Settings-owned request/result pairs.
+  - The route-only census is exactly settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.replay, settings.doctor.open, and settings.doctor.remediation.open, each dispatching cmd.settings.open with its frozen manager/detail target.
+  - All open and specialized route actions return through the one canonical pm.settings_route_return.v1 contract.
+  - Route-only actions authorize no Onboarding run, Guided Tour replay, Doctor probe, or remediation operation; disabled actions dispatch nothing.
+  - Declared handler destinations, schemas, production-intent rows, and concept simulation do not prove executable handlers or native wiring.
+  - Pointer/keyboard parity, accessibility, focus return, stale rejection, exact dispatch count, receipt/result, and no-unregistered-event behavior are required before production credit.
+validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings ten-row command/action census, handler-absence, stale-return, accessibility, and no-unregistered-event fixtures]
+risk_class: settings_ui_action_owner_or_return_drift
+reasoning_tier: high
+context_scope: settings_commands_and_route_only_actions
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Commands_System.md, Plans/Settings_System.md, Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: settings_command_and_route_only_wiring, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Settings_System.md#SSYS-018
+  - Plans/Settings_System.md#SSYS-019
+  - Plans/Settings_System.md#SSYS-022
+  - source_ref:chat:settings-reference-review-canon-closure-2026-08-31
+preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.replay, settings.doctor.open, settings.doctor.remediation.open, pm.settings_route_return.v1, owner_operation_authorized=false]
+negative_constraints:
+  - Do not mint a command or alias for a route-only UI action.
+  - Do not execute Onboarding, Guided Tour, Doctor probe, or remediation work from a Settings route action.
+  - Do not claim a runtime handler from a declared handler path, schema, static wiring row, or concept simulation.
+  - Do not emit or infer an unregistered EventRecord.
+owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Commands_System.md, Plans/Settings_System.md, Plans/Wiring_Matrix.production.json]
+```
+
+## Product Onboarding typed-local action wiring addendum - 2026-09-01
+
+Product Onboarding remains one bounded modal over the visible, input-blocked application. It does not become a routed page,
+nested modal, substitute application frame, or browser-history surface. No browser/route Back or breadcrumb chrome is added;
+the existing typed `ui.onboarding.back` control changes only the modal's bounded stage or owner-branch presentation.
+
+The exact current typed-local action census is thirteen:
+`ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`,
+`ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`,
+`ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`,
+`ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`.
+Every actionable control emits exactly one of these IDs. They are not `UICommand`s, catalog aliases, handler names,
+EventRecords, or production-wiring rows.
+
+Each action emits one closed `pm.product_onboarding.action_request.v1` carrying the action/session/stage identity,
+expected revision, continuation generation, bounded choice, required `local_context`, optional owner route, actor,
+idempotency key, source surface, and exact return-focus identity. `local_context` contains only normalized, secret-free
+`intent`, optional `review_confirmation`, `scope`, `branch_kind`, `branch_step`, `selection_ref`, `target_ref`, `owner_operation_ref`,
+`owner_branch_ref`, `expanded`, `start_tour`, and `recovery_condition`. It has `additionalProperties=false` semantics:
+arbitrary keys, raw payload copies, free-form control payloads, and secret-bearing values are rejected and never logged or
+persisted. It resolves to one `pm.product_onboarding.action_result.v1` carrying
+`status=applied|disabled|rejected`, before/after stage, resulting session status, closed local effect, session-write flag,
+optional continuation snapshot, ephemeral Details state, optional owner route/operation refs,
+`production_receipt_ref=null` for local choreography, `owner_mutation_claimed=false`, exact error/disabled reason, focus
+return, revision, and continuation generation. Disabled or rejected actions have `local_effect=none`, write no session or
+continuation, dispatch no owner route, carry no production receipt, and remain keyboard/focus describable without
+activating.
+
+| Typed local action | Required local result boundary |
+|---|---|
+| `ui.onboarding.defer` | Before modal dismissal, durably write one resumable continuation snapshot preserving exact stage, selected path, active branch, bounded history, revision, continuation generation, initiating Client, and return-focus identity. It does not complete or skip the session and claims no owner mutation. |
+| `ui.onboarding.close` | Dismiss the modal and restore initiating focus without marking the session completed, skipped, deferred, or any owner Ready. It does not silently cancel owner work. |
+| `ui.onboarding.skip` | Record the explicit `skipped` session outcome without implying Onboarding-path completion or owner readiness. |
+| `ui.onboarding.open_details` | Toggle one bounded same-stage Details disclosure ephemerally; write no `OnboardingSession`, launch no owner route/command, and return focus to the Details toggle. |
+| `ui.onboarding.more_ways` | A stage disclosure uses `intent=toggle_setup_options`, `choice=other_setup_options|other_project_options`, matching `scope=setup_options|project_options`, and `branch_kind=null`. A branch-local disclosure/step/selection/consent update uses `intent=update_branch_state`, `choice=null`, a canonical non-null `branch_kind`, and only relevant normalized branch/selection/disclosure fields; its result is `disclosure_opened|disclosure_closed|branch_state_updated`. |
+| `ui.onboarding.skip` | Whole-session Skip uses `intent=skip_product_onboarding`, `scope=product_onboarding`, `choice=null`, and returns `session_skipped` with skipped session status. Optional Project or Remote Access Skip uses `intent=skip_optional_scope`, `choice=skip_project|skip_remote_access`, matching `scope=first_project|remote_access` and `branch_kind=project|remote-access`, and returns `optional_scope_skipped` while the session stays active. |
+
+When `ui.onboarding.open_owner_flow` or another owner-launch action is available, its typed route/intent dispatches only
+the target owner's existing canonical command and sole handler and returns through the revisioned continuation. Product
+Onboarding receives no generic mutation handler. The packet candidate tokens `cmd.onboarding.back`,
+`cmd.onboarding.cancel`, `cmd.onboarding.continue`, `cmd.onboarding.defer`, `cmd.onboarding.finish`,
+`cmd.onboarding.open_details`, `cmd.onboarding.resume`, and `cmd.onboarding.skip` are source-lineage candidate tokens only
+and are rejected as commands, aliases, handlers, and production rows because the typed local `ui.onboarding.*` actions
+own those semantics. This is separate from UCC-106's eleven retained provider-first command-era tokens, whose count and
+lineage remain unchanged.
+
+Schema/fixture validation, transform assertions, the generated-artifact static gate, and
+`Concepts/pm7-tools/verify/onboarding_cinematic.mjs` cover vocabulary, markup, request/result, required closed
+secret-free `local_context`, ambiguous/missing/additional/raw/secret-bearing-context rejection, both `more_ways`
+variants, both global/optional `skip` variants, disabled/rejected, modal/focus, durable defer, explicit Skip,
+non-completing Close, and ephemeral Details behavior at their declared
+evidence layers. They do not prove a native Slint controller, native Storage binding, dispatcher/handler execution,
+production persistence, runtime behavior, accessibility certification, motion quality, or visual acceptance.
+
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/Wiring_Matrix.md#WM-041, SchemaID:pm.product_onboarding.action_request.v1, SchemaID:pm.product_onboarding.action_result.v1
+
+### UIW-015 - Product Onboarding typed-local request/result closure
+
+```yaml
+plan_unit_id: UIW-015
+unit_type: wiring_contract
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  Product Onboarding exposes exactly thirteen typed local ui.onboarding.* actions through the closed action-request and
+  action-result envelopes. Every control has one action, accessible availability/disabled behavior, deterministic local
+  result and focus return, and an owner route only where the action explicitly launches the existing owner command.
+  Every request includes closed normalized secret-free local_context, and more_ways/skip variants are disambiguated by
+  exact intent, scope, choice, branch, and result-effect combinations rather than arbitrary control payload.
+  Defer durably preserves exact continuation, Close is a non-completion dismissal, Skip records a skipped session, and
+  Details is ephemeral/same-stage/non-persistent/owner-command-free. No cmd.onboarding.* command, alias, handler,
+  EventRecord, production row, full-page route, or breadcrumb chrome is created.
+gui_related: true
+gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
+split_recommended: false
+depends_on: [PWIZ-021, PWIZ-022, UCC-106, WM-041, UIW-013]
+unblocks: []
+acceptance_criteria:
+  - The exact action census is the thirteen named ui.onboarding.* IDs, and every authored control carries exactly one typed local action.
+  - Every request/result validates against pm.product_onboarding.action_request.v1 and pm.product_onboarding.action_result.v1 with closed applied, disabled, and rejected outcomes.
+  - local_context is required and closed to intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition; missing/additional/arbitrary/raw/secret-bearing context is rejected.
+  - more_ways stage disclosure and branch-local state updates cannot normalize into each other, and whole-session Skip cannot normalize into optional Project/Remote-Access Skip; exact request fields and result effects/statuses prove the selected variant.
+  - Disabled/rejected results have no local effect, write, continuation, owner route, owner operation, or production receipt and expose exact accessible reasons.
+  - Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral.
+  - The eight named packet candidate cmd.onboarding.* tokens are source-lineage only and receive no command, alias, handler, or production row; UCC-106's eleven retired command-era tokens retain their separate lineage count.
+  - The flow stays a bounded modal with no route-history or breadcrumb chrome, and no static/browser evidence is treated as native or runtime proof.
+validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/verify/onboarding_cinematic.mjs, future native Product Onboarding request/result and accessibility fixtures]
+risk_class: onboarding_local_action_or_result_wiring_drift
+reasoning_tier: high
+context_scope: product_onboarding_typed_local_request_result
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
+node_compile_hint: {mode: product_onboarding_local_action_wiring, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - approved current Product Onboarding source/schema reconciliation
+  - Plans/Planning_Wizard.md#PWIZ-021
+  - Plans/product_onboarding_contracts.schema.json
+preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, pm.product_onboarding.action_request.v1, pm.product_onboarding.action_result.v1, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
+negative_constraints:
+  - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
+  - Do not fabricate an owner mutation, production receipt, EventRecord, or durable write from local Details or a disabled/rejected result.
+  - Do not conflate Close, Skip, Defer, Finish, or Ready state.
+  - Do not accept open-ended local_context, arbitrary/raw payload copies, secret-bearing values, or ambiguous more_ways/skip combinations.
+  - Do not turn Product Onboarding into a page, nested modal, route-history surface, or breadcrumb flow.
+  - Do not claim native Slint, Storage, dispatcher, handler, runtime, accessibility, motion, or visual proof from schemas, fixtures, static assertions, or browser checks.
+owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+```
+## Server/Egolite Alias, Local-Action, And Handler-Truth Rules - 2026-09-01
+
+The 171-row command-gap adjudication and six retained Egolite rows obey four closed UI rules:
+
+1. A primary UI command resolves through one canonical owner, exact typed request/result/error/availability/permission contract, and one sole planned handler target. The control stays disabled with an accessible `handler_unavailable` reason until native evidence exists.
+2. A compatibility spelling normalizes to its exact target before availability, permission, policy, or dispatch. The source has no registration, handler, state projection, production row, persistence, or EventRecord. Only compatibility/source receipt identity may preserve the invoked spelling.
+3. A presentation-only packet spelling is replaced by an exact typed `ui.*` action. It preserves currentness, focus, keyboard/accessibility, viewport, and exact return state but receives no semantic-domain command or production UICommand row.
+4. A rejected spelling is inert. Its reason and safe exact replacement guidance remain visible to maintainers and audits, but it cannot dispatch.
+
+Every intended GUI consumer uses owner data and the same command/action identity. Settings, Product Onboarding, and Doctor remain consumers/routers; they cannot privately authenticate, install, update, move, back up, restore, browse, test, or operate source control. Static concept JavaScript remains simulation only.
+
+### UIW-016 - Server And Egolite Exact Dispatch Boundary
+
+```yaml
+plan_unit_id: UIW-016
+unit_type: ui_wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: Server/Egolite controls use one exact primary dispatch route or one typed local UI action; aliases normalize before permission and dispatch, rejected spellings remain inert, and every route preserves availability, disabled reason, accessibility, exact return, reverse consumers, and static-versus-native truth.
+gui_related: true
+depends_on: [CS-073, UCC-151, WM-050]
+unblocks: []
+acceptance_criteria:
+  - No visible control dispatches an alias, local predecessor, rejected spelling, or unregistered family root.
+  - Every primary control and intended consumer uses the same exact target availability and accessible disabled reason.
+  - Every typed local action has owner-local currentness/focus/return behavior and no domain mutation or EventRecord.
+  - Concept simulation, schema validation, catalog presence, and planned target strings never claim native runtime readiness.
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py, Concepts/pm7-tools/onboarding_cinematic_source.py, scripts/pm-touch-closure-verify.py]
+risk_class: ui_alias_bypass_or_phantom_runtime_claim
+reasoning_tier: high
+context_scope: server_egolite_ui_dispatch_boundary
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/]
+node_compile_hint: {mode: ui_wiring_rule_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
+negative_constraints: [No alias dispatch., No local domain command., No Doctor/Settings private owner., No fake native proof.]
+```
+
+## Central Touch Command/GUI Closure Rule Addendum - 2026-09-01
+
+For every non-blocked Touch primary command, the closure gate resolves the primary row through its Touch profile and production entries, requires at least one entry, and requires all entries for that command to name one identical handler. An alias must normalize before permission and dispatch and must have no peer production entry. A blocked false-inventory token must have neither a handler nor a production entry. GUI coverage means an exact intended route, typed availability/disabled reason, accessible action semantics, result/error settlement, and deterministic return; it does not require inventing a synthetic visible control where no user route is intended.
+
+The September 1 closure preserves the same dispatch rule while changing the machine census to 425 primaries (424 actionable plus one blocked false inventory), 55 aliases, 101 typed local actions, seven presentation rows, 588 Touch rows, 87 profiles, and 1065 production entries. Forge adds nine event-silent primaries, Backup/Restore adds sixteen, and Remote Access replaces four component/Serve primaries with three built-in-connector primaries plus four compatibility-only aliases. Those aliases have no peer control, state selector, handler, production row, persistence, or EventRecord.
+
+### UIW-017 - Exact Touch Command/GUI/Handler Closure
+
+```yaml
+plan_unit_id: UIW-017
+unit_type: gui_wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: Every actionable Touch primary command must have production wiring and exactly one handler identity across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not create synthetic controls.
+gui_related: true
+gui_classification_reason: The rule closes bidirectional command-to-GUI reachability, accessibility, disabled behavior, and focus return.
+depends_on: [UIW-016, CS-074, UCC-152, WM-051]
+unblocks: []
+acceptance_criteria:
+- The Touch verifier fails on missing production coverage, competing handler identities, alias peer rows, blocked-token wiring, missing GUI routes, or stale profile refs.
+- Rebinding uses exact semantic equivalence and never relabels a nearby non-equivalent action.
+- Static, concept-simulated, and native-runtime claims remain separate.
+validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json]
+risk_class: gui_command_reverse_coverage
+reasoning_tier: high
+context_scope: touch_command_gui_closure
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/touch_closure.json, scripts/pm-touch-closure-verify.py]
+node_compile_hint: {mode: exact_touch_gui_closure, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Wiring_Matrix.md#WM-051]
+negative_constraints: [Do not mint false domain commands for ephemeral presentation., Do not invent synthetic controls solely to satisfy a census.]
+compile_disposition: extend_existing_owner
 ```

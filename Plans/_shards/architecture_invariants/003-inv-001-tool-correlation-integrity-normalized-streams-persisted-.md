@@ -4,7 +4,7 @@ Source: `Plans/Architecture_Invariants.md`
 
 Source lines: L25-L44
 
-Source SHA256: `a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543`
+Source SHA256: `6ce7f74c2d708b8bdc9358c3f7e41354630e681db5985087d30bd42654a39c7b`
 
 ---
 
@@ -17,7 +17,7 @@ Source SHA256: `a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543
   - `tier_id` may remain a human-readable grouping label for compatibility, but canonical execution correlation is owned by runtime identity fields and EventRecord payload contracts.
   - Route and open args MUST carry a normalized subject or route target. New producers/docs emit `subject_id` or `object_kind`/`object_id` forms and include explicit migration notes when replacing raw local ids.
   ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
-  - `usage_event_ref` is a usage/accounting bridge only. Before route/open handling, it normalizes to `object_kind = usage_event` plus `object_id`; it MUST NOT be reintroduced as a top-level route special case or as canonical navigation transport.
+  - `usage_event_ref` is canonical usage/accounting identity and the event-primary routing bridge. Event-primary callers normalize it to `object_kind = usage_event` plus `object_id`; a PMConcept7 Ledger attempt row instead selects `object_kind = usage_attempt` plus `object_id = attempt_id` and retains `usage_event_ref` only as correlation. Neither branch may reintroduce a top-level route special case or bypass typed object-route identity.
   - `resume_url?` and similar transport hints are not canonical persisted identity; persisted shell state and local destination defaults may be reused only when they do not violate current owner-doc integrity, routing, usage/evidence correlation, or runtime identity constraints.
 **Rule:** Tool invocation correlation MUST be consistent:
 - In normalized provider streams, every `tool_use` MUST have exactly one matching `tool_result` with the same `tool_use_id` (no orphan tool events).  

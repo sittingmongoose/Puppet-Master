@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1133-L1200
+Source lines: L1133-L1202
 
-Source SHA256: `7e7cc7c4a88a4fe7766f2f08e3cbec180ca48744d83610581004317f5f6052b7`
+Source SHA256: `13a2d1319de9ca386a950e7b4deddae37debb57befbdaf81be0922dfbac58cae`
 
 ---
 
@@ -22,9 +22,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
-  Usage widget disclosure is a mount filter, not a deletion. The Usage page's three disclosure levels
-  determine which widget types a room may mount and which the Add Widget affordance may offer at the current
-  level, and a level change never deletes an existing widget instance and never rewrites a stored layout.
+  Usage widget disclosure is a mount filter, not a deletion. The Usage page exposes the user-facing levels
+  `At a glance`, `Detailed`, and `Diagnostics`; each level determines which widget types a room may mount and
+  which the Add Widget affordance may offer, and a level change never deletes an existing widget instance or
+  rewrites a stored layout.
   A room whose widget types all sit above the current level renders an explicit empty state that names the
   level actually holding that room and offers the switch to it, and its Add affordance is suppressed so it
   cannot open an empty menu. Such a room states that it is empty; it must not mount an out-of-level widget,
@@ -61,12 +62,13 @@ source_lineage:
   - Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md
 preserved_exact_tokens:
-  - essentials
-  - standard
-  - advanced
+  - "At a glance"
+  - Detailed
+  - Diagnostics
   - "Add Widget"
   - "widget_layout:v1:usage"
 negative_constraints:
+  - Do not expose `essentials`, `standard`, `advanced`, `Essen`, `Std`, or `Adv` as user-facing Usage disclosure labels.
   - Do not delete or rewrite an existing widget instance when the disclosure level changes.
   - Do not mount an out-of-level, placeholder, or simplified widget so a room looks populated.
   - Do not leave an Add affordance that opens an empty menu in an out-of-level room.

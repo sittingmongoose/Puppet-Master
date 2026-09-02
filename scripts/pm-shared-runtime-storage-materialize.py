@@ -29,6 +29,7 @@ REGISTRY_SCHEMA_PATH = ROOT / "Plans/storage_value_registry.schema.json"
 SHARED_SCHEMA_PATH = ROOT / "Plans/shared_runtime_contracts.schema.json"
 GOAL_SCHEMA_PATH = ROOT / "Plans/goal_runtime_lineage.schema.json"
 RECOVERY_SCHEMA_PATH = ROOT / "Plans/storage_recovery_contracts.schema.json"
+HOME_WORKSPACE_SCHEMA_PATH = ROOT / "Plans/home_workspace_layout.schema.json"
 SHARED_OWNER = "Plans/Shared_Integration_Runtime.md"
 STORAGE_OWNER = "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13"
 
@@ -316,6 +317,23 @@ def split_superseded_group_members(row: dict[str, Any]) -> dict[str, Any]:
     return updated
 
 
+def synchronized_home_workspace_layout_row(row: dict[str, Any]) -> dict[str, Any]:
+    """Mirror the standalone Home layout owner without changing its registry identity."""
+    updated = copy.deepcopy(row)
+    owner_schema = read_json(HOME_WORKSPACE_SCHEMA_PATH)
+    Draft202012Validator.check_schema(owner_schema)
+    if owner_schema.get("properties", {}).get("schema_id", {}).get("const") != row.get("value_schema_id"):
+        raise ValueError("home_workspace_layout owner schema identity mismatch")
+    if owner_schema.get("properties", {}).get("schema_version", {}).get("const") != row.get("schema_version"):
+        raise ValueError("home_workspace_layout owner schema version mismatch")
+    updated["value_schema"] = owner_schema
+    updated["required_fields"] = list(owner_schema.get("required", []))
+    updated["optional_fields"] = sorted(
+        set(updated.get("optional_fields", [])) | {"surface.size.preset_id"}
+    )
+    return updated
+
+
 def validate_registry_semantics(registry: dict[str, Any]) -> None:
     rows = registry["families"]
     ids = [row["family_id"] for row in rows]
@@ -361,6 +379,8 @@ def expected_registry(registry: dict[str, Any]) -> dict[str, Any]:
     base_rows = [
         hardened_migration_receipt_row(row)
         if row["family_id"] == "migration_receipt"
+        else synchronized_home_workspace_layout_row(row)
+        if row["family_id"] == "home_workspace_layout"
         else split_superseded_group_members(row)
         for row in registry["families"]
         if row["family_id"] not in replacements

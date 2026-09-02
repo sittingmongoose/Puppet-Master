@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.concern_event.concern_promoted.schema.v1",
+  "$comment": "Static payload shape only. The owner/runtime must prove prior_revision current, concern_revision its successor, and result_attention_level is a valid promotion over prior_attention_level. This schema grants no append or dispatch authority.",
+  "title": "concern.promoted payload",
+  "description": "Closed project-scoped payload promoting a durable concern to a stronger shared attention route while preserving concern identity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "project_id", "concern_id", "concern_revision",
+    "prior_revision", "concern_record_ref", "actor_ref", "currentness_basis_ref",
+    "prior_attention_level", "result_attention_level", "promotion_ref", "state",
+    "reason_code", "origin", "handler_target", "command_id", "correlation_id",
+    "idempotency_key", "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.concern_event.concern_promoted.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/non_empty_id"},
+    "concern_id": {"$ref": "#/$defs/non_empty_id"},
+    "concern_revision": {"type": "integer", "minimum": 2},
+    "prior_revision": {"type": "integer", "minimum": 1},
+    "concern_record_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "currentness_basis_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "source_refs": {"$ref": "#/$defs/ref_array"},
+    "evidence_refs": {"$ref": "#/$defs/ref_array"},
+    "prior_attention_level": {"$ref": "#/$defs/attention_level"},
+    "result_attention_level": {"$ref": "#/$defs/attention_level"},
+    "promotion_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "state": {"$ref": "#/$defs/lifecycle_state"},
+    "reason_code": {"$ref": "#/$defs/reason_code"},
+    "origin": {"$ref": "#/$defs/origin"},
+    "handler_target": {"const": "handlers::concern::promote"},
+    "command_id": {"const": "cmd.concern.promote"},
+    "correlation_id": {"$ref": "#/$defs/non_empty_id"},
+    "idempotency_key": {"$ref": "#/$defs/non_empty_id"},
+    "ts": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "origin": {"enum": ["orchestrator", "concern_center", "dashboard", "api"]},
+    "lifecycle_state": {"enum": ["active", "acknowledged", "resolved", "dismissed"]},
+    "attention_level": {"enum": ["info", "watch", "attention_required", "blocked", "escalated"]},
+    "ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "maxItems": 64, "uniqueItems": true}
+  }
+}

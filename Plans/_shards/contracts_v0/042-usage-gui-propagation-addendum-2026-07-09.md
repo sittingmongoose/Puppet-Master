@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L20399-L20460
+Source lines: L20405-L20469
 
-Source SHA256: `09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd`
+Source SHA256: `8c7a1cfb06b9002436190af12a1dcdccdc2913bbb7c6ffe13118bc081fa33613`
 
 ---
 
@@ -20,15 +20,15 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  GUI Usage route/open payloads normalize every usage drill-through target into route_target.object_kind = usage_event and route_target.object_id = the canonical usage event id when usage_event_ref exists. OpenSubject carries the display subject, while usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health remain correlation and projection fields. Thread_id, tier_id, timestamp, and run_id can filter or scope a view but cannot replace UsageRecord identity. Raw/Curated consumers share the same redaction contract: Curated receives normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not unredacted provider payloads.
+  GUI Usage route/open payloads use typed object-first selectors. Event-primary callers normalize usage_event_ref into route_target.object_kind = usage_event and the canonical event object_id. PMConcept7 Ledger attempt rows normalize attempt_id into route_target.object_kind = usage_attempt and route_target.object_id = attempt_id, repeat attempt_id at top level, retain usage_event_ref plus UsageRecord/provider/runtime refs as correlation, and carry no OpenSubject. Event-primary Usage object routes likewise carry no OpenSubject. Thread_id, tier_id, timestamp, and run_id can filter or scope a view but cannot replace the selected event or attempt identity. Raw/Curated consumers share the same redaction contract: Curated receives normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not unredacted provider payloads.
 gui_related: true
 gui_classification_reason: Shared route/open payloads drive visible Usage, Ledger, chat, artifact, graph, and orchestrator navigation.
 depends_on: [CV-309, UF-087, UF-088]
 unblocks: [SP-234, WM-043]
 acceptance_criteria:
-  - Route payload fixtures fail if usage_event_ref remains a top-level route selector without object_kind = usage_event and object_id normalization.
-  - OpenSubject fixtures preserve usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id.
-  - Cross-surface drill-through fixtures fail timestamp/run/thread/tier primary routing when usage_event_ref is available.
+  - Event-primary route payload fixtures fail if usage_event_ref bypasses object_kind = usage_event and object_id normalization; PMConcept7 Ledger fixtures fail unless attempt_id selects object_kind = usage_attempt and usage_event_ref remains correlation.
+  - Both Usage selector branches carry no OpenSubject and preserve applicable usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id.
+  - Cross-surface drill-through fixtures fail timestamp/run/thread/tier primary routing when a canonical event or attempt selector is available.
   - Raw/Curated fixtures prove redacted Raw refs and normalized Curated fields share the same UsageRecord identity.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -53,6 +53,8 @@ source_lineage:
   - "Plans/Runtime_Artifacts_Panel.md:316"
 preserved_exact_tokens:
   - route_target.object_kind = usage_event
+  - route_target.object_kind = usage_attempt
+  - attempt_id
   - object_id
   - OpenSubject
   - usage_event_ref
@@ -62,8 +64,9 @@ preserved_exact_tokens:
   - source_confidence
   - settlement_status
 negative_constraints:
-  - Do not let usage_event_ref bypass object-first route normalization.
-  - Do not use timestamp, run_id, thread_id, or tier_id as primary Usage route identity when usage_event_ref exists.
+  - Do not let usage_event_ref or attempt_id bypass object-first route normalization.
+  - Do not attach OpenSubject to either Usage object-route branch.
+  - Do not use timestamp, run_id, thread_id, or tier_id as primary Usage route identity when a canonical event or attempt selector exists.
   - Do not expose unredacted Raw provider payloads through route/open payloads.
 owner_hints:
   - Plans/Contracts_V0.md

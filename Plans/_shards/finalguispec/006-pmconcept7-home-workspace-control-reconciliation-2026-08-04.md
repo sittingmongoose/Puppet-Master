@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L262-L1205
+Source lines: L262-L1207
 
-Source SHA256: `ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523`
+Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
 
 ---
 
@@ -424,8 +424,10 @@ projection with the pickup-band and preview-capture guards; the one-way top-bar
 `Collapse Bottom Terminal` contract is superseded by the runtime toggle relabel;
 the kebab Placement section/hint is retired; the equal-height three-column grid
 is superseded by the full-height `dock_right` template; the dedicated editor
-pane-close glyph is retired in favour of the kebab `Close Panel` row; and the
-app status bar is removed from the PM7 shell.
+pane-close glyph is retired in favour of the kebab `Close Panel` row. The same
+wave's removal of the app status bar is itself superseded on 2026-08-27: PM7
+retains the full-width bottom status bar and the trimmed no-bell inventory owned
+by F3-448.
 
 Superseded 2026-08-13 (wave 3): the head-row kebab placement is superseded by
 the vertical-dots 16 by 20 control at the surface's right edge below the grip

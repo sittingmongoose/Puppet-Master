@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/pm.pmconcept7.final_evidence_manifest.v1.json",
+  "title": "PMConcept7 final evidence manifest",
+  "$comment": "All manifest and receipt paths resolve from the final manifest directory. Root manifest entries resolve from evidence_root; capture artifacts resolve from the campaign directory; relative contact-sheet paths resolve from the contact-sheet-index directory. Keep the final manifest and gate report outside evidence_root; the root hash manifest itself is the sole file excluded from its exact file census.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "evidence_root",
+    "artifact",
+    "root_evidence_hash_manifest",
+    "k3_geometry_manifest",
+    "runners",
+    "build_reports",
+    "browser_runs",
+    "interactive_reviews",
+    "film",
+    "residuals"
+  ],
+  "properties": {
+    "schema_id": { "const": "pm.pmconcept7.final_evidence_manifest.v1" },
+    "evidence_root": { "$ref": "#/$defs/nonEmptyString" },
+    "artifact": { "$ref": "#/$defs/fileRef" },
+    "root_evidence_hash_manifest": { "$ref": "#/$defs/jsonRef" },
+    "k3_geometry_manifest": { "$ref": "#/$defs/jsonRef" },
+    "runners": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path", "sha256"],
+        "properties": {
+          "id": { "$ref": "#/$defs/nonEmptyString" },
+          "path": { "$ref": "#/$defs/nonEmptyString" },
+          "sha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "build_reports": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "allOf": [
+          { "$ref": "#/$defs/fileRef" },
+          {
+            "type": "object",
+            "required": ["runner_id"],
+            "properties": { "runner_id": { "$ref": "#/$defs/nonEmptyString" } }
+          }
+        ]
+      }
+    },
+    "browser_runs": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "runner_id", "report", "receipt", "expected_command", "expected_scenario_ids", "allowed_dispositions", "case_censuses", "success_assertions"],
+        "properties": {
+          "id": { "enum": ["home_workspace", "settings_transactions", "hover_tags", "onboarding_cinematic", "guided_tour", "systems_integration", "plugin_projection", "backup_browser_scm", "accessibility_visual", "full_thread_performance"] },
+          "runner_id": { "$ref": "#/$defs/nonEmptyString" },
+          "runner_path": { "$ref": "#/$defs/nonEmptyString" },
+          "report": { "$ref": "#/$defs/jsonRef" },
+          "receipt": { "$ref": "#/$defs/jsonRef" },
+          "expected_command": { "$ref": "#/$defs/command" },
+          "expected_scenario_ids": { "$ref": "#/$defs/stringList" },
+          "allowed_dispositions": { "$ref": "#/$defs/stringList" },
+          "allowed_scenario_dispositions": { "$ref": "#/$defs/stringList" },
+          "artifact_sha256_pointers": { "type": "array", "items": { "type": "string", "pattern": "^/" } },
+          "case_censuses": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["pointer", "expected_count"],
+              "properties": {
+                "pointer": { "type": "string", "pattern": "^/" },
+                "expected_count": { "type": "integer", "minimum": 1 },
+                "id_pointer": { "type": "string", "pattern": "^/" },
+                "expected_ids": { "$ref": "#/$defs/stringList" }
+              }
+            }
+          },
+          "success_assertions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["pointer", "equals"],
+              "properties": { "pointer": { "type": "string", "pattern": "^/" }, "equals": true }
+            }
+          }
+        }
+      }
+    },
+    "interactive_reviews": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/jsonRef" }
+    },
+    "film": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_fps", "denominator", "runner_id", "expected_command", "expected_configuration_sha256", "campaign_report", "artifact_manifest", "frame_index", "scenario_manifest", "coverage_manifest", "action_timing", "timing_report", "review_ledger", "contact_sheet_index", "full_frame_review_index", "terminal_review_receipt", "required_media"],
+      "properties": {
+        "target_fps": { "type": "number", "const": 60 },
+        "denominator": {
+          "allOf": [
+            { "$ref": "#/$defs/jsonRef" },
+            { "properties": { "schema_id": { "const": "pm.pmconcept7.final_campaign_denominator.v1" } } }
+          ]
+        },
+        "runner_id": { "$ref": "#/$defs/nonEmptyString" },
+        "expected_command": { "$ref": "#/$defs/command" },
+        "expected_configuration_sha256": { "$ref": "#/$defs/sha256" },
+        "campaign_report": { "$ref": "#/$defs/jsonRef" },
+        "artifact_manifest": { "$ref": "#/$defs/jsonRef" },
+        "frame_index": { "$ref": "#/$defs/jsonRef" },
+        "scenario_manifest": { "$ref": "#/$defs/jsonRef" },
+        "coverage_manifest": { "$ref": "#/$defs/jsonRef" },
+        "action_timing": { "$ref": "#/$defs/jsonRef" },
+        "timing_report": { "$ref": "#/$defs/jsonRef" },
+        "review_ledger": { "$ref": "#/$defs/jsonRef" },
+        "contact_sheet_index": { "$ref": "#/$defs/jsonRef" },
+        "full_frame_review_index": { "$ref": "#/$defs/fileRef" },
+        "terminal_review_receipt": { "$ref": "#/$defs/jsonRef" },
+        "required_media": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/fileRef" } }
+      }
+    },
+    "residuals": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["native_slint_1_17_1_certification", "production_runtime_certification", "platform_hardware_certification", "browser_evidence_scope"],
+      "properties": {
+        "native_slint_1_17_1_certification": { "const": "open" },
+        "production_runtime_certification": { "const": "open" },
+        "platform_hardware_certification": { "const": "open" },
+        "browser_evidence_scope": { "const": "browser_concept_only" }
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "fileRef": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/nonEmptyString" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "jsonRef": {
+      "allOf": [
+        { "$ref": "#/$defs/fileRef" },
+        {
+          "type": "object",
+          "required": ["schema_id"],
+          "properties": { "schema_id": { "$ref": "#/$defs/nonEmptyString" } }
+        }
+      ]
+    },
+    "stringList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["argv", "cwd"],
+      "properties": {
+        "argv": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmptyString" } },
+        "cwd": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "browserRunReceipt": {
+      "$comment": "Content of each browser run receipt referenced by browser_runs[*].receipt; the verifier enforces this shape and exact bindings.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["schema_id", "run_id", "artifact_sha256", "report_sha256", "runner", "browser_identity", "command", "scenarios", "counts", "disposition", "evidence_boundary", "native_slint_certified", "production_runtime_certified"],
+      "properties": {
+        "schema_id": { "const": "pm.pmconcept7.browser_run_receipt.v1" },
+        "run_id": { "$ref": "#/$defs/nonEmptyString" },
+        "artifact_sha256": { "$ref": "#/$defs/sha256" },
+        "report_sha256": { "$ref": "#/$defs/sha256" },
+        "runner": {
+          "type": "object",
+          "required": ["path", "sha256"],
+          "properties": { "path": { "$ref": "#/$defs/nonEmptyString" }, "sha256": { "$ref": "#/$defs/sha256" } }
+        },
+        "browser_identity": { "$ref": "#/$defs/browserIdentity" },
+        "command": { "$ref": "#/$defs/command" },
+        "scenarios": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["id", "disposition"],
+            "properties": { "id": { "$ref": "#/$defs/nonEmptyString" }, "disposition": { "$ref": "#/$defs/nonEmptyString" } }
+          }
+        },
+        "counts": {
+          "type": "object",
+          "required": ["checks_expected", "checks_observed", "cases_expected", "cases_observed", "scenarios_expected", "scenarios_observed"],
+          "properties": {
+            "checks_expected": { "type": "integer", "minimum": 1 }, "checks_observed": { "type": "integer", "minimum": 1 },
+            "cases_expected": { "type": "integer", "minimum": 1 }, "cases_observed": { "type": "integer", "minimum": 1 },
+            "scenarios_expected": { "type": "integer", "minimum": 1 }, "scenarios_observed": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "disposition": { "$ref": "#/$defs/nonEmptyString" },
+        "evidence_boundary": { "$ref": "#/$defs/nonEmptyString" },
+        "native_slint_certified": { "const": false },
+        "production_runtime_certified": { "const": false },
+        "k3_geometry_manifest_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "browserIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product", "version", "channel", "user_agent", "executable_path", "executable_sha256", "executable_bytes", "executable_device", "executable_inode", "executable_mtime_ns", "playwright_version"],
+      "properties": {
+        "product": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" },
+        "channel": { "$ref": "#/$defs/nonEmptyString" },
+        "user_agent": { "$ref": "#/$defs/nonEmptyString" },
+        "executable_path": { "$ref": "#/$defs/nonEmptyString" },
+        "executable_sha256": { "$ref": "#/$defs/sha256" },
+        "executable_bytes": { "type": "integer", "minimum": 0 },
+        "executable_device": { "type": "integer", "minimum": 0 },
+        "executable_inode": { "type": "integer", "minimum": 0 },
+        "executable_mtime_ns": { "type": "integer", "minimum": 0 },
+        "playwright_version": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "rootEvidenceHashManifest": {
+      "$comment": "Content of root_evidence_hash_manifest; files is the exact evidence-root census excluding this manifest itself.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "artifact_sha256", "complete_file_census", "files"],
+      "properties": {
+        "schema_id": { "const": "pm.pmconcept7.final_evidence_root_hash_manifest.v1" },
+        "artifact_sha256": { "$ref": "#/$defs/sha256" },
+        "complete_file_census": { "const": true },
+        "files": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["path", "sha256", "bytes"],
+            "properties": {
+              "path": { "$ref": "#/$defs/nonEmptyString" },
+              "sha256": { "$ref": "#/$defs/sha256" },
+              "bytes": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    },
+    "interactiveReviewReceipt": {
+      "$comment": "Content of each of the three separately hashed interactive review receipts.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["schema_id", "surface", "artifact_sha256", "browser_identity", "scenarios", "disposition", "native_slint_certified", "production_runtime_certified"],
+      "properties": {
+        "schema_id": { "const": "pm.pmconcept7.interactive_review_receipt.v1" },
+        "surface": { "enum": ["system_chrome", "chrome_extension", "codex_in_app_browser"] },
+        "artifact_sha256": { "$ref": "#/$defs/sha256" },
+        "browser_identity": { "$ref": "#/$defs/browserIdentity" },
+        "extension_identity": {
+          "type": ["object", "null"],
+          "properties": {
+            "name": { "$ref": "#/$defs/nonEmptyString" }, "id": { "$ref": "#/$defs/nonEmptyString" },
+            "version": { "$ref": "#/$defs/nonEmptyString" }, "enabled": { "type": "boolean" }
+          }
+        },
+        "scenarios": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["id", "observations", "screenshots", "disposition"],
+            "properties": {
+              "id": { "$ref": "#/$defs/nonEmptyString" },
+              "observations": { "$ref": "#/$defs/stringList" },
+              "screenshots": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/fileRef" } },
+              "disposition": { "enum": ["pass", "pass_with_native_residuals_open"] }
+            }
+          }
+        },
+        "disposition": { "enum": ["pass", "pass_with_native_residuals_open"] },
+        "native_slint_certified": { "const": false },
+        "production_runtime_certified": { "const": false }
+      }
+    },
+    "terminalFrameReviewReceipt": {
+      "$comment": "Authoritative terminal output consumed from review_capture_frames.py; the aggregate independently revalidates all transitive custody.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["schema_id", "disposition", "complete", "ledger_path", "ledger_sha256", "source_frame_index_sha256", "evidence_boundary", "source_integrity", "review_surface_integrity", "review_coverage", "defect_closure", "primary_integrator_review", "failures"],
+      "properties": {
+        "schema_id": { "const": "pm.capture.terminal_frame_review_receipt.v1" },
+        "disposition": { "const": "complete" },
+        "complete": { "const": true },
+        "ledger_path": { "$ref": "#/$defs/nonEmptyString" },
+        "ledger_sha256": { "$ref": "#/$defs/sha256" },
+        "source_frame_index_sha256": { "$ref": "#/$defs/sha256" },
+        "evidence_boundary": { "$ref": "#/$defs/nonEmptyString" },
+        "source_integrity": { "$ref": "#/$defs/completeResult" },
+        "review_surface_integrity": { "$ref": "#/$defs/completeResult" },
+        "review_coverage": { "$ref": "#/$defs/completeResult" },
+        "defect_closure": { "$ref": "#/$defs/completeResult" },
+        "primary_integrator_review": { "$ref": "#/$defs/completeResult" },
+        "failures": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "completeResult": {
+      "type": "object",
+      "required": ["complete"],
+      "properties": { "complete": { "const": true } }
+    },
+    "authoritativeFrameReviewSchemas": {
+      "$comment": "Schema identities owned by review_capture_frames.py and admitted transitively through the v2 ledger and terminal receipt.",
+      "type": "object",
+      "properties": {
+        "ledger": { "const": "pm.capture.full_frame_review_ledger.v2" },
+        "contact_index": { "const": "pm.capture.contact_sheet_index.v2" },
+        "finding_source": { "const": "pm.capture.frame_review_findings.v1" },
+        "finding_disposition": { "const": "pm.capture.frame_review_finding_dispositions.v1" },
+        "primary_review": { "const": "pm.capture.primary_integrator_review_receipt.v1" },
+        "terminal": { "const": "pm.capture.terminal_frame_review_receipt.v1" }
+      }
+    }
+  }
+}

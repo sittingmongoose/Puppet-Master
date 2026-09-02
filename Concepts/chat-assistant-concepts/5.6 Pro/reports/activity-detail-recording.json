@@ -1,0 +1,485 @@
+{
+  "overall": "PASS",
+  "source": "index.html",
+  "selectedProfile": {
+    "name": "1080p",
+    "width": 1920,
+    "height": 1080,
+    "count": 45,
+    "elapsedSeconds": 1.567,
+    "effectiveFps": 28.08,
+    "medianGapMs": 34,
+    "p95GapMs": 57.7,
+    "maxGapMs": 79.79,
+    "sustainable60": false,
+    "sustainable30": true
+  },
+  "preflight": [
+    {
+      "name": "2160p",
+      "width": 3840,
+      "height": 2160,
+      "count": 10,
+      "elapsedSeconds": 1.173,
+      "effectiveFps": 7.68,
+      "medianGapMs": 131.93,
+      "p95GapMs": 158.01,
+      "maxGapMs": 158.01,
+      "sustainable60": false,
+      "sustainable30": false
+    },
+    {
+      "name": "1440p",
+      "width": 2560,
+      "height": 1440,
+      "count": 23,
+      "elapsedSeconds": 1.427,
+      "effectiveFps": 15.41,
+      "medianGapMs": 68.4,
+      "p95GapMs": 82.57,
+      "maxGapMs": 88.27,
+      "sustainable60": false,
+      "sustainable30": false
+    },
+    {
+      "name": "1080p",
+      "width": 1920,
+      "height": 1080,
+      "count": 45,
+      "elapsedSeconds": 1.567,
+      "effectiveFps": 28.08,
+      "medianGapMs": 34,
+      "p95GapMs": 57.7,
+      "maxGapMs": 79.79,
+      "sustainable60": false,
+      "sustainable30": true
+    }
+  ],
+  "frameStream": {
+    "count": 326,
+    "elapsedSeconds": 15.917,
+    "effectiveFps": 20.42,
+    "medianGapMs": 48.04,
+    "p95GapMs": 75.61,
+    "maxGapMs": 181.5,
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "consecutiveDuplicates": 2,
+    "consecutiveDuplicateRatio": 0.00615
+  },
+  "events": [
+    {
+      "name": "Activity Bar hover preview",
+      "beforeMs": 11029,
+      "afterMs": 12036,
+      "frameBefore": 0,
+      "frameAfter": 17,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": null,
+        "hover": {
+          "left": 1487.91,
+          "top": 512.99,
+          "right": 1841.91,
+          "bottom": 862.99,
+          "width": 354,
+          "height": 350
+        },
+        "scope": null,
+        "domain": "changes",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 0
+      }
+    },
+    {
+      "name": "Open focused Changes from preview",
+      "beforeMs": 12090,
+      "afterMs": 13125,
+      "frameBefore": 18,
+      "frameAfter": 37,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1521.8,
+          "bottom": 1056,
+          "width": 280,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "focus",
+        "domain": "changes",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 1
+      }
+    },
+    {
+      "name": "Resize the pinned panel to its two-column tier",
+      "beforeMs": 13157,
+      "afterMs": 17190,
+      "frameBefore": 39,
+      "frameAfter": 126,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1620,
+          "bottom": 1056,
+          "width": 378.2,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "focus",
+        "domain": "changes",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 1
+      }
+    },
+    {
+      "name": "Show all live domains",
+      "beforeMs": 17196,
+      "afterMs": 18294,
+      "frameBefore": 127,
+      "frameAfter": 150,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1620,
+          "bottom": 1056,
+          "width": 378.2,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "all",
+        "domain": "changes",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 5,
+        "selectedDomains": 0
+      }
+    },
+    {
+      "name": "Hover a Status Board domain card",
+      "beforeMs": 18298,
+      "afterMs": 19036,
+      "frameBefore": 151,
+      "frameAfter": 166,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1620,
+          "bottom": 1056,
+          "width": 378.2,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "all",
+        "domain": "changes",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 5,
+        "selectedDomains": 0
+      }
+    },
+    {
+      "name": "Drill into Todo records",
+      "beforeMs": 19086,
+      "afterMs": 19869,
+      "frameBefore": 168,
+      "frameAfter": 183,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1620,
+          "bottom": 1056,
+          "width": 378.2,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "focus",
+        "domain": "todo",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 1
+      }
+    },
+    {
+      "name": "Hide the domain rail",
+      "beforeMs": 19886,
+      "afterMs": 20724,
+      "frameBefore": 185,
+      "frameAfter": 202,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1620,
+          "bottom": 1056,
+          "width": 378.2,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "focus",
+        "domain": "todo",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 1
+      }
+    },
+    {
+      "name": "Restore the domain rail",
+      "beforeMs": 20749,
+      "afterMs": 21639,
+      "frameBefore": 204,
+      "frameAfter": 218,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1620,
+          "bottom": 1056,
+          "width": 378.2,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "focus",
+        "domain": "todo",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 1
+      }
+    },
+    {
+      "name": "Unpin into the transient inspector",
+      "beforeMs": 21643,
+      "afterMs": 22830,
+      "frameBefore": 219,
+      "frameAfter": 241,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1520,
+          "top": 228.16,
+          "right": 1910,
+          "bottom": 848.16,
+          "width": 390,
+          "height": 620
+        },
+        "hover": null,
+        "scope": "focus",
+        "domain": "todo",
+        "transient": true,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 1
+      }
+    },
+    {
+      "name": "Show all in the transient inspector",
+      "beforeMs": 22873,
+      "afterMs": 23988,
+      "frameBefore": 243,
+      "frameAfter": 262,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1520,
+          "top": 228.16,
+          "right": 1910,
+          "bottom": 848.16,
+          "width": 390,
+          "height": 620
+        },
+        "hover": null,
+        "scope": "all",
+        "domain": "todo",
+        "transient": true,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 5,
+        "selectedDomains": 0
+      }
+    },
+    {
+      "name": "Close transient Activity Detail",
+      "beforeMs": 24058,
+      "afterMs": 24850,
+      "frameBefore": 265,
+      "frameAfter": 279,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": null,
+        "hover": null,
+        "scope": null,
+        "domain": null,
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 0,
+        "selectedDomains": 0
+      }
+    },
+    {
+      "name": "Review the light-theme overview",
+      "beforeMs": 24882,
+      "afterMs": 27062,
+      "frameBefore": 281,
+      "frameAfter": 324,
+      "geometry": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "left": 1241.8,
+          "top": 42,
+          "right": 1620,
+          "bottom": 1056,
+          "width": 378.2,
+          "height": 1014
+        },
+        "hover": null,
+        "scope": "all",
+        "domain": "artifacts",
+        "transient": false,
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "overviewCards": 5,
+        "selectedDomains": 0
+      }
+    }
+  ],
+  "checks": {
+    "hasFrameStream": true,
+    "frameDimensionsMatch": true,
+    "consecutiveDuplicateRatioUnderOnePercent": true,
+    "everyEventHasContainedGeometry": true,
+    "playwrightVideoWritten": true,
+    "frameVideoWritten": true,
+    "contactSheetsWritten": true
+  },
+  "videoInspection": {
+    "playwright": {
+      "probeOk": true,
+      "metadata": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1",
+            "avg_frame_rate": "25/1",
+            "nb_read_frames": "462"
+          }
+        ]
+      },
+      "scanOk": true,
+      "findings": [
+        "[freezedetect @ 0x772ff8004b40] lavfi.freezedetect.freeze_start: 7.04",
+        "[freezedetect @ 0x772ff8004b40] lavfi.freezedetect.freeze_duration: 0.84",
+        "[freezedetect @ 0x772ff8004b40] lavfi.freezedetect.freeze_end: 7.88"
+      ]
+    },
+    "frameStream": {
+      "probeOk": true,
+      "metadata": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1",
+            "avg_frame_rate": "8175/401",
+            "duration": "16.000000",
+            "nb_read_frames": "327"
+          }
+        ]
+      },
+      "scanOk": true,
+      "findings": [
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_start: 2.08",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_duration: 0.76",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_end: 2.84",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_start: 5.2",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_duration: 1.04",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_end: 6.24",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_start: 11.48",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_duration: 0.84",
+        "[freezedetect @ 0x74c42c004b40] lavfi.freezedetect.freeze_end: 12.32"
+      ]
+    }
+  },
+  "artifacts": {
+    "playwrightVideo": "evidence/activity-detail-redesign/activity-detail-qa-playwright.webm",
+    "frameStreamVideo": "evidence/activity-detail-redesign/activity-detail-qa-frame-stream.mp4",
+    "frameDirectory": "evidence/activity-detail-redesign/frames",
+    "contactSheets": "evidence/activity-detail-redesign/contact-sheets",
+    "keyframes": "evidence/activity-detail-redesign/keyframes"
+  },
+  "generatedAt": "2026-08-31T19:30:43.849Z"
+}

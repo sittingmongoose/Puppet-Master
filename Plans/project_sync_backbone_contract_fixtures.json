@@ -1,0 +1,2142 @@
+{
+  "schema_id": "pm.project_sync_backbone.contract_fixtures.v1",
+  "contract_schema_id": "pm.project_sync_backbone.contracts.v1",
+  "claim_boundary": "static source contract only; all commands remain handler_unavailable; no central registration, native handler, runtime, security-attack, restart execution, GUI implementation, or certification proof",
+  "coverage": {
+    "adjudication_rows": 13,
+    "command_rows": 11,
+    "local_action_rows": 2,
+    "positive_cases": 39,
+    "negative_cases": 18,
+    "families": {
+      "project_move": {
+        "commands": 7,
+        "local_actions": 1
+      },
+      "content_update": {
+        "commands": 4,
+        "local_actions": 1
+      }
+    }
+  },
+  "valid": [
+    {
+      "name": "server_gap_b.project_move.positive.cancel.request",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.cancel",
+        "operation": "cancel",
+        "command_instance_id": "command:project_move:1",
+        "idempotency_key": "idempotency:project_move:1",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:1",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.cancel",
+          "move_operation_id": "project-move:1",
+          "cancellable_proof_ref": "cancellable:project-move:1",
+          "confirmation": true
+        }
+      },
+      "row_index": 109
+    },
+    {
+      "name": "server_gap_b.project_move.positive.cancel.result",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.cancel",
+        "operation": "cancel",
+        "command_instance_id": "command:project_move:1",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.cancel",
+          "changed": true,
+          "state": "cancelled",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:1",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 109
+    },
+    {
+      "name": "server_gap_b.project_move.positive.cancel.handler_unavailable",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.cancel",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.cancel",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::cancel"
+          ]
+        }
+      },
+      "row_index": 109
+    },
+    {
+      "name": "server_gap_b.project_move.positive.pause.request",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.pause",
+        "operation": "pause",
+        "command_instance_id": "command:project_move:2",
+        "idempotency_key": "idempotency:project_move:2",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:2",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "pause-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.pause",
+          "move_operation_id": "project-move:1",
+          "safe_point_policy_ref": "safe-point-policy:project-move:1",
+          "live_process_frozen": false
+        }
+      },
+      "row_index": 111
+    },
+    {
+      "name": "server_gap_b.project_move.positive.pause.result",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.pause",
+        "operation": "pause",
+        "command_instance_id": "command:project_move:2",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:2",
+        "observable_work_ref": "work:project_move:2",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "pause-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.pause",
+          "changed": true,
+          "state": "paused",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:2",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 111
+    },
+    {
+      "name": "server_gap_b.project_move.positive.pause.handler_unavailable",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.pause",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.pause",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::pause"
+          ]
+        }
+      },
+      "row_index": 111
+    },
+    {
+      "name": "server_gap_b.project_move.positive.preflight.request",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.preflight",
+        "operation": "preflight",
+        "command_instance_id": "command:project_move:3",
+        "idempotency_key": "idempotency:project_move:3",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:3",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "preflight-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.preflight",
+          "inventory_snapshot_ref": "inventory:project-move:1",
+          "capacity_evidence_ref": "capacity:project-move:1",
+          "conflict_policy_ref": "conflict-policy:project-move:1",
+          "filesafe_evidence_ref": "filesafe:project-move:1",
+          "recovery_boundary_ref": "recovery-boundary:project-move:1",
+          "credential_readiness_ref": "credential-readiness:project-move:1",
+          "move_plan_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      },
+      "row_index": 112
+    },
+    {
+      "name": "server_gap_b.project_move.positive.preflight.result",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.preflight",
+        "operation": "preflight",
+        "command_instance_id": "command:project_move:3",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:3",
+        "observable_work_ref": "work:project_move:3",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "preflight-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.preflight",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:3",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 112
+    },
+    {
+      "name": "server_gap_b.project_move.positive.preflight.handler_unavailable",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.preflight",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.preflight",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::preflight"
+          ]
+        }
+      },
+      "row_index": 112
+    },
+    {
+      "name": "server_gap_b.project_move.positive.resume.request",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.resume",
+        "operation": "resume",
+        "command_instance_id": "command:project_move:4",
+        "idempotency_key": "idempotency:project_move:4",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:4",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "resume-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.resume",
+          "move_operation_id": "project-move:1",
+          "continuation_ref": "continuation:project-move:1",
+          "owner_state_ref": "owner-state:project-move:1"
+        }
+      },
+      "row_index": 113
+    },
+    {
+      "name": "server_gap_b.project_move.positive.resume.result",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.resume",
+        "operation": "resume",
+        "command_instance_id": "command:project_move:4",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:4",
+        "observable_work_ref": "work:project_move:4",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "resume-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.resume",
+          "changed": true,
+          "state": "running",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:4",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 113
+    },
+    {
+      "name": "server_gap_b.project_move.positive.resume.handler_unavailable",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.resume",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.resume",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::resume"
+          ]
+        }
+      },
+      "row_index": 113
+    },
+    {
+      "name": "server_gap_b.project_move.positive.retry.request",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.retry",
+        "operation": "retry",
+        "command_instance_id": "command:project_move:5",
+        "idempotency_key": "idempotency:project_move:5",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:5",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "retry-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.retry",
+          "move_operation_id": "project-move:1",
+          "failure_ref": "failure:project-move:1",
+          "original_idempotency_key": "idempotency:project-move:original"
+        }
+      },
+      "row_index": 114
+    },
+    {
+      "name": "server_gap_b.project_move.positive.retry.result",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.retry",
+        "operation": "retry",
+        "command_instance_id": "command:project_move:5",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:5",
+        "observable_work_ref": "work:project_move:5",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "retry-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.retry",
+          "changed": true,
+          "state": "running",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:5",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 114
+    },
+    {
+      "name": "server_gap_b.project_move.positive.retry.handler_unavailable",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.retry",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.retry",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::retry"
+          ]
+        }
+      },
+      "row_index": 114
+    },
+    {
+      "name": "server_gap_b.project_move.positive.rollback.request",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.rollback",
+        "operation": "rollback",
+        "command_instance_id": "command:project_move:6",
+        "idempotency_key": "idempotency:project_move:6",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:6",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "rollback-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.rollback",
+          "move_operation_id": "project-move:1",
+          "recovery_boundary_ref": "recovery-boundary:project-move:1",
+          "last_verified_placement_ref": "placement:project-move:last-good",
+          "confirmation": true
+        }
+      },
+      "row_index": 115
+    },
+    {
+      "name": "server_gap_b.project_move.positive.rollback.result",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.rollback",
+        "operation": "rollback",
+        "command_instance_id": "command:project_move:6",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:6",
+        "observable_work_ref": "work:project_move:6",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "rollback-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.rollback",
+          "changed": true,
+          "state": "rolled_back",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:6",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 115
+    },
+    {
+      "name": "server_gap_b.project_move.positive.rollback.handler_unavailable",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.rollback",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.rollback",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::rollback"
+          ]
+        }
+      },
+      "row_index": 115
+    },
+    {
+      "name": "server_gap_b.project_move.positive.start.request",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.start",
+        "operation": "start",
+        "command_instance_id": "command:project_move:7",
+        "idempotency_key": "idempotency:project_move:7",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:7",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "start-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.start",
+          "approved_move_plan_ref": "move-plan:approved:1",
+          "approved_move_plan_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "source_retention_ref": "source-retention:verified:1",
+          "writer_lease_ref": "writer-lease:project-move:1"
+        }
+      },
+      "row_index": 116
+    },
+    {
+      "name": "server_gap_b.project_move.positive.start.result",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.start",
+        "operation": "start",
+        "command_instance_id": "command:project_move:7",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:7",
+        "observable_work_ref": "work:project_move:7",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "start-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.start",
+          "changed": true,
+          "state": "running",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:7",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 116
+    },
+    {
+      "name": "server_gap_b.project_move.positive.start.handler_unavailable",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.start",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.start",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::start"
+          ]
+        }
+      },
+      "row_index": 116
+    },
+    {
+      "name": "server_gap_b.project_move.positive.permission_deny_is_explicit",
+      "definition": "ProjectMovePermissionDecision",
+      "value": {
+        "schema_id": "pm.project_move.permission_decision.v1",
+        "record_kind": "ProjectMovePermissionDecision",
+        "command_id": "cmd.project.move.cancel",
+        "permission_snapshot_ref": "permission:project_move:deny",
+        "permission_class": "project.move.mutate",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied"
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.positive.local.1.request",
+      "definition": "ProjectMoveLocalActionRequest",
+      "value": {
+        "schema_id": "pm.project_move.local_action_request.v1",
+        "record_kind": "ProjectMoveLocalActionRequest",
+        "local_action_id": "ui.project.move.open_details",
+        "projection_ref": "projection:project_move:1",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "move-details",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 110
+    },
+    {
+      "name": "server_gap_b.project_move.positive.local.1.result",
+      "definition": "ProjectMoveLocalActionResult",
+      "value": {
+        "schema_id": "pm.project_move.local_action_result.v1",
+        "record_kind": "ProjectMoveLocalActionResult",
+        "local_action_id": "ui.project.move.open_details",
+        "projection_ref": "projection:project_move:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "move-details",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "move-details",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 110
+    },
+    {
+      "name": "server_gap_b.content_update.positive.activate.request",
+      "definition": "ContentUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.content_update.command_request.v1",
+        "record_kind": "ContentUpdateCommandRequest",
+        "command_id": "cmd.update.content.activate",
+        "operation": "activate",
+        "command_instance_id": "command:content_update:1",
+        "idempotency_key": "idempotency:content_update:1",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "permission_snapshot_ref": "permission:content_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-activate-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.content.activate",
+          "staged_generation_ref": "content-generation:2",
+          "verified_artifact_ref": "verified-content-artifact:2",
+          "signature_evidence_ref": "signature-evidence:content:2",
+          "last_known_good_generation_ref": "content-generation:1"
+        }
+      },
+      "row_index": 167
+    },
+    {
+      "name": "server_gap_b.content_update.positive.activate.result",
+      "definition": "ContentUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.content_update.command_result.v1",
+        "record_kind": "ContentUpdateCommandResult",
+        "command_id": "cmd.update.content.activate",
+        "operation": "activate",
+        "command_instance_id": "command:content_update:1",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "receipt_ref": "receipt:content_update:1",
+        "observable_work_ref": "work:content_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-activate-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.content.activate",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:content_update:1",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 167
+    },
+    {
+      "name": "server_gap_b.content_update.positive.activate.handler_unavailable",
+      "definition": "ContentUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.content_update.availability.v1",
+        "record_kind": "ContentUpdateCommandAvailability",
+        "command_id": "cmd.update.content.activate",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.content_update.disabled_reason.v1",
+          "record_kind": "ContentUpdateDisabledReason",
+          "command_id": "cmd.update.content.activate",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::content_update::activate"
+          ]
+        }
+      },
+      "row_index": 167
+    },
+    {
+      "name": "server_gap_b.content_update.positive.check.request",
+      "definition": "ContentUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.content_update.command_request.v1",
+        "record_kind": "ContentUpdateCommandRequest",
+        "command_id": "cmd.update.content.check",
+        "operation": "check",
+        "command_instance_id": "command:content_update:2",
+        "idempotency_key": "idempotency:content_update:2",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "permission_snapshot_ref": "permission:content_update:2",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-check-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.content.check",
+          "catalog_ref": "catalog:content:stable",
+          "cache_policy": "refresh_if_stale",
+          "coalesce_key": "coalesce:content:stable"
+        }
+      },
+      "row_index": 168
+    },
+    {
+      "name": "server_gap_b.content_update.positive.check.result",
+      "definition": "ContentUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.content_update.command_result.v1",
+        "record_kind": "ContentUpdateCommandResult",
+        "command_id": "cmd.update.content.check",
+        "operation": "check",
+        "command_instance_id": "command:content_update:2",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "receipt_ref": "receipt:content_update:2",
+        "observable_work_ref": "work:content_update:2",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-check-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.content.check",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:content_update:2",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 168
+    },
+    {
+      "name": "server_gap_b.content_update.positive.check.handler_unavailable",
+      "definition": "ContentUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.content_update.availability.v1",
+        "record_kind": "ContentUpdateCommandAvailability",
+        "command_id": "cmd.update.content.check",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.content_update.disabled_reason.v1",
+          "record_kind": "ContentUpdateDisabledReason",
+          "command_id": "cmd.update.content.check",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::content_update::check"
+          ]
+        }
+      },
+      "row_index": 168
+    },
+    {
+      "name": "server_gap_b.content_update.positive.download.request",
+      "definition": "ContentUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.content_update.command_request.v1",
+        "record_kind": "ContentUpdateCommandRequest",
+        "command_id": "cmd.update.content.download",
+        "operation": "download",
+        "command_instance_id": "command:content_update:3",
+        "idempotency_key": "idempotency:content_update:3",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "permission_snapshot_ref": "permission:content_update:3",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-download-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.content.download",
+          "selected_generation_ref": "content-generation:2",
+          "artifact_manifest_ref": "content-manifest:2",
+          "signing_policy_ref": "signing-policy:content:stable",
+          "activate_after_download": false
+        }
+      },
+      "row_index": 169
+    },
+    {
+      "name": "server_gap_b.content_update.positive.download.result",
+      "definition": "ContentUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.content_update.command_result.v1",
+        "record_kind": "ContentUpdateCommandResult",
+        "command_id": "cmd.update.content.download",
+        "operation": "download",
+        "command_instance_id": "command:content_update:3",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "receipt_ref": "receipt:content_update:3",
+        "observable_work_ref": "work:content_update:3",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-download-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.content.download",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:content_update:3",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 169
+    },
+    {
+      "name": "server_gap_b.content_update.positive.download.handler_unavailable",
+      "definition": "ContentUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.content_update.availability.v1",
+        "record_kind": "ContentUpdateCommandAvailability",
+        "command_id": "cmd.update.content.download",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.content_update.disabled_reason.v1",
+          "record_kind": "ContentUpdateDisabledReason",
+          "command_id": "cmd.update.content.download",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::content_update::download"
+          ]
+        }
+      },
+      "row_index": 169
+    },
+    {
+      "name": "server_gap_b.content_update.positive.rollback.request",
+      "definition": "ContentUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.content_update.command_request.v1",
+        "record_kind": "ContentUpdateCommandRequest",
+        "command_id": "cmd.update.content.rollback",
+        "operation": "rollback",
+        "command_instance_id": "command:content_update:4",
+        "idempotency_key": "idempotency:content_update:4",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "permission_snapshot_ref": "permission:content_update:4",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-rollback-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.content.rollback",
+          "target_generation_ref": "content-generation:1",
+          "recovery_boundary_ref": "recovery-boundary:content:2",
+          "verification_policy_ref": "verification-policy:content:stable",
+          "confirmation": true
+        }
+      },
+      "row_index": 171
+    },
+    {
+      "name": "server_gap_b.content_update.positive.rollback.result",
+      "definition": "ContentUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.content_update.command_result.v1",
+        "record_kind": "ContentUpdateCommandResult",
+        "command_id": "cmd.update.content.rollback",
+        "operation": "rollback",
+        "command_instance_id": "command:content_update:4",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "receipt_ref": "receipt:content_update:4",
+        "observable_work_ref": "work:content_update:4",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-rollback-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.content.rollback",
+          "changed": true,
+          "state": "rolled_back",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:content_update:4",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 171
+    },
+    {
+      "name": "server_gap_b.content_update.positive.rollback.handler_unavailable",
+      "definition": "ContentUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.content_update.availability.v1",
+        "record_kind": "ContentUpdateCommandAvailability",
+        "command_id": "cmd.update.content.rollback",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.content_update.disabled_reason.v1",
+          "record_kind": "ContentUpdateDisabledReason",
+          "command_id": "cmd.update.content.rollback",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::content_update::rollback"
+          ]
+        }
+      },
+      "row_index": 171
+    },
+    {
+      "name": "server_gap_b.content_update.positive.permission_deny_is_explicit",
+      "definition": "ContentUpdatePermissionDecision",
+      "value": {
+        "schema_id": "pm.content_update.permission_decision.v1",
+        "record_kind": "ContentUpdatePermissionDecision",
+        "command_id": "cmd.update.content.activate",
+        "permission_snapshot_ref": "permission:content_update:deny",
+        "permission_class": "content.update.manage",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied"
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.positive.local.1.request",
+      "definition": "ContentUpdateLocalActionRequest",
+      "value": {
+        "schema_id": "pm.content_update.local_action_request.v1",
+        "record_kind": "ContentUpdateLocalActionRequest",
+        "local_action_id": "ui.update.content.open_details",
+        "projection_ref": "projection:content_update:1",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-update-details",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 170
+    },
+    {
+      "name": "server_gap_b.content_update.positive.local.1.result",
+      "definition": "ContentUpdateLocalActionResult",
+      "value": {
+        "schema_id": "pm.content_update.local_action_result.v1",
+        "record_kind": "ContentUpdateLocalActionResult",
+        "local_action_id": "ui.update.content.open_details",
+        "projection_ref": "projection:content_update:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "content-update-details",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-update-details",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 170
+    }
+  ],
+  "invalid": [
+    {
+      "name": "server_gap_b.project_move.negative.unknown_command",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.unknown",
+        "operation": "cancel",
+        "command_instance_id": "command:project_move:1",
+        "idempotency_key": "idempotency:project_move:1",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:1",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.cancel",
+          "move_operation_id": "project-move:1",
+          "cancellable_proof_ref": "cancellable:project-move:1",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.raw_secret",
+      "definition": "ProjectMoveCommandRequest",
+      "value": {
+        "schema_id": "pm.project_move.command_request.v1",
+        "record_kind": "ProjectMoveCommandRequest",
+        "command_id": "cmd.project.move.cancel",
+        "operation": "cancel",
+        "command_instance_id": "command:project_move:1",
+        "idempotency_key": "idempotency:project_move:1",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "permission_snapshot_ref": "permission:project_move:1",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.move.cancel",
+          "move_operation_id": "project-move:1",
+          "cancellable_proof_ref": "cancellable:project-move:1",
+          "confirmation": true,
+          "raw_secret": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.available_without_handler",
+      "definition": "ProjectMoveCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_move.availability.v1",
+        "record_kind": "ProjectMoveCommandAvailability",
+        "command_id": "cmd.project.move.cancel",
+        "available": true,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_move.disabled_reason.v1",
+          "record_kind": "ProjectMoveDisabledReason",
+          "command_id": "cmd.project.move.cancel",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project_move::cancel"
+          ]
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.denied_without_reason",
+      "definition": "ProjectMovePermissionDecision",
+      "value": {
+        "schema_id": "pm.project_move.permission_decision.v1",
+        "record_kind": "ProjectMovePermissionDecision",
+        "command_id": "cmd.project.move.cancel",
+        "permission_snapshot_ref": "permission:project_move:deny",
+        "permission_class": "project.move.mutate",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.secret_exposed",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.cancel",
+        "operation": "cancel",
+        "command_instance_id": "command:project_move:1",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.cancel",
+          "changed": true,
+          "state": "cancelled",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:1",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": true,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.local_domain_event",
+      "definition": "ProjectMoveLocalActionResult",
+      "value": {
+        "schema_id": "pm.project_move.local_action_result.v1",
+        "record_kind": "ProjectMoveLocalActionResult",
+        "local_action_id": "ui.project.move.open_details",
+        "projection_ref": "projection:project_move:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "accessible_focus_target": "move-details",
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "move-details",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.restart_false_success",
+      "definition": "ProjectMoveCommandResult",
+      "value": {
+        "schema_id": "pm.project_move.command_result.v1",
+        "record_kind": "ProjectMoveCommandResult",
+        "command_id": "cmd.project.move.cancel",
+        "operation": "cancel",
+        "command_instance_id": "command:project_move:1",
+        "status": "succeeded",
+        "project_id": "project:1",
+        "project_vault_id": "vault:1",
+        "source_host_id": "host:source",
+        "destination_host_id": "host:destination",
+        "source_environment_id": "environment:source",
+        "destination_environment_id": "environment:destination",
+        "source_location_id": "source-location:source",
+        "destination_location_id": "source-location:destination",
+        "expected_topology_generation": 4,
+        "expected_project_generation": 5,
+        "expected_source_generation": 6,
+        "expected_destination_generation": 7,
+        "receipt_ref": "receipt:project_move:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "projects.move",
+          "route_id": "projects/move",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:projects.move:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.move.cancel",
+          "changed": true,
+          "state": "cancelled",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_move:1",
+          "resulting_generation": 8,
+          "restart_disposition": "claim_success",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.exact_return_mismatch",
+      "definition": "ProjectMoveCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.project_move.command_request.v1",
+          "record_kind": "ProjectMoveCommandRequest",
+          "command_id": "cmd.project.move.cancel",
+          "operation": "cancel",
+          "command_instance_id": "command:project_move:1",
+          "idempotency_key": "idempotency:project_move:1",
+          "project_id": "project:1",
+          "project_vault_id": "vault:1",
+          "source_host_id": "host:source",
+          "destination_host_id": "host:destination",
+          "source_environment_id": "environment:source",
+          "destination_environment_id": "environment:destination",
+          "source_location_id": "source-location:source",
+          "destination_location_id": "source-location:destination",
+          "expected_topology_generation": 4,
+          "expected_project_generation": 5,
+          "expected_source_generation": 6,
+          "expected_destination_generation": 7,
+          "permission_snapshot_ref": "permission:project_move:1",
+          "return_context": {
+            "surface_id": "projects.move",
+            "route_id": "projects/move",
+            "focus_target": "cancel-button",
+            "invocation_token": "return:projects.move:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.project.move.cancel",
+            "move_operation_id": "project-move:1",
+            "cancellable_proof_ref": "cancellable:project-move:1",
+            "confirmation": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.project_move.command_result.v1",
+          "record_kind": "ProjectMoveCommandResult",
+          "command_id": "cmd.project.move.cancel",
+          "operation": "cancel",
+          "command_instance_id": "command:project_move:1",
+          "status": "succeeded",
+          "project_id": "project:1",
+          "project_vault_id": "vault:1",
+          "source_host_id": "host:source",
+          "destination_host_id": "host:destination",
+          "source_environment_id": "environment:source",
+          "destination_environment_id": "environment:destination",
+          "source_location_id": "source-location:source",
+          "destination_location_id": "source-location:destination",
+          "expected_topology_generation": 4,
+          "expected_project_generation": 5,
+          "expected_source_generation": 6,
+          "expected_destination_generation": 7,
+          "receipt_ref": "receipt:project_move:1",
+          "observable_work_ref": null,
+          "return_context": {
+            "surface_id": "projects.move",
+            "route_id": "projects/move",
+            "focus_target": "different-control",
+            "invocation_token": "return:projects.move:1",
+            "return_generation": -1
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.project.move.cancel",
+            "changed": true,
+            "state": "cancelled",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:project_move:1",
+            "resulting_generation": 8,
+            "restart_disposition": "not_applicable",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.project_move.negative.race_generation_regression",
+      "definition": "ProjectMoveCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.project_move.command_request.v1",
+          "record_kind": "ProjectMoveCommandRequest",
+          "command_id": "cmd.project.move.cancel",
+          "operation": "cancel",
+          "command_instance_id": "command:project_move:1",
+          "idempotency_key": "idempotency:project_move:1",
+          "project_id": "project:1",
+          "project_vault_id": "vault:1",
+          "source_host_id": "host:source",
+          "destination_host_id": "host:destination",
+          "source_environment_id": "environment:source",
+          "destination_environment_id": "environment:destination",
+          "source_location_id": "source-location:source",
+          "destination_location_id": "source-location:destination",
+          "expected_topology_generation": 4,
+          "expected_project_generation": 5,
+          "expected_source_generation": 6,
+          "expected_destination_generation": 7,
+          "permission_snapshot_ref": "permission:project_move:1",
+          "return_context": {
+            "surface_id": "projects.move",
+            "route_id": "projects/move",
+            "focus_target": "cancel-button",
+            "invocation_token": "return:projects.move:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.project.move.cancel",
+            "move_operation_id": "project-move:1",
+            "cancellable_proof_ref": "cancellable:project-move:1",
+            "confirmation": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.project_move.command_result.v1",
+          "record_kind": "ProjectMoveCommandResult",
+          "command_id": "cmd.project.move.cancel",
+          "operation": "cancel",
+          "command_instance_id": "command:project_move:1",
+          "status": "succeeded",
+          "project_id": "project:1",
+          "project_vault_id": "vault:1",
+          "source_host_id": "host:source",
+          "destination_host_id": "host:destination",
+          "source_environment_id": "environment:source",
+          "destination_environment_id": "environment:destination",
+          "source_location_id": "source-location:source",
+          "destination_location_id": "source-location:destination",
+          "expected_topology_generation": 4,
+          "expected_project_generation": 5,
+          "expected_source_generation": 6,
+          "expected_destination_generation": 7,
+          "receipt_ref": "receipt:project_move:1",
+          "observable_work_ref": null,
+          "return_context": {
+            "surface_id": "projects.move",
+            "route_id": "projects/move",
+            "focus_target": "cancel-button",
+            "invocation_token": "return:projects.move:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.project.move.cancel",
+            "changed": true,
+            "state": "cancelled",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:project_move:1",
+            "resulting_generation": -1,
+            "restart_disposition": "not_applicable",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.unknown_command",
+      "definition": "ContentUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.content_update.command_request.v1",
+        "record_kind": "ContentUpdateCommandRequest",
+        "command_id": "cmd.unknown",
+        "operation": "activate",
+        "command_instance_id": "command:content_update:1",
+        "idempotency_key": "idempotency:content_update:1",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "permission_snapshot_ref": "permission:content_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-activate-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.content.activate",
+          "staged_generation_ref": "content-generation:2",
+          "verified_artifact_ref": "verified-content-artifact:2",
+          "signature_evidence_ref": "signature-evidence:content:2",
+          "last_known_good_generation_ref": "content-generation:1"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.raw_secret",
+      "definition": "ContentUpdateCommandRequest",
+      "value": {
+        "schema_id": "pm.content_update.command_request.v1",
+        "record_kind": "ContentUpdateCommandRequest",
+        "command_id": "cmd.update.content.activate",
+        "operation": "activate",
+        "command_instance_id": "command:content_update:1",
+        "idempotency_key": "idempotency:content_update:1",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "permission_snapshot_ref": "permission:content_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-activate-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.update.content.activate",
+          "staged_generation_ref": "content-generation:2",
+          "verified_artifact_ref": "verified-content-artifact:2",
+          "signature_evidence_ref": "signature-evidence:content:2",
+          "last_known_good_generation_ref": "content-generation:1",
+          "raw_secret": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.available_without_handler",
+      "definition": "ContentUpdateCommandAvailability",
+      "value": {
+        "schema_id": "pm.content_update.availability.v1",
+        "record_kind": "ContentUpdateCommandAvailability",
+        "command_id": "cmd.update.content.activate",
+        "available": true,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.content_update.disabled_reason.v1",
+          "record_kind": "ContentUpdateDisabledReason",
+          "command_id": "cmd.update.content.activate",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::content_update::activate"
+          ]
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.denied_without_reason",
+      "definition": "ContentUpdatePermissionDecision",
+      "value": {
+        "schema_id": "pm.content_update.permission_decision.v1",
+        "record_kind": "ContentUpdatePermissionDecision",
+        "command_id": "cmd.update.content.activate",
+        "permission_snapshot_ref": "permission:content_update:deny",
+        "permission_class": "content.update.manage",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.secret_exposed",
+      "definition": "ContentUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.content_update.command_result.v1",
+        "record_kind": "ContentUpdateCommandResult",
+        "command_id": "cmd.update.content.activate",
+        "operation": "activate",
+        "command_instance_id": "command:content_update:1",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "receipt_ref": "receipt:content_update:1",
+        "observable_work_ref": "work:content_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-activate-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.content.activate",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:content_update:1",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": true,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.local_domain_event",
+      "definition": "ContentUpdateLocalActionResult",
+      "value": {
+        "schema_id": "pm.content_update.local_action_result.v1",
+        "record_kind": "ContentUpdateLocalActionResult",
+        "local_action_id": "ui.update.content.open_details",
+        "projection_ref": "projection:content_update:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "accessible_focus_target": "content-update-details",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-update-details",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.restart_false_success",
+      "definition": "ContentUpdateCommandResult",
+      "value": {
+        "schema_id": "pm.content_update.command_result.v1",
+        "record_kind": "ContentUpdateCommandResult",
+        "command_id": "cmd.update.content.activate",
+        "operation": "activate",
+        "command_instance_id": "command:content_update:1",
+        "status": "succeeded",
+        "application_id": "application:puppet-master",
+        "content_catalog_id": "catalog:content",
+        "channel_id": "channel:stable",
+        "content_update_operation_id": "content-update:1",
+        "active_generation_ref": "content-generation:1",
+        "expected_catalog_generation": 3,
+        "expected_update_generation": 4,
+        "receipt_ref": "receipt:content_update:1",
+        "observable_work_ref": "work:content_update:1",
+        "return_context": {
+          "surface_id": "settings.updates",
+          "route_id": "settings/updates",
+          "focus_target": "content-activate-button",
+          "invocation_token": "return:settings.updates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.update.content.activate",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:content_update:1",
+          "resulting_generation": 8,
+          "restart_disposition": "claim_success",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.exact_return_mismatch",
+      "definition": "ContentUpdateCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.content_update.command_request.v1",
+          "record_kind": "ContentUpdateCommandRequest",
+          "command_id": "cmd.update.content.activate",
+          "operation": "activate",
+          "command_instance_id": "command:content_update:1",
+          "idempotency_key": "idempotency:content_update:1",
+          "application_id": "application:puppet-master",
+          "content_catalog_id": "catalog:content",
+          "channel_id": "channel:stable",
+          "content_update_operation_id": "content-update:1",
+          "active_generation_ref": "content-generation:1",
+          "expected_catalog_generation": 3,
+          "expected_update_generation": 4,
+          "permission_snapshot_ref": "permission:content_update:1",
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "content-activate-button",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.update.content.activate",
+            "staged_generation_ref": "content-generation:2",
+            "verified_artifact_ref": "verified-content-artifact:2",
+            "signature_evidence_ref": "signature-evidence:content:2",
+            "last_known_good_generation_ref": "content-generation:1"
+          }
+        },
+        "result": {
+          "schema_id": "pm.content_update.command_result.v1",
+          "record_kind": "ContentUpdateCommandResult",
+          "command_id": "cmd.update.content.activate",
+          "operation": "activate",
+          "command_instance_id": "command:content_update:1",
+          "status": "succeeded",
+          "application_id": "application:puppet-master",
+          "content_catalog_id": "catalog:content",
+          "channel_id": "channel:stable",
+          "content_update_operation_id": "content-update:1",
+          "active_generation_ref": "content-generation:1",
+          "expected_catalog_generation": 3,
+          "expected_update_generation": 4,
+          "receipt_ref": "receipt:content_update:1",
+          "observable_work_ref": "work:content_update:1",
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "different-control",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": -1
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.update.content.activate",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:content_update:1",
+            "resulting_generation": 8,
+            "restart_disposition": "rollback",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.content_update.negative.race_generation_regression",
+      "definition": "ContentUpdateCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.content_update.command_request.v1",
+          "record_kind": "ContentUpdateCommandRequest",
+          "command_id": "cmd.update.content.activate",
+          "operation": "activate",
+          "command_instance_id": "command:content_update:1",
+          "idempotency_key": "idempotency:content_update:1",
+          "application_id": "application:puppet-master",
+          "content_catalog_id": "catalog:content",
+          "channel_id": "channel:stable",
+          "content_update_operation_id": "content-update:1",
+          "active_generation_ref": "content-generation:1",
+          "expected_catalog_generation": 3,
+          "expected_update_generation": 4,
+          "permission_snapshot_ref": "permission:content_update:1",
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "content-activate-button",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.update.content.activate",
+            "staged_generation_ref": "content-generation:2",
+            "verified_artifact_ref": "verified-content-artifact:2",
+            "signature_evidence_ref": "signature-evidence:content:2",
+            "last_known_good_generation_ref": "content-generation:1"
+          }
+        },
+        "result": {
+          "schema_id": "pm.content_update.command_result.v1",
+          "record_kind": "ContentUpdateCommandResult",
+          "command_id": "cmd.update.content.activate",
+          "operation": "activate",
+          "command_instance_id": "command:content_update:1",
+          "status": "succeeded",
+          "application_id": "application:puppet-master",
+          "content_catalog_id": "catalog:content",
+          "channel_id": "channel:stable",
+          "content_update_operation_id": "content-update:1",
+          "active_generation_ref": "content-generation:1",
+          "expected_catalog_generation": 3,
+          "expected_update_generation": 4,
+          "receipt_ref": "receipt:content_update:1",
+          "observable_work_ref": "work:content_update:1",
+          "return_context": {
+            "surface_id": "settings.updates",
+            "route_id": "settings/updates",
+            "focus_target": "content-activate-button",
+            "invocation_token": "return:settings.updates:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.update.content.activate",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:content_update:1",
+            "resulting_generation": -1,
+            "restart_disposition": "rollback",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    }
+  ]
+}

@@ -17725,7 +17725,7 @@ Status: `STATICALLY_MATERIALIZED`. This section is the Storage owner contract fo
 
 ### Known-37 retention assignment (`RET-K37-ASSIGNMENT-001@1.0.0`)
 
-The sole catalog is `Plans/storage_value_registry.json#/retention_policies`, schema `pm.storage_value_registry.v2@2.0.0`. Each event family in the historical Known-37 assignment has exactly one closed `retention_policy_ref = {registry_schema_id, policy_id, policy_version}`, with `registry_schema_id=pm.storage_value_registry.v2` and version `1.0.0`. That bounded assignment used `pm.event_family_registry.v1`, instance schema version `2.0.0`, revision `2026-07-18.2`; exactly 37 families in that historical slice have revision `2.0.0`. The live registry is now revision `2026-08-04.1` with 39 rows. The two later rows are not retroactively part of the Known-37 assignment, and this section does not assert a complete current registry or current denominator.
+The sole catalog is `Plans/storage_value_registry.json#/retention_policies`, schema `pm.storage_value_registry.v2@2.0.0`. Each event family in the historical Known-37 assignment has exactly one closed `retention_policy_ref = {registry_schema_id, policy_id, policy_version}`, with `registry_schema_id=pm.storage_value_registry.v2` and version `1.0.0`. That bounded assignment used `pm.event_family_registry.v1`, instance schema version `2.0.0`, revision `2026-07-18.2`; exactly 37 families in that historical slice have revision `2.0.0`. The live registry is now revision `2026-08-27.1` with 39 rows; that revision upgrades the existing `workspace.layout_changed` family and its closed payload contract to `1.1.0` without adding a fortieth family. The two post-Known-37 rows are not retroactively part of the Known-37 assignment, and neither the revision upgrade nor this currentness correction asserts a complete current registry or current denominator: the denominator remains `UNKNOWN_OPEN`.
 
 Currentness boundary (2026-08-10): the July Event Authority union records 37 registered rows, at least 248 confirmed persisted-unregistered families, at least 40 unresolved exact rows, and 68 excluded rows. It proves only a source-dated persisted floor of at least 285 and leaves the complete denominator `UNKNOWN_OPEN`. This claim is bound to `EA-27_PRODUCER_UNION_AND_DENOMINATOR.json` (SHA-256 `644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47`; `union_rows_sha256=aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d`) and `EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md` (SHA-256 `17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf`) under external `PuppetMaster-AssuranceLab` custody. This lower-bound evidence requires fresh reconciliation against current sources; it forbids bulk registration and does not close material contract depth, Case L, PNC-019, buildability, or `CL-CRIT-EVENT-AUTHORITY-001`. Unknown or unregistered families remain quarantined without checkpoint advance.
 
@@ -18131,6 +18131,12 @@ registers no redb family and no EventRecord family here; the machine registry ro
 It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, production
 build tasks, final manifests, or PNC-019 receipts.
 
+Final successor evidence is report-owned. When `audit_report.json` records `status = pass_with_named_residuals`
+and `verdict = successor_scope_verified_with_named_residuals`, the `evidence_ref` entries below prove only their
+named exact-hash PMConcept7 concept/demo slices. They grant no native Slint, production-runtime, PNC-019,
+certification, completeness, or product-readiness credit; every blocked, failed, uncaptured, or residual lane
+retains that classification.
+
 ### SP-248 - Usage View-State Persistence Surface
 
 ```yaml
@@ -18139,34 +18145,41 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  The Usage page persists exactly eight keys and every one of them is view or layout state: the disclosure
-  level, the page scope selection, the page date range, the per-product continuation view selection, the
-  parked-widget record, the seeded-room record, the per-page widget layout record, and the shared theme
-  selection. None of them is a Settings-owned policy value, and the Usage page must not re-acquire one by
-  mirroring it: policy is read from its Settings owner as a projection and changed only by deep-linking to
-  that owner. Each of the eight is current-value-only under a configuration retention disposition with no
-  history, which is a different retention story from the raw provider attempt and operational records that
-  carry the ninety-day figure in UF-089; conflating the two attaches the wrong retention to the wrong
-  family. A view-state value whose referent has vanished evicts to its documented safe default rather than
-  pinning a dangling identity, and the widget layout record persists only through the canonical widget
-  layout namespace and its typed layout commands, never as a direct write on pointer move, resize preview,
-  or configuration edit. The concept's colon-form keys are prototype shims like the PMConcept7 precedent,
-  not canonical key names.
+  The current Usage workspace persists exactly eight current-value-only view/layout families: active `room`,
+  disclosure `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget
+  `hidden` state, per-room settled widget `layout`, and per-room widget `order`. These are configuration/view
+  records with no event history and no Settings-owned policy values. The layout family persists only through
+  `widget_layout:v1:usage` and the existing typed widget commands after a settled commit; pointer move,
+  held-resize preview, configuration preview, ghost, placeholder, animation state, and per-frame drafts never
+  write storage. A vanished room, scope, widget, or unsupported geometry migrates or evicts to its documented
+  current safe default. The U11 keys `u11:disclosure`, `u11:scope`, `u11:range`, `u11:settingsView`,
+  `u11:parked`, `u11:seeded`, `pmw:<pageId>`, and `pm.theme`, together with the PMConcept7 key family
+  `pm7:usage:v10:*`, are prototype/import lineage only and are not canonical key names. The
+  current `pm7:usage:prototype:workspace:v12` envelope is likewise demo-only, noncanonical prototype lineage;
+  when v12 is absent it validates and considers the prior v11 envelope once, and it considers the v10 family
+  only through the bounded legacy import when no valid envelope is admitted. None becomes a canonical product
+  store or continuing dual-read source.
 gui_related: true
 gui_classification_reason: These records decide what the Usage page shows on reopen, including disclosure level, scope, range, and widget layout.
 depends_on: [SP-222, UF-092, WS-016]
-unblocks: []
+unblocks: [SP-249]
 acceptance_criteria:
-  - The Usage view-state surface holds exactly the eight enumerated view or layout records and no Settings-owned policy value.
-  - Usage view-state records are current-value-only with a configuration retention disposition and carry no history; the ninety-day figure belongs to provider attempt and operational records, not to these keys.
-  - A persisted scope, range, or widget-layout reference whose target no longer exists evicts to its documented safe default and discloses the fallback rather than rendering a dangling identity.
-  - Widget layout writes go through the canonical widget layout namespace and its typed commands; a direct storage write from a pointer-move, resize-preview, or configuration edit fails the fixture.
-  - The concept's colon-form keys are recorded as prototype shims and are never promoted to canonical key names.
+  - The current Usage view-state surface contains exactly room, detail, range, scope, more, hidden, layout, and order as its eight persisted view/layout families.
+  - No Settings-owned policy value or provider-account authority is mirrored into Usage view state.
+  - Usage view-state records are current-value-only configuration records and do not inherit the ninety-day provider-attempt retention policy.
+  - Layout writes use widget_layout:v1:usage and existing typed widget commands after settled commit; pointer/preview/ghost/placeholder/animation frames cannot write storage.
+  - Missing or unsupported room, scope, widget, or geometry references migrate or evict to a named current safe default.
+  - U11 and PMConcept7 prototype key names remain import/source-lineage shims and never become canonical key names; the v12 Usage envelope remains demo-only and noncanonical, v11 is considered only as its prior one-time import source, and v10 is bounded rather than maintained as a dual-read path.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shared-runtime-storage-materialize.py check
-  - future Usage view-state eviction and layout-write fixtures
-risk_class: usage_view_state_becomes_second_policy_store
+  - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/room_disclosure_width_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/range_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/scope_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/migration_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/browser-verification-report.json"
+risk_class: usage_view_state_becomes_second_policy_or_preview_store
 reasoning_tier: high
 context_scope: usage_view_state_persistence
 implementation_surfaces:
@@ -18179,26 +18192,501 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (u11 Prism II Usage concept; source-lineage-only)"
+  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (superseded prototype/import lineage)"
   - Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
-  - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md
 preserved_exact_tokens:
-  - "u11:disclosure"
-  - "u11:scope"
-  - "u11:range"
-  - "u11:settingsView"
-  - "u11:parked"
-  - "u11:seeded"
-  - "pmw:<pageId>"
-  - "pm.theme"
+  - room
+  - detail
+  - range
+  - scope
+  - more
+  - hidden
+  - layout
+  - order
+  - widget_layout:v1:usage
   - RP-CONFIG-CURRENT
 negative_constraints:
   - Do not persist a Settings-owned policy value in the Usage view-state surface.
-  - Do not attach the raw-attempt retention figure to current-value-only view state.
-  - Do not write widget layout directly from a pointer, preview, or configuration interaction.
-  - Do not promote a prototype colon-form key to a canonical key name.
+  - Do not attach raw-attempt retention to current-value-only view state.
+  - Do not write layout from a pointer move, held preview, ghost, placeholder, animation frame, or configuration preview.
+  - Do not promote U11 or PMConcept7 prototype keys to canonical key names.
+  - Do not promote v12, v11, or `pm7:usage:v10:*` prototype lineage to canonical storage or maintain a continuing dual-read path.
+compatibility_only_notes:
+  - "u11:disclosure, u11:scope, u11:range, u11:settingsView, u11:parked, u11:seeded, pmw:<pageId>, pm.theme, pm7:usage:v10:*, pm7:usage:prototype:workspace:v11, and pm7:usage:prototype:workspace:v12 are demo/import/source-lineage shims only; v11-to-v12 consideration is one-time and v10 is a bounded fallback import."
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Widget_System.md
   - Plans/usage-feature.md
+```
+
+## PMConcept7 Recovery Settled Layout Addendum - 2026-08-27
+
+This addendum closes current Plans ownership for Usage/Dashboard widget layout and the recovered Home semantic
+size fields. Current source lineage is the pinned `Concepts/pm7-tools/base/PM7-base.html` plus the
+assertion-guarded T33-T41 pipeline in `Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` remains the
+protected generated output and is never a storage owner. Current audit receipts are tracked by
+`Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`; incomplete or failed
+rows remain `verification_pending`, so this addendum claims no executable persistence, interaction, visual, or motion acceptance. It
+does not create another database family, command family, event family, WorkNode, NodeSeed, executable queue,
+implementation task, production implementation, or generated governance output.
+
+### SP-249 - Settled Widget Layout Versioning Migration And Write Boundary
+
+```yaml
+plan_unit_id: SP-249
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  The sole widget-layout schema family uses separate host namespaces `widget_layout:v1:usage` and
+  `widget_layout:v1:dashboard`. Usage records are scoped to the exact `usage` host and `room_id`; Dashboard
+  records are scoped by Dashboard host. The named public Usage record is `UsageWidgetLayoutRecord`; it serializes exactly the
+  WS-020-owned required fields `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`,
+  `visible`, `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and
+  `committed_revision` needed for deterministic restore. It forbids preview
+  rectangles, pointers or pointer coordinates, ghosts, placeholders, animation state, and drafts or per-frame
+  drafts. Migration validates identities and
+  maps retired geometry to supported current sizes before admission; an unversioned, incompatible, corrupt, or
+  unmappable layout is quarantined or reset to the corrected current default and cannot silently override it.
+  Existing `cmd.widget.*` commit paths are the only mutation seam; storage is written once after a successful
+  settled commit and cancellation writes nothing.
+gui_related: true
+gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
+depends_on: [SP-248, WS-009, WS-020, UF-095]
+unblocks: []
+acceptance_criteria:
+  - Usage and Dashboard persist under their separate canonical widget-layout namespaces and never write the Home workspace record.
+  - "UsageWidgetLayoutRecord is the named public contract for the settled Usage widget layout and serializes exactly layout_schema_version, default_set_version, host_id, room_id, widget_id, visible, order_index, slot_id, geometry_id, semantic_tier_id, preset_id, configuration_refs, and committed_revision as required fields under the WS-020 field contract."
+  - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft is serializable as UsageWidgetLayoutRecord."
+  - Migration validates widget identities and maps only to supported current geometry; invalid or unmappable records cannot override corrected defaults.
+  - One successful settled widget command results in one storage write; cancellation or unchanged release results in none.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
+  - Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/migration_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/transaction_interaction_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/pointer-pair-verification-report.json"
+risk_class: stale_widget_layout_or_preview_state_persistence
+reasoning_tier: high
+context_scope: settled_widget_layout_storage
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Widget_System.md
+node_compile_hint:
+  mode: settled_widget_layout_storage
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+preserved_exact_tokens:
+  - widget_layout:v1:usage
+  - widget_layout:v1:dashboard
+  - default-set version
+  - UsageWidgetLayoutRecord
+  - committed revision
+  - semantic tier
+  - preset
+negative_constraints:
+  - Do not introduce a second Usage or Dashboard widget-layout store.
+  - Do not serialize transient interaction state or write storage on pointer-preview frames.
+  - Do not allow an invalid old layout to override corrected current defaults.
+  - Do not treat the protected generated artifact or an in-progress audit as proof that the storage write contract executes correctly.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Widget_System.md
+```
+
+### SP-250 - Home Workspace Cross-Axis And Semantic Preset Persistence
+
+```yaml
+plan_unit_id: SP-250
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  `pm.home_workspace_layout.v1` stores committed Home shell surfaces only. Each canonical surface size includes
+  `basis_px`, `cross_basis_px`, `flex_weight`, `min_width_px`, and `min_height_px`; `cross_basis_px` owns the
+  top/bottom row-dock track thickness and migrates from `basis_px` for pre-field records before canonical
+  validation. An optional `preset_id` preserves the committed semantic size identity using `compact`,
+  `standard`, `wide`, `tall`, or `focus`, so the shared Home composition can restore the matching adaptive
+  content tier. Both fields are settled state: held-resize drafts and pointer coordinates remain local and are
+  never serialized. Dashboard widget geometry remains in `widget_layout:v1:dashboard`; the Home record owns
+  the Dashboard surface, not the widgets inside it.
+gui_related: true
+gui_classification_reason: These schema fields determine restored Home dock thickness and adaptive surface content after a committed size change.
+depends_on: [SP-245, WS-018, WS-020]
+unblocks: []
+acceptance_criteria:
+  - Plans/home_workspace_layout.schema.json admits and requires cross_basis_px in canonical normalized surface sizes.
+  - The schema admits optional preset_id only for compact, standard, wide, tall, or focus.
+  - Pre-field records receive cross_basis_px from basis_px during migration before canonical validation; a migration input is not treated as a current canonical record until normalized.
+  - Held preview dimensions, pointer coordinates, ghosts, placeholders, and animation state remain absent from the schema and persisted records.
+  - Dashboard widget geometry cannot be written into the Home surface record.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Draft 2020-12 validation of Plans/home_workspace_layout.schema.json
+  - Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/home_restoration_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/browser-verification-report.json"
+risk_class: home_cross_axis_or_semantic_preset_schema_drift
+reasoning_tier: high
+context_scope: home_workspace_cross_axis_semantic_preset
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/home_workspace_layout.schema.json
+  - Plans/storage_value_registry.json
+node_compile_hint:
+  mode: home_workspace_cross_axis_semantic_preset
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - Plans/home_workspace_layout.schema.json
+preserved_exact_tokens:
+  - pm.home_workspace_layout.v1
+  - basis_px
+  - cross_basis_px
+  - preset_id
+  - compact
+  - standard
+  - wide
+  - tall
+  - focus
+negative_constraints:
+  - Do not add preview-only fields to the canonical Home layout schema.
+  - Do not place Dashboard widget geometry in the Home surface layout record.
+  - Do not claim schema acceptance proves runtime migration or persistence behavior.
+  - The run-002 Home observation binds only restored visible Home composition; product persistence and migration remain schema-governed and are not promoted to executed native-runtime evidence.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/home_workspace_layout.schema.json
+```
+
+## Packet-Authoritative Storage Disposition And Redaction Addendum - 2026-08-31
+
+This addendum owns the physical-persistence disposition for the Settings, Project, Named Plan, Product
+Onboarding, Guided Tour, Doctor, Server, Remote Access, Backup/Restore, Source Control, Forge, Browser Program,
+Test Capture, Full Thread, and Plugins contracts added by the 2026-08-31 packet-authoritative owner wave. The
+semantic record shapes remain with their named domain owners. `Plans/storage_value_registry.json` now carries a
+separate `contract_family_dispositions` layer because the existing 84-row `families` denominator is enforced by
+the Tier 0C-2 readiness validator and cannot be silently widened or reinterpreted. A disposition row proves a
+machine-readable decision about durable versus nonpersisted state; it does not prove a physical redb/seglog or
+artifact implementation. `physical_family_registration_pending` and
+`external_artifact_store_registration_pending` are blockers, not aliases for materialized storage.
+
+No row in this addendum registers an EventRecord family. Every new effect remains
+`receipt_only_no_eventrecord_pending_event_authority` until Event Authority admits an exact producer/payload row.
+The current EventRecord denominator remains `UNKNOWN_OPEN`; bulk event registration is forbidden. No static
+schema, receipt shape, registry row, migration prose, or validator pass is runtime, recovery, WAN, native Slint,
+performance, certification, PNC-019, or readiness evidence.
+
+### SP-251 - Contract-Family Persistence Disposition Layer
+
+```yaml
+plan_unit_id: SP-251
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  `Plans/storage_value_registry.json#/contract_family_dispositions` is the machine authority that classifies
+  each packet-authoritative contract group as durable, durable metadata with externally held bytes, durable
+  with an existing-family migration requirement, ephemeral nonpersisted, request/preview nonpersisted, or
+  compatibility-input-only nonpersisted. Every row names the semantic owner/schema, exact record kinds,
+  physical-family state, existing family refs, retention mode/refs/holds/expiry, registered redaction
+  transforms, migration rule, Event Authority boundary, AuthBrowserSession disposition, source refs, and
+  `runtime_evidence=false`. A durable disposition whose physical state is pending cannot be written, restored,
+  advertised as materialized, or used to enable a dependent command. Guided Tour session/action state, typed
+  request/preview/route transport, Source Control credential leases, Browser compile/query transport, Test
+  Capture playback comparison state, and protected AuthBrowserSession content/state are explicitly
+  nonpersisted. The existing 84 physical rows and 24 retention policies remain unchanged in membership.
+gui_related: false
+gui_classification_reason: This PlanUnit governs storage and contract custody rather than presentation.
+depends_on: [SP-222, SSYS-001, PWIZ-021, PWIZ-023, N2-151]
+unblocks: []
+acceptance_criteria:
+  - Every disposition ID is unique and schema-valid, and every row fixes runtime_evidence=false.
+  - Durable rows that lack exact physical key/value registration remain physical_family_registration_pending or external_artifact_store_registration_pending rather than materialized.
+  - Nonpersisted action, preview, lease, Guided Tour, playback, and protected-auth rows have no physical family and no retention authority.
+  - Full Thread rows reference existing shared-runtime families only as explicit migration inputs and never reinterpret their schema IDs in place.
+  - Browser and Test Capture legacy aggregate IDs are compatibility inputs only; one exact schema_id plus record_kind must be established before any durable admission.
+  - No disposition adds an EventRecord family or treats a receipt/projection as event admission.
+validation_surfaces:
+  - Draft 2020-12 validation of Plans/storage_value_registry.json against Plans/storage_value_registry.schema.json
+  - python3 scripts/pm-implementation-readiness.py validate-case-l
+  - python3 scripts/pm-shared-runtime-storage-materialize.py check
+risk_class: durable_contract_claim_without_physical_family_or_nonpersisted_boundary
+reasoning_tier: high
+context_scope: packet_authoritative_storage_dispositions
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/storage_value_registry.schema.json
+node_compile_hint:
+  mode: packet_authoritative_storage_dispositions
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [source_manifest:Plans/storage_value_registry.json#/contract_family_dispositions/*/source_refs, source_ref:packet:PKT-04/03_REQUIREMENTS_COVERAGE_MATRIX.md:5-184, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:1-457]
+negative_constraints:
+  - Do not treat a disposition row as a running storage handler, migration, replay, restore, backup, or recovery implementation.
+  - Do not add physical families by silently changing the enforced 84-row denominator.
+  - Do not persist request/preview transport, Guided Tour session state, credential leases, playback UI state, or AuthBrowserSession content/state.
+  - Do not register any packet candidate as an EventRecord from this storage lane.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+```
+
+### SP-252 - Product Onboarding Nine-Stage Storage Migration
+
+```yaml
+plan_unit_id: SP-252
+unit_type: migration_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Registry family `onboarding_state` now binds canonical key
+  `onboarding_state.v2:{onboarding_session_id}` to `pm.product_onboarding.session.v1` and the owner schema
+  `Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session`. The former
+  `onboarding_state.v1:{project_id}` and `onboarding:v1` keys are read-once compatibility inputs only.
+  Current values persist the exact nine-stage guided-setup path `welcome | simple_path | first_project |
+  source_control_setup | server_storage_client | remote_access_setup | review_setup_plan |
+  automatic_preparation | ready` or the exact six-stage connect-existing shortcut `welcome | simple_path |
+  remote_access_setup | review_setup_plan | automatic_preparation | ready`. `path_kind` is the path discriminator;
+  `simple_path_selection` is the current visible setup-mode choice and MUST agree with it. The session persists
+  `queued_setup_plan_ref`, `queued_setup_plan_revision`, `reviewed_setup_plan_revision`, `review_confirmation`,
+  `approved_setup_plan_sha256`, and `automatic_preparation_currentness_ref` so no owner work can begin before a
+  person confirms the current Review revision and Automatic Preparation can resume only against the same current
+  plan. StorageMigrationCoordinator maps admissible provider-first/four-screen, predecessor-five-stage, and
+  superseded seven-stage records once to the first applicable unresolved current stage, forces an unconfirmed
+  `review_setup_plan`, preserves compatible decisions, valid receipt refs, and bounded warnings, never replays owner
+  work, and rejects or quarantines ambiguous, corrupt, stale, or secret-bearing rows. It emits the sole terminal
+  durable `pm.storage_value.migration_receipt.v1`; the typed
+  `pm.product_onboarding.legacy_migration_receipt.v1` is a domain reconciliation record that references that
+  Storage receipt, proves exact source/accepted/stale/dropped/quarantined counts, `mapped_stage_counts`, and
+  `mapped_path_counts` plus a hashed disposition manifest, and is not peer commit authority. New writes use only
+  v2 session identity. Guided
+  Tour session, scene, action, Teacher, focus, motion, and checkpoint state remains ephemeral and is never stored in
+  this family; only a stable non-secret handoff ref may be retained.
+gui_related: true
+gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume point shown to the user.
+depends_on: [SP-251, PWIZ-021, PWIZ-022]
+unblocks: []
+acceptance_criteria:
+  - The materialized onboarding_state family schema ID, key, required fields, owner, producer, and consumers match the nine-stage Product Onboarding owner contract and exact six-stage connect-existing shortcut.
+  - Both legacy key shapes are read-only coordinator copy-forward inputs and never continuing dual-read or write authorities.
+  - Missing current state starts at welcome; a completed session requires stage=ready.
+  - "`simple_path` and `ui.onboarding.choose_simple_path` are current behavior; `path_kind = guided_setup | connect_existing | null` is the persisted path discriminator and `simple_path_selection = start_on_this_computer | connect_existing_server | setup_server | restore_backup | null` is the distinct current setup-mode choice. Null is admitted only before a choice at `welcome` or `simple_path`; `connect_existing` requires `connect_existing_server`, and every other non-null setup-mode choice requires `guided_setup`."
+  - "`scm_backend_selection = git | jujutsu | null` records the independent local Safe History backend, while `forge_provider_selection = github | gitlab | azure_devops | bitbucket_cloud | bitbucket_data_center | forgejo | gitea | cursor_origin | none | null` independently records the optional online-copy provider; migration never derives either axis from the other or invents a Jujutsu service account."
+  - "Before person confirmation, reviewed_setup_plan_revision, approved_setup_plan_sha256, and automatic_preparation_currentness_ref are null and review_confirmation=unconfirmed; confirmation binds queued_setup_plan_revision to reviewed_setup_plan_revision and its approved SHA-256, and automatic_preparation/ready additionally require the currentness ref."
+  - Persisted setup-plan and continuation data is limited to stable identities, revisions, enums, SHA-256 values, and non-secret refs/handles; it contains no plan body, transcript, credential, authentication content, or broad local path.
+  - Migration covers provider-first/four-screen, predecessor-five-stage, and superseded seven-stage `server_setup` records, maps each admissible row to the first unresolved current stage, forces unconfirmed Review, reports exact per-stage and per-path counts, quarantines secrets, and never runs or replays installation, authentication, repository creation/publication, restore, Project, provider, Server, remote-access, or source-control work.
+  - The domain migration receipt references the sole Storage migration receipt and never substitutes for it.
+  - Raw transcripts, API keys, tokens, auth URLs/codes, credentials, profile roots, broad paths, and AuthBrowserSession content/state fail storage admission.
+  - Guided Tour session, scene, action, Teacher, focus, motion, and checkpoint state is ephemeral and absent from onboarding_state; only a stable non-secret handoff ref is admissible.
+validation_surfaces:
+  - Draft 2020-12 validation of Plans/product_onboarding_contracts.schema.json
+  - Draft 2020-12 validation of the onboarding_state inline registry value schema
+  - python3 scripts/pm-implementation-readiness.py validate-case-l
+  - future migration positive/quarantine/restart/rollback fixtures and raw receipts
+risk_class: stale_onboarding_path_or_unconfirmed_owner_work_replayed
+reasoning_tier: high
+context_scope: onboarding_nine_stage_storage_migration
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/product_onboarding_contracts.schema.json
+node_compile_hint:
+  mode: onboarding_nine_stage_storage_migration
+  create_worknodes: false
+  create_nodeseeds: false
+preserved_exact_tokens:
+  - onboarding_state.v2:{onboarding_session_id}
+  - onboarding_state.v1:{project_id}
+  - onboarding:v1
+  - pm.product_onboarding.session.v1
+  - pm.product_onboarding.legacy_migration_receipt.v1
+  - pm.storage_value.migration_receipt.v1
+  - path_kind
+  - queued_setup_plan_ref
+  - queued_setup_plan_revision
+  - reviewed_setup_plan_revision
+  - review_confirmation
+  - approved_setup_plan_sha256
+  - automatic_preparation_currentness_ref
+  - mapped_stage_counts
+  - mapped_path_counts
+source_lineage: [source_ref:Plans/Planning_Wizard.md#PWIZ-021, source_ref:Plans/Planning_Wizard.md#PWIZ-022, source_ref:Plans/product_onboarding_contracts.schema.json, source_report:register-settings-onboarding.md#1E, source_report:register-fullthread.md#R-063, source_report:wave3-lane2.md#S0098]
+negative_constraints:
+  - Do not silently reinterpret a provider-first, predecessor-five-stage, or superseded seven-stage row as a current nine-stage record.
+  - Do not treat current `simple_path` or `simple_path_selection` as compatibility-only, permit `path_kind` disagreement, or collapse local Safe History and optional online-copy selections into one provider field.
+  - Do not dispatch or resume external owner work from an unconfirmed, stale, hash-mismatched, revision-mismatched, or currentness-mismatched setup plan.
+  - Do not rerun owner mutations during migration.
+  - Do not persist Guided Tour session, scene, action, Teacher, focus, motion, or checkpoint state as part of Product Onboarding.
+  - Do not treat static schema validation as executed migration or restart proof.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Planning_Wizard.md
+```
+
+### SP-253 - Registered Redaction Contracts And Protected-Auth Exclusion
+
+```yaml
+plan_unit_id: SP-253
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  `Plans/redaction_transform_registry.json` and its schema are the single machine registry for versioned
+  redaction/admission transforms used by the packet-authoritative storage dispositions. Transform contracts
+  define scope, input class, bounded output, prohibited inputs, quarantine behavior, retention effect,
+  AuthBrowserSession posture, source refs, and `implementation_status=contract_only_no_runtime_evidence`.
+  They do not claim executable transform code. `rt.capture_retained_media.v1` distinguishes source/encoder
+  masking from display-only masking; display-only masking never qualifies retained bytes as redacted.
+  `rt.auth_browser_session_exclusion.v1` is a hard exclusion, not a sanitizing path: AuthBrowserSession is
+  human-only, ephemeral, non-recordable, non-inspectable, unavailable to agents/adapters/plugins/MCP/Doctor/
+  capture/backup, and produces no ordinary stored value, artifact, screenshot, representation, automation
+  result, profile, reusable session identity, or backup content. Only the separately owned bounded redacted
+  denial/lifecycle projection may exist.
+gui_related: false
+gui_classification_reason: This PlanUnit governs storage admission and protected-session security rather than GUI paint or layout.
+depends_on: [SP-251, SMPFS-143]
+unblocks: []
+acceptance_criteria:
+  - Every redaction transform ID and version is unique and schema-valid.
+  - Every packet-authoritative storage disposition references one or more registered transforms.
+  - Every transform declares contract_only_no_runtime_evidence until an executable implementation and tests exist.
+  - Backup rejects ordinary secret bytes, recovery credentials, raw callback/session content, absolute source paths, live browser/process/PTY state, and reconstructable cache payloads.
+  - Doctor stores bounded normalized/redacted evidence and refs only; migrated cache never becomes fresh execution evidence.
+  - Source Control and Forge never persist private keys, raw tokens/passwords/cookies, agent sockets, webhook signatures/bodies, credential-bearing environment values, or unredacted CLI output.
+  - Capture retained bytes require source or encoder masking; display-only masking is insufficient.
+  - AuthBrowserSession matches the hard exclusion and yields no ordinary persistence, capture, restore, export, or backup path.
+validation_surfaces:
+  - Draft 2020-12 validation of Plans/redaction_transform_registry.json against Plans/redaction_transform_registry.schema.json
+  - cross-reference check from every contract_family_dispositions row to one registered transform ID
+  - future executable transform, negative secret-corpus, quarantine, retained-media, and protected-auth tests
+risk_class: unregistered_redaction_transform_or_protected_auth_persistence
+reasoning_tier: high
+context_scope: packet_authoritative_redaction_and_auth_browser_exclusion
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/redaction_transform_registry.json
+  - Plans/redaction_transform_registry.schema.json
+  - Plans/storage_value_registry.json
+node_compile_hint:
+  mode: packet_authoritative_redaction_and_auth_browser_exclusion
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [source_report:scratchpad/pm-integration-20260831/audits/schema-registry-integration.md:40, source_ref:egolite-requirement:BRW-013, source_ref:egolite-requirement:CAP-008, source_ref:egolite-requirement:CAP-013, source_ref:egolite-requirement:SEC-002, source_ref:egolite-requirement:SEC-003, source_ref:egolite-requirement:SEC-005, source_ref:packet:PKT-04/08_AUTHORITY_AND_SUPERSESSION.md:24-48, source_ref:packet:PKT-04/08_AUTHORITY_AND_SUPERSESSION.md:97]
+negative_constraints:
+  - Do not claim the registry is executable redaction proof.
+  - Do not use display-only masking as retained-media redaction.
+  - Do not sanitize AuthBrowserSession into ordinary storage; reject the entire protected subject.
+  - Do not register EventRecord types from redaction or receipt metadata.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/Test_Capture_and_Motion_Evidence.md
+```
+
+## Forge, Backup v2, And Go tsnet Storage/Redaction Transaction - 2026-09-01
+
+This transaction extends the SP-251 disposition layer and SP-253 transform registry without changing the enforced
+84-row physical-family membership. The newly detailed durable contract groups remain
+`physical_family_registration_pending`; the deferred grouped automation projection remains non-build-blocking and its
+physical split remains pending. Registry/schema validity is static planning evidence only. It proves no redb/seglog or
+external-artifact writer, migration run, backup/restore, connector, forge adapter, protected channel, native handler,
+security result, provider readiness, runtime, or recovery outcome.
+
+No row in this transaction registers an EventRecord. Owner receipts and bounded public projections remain the only
+planned durable effects, and every touched or added disposition retains
+`event_effect_policy=receipt_only_no_eventrecord_pending_event_authority` and `runtime_evidence=false`.
+
+### SP-254 - Consolidated Forge/Backup/tsnet Durable-Metadata And Redaction Boundary
+
+```yaml
+plan_unit_id: SP-254
+unit_type: storage_security_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  `Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract groups as
+  public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup v2
+  retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence and
+  outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration,
+  restore, and receipt records while snapshot/repository/export bytes remain in Backup-owned external custody and raw
+  Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2
+  disposition without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup's
+  `pm.backup_restore_system.recovery_set_public.v2` is never Storage boot recovery `recovery_set_id`. Forge retains
+  provider-instance, repository-binding, independent automation-binding/shell, provider-native object, currentness,
+  and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential content; canonical shell state uses
+  `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor keys only through an
+  idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration,
+  generations, version/build/protocol facts, redacted authorization-operation metadata, route/health/migration/receipt
+  refs, and an opaque `secure_state_ref`; connector IPC, protected URLs, raw tsnet state, tailnet identity, and node/auth/
+  pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public
+  requests, results, errors, availability, receipts, and health/currentness projections and reject key/token/code,
+  protected/browser, private path/host, unsafe SCM configuration, and capture content. All three domains remain
+  receipt-only and Event Authority silent with `runtime_evidence=false`.
+gui_related: false
+gui_classification_reason: The unit defines storage custody, migration, redaction, and event-admission boundaries rather than visible presentation.
+depends_on: [SP-251, SP-253, BRS-012, BRS-016, FGI-012, RAS-015]
+unblocks: []
+acceptance_criteria:
+  - The storage registry remains schema-valid with exactly the existing 84 physical-family rows; new classifications use contract_family_dispositions and do not claim a materialized family.
+  - Backup durable metadata binds the v2 aggregate and exact owner schema IDs, retains only public RecoverySet and no-store delivery-session metadata, keeps repository/snapshot/export bytes external, and excludes every raw key, Kit, protected attachment/submission, and session payload.
+  - Backup migration maps every admissible v1 axis explicitly, quarantines ambiguity, and never equates `pm.backup_restore_system.recovery_set_public.v2` with the deterministic Storage boot `recovery_set_id` work-set identity.
+  - Forge persistence retains independent repository and automation binding identities/generations plus provider-instance and provider-native object refs, never infers their equality, and never duplicates credential, authorization, SSH, private-CA, or protected-browser contents.
+  - repository_automation is the canonical automation shell key; github_actions.project_state.{project_id} and gha_panel_state.v1:{project_id} are read-only copy-forward aliases, canonical data wins, nonconflicting legacy fields merge only with a verified GitHub automation binding, and ambiguity quarantines with a typed migration receipt.
+  - Remote Access persists only public connector/Server identity, configuration, state enums, versions, redacted lifecycle/health and receipt facts plus opaque secure-state refs; raw connector state, host Tailscale state, tailnet identity/keys, reusable URLs/queries, cookies, protected browser content, and IPC secrets/payloads have no ordinary durable family.
+  - rt.backup_manifest_metadata.v1, rt.scm_forge_metadata.v1, and rt.server_remote_metadata.v1 cover their public requests/results/errors/availability/receipts/health and quarantine prohibited key/token/code/protected/browser/private-path/private-host/unsafe-SCM-config/capture input before persistence, indexing, export, help/copy, GUI, Chat, Usage, Doctor, or evidence reuse.
+  - Every touched disposition retains physical-family truth, `runtime_evidence=false`, and `receipt_only_no_eventrecord_pending_event_authority`; every transform remains `contract_only_no_runtime_evidence`.
+validation_surfaces:
+  - Draft 2020-12 validation of Plans/storage_value_registry.json against Plans/storage_value_registry.schema.json
+  - Draft 2020-12 validation of Plans/redaction_transform_registry.json against Plans/redaction_transform_registry.schema.json
+  - cross-reference/uniqueness checks for disposition IDs, transform IDs, record schema IDs, redaction refs, event-effect policy, physical status, and runtime_evidence
+  - focused assertions for the 84-family denominator, Backup v2/v1 exclusion, RecoverySet identity separation, Forge automation-key aliases, and tsnet secure-state exclusions
+risk_class: cross_domain_secret_leak_identity_collision_or_false_persistence_proof
+reasoning_tier: high
+context_scope: forge_backup_v2_tsnet_storage_and_redaction_transaction
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/redaction_transform_registry.json
+node_compile_hint:
+  mode: static_storage_redaction_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_backup_reconciliation.md
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+preserved_exact_tokens:
+  - pm.backup_restore_system.recovery_set_public.v2
+  - recovery_set_id
+  - repository_automation.project_state.{project_id}
+  - github_actions.project_state.{project_id}
+  - gha_panel_state.v1:{project_id}
+  - secure_state_ref
+  - receipt_only_no_eventrecord_pending_event_authority
+  - runtime_evidence=false
+negative_constraints:
+  - Do not inline or duplicate any key, Recovery Kit, PAT, OAuth grant/code/token, SSH/private-CA material, connector secure state, protected browser content, or credential contents behind an opaque ref.
+  - Do not persist raw host/private path or host/address data, unsafe SCM configuration/hook/environment content, screenshots, capture frames, clipboard/history, print-spool payload, browser data, or raw CLI/provider errors.
+  - Do not treat a disposition, schema, receipt, migration description, transform registration, or validator pass as physical registration, executed migration, security proof, runtime evidence, provider readiness, recovery evidence, or Event Authority admission.
+  - Do not add an EventRecord family or reinterpret an owner receipt/projection as an EventRecord.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Backup_Restore_System.md
+  - Plans/Forge_Integrations.md
+  - Plans/Remote_Access_System.md
 ```

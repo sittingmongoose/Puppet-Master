@@ -28,31 +28,35 @@
    --rail8-n is the step count, supplied by the take; the collapsed rail is
    n discs plus n-1 gaps, which is where the past-tense label starts. */
 .working-variant-8 .rail8-head {
-  display:flex; align-items:center; gap:10px; min-height:26px;
-  --rail8-d:15px; --rail8-g:2px;
+  display:flex; flex-direction:column; align-items:stretch; gap:6px; min-height:26px;
+  --rail8-d:20px; --rail8-g:3px;
   --rail8-w:calc(var(--rail8-n,14) * var(--rail8-d)
                  + (var(--rail8-n,14) - 1) * var(--rail8-g) + 12px);
 }
-.working-variant-8 .rail8-track { flex:0 0 auto; gap:var(--rail8-g); }
+.working-variant-8 .rail8-track {
+  flex:0 0 auto; width:100%; max-width:100%;
+  display:flex; flex-wrap:wrap; align-items:center;
+  gap:var(--rail8-g); overflow:visible;
+}
+.working-variant-8 .rail8-head-tail {
+  display:flex; align-items:center; gap:10px; width:100%; min-width:0;
+}
 .working-variant-8 .rail8-spacer { flex:1 1 auto; }
 .working-variant-8 .rail8-item {
   width:var(--rail8-d); height:var(--rail8-d);
-  padding:0; font:inherit; cursor:default; -webkit-appearance:none; appearance:none;
+  padding:0; font:inherit; cursor:pointer; -webkit-appearance:none; appearance:none;
 }
 .working-variant-8 .rail8-item.current {
-  width:calc(var(--rail8-d) + 7px); height:calc(var(--rail8-d) + 7px);
+  width:calc(var(--rail8-d) + 6px); height:calc(var(--rail8-d) + 6px);
 }
 /* The assistant pane is resizable; below ~430px the rail tightens rather
    than pushing the label out of the card. */
 @container (max-width: 430px) {
-  .working-variant-8 .rail8-head { --rail8-d:13px; --rail8-g:1px; gap:7px; }
-  .working-variant-8 .rail8-verb { font-size:11.5px; }
-  .working-variant-8 .rail8-count { font-size:11px; }
-  .working-variant-8 .rail8-pastlabel b { font-size:11.5px; }
-  .working-variant-8 .rail8-pastlabel i { font-size:11px; }
+  .working-variant-8 .rail8-head { --rail8-d:16px; --rail8-g:2px; gap:7px; }
+  .working-variant-8 .rail8-verb { font-size:12.5px; }
+  .working-variant-8 .rail8-count { font-size:12px; }
 }
 
-.working-variant-8 .done8 .rail8-item { cursor:pointer; }
 .working-variant-8 .rail8-item svg {
   transition:transform var(--pm-t-icon) var(--pm-ease-pop);
 }
@@ -60,8 +64,8 @@
 /* The reference starts the disc ~65ms after the label settles, so the two
    never move on the same frame (f0477 label, f0480 disc). */
 .working-variant-8 .rail8-item.enter { animation-delay:65ms; }
-.working-variant-8 .done8 .rail8-item:hover,
-.working-variant-8 .done8 .rail8-item:focus-visible {
+.working-variant-8 .rail8-item:hover,
+.working-variant-8 .rail8-item:focus-visible {
   color:var(--pm-step, var(--accent));
   background:color-mix(in srgb, var(--pm-step, var(--accent)) 14%, transparent);
   border-color:color-mix(in srgb, var(--pm-step, var(--accent)) 50%, transparent);
@@ -85,14 +89,14 @@
 @keyframes rail8-settle { from { opacity:.28; } to { opacity:1; } }
 
 .working-variant-8 .rail8-count {
-  font-size:12px; color:var(--muted); white-space:nowrap;
+  font-size:13px; color:var(--muted); white-space:nowrap;
   animation:rail8-settle var(--pm-t-label) var(--pm-ease-out) both;
 }
 .working-variant-8 .rail8-sum { font-size:12.5px; font-weight:650; color:var(--text); }
 .working-variant-8 .rail8-sum .pm-roll { font-weight:750; }
 
 .working-variant-8 .rail8-chev {
-  width:22px; height:22px; flex:0 0 auto; border-radius:7px; padding:0;
+  width:22px; height:22px; flex:0 0 22px; border-radius:7px; padding:0;
   display:grid; place-items:center; cursor:pointer;
   background:transparent; border:1px solid transparent; color:var(--subtle);
   transition:transform var(--pm-t-handoff) var(--pm-ease-pop),
@@ -108,55 +112,78 @@
 }
 .working-variant-8 .rail8-idle { display:block; }
 .working-variant-8 .rail8-idle .work-receipt { margin-top:0; }
+/* Collapsed completed rest: receipt only — drop the live-row floor. */
+.working-variant-8.is-done .rail8-under:has(.rail8-idle) {
+  min-height:0; margin-top:6px; gap:0;
+}
+.working-variant-8.is-done .working-body:has(.rail8-idle) { padding:8px 12px; }
 
 /* The rows carry .pm-materialize and their container carries .pm-rows, so
    the handoff budget lives in the shared --pm-row-base token rather than
    in a number copied into this file. First row at 175ms + one 45ms slot =
    220ms, which is the measured handoff. */
 .working-variant-8 .rail8-row {
-  display:flex; align-items:baseline; gap:10px; font-size:10.5px;
+  display:flex; align-items:baseline; gap:10px; font-size:11.5px;
 }
+button.rail8-row {
+  font: inherit; color: inherit; background: transparent; border: 0; padding: 0;
+  width: 100%; text-align: left; cursor: pointer;
+}
+.rail8-row.is-click:hover .rail8-rowtext,
+.rail8-row.is-shell:hover .rail8-rowtext { color: var(--accent); }
 .working-variant-8 .rail8-rowtext {
   flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis;
   white-space:nowrap; color:var(--text); opacity:.84;
 }
 .working-variant-8 .rail8-meta {
-  flex:0 0 auto; display:flex; gap:7px; font-family:var(--font-mono); font-size:10px;
+  flex:0 0 auto; display:flex; gap:7px; font-family:var(--font-mono); font-size:11px;
 }
 .working-variant-8 .rail8-add { color:var(--positive); font-weight:700; }
 .working-variant-8 .rail8-del { color:var(--danger); font-weight:700; }
 .working-variant-8 .rail8-tag {
-  color:var(--warning); font-size:9px; font-weight:700;
+  color:var(--warning); font-size:10px; font-weight:700;
   text-transform:uppercase; letter-spacing:.05em;
 }
+.working-variant-8 .rail8-item.pinned {
+  color:var(--pm-step, var(--accent));
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--pm-step, var(--accent)) 55%, transparent);
+}
+/* Streamed rows are prose — the single-line ellipsis treatment would clip
+   the cascade mid-word. */
+.working-variant-8 .rail8-rowtext.rail8-prose {
+  white-space:normal; overflow:visible; text-overflow:clip; opacity:1;
+}
+/* A LIVE rows region keeps a floor near its steady state so per-subject
+   refills stop walking a bottom-pinned transcript up and down (repro R3). */
+.working-variant-8:not(.is-done) .rail8-under.rail8-live { min-height:96px; }
+.working-variant-8 .rail8-under:empty { min-height:0; margin-top:0; }
+/* Orbit-strip parity (wave 3): kind-tinted discs, a larger pulsing current
+   disc, and a slight hover grow. data-step-kind on each disc scopes
+   --pm-step exactly like the orbit ring. */
+.working-variant-8 .rail8-item {
+  transition: transform var(--pm-t-icon) var(--pm-ease-pop),
+              background var(--pm-t-icon) var(--pm-ease-out),
+              border-color var(--pm-t-icon) var(--pm-ease-out),
+              color var(--pm-t-icon) var(--pm-ease-out);
+}
+.working-variant-8 .rail8-item.done {
+  color: var(--pm-step, var(--accent));
+  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 34%, var(--border));
+  background: color-mix(in srgb, var(--pm-step, var(--accent)) 9%, var(--surface-3));
+}
+.working-variant-8 .rail8-item.current {
+  color: var(--pm-step, var(--accent));
+  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 62%, var(--border));
+  background: color-mix(in srgb, var(--pm-step, var(--accent)) 18%, var(--surface-3));
+  animation: pm-disc-in var(--pm-t-icon) var(--pm-ease-pop) both,
+             orbit-strip-pulse 1900ms var(--ease) infinite;
+  animation-delay: 65ms, 600ms;
+}
+.working-variant-8 .rail8-item:hover { transform: scale(1.12); }
+.working-variant-8 .rail8-item.current:hover { transform: scale(1.06); }
+/* A live rail collapsed to icons-only should not float in 122px of card. */
+.working-variant-8:not(.is-done) .working-body:has(.rail8-under:empty) { min-height: 0; }
 
-/* Hover-to-re-open. The panel is a sibling of the disc, so one selector
-   drives all fourteen; the idle content simply fades away under it. */
-.working-variant-8 .rail8-pop {
-  position:absolute; left:0; right:0; top:calc(var(--rail8-top) + var(--rail8-gap)); display:none;
-}
-.working-variant-8 .rail8-item:hover + .rail8-pop,
-.working-variant-8 .rail8-item:focus-visible + .rail8-pop {
-  display:block; animation:rail8-open var(--pm-t-row) var(--pm-ease-out) both;
-}
-.working-variant-8 .rail8-poprows { display:flex; flex-direction:column; gap:5px; }
-/* The panel is anchored at --rail8-top, so pulling its label back by the
-   same amount lands it on the head line, exactly where the live verb sits
-   and exactly where the reference puts the past-tense label. */
-.working-variant-8 .rail8-pastlabel {
-  position:absolute; left:var(--rail8-w, 248px);
-  top:calc(-1 * (var(--rail8-top) + var(--rail8-gap))); height:var(--rail8-top);
-  max-width:calc(100% - var(--rail8-w, 248px) - 26px);
-  display:flex; align-items:center; gap:5px; white-space:nowrap; overflow:hidden;
-}
-.working-variant-8 .rail8-pastlabel b { font-weight:750; font-size:12.5px; color:var(--text); letter-spacing:-.012em; }
-.working-variant-8 .rail8-pastlabel i { font-style:normal; font-size:12px; color:var(--muted); }
-@keyframes rail8-open { from { opacity:0; filter:blur(var(--pm-blur)); } to { opacity:1; filter:blur(0); } }
-
-.working-variant-8 .rail8.done8:has(.rail8-item:hover) .rail8-head-label,
-.working-variant-8 .rail8.done8:has(.rail8-item:focus-visible) .rail8-head-label,
-.working-variant-8 .rail8.done8:has(.rail8-item:hover) .rail8-under,
-.working-variant-8 .rail8.done8:has(.rail8-item:focus-visible) .rail8-under { opacity:0; }
 
 /* =====================================================================
    9 — WORD STREAM
@@ -189,7 +216,7 @@
 .working-variant-9 .ws-chip {
   display:inline-flex; align-items:center; gap:4px; margin:0 1px;
   padding:1px 6px 1px 5px; border-radius:7px; vertical-align:-1px;
-  font-size:11px; line-height:1.4; color:var(--text);
+  font-size:12px; line-height:1.4; color:var(--text);
   background:color-mix(in srgb, var(--pm-step, var(--accent)) 11%, var(--surface-3));
   border:1px solid color-mix(in srgb, var(--pm-step, var(--accent)) 26%, var(--border));
   animation:ws-chip-in var(--pm-t-row) var(--pm-ease-out) backwards;
@@ -211,7 +238,7 @@
 @keyframes ws-caret { 0% { opacity:1; } 42% { opacity:.1; } 70%,100% { opacity:1; } }
 
 .working-variant-9 .ws-coda {
-  display:block; margin-top:11px; font-size:10.5px; color:var(--subtle);
+  display:block; margin-top:11px; font-size:11.5px; color:var(--subtle);
   letter-spacing:.01em;
   animation:ws-coda-in var(--pm-t-row) var(--pm-ease-out) both;
 }
@@ -226,7 +253,7 @@
    ===================================================================== */
 .working-variant-10 .tc10 { display:flex; flex-direction:column; gap:11px; container-type:inline-size; }
 .working-variant-10 .tc10-top { display:flex; align-items:center; gap:8px; }
-.working-variant-10 .tc10-count { font-size:12px; color:var(--muted); }
+.working-variant-10 .tc10-count { font-size:13px; color:var(--muted); }
 .working-variant-10 .tc10-count b {
   font-weight:750; font-size:16px; color:var(--text);
   letter-spacing:-.025em; margin-right:3px;
@@ -323,12 +350,12 @@
    its clipped gradient show, and .pm-settled paints it back. Setting
    color:var(--text) on this rule out-specifies both and silently kills
    the band while leaving the animation running. */
-.working-variant-10 .tc10-line b { font-size:12px; font-weight:700; align-self:flex-start; }
+.working-variant-10 .tc10-line b { font-size:13px; font-weight:700; align-self:flex-start; }
 /* Same rule the reference sets: only the active bold verb ever shimmers,
    and nothing else in the take carries a "still working" loop. */
 .working-variant-10 .tc10-line b.pm-shimmer.pm-settled { color:var(--text); }
 .working-variant-10 .tc10-line code {
-  font-family:var(--font-mono); font-size:10px; color:var(--accent-2);
+  font-family:var(--font-mono); font-size:11px; color:var(--accent-2);
   background:var(--code); border:1px solid var(--border); border-radius:8px;
   padding:6px 8px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
@@ -351,7 +378,7 @@
 .working-variant-10 .tc10-names { display:none; flex-wrap:wrap; gap:4px; }
 .working-variant-10 .tc10.fanned .tc10-names { display:flex; }
 .working-variant-10 .tc10-name {
-  font-size:9.5px; color:var(--muted); padding:2px 6px; border-radius:6px;
+  font-size:10.5px; color:var(--muted); padding:2px 6px; border-radius:6px;
   background:var(--surface-3); border:1px solid var(--border); white-space:nowrap;
   animation:tc10-name-in var(--pm-t-row) var(--pm-ease-out) both;
   animation-delay:calc(var(--pm-stagger,0) * var(--pm-t-cascade));
@@ -384,7 +411,7 @@
    the window sits ~10px above the tape when the completion total is present,
    and the header's own numerals must stay clear of it. */
 .working-variant-11 .dt-head {
-  display:flex; align-items:baseline; gap:7px; font-size:9.5px;
+  display:flex; align-items:baseline; gap:7px; font-size:10.5px;
   color:var(--subtle); letter-spacing:.05em; text-transform:uppercase;
   border-bottom:1px dashed var(--border-strong); padding-bottom:9px;
 }
@@ -392,7 +419,7 @@
 .working-variant-11 .dt-sep { color:var(--border-strong); }
 .working-variant-11 .dt-clock { color:var(--muted); }
 .working-variant-11 .dt-lines i,
-.working-variant-11 .dt-n i { font-style:normal; color:var(--subtle); margin-left:3px; font-size:9px; }
+.working-variant-11 .dt-n i { font-style:normal; color:var(--subtle); margin-left:3px; font-size:10px; }
 .working-variant-11 .dt-tot { display:flex; gap:7px; }
 /* The head totals are summaries, not events: the per-line flash belongs to
    the tape. What reads as change up here is the odometer stepping. */
@@ -452,7 +479,7 @@
 .working-variant-11 .dt-row {
   position:relative; flex:0 0 auto; height:var(--dt-h); line-height:var(--dt-h);
   overflow:hidden; display:flex; align-items:baseline; gap:7px;
-  font-size:10.5px; color:var(--muted);
+  font-size:11.5px; color:var(--muted);
   padding-left:8px;
   border-left:2px solid color-mix(in srgb, var(--pm-step, var(--accent)) 42%, transparent);
   animation:dt-print var(--dt-print) var(--pm-ease-out) both;
@@ -485,7 +512,7 @@
 
 .working-variant-11 .dt-v {
   font-style:normal; flex:0 0 34px; color:var(--subtle);
-  font-size:9px; text-transform:uppercase; letter-spacing:.06em;
+  font-size:10px; text-transform:uppercase; letter-spacing:.06em;
   --dt-i:0;
 }
 .working-variant-11 .dt-p {

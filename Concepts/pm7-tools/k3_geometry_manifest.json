@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.pmconcept7.k3_geometry_manifest.v1",
+  "authority": {
+    "geometry_and_ux": "Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html",
+    "geometry_and_ux_sha256": "ee973df22fa57cbaeac1f034cc158525c0747f04be5d8b0e68054a84c5f9d958",
+    "geometry_css": "Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-kimi/kimi.css",
+    "geometry_css_sha256": "d3a7ba468c31924845c6f80a4933c0c8e5abd7e668d168f9d38b3a74caf15b02",
+    "semantic_content": "Plans/Settings_System.md",
+    "shared_chrome_and_themes": "Plans/FinalGUISpec.md"
+  },
+  "wide_geometry": {
+    "minimum_host_width_px": 1181,
+    "rail_width_px": 250,
+    "topbar_height_px": 62,
+    "page_index_width_px": 168,
+    "shell_columns": ["domain_rail", "workspace_shell"],
+    "workspace_rows": ["topbar", "workspace_tabs", "document_or_manager"]
+  },
+  "responsive_geometry": [
+    {
+      "maximum_host_width_px": 1180,
+      "minimum_host_width_px": 961,
+      "rail_width_px": 215,
+      "topbar_height_px": 62,
+      "behavior": "narrower persistent rail; continuous document and manager structure retained"
+    },
+    {
+      "maximum_host_width_px": 960,
+      "minimum_host_width_px": 721,
+      "rail_width_px": 76,
+      "topbar_height_px": 62,
+      "behavior": "icon rail; detail inspector overlays without deleting document, index, or manager state"
+    },
+    {
+      "maximum_host_width_px": 720,
+      "minimum_host_width_px": 0,
+      "rail_width_px": 0,
+      "topbar_height_px": 55,
+      "behavior": "off-canvas rail; one-column document and manager reflow; no hidden owner state or replacement screen"
+    }
+  ],
+  "continuous_structure": {
+    "root": "#panel-settings #pm-settings-root",
+    "rail": "#panel-settings .domain-rail",
+    "topbar": "#panel-settings .topbar",
+    "workspace_tabs": "#panel-settings .workspace-tabs",
+    "document": "#panel-settings .document-layout",
+    "index": "#panel-settings .page-index",
+    "detail": "#panel-settings .detail-inspector",
+    "manager": "#panel-settings .manager-page",
+    "manager_tabs": "#panel-settings .manager-tabs",
+    "portal_root": "#panel-settings #pm-settings-portals"
+  },
+  "required_widths_px": [320, 520, 680, 720, 750, 760, 860, 900, 960, 975, 980, 1180, 1200, 1280, 1440, 1700, 2200, 2500],
+  "allowed_differences": [
+    "PMConcept7 theme-token paint",
+    "PMConcept7 theme typography",
+    "shared PMHoverTag overlay",
+    "Glass transparency and readable-opacity floor",
+    "Retro stepped motion and square chrome",
+    "host containment and focus-host Chat suppression",
+    "later-authority Settings and Doctor content",
+    "mild chrome adaptation that does not add navigation hierarchy"
+  ],
+  "forbidden_differences": [
+    "new Settings Back control",
+    "new Settings breadcrumb chrome",
+    "rail, topbar, workspace-tab, document, index, detail, or manager hierarchy replacement",
+    "viewport-only geometry that ignores the physical Settings host",
+    "theme-specific geometry forks",
+    "content truncation used to conceal layout failure"
+  ],
+  "verification": {
+    "browser_runner": "Concepts/pm7-tools/verify/systems_integration.mjs",
+    "accessibility_visual_runner": "Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs",
+    "wide_measurement_tolerance_px": 0.5,
+    "document_horizontal_overflow_allowed": false,
+    "native_slint_certification": false,
+    "claim_boundary": "Frozen authored expectations plus browser-concept measurements only; native Slint 1.17.1 geometry remains separately unproven."
+  }
+}

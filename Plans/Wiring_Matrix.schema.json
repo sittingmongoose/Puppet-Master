@@ -83,12 +83,12 @@
         },
         "request_schema_ref": {
           "type": "string",
-          "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[a-z][a-z0-9_]*$",
+          "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[A-Za-z][A-Za-z0-9_]*$",
           "description": "Optional exact pre-build JSON Schema definition for the dispatched request. Shared-runtime command rows require it through their bounded validator."
         },
         "result_schema_ref": {
           "type": "string",
-          "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[a-z][a-z0-9_]*$",
+          "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[A-Za-z][A-Za-z0-9_]*$",
           "description": "Optional exact pre-build JSON Schema definition for the returned result. Shared-runtime command rows require it through their bounded validator."
         },
         "expected_event_types": {
@@ -231,11 +231,10 @@
         "route_contract": {
           "type": "object",
           "additionalProperties": false,
-          "description": "Optional route/open proof for commands that navigate by canonical route_target and OpenSubject identity.",
+          "description": "Optional route proof for commands that navigate by canonical route_target identity. New PM7 Usage object-route branches omit OpenSubject; pre-existing artifact route/open commands retain their owner-declared OpenSubject bridge until separately migrated.",
           "required": [
             "route_target_required",
             "open_subject_required",
-            "route_target_object_kind_when_usage_event_ref",
             "correlation_passthrough"
           ],
           "properties": {
@@ -249,6 +248,18 @@
               "type": "string",
               "minLength": 1
             },
+            "route_target_object_id_source_when_usage_event_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "route_target_object_kind_when_attempt_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "route_target_object_id_source_when_attempt_id": {
+              "type": "string",
+              "minLength": 1
+            },
             "correlation_passthrough": {
               "type": "array",
               "minItems": 1,
@@ -257,7 +268,68 @@
                 "minLength": 1
               }
             }
-          }
+          },
+          "allOf": [
+            {
+              "anyOf": [
+                {
+                  "required": [
+                    "route_target_object_kind_when_usage_event_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "route_target_object_kind_when_attempt_id",
+                    "route_target_object_id_source_when_attempt_id"
+                  ]
+                }
+              ]
+            },
+            {
+              "if": {
+                "required": [
+                  "route_target_object_id_source_when_usage_event_ref"
+                ],
+                "properties": {
+                  "route_target_object_id_source_when_usage_event_ref": {
+                    "const": "usage_event_ref"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "open_subject_required": {
+                    "const": false
+                  },
+                  "route_target_object_id_source_when_usage_event_ref": {
+                    "const": "usage_event_ref"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "route_target_object_kind_when_attempt_id"
+                ],
+                "properties": {
+                  "route_target_object_kind_when_attempt_id": {
+                    "const": "usage_attempt"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "open_subject_required": {
+                    "const": false
+                  },
+                  "route_target_object_id_source_when_attempt_id": {
+                    "const": "attempt_id"
+                  }
+                }
+              }
+            }
+          ]
         },
         "example": {
           "type": "boolean",

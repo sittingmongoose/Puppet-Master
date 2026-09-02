@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json",
+  "title": "Puppet Master full-thread runtime value envelopes",
+  "description": "Closed pre-build value envelopes for the existing RuntimeResourceGovernor, ObservableWork, command outcome, continuity, projection, and public-ingress composition. This schema creates no runtime owner or Event Authority.",
+  "x-schema-id": "pm.full_thread_runtime.contracts.v1",
+  "x-runtime-schema-id-policy": "aggregate_plus_record_kind",
+  "oneOf": [
+    {"$ref": "#/$defs/GovernorDecisionRecord"},
+    {"$ref": "#/$defs/CommandOutcomeRecord"},
+    {"$ref": "#/$defs/ObservableWorkRecord"},
+    {"$ref": "#/$defs/FullThreadProjectionRecord"},
+    {"$ref": "#/$defs/ContinuityRecord"},
+    {"$ref": "#/$defs/PublicIngressGateDecision"}
+  ],
+  "$defs": {
+    "Id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "Sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "UtcTimestamp": {"type": "string", "format": "date-time"},
+    "IdentityEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_id", "operation_generation", "project_id", "project_home_server_id", "execution_host_id", "execution_environment_id", "topology_generation"],
+      "properties": {
+        "operation_id": {"$ref": "#/$defs/Id"},
+        "operation_generation": {"type": "integer", "minimum": 0},
+        "attempt_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "command_instance_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "project_id": {"$ref": "#/$defs/Id"},
+        "project_home_server_id": {"$ref": "#/$defs/Id"},
+        "plan_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "thread_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "goal_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "source_location_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "topology_generation": {"type": "integer", "minimum": 0}
+      }
+    },
+    "GovernorDecisionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "identity", "resource_family", "physical_parent_budget_id", "requested_budget_ref", "effective_budget_ref", "decision", "reason_code", "policy_generation", "host_observation_ref", "reevaluation_trigger", "observed_at"],
+      "properties": {
+        "schema_id": {"const": "pm.full_thread_runtime.contracts.v1"},
+        "record_kind": {"const": "governor_decision"},
+        "identity": {"$ref": "#/$defs/IdentityEnvelope"},
+        "resource_family": {"enum": ["cpu", "memory", "process", "watcher", "descriptor", "queue", "log", "artifact", "network", "port", "storage", "index", "browser", "capture", "provider", "lsp", "dap", "eval", "mcp", "test_host", "device", "container", "worktree", "package_manager_root"]},
+        "physical_parent_budget_id": {"$ref": "#/$defs/Id"},
+        "requested_budget_ref": {"$ref": "#/$defs/Id"},
+        "effective_budget_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "decision": {"enum": ["admitted", "queued", "admitted_degraded", "permission_blocked", "resource_blocked", "cancelled"]},
+        "reason_code": {"$ref": "#/$defs/Id"},
+        "policy_generation": {"type": "integer", "minimum": 0},
+        "host_observation_ref": {"$ref": "#/$defs/Id"},
+        "lease_refs": {"type": "array", "maxItems": 64, "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+        "reevaluation_trigger": {"$ref": "#/$defs/Id"},
+        "observed_at": {"$ref": "#/$defs/UtcTimestamp"}
+      }
+    },
+    "CommandOutcomeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "identity", "command_id", "payload_sha256", "idempotency_key", "target_generation", "outcome", "dispatch_frame_id", "acknowledgement_frame_offset", "same_frame_acknowledged", "acknowledgement_receipt_ref", "observed_at"],
+      "properties": {
+        "schema_id": {"const": "pm.full_thread_runtime.contracts.v1"},
+        "record_kind": {"const": "command_outcome"},
+        "identity": {"$ref": "#/$defs/IdentityEnvelope"},
+        "command_id": {"type": "string", "pattern": "^cmd\\.[a-z0-9_.-]+$", "maxLength": 160},
+        "payload_sha256": {"$ref": "#/$defs/Sha256"},
+        "idempotency_key": {"$ref": "#/$defs/Id"},
+        "target_generation": {"type": "integer", "minimum": 0},
+        "outcome": {"enum": ["accepted", "acknowledged", "executing", "succeeded", "failed", "cancelled", "rejected", "terminal_unknown"]},
+        "dispatch_frame_id": {"$ref": "#/$defs/Id"},
+        "acknowledgement_frame_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "acknowledgement_frame_offset": {"type": ["integer", "null"], "minimum": 0},
+        "same_frame_acknowledged": {"type": "boolean"},
+        "acknowledgement_receipt_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "result_receipt_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "error_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "observed_at": {"$ref": "#/$defs/UtcTimestamp"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"same_frame_acknowledged": {"const": true}}, "required": ["same_frame_acknowledged"]},
+          "then": {"required": ["acknowledgement_frame_id", "acknowledgement_frame_offset", "acknowledgement_receipt_ref"], "properties": {"acknowledgement_frame_id": {"type": "string", "minLength": 1, "maxLength": 256}, "acknowledgement_frame_offset": {"const": 0}, "acknowledgement_receipt_ref": {"type": "string", "minLength": 1, "maxLength": 256}}}
+        }
+      ]
+    },
+    "ObservableWorkRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "identity", "observable_work_id", "owner_domain", "work_state", "phase", "progress_kind", "freshness", "projection_generation", "cancel_available", "background_available", "retry_available", "dedupe_key", "observed_at"],
+      "properties": {
+        "schema_id": {"const": "pm.full_thread_runtime.contracts.v1"},
+        "record_kind": {"const": "observable_work"},
+        "identity": {"$ref": "#/$defs/IdentityEnvelope"},
+        "observable_work_id": {"$ref": "#/$defs/Id"},
+        "owner_domain": {"enum": ["chat", "thread", "plan", "goal", "worknode", "provider", "installation", "authentication", "connection", "browser", "capture", "testing", "migration", "storage", "plugin", "release", "lsp", "dap", "eval", "mcp", "worktree", "container", "other_registered"]},
+        "work_state": {"enum": ["accepted", "queued", "starting", "running", "waiting", "retrying", "reconnecting", "backgrounded", "degraded", "stalled", "committing", "verifying", "testing-route", "migrating-route", "rolling-back", "completed", "failed", "cancelled", "recovery-required"]},
+        "phase": {"$ref": "#/$defs/Id"},
+        "wait_reason": {"type": ["string", "null"], "enum": [null, "provider", "host", "network", "resource", "permission", "sign-in", "idle", "user", "package-manager", "lease", "rate-limit", "owner-recovery"]},
+        "next_reevaluation_condition": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "progress_kind": {"enum": ["none", "indeterminate", "units", "bytes", "items", "steps", "time"]},
+        "completed_units": {"type": ["integer", "number", "null"], "minimum": 0},
+        "total_units": {"type": ["integer", "number", "null"], "exclusiveMinimum": 0},
+        "progress_source_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "freshness": {"enum": ["current", "cached", "stale", "unknown", "conflicted"]},
+        "projection_generation": {"type": "integer", "minimum": 0},
+        "cancel_available": {"type": "boolean"},
+        "background_available": {"type": "boolean"},
+        "retry_available": {"type": "boolean"},
+        "dedupe_key": {"$ref": "#/$defs/Id"},
+        "result_receipt_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "error_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "observed_at": {"$ref": "#/$defs/UtcTimestamp"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"work_state": {"const": "waiting"}}, "required": ["work_state"]},
+          "then": {"required": ["wait_reason", "next_reevaluation_condition"], "properties": {"wait_reason": {"not": {"type": "null"}}, "next_reevaluation_condition": {"not": {"type": "null"}}}}
+        },
+        {
+          "if": {"properties": {"progress_kind": {"enum": ["units", "bytes", "items", "steps", "time"]}}, "required": ["progress_kind"]},
+          "then": {"required": ["completed_units", "total_units", "progress_source_ref"], "properties": {"completed_units": {"not": {"type": "null"}}, "total_units": {"not": {"type": "null"}}, "progress_source_ref": {"not": {"type": "null"}}}}
+        }
+      ]
+    },
+    "FullThreadProjectionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "identity", "collection_id", "collection_generation", "projection_generation", "window_start", "window_count", "overscan_count", "total_item_count", "stable_item_ids", "hidden_surface_policy", "durable_work_continues", "latest_request_generation", "stale_generation_disposition", "observed_at"],
+      "properties": {
+        "schema_id": {"const": "pm.full_thread_runtime.contracts.v1"},
+        "record_kind": {"const": "full_thread_projection"},
+        "identity": {"$ref": "#/$defs/IdentityEnvelope"},
+        "collection_id": {"$ref": "#/$defs/Id"},
+        "collection_generation": {"type": "integer", "minimum": 0},
+        "projection_generation": {"type": "integer", "minimum": 0},
+        "window_start": {"type": "integer", "minimum": 0},
+        "window_count": {"type": "integer", "minimum": 0, "maximum": 1000},
+        "overscan_count": {"type": "integer", "minimum": 0, "maximum": 250},
+        "total_item_count": {"type": "integer", "minimum": 0},
+        "stable_item_ids": {"type": "array", "maxItems": 1250, "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+        "hidden_surface_policy": {"enum": ["visible_hydrated", "visible_compact", "hidden_paint_suppressed", "offscreen_paint_suppressed", "collapsed_paint_suppressed"]},
+        "durable_work_continues": {"type": "boolean", "const": true},
+        "latest_request_generation": {"type": "integer", "minimum": 0},
+        "stale_generation_disposition": {"enum": ["not_stale", "rejected", "superseded_projection_only"]},
+        "observed_at": {"$ref": "#/$defs/UtcTimestamp"}
+      }
+    },
+    "ContinuityRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "identity", "continuity_trigger", "prior_transport_epoch", "current_transport_epoch", "continuation_generation", "return_route_ref", "dedupe_key", "disposition", "observed_at"],
+      "properties": {
+        "schema_id": {"const": "pm.full_thread_runtime.contracts.v1"},
+        "record_kind": {"const": "continuity"},
+        "identity": {"$ref": "#/$defs/IdentityEnvelope"},
+        "continuity_trigger": {"enum": ["reconnect", "restart", "sleep", "external-return"]},
+        "prior_transport_epoch": {"type": "integer", "minimum": 0},
+        "current_transport_epoch": {"type": "integer", "minimum": 0},
+        "continuation_generation": {"type": "integer", "minimum": 0},
+        "return_route_ref": {"$ref": "#/$defs/Id"},
+        "dedupe_key": {"$ref": "#/$defs/Id"},
+        "disposition": {"enum": ["same_logical_operation_resumed", "same_logical_operation_reconciled", "duplicate_suppressed", "stale_generation_rejected", "manual_recovery_required"]},
+        "observed_at": {"$ref": "#/$defs/UtcTimestamp"}
+      }
+    },
+    "PublicIngressGateDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "endpoint_id", "endpoint_generation", "request_id", "exposure_class", "authentication_decision_ref", "rate_decision_ref", "checked_before_expensive_hydration", "decision", "response_class", "operational_attribution_ref", "observed_at"],
+      "properties": {
+        "schema_id": {"const": "pm.full_thread_runtime.contracts.v1"},
+        "record_kind": {"const": "public_ingress_gate"},
+        "endpoint_id": {"$ref": "#/$defs/Id"},
+        "endpoint_generation": {"type": "integer", "minimum": 0},
+        "request_id": {"$ref": "#/$defs/Id"},
+        "exposure_class": {"enum": ["lan_private", "tailscale_private", "public_funnel", "public_reverse_proxy", "public_custom_domain"]},
+        "authentication_decision_ref": {"$ref": "#/$defs/Id"},
+        "rate_decision_ref": {"$ref": "#/$defs/Id"},
+        "permission_security_refs": {"type": "array", "maxItems": 32, "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+        "checked_before_expensive_hydration": {"type": "boolean", "const": true},
+        "decision": {"enum": ["admitted", "authentication_required", "authentication_rejected", "rate_limited", "blocked_policy", "stale_generation"]},
+        "response_class": {"enum": ["bounded_admitted", "bounded_redacted_rejection", "bounded_redacted_challenge", "bounded_redacted_rate_limit"]},
+        "operational_attribution_ref": {"$ref": "#/$defs/Id"},
+        "usage_record_ref": {"type": "null"},
+        "observed_at": {"$ref": "#/$defs/UtcTimestamp"}
+      }
+    }
+  }
+}

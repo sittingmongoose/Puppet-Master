@@ -2120,7 +2120,7 @@ resolve only through the command owner as follows:
 | `cmd.debug.session.action` | Rejected generic action; select the exact existing `cmd.run_debug.*` verb. |
 | `cmd.worktree.provision` | Normalize to `cmd.git.worktree.create`; a thread-scoped caller may use only the existing thread wrapper. |
 | `cmd.worktree.release` | Normalize to `cmd.git.worktree.release`. |
-| `cmd.context.receipt.open` | Normalize by subject kind to `cmd.nav.open_subject` or `cmd.nav.open_usage_subject`. |
+| `cmd.context.receipt.open` | Normalize to `cmd.nav.open_subject` for a document/artifact subject, or to `cmd.nav.open_usage_subject` only for event-backed Usage/Ledger identity carrying stable `usage_event_ref`; current PMConcept7 aggregate provider/account/panel cards stay local. |
 | `cmd.remote.reconnect` | Retained exact-`ExecutionEnvironmentId` compatibility wrapper over canonical `cmd.environment.reconnect`; it owns no peer lifecycle. |
 
 The 26 generalized Environment, outbox, installation, Eval, MCP, resource, BSD,
@@ -2312,4 +2312,203 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md
   - Plans/Shared_Integration_Runtime.md
+```
+
+## PMConcept7 Usage, command, and shared Assistant SSOT addendum - 2026-08-27
+
+The recovered PMConcept7 surfaces remain consumers of existing owners. They do not become a second
+architecture layer merely because the concept contains self-contained fixture adapters.
+
+| Concern | Sole current authority | Forbidden parallel authority |
+|---|---|---|
+| Usage data semantics and view state | `Plans/usage-feature.md` | PM7-local Usage service, provider-management service, or second Usage store |
+| Usage/Ledger drill-through | `Plans/Contracts_V0.md` plus `Plans/usage-feature.md`; event-primary callers use `usage_event`/`usage_event_ref`, while a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, retains `usage_event_ref` as correlation, and carries no `OpenSubject` | correlation or presentation identity substituted for the selected object id, current PMConcept7 aggregate-card route command, or unregistered object kind |
+| Usage/Dashboard widget layout | `Plans/Widget_System.md` plus `Plans/storage-plan.md` namespaces | PM7-local widget store, `dashboard_layout:v1` peer writes, per-frame preview persistence |
+| Home shell surface layout | `Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md` | Dashboard widget layout inside the Home record, concept-only size command/store |
+| Command language | `Plans/Commands_System.md` and `Plans/UI_Command_Catalog.md` | PM7 command family, popup/hover commands, duplicate `size_surface` primary command |
+| Production wiring | `Plans/Wiring_Matrix.md` and `Plans/Wiring_Matrix.production.json` | concept report or demo event log as production wiring authority |
+| Shared Assistant/context | `Plans/assistant-chat-design.md` | second Assistant node, controller, transcript store, context store, or page-local clone |
+| UI transaction rules | `Plans/UI_Wiring_Rules.md` | pointer-preview command/event stream or component-local persistence authority |
+| Events | existing Event Authority registry and payload owners | fabricated pointer-preview or `context.compaction.*` event family without registry admission |
+
+The PM7 prototype keys and concept events are source-lineage fixtures only. Production adapters must
+normalize them into the owner contracts above, and one shared Assistant node must be re-seated rather than
+recreated.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Widget_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/assistant-chat-design.md
+
+### DR-039 - PMConcept7 One Usage One Command Language And One Shared Assistant Boundary
+
+```yaml
+plan_unit_id: DR-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  PMConcept7 is a consumer of one Usage authority, one widget-layout authority per
+  canonical host namespace, one Home layout schema, one command language, one production
+  wiring matrix, one Event Authority registry, and one shared Assistant node/controller/
+  transcript/context store. Concept adapters, keys, logs, and the size_surface token are
+  source-lineage or compatibility inputs only. They cannot become peer stores, services,
+  commands, events, Assistant clones, or production wiring authorities; preview state and
+  current PMConcept7 aggregate provider/account/panel inspectors are local. Event-primary Usage callers cross
+  the route-command boundary with usage_event/usage_event_ref; a PMConcept7 Ledger attempt row crosses it with
+  usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries
+  no OpenSubject. Only settled owner commands cross the command/persistence boundary.
+gui_related: true
+gui_classification_reason: The DRY boundary prevents visible state divergence across Usage, Home, Dashboard, and the shared Assistant on different pages.
+split_recommended: false
+depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012]
+unblocks: [ACD-448]
+acceptance_criteria:
+  - Usage semantics, widget layout, Home layout, commands, wiring, events, and Assistant state each name one current owner and no peer PM7 authority; event-primary callers use usage_event/usage_event_ref and a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id with usage_event_ref correlation, while current aggregate inspectors dispatch no command, receipt, or domain event.
+  - Production never writes PM7 fixture keys as a peer to widget_layout:v1:usage, widget_layout:v1:dashboard, or home_workspace_layout.v1.
+  - No primary cmd.workspace_layout.size_surface or PM7 command family is registered.
+  - No pointer-preview or unregistered context-compaction event family is admitted.
+  - Every page reuses the same Assistant node/controller/transcript/context store and re-seats it instead of cloning it.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: pm7_parallel_owner_or_shared_assistant_clone_drift
+reasoning_tier: high
+context_scope: pm7_commands_wiring_dry_assistant
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: pm7_ssot_owner_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+preserved_exact_tokens:
+  - widget_layout:v1:usage
+  - widget_layout:v1:dashboard
+  - home_workspace_layout.v1
+  - cmd.workspace_layout.size_surface
+  - chatPanel
+  - chatResizer
+negative_constraints:
+  - Do not create a second Usage store, widget-layout store, Home layout store, command language, Event Authority, or production wiring matrix.
+  - Do not create a second Assistant node, controller, transcript store, context store, or page-local clone.
+  - Do not treat concept fixture logs, keys, or events as production authority.
+  - Do not attach OpenSubject to either typed cmd.nav.open_usage_subject selector branch, substitute correlation or presentation identity for the selected object_id, or invent a route kind for aggregate Usage cards; pre-existing artifact route/open source realization remains separately owned.
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
+```
+
+## Universal touch-closure and projection-owner addendum - 2026-08-31
+
+Every capability touched by the Settings, Product Onboarding, Guided Tour, Doctor, Server/WAN/Backup, Browser/Capture, SCM/Forge/Origin, plugin, and full-thread-performance wave must have one machine-readable row in `Plans/touch_closure.json`. A row is complete only when it routes one requirement to one canonical owner and PlanUnit, one DRY schema or typed local UI-action contract, one command/handler path where a domain operation exists, all intended GUI consumers in reverse, and named test/evidence and residual-risk boundaries. Paint, typography, animation tokens, hover-overlay presentation, and local disclosure state remain Final GUI/UI-action concerns and must not be promoted into false domain commands.
+
+Settings, Onboarding, Guided Tour, Doctor, and PMConcept7 remain consumers. They may cache and render owner projections, open exact owner routes, and observe `ObservableWork` and receipts, but they cannot duplicate Server, route, backup, Browser, capture, SCM, forge, plugin, Project, Named Plan, installation, authentication, update, storage, or repair state machines. `AuthBrowserSession` is outside agent, adapter, capture, inspection, replay, export, and restore authority. A concept simulation is not a native handler, production wiring receipt, runtime result, or Slint certification.
+
+The closure validator fails on duplicate command/action IDs, competing owners, orphan controls, command-without-handler, handler-without-command, missing GUI reverse coverage, stale PlanRefs, undocumented local-action exemptions, or incomplete closure dimensions. A row may remain `partial`, `blocked`, or `missing`; it must not be relabeled `implemented` merely because canon, schema, fixtures, PMConcept7 behavior, or browser evidence exists.
+
+ContractRef: ContractName:Plans/touch_closure.json, SchemaID:touch_closure.schema.json, ContractName:Plans/Settings_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
+
+### DR-040 - Universal touch closure and sole-owner projection law
+
+```yaml
+plan_unit_id: DR-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Every touched system, command, typed local UI action, route, control, setting, and migration has exactly one Touch Closure row connecting requirement evidence, canonical owner and PlanUnit, one DRY contract, one sole handler route, GUI and reverse coverage, availability and disabled reason, events or receipts, ObservableWork, persistence or migration, tests, evidence class, disposition, and residual risk. Consumer GUIs render or route owner state and never create parallel runtimes. Presentation-only behavior remains a typed local UI action or theme/motion token rather than a false domain command, and concept/browser/static evidence never becomes native runtime or Slint certification.
+gui_related: true
+gui_classification_reason: Governs every visible control's owner route, action type, disabled state, and evidence boundary.
+split_recommended: false
+depends_on: [DR-039, UIW-012, WM-045]
+unblocks: [UIW-013, WM-046]
+acceptance_criteria:
+  - Plans/touch_closure.json has one unique complete row for every touched command and typed local UI action.
+  - Duplicate owners or IDs, orphan controls, missing handler/command direction, missing GUI reverse coverage, stale PlanRefs, and incomplete dimensions fail verification.
+  - Paint, typography, motion, hover-overlay, and local disclosure state are not assigned fake domain commands.
+  - Static canon, schemas, fixtures, browser concepts, and browser tests retain distinct evidence classes and cannot imply native runtime or Slint certification.
+  - Partial, blocked, and missing dispositions retain named residual risk rather than being promoted to implemented.
+validation_surfaces:
+  - python3 scripts/pm-touch-closure-verify.py
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_owner_or_false_touch_closure
+reasoning_tier: high
+context_scope: universal_touch_closure
+implementation_surfaces: [Plans/DRY_Rules.md, Plans/touch_closure.json, Plans/touch_closure.schema.json, scripts/pm-touch-closure-verify.py]
+node_compile_hint: {mode: touch_closure_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Settings_Dependency_and_Work_Correction_2026-08-13
+  - PM_Onboarding_Doctor_Dependency_and_Work_Correction_2026-08-13
+  - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+preserved_exact_tokens: [ObservableWork, AuthBrowserSession, implemented, already_current_with_evidence, superseded, retired_bakeoff_process_only, partial, blocked, missing]
+negative_constraints:
+  - Do not infer a native handler or production receipt from a concept simulation.
+  - Do not create parallel GUI-owned runtime state machines.
+  - Do not invent a command for ephemeral presentation behavior.
+  - Do not hide incomplete closure behind an aggregate pass.
+owner_hints: [Plans/DRY_Rules.md, Plans/Wiring_Matrix.md, Plans/UI_Wiring_Rules.md]
+```
+
+## Touch Closure Exact-Key Addendum - 2026-09-01
+
+### DR-041 - Touch Closure Exact-Key And No-Peer DRY Rule
+
+```yaml
+plan_unit_id: DR-041
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  Touch Closure extends DR-040 through exact command_id, profile_id, sole_handler,
+  schema_ref, and reverse-consumer keys. Each actionable primary command has one
+  canonical identity, one typed owner contract, and exactly one sole future-handler
+  identity. A compatibility alias normalizes before dispatch to its exact primary
+  target and must not receive a peer production row, peer handler, peer schema, or
+  peer state machine. Typed local UI actions remain local, blocked tokens remain
+  excluded from production wiring, and reverse coverage must use real GUI consumers
+  rather than synthetic controls. Both dedicated validators fail closed on drift.
+gui_related: true
+gui_classification_reason: The invariant prevents duplicate GUI actions, fabricated controls, and divergent command behavior across PMConcept7 consumers.
+split_recommended: false
+depends_on: [DR-040, C-051, CS-074, UCC-152, WM-051, UIW-017]
+unblocks: [CV-326, 0PI-068]
+acceptance_criteria:
+  - "Every actionable primary command has exactly one canonical command_id, one schema_ref pair, one sole future-handler identity, and at least one intended reverse consumer where GUI-required."
+  - "Every alias normalizes to its exact primary target before permission, availability, dispatch, receipt, event, or persistence handling and has no peer production row."
+  - "Typed local UI actions use typed owner-local controllers and cannot contain a handlers:: domain identity."
+  - "Blocked or rejected tokens have explicit dispositions and no production wiring; synthetic GUI controls cannot satisfy missing reverse coverage."
+  - "The server-gap and Touch Closure validators run independently and reject duplicate keys, peer handlers, unresolved schema refs, missing reverse routes, and denominator drift."
+validation_surfaces:
+  - python3 scripts/pm-server-command-gap-verify.py --json
+  - python3 scripts/pm-touch-closure-verify.py --json
+  - python3 scripts/pm-plans-verify.py validate-server-command-gap
+  - python3 scripts/pm-plans-verify.py validate-touch-closure
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_command_handler_schema_or_gui_authority
+reasoning_tier: high
+context_scope: touch_closure_exact_key_no_peer_rule
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/server_command_gap_adjudication.json
+  - Plans/server_command_gap_adjudication.schema.json
+  - Plans/touch_closure.json
+  - Plans/touch_closure.schema.json
+  - Plans/Wiring_Matrix.production.json
+  - scripts/pm-server-command-gap-verify.py
+  - scripts/pm-touch-closure-verify.py
+node_compile_hint: {mode: exact_key_static_dry_gate_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/DRY_Rules.md#dr-040---universal-touch-closure-and-sole-owner-projection-law
+  - Plans/Crosswalk.md#c-051---touch-closure-authority-and-consumer-routing
+preserved_exact_tokens: [command_id, profile_id, sole_handler, schema_ref, reverse_consumers, no-peer, typed local UI action]
+negative_constraints:
+  - "Do not register an alias as a second primary command or give it a peer handler or production row."
+  - "Do not turn a typed local presentation action into a false domain command."
+  - "Do not fabricate controls, handlers, schemas, events, receipts, persistence, or runtime evidence to close a row."
+owner_hints: [Plans/DRY_Rules.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
 ```

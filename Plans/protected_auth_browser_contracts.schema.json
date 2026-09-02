@@ -2,11 +2,17 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "pm.protected_auth_browser_contracts.schema.v1",
   "title": "Puppet Master Protected Auth Browser Boundary",
-  "description": "Closed discrimination between ordinary PM-native browser work and the human-only, ephemeral AuthBrowserSession. Protected auth sessions may expose only the redacted lifecycle projection defined here.",
+  "description": "Closed discrimination between ordinary PM-native browser work and the human-only, ephemeral AuthBrowserSession. Protected auth sessions may expose only the redacted lifecycle projection defined here, keyed to one exact operation and initiating active Client/session generation. Completion, cancel, timeout, stale return, and Client rejection are fenced without exposing content or allowing caller navigation, capture, recording, or persistence. Runtime payload identity is the declared aggregate schema_id plus one unique record_kind discriminator.",
+  "x-schema-id": "pm.protected_auth_browser_contracts.schema.v1",
+  "x-runtime-schema-id-policy": "aggregate_plus_record_kind",
   "oneOf": [
     {"$ref": "#/$defs/ordinary_browser_operation"},
     {"$ref": "#/$defs/ordinary_browser_artifact"},
-    {"$ref": "#/$defs/protected_auth_browser_lifecycle_projection"}
+    {"$ref": "#/$defs/protected_auth_browser_lifecycle_projection"},
+    {"$ref": "#/$defs/protected_auth_handoff_admission_projection"},
+    {"$ref": "#/$defs/connection_draft"},
+    {"$ref": "#/$defs/connection_profile_lifecycle"},
+    {"$ref": "#/$defs/source_api_orchestration"}
   ],
   "$defs": {
     "non_secret_ref": {
@@ -50,14 +56,26 @@
         "session_class",
         "session_security_class",
         "session_epoch",
-        "domain_policy_ref"
+        "domain_policy_ref",
+        "operation_id",
+        "operation_generation",
+        "initiating_client_id",
+        "initiating_client_session_generation",
+        "return_target_ref",
+        "client_handoff_policy"
       ],
       "properties": {
         "browser_session_id": {"type": "string", "minLength": 1},
         "session_class": {"const": "auth_browser"},
         "session_security_class": {"const": "protected_auth"},
         "session_epoch": {"type": "integer", "minimum": 0},
-        "domain_policy_ref": {"$ref": "#/$defs/non_secret_ref"}
+        "domain_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "operation_id": {"$ref": "#/$defs/non_secret_ref"},
+        "operation_generation": {"type": "integer", "minimum": 0},
+        "initiating_client_id": {"$ref": "#/$defs/non_secret_ref"},
+        "initiating_client_session_generation": {"type": "integer", "minimum": 0},
+        "return_target_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "client_handoff_policy": {"const": "initiating_active_client_only"}
       }
     },
     "browser_subject_ref": {
@@ -138,9 +156,20 @@
         "human_presence_required",
         "ephemeral",
         "content_observation_allowed",
+        "caller_navigation_allowed",
+        "content_capture_allowed",
+        "content_recording_allowed",
         "persistence_allowed",
+        "client_binding_state",
+        "operation_currentness_state",
+        "return_fence_state",
+        "terminal_reason_code",
+        "focus_return_ref",
         "denied_capability_codes",
         "redaction_profile_ref",
+        "safe_attention_state",
+        "created_at_utc",
+        "expires_at_utc",
         "updated_at_utc"
       ],
       "properties": {
@@ -155,6 +184,7 @@
             "active_human_only",
             "completed",
             "cancelled",
+            "timed_out",
             "expired",
             "failed_closed"
           ]
@@ -162,7 +192,46 @@
         "human_presence_required": {"const": true},
         "ephemeral": {"const": true},
         "content_observation_allowed": {"const": false},
+        "caller_navigation_allowed": {"const": false},
+        "content_capture_allowed": {"const": false},
+        "content_recording_allowed": {"const": false},
         "persistence_allowed": {"const": false},
+        "client_binding_state": {
+          "type": "string",
+          "enum": ["initiating_active", "initiating_inactive", "initiating_disconnected", "initiating_mismatched"]
+        },
+        "operation_currentness_state": {
+          "type": "string",
+          "enum": ["current", "stale", "mismatched"]
+        },
+        "return_fence_state": {
+          "type": "string",
+          "enum": [
+            "pending_exact_operation_and_client",
+            "exact_operation_and_initiating_active_client",
+            "cancelled_without_content_return",
+            "timed_out_without_content_return",
+            "rejected_stale_operation",
+            "rejected_initiating_client",
+            "rejected_client_and_stale_operation"
+          ]
+        },
+        "terminal_reason_code": {
+          "oneOf": [
+            {
+              "enum": [
+                "user_cancelled",
+                "deadline_expired",
+                "stale_operation_return",
+                "initiating_client_unavailable_or_mismatched",
+                "client_and_operation_fence_rejected",
+                "verification_failed"
+              ]
+            },
+            {"type": "null"}
+          ]
+        },
+        "focus_return_ref": {"$ref": "#/$defs/non_secret_ref"},
         "denied_capability_codes": {
           "type": "array",
           "uniqueItems": true,
@@ -214,6 +283,326 @@
         "created_at_utc": {"type": "string", "format": "date-time"},
         "updated_at_utc": {"type": "string", "format": "date-time"},
         "expires_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"client_binding_state": {"not": {"const": "initiating_active"}}}, "required": ["client_binding_state"]},
+          "then": {
+            "properties": {
+              "state": {"const": "failed_closed"},
+              "return_fence_state": {"enum": ["rejected_initiating_client", "rejected_client_and_stale_operation"]},
+              "terminal_reason_code": {"enum": ["initiating_client_unavailable_or_mismatched", "client_and_operation_fence_rejected"]},
+              "safe_attention_state": {"const": "failed_closed"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"operation_currentness_state": {"not": {"const": "current"}}}, "required": ["operation_currentness_state"]},
+          "then": {
+            "properties": {
+              "state": {"const": "failed_closed"},
+              "return_fence_state": {"enum": ["rejected_stale_operation", "rejected_client_and_stale_operation"]},
+              "terminal_reason_code": {"enum": ["stale_operation_return", "client_and_operation_fence_rejected"]},
+              "safe_attention_state": {"const": "failed_closed"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"enum": ["requested", "awaiting_human", "active_human_only"]}}, "required": ["state"]},
+          "then": {
+            "properties": {
+              "client_binding_state": {"const": "initiating_active"},
+              "operation_currentness_state": {"const": "current"},
+              "return_fence_state": {"const": "pending_exact_operation_and_client"},
+              "terminal_reason_code": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"const": "completed"}}, "required": ["state"]},
+          "then": {
+            "properties": {
+              "client_binding_state": {"const": "initiating_active"},
+              "operation_currentness_state": {"const": "current"},
+              "return_fence_state": {"const": "exact_operation_and_initiating_active_client"},
+              "terminal_reason_code": {"type": "null"},
+              "safe_attention_state": {"const": "completion_available"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"const": "cancelled"}}, "required": ["state"]},
+          "then": {
+            "properties": {
+              "return_fence_state": {"const": "cancelled_without_content_return"},
+              "terminal_reason_code": {"const": "user_cancelled"},
+              "safe_attention_state": {"const": "failed_closed"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"enum": ["timed_out", "expired"]}}, "required": ["state"]},
+          "then": {
+            "properties": {
+              "return_fence_state": {"const": "timed_out_without_content_return"},
+              "terminal_reason_code": {"const": "deadline_expired"},
+              "safe_attention_state": {"const": "failed_closed"}
+            }
+          }
+        }
+      ]
+    },
+    "protected_auth_handoff_admission_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "handoff_id",
+        "subject",
+        "purpose",
+        "provider_kind",
+        "owning_server_id",
+        "execution_host_ref",
+        "resource_ref",
+        "authentication_profile_ref",
+        "continuation_ref",
+        "requested_scope_set_ref",
+        "method",
+        "registration_state",
+        "availability_state",
+        "handoff_started",
+        "human_only",
+        "content_recording_allowed",
+        "content_inspection_allowed",
+        "content_capture_allowed",
+        "agent_access_allowed",
+        "adapter_access_allowed",
+        "protected_content_exposed",
+        "mutation_authority_granted",
+        "exact_client_and_operation_return_required",
+        "event_effect_policy",
+        "runtime_evidence_claimed",
+        "evaluated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.protected_auth_browser_contracts.schema.v1"},
+        "record_kind": {"const": "protected_auth_handoff_admission_projection"},
+        "handoff_id": {"$ref": "#/$defs/non_secret_ref"},
+        "subject": {"$ref": "#/$defs/protected_auth_browser_subject"},
+        "purpose": {
+          "enum": ["forge_api_auth", "backup_destination_auth", "tailscale_connector_auth"]
+        },
+        "provider_kind": {
+          "enum": ["forgejo", "gitea", "google_drive", "microsoft_onedrive", "hosted_tailscale", "headscale"]
+        },
+        "owning_server_id": {"$ref": "#/$defs/non_secret_ref"},
+        "execution_host_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "resource_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "authentication_profile_ref": {
+          "anyOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]
+        },
+        "continuation_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "requested_scope_set_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "method": {
+          "enum": [
+            "guided_scoped_pat",
+            "registered_oauth_pkce",
+            "official_system_browser",
+            "approved_device_flow",
+            "protected_code_entry",
+            "official_cli_browser_auth",
+            "headscale_pre_auth"
+          ]
+        },
+        "registration_state": {"enum": ["not_applicable", "registered", "approval_pending", "unavailable"]},
+        "availability_state": {"enum": ["protected", "handler_unavailable", "read_only", "unsupported"]},
+        "handoff_started": {"type": "boolean"},
+        "human_only": {"const": true},
+        "content_recording_allowed": {"const": false},
+        "content_inspection_allowed": {"const": false},
+        "content_capture_allowed": {"const": false},
+        "agent_access_allowed": {"const": false},
+        "adapter_access_allowed": {"const": false},
+        "protected_content_exposed": {"const": false},
+        "mutation_authority_granted": {"const": false},
+        "exact_client_and_operation_return_required": {"const": true},
+        "event_effect_policy": {"const": "redacted_lifecycle_projection_only_no_eventrecord"},
+        "runtime_evidence_claimed": {"const": false},
+        "evaluated_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"purpose": {"const": "forge_api_auth"}}, "required": ["purpose"]},
+          "then": {"properties": {"provider_kind": {"enum": ["forgejo", "gitea"]}}}
+        },
+        {
+          "if": {"properties": {"purpose": {"const": "backup_destination_auth"}}, "required": ["purpose"]},
+          "then": {"properties": {"provider_kind": {"enum": ["google_drive", "microsoft_onedrive"]}}}
+        },
+        {
+          "if": {"properties": {"purpose": {"const": "tailscale_connector_auth"}}, "required": ["purpose"]},
+          "then": {"properties": {"provider_kind": {"enum": ["hosted_tailscale", "headscale"]}}}
+        },
+        {
+          "if": {"properties": {"method": {"const": "registered_oauth_pkce"}}, "required": ["method"]},
+          "then": {
+            "if": {"properties": {"registration_state": {"const": "registered"}}, "required": ["registration_state"]},
+            "else": {"properties": {"availability_state": {"const": "handler_unavailable"}, "handoff_started": {"const": false}}}
+          }
+        },
+        {
+          "if": {"properties": {"availability_state": {"enum": ["handler_unavailable", "read_only", "unsupported"]}}, "required": ["availability_state"]},
+          "then": {"properties": {"handoff_started": {"const": false}}}
+        }
+      ]
+    },
+    "ProtectedAuthLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "required": [
+            "human_only",
+            "content_recording_allowed",
+            "content_inspection_allowed",
+            "agent_access_allowed",
+            "adapter_access_allowed",
+            "persistence_allowed",
+            "protected_content_exposed"
+          ],
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.auth_session.close_secure_browser",
+                "ui.auth_session.copy_device_code",
+                "ui.auth_session.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.auth_session.close_secure_browser",
+                "cmd.auth_session.copy_device_code",
+                "cmd.auth_session.open_details"
+              ]
+            },
+            "human_only": {
+              "const": true
+            },
+            "content_recording_allowed": {
+              "const": false
+            },
+            "content_inspection_allowed": {
+              "const": false
+            },
+            "agent_access_allowed": {
+              "const": false
+            },
+            "adapter_access_allowed": {
+              "const": false
+            },
+            "persistence_allowed": {
+              "const": false
+            },
+            "protected_content_exposed": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "ProtectedAuthLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "required": [
+            "human_only",
+            "content_recording_allowed",
+            "content_inspection_allowed",
+            "agent_access_allowed",
+            "adapter_access_allowed",
+            "persistence_allowed",
+            "protected_content_exposed"
+          ],
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.auth_session.close_secure_browser",
+                "ui.auth_session.copy_device_code",
+                "ui.auth_session.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.auth_session.close_secure_browser",
+                "cmd.auth_session.copy_device_code",
+                "cmd.auth_session.open_details"
+              ]
+            },
+            "human_only": {
+              "const": true
+            },
+            "content_recording_allowed": {
+              "const": false
+            },
+            "content_inspection_allowed": {
+              "const": false
+            },
+            "agent_access_allowed": {
+              "const": false
+            },
+            "adapter_access_allowed": {
+              "const": false
+            },
+            "persistence_allowed": {
+              "const": false
+            },
+            "protected_content_exposed": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "connection_draft": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "draft_id", "connection_kind", "state", "provider_kind", "instance_intent_ref", "target_intent_ref", "return_context_ref", "requested_scope_set_ref", "auth_session_ref", "selected_resource_ref", "minimum_non_destructive_capability_ref", "existing_connection_required", "draft_attachment_refs", "activation_sequence", "atomic_activation", "connection_ref", "callbacks_expired", "remove_only_uncommitted_draft_attachments", "preserve_user_owned_existing_profiles", "global_provider_configuration_mutated", "backup_connection_removal_deletes_backup_data", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.protected_auth_browser_contracts.schema.v1"}, "record_kind": {"const": "connection_draft"}, "draft_id": {"$ref": "#/$defs/non_secret_ref"}, "connection_kind": {"enum": ["forge", "automation", "cloud_storage"]},
+        "state": {"enum": ["inactive", "auth_pending", "target_selection", "verifying", "ready_to_activate", "active", "cancelled", "expired", "failed"]},
+        "provider_kind": {"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin", "generic_git", "google_drive", "microsoft_onedrive", "s3_compatible", "sftp", "webdav"]},
+        "instance_intent_ref": {"$ref": "#/$defs/non_secret_ref"}, "target_intent_ref": {"$ref": "#/$defs/non_secret_ref"}, "return_context_ref": {"$ref": "#/$defs/non_secret_ref"}, "requested_scope_set_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "auth_session_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}, "selected_resource_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}, "minimum_non_destructive_capability_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "existing_connection_required": {"const": false}, "draft_attachment_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "activation_sequence": {"type": "array", "prefixItems": [{"const": "create_inactive_draft"}, {"const": "start_shared_auth_session"}, {"const": "select_permitted_resource"}, {"const": "verify_minimum_non_destructive_capabilities"}, {"const": "activate_connection"}], "items": false},
+        "atomic_activation": {"type": "boolean"}, "connection_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}, "callbacks_expired": {"type": "boolean"}, "remove_only_uncommitted_draft_attachments": {"const": true}, "preserve_user_owned_existing_profiles": {"const": true}, "global_provider_configuration_mutated": {"const": false}, "backup_connection_removal_deletes_backup_data": {"const": false}, "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "active"}}, "required": ["state"]}, "then": {"properties": {"auth_session_ref": {"$ref": "#/$defs/non_secret_ref"}, "selected_resource_ref": {"$ref": "#/$defs/non_secret_ref"}, "minimum_non_destructive_capability_ref": {"$ref": "#/$defs/non_secret_ref"}, "atomic_activation": {"const": true}, "connection_ref": {"$ref": "#/$defs/non_secret_ref"}}}, "else": {"properties": {"connection_ref": {"type": "null"}}}},
+        {"if": {"properties": {"state": {"enum": ["cancelled", "expired"]}}, "required": ["state"]}, "then": {"properties": {"callbacks_expired": {"const": true}, "atomic_activation": {"const": false}}}}
+      ]
+    },
+    "connection_profile_lifecycle": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "connection_ref", "service_label", "account_label", "instance_label", "requested_permissions_labels", "extra_scopes_requested_only_for_operation", "refresh_profile_store", "survives_container_replacement", "refresh_writes_serialized_per_profile", "sign_out_scope", "dependency_preview_required", "global_cli_profiles_deleted", "copy_project_settings_copies_token", "general_process_credential_inheritance", "git_and_api_roles_separate", "revoke_ref", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.protected_auth_browser_contracts.schema.v1"}, "record_kind": {"const": "connection_profile_lifecycle"}, "connection_ref": {"$ref": "#/$defs/non_secret_ref"}, "service_label": {"type": "string", "minLength": 1}, "account_label": {"type": "string", "minLength": 1}, "instance_label": {"type": "string", "minLength": 1}, "requested_permissions_labels": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "extra_scopes_requested_only_for_operation": {"const": true}, "refresh_profile_store": {"enum": ["owning_server_environment_vault", "external_secret_reference"]}, "survives_container_replacement": {"const": true}, "refresh_writes_serialized_per_profile": {"const": true}, "sign_out_scope": {"const": "exact_connection_or_profile_only"}, "dependency_preview_required": {"const": true}, "global_cli_profiles_deleted": {"const": false}, "copy_project_settings_copies_token": {"const": false}, "general_process_credential_inheritance": {"const": false}, "git_and_api_roles_separate": {"const": true}, "revoke_ref": {"$ref": "#/$defs/non_secret_ref"}, "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "source_api_orchestration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "operation_id", "semantic_handler_ref", "consumer_paths", "ordered_suboperations", "shared_governor_lease_refs", "lineage_refs", "source_location_execution_environment_ref", "forge_egress_host_ref", "silent_cross_host_fallback", "errors_scrubbed_before_consumers", "private_panel_implementation", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.protected_auth_browser_contracts.schema.v1"}, "record_kind": {"const": "source_api_orchestration"}, "operation_id": {"$ref": "#/$defs/non_secret_ref"}, "semantic_handler_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "consumer_paths": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": ["gui", "command_palette", "automation"]}, "allOf": [{"contains": {"const": "gui"}}, {"contains": {"const": "command_palette"}}, {"contains": {"const": "automation"}}]},
+        "ordered_suboperations": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["ordinal", "owner", "target_ref", "receipt_ref"], "properties": {"ordinal": {"type": "integer", "minimum": 1}, "owner": {"enum": ["local_git_or_jujutsu", "worktree_or_workspace_manager", "forge_adapter", "automation_adapter"]}, "target_ref": {"$ref": "#/$defs/non_secret_ref"}, "receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        "shared_governor_lease_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}}, "lineage_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}}, "source_location_execution_environment_ref": {"$ref": "#/$defs/non_secret_ref"}, "forge_egress_host_ref": {"$ref": "#/$defs/non_secret_ref"}, "silent_cross_host_fallback": {"const": false}, "errors_scrubbed_before_consumers": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"enum": ["events", "usage", "chat"]}, "allOf": [{"contains": {"const": "events"}}, {"contains": {"const": "usage"}}, {"contains": {"const": "chat"}}]}, "private_panel_implementation": {"const": false}, "runtime_evidence_claimed": {"const": false}
       }
     }
   }

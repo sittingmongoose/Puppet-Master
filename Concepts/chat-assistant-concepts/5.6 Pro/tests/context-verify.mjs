@@ -521,6 +521,285 @@ await page.evaluate(t => window.PM56_DEMO.setTheme(t), 'basic-dark');
   await page2.close();
 }
 
+/* =====================================================================
+   11. SHARED COMMAND PATH, MUTABLE PROJECTION, EVIDENCE, AND FOCUS
+   ===================================================================== */
+const ctxSnapshot = (tid) => page.evaluate(t => window.PM56_CTX.snapshot(t), tid);
+const countsOf = s => ({ results:s.commandResults.length, receipts:s.dispatchReceipts.length,
+  history:s.compaction.history.length, events:s.eventRecords.length });
+
+await page.evaluate(() => window.PM56_DEMO.reset());
+await page.waitForTimeout(180);
+await page.evaluate(() => window.PM56_DEMO.selectThread('query'));
+await openDrawer();
+const silent0 = await ctxSnapshot('query');
+const silentCounts0 = countsOf(silent0);
+await page.locator('.ctx-drawer [data-action="compact-now"]').click();
+await page.waitForTimeout(80);
+ok((await page.locator('.ctx-compact-dialog[role="dialog"][aria-modal="true"]').count()) === 1,
+  'Drawer Preview Compact opens an accessible modal preview');
+ok((await page.evaluate(() => document.activeElement?.dataset.action)) === 'ctx-apply-compaction',
+  'Compaction preview moves focus to Apply');
+await page.locator('[data-action="ctx-cancel-compaction"]').first().click();
+await page.waitForTimeout(100);
+const silentCancel = await ctxSnapshot('query');
+ok(JSON.stringify(countsOf(silentCancel)) === JSON.stringify(silentCounts0),
+  'Pre-dispatch Cancel records no result, receipt, history row, or event', JSON.stringify(countsOf(silentCancel)));
+ok((await page.evaluate(() => document.activeElement?.dataset.action)) === 'compact-now',
+  'Cancel restores focus to Preview Compact instead of body');
+
+await page.locator('.ctx-drawer [data-action="compact-now"]').click();
+await page.keyboard.press('Escape');
+await page.waitForTimeout(100);
+const silentEscape = await ctxSnapshot('query');
+ok(JSON.stringify(countsOf(silentEscape)) === JSON.stringify(silentCounts0),
+  'Pre-dispatch Escape records no result, receipt, history row, or event', JSON.stringify(countsOf(silentEscape)));
+ok((await page.evaluate(() => document.activeElement?.dataset.action)) === 'compact-now',
+  'Escape restores drawer focus instead of dropping it to body');
+
+const completedBefore = await ctxSnapshot('query');
+await page.evaluate(() => window.PM56_CTX._testQueueOutcomes(['completed']));
+await page.locator('.ctx-drawer [data-action="compact-now"]').click();
+await page.locator('[data-action="ctx-apply-compaction"]').click();
+await page.waitForTimeout(1150);
+const completedAfter = await ctxSnapshot('query');
+const completedResult = completedAfter.commandResults.at(-1);
+const completedReceipt = completedAfter.dispatchReceipts.at(-1);
+const completedHistory = completedAfter.compaction.history.at(-1);
+ok((await page.locator('.ctx-drawer').count()) === 1, 'Completed compaction keeps the details drawer open');
+ok(completedAfter.compaction.revision === completedBefore.compaction.revision + 1,
+  'Completed compaction increments the committed revision exactly once');
+ok(completedAfter.window.used === completedBefore.window.used - completedBefore.compactionPreview.wouldRemove,
+  'Completed compaction subtracts the previewed token count exactly', `${completedBefore.window.used} -> ${completedAfter.window.used}`);
+ok(completedAfter.window.available === completedAfter.window.limit - completedAfter.window.used,
+  'Availability is recomputed from the same mutated projection');
+ok(completedAfter.sources.reduce((n, s) => n + s.tokens, 0) === completedAfter.window.used,
+  'Source composition sums exactly to the refreshed token total');
+ok(completedAfter.window.growth.at(-1).tokens === completedAfter.window.used,
+  'Growth appends the refreshed token total');
+ok(completedAfter.compactionPreview.wouldRemove === 0 && completedAfter.compactionPreview.wouldRetain === completedAfter.window.used,
+  'Preview refreshes after completion and carries no stale reclaim count');
+ok(completedAfter.contextEpoch === completedBefore.contextEpoch,
+  'Completed compaction preserves the context epoch');
+ok(JSON.stringify(completedAfter.historicalUsageTotals) === JSON.stringify(completedBefore.historicalUsageTotals),
+  'Completed compaction does not mutate or recompute historical Usage totals');
+ok(completedAfter.commandResults.length === completedBefore.commandResults.length + 1 &&
+   completedAfter.dispatchReceipts.length === completedBefore.dispatchReceipts.length + 1 &&
+   completedAfter.compaction.history.length === completedBefore.compaction.history.length + 1,
+  'One drawer dispatch records exactly one result, one receipt, and one terminal history row');
+ok(completedAfter.eventRecords.length === 0, 'Context compaction emits zero EventRecords');
+ok(completedResult.dispatch_id === completedReceipt.dispatch_id && completedResult.dispatch_id === completedHistory.dispatch_id,
+  'Result, receipt, and history row bind to one dispatch identity');
+ok(completedResult.command_id === 'cmd.chat.compact_context' && completedReceipt.expected_event_types.length === 0,
+  'Drawer Apply uses cmd.chat.compact_context with an empty event list');
+ok((await page.locator(`[data-message-id="${completedReceipt.receipt_id}"]`).count()) === 1,
+  'The dispatch receipt has exactly one transcript representation');
+ok((await page.evaluate(() => document.activeElement?.dataset.action)) === 'compact-now',
+  'Completed drawer dispatch restores focus to Preview Compact');
+const refreshedDrawerText = await page.locator('.ctx-drawer').innerText();
+ok(refreshedDrawerText.includes(completedAfter.window.used.toLocaleString('en-US')) &&
+   refreshedDrawerText.includes(`revision ${completedAfter.compaction.revision}`),
+  'Already-open drawer visibly refreshes tokens and revision');
+ok((await page.locator('.ctx-history-row').count()) === 1,
+  'Already-open drawer visibly refreshes compaction history');
+
+await page.locator('[data-action="close-context-details"]').click();
+await openRing();
+const completedPct = Math.round(completedAfter.window.pct);
+const compactFrac = await page.locator('.ctx-frac').innerText();
+ok((await page.locator('.context-ring').getAttribute('data-value')) === String(completedPct) && compactFrac.endsWith(`${completedPct}%`),
+  'Ring and compact menu refresh from the completed drawer projection', compactFrac);
+
+/* =====================================================================
+   12. ACCESSIBLE CURATED / RAW REPRESENTATIONS AND ROUTE CASES
+   ===================================================================== */
+await closeAll();
+await openDrawer();
+ok((await page.locator('.ctx-view-tabs[role="tablist"]').count()) === 1 &&
+   (await page.locator('.ctx-view-tab[role="tab"]').count()) === 2,
+  'Curated and Raw are real tablist/tab controls');
+await page.locator('#ctx-tab-curated').focus();
+await page.keyboard.press('ArrowRight');
+await page.waitForTimeout(100);
+ok((await page.locator('#ctx-tab-raw').getAttribute('aria-selected')) === 'true' &&
+   (await page.locator('#ctx-panel-raw[role="tabpanel"]').count()) === 1,
+  'ArrowRight selects the Raw tab and its controlled tabpanel');
+const rawText = await page.locator('.ctx-raw pre').innerText();
+ok(/raw_payload_ref/.test(rawText) && /provider_payload_hash/.test(rawText) && /omitted_evidence_counts/.test(rawText) && /permission_state/.test(rawText),
+  'Raw view exposes redacted refs, payload hash, omitted counts, and permission state');
+ok(/[a-f0-9]{64}/.test(rawText), 'Raw view carries a 64-hex provider payload hash');
+ok(!/(anthropic-work|kimi-main|feature\/query-index|\/home\/|[A-Z]:\\\\)/i.test(rawText),
+  'Raw view excludes account IDs and local paths');
+await page.keyboard.press('ArrowLeft');
+await page.waitForTimeout(100);
+ok((await page.locator('#ctx-tab-curated').getAttribute('aria-selected')) === 'true',
+  'ArrowLeft returns to Curated with correct selected semantics');
+await page.locator('[data-action="raw-context"]').scrollIntoViewIfNeeded();
+await page.locator('[data-action="raw-context"]').click();
+ok((await page.locator('#ctx-tab-raw').getAttribute('aria-selected')) === 'true',
+  'The existing Raw projection action opens the same Raw tab');
+
+await closeAll();
+await page.evaluate(() => window.PM56_DEMO.selectThread('debug'));
+await openDrawer();
+await page.locator('#ctx-tab-curated').click();
+const fallbackText = await page.locator('.ctx-drawer').innerText();
+ok(/Requested route · Anthropic/.test(fallbackText) && /Effective route · Moonshot/.test(fallbackText),
+  'Drawer distinguishes requested and effective routes');
+ok(/Fallback Anthropic to Moonshot/.test(fallbackText) && /requested route unavailable/i.test(fallbackText),
+  'Drawer surfaces fallback identity, reason, and history');
+ok(/Plan limits/.test(fallbackText) && /Session/.test(fallbackText), 'Drawer surfaces plan limits');
+await closeAll();
+await page.evaluate(() => window.PM56_DEMO.selectThread('no-models'));
+await openDrawer();
+await page.locator('#ctx-tab-curated').click();
+const unavailableText = await page.locator('.ctx-drawer').innerText();
+ok(/Effective route · unavailable/.test(unavailableText) && /No plan limits are exposed/.test(unavailableText),
+  'No-route case is explicit and does not invent plan limits');
+
+/* =====================================================================
+   13. EVERY RESULT STATUS, EXACT COUNTS, MENU FOCUS, AND RAPID REENTRY
+   ===================================================================== */
+await page.evaluate(() => window.PM56_DEMO.reset());
+await page.waitForTimeout(180);
+await page.evaluate(() => window.PM56_DEMO.selectThread('query'));
+const canonicalStatuses = ['started','cancelled','no_op','degraded','unavailable','retry_scheduled','completed','failed'];
+const seenStatuses = [];
+for (const status of canonicalStatuses) {
+  await openRing();
+  const before = await ctxSnapshot('query');
+  await page.evaluate(s => window.PM56_CTX._testQueueOutcomes([s]), status);
+  await page.locator('[data-action="ctx-compact-now"]').click();
+  await page.waitForTimeout(1100);
+  const after = await ctxSnapshot('query');
+  const result = after.commandResults.at(-1), receipt = after.dispatchReceipts.at(-1), history = after.compaction.history.at(-1);
+  seenStatuses.push(result.status);
+  ok(after.commandResults.length === before.commandResults.length + 1 &&
+     after.dispatchReceipts.length === before.dispatchReceipts.length + 1 &&
+     after.compaction.history.length === before.compaction.history.length + 1 &&
+     after.eventRecords.length === 0,
+    `Result ${status} records one bound triple and zero events`);
+  ok(result.status === status && receipt.status === status && history.status === status &&
+     result.dispatch_id === receipt.dispatch_id && result.dispatch_id === history.dispatch_id,
+    `Result ${status} stays correlated across result, receipt, and history`);
+  ok(result.command_id === 'cmd.chat.compact_context' && receipt.command_id === result.command_id,
+    `Result ${status} uses only cmd.chat.compact_context`);
+  ok((await page.locator('.ctx-status').getAttribute('data-result-status')) === status,
+    `Result ${status} is visibly surfaced in the compact menu`);
+  ok((await page.evaluate(() => document.activeElement?.dataset.action)) === 'ctx-compact-now',
+    `Result ${status} preserves compact-menu focus`);
+  ok((await page.locator(`[data-message-id="${receipt.receipt_id}"]`).count()) === 1,
+    `Result ${status} has exactly one transcript receipt representation`);
+  ok(!JSON.stringify(after).includes('context.compaction.'),
+    `Result ${status} fabricates no context.compaction.* EventRecord token`);
+}
+ok(JSON.stringify(seenStatuses) === JSON.stringify(canonicalStatuses),
+  'Harness exercised every non-reentrant canonical result status exactly once', JSON.stringify(seenStatuses));
+
+await page.evaluate(() => window.PM56_DEMO.reset());
+await page.waitForTimeout(180);
+await page.evaluate(() => window.PM56_DEMO.selectThread('query'));
+await openRing();
+await page.evaluate(() => window.PM56_CTX._testQueueOutcomes(['failed']));
+await page.locator('[data-action="ctx-compact-now"]').click();
+await page.waitForTimeout(60);
+/* A Playwright locator click waits for the freshly re-rendered spring menu to
+   become geometrically stable; on a busy runner that actionability wait can
+   exceed the 900 ms command timer and cease to be a rapid-reentry probe. A
+   DOM activation after the explicit 60 ms interval exercises the same
+   delegated click handler without turning runner speed into product state. */
+await page.evaluate(() => document.querySelector('[data-action="ctx-compact-now"]')?.click());
+await page.waitForTimeout(1100);
+const rapid = await ctxSnapshot('query');
+const rapidStatuses = rapid.commandResults.map(x => x.status).sort();
+ok(JSON.stringify(rapidStatuses) === JSON.stringify(['already_running','failed']),
+  'Rapid reentry returns already_running without starting a second pass', JSON.stringify(rapidStatuses));
+ok(rapid.commandResults.length === 2 && rapid.dispatchReceipts.length === 2 && rapid.compaction.history.length === 2 && rapid.eventRecords.length === 0,
+  'Two explicit rapid invocations record two exact triples and zero events');
+const rapidDispatches = [...new Set(rapid.commandResults.map(x => x.dispatch_id))];
+ok(rapidDispatches.length === 2 && rapid.commandResults.find(x => x.status === 'failed').dispatch_id.endsWith('-1'),
+  'Dispatch identity is allocated in invocation order even when already_running terminates first', JSON.stringify(rapidDispatches));
+
+/* =====================================================================
+   14. NEW/DUPLICATE THREAD PROJECTIONS, RELOAD ISOLATION, AND USAGE
+       IMMUTABILITY
+   ===================================================================== */
+await page.evaluate(() => window.PM56_DEMO.reset());
+await page.waitForTimeout(180);
+await page.locator('.history-head [data-action="new-thread"]').click();
+const newThreadId = await page.evaluate(() => window.PM56_DEMO.snapshot().thread);
+const newThreadSeed = await ctxSnapshot(newThreadId);
+ok(!!newThreadSeed && newThreadSeed.threadId === newThreadId && newThreadSeed.contextEpoch.includes(newThreadId),
+  'New thread receives a persisted identity-bound context projection');
+ok(newThreadSeed.compaction.revision === 0 && newThreadSeed.commandResults.length === 0 && newThreadSeed.dispatchReceipts.length === 0,
+  'New thread projection starts with clean compaction evidence');
+await openRing();
+await page.evaluate(() => window.PM56_CTX._testQueueOutcomes(['no_op']));
+await page.locator('[data-action="ctx-compact-now"]').click();
+await page.waitForTimeout(1100);
+const newThreadAfter = await ctxSnapshot(newThreadId);
+ok(newThreadAfter.commandResults.length === 1 && newThreadAfter.dispatchReceipts.length === 1 &&
+   newThreadAfter.compaction.history.length === 1 && newThreadAfter.eventRecords.length === 0,
+  'New thread retains its exact command evidence triple across re-render');
+
+await page.evaluate(() => window.PM56_DEMO.reset());
+await page.waitForTimeout(180);
+const duplicateSource = await ctxSnapshot('query');
+await page.locator('[data-action="thread-menu"][data-id="query"]').first().click();
+await page.locator('.overlay-menu').waitFor({ state: 'visible' });
+await settle('.overlay-menu');
+await page.locator('[data-action="duplicate-thread"][data-id="query"]').click();
+const duplicateThreadId = await page.evaluate(() => window.PM56_DEMO.snapshot().thread);
+const duplicateSeed = await ctxSnapshot(duplicateThreadId);
+ok(!!duplicateSeed && duplicateSeed.threadId === duplicateThreadId && !duplicateSeed.lineage,
+  'Duplicated thread receives a persisted projection without false branch lineage');
+ok(duplicateSeed.window.used === duplicateSource.window.used && duplicateSeed.sources.reduce((n,s)=>n+s.tokens,0) === duplicateSeed.window.used,
+  'Duplicated thread seeds context bytes from its source projection coherently');
+ok(duplicateSeed.compaction.revision === 0 && duplicateSeed.commandResults.length === 0 && duplicateSeed.dispatchReceipts.length === 0,
+  'Duplicated thread starts a fresh command revision and evidence trail');
+await openRing();
+await page.evaluate(() => window.PM56_CTX._testQueueOutcomes(['failed']));
+await page.locator('[data-action="ctx-compact-now"]').click();
+await page.waitForTimeout(1100);
+const duplicateAfter = await ctxSnapshot(duplicateThreadId);
+ok(duplicateAfter.commandResults.length === 1 && duplicateAfter.dispatchReceipts.length === 1 &&
+   duplicateAfter.compaction.history.length === 1 && duplicateAfter.eventRecords.length === 0,
+  'Duplicated thread retains its exact command evidence triple across re-render');
+
+await page.reload({ waitUntil:'load' });
+await page.waitForFunction(() => window.__PM56_BOOT_OK === true && window.PM56_CTX);
+const reloaded = await ctxSnapshot('query');
+ok(reloaded.compaction.revision === 0 && reloaded.commandResults.length === 0 && reloaded.dispatchReceipts.length === 0 && reloaded.compaction.history.length === 0,
+  'Reload reseeds the fixture projection and clears demo-only command evidence');
+ok(reloaded.contextEpoch === 'context:query:fixture-epoch-1', 'Reload restores the stable fixture epoch');
+
+await openRing();
+await page.evaluate(() => window.PM56_CTX._testQueueOutcomes(['completed']));
+await page.locator('[data-action="ctx-compact-now"]').click();
+await page.waitForTimeout(1100);
+const mutatedQuery = await ctxSnapshot('query');
+await page.evaluate(() => window.PM56_DEMO.selectThread('plain'));
+const untouchedPlain = await ctxSnapshot('plain');
+ok(mutatedQuery.compaction.revision === 1 && untouchedPlain.compaction.revision === 0 && untouchedPlain.commandResults.length === 0,
+  'A thread mutation does not leak into another thread projection');
+ok(JSON.stringify(mutatedQuery.historicalUsageTotals) === JSON.stringify(reloaded.historicalUsageTotals),
+  'Historical Usage totals remain immutable across menu compaction too');
+
+await page.setViewportSize({ width:390, height:900 });
+await closeAll();
+await openDrawer();
+await page.locator('#ctx-tab-raw').click();
+const narrowRaw = await page.evaluate(() => {
+  const d=document.querySelector('.ctx-drawer').getBoundingClientRect();
+  const pre=document.querySelector('.ctx-raw pre');
+  return {right:d.right,clientWidth:document.documentElement.clientWidth,bodyWidth:document.body.scrollWidth,
+    preScroll:pre.scrollWidth,preClient:pre.clientWidth};
+});
+ok(narrowRaw.right <= narrowRaw.clientWidth + 1 && narrowRaw.bodyWidth <= narrowRaw.clientWidth + 1,
+  'Raw view remains on-screen without body overflow at 390px', JSON.stringify(narrowRaw));
+ok(narrowRaw.preScroll >= narrowRaw.preClient, 'Raw code overflow is contained by its own scroller');
+await page.setViewportSize({ width:1440, height:900 });
+
 /* ---------- report ---------- */
 ok(consoleErrors.length === 0, 'No console errors', consoleErrors.join(' | '));
 ok(pageErrors.length === 0, 'No uncaught page errors', pageErrors.join(' | '));

@@ -329,12 +329,12 @@
     "Basic Dark",
     "Basic Light"
    ],
-   "default": "Friendly Dark",
+   "default": "Basic Dark",
    "scope": [
     "global"
    ],
    "tier": "simple",
-   "recommended": "Friendly Dark",
+   "recommended": "Basic Dark",
    "curated": true,
    "search": [
     "appearance",
@@ -360,12 +360,12 @@
      "Dark",
      "Auto"
     ],
-    "default": "Auto",
+    "default": "Dark",
     "scope": [
      "global"
     ],
     "tier": "simple",
-    "recommended": "Auto",
+    "recommended": "Dark",
     "search": [
      "prefers-color-scheme",
      "system theme",

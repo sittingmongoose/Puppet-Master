@@ -1,0 +1,332 @@
+{
+  "schema_id": "pm.integration_packet_audit_spec.v1",
+  "schema_version": "1.0.0",
+  "custody_root": "scratchpad/approval-gated-touch-closure-packet-custody-20260831-001",
+  "source_groups": [
+    {
+      "group_id": "settings_base_audit",
+      "suite": "settings",
+      "document_id": "DOC-0084",
+      "extractor": "markdown_obligation",
+      "minimum_count": 10
+    },
+    {
+      "group_id": "settings_seven_designs_audit",
+      "suite": "settings",
+      "document_id": "DOC-0043",
+      "extractor": "markdown_obligation",
+      "minimum_count": 15
+    },
+    {
+      "group_id": "settings_cumulative_audit",
+      "suite": "settings",
+      "document_id": "DOC-0015",
+      "extractor": "markdown_obligation",
+      "minimum_count": 10
+    },
+    {
+      "group_id": "settings_nested_decision_coverage",
+      "suite": "settings",
+      "document_id": "DOC-0002",
+      "extractor": "json_objects",
+      "identifier_field": "id",
+      "description_fields": ["title", "requirement", "status"],
+      "expected_count": 129
+    },
+    {
+      "group_id": "settings_final_decision_coverage",
+      "suite": "settings",
+      "document_id": "DOC-0086",
+      "extractor": "json_objects",
+      "identifier_field": "id",
+      "description_fields": ["title", "requirement", "status"],
+      "expected_count": 129
+    },
+    {
+      "group_id": "settings_nested_manager_matrix",
+      "suite": "settings",
+      "document_id": "DOC-0028",
+      "extractor": "json_leaf_lines",
+      "expected_count": 64
+    },
+    {
+      "group_id": "settings_final_manager_matrix",
+      "suite": "settings",
+      "document_id": "DOC-0089",
+      "extractor": "json_leaf_lines",
+      "expected_count": 64
+    },
+    {
+      "group_id": "settings_nested_command_candidates",
+      "suite": "settings",
+      "document_id": "DOC-0031",
+      "extractor": "command_token_set",
+      "expected_count": 80
+    },
+    {
+      "group_id": "settings_final_command_candidates",
+      "suite": "settings",
+      "document_id": "DOC-0085",
+      "extractor": "command_token_set",
+      "expected_count": 80
+    },
+    {
+      "group_id": "settings_seven_manager_requirements",
+      "suite": "settings",
+      "document_id": "DOC-0057",
+      "extractor": "json_leaf_lines",
+      "expected_count": 71
+    },
+    {
+      "group_id": "settings_seven_test_matrix",
+      "suite": "settings",
+      "document_id": "DOC-0058",
+      "extractor": "json_leaf_lines",
+      "expected_count": 28
+    },
+    {
+      "group_id": "onboarding_doctor_requirements",
+      "suite": "onboarding_doctor",
+      "document_id": "DOC-0215",
+      "extractor": "json_objects",
+      "identifier_field": "id",
+      "description_fields": ["requirement", "area", "expected_evidence"],
+      "expected_count": 128
+    },
+    {
+      "group_id": "full_thread_topics",
+      "suite": "full_thread_performance",
+      "document_id": "DOC-0175",
+      "extractor": "json_objects",
+      "identifier_field": "topic_id",
+      "description_fields": ["topic", "acceptance_surface"],
+      "expected_count": 85
+    },
+    {
+      "group_id": "full_thread_performance_scenarios",
+      "suite": "full_thread_performance",
+      "document_id": "DOC-0170",
+      "extractor": "numbered_items",
+      "expected_count": 19
+    },
+    {
+      "group_id": "server_full_thread_obligations",
+      "suite": "server_wan_backup",
+      "document_id": "DOC-0269",
+      "extractor": "json_objects",
+      "identifier_field": "id",
+      "description_fields": ["requirement", "domain", "status"],
+      "expected_count": 243
+    },
+    {
+      "group_id": "server_command_candidates",
+      "suite": "server_wan_backup",
+      "document_id": "DOC-0268",
+      "extractor": "json_objects",
+      "identifier_field": "command_id",
+      "description_fields": ["group", "disposition"],
+      "start_marker": "\"commands\"",
+      "stop_marker": "\"superseded_candidates\"",
+      "expected_count": 374
+    },
+    {
+      "group_id": "server_owner_consumer_rows",
+      "suite": "server_wan_backup",
+      "document_id": "DOC-0270",
+      "extractor": "json_objects",
+      "identifier_field": "path",
+      "description_fields": ["action", "prefix", "scope"],
+      "expected_count": 57
+    },
+    {
+      "group_id": "server_machine_requirements",
+      "suite": "server_wan_backup",
+      "document_id": "DOC-0272",
+      "extractor": "json_objects",
+      "identifier_field": "id",
+      "description_fields": ["requirement", "domain"],
+      "expected_count": 38
+    },
+    {
+      "group_id": "server_wan_contract",
+      "suite": "server_wan_backup",
+      "document_id": "DOC-0271",
+      "extractor": "json_leaf_lines",
+      "minimum_count": 100
+    },
+    {
+      "group_id": "server_backup_restore_contract",
+      "suite": "server_wan_backup",
+      "document_id": "DOC-0253",
+      "extractor": "nonempty_prose",
+      "minimum_count": 20
+    },
+    {
+      "group_id": "server_backup_restore_acceptance",
+      "suite": "server_wan_backup",
+      "document_id": "DOC-0259",
+      "extractor": "markdown_obligation",
+      "minimum_count": 40
+    },
+    {
+      "group_id": "egolite_requirements",
+      "suite": "egolite_browser_scm_origin",
+      "document_id": "DOC-0116",
+      "extractor": "markdown_table_ids",
+      "expected_count": 181
+    },
+    {
+      "group_id": "egolite_command_alias_tokens",
+      "suite": "egolite_browser_scm_origin",
+      "document_id": "DOC-0115",
+      "extractor": "command_token_set",
+      "expected_count": 176
+    },
+    {
+      "group_id": "egolite_plan_references",
+      "suite": "egolite_browser_scm_origin",
+      "document_id": "DOC-0109",
+      "extractor": "plan_ref_set",
+      "expected_count": 69
+    },
+    {
+      "group_id": "egolite_validation_security_negatives",
+      "suite": "egolite_browser_scm_origin",
+      "document_id": "DOC-0110",
+      "extractor": "markdown_obligation",
+      "minimum_count": 120
+    },
+    {
+      "group_id": "egolite_retention_checks",
+      "suite": "egolite_browser_scm_origin",
+      "document_id": "DOC-0111",
+      "extractor": "markdown_obligation",
+      "minimum_count": 20
+    },
+    {
+      "group_id": "egolite_four_arm_benchmark",
+      "suite": "egolite_browser_scm_origin",
+      "document_id": "DOC-0110",
+      "extractor": "benchmark_arms",
+      "expected_count": 4
+    },
+    {
+      "group_id": "settings_correction_readme",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0067",
+      "extractor": "nonempty_prose",
+      "expected_count": 9
+    },
+    {
+      "group_id": "settings_correction_decision_register",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0068",
+      "extractor": "markdown_obligation",
+      "expected_count": 399
+    },
+    {
+      "group_id": "settings_correction_goal",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0069",
+      "extractor": "markdown_obligation",
+      "expected_count": 6
+    },
+    {
+      "group_id": "settings_correction_manifest",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0070",
+      "extractor": "json_leaf_lines",
+      "expected_count": 24
+    },
+    {
+      "group_id": "settings_correction_provider_policy",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0071",
+      "extractor": "markdown_obligation",
+      "expected_count": 26
+    },
+    {
+      "group_id": "settings_correction_checks",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0072",
+      "extractor": "markdown_obligation",
+      "minimum_count": 7
+    },
+    {
+      "group_id": "onboarding_doctor_correction_readme",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0223",
+      "extractor": "nonempty_prose",
+      "expected_count": 4
+    },
+    {
+      "group_id": "onboarding_doctor_correction_decision_register",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0224",
+      "extractor": "markdown_obligation",
+      "expected_count": 399
+    },
+    {
+      "group_id": "onboarding_doctor_correction_goal",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0225",
+      "extractor": "markdown_obligation",
+      "expected_count": 7
+    },
+    {
+      "group_id": "onboarding_doctor_correction_manifest",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0226",
+      "extractor": "json_leaf_lines",
+      "expected_count": 24
+    },
+    {
+      "group_id": "onboarding_doctor_correction_provider_policy",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0227",
+      "extractor": "markdown_obligation",
+      "expected_count": 26
+    },
+    {
+      "group_id": "onboarding_doctor_correction_checks",
+      "suite": "dependency_correction",
+      "document_id": "DOC-0228",
+      "extractor": "nonempty_prose",
+      "expected_count": 2
+    }
+  ],
+  "retired_bakeoff_cases": {
+    "onboarding_doctor_requirements": ["SH-001", "SH-002", "SH-003", "TST-001"]
+  },
+  "superseded_cases": {
+    "onboarding_doctor_requirements": ["IMP-006"]
+  },
+  "required_suite_verdicts": [
+    "settings",
+    "onboarding",
+    "guided_tour",
+    "doctor",
+    "onboarding_doctor_overall",
+    "full_thread_performance",
+    "server_wan_backup",
+    "egolite_browser_scm_origin",
+    "dependency_correction",
+    "touch_closure",
+    "overall"
+  ],
+  "touch_closure_dimensions": [
+    "requirement_and_packet_refs",
+    "canonical_owner_and_plan_unit",
+    "single_dry_contract",
+    "command_or_typed_ui_action",
+    "payload_result_error_availability_permissions_disabled_reason",
+    "single_handler_owner",
+    "production_or_concept_wiring",
+    "gui_trigger_and_return_route",
+    "reverse_consumer_coverage",
+    "events_receipts_observable_work",
+    "persistence_and_migration",
+    "tests_and_evidence",
+    "disposition_and_residual_risk"
+  ]
+}

@@ -1,0 +1,1951 @@
+{
+  "schema_id": "pm.plugins.package_contract_fixtures.v1",
+  "contract_schema_id": "pm.plugins.package_contracts.v1",
+  "claim_boundary": "Static schema, relation, and fixture consistency only; central registration and production-intent wiring are separately admitted, but no native handler, filesystem, process, network, signature, adapter, migration, activation, rollback, or cross-platform execution ran.",
+  "coverage": {
+    "positive_case_count": 27,
+    "negative_case_count": 31,
+    "conformance_report_kinds": [
+      "PortableConformanceReport",
+      "TargetAdapterConformanceReport",
+      "AgentPluginConformanceReport"
+    ],
+    "target_adapters": [
+      "openai_codex",
+      "claude_code"
+    ],
+    "round_trip_targets": [
+      "openai_codex",
+      "claude_code"
+    ],
+    "update_diff_axes": [
+      "manifest",
+      "components",
+      "permissions",
+      "capabilities",
+      "sandbox",
+      "executable",
+      "transport",
+      "license",
+      "sbom",
+      "publisher",
+      "signature",
+      "provenance",
+      "known_bad",
+      "runtime_compatibility"
+    ],
+    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+  },
+  "positive": [
+    {
+      "name": "portable_manifest",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "portable_plugin_manifest",
+        "manifest_kind": "portable",
+        "schema_version": "1.0.0",
+        "interchange_scope": "pm_internal_only",
+        "direct_external_loadability": false,
+        "id": "portable-example",
+        "name": "PM Interchange Example",
+        "version": "1.2.3",
+        "description": "Puppet Master internal interchange skills and MCP only.",
+        "skills": [
+          "skills/review/SKILL.md"
+        ],
+        "mcp": "mcp.json"
+      }
+    },
+    {
+      "name": "openai_codex_target_adapter_output",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "target_adapter_output",
+        "adapter_output_id": "adapter-output:codex:1",
+        "adapter_target": "openai_codex",
+        "adapter_schema_version": "1.0.0",
+        "source_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "target_manifest_path": ".codex-plugin/plugin.json",
+        "target_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "target_manifest_schema_id": "openai.codex.plugin_manifest.current",
+        "target_mcp_path": ".mcp.json",
+        "target_mcp_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "target_mcp_schema_id": "mcp.configuration.current",
+        "generated_file_inventory": [
+          {
+            "path": ".codex-plugin/plugin.json",
+            "role": "target_manifest",
+            "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "schema_id": "openai.codex.plugin_manifest.current"
+          },
+          {
+            "path": ".mcp.json",
+            "role": "target_mcp",
+            "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "schema_id": "mcp.configuration.current"
+          }
+        ],
+        "generated_file_inventory_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "conformance_ref": "adapter-conformance:codex:1",
+        "authority_mapping_ref": "authority-map:codex:1",
+        "authority_widening": false,
+        "pm_native_activation_authorized": false,
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "claude_code_target_adapter_output",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "target_adapter_output",
+        "adapter_output_id": "adapter-output:claude:1",
+        "adapter_target": "claude_code",
+        "adapter_schema_version": "1.0.0",
+        "source_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "target_manifest_path": ".claude-plugin/plugin.json",
+        "target_manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "target_manifest_schema_id": "anthropic.claude_code.plugin_manifest.current",
+        "target_mcp_path": ".mcp.json",
+        "target_mcp_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "target_mcp_schema_id": "mcp.configuration.current",
+        "generated_file_inventory": [
+          {
+            "path": ".claude-plugin/plugin.json",
+            "role": "target_manifest",
+            "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "schema_id": "anthropic.claude_code.plugin_manifest.current"
+          },
+          {
+            "path": ".mcp.json",
+            "role": "target_mcp",
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "schema_id": "mcp.configuration.current"
+          }
+        ],
+        "generated_file_inventory_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "conformance_ref": "adapter-conformance:claude:1",
+        "authority_mapping_ref": "authority-map:claude:1",
+        "authority_widening": false,
+        "pm_native_activation_authorized": false,
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "openai_codex_target_adapter_conformance",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "target_adapter_conformance_report",
+        "report_id": "adapter-conformance:codex:1",
+        "adapter_output_id": "adapter-output:codex:1",
+        "adapter_target": "openai_codex",
+        "source_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "target_manifest_path": ".codex-plugin/plugin.json",
+        "target_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "target_mcp_path": ".mcp.json",
+        "target_mcp_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "generated_file_inventory_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "target_manifest_schema_id": "openai.codex.plugin_manifest.current",
+        "target_mcp_schema_id": "mcp.configuration.current",
+        "target_manifest_validation_ref": "schema-validation:codex-manifest:1",
+        "target_mcp_validation_ref": "schema-validation:codex-mcp:1",
+        "authority_mapping_ref": "authority-map:codex:1",
+        "authority_widening": false,
+        "result": "conformant"
+      }
+    },
+    {
+      "name": "claude_code_target_adapter_conformance",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "target_adapter_conformance_report",
+        "report_id": "adapter-conformance:claude:1",
+        "adapter_output_id": "adapter-output:claude:1",
+        "adapter_target": "claude_code",
+        "source_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "target_manifest_path": ".claude-plugin/plugin.json",
+        "target_manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "target_mcp_path": ".mcp.json",
+        "target_mcp_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "generated_file_inventory_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "target_manifest_schema_id": "anthropic.claude_code.plugin_manifest.current",
+        "target_mcp_schema_id": "mcp.configuration.current",
+        "target_manifest_validation_ref": "schema-validation:claude-manifest:1",
+        "target_mcp_validation_ref": "schema-validation:claude-mcp:1",
+        "authority_mapping_ref": "authority-map:claude:1",
+        "authority_widening": false,
+        "result": "conformant"
+      }
+    },
+    {
+      "name": "pm_native_manifest",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "pm_plugin_manifest",
+        "manifest_kind": "pm_native",
+        "schema_version": "1.0.0",
+        "id": "native-example",
+        "name": "Native Example",
+        "version": "2.0.0",
+        "description": "PM native example.",
+        "components": {
+          "agents": [],
+          "hooks": [
+            "tool.execute.before"
+          ],
+          "tools": [
+            "native-example.review"
+          ],
+          "commands": [],
+          "ui": [],
+          "rules": [],
+          "lsp": [],
+          "browser_adapters": []
+        },
+        "runtime": {
+          "kind": "wasm",
+          "executable": "plugin.wasm",
+          "argv": [],
+          "plugin_root_mode": "PLUGIN_ROOT_read_only",
+          "plugin_data_mode": "PLUGIN_DATA_read_write_separate",
+          "environment_allowlist": [
+            "LANG"
+          ],
+          "broker_secret_refs": [],
+          "private_runtime_directory": true,
+          "stdout_max_bytes": 1048576,
+          "stderr_max_bytes": 1048576,
+          "log_max_bytes": 2097152,
+          "wall_timeout_ms": 30000,
+          "crash_budget": 3,
+          "process_tree_cancellation": true,
+          "off_loopback_transport": "none",
+          "network_allowlist_refs": [],
+          "outbound_endpoints": []
+        },
+        "permissions": [
+          {
+            "permission_id": "tool.review",
+            "scope": "project",
+            "purpose": "Review selected files",
+            "default_state": "ask",
+            "requested_actions": [
+              "read"
+            ],
+            "approval_scope_key": null
+          }
+        ],
+        "capabilities": [
+          {
+            "capability_id": "review",
+            "provider_surface": "tools",
+            "hook_refs": [
+              "tool.execute.before"
+            ],
+            "data_access": "bounded_declared",
+            "network_access": "none",
+            "fs_access": "filesafe_scoped",
+            "command_access": "none"
+          }
+        ],
+        "sandbox": "filesystem_limited",
+        "signature": {
+          "signature_algorithm": "ed25519",
+          "key_id": "key-1",
+          "trust_root_ref": "trust-1",
+          "manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+          "verification_status": "verified",
+          "failure_reason_code": null
+        },
+        "supply_chain": {
+          "publisher_ref": "publisher-1",
+          "license_ref": "license-1",
+          "sbom_ref": "sbom-1",
+          "provenance_ref": "provenance-1",
+          "known_bad_check_ref": "known-bad-1",
+          "archive_containment_ref": "containment-1",
+          "symlink_policy": "internal_relative_only",
+          "resolved_containment_verified": true
+        }
+      }
+    },
+    {
+      "name": "pm_native_https_allowlisted_manifest",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "pm_plugin_manifest",
+        "manifest_kind": "pm_native",
+        "schema_version": "1.0.0",
+        "id": "native-network-example",
+        "name": "Native Network Example",
+        "version": "2.0.0",
+        "description": "PM native example.",
+        "components": {
+          "agents": [],
+          "hooks": [
+            "tool.execute.before"
+          ],
+          "tools": [
+            "native-example.review"
+          ],
+          "commands": [],
+          "ui": [],
+          "rules": [],
+          "lsp": [],
+          "browser_adapters": []
+        },
+        "runtime": {
+          "kind": "wasm",
+          "executable": "plugin.wasm",
+          "argv": [],
+          "plugin_root_mode": "PLUGIN_ROOT_read_only",
+          "plugin_data_mode": "PLUGIN_DATA_read_write_separate",
+          "environment_allowlist": [
+            "LANG"
+          ],
+          "broker_secret_refs": [
+            "secret-ref:plugin-review"
+          ],
+          "private_runtime_directory": true,
+          "stdout_max_bytes": 1048576,
+          "stderr_max_bytes": 1048576,
+          "log_max_bytes": 2097152,
+          "wall_timeout_ms": 30000,
+          "crash_budget": 3,
+          "process_tree_cancellation": true,
+          "off_loopback_transport": "https_allowlisted_only",
+          "network_allowlist_refs": [
+            "network-allowlist:plugin-review"
+          ],
+          "outbound_endpoints": [
+            {
+              "endpoint_id": "endpoint-review-api",
+              "url": "https://plugins.example.test/v1/review",
+              "allowlist_ref": "network-allowlist:plugin-review",
+              "public_ingress_authorized": false,
+              "auth_browser_access_allowed": false
+            }
+          ]
+        },
+        "permissions": [
+          {
+            "permission_id": "tool.review",
+            "scope": "project",
+            "purpose": "Review selected files",
+            "default_state": "ask",
+            "requested_actions": [
+              "read"
+            ],
+            "approval_scope_key": null
+          }
+        ],
+        "capabilities": [
+          {
+            "capability_id": "review",
+            "provider_surface": "tools",
+            "hook_refs": [
+              "tool.execute.before"
+            ],
+            "data_access": "bounded_declared",
+            "network_access": "none",
+            "fs_access": "filesafe_scoped",
+            "command_access": "none"
+          }
+        ],
+        "sandbox": "filesystem_limited",
+        "signature": {
+          "signature_algorithm": "ed25519",
+          "key_id": "key-1",
+          "trust_root_ref": "trust-1",
+          "manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+          "verification_status": "verified",
+          "failure_reason_code": null
+        },
+        "supply_chain": {
+          "publisher_ref": "publisher-1",
+          "license_ref": "license-1",
+          "sbom_ref": "sbom-1",
+          "provenance_ref": "provenance-1",
+          "known_bad_check_ref": "known-bad-1",
+          "archive_containment_ref": "containment-1",
+          "symlink_policy": "internal_relative_only",
+          "resolved_containment_verified": true
+        }
+      }
+    },
+    {
+      "name": "dual_manifest_package_record",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_package",
+        "package_id": "pkg-1",
+        "plugin_id": "native-example",
+        "version": "2.0.0",
+        "package_generation": 3,
+        "manifests_present": "portable_and_pm_native",
+        "package_status": "pm_extended",
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "legacy_manifest_sha256": null,
+        "id_version_alignment_verified": true,
+        "component_results": [
+          {
+            "component_kind": "portable_skill",
+            "component_id": "skills/review",
+            "required": true,
+            "state": "enabled",
+            "reason_code": null
+          },
+          {
+            "component_kind": "hook",
+            "component_id": "tool.execute.before",
+            "required": false,
+            "state": "disabled",
+            "reason_code": "user_disabled"
+          }
+        ],
+        "portable_conformance_ref": "portable-report-1",
+        "agent_conformance_ref": "agent-report-1",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "legacy_manifest_is_explicit_import_only",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_package",
+        "package_id": "pkg-legacy",
+        "plugin_id": "legacy-example",
+        "version": "1.0.0",
+        "package_generation": 7,
+        "manifests_present": "legacy_pm_plugin_json",
+        "package_status": "legacy_imported",
+        "portable_manifest_sha256": null,
+        "pm_manifest_sha256": null,
+        "legacy_manifest_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+        "id_version_alignment_verified": false,
+        "component_results": [
+          {
+            "component_kind": "runtime_entry",
+            "component_id": "legacy-entry",
+            "required": true,
+            "state": "approval_required",
+            "reason_code": "migration_required"
+          }
+        ],
+        "portable_conformance_ref": null,
+        "agent_conformance_ref": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "dual_manifest_supply_chain_admitted",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "PluginPackageSupplyChainProof",
+        "proof_id": "proof-1",
+        "package_id": "pkg-1",
+        "plugin_id": "native-example",
+        "version": "2.0.0",
+        "package_generation": 3,
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "archive_inventory_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "normalized_tree_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "publisher_ref": "publisher-1",
+        "signature_algorithm": "ed25519",
+        "key_id": "key-1",
+        "trust_root_ref": "trust-1",
+        "signature_verification_status": "verified",
+        "license_ref": "license-1",
+        "sbom_ref": "sbom-1",
+        "provenance_ref": "provenance-1",
+        "known_bad_check_ref": "known-bad-1",
+        "target_platform": "linux",
+        "target_architecture": "x86_64",
+        "runtime_compatibility_ref": "compat-1",
+        "archive_containment_ref": "containment-1",
+        "symlink_policy": "internal_relative_only",
+        "resolved_containment_verified": true,
+        "portable_conformance_ref": "portable-report-1",
+        "agent_conformance_ref": "agent-report-1",
+        "permission_capability_diff_ref": "permission-diff-1",
+        "component_diff_ref": "component-diff-1",
+        "update_diff_ref": "update-diff-1",
+        "rollback_package_proof_ref": "rollback-proof-1",
+        "admission": "admitted",
+        "failure_reason_code": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "receipt_only_update_rejected_without_native_handler",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_lifecycle_receipt",
+        "receipt_id": "receipt-1",
+        "command_id": "cmd.agent_plugin.update",
+        "package_id": "pkg-1",
+        "plugin_id": "native-example",
+        "prior_package_generation": 2,
+        "result_package_generation": 2,
+        "outcome": "rejected",
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "component_results": [],
+        "conformance_refs": [
+          "portable-report-1",
+          "agent-report-1"
+        ],
+        "permission_diff_ref": "permission-diff-1",
+        "update_diff_ref": "update-diff-1",
+        "supply_chain_ref": "supply-chain-1",
+        "rollback_ref": "rollback-1",
+        "observable_work_ref": "work-1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+      }
+    },
+    {
+      "name": "portable_conformance_positive",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "portable_conformance_report",
+        "report_kind": "PortableConformanceReport",
+        "interchange_scope": "pm_internal_only",
+        "direct_external_loadability": false,
+        "report_id": "portable-report-1",
+        "package_id": "pkg-1",
+        "package_generation": 3,
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "skills_containment_ref": "skills-containment-1",
+        "mcp_validation_ref": "mcp-validation-1",
+        "component_results": [
+          {
+            "component_kind": "portable_skill",
+            "component_id": "skills/review",
+            "required": true,
+            "state": "validated",
+            "reason_code": null
+          },
+          {
+            "component_kind": "portable_mcp",
+            "component_id": "mcp.json",
+            "required": true,
+            "state": "validated",
+            "reason_code": null
+          }
+        ],
+        "usable_component_refs": [
+          "skills/review",
+          "mcp.json"
+        ],
+        "failed_component_refs": [],
+        "isolation_preserved": true,
+        "unsupported_component_refs": [],
+        "result": "conformant"
+      }
+    },
+    {
+      "name": "portable_invalid_skill_isolated_valid_mcp_usable",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "portable_conformance_report",
+        "report_kind": "PortableConformanceReport",
+        "interchange_scope": "pm_internal_only",
+        "direct_external_loadability": false,
+        "report_id": "portable-report-invalid-skill-1",
+        "package_id": "pkg-1",
+        "package_generation": 3,
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "skills_containment_ref": "skills-containment-1",
+        "mcp_validation_ref": "mcp-validation-1",
+        "component_results": [
+          {
+            "component_kind": "portable_skill",
+            "component_id": "skills/bad",
+            "required": false,
+            "state": "failed",
+            "reason_code": "skill_schema_invalid"
+          },
+          {
+            "component_kind": "portable_mcp",
+            "component_id": "mcp.json",
+            "required": true,
+            "state": "enabled",
+            "reason_code": null
+          }
+        ],
+        "usable_component_refs": [
+          "mcp.json"
+        ],
+        "failed_component_refs": [
+          "skills/bad"
+        ],
+        "isolation_preserved": true,
+        "unsupported_component_refs": [],
+        "result": "partial"
+      }
+    },
+    {
+      "name": "portable_invalid_mcp_isolated_valid_skill_usable",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "portable_conformance_report",
+        "report_kind": "PortableConformanceReport",
+        "interchange_scope": "pm_internal_only",
+        "direct_external_loadability": false,
+        "report_id": "portable-report-invalid-mcp-1",
+        "package_id": "pkg-1",
+        "package_generation": 3,
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "skills_containment_ref": "skills-containment-1",
+        "mcp_validation_ref": "mcp-validation-1",
+        "component_results": [
+          {
+            "component_kind": "portable_skill",
+            "component_id": "skills/review",
+            "required": true,
+            "state": "enabled",
+            "reason_code": null
+          },
+          {
+            "component_kind": "portable_mcp",
+            "component_id": "mcp.json",
+            "required": false,
+            "state": "failed",
+            "reason_code": "mcp_schema_invalid"
+          }
+        ],
+        "usable_component_refs": [
+          "skills/review"
+        ],
+        "failed_component_refs": [
+          "mcp.json"
+        ],
+        "isolation_preserved": true,
+        "unsupported_component_refs": [],
+        "result": "partial"
+      }
+    },
+    {
+      "name": "agent_plugin_conformance_positive",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "agent_plugin_conformance_report",
+        "report_kind": "AgentPluginConformanceReport",
+        "report_id": "agent-report-1",
+        "package_id": "pkg-1",
+        "package_generation": 3,
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "component_results": [
+          {
+            "component_kind": "hook",
+            "component_id": "tool.execute.before",
+            "required": true,
+            "state": "validated",
+            "reason_code": null
+          },
+          {
+            "component_kind": "runtime_entry",
+            "component_id": "plugin.wasm",
+            "required": true,
+            "state": "validated",
+            "reason_code": null
+          }
+        ],
+        "usable_component_refs": [
+          "tool.execute.before",
+          "plugin.wasm"
+        ],
+        "failed_component_refs": [],
+        "isolation_preserved": true,
+        "permission_capability_ref": "permission-capability-1",
+        "sandbox_ref": "sandbox-1",
+        "signature_provenance_ref": "signature-provenance-1",
+        "containment_ref": "containment-1",
+        "runtime_bounds_ref": "runtime-bounds-1",
+        "result": "conformant"
+      }
+    },
+    {
+      "name": "agent_optional_incompatible_component_isolated",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "agent_plugin_conformance_report",
+        "report_kind": "AgentPluginConformanceReport",
+        "report_id": "agent-report-optional-component-1",
+        "package_id": "pkg-1",
+        "package_generation": 3,
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "component_results": [
+          {
+            "component_kind": "runtime_entry",
+            "component_id": "plugin.wasm",
+            "required": true,
+            "state": "enabled",
+            "reason_code": null
+          },
+          {
+            "component_kind": "lsp",
+            "component_id": "legacy-lsp",
+            "required": false,
+            "state": "failed",
+            "reason_code": "platform_incompatible"
+          }
+        ],
+        "usable_component_refs": [
+          "plugin.wasm"
+        ],
+        "failed_component_refs": [
+          "legacy-lsp"
+        ],
+        "isolation_preserved": true,
+        "permission_capability_ref": "permission-capability-1",
+        "sandbox_ref": "sandbox-1",
+        "signature_provenance_ref": "signature-provenance-1",
+        "containment_ref": "containment-1",
+        "runtime_bounds_ref": "runtime-bounds-1",
+        "result": "partial_optional_components"
+      }
+    },
+    {
+      "name": "dual_manifest_precedence_no_merge",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_manifest_resolution",
+        "resolution_id": "resolution-dual-1",
+        "package_id": "pkg-1",
+        "manifests_present": "portable_and_pm_native",
+        "portable_identity": {
+          "plugin_id": "native-example",
+          "version": "2.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "pm_native_identity": {
+          "plugin_id": "native-example",
+          "version": "2.0.0",
+          "sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+        },
+        "legacy_identity": null,
+        "target_adapter_outputs": [
+          "adapter-output:codex:1",
+          "adapter-output:claude:1"
+        ],
+        "identity_alignment": "matched",
+        "field_merge_performed": false,
+        "precedence_policy": "independent_validation_no_field_merge",
+        "package_status": "pm_extended",
+        "pm_native_declarations_eligible": true,
+        "target_outputs_activate_pm_native": false,
+        "blocked_reason_code": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "portable_manifest_precedence_external_adapters_separate",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_manifest_resolution",
+        "resolution_id": "resolution-portable-1",
+        "package_id": "pkg-portable",
+        "manifests_present": "portable_only",
+        "portable_identity": {
+          "plugin_id": "portable-example",
+          "version": "1.2.3",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "pm_native_identity": null,
+        "legacy_identity": null,
+        "target_adapter_outputs": [
+          "adapter-output:codex:1",
+          "adapter-output:claude:1"
+        ],
+        "identity_alignment": "not_applicable",
+        "field_merge_performed": false,
+        "precedence_policy": "independent_validation_no_field_merge",
+        "package_status": "portable_conformant",
+        "pm_native_declarations_eligible": false,
+        "target_outputs_activate_pm_native": false,
+        "blocked_reason_code": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "legacy_manifest_precedence_requires_migration",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_manifest_resolution",
+        "resolution_id": "resolution-legacy-1",
+        "package_id": "pkg-legacy",
+        "manifests_present": "legacy_pm_plugin_json",
+        "portable_identity": null,
+        "pm_native_identity": null,
+        "legacy_identity": {
+          "plugin_id": "legacy-example",
+          "version": "1.0.0",
+          "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+        },
+        "target_adapter_outputs": [],
+        "identity_alignment": "not_applicable",
+        "field_merge_performed": false,
+        "precedence_policy": "independent_validation_no_field_merge",
+        "package_status": "legacy_imported",
+        "pm_native_declarations_eligible": false,
+        "target_outputs_activate_pm_native": false,
+        "blocked_reason_code": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "legacy_migration_preview_hash_bound",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_legacy_migration",
+        "migration_id": "migration-legacy-1",
+        "package_id": "pkg-legacy",
+        "plugin_id": "legacy-example",
+        "source_legacy_manifest_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+        "source_version": "1.0.0",
+        "output_portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "output_pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "field_decisions": [
+          {
+            "source_field": "skills",
+            "disposition": "mapped",
+            "target_manifest": "plugin.json",
+            "target_field": "skills",
+            "reason_code": null
+          },
+          {
+            "source_field": "hooks",
+            "disposition": "mapped",
+            "target_manifest": "pm-plugin.json",
+            "target_field": "components.hooks",
+            "reason_code": null
+          },
+          {
+            "source_field": "unknown_legacy_field",
+            "disposition": "blocked",
+            "target_manifest": "none",
+            "target_field": null,
+            "reason_code": "unsupported_legacy_field"
+          }
+        ],
+        "warnings": [
+          "explicit_reapproval_required"
+        ],
+        "conformance_refs": [
+          "portable-report-1",
+          "agent-report-1"
+        ],
+        "update_diff_ref": "update-diff-1",
+        "package_proof_ref": "proof-1",
+        "rollback_ref": "rollback-proof-1",
+        "review_state": "pending",
+        "approval_ref": null,
+        "outputs_written": false,
+        "silent_rewrite_performed": false,
+        "legacy_precedence_applied": false,
+        "pm_native_activation_authorized": false,
+        "outcome": "preview_ready",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "openai_codex_adapter_round_trip",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_adapter_round_trip_report",
+        "round_trip_id": "round-trip:codex:1",
+        "adapter_target": "openai_codex",
+        "adapter_output_id": "adapter-output:codex:1",
+        "target_manifest_path": ".codex-plugin/plugin.json",
+        "target_mcp_path": ".mcp.json",
+        "source_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "reconstructed_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "reconstructed_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "reconstructed_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "source_manifest_hash_match_verified": true,
+        "source_mcp_hash_match_verified": true,
+        "source_inventory_hash_match_verified": true,
+        "generated_inventory_relation_verified": true,
+        "conformance_ref": "adapter-conformance:codex:1",
+        "lossy_mapping_refs": [],
+        "authority_widening": false,
+        "pm_native_activation_authorized": false,
+        "result": "round_trip_conformant",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "claude_code_adapter_round_trip",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_adapter_round_trip_report",
+        "round_trip_id": "round-trip:claude:1",
+        "adapter_target": "claude_code",
+        "adapter_output_id": "adapter-output:claude:1",
+        "target_manifest_path": ".claude-plugin/plugin.json",
+        "target_mcp_path": ".mcp.json",
+        "source_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "reconstructed_interchange_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "reconstructed_interchange_mcp_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "reconstructed_inventory_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "source_manifest_hash_match_verified": true,
+        "source_mcp_hash_match_verified": true,
+        "source_inventory_hash_match_verified": true,
+        "generated_inventory_relation_verified": true,
+        "conformance_ref": "adapter-conformance:claude:1",
+        "lossy_mapping_refs": [],
+        "authority_widening": false,
+        "pm_native_activation_authorized": false,
+        "result": "round_trip_conformant",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "path_traversal_rejected",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_containment_report",
+        "containment_report_id": "containment-traversal-1",
+        "package_id": "pkg-hostile-traversal",
+        "package_generation": 1,
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "entries": [
+          {
+            "entry_id": "entry-traversal",
+            "raw_path": "skills/../../escape",
+            "normalized_path": null,
+            "entry_kind": "file",
+            "link_target": null,
+            "forbidden_path_detected": true,
+            "resolved_path_within_root": false,
+            "external_hardlink_detected": false,
+            "disposition": "rejected",
+            "reason_code": "parent_traversal"
+          }
+        ],
+        "final_tree_rewalk_performed": false,
+        "normalized_tree_sha256": null,
+        "normalized_tree_hash_match": false,
+        "admission": "rejected",
+        "failure_reason_code": "archive_path_escape",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "symlink_escape_rejected",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_containment_report",
+        "containment_report_id": "containment-symlink-1",
+        "package_id": "pkg-hostile-symlink",
+        "package_generation": 1,
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "entries": [
+          {
+            "entry_id": "entry-symlink",
+            "raw_path": "skills/review/link",
+            "normalized_path": "skills/review/link",
+            "entry_kind": "symlink",
+            "link_target": "../../../../outside",
+            "forbidden_path_detected": true,
+            "resolved_path_within_root": false,
+            "external_hardlink_detected": false,
+            "disposition": "rejected",
+            "reason_code": "symlink_escape"
+          }
+        ],
+        "final_tree_rewalk_performed": false,
+        "normalized_tree_sha256": null,
+        "normalized_tree_hash_match": false,
+        "admission": "rejected",
+        "failure_reason_code": "resolved_symlink_escape",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "crash_loop_bounded_logs_and_quarantine",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_runtime_bounds_report",
+        "runtime_bounds_report_id": "runtime-bounds-crash-1",
+        "package_id": "pkg-crash-loop",
+        "package_generation": 4,
+        "stdout_limit_bytes": 1024,
+        "stdout_observed_bytes": 1024,
+        "stdout_truncated": true,
+        "stderr_limit_bytes": 1024,
+        "stderr_observed_bytes": 1024,
+        "stderr_truncated": true,
+        "log_limit_bytes": 2048,
+        "log_observed_bytes": 2048,
+        "log_truncated": true,
+        "stream_bounds_enforced": true,
+        "log_bounds_enforced": true,
+        "wall_timeout_ms": 30000,
+        "process_tree_cancelled": true,
+        "crash_count": 4,
+        "crash_budget": 3,
+        "crash_budget_state": "budget_exhausted",
+        "lifecycle_disposition": "quarantined",
+        "rollback_ref": "rollback-crash-loop-1",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "stale_promoted_routine_disabled_with_rollback",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_promoted_routine_disposition",
+        "disposition_id": "routine-disposition-1",
+        "routine_id": "routine-review-1",
+        "package_id": "pkg-1",
+        "source_package_generation": 2,
+        "current_package_generation": 3,
+        "freshness": "stale",
+        "routine_state": "disabled_stale",
+        "invocation_authorized": false,
+        "rollback_ref": "rollback-routine-1",
+        "reason_code": "source_generation_stale",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    },
+    {
+      "name": "fully_typed_update_diff_all_axes",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_update_diff",
+        "update_diff_id": "update-diff-1",
+        "package_id": "pkg-1",
+        "plugin_id": "native-example",
+        "from_version": "1.9.0",
+        "to_version": "2.0.0",
+        "from_package_generation": 2,
+        "to_package_generation": 3,
+        "from_package_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+        "to_package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "manifest": {
+          "change_kind": "changed",
+          "before_portable_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "after_portable_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "before_pm_native_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+          "after_pm_native_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "before_legacy_sha256": null,
+          "after_legacy_sha256": null,
+          "identity_changed": false
+        },
+        "components": {
+          "change_kind": "changed",
+          "before_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "after_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "added_ids": [],
+          "removed_ids": [],
+          "changed_ids": [
+            "tool.review"
+          ]
+        },
+        "permissions": {
+          "change_kind": "changed",
+          "before_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "after_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "added_ids": [
+            "network.review"
+          ],
+          "removed_ids": [],
+          "changed_ids": [
+            "tool.review"
+          ]
+        },
+        "capabilities": {
+          "change_kind": "changed",
+          "before_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "after_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "added_ids": [],
+          "removed_ids": [],
+          "changed_ids": [
+            "review"
+          ]
+        },
+        "sandbox": {
+          "change_kind": "changed",
+          "before": "filesystem_limited",
+          "after": "network_limited"
+        },
+        "executable": {
+          "change_kind": "changed",
+          "before": {
+            "runtime_kind": "wasm",
+            "executable": "plugin-v1.wasm",
+            "argv_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "environment_allowlist_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "broker_secret_ref_set_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "runtime_limits_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+          },
+          "after": {
+            "runtime_kind": "wasm",
+            "executable": "plugin.wasm",
+            "argv_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "environment_allowlist_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "broker_secret_ref_set_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "runtime_limits_sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+          }
+        },
+        "transport": {
+          "change_kind": "changed",
+          "before": {
+            "off_loopback_transport": "https_allowlisted_only",
+            "network_allowlist_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "outbound_endpoints_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "public_ingress_authorized": false,
+            "auth_browser_access_allowed": false
+          },
+          "after": {
+            "off_loopback_transport": "https_allowlisted_only",
+            "network_allowlist_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+            "outbound_endpoints_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+            "public_ingress_authorized": false,
+            "auth_browser_access_allowed": false
+          }
+        },
+        "license": {
+          "change_kind": "changed",
+          "before_ref": "license-0",
+          "after_ref": "license-1"
+        },
+        "sbom": {
+          "change_kind": "changed",
+          "before_ref": "sbom-0",
+          "after_ref": "sbom-1"
+        },
+        "publisher": {
+          "change_kind": "unchanged",
+          "before_ref": "publisher-1",
+          "after_ref": "publisher-1"
+        },
+        "signature": {
+          "change_kind": "changed",
+          "before": {
+            "signature_algorithm": "ed25519",
+            "key_id": "key-0",
+            "trust_root_ref": "trust-1",
+            "manifest_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+            "package_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+            "verification_status": "verified"
+          },
+          "after": {
+            "signature_algorithm": "ed25519",
+            "key_id": "key-1",
+            "trust_root_ref": "trust-1",
+            "manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+            "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+            "verification_status": "verified"
+          }
+        },
+        "provenance": {
+          "change_kind": "changed",
+          "before_ref": "provenance-0",
+          "after_ref": "provenance-1"
+        },
+        "known_bad": {
+          "change_kind": "changed",
+          "before_ref": "known-bad-0",
+          "after_ref": "known-bad-1"
+        },
+        "runtime_compatibility": {
+          "change_kind": "changed",
+          "before_ref": "compat-0",
+          "after_ref": "compat-1"
+        },
+        "authority_change": "widened",
+        "reapproval_required": true,
+        "approval_state": "approved",
+        "approval_ref": "approval-update-1",
+        "candidate_signature_verification_status": "verified",
+        "prior_verified_generation_retained": true,
+        "rollback_package_proof_ref": "rollback-proof-1",
+        "review_disposition": "approved_for_attempt",
+        "observed_at": "2026-09-01T03:00:00Z"
+      }
+    }
+  ],
+  "negative": [
+    {
+      "name": "portable_manifest_requests_pm_hook",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "portable_plugin_manifest",
+        "manifest_kind": "portable",
+        "schema_version": "1.0.0",
+        "interchange_scope": "pm_internal_only",
+        "direct_external_loadability": false,
+        "id": "portable-example",
+        "name": "PM Interchange Example",
+        "version": "1.2.3",
+        "description": "Puppet Master internal interchange skills and MCP only.",
+        "skills": [
+          "skills/review/SKILL.md"
+        ],
+        "mcp": "mcp.json",
+        "hooks": [
+          "tool.execute.before"
+        ]
+      },
+      "expected_failure": "portable_additional_property"
+    },
+    {
+      "name": "internal_interchange_cannot_claim_direct_external_loadability",
+      "base_valid": "portable_manifest",
+      "patch": {
+        "direct_external_loadability": true
+      },
+      "expected_failure": "internal_interchange_not_directly_loadable"
+    },
+    {
+      "name": "portable_skill_path_traversal",
+      "base_valid": "portable_manifest",
+      "patch": {
+        "skills": [
+          "skills/../escape/SKILL.md"
+        ]
+      },
+      "expected_failure": "portable_skill_path_containment"
+    },
+    {
+      "name": "codex_adapter_requires_codex_metadata_directory",
+      "base_valid": "openai_codex_target_adapter_output",
+      "patch": {
+        "target_manifest_path": ".claude-plugin/plugin.json"
+      },
+      "expected_failure": "codex_target_manifest_path"
+    },
+    {
+      "name": "claude_adapter_requires_claude_metadata_directory",
+      "base_valid": "claude_code_target_adapter_output",
+      "patch": {
+        "target_manifest_path": ".codex-plugin/plugin.json"
+      },
+      "expected_failure": "claude_target_manifest_path"
+    },
+    {
+      "name": "target_adapter_requires_dot_mcp_filename",
+      "base_valid": "openai_codex_target_adapter_output",
+      "patch": {
+        "target_mcp_path": "mcp.json"
+      },
+      "expected_failure": "target_mcp_path"
+    },
+    {
+      "name": "target_adapter_cannot_widen_authority",
+      "base_valid": "claude_code_target_adapter_output",
+      "patch": {
+        "authority_widening": true
+      },
+      "expected_failure": "adapter_authority_widening_forbidden"
+    },
+    {
+      "name": "claude_conformance_requires_claude_path",
+      "base_valid": "claude_code_target_adapter_conformance",
+      "patch": {
+        "target_manifest_path": ".codex-plugin/plugin.json"
+      },
+      "expected_failure": "claude_conformance_path"
+    },
+    {
+      "name": "dual_manifest_id_version_not_verified",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_package",
+        "package_id": "pkg-bad",
+        "plugin_id": "native-example",
+        "version": "2.0.0",
+        "package_generation": 3,
+        "manifests_present": "portable_and_pm_native",
+        "package_status": "pm_extended",
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "legacy_manifest_sha256": null,
+        "id_version_alignment_verified": false,
+        "component_results": [
+          {
+            "component_kind": "portable_skill",
+            "component_id": "skills/review",
+            "required": true,
+            "state": "enabled",
+            "reason_code": null
+          },
+          {
+            "component_kind": "hook",
+            "component_id": "tool.execute.before",
+            "required": false,
+            "state": "disabled",
+            "reason_code": "user_disabled"
+          }
+        ],
+        "portable_conformance_ref": "portable-report-1",
+        "agent_conformance_ref": "agent-report-1",
+        "observed_at": "2026-09-01T03:00:00Z"
+      },
+      "expected_failure": "dual_manifest_alignment_required"
+    },
+    {
+      "name": "dual_manifest_cannot_merge_fields",
+      "base_valid": "dual_manifest_precedence_no_merge",
+      "patch": {
+        "field_merge_performed": true
+      },
+      "expected_failure": "dual_manifest_no_field_merge"
+    },
+    {
+      "name": "mismatched_dual_manifest_cannot_be_extended",
+      "base_valid": "dual_manifest_precedence_no_merge",
+      "patch": {
+        "identity_alignment": "mismatched"
+      },
+      "expected_failure": "dual_manifest_mismatch_fails_closed"
+    },
+    {
+      "name": "legacy_import_missing_hash",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_package",
+        "package_id": "pkg-legacy",
+        "plugin_id": "legacy-example",
+        "version": "1.0.0",
+        "package_generation": 7,
+        "manifests_present": "legacy_pm_plugin_json",
+        "package_status": "legacy_imported",
+        "portable_manifest_sha256": null,
+        "pm_manifest_sha256": null,
+        "id_version_alignment_verified": false,
+        "component_results": [
+          {
+            "component_kind": "runtime_entry",
+            "component_id": "legacy-entry",
+            "required": true,
+            "state": "approval_required",
+            "reason_code": "migration_required"
+          }
+        ],
+        "portable_conformance_ref": null,
+        "agent_conformance_ref": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      },
+      "expected_failure": "legacy_hash_required"
+    },
+    {
+      "name": "legacy_migration_cannot_silently_rewrite",
+      "base_valid": "legacy_migration_preview_hash_bound",
+      "patch": {
+        "silent_rewrite_performed": true
+      },
+      "expected_failure": "silent_rewrite_forbidden"
+    },
+    {
+      "name": "legacy_migration_cannot_apply_legacy_precedence",
+      "base_valid": "legacy_migration_preview_hash_bound",
+      "patch": {
+        "legacy_precedence_applied": true
+      },
+      "expected_failure": "legacy_precedence_forbidden"
+    },
+    {
+      "name": "portable_only_admission_carries_native_manifest",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "PluginPackageSupplyChainProof",
+        "proof_id": "proof-bad",
+        "package_id": "pkg-bad",
+        "plugin_id": "portable-example",
+        "version": "2.0.0",
+        "package_generation": 3,
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "archive_inventory_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "normalized_tree_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "publisher_ref": "publisher-1",
+        "signature_algorithm": "ed25519",
+        "key_id": "key-1",
+        "trust_root_ref": "trust-1",
+        "signature_verification_status": "verified",
+        "license_ref": "license-1",
+        "sbom_ref": "sbom-1",
+        "provenance_ref": "provenance-1",
+        "known_bad_check_ref": "known-bad-1",
+        "target_platform": "linux",
+        "target_architecture": "x86_64",
+        "runtime_compatibility_ref": "compat-1",
+        "archive_containment_ref": "containment-1",
+        "symlink_policy": "internal_relative_only",
+        "resolved_containment_verified": true,
+        "portable_conformance_ref": "portable-report-1",
+        "agent_conformance_ref": null,
+        "permission_capability_diff_ref": "permission-diff-1",
+        "component_diff_ref": "component-diff-1",
+        "update_diff_ref": "update-diff-1",
+        "rollback_package_proof_ref": "rollback-proof-1",
+        "admission": "admitted_portable_only",
+        "failure_reason_code": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      },
+      "expected_failure": "portable_only_cannot_carry_pm_manifest"
+    },
+    {
+      "name": "shell_string_executable",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "pm_plugin_manifest",
+        "manifest_kind": "pm_native",
+        "schema_version": "1.0.0",
+        "id": "bad-runtime",
+        "name": "Native Example",
+        "version": "2.0.0",
+        "description": "PM native example.",
+        "components": {
+          "agents": [],
+          "hooks": [
+            "tool.execute.before"
+          ],
+          "tools": [
+            "native-example.review"
+          ],
+          "commands": [],
+          "ui": [],
+          "rules": [],
+          "lsp": [],
+          "browser_adapters": []
+        },
+        "runtime": {
+          "kind": "wasm",
+          "executable": "sh -c bad",
+          "argv": [],
+          "plugin_root_mode": "PLUGIN_ROOT_read_only",
+          "plugin_data_mode": "PLUGIN_DATA_read_write_separate",
+          "environment_allowlist": [
+            "LANG"
+          ],
+          "broker_secret_refs": [],
+          "private_runtime_directory": true,
+          "stdout_max_bytes": 1048576,
+          "stderr_max_bytes": 1048576,
+          "log_max_bytes": 2097152,
+          "wall_timeout_ms": 30000,
+          "crash_budget": 3,
+          "process_tree_cancellation": true,
+          "off_loopback_transport": "none",
+          "network_allowlist_refs": [],
+          "outbound_endpoints": []
+        },
+        "permissions": [
+          {
+            "permission_id": "tool.review",
+            "scope": "project",
+            "purpose": "Review selected files",
+            "default_state": "ask",
+            "requested_actions": [
+              "read"
+            ],
+            "approval_scope_key": null
+          }
+        ],
+        "capabilities": [
+          {
+            "capability_id": "review",
+            "provider_surface": "tools",
+            "hook_refs": [
+              "tool.execute.before"
+            ],
+            "data_access": "bounded_declared",
+            "network_access": "none",
+            "fs_access": "filesafe_scoped",
+            "command_access": "none"
+          }
+        ],
+        "sandbox": "filesystem_limited",
+        "signature": {
+          "signature_algorithm": "ed25519",
+          "key_id": "key-1",
+          "trust_root_ref": "trust-1",
+          "manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+          "verification_status": "verified",
+          "failure_reason_code": null
+        },
+        "supply_chain": {
+          "publisher_ref": "publisher-1",
+          "license_ref": "license-1",
+          "sbom_ref": "sbom-1",
+          "provenance_ref": "provenance-1",
+          "known_bad_check_ref": "known-bad-1",
+          "archive_containment_ref": "containment-1",
+          "symlink_policy": "internal_relative_only",
+          "resolved_containment_verified": true
+        }
+      },
+      "expected_failure": "executable_is_one_safe_relative_token"
+    },
+    {
+      "name": "literal_secret_rejected",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "pm_plugin_manifest",
+        "manifest_kind": "pm_native",
+        "schema_version": "1.0.0",
+        "id": "native-network-example",
+        "name": "Native Network Example",
+        "version": "2.0.0",
+        "description": "PM native example.",
+        "components": {
+          "agents": [],
+          "hooks": [
+            "tool.execute.before"
+          ],
+          "tools": [
+            "native-example.review"
+          ],
+          "commands": [],
+          "ui": [],
+          "rules": [],
+          "lsp": [],
+          "browser_adapters": []
+        },
+        "runtime": {
+          "kind": "wasm",
+          "executable": "plugin.wasm",
+          "argv": [],
+          "plugin_root_mode": "PLUGIN_ROOT_read_only",
+          "plugin_data_mode": "PLUGIN_DATA_read_write_separate",
+          "environment_allowlist": [
+            "LANG"
+          ],
+          "broker_secret_refs": [
+            "api_token=literal-secret-value"
+          ],
+          "private_runtime_directory": true,
+          "stdout_max_bytes": 1048576,
+          "stderr_max_bytes": 1048576,
+          "log_max_bytes": 2097152,
+          "wall_timeout_ms": 30000,
+          "crash_budget": 3,
+          "process_tree_cancellation": true,
+          "off_loopback_transport": "https_allowlisted_only",
+          "network_allowlist_refs": [
+            "network-allowlist:plugin-review"
+          ],
+          "outbound_endpoints": [
+            {
+              "endpoint_id": "endpoint-review-api",
+              "url": "https://plugins.example.test/v1/review",
+              "allowlist_ref": "network-allowlist:plugin-review",
+              "public_ingress_authorized": false,
+              "auth_browser_access_allowed": false
+            }
+          ]
+        },
+        "permissions": [
+          {
+            "permission_id": "tool.review",
+            "scope": "project",
+            "purpose": "Review selected files",
+            "default_state": "ask",
+            "requested_actions": [
+              "read"
+            ],
+            "approval_scope_key": null
+          }
+        ],
+        "capabilities": [
+          {
+            "capability_id": "review",
+            "provider_surface": "tools",
+            "hook_refs": [
+              "tool.execute.before"
+            ],
+            "data_access": "bounded_declared",
+            "network_access": "none",
+            "fs_access": "filesafe_scoped",
+            "command_access": "none"
+          }
+        ],
+        "sandbox": "filesystem_limited",
+        "signature": {
+          "signature_algorithm": "ed25519",
+          "key_id": "key-1",
+          "trust_root_ref": "trust-1",
+          "manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+          "verification_status": "verified",
+          "failure_reason_code": null
+        },
+        "supply_chain": {
+          "publisher_ref": "publisher-1",
+          "license_ref": "license-1",
+          "sbom_ref": "sbom-1",
+          "provenance_ref": "provenance-1",
+          "known_bad_check_ref": "known-bad-1",
+          "archive_containment_ref": "containment-1",
+          "symlink_policy": "internal_relative_only",
+          "resolved_containment_verified": true
+        }
+      },
+      "expected_failure": "literal_secret_forbidden"
+    },
+    {
+      "name": "non_https_off_loopback_rejected",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "pm_plugin_manifest",
+        "manifest_kind": "pm_native",
+        "schema_version": "1.0.0",
+        "id": "native-network-example",
+        "name": "Native Network Example",
+        "version": "2.0.0",
+        "description": "PM native example.",
+        "components": {
+          "agents": [],
+          "hooks": [
+            "tool.execute.before"
+          ],
+          "tools": [
+            "native-example.review"
+          ],
+          "commands": [],
+          "ui": [],
+          "rules": [],
+          "lsp": [],
+          "browser_adapters": []
+        },
+        "runtime": {
+          "kind": "wasm",
+          "executable": "plugin.wasm",
+          "argv": [],
+          "plugin_root_mode": "PLUGIN_ROOT_read_only",
+          "plugin_data_mode": "PLUGIN_DATA_read_write_separate",
+          "environment_allowlist": [
+            "LANG"
+          ],
+          "broker_secret_refs": [
+            "secret-ref:plugin-review"
+          ],
+          "private_runtime_directory": true,
+          "stdout_max_bytes": 1048576,
+          "stderr_max_bytes": 1048576,
+          "log_max_bytes": 2097152,
+          "wall_timeout_ms": 30000,
+          "crash_budget": 3,
+          "process_tree_cancellation": true,
+          "off_loopback_transport": "https_allowlisted_only",
+          "network_allowlist_refs": [
+            "network-allowlist:plugin-review"
+          ],
+          "outbound_endpoints": [
+            {
+              "endpoint_id": "endpoint-review-api",
+              "url": "http://plugins.example.test/v1/review",
+              "allowlist_ref": "network-allowlist:plugin-review",
+              "public_ingress_authorized": false,
+              "auth_browser_access_allowed": false
+            }
+          ]
+        },
+        "permissions": [
+          {
+            "permission_id": "tool.review",
+            "scope": "project",
+            "purpose": "Review selected files",
+            "default_state": "ask",
+            "requested_actions": [
+              "read"
+            ],
+            "approval_scope_key": null
+          }
+        ],
+        "capabilities": [
+          {
+            "capability_id": "review",
+            "provider_surface": "tools",
+            "hook_refs": [
+              "tool.execute.before"
+            ],
+            "data_access": "bounded_declared",
+            "network_access": "none",
+            "fs_access": "filesafe_scoped",
+            "command_access": "none"
+          }
+        ],
+        "sandbox": "filesystem_limited",
+        "signature": {
+          "signature_algorithm": "ed25519",
+          "key_id": "key-1",
+          "trust_root_ref": "trust-1",
+          "manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+          "verification_status": "verified",
+          "failure_reason_code": null
+        },
+        "supply_chain": {
+          "publisher_ref": "publisher-1",
+          "license_ref": "license-1",
+          "sbom_ref": "sbom-1",
+          "provenance_ref": "provenance-1",
+          "known_bad_check_ref": "known-bad-1",
+          "archive_containment_ref": "containment-1",
+          "symlink_policy": "internal_relative_only",
+          "resolved_containment_verified": true
+        }
+      },
+      "expected_failure": "off_loopback_https_only"
+    },
+    {
+      "name": "invented_event_policy",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "plugin_lifecycle_receipt",
+        "receipt_id": "receipt-bad-event",
+        "command_id": "cmd.agent_plugin.update",
+        "package_id": "pkg-1",
+        "plugin_id": "native-example",
+        "prior_package_generation": 2,
+        "result_package_generation": 2,
+        "outcome": "rejected",
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "component_results": [],
+        "conformance_refs": [
+          "portable-report-1",
+          "agent-report-1"
+        ],
+        "permission_diff_ref": "permission-diff-1",
+        "update_diff_ref": "update-diff-1",
+        "supply_chain_ref": "supply-chain-1",
+        "rollback_ref": "rollback-1",
+        "observable_work_ref": "work-1",
+        "event_effect_policy": "emit_agent_plugin_updated"
+      },
+      "expected_failure": "event_authority_not_admitted"
+    },
+    {
+      "name": "portable_partial_requires_isolation",
+      "base_valid": "portable_invalid_skill_isolated_valid_mcp_usable",
+      "patch": {
+        "isolation_preserved": false
+      },
+      "expected_failure": "component_isolation_required"
+    },
+    {
+      "name": "agent_partial_requires_isolation",
+      "base_valid": "agent_optional_incompatible_component_isolated",
+      "patch": {
+        "isolation_preserved": false
+      },
+      "expected_failure": "native_component_isolation_required"
+    },
+    {
+      "name": "required_incompatible_component_cannot_be_conformant",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "agent_plugin_conformance_report",
+        "report_kind": "AgentPluginConformanceReport",
+        "report_id": "agent-report-required-failure",
+        "package_id": "pkg-1",
+        "package_generation": 3,
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "component_results": [
+          {
+            "component_kind": "hook",
+            "component_id": "tool.execute.before",
+            "required": true,
+            "state": "failed",
+            "reason_code": "platform_incompatible"
+          },
+          {
+            "component_kind": "runtime_entry",
+            "component_id": "plugin.wasm",
+            "required": true,
+            "state": "validated",
+            "reason_code": null
+          }
+        ],
+        "usable_component_refs": [
+          "tool.execute.before",
+          "plugin.wasm"
+        ],
+        "failed_component_refs": [
+          "tool.execute.before"
+        ],
+        "isolation_preserved": true,
+        "permission_capability_ref": "permission-capability-1",
+        "sandbox_ref": "sandbox-1",
+        "signature_provenance_ref": "signature-provenance-1",
+        "containment_ref": "containment-1",
+        "runtime_bounds_ref": "runtime-bounds-1",
+        "result": "conformant"
+      },
+      "expected_failure": "required_component_failure_rejects_conformance"
+    },
+    {
+      "name": "codex_round_trip_requires_hash_relation",
+      "base_valid": "openai_codex_adapter_round_trip",
+      "patch": {
+        "source_manifest_hash_match_verified": false
+      },
+      "expected_failure": "round_trip_source_hash_relation"
+    },
+    {
+      "name": "claude_round_trip_cannot_widen_authority",
+      "base_valid": "claude_code_adapter_round_trip",
+      "patch": {
+        "authority_widening": true
+      },
+      "expected_failure": "round_trip_authority_widening"
+    },
+    {
+      "name": "path_traversal_cannot_be_allowed",
+      "base_valid": "path_traversal_rejected",
+      "patch": {
+        "entries": [
+          {
+            "entry_id": "entry-traversal",
+            "raw_path": "skills/../../escape",
+            "normalized_path": null,
+            "entry_kind": "file",
+            "link_target": null,
+            "forbidden_path_detected": true,
+            "resolved_path_within_root": false,
+            "external_hardlink_detected": false,
+            "disposition": "allowed",
+            "reason_code": null
+          }
+        ],
+        "admission": "admitted",
+        "final_tree_rewalk_performed": true,
+        "normalized_tree_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "normalized_tree_hash_match": true,
+        "failure_reason_code": null
+      },
+      "expected_failure": "traversal_admission_forbidden"
+    },
+    {
+      "name": "symlink_escape_cannot_be_allowed",
+      "base_valid": "symlink_escape_rejected",
+      "patch": {
+        "entries": [
+          {
+            "entry_id": "entry-symlink",
+            "raw_path": "skills/review/link",
+            "normalized_path": "skills/review/link",
+            "entry_kind": "symlink",
+            "link_target": "../../../../outside",
+            "forbidden_path_detected": true,
+            "resolved_path_within_root": false,
+            "external_hardlink_detected": false,
+            "disposition": "allowed",
+            "reason_code": null
+          }
+        ],
+        "admission": "admitted",
+        "final_tree_rewalk_performed": true,
+        "normalized_tree_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "normalized_tree_hash_match": true,
+        "failure_reason_code": null
+      },
+      "expected_failure": "symlink_escape_admission_forbidden"
+    },
+    {
+      "name": "unsigned_update_cannot_be_admitted",
+      "instance": {
+        "schema_id": "pm.plugins.package_contracts.v1",
+        "record_kind": "PluginPackageSupplyChainProof",
+        "proof_id": "proof-unsigned",
+        "package_id": "pkg-1",
+        "plugin_id": "native-example",
+        "version": "2.0.0",
+        "package_generation": 3,
+        "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "pm_manifest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "package_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "archive_inventory_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "normalized_tree_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "publisher_ref": "publisher-1",
+        "signature_algorithm": "ed25519",
+        "key_id": "key-1",
+        "trust_root_ref": "trust-1",
+        "signature_verification_status": "failed",
+        "license_ref": "license-1",
+        "sbom_ref": "sbom-1",
+        "provenance_ref": "provenance-1",
+        "known_bad_check_ref": "known-bad-1",
+        "target_platform": "linux",
+        "target_architecture": "x86_64",
+        "runtime_compatibility_ref": "compat-1",
+        "archive_containment_ref": "containment-1",
+        "symlink_policy": "internal_relative_only",
+        "resolved_containment_verified": true,
+        "portable_conformance_ref": "portable-report-1",
+        "agent_conformance_ref": "agent-report-1",
+        "permission_capability_diff_ref": "permission-diff-1",
+        "component_diff_ref": "component-diff-1",
+        "update_diff_ref": "update-diff-1",
+        "rollback_package_proof_ref": "rollback-proof-1",
+        "admission": "admitted",
+        "failure_reason_code": null,
+        "observed_at": "2026-09-01T03:00:00Z"
+      },
+      "expected_failure": "verified_signature_required"
+    },
+    {
+      "name": "changed_after_verification_update_cannot_be_approved",
+      "base_valid": "fully_typed_update_diff_all_axes",
+      "patch": {
+        "candidate_signature_verification_status": "changed_after_verification"
+      },
+      "expected_failure": "changed_candidate_blocked"
+    },
+    {
+      "name": "update_diff_requires_all_named_axes",
+      "base_valid": "fully_typed_update_diff_all_axes",
+      "remove": [
+        "transport"
+      ],
+      "expected_failure": "complete_update_diff_axes"
+    },
+    {
+      "name": "crash_budget_exhaustion_cannot_remain_enabled",
+      "base_valid": "crash_loop_bounded_logs_and_quarantine",
+      "patch": {
+        "lifecycle_disposition": "enabled"
+      },
+      "expected_failure": "crash_loop_fails_closed"
+    },
+    {
+      "name": "stale_promoted_routine_cannot_execute",
+      "base_valid": "stale_promoted_routine_disabled_with_rollback",
+      "patch": {
+        "invocation_authorized": true
+      },
+      "expected_failure": "stale_routine_disabled"
+    }
+  ]
+}

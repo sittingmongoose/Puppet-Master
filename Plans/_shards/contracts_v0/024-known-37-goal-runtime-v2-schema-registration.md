@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3468-L17377
+Source lines: L3469-L17383
 
-Source SHA256: `09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd`
+Source SHA256: `8c7a1cfb06b9002436190af12a1dcdccdc2913bbb7c6ffe13118bc081fa33613`
 
 ---
 
@@ -2409,8 +2409,10 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Usage routes normalize usage_event_ref to object_kind = usage_event and the
-  canonical usage event object_id; timestamp/run/thread/tier filters are
+  Usage routes use typed primary selectors. Event-primary callers normalize
+  usage_event_ref to object_kind = usage_event and the canonical event object_id;
+  PMConcept7 Ledger attempt rows normalize attempt_id to object_kind = usage_attempt
+  and retain usage_event_ref as correlation. Timestamp/run/thread/tier filters are
   degraded compatibility or narrowing, not primary route identity.
 gui_related: false
 gui_classification_reason: This unit defines usage route identity and compatibility filters.
@@ -2418,8 +2420,8 @@ split_recommended: true
 depends_on: [CV-031, CV-054]
 unblocks: []
 acceptance_criteria:
-  - usage_event_ref normalizes into object_kind = usage_event.
-  - The canonical usage event is the object_id for usage routes.
+  - Event-primary usage_event_ref normalizes into object_kind = usage_event and the canonical event object_id.
+  - A PMConcept7 Ledger attempt row normalizes attempt_id into object_kind = usage_attempt and retains usage_event_ref as correlation/accounting identity.
   - Timestamp/run/thread/tier filters are not primary route identity.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2437,6 +2439,8 @@ source_lineage:
 preserved_exact_tokens:
   - "`usage_event_ref`"
   - "`object_kind = usage_event`"
+  - "`object_kind = usage_attempt`"
+  - "`attempt_id`"
   - "`object_id`"
   - "`tier_id`"
 compatibility_only_notes:
@@ -7796,6 +7800,7 @@ preserved_exact_tokens:
   - "`message`"
   - "`wizard`"
   - "`usage_event`"
+  - "`usage_attempt`"
   - "`blocked_episode`"
   - "`browser_session`"
   - "`terminal_session`"

@@ -1,0 +1,692 @@
+{
+  "schema_id": "pm.test_capture_motion_evidence_contract_fixtures.v1",
+  "owner_schema": "Plans/test_capture_motion_evidence_contracts.schema.json",
+  "proof_boundary": "Schema fixture validity is static contract evidence only, not captured media, platform, crash-recovery, motion, privacy, visual, performance, or provenance execution proof.",
+  "valid": [
+    {
+      "name": "browser_page_capture_has_explicit_target_and_requested_effective_state",
+      "value": {
+        "schema_id": "pm.test_capture.session.v1",
+        "record_kind": "test_capture_session",
+        "capture_session_id": "capture-session-1",
+        "lineage": {
+          "project_id": "project-1",
+          "plan_id": "plan-1",
+          "goal_id": "goal-1",
+          "run_id": "run-1",
+          "task_id": "task-1",
+          "attempt_id": "attempt-1",
+          "agent_id": "agent-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "mode": "on_failure",
+        "target_policy": "fixed_page",
+        "requested_target": {
+          "target_id": "browser-page-target-1",
+          "target_family": "browser_page",
+          "target_generation": 3,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 3
+        },
+        "effective_target": {
+          "target_id": "browser-page-target-1",
+          "target_family": "browser_page",
+          "target_generation": 3,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 3
+        },
+        "engine": {"requested": "cef_shared_texture", "effective": "bgra_copy", "reason_code": "shared_texture_unavailable"},
+        "visibility": {"requested": "visible_watchable", "effective": "visible_watchable", "reason_code": "user_requested"},
+        "cadence_fps": {"requested": 60, "effective": 30, "reason_code": "governor_pressure"},
+        "dimensions": {"width": 1440, "height": 900, "device_pixel_ratio": 2},
+        "codec": {"requested": "automatic", "effective": "h264_high", "selection_rank": 1, "container": "matroska"},
+        "audio": {
+          "requested": "off",
+          "effective": "off",
+          "explicit_target_grant": false,
+          "codec": "none",
+          "sample_rate_hz": 0,
+          "microphone_inferred": false,
+          "system_audio_inferred": false
+        },
+        "masking": {
+          "requested_stage": "source",
+          "effective_stage": "encoder",
+          "policy_ref": "policy:capture-mask:1",
+          "profile_ref": "masking:profile:1",
+          "display_only_counts_as_retained_redaction": false,
+          "privacy_review_state": "pending",
+          "masked_region_manifest_ref": "masking:regions:1",
+          "unmasked_interval_refs": []
+        },
+        "runtime_resource_governor_permit_ref": "governor:permit:capture:1",
+        "viewer_count": 5,
+        "encoder_count": 1,
+        "focus_changes_target": false,
+        "state": "degraded",
+        "created_at_utc": "2026-08-31T13:00:00Z",
+        "updated_at_utc": "2026-08-31T13:00:05Z"
+      }
+    },
+    {
+      "name": "controller_follow_target_switch_is_timed_and_not_focus_triggered",
+      "value": {
+        "schema_id": "pm.test_capture.target_switch_receipt.v1",
+        "record_kind": "capture_target_switch_receipt",
+        "switch_id": "target-switch-1",
+        "capture_session_id": "capture-session-1",
+        "target_policy": "follow_controller_page",
+        "old_target": {
+          "target_id": "browser-page-target-1",
+          "target_family": "browser_page",
+          "target_generation": 3,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 3
+        },
+        "new_target": {
+          "target_id": "browser-page-target-2",
+          "target_family": "browser_page",
+          "target_generation": 7,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-2",
+          "page_generation": 7
+        },
+        "switch_requested_monotonic_ns": 1000000000,
+        "switch_effective_monotonic_ns": 1001000000,
+        "first_new_target_frame_monotonic_ns": 1033000000,
+        "focus_triggered": false,
+        "controller_generation_ref": "browser-controller:generation:7",
+        "continuity_disposition": "gap_recorded",
+        "created_at_utc": "2026-08-31T13:00:06Z"
+      }
+    },
+    {
+      "name": "atomic_segment_is_keyframed_clocked_hashed_and_recovered",
+      "value": {
+        "schema_id": "pm.test_capture.segment_manifest.v1",
+        "record_kind": "capture_segment_manifest",
+        "segment_id": "segment-8",
+        "capture_session_id": "capture-session-1",
+        "stream_id": "stream-1",
+        "target": {
+          "target_id": "browser-page-target-1",
+          "target_family": "browser_page",
+          "target_generation": 3,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 3
+        },
+        "sequence": 8,
+        "container": "matroska",
+        "nominal_duration_ms": 2000,
+        "starts_with_keyframe": true,
+        "codec": "h264_high",
+        "dimensions": {"width": 1440, "height": 900, "device_pixel_ratio": 2},
+        "cadence_fps": {"requested": 60, "effective": 30, "reason_code": "governor_pressure"},
+        "audio": {
+          "requested": "off",
+          "effective": "off",
+          "explicit_target_grant": false,
+          "codec": "none",
+          "sample_rate_hz": 0,
+          "microphone_inferred": false,
+          "system_audio_inferred": false
+        },
+        "masking": {
+          "requested_stage": "source",
+          "effective_stage": "encoder",
+          "policy_ref": "policy:capture-mask:1",
+          "profile_ref": "masking:profile:1",
+          "display_only_counts_as_retained_redaction": false,
+          "privacy_review_state": "approved",
+          "masked_region_manifest_ref": "masking:regions:segment-8",
+          "unmasked_interval_refs": []
+        },
+        "wall_start_utc": "2026-08-31T13:00:06Z",
+        "wall_end_utc": "2026-08-31T13:00:08Z",
+        "monotonic_start_ns": 2000000000,
+        "monotonic_end_ns": 4000000000,
+        "clock_calibration": {
+          "calibration_id": "clock-calibration-1",
+          "source_clock_domain": "cef-producer-monotonic",
+          "reference_clock_domain": "test-capture-service-monotonic",
+          "offset_ns": 1200,
+          "drift_ppm": 0.4,
+          "uncertainty_ns": 2500,
+          "method": "producer_timestamp_map",
+          "valid_from_monotonic_ns": 1000000000,
+          "valid_to_monotonic_ns": 10000000000
+        },
+        "frame_health": {
+          "delivered_frames": 58,
+          "dropped_frames": 2,
+          "repeated_frames": 0,
+          "black_frames": 0,
+          "blank_frames": 0,
+          "frozen_frames": 0,
+          "stale_frames": 0,
+          "corrupt_frames": 0,
+          "misordered_frames": 0,
+          "cadence_collapse_intervals": 1,
+          "health_state": "degraded",
+          "finding_refs": ["finding:cadence-collapse:segment-8"]
+        },
+        "popup_composition_ref": null,
+        "action_refs": ["browser-action:click:17"],
+        "bookmark_refs": ["capture-bookmark:submit"],
+        "content_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "byte_size": 1048576,
+        "previous_segment_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "finalization_state": "finalized",
+        "recovery_disposition": "recovered_finalized",
+        "immutable": true,
+        "created_at_utc": "2026-08-31T13:00:09Z"
+      }
+    },
+    {
+      "name": "external_project_artifact_conveys_no_pm_browser_authority",
+      "value": {
+        "schema_id": "pm.test_capture.artifact.v1",
+        "record_kind": "capture_artifact",
+        "capture_artifact_id": "capture-artifact-external-1",
+        "capture_session_id": "capture-session-external-1",
+        "lineage": {
+          "project_id": "project-1",
+          "run_id": "run-external-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "producer_kind": "external_project",
+        "target": {
+          "target_id": "external-process-target-1",
+          "target_family": "external_adapter",
+          "target_generation": 1,
+          "target_security_class": "external_project",
+          "external_project_process_id": "project-process-1"
+        },
+        "requested_engine": "external_project_declared",
+        "effective_engine": "external_project_declared",
+        "requested_visibility": "headless_background",
+        "effective_visibility": "headless_background",
+        "dimensions": {"width": 1280, "height": 720, "device_pixel_ratio": 1},
+        "requested_cadence_fps": 30,
+        "effective_cadence_fps": 30,
+        "media_kind": "video",
+        "codec": "vp8",
+        "segment_refs": ["artifact:external-segment:1"],
+        "clock_calibration_refs": ["clock:external:1"],
+        "health_receipt_refs": [],
+        "masking": {
+          "requested_stage": "none",
+          "effective_stage": "none",
+          "policy_ref": "policy:external-capture:1",
+          "profile_ref": "masking:none",
+          "display_only_counts_as_retained_redaction": false,
+          "privacy_review_state": "not_required"
+        },
+        "size_bytes": 1000000,
+        "content_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "retention_policy_ref": "retention:test-capture:1",
+        "finalization_state": "complete",
+        "recovery_state": "not_needed",
+        "pm_browser_authority_conferred": false,
+        "created_at_utc": "2026-08-31T13:01:00Z"
+      }
+    },
+    {
+      "name": "raw_capture_is_immutable_and_distinct_from_derived",
+      "value": {
+        "schema_id": "pm.test_capture.raw_capture.v1",
+        "record_kind": "raw_test_capture",
+        "raw_capture_id": "raw-test-capture-1",
+        "capture_artifact_ref": "artifact:capture:raw:1",
+        "capture_session_id": "capture-session-1",
+        "target": {
+          "target_id": "browser-page-target-1",
+          "target_family": "browser_page",
+          "target_generation": 3,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 3
+        },
+        "segment_refs": ["segment:1", "segment:2", "segment:3"],
+        "continuity_state": "partial_with_gaps",
+        "gap_refs": ["gap:producer-disconnect:1"],
+        "immutable": true,
+        "derived_identity": false,
+        "reenactment": false,
+        "content_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "created_at_utc": "2026-08-31T13:02:00Z"
+      }
+    },
+    {
+      "name": "derivation_manifest_cites_exact_raw_spans_and_no_uncaptured_state",
+      "value": {
+        "schema_id": "pm.test_capture.derivation_manifest.v1",
+        "record_kind": "capture_derivation_manifest",
+        "derivation_manifest_id": "derivation-1",
+        "raw_capture_ids": ["raw-test-capture-1"],
+        "raw_spans": [
+          {
+            "raw_capture_id": "raw-test-capture-1",
+            "stream_id": "stream-1",
+            "segment_id": "segment-2",
+            "start_frame": 4,
+            "end_frame": 48,
+            "start_monotonic_ns": 2200000000,
+            "end_monotonic_ns": 3800000000
+          }
+        ],
+        "edits": [
+          {
+            "edit_id": "edit-caption-1",
+            "edit_type": "caption",
+            "input_span_refs": ["span:raw-test-capture-1:segment-2:4-48"],
+            "parameters_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          }
+        ],
+        "action_refs": ["browser-action:click:17"],
+        "privacy_review_ref": "privacy-review:derivation-1",
+        "privacy_review_state": "approved_with_gaps",
+        "tool_id": "pm-demonstration-video-deriver",
+        "tool_version": "1.0.0",
+        "tool_config_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "output_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+        "uncaptured_state_introduced": false,
+        "validation_receipt_ref": "receipt:derivation-validation:1",
+        "overwrites_raw": false,
+        "immutable": true,
+        "created_at_utc": "2026-08-31T13:03:00Z"
+      }
+    },
+    {
+      "name": "derived_video_is_not_raw_and_does_not_overwrite",
+      "value": {
+        "schema_id": "pm.test_capture.demonstration_video.v1",
+        "record_kind": "derived_demonstration_video",
+        "demonstration_video_id": "demonstration-video-1",
+        "derivation_manifest_ref": "derivation:manifest:1",
+        "source_raw_capture_ids": ["raw-test-capture-1"],
+        "container": "mp4",
+        "codec": "h264_high",
+        "content_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+        "byte_size": 2000000,
+        "immutable": true,
+        "raw_identity": false,
+        "overwrites_raw": false,
+        "created_at_utc": "2026-08-31T13:03:01Z"
+      }
+    },
+    {
+      "name": "latest_selection_requires_identity_and_continuity_verification",
+      "value": {
+        "schema_id": "pm.test_capture.provenance_selection.v1",
+        "record_kind": "capture_provenance_selection",
+        "selection_id": "provenance-selection-1",
+        "requested_relation": "latest_verified_continuous",
+        "subject_ref": "subject:test-run:1",
+        "candidate_capture_ids": ["raw-test-capture-1", "raw-test-capture-2"],
+        "selected_capture_id": "raw-test-capture-2",
+        "identity_verified": true,
+        "continuity_verified": true,
+        "original_available": true,
+        "reenactment_substituted": false,
+        "disposition": "selected",
+        "created_at_utc": "2026-08-31T13:04:00Z"
+      }
+    },
+    {
+      "name": "missing_original_is_admitted_without_reenactment",
+      "value": {
+        "schema_id": "pm.test_capture.provenance_selection.v1",
+        "record_kind": "capture_provenance_selection",
+        "selection_id": "provenance-selection-missing",
+        "requested_relation": "exact_capture",
+        "subject_ref": "subject:test-run:missing",
+        "candidate_capture_ids": [],
+        "selected_capture_id": null,
+        "identity_verified": false,
+        "continuity_verified": false,
+        "original_available": false,
+        "reenactment_substituted": false,
+        "disposition": "original_missing",
+        "created_at_utc": "2026-08-31T13:04:01Z"
+      }
+    },
+    {
+      "name": "comparison_discloses_calibration_gaps_masking_and_quarter_speed",
+      "value": {
+        "schema_id": "pm.test_capture.playback_comparison_state.v1",
+        "record_kind": "capture_playback_comparison_state",
+        "comparison_id": "comparison-1",
+        "left_artifact_ref": "artifact:raw-capture:reference",
+        "left_artifact_class": "raw_test_capture",
+        "right_artifact_ref": "artifact:raw-capture:actual",
+        "right_artifact_class": "raw_test_capture",
+        "alignment_method": "calibrated_clock",
+        "clock_calibration_refs": ["clock:reference:1", "clock:actual:1"],
+        "frame_step_enabled": true,
+        "bookmarks_enabled": true,
+        "action_jumps_enabled": true,
+        "slow_motion_rates": [0.25, 0.5, 1],
+        "synchronized_panes": true,
+        "comparison_mode": "side_by_side",
+        "gap_refs": ["gap:actual:1"],
+        "masking_stages_disclosed": true,
+        "screenshot_substitutes_for_motion": false,
+        "created_at_utc": "2026-08-31T13:05:00Z"
+      }
+    },
+    {
+      "name": "capture_observable_work_is_not_test_verdict_or_viewer_owned",
+      "value": {
+        "schema_id": "pm.test_capture.observable_work_projection.v1",
+        "record_kind": "capture_observable_work_projection",
+        "observable_work_id": "observable-capture-1",
+        "capture_session_id": "capture-session-1",
+        "phase": "recording",
+        "state": "degraded",
+        "requested_target": {
+          "target_id": "browser-page-target-1",
+          "target_family": "browser_page",
+          "target_generation": 3,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 3
+        },
+        "effective_target": {
+          "target_id": "browser-page-target-1",
+          "target_family": "browser_page",
+          "target_generation": 3,
+          "target_security_class": "ordinary",
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 3
+        },
+        "requested_cadence_fps": 60,
+        "effective_cadence_fps": 30,
+        "segments_finalized": 8,
+        "frames_delivered": 472,
+        "health_state": "degraded",
+        "progress_is_test_verdict": false,
+        "viewer_controls_lifecycle": false,
+        "blocked_reason_code": null,
+        "artifact_refs": ["artifact:capture:raw:1"],
+        "safe_next_actions": ["inspect_health", "pause", "bookmark", "stop", "background"],
+        "updated_at_utc": "2026-08-31T13:06:00Z"
+      }
+    },
+    {"name":"command_capture_start","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.start","command_instance_id":"capture-command-start-01","lineage":{"project_id":"project-command-01","run_id":"run-command-01","home_server_id":"server-command-01","execution_host_id":"host-command-01","execution_environment_id":"environment-command-01","source_location_id":"source-command-01"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-start-01","expected_currentness_ref":"currentness:capture-owner:01","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","target":{"target_id":"window-target-start-01","target_family":"desktop_window","target_generation":1,"target_security_class":"ordinary","window_id":"window-start-01"},"expected_target_currentness_ref":"currentness:window-target:start-01","expected_target_currentness_sha256":"2222222222222222222222222222222222222222222222222222222222222222","mode":"manual","target_policy":"application_window","requested_engine":"native_window_capture","capture_policy_ref":"policy:capture:manual-01","runtime_resource_permit_ref":"permit:capture:01"}},
+    {"name":"command_capture_pause","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.pause","command_instance_id":"capture-command-pause-01","lineage":{"project_id":"project-command-02","run_id":"run-command-02","home_server_id":"server-command-02","execution_host_id":"host-command-02","execution_environment_id":"environment-command-02","source_location_id":"source-command-02"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-pause-01","expected_currentness_ref":"currentness:capture-session:02","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","capture_session_id":"capture-session-command-02"}},
+    {"name":"command_capture_resume","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.resume","command_instance_id":"capture-command-resume-01","lineage":{"project_id":"project-command-03","run_id":"run-command-03","home_server_id":"server-command-03","execution_host_id":"host-command-03","execution_environment_id":"environment-command-03","source_location_id":"source-command-03"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-resume-01","expected_currentness_ref":"currentness:capture-session:03","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","capture_session_id":"capture-session-command-03"}},
+    {"name":"command_capture_bookmark","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.bookmark","command_instance_id":"capture-command-bookmark-01","lineage":{"project_id":"project-command-04","run_id":"run-command-04","home_server_id":"server-command-04","execution_host_id":"host-command-04","execution_environment_id":"environment-command-04","source_location_id":"source-command-04"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-bookmark-01","expected_currentness_ref":"currentness:capture-session:04","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","capture_session_id":"capture-session-command-04","bookmark_monotonic_ns":4200000000,"bookmark_label_ref":"user-step-label:settings-opened"}},
+    {"name":"command_capture_save_clip","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.save_clip","command_instance_id":"capture-command-save-clip-01","lineage":{"project_id":"project-command-05","run_id":"run-command-05","home_server_id":"server-command-05","execution_host_id":"host-command-05","execution_environment_id":"environment-command-05","source_location_id":"source-command-05"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-save-clip-01","expected_currentness_ref":"currentness:capture-session:05","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","capture_session_id":"capture-session-command-05","raw_capture_id":"raw-capture-command-05","clip_start_monotonic_ns":1000000000,"clip_end_monotonic_ns":5000000000,"derivation_manifest_ref":"derivation:clip:05","privacy_review_ref":"privacy-review:clip:05"}},
+    {"name":"command_capture_target_update","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.target.update","command_instance_id":"capture-command-target-update-01","lineage":{"project_id":"project-command-06","run_id":"run-command-06","home_server_id":"server-command-06","execution_host_id":"host-command-06","execution_environment_id":"environment-command-06","source_location_id":"source-command-06"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-target-update-01","expected_currentness_ref":"currentness:capture-session:06","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","capture_session_id":"capture-session-command-06","target":{"target_id":"window-target-update-06","target_family":"desktop_window","target_generation":2,"target_security_class":"ordinary","window_id":"window-update-06"},"expected_target_currentness_ref":"currentness:window-target:update-06","expected_target_currentness_sha256":"2222222222222222222222222222222222222222222222222222222222222222"}},
+    {"name":"command_capture_stop","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.stop","command_instance_id":"capture-command-stop-01","lineage":{"project_id":"project-command-07","run_id":"run-command-07","home_server_id":"server-command-07","execution_host_id":"host-command-07","execution_environment_id":"environment-command-07","source_location_id":"source-command-07"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-stop-01","expected_currentness_ref":"currentness:capture-session:07","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","capture_session_id":"capture-session-command-07"}},
+    {"name":"command_capture_health_inspect","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.testing.capture.health.inspect","command_instance_id":"capture-command-health-01","lineage":{"project_id":"project-command-08","run_id":"run-command-08","home_server_id":"server-command-08","execution_host_id":"host-command-08","execution_environment_id":"environment-command-08","source_location_id":"source-command-08"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-capture-health-01","expected_currentness_ref":"currentness:capture-session:08","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"testing","return_route_ref":"route:testing:capture","capture_session_id":"capture-session-command-08"}},
+    {"name":"command_create_demonstration_video","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.artifacts.create_demonstration_video","command_instance_id":"capture-command-demo-video-01","lineage":{"project_id":"project-command-09","run_id":"run-command-09","home_server_id":"server-command-09","execution_host_id":"host-command-09","execution_environment_id":"environment-command-09","source_location_id":"source-command-09"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-demo-video-01","expected_currentness_ref":"currentness:raw-captures:09","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"runtime_artifacts","return_route_ref":"route:artifacts:capture","raw_capture_ids":["raw-capture-command-09"],"derivation_manifest_ref":"derivation:demonstration:09","privacy_review_ref":"privacy-review:demonstration:09","confirmation_receipt_ref":"receipt:confirmation:demonstration:09"}},
+    {"name":"command_inspect_capture_provenance","definition":"capture_command_request","value":{"schema_id":"pm.test_capture.command_request.v1","record_kind":"capture_command_request","command_id":"cmd.artifacts.inspect_capture_provenance","command_instance_id":"capture-command-provenance-01","lineage":{"project_id":"project-command-10","run_id":"run-command-10","home_server_id":"server-command-10","execution_host_id":"host-command-10","execution_environment_id":"environment-command-10","source_location_id":"source-command-10"},"actor_ref":"actor:user:01","permission_snapshot_ref":"permission:capture:01","idempotency_key":"idem-provenance-01","expected_currentness_ref":"currentness:raw-captures:10","expected_currentness_sha256":"1111111111111111111111111111111111111111111111111111111111111111","source_surface":"runtime_artifacts","return_route_ref":"route:artifacts:capture","provenance_subject_ref":"subject:test-run:10","candidate_capture_ids":["raw-capture-command-10"]}},
+    {"name":"completed_capture_result_is_receipt_backed","definition":"capture_command_result","value":{"schema_id":"pm.test_capture.command_result.v1","record_kind":"capture_command_result","command_id":"cmd.testing.capture.stop","command_instance_id":"capture-command-result-stop-01","outcome":"completed","capture_session_ref":"capture-session:result-stop-01","artifact_refs":["artifact:raw-capture:result-stop-01"],"receipt_refs":["receipt:capture-stop:result-stop-01"],"observable_work_ref":"observable-work:capture:result-stop-01","currentness_ref":"currentness:capture:result-stop-01","currentness_sha256":"3333333333333333333333333333333333333333333333333333333333333333","disabled_reason":null,"error_ref":null,"replayed":false}},
+    {"name":"disabled_capture_result_names_protected_auth_boundary","definition":"capture_command_result","value":{"schema_id":"pm.test_capture.command_result.v1","record_kind":"capture_command_result","command_id":"cmd.testing.capture.start","command_instance_id":"capture-command-result-disabled-01","outcome":"disabled","capture_session_ref":null,"artifact_refs":[],"receipt_refs":[],"observable_work_ref":null,"currentness_ref":null,"currentness_sha256":null,"disabled_reason":"protected_auth_session_non_recordable","error_ref":"error:capture:target-forbidden","replayed":false}},
+    {"name":"protected_auth_capture_error_is_content_free","definition":"capture_command_error","value":{"schema_id":"pm.test_capture.command_error.v1","record_kind":"capture_command_error","command_id":"cmd.testing.capture.start","command_instance_id":"capture-command-error-protected-01","error_code":"protected_auth_target_forbidden","message_code":"protected_target_is_human_only_non_recordable","retriable":false,"currentness_ref":"currentness:capture-owner:error-01","target_ref":null,"capture_session_ref":null,"safe_next_action_ref":"action:choose-ordinary-capture-target","redaction_profile":"no_secrets_no_protected_auth_content_no_absolute_paths"}},
+    {"name":"capture_availability_disabled_without_native_handler","definition":"capture_command_availability","value":{"schema_id":"pm.test_capture.command_availability.v1","record_kind":"capture_command_availability","command_id":"cmd.testing.capture.start","subject_ref":"capture-policy:manual-01","availability":"disabled","currentness_ref":"currentness:capture-owner:availability-01","currentness_sha256":"4444444444444444444444444444444444444444444444444444444444444444","disabled_reason":"native_handler_absent","missing_requirement_refs":["requirement:native-capture-handler"],"safe_next_action_ref":"action:inspect-capture-readiness"}}
+  ],
+  "invalid": [
+    {
+      "name": "legacy_aggregate_payload_schema_id_requires_explicit_migration",
+      "value": {
+        "schema_id": "pm.test_capture_motion_evidence_contracts.schema.v1",
+        "record_kind": "capture_provenance_selection",
+        "selection_id": "provenance-selection-legacy-schema-id",
+        "requested_relation": "exact_capture",
+        "subject_ref": "subject:test-run:missing",
+        "candidate_capture_ids": [],
+        "selected_capture_id": null,
+        "identity_verified": false,
+        "continuity_verified": false,
+        "original_available": false,
+        "reenactment_substituted": false,
+        "disposition": "original_missing",
+        "created_at_utc": "2026-08-31T13:04:01Z"
+      }
+    },
+    {
+      "name": "record_kind_cannot_use_another_capture_record_schema_id",
+      "value": {
+        "schema_id": "pm.test_capture.artifact.v1",
+        "record_kind": "capture_provenance_selection",
+        "selection_id": "provenance-selection-mismatched-schema-id",
+        "requested_relation": "exact_capture",
+        "subject_ref": "subject:test-run:missing",
+        "candidate_capture_ids": [],
+        "selected_capture_id": null,
+        "identity_verified": false,
+        "continuity_verified": false,
+        "original_available": false,
+        "reenactment_substituted": false,
+        "disposition": "original_missing",
+        "created_at_utc": "2026-08-31T13:04:01Z"
+      }
+    },
+    {
+      "name": "capture_records_cannot_embed_cookie_or_secret_material",
+      "value": {
+        "schema_id": "pm.test_capture.provenance_selection.v1",
+        "record_kind": "capture_provenance_selection",
+        "selection_id": "provenance-selection-secret-material",
+        "requested_relation": "exact_capture",
+        "subject_ref": "subject:test-run:missing",
+        "candidate_capture_ids": [],
+        "selected_capture_id": null,
+        "identity_verified": false,
+        "continuity_verified": false,
+        "original_available": false,
+        "reenactment_substituted": false,
+        "disposition": "original_missing",
+        "cookie_value": "raw-secret-material-forbidden",
+        "created_at_utc": "2026-08-31T13:04:01Z"
+      }
+    },
+    {
+      "name": "protected_auth_is_not_a_capture_target_security_class",
+      "value": {
+        "schema_id": "pm.test_capture.raw_capture.v1",
+        "record_kind": "raw_test_capture",
+        "raw_capture_id": "raw-bad-auth",
+        "capture_artifact_ref": "artifact:bad-auth",
+        "capture_session_id": "capture-session-bad-auth",
+        "target": {
+          "target_id": "auth-browser-target-1",
+          "target_family": "browser_page",
+          "target_generation": 1,
+          "target_security_class": "protected_auth",
+          "browser_session_id": "auth-browser-session-1",
+          "browser_workspace_id": "auth-workspace-1",
+          "browser_page_id": "auth-page-1",
+          "page_generation": 1
+        },
+        "segment_refs": ["segment:bad-auth:1"],
+        "continuity_state": "continuous",
+        "gap_refs": [],
+        "immutable": true,
+        "derived_identity": false,
+        "reenactment": false,
+        "content_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "created_at_utc": "2026-08-31T13:10:00Z"
+      }
+    },
+    {
+      "name": "focus_cannot_trigger_capture_target_switch",
+      "value": {
+        "schema_id": "pm.test_capture.target_switch_receipt.v1",
+        "record_kind": "capture_target_switch_receipt",
+        "switch_id": "switch-bad-focus",
+        "capture_session_id": "capture-session-1",
+        "target_policy": "follow_controller_page",
+        "focus_triggered": true
+      }
+    },
+    {
+      "name": "raw_segment_must_start_with_keyframe",
+      "value": {
+        "schema_id": "pm.test_capture.segment_manifest.v1",
+        "record_kind": "capture_segment_manifest",
+        "segment_id": "segment-bad-keyframe",
+        "capture_session_id": "capture-session-1",
+        "stream_id": "stream-1",
+        "sequence": 1,
+        "container": "matroska",
+        "nominal_duration_ms": 2000,
+        "starts_with_keyframe": false
+      }
+    },
+    {
+      "name": "target_audio_requires_explicit_grant",
+      "value": {
+        "schema_id": "pm.test_capture.session.v1",
+        "record_kind": "test_capture_session",
+        "capture_session_id": "capture-session-bad-audio",
+        "audio": {
+          "requested": "target_audio",
+          "effective": "target_audio",
+          "explicit_target_grant": false,
+          "codec": "opus",
+          "sample_rate_hz": 48000,
+          "microphone_inferred": false,
+          "system_audio_inferred": false
+        }
+      }
+    },
+    {
+      "name": "display_only_masking_cannot_count_as_retained_redaction",
+      "value": {
+        "schema_id": "pm.test_capture.session.v1",
+        "record_kind": "test_capture_session",
+        "capture_session_id": "capture-session-bad-mask",
+        "masking": {
+          "requested_stage": "display_only",
+          "effective_stage": "display_only",
+          "policy_ref": "policy:mask:display",
+          "profile_ref": "masking:display-only",
+          "display_only_counts_as_retained_redaction": true,
+          "privacy_review_state": "approved"
+        }
+      }
+    },
+    {
+      "name": "derived_video_cannot_overwrite_raw",
+      "value": {
+        "schema_id": "pm.test_capture.demonstration_video.v1",
+        "record_kind": "derived_demonstration_video",
+        "demonstration_video_id": "demonstration-video-bad-overwrite",
+        "derivation_manifest_ref": "derivation:manifest:bad",
+        "source_raw_capture_ids": ["raw-test-capture-1"],
+        "container": "mp4",
+        "codec": "h264_high",
+        "content_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "byte_size": 1,
+        "immutable": true,
+        "raw_identity": false,
+        "overwrites_raw": true,
+        "created_at_utc": "2026-08-31T13:10:01Z"
+      }
+    },
+    {
+      "name": "selected_latest_cannot_skip_identity_or_continuity_verification",
+      "value": {
+        "schema_id": "pm.test_capture.provenance_selection.v1",
+        "record_kind": "capture_provenance_selection",
+        "selection_id": "selection-bad-latest",
+        "requested_relation": "latest_verified_continuous",
+        "subject_ref": "subject:test-run:1",
+        "candidate_capture_ids": ["raw-test-capture-2"],
+        "selected_capture_id": "raw-test-capture-2",
+        "identity_verified": false,
+        "continuity_verified": false,
+        "original_available": true,
+        "reenactment_substituted": false,
+        "disposition": "selected",
+        "created_at_utc": "2026-08-31T13:10:02Z"
+      }
+    },
+    {
+      "name": "reenactment_cannot_substitute_for_missing_original",
+      "value": {
+        "schema_id": "pm.test_capture.provenance_selection.v1",
+        "record_kind": "capture_provenance_selection",
+        "selection_id": "selection-bad-reenactment",
+        "requested_relation": "exact_capture",
+        "subject_ref": "subject:test-run:missing",
+        "candidate_capture_ids": ["raw-reenactment-1"],
+        "selected_capture_id": "raw-reenactment-1",
+        "identity_verified": false,
+        "continuity_verified": false,
+        "original_available": false,
+        "reenactment_substituted": true,
+        "disposition": "original_missing",
+        "created_at_utc": "2026-08-31T13:10:03Z"
+      }
+    },
+    {
+      "name": "observable_capture_progress_cannot_be_test_verdict_or_viewer_owned",
+      "value": {
+        "schema_id": "pm.test_capture.observable_work_projection.v1",
+        "record_kind": "capture_observable_work_projection",
+        "observable_work_id": "observable-capture-bad",
+        "capture_session_id": "capture-session-1",
+        "phase": "terminal",
+        "state": "completed",
+        "progress_is_test_verdict": true,
+        "viewer_controls_lifecycle": true
+      }
+    },
+    {
+      "name": "hevc_is_not_a_raw_capture_codec",
+      "value": {
+        "schema_id": "pm.test_capture.segment_manifest.v1",
+        "record_kind": "capture_segment_manifest",
+        "segment_id": "segment-bad-hevc",
+        "capture_session_id": "capture-session-1",
+        "stream_id": "stream-1",
+        "sequence": 1,
+        "container": "matroska",
+        "nominal_duration_ms": 2000,
+        "starts_with_keyframe": true,
+        "codec": "hevc_export_only"
+      }
+    },
+    {"name":"capture_command_rejects_unassigned_session_command_id","definition":"capture_command_request","base_valid":"command_capture_pause","patch":{"command_id":"cmd.testing.session.open"},"expected_invariant":"exact_10_command_ids_only_without_duplicate_central_rows"},
+    {"name":"capture_start_rejects_protected_auth_target_identity","definition":"capture_command_request","base_valid":"command_capture_start","patch":{"target":{"target_id":"AuthBrowserSession-target","target_family":"desktop_window","target_generation":1,"target_security_class":"ordinary","window_id":"window-protected-01"}},"expected_invariant":"auth_browser_session_is_human_only_non_recordable_non_inspectable"},
+    {"name":"capture_start_rejects_playwright_runtime_engine","definition":"capture_command_request","base_valid":"command_capture_start","patch":{"requested_engine":"playwright"},"expected_invariant":"no_pm_playwright_runtime_or_facade"},
+    {"name":"capture_request_requires_exact_currentness","definition":"capture_command_request","base_valid":"command_capture_pause","remove":["expected_currentness_sha256"],"expected_invariant":"stale_or_missing_currentness_fails_closed"},
+    {"name":"capture_target_update_requires_target_currentness","definition":"capture_command_request","base_valid":"command_capture_target_update","remove":["expected_target_currentness_sha256"],"expected_invariant":"target_switch_is_generation_and_currentness_bound"},
+    {"name":"save_clip_requires_privacy_review","definition":"capture_command_request","base_valid":"command_capture_save_clip","remove":["privacy_review_ref"],"expected_invariant":"derived_clip_requires_privacy_review"},
+    {"name":"demonstration_video_requires_explicit_confirmation","definition":"capture_command_request","base_valid":"command_create_demonstration_video","remove":["confirmation_receipt_ref"],"expected_invariant":"derived_artifact_creation_is_confirmation_bound"},
+    {"name":"capture_command_rejects_raw_cookie_value","definition":"capture_command_request","base_valid":"command_capture_start","patch":{"cookie_value":"raw-cookie-forbidden"},"expected_invariant":"no_secret_or_protected_session_content"},
+    {"name":"completed_capture_result_requires_receipt","definition":"capture_command_result","base_valid":"completed_capture_result_is_receipt_backed","patch":{"receipt_refs":[]},"expected_invariant":"completed_capture_result_is_receipt_backed"},
+    {"name":"available_capture_command_cannot_keep_disabled_reason","definition":"capture_command_availability","base_valid":"capture_availability_disabled_without_native_handler","patch":{"availability":"available","missing_requirement_refs":[],"safe_next_action_ref":null},"expected_invariant":"availability_and_disabled_reason_are_consistent"}
+  ]
+}

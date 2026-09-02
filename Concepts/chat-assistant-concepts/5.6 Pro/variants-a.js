@@ -38,7 +38,8 @@
      ===================================================================== */
 
   /* [gerund, past participle, grey count] — the reference label is always
-     "bold verb" + "grey count", e.g. "Making 1 edit" / "13 tools used". */
+     "bold verb" + "grey count"; unknown ids (the mcp/skill subjects) fall
+     back to the instance's own verb/label/stat. */
   const RAIL = {
     prepare:  ['Preparing',  'Prepared',  '3 checks'],
     think:    ['Thinking',   'Thought',   '4 signals'],
@@ -55,78 +56,131 @@
     render:   ['Rendering',  'Rendered',  '2 artifacts'],
     complete: ['Finishing',  'Finished',  '14 tools']
   };
-  const railMeta = (s) => RAIL[s.id] || [s.label, s.label, ''];
+  const railMeta = (s) => RAIL[s.id] || [s.verb || s.label, s.label, s.stat || ''];
 
-  /* Detail rows differ by what the step actually produced, so the block
-     under the rail is never the same shape twice in a row. */
-  function rail8Rows(ctx, s) {
-    if (s.kind === 'edit') {
-      return ctx.D.changes.map((c) => ({ text: 'Edited ' + c.path, add: c.add, del: c.del }));
-    }
-    if (s.kind === 'agents') {
-      return ctx.D.subagents.slice(0, 2).map((a) => ({ text: a.name + ' · ' + a.current, tag: a.status }));
-    }
-    return (s.evidence || []).slice(0, 3).map((e) => ({ text: e }));
-  }
+  /* Per-card UI, keyed by ctx.cardId: `pin` (subject index; null = follow
+     live/last) and `expanded` (the rows region; null = the default — open
+     while running, shut once completed or superseded). The old design had no
+     state at all: "opening" a subject emitted inspect-work-step, which
+     REWOUND the record (rec.completed flipped false), stranding the card
+     with dead discs and no chevron. Pinning is a view concern now and never
+     touches the record. */
+  const RAIL8_UI = {};
+  const rail8Ui = (id) => RAIL8_UI[id] || (RAIL8_UI[id] = { pin: null, expanded: null, _eff: true });
 
-  function rail8Row(r, i, key) {
+  /* This file loads BEFORE the EXT shim (see build.py), so the actions are
+     wired on the first take-8 render instead of at module scope. The
+     lifecycle hooks CHAIN the previously-registered handler — orbit.js owns
+     one too, and the registry is last-wins, so replacing it would strand
+     orbit's per-card UI. */
+  let rail8Wired = false;
+  const rail8Wire = () => {
+    const EXT = window.PM56_EXT;
+    if (rail8Wired || !EXT || !EXT.action) return;
+    rail8Wired = true;
+    const uiOf = (btn) => {
+      const card = btn && btn.closest ? btn.closest('.working-card') : null;
+      return card ? rail8Ui(card.dataset.cardUi || 'work') : null;
+    };
+    EXT.action('rail8-pin', (ctx, btn) => {
+      const ui = uiOf(btn); if (!ui) return false;
+      const i = Number(btn.dataset.value);
+      /* Clicking the CURRENT disc always returns to following the live run
+         (the rails equivalent of orbit's core); any other disc pins, and
+         clicking the pinned disc again unpins. */
+      if (btn.classList.contains('current')) ui.pin = null;
+      else ui.pin = ui.pin === i ? null : i;
+      ui.expanded = true;
+      ctx.renderApp();
+      return true;
+    });
+    EXT.action('rail8-toggle', (ctx, btn) => {
+      const ui = uiOf(btn); if (!ui) return false;
+      ui.expanded = !ui._eff;
+      ctx.renderApp();
+      return true;
+    });
+    /* Only RESET clears the view state — play/complete respect the pin and
+       the collapse. Chains orbit.js's reset hook (last-wins registry). */
+    {
+      const prev = EXT._actions && EXT._actions['reset-working'];
+      EXT.action('reset-working', (ctx, btn) => {
+        if (prev) { try { prev(ctx, btn); } catch (e) { /* keep the chain alive */ } }
+        const card = btn && btn.closest ? btn.closest('.working-card') : null;
+        if (card) { const ui = RAIL8_UI[card.dataset.cardUi]; if (ui) { ui.pin = null; ui.expanded = null; } }
+        return false;
+      });
+    }
+  };
+
+  /* Rows come from the INSTANCE (per-occurrence content, duplicates safe)
+     and stream against the record's clock exactly like the Orbit panel. */
+  const rail8Rows = (ctx, inst) => {
+    const rows = inst.rows || [];
+    return ctx.completed ? rows : rows.filter((r) => ctx.rowVisible(inst, r));
+  };
+  const rail8Row = (ctx, inst, r, j, key) => {
     let meta = '';
     if (r.add != null) {
-      meta = `<span class="rail8-meta"><b class="rail8-add">+${r.add}</b><b class="rail8-del">−${r.del}</b></span>`;
+      meta = `<span class="rail8-meta"><b class="rail8-add">+${r.add}</b>${r.del != null ? `<b class="rail8-del">−${r.del}</b>` : ''}</span>`;
+    } else if (r.url) {
+      meta = `<span class="rail8-meta"><b class="rail8-tag">${esc(r.url)}</b></span>`;
     } else if (r.tag) {
       meta = `<span class="rail8-meta"><b class="rail8-tag">${esc(r.tag)}</b></span>`;
     }
-    /* stagger starts at 1 so the first row lands at 175ms + 45ms = 220ms,
-       the measured "old out -> new label -> first row" handoff. */
-    return `<span class="rail8-row pm-materialize" data-k="${key}" style="--pm-stagger:${i}"><span class="rail8-rowtext">${esc(r.text)}</span>${meta}</span>`;
-  }
+    const body = r.stream
+      ? `<span class="rail8-rowtext rail8-prose pm-stream">${M.words(r.text)}</span>`
+      : `<span class="rail8-rowtext">${esc(r.text)}</span>`;
+    const wrap = ctx.shellRowWrap;
+    if (wrap) return wrap(ctx.cardId, inst, r, j, body + meta, key, 'rail8-row', Math.min(j, 6));
+    return `<span class="rail8-row pm-materialize" data-k="${key}" style="--pm-stagger:${Math.min(j, 6)}">${body}${meta}</span>`;
+  };
 
   W[8] = (ctx) => {
-    const { D, icon, index, total, completed, running, step, workReceipt } = ctx;
+    rail8Wire();
+    const { icon, index, total, completed, running, workReceipt } = ctx;
+    const rec = ctx.rec || ctx.state.work;
+    const ui = rail8Ui(ctx.cardId);
     const steps = ctx.steps;
 
-    /* Three states. `shut` is the finished collapse; `past` is a step the
-       reader re-opened from the collapsed rail; otherwise the live run. */
-    const shut = completed && index === total - 1;
-    const list = completed ? steps : steps.slice(0, index + 1);
-    const editIdx = Math.max(0, steps.findIndex((s) => s.kind === 'edit'));
+    /* An accumulating rail: only STARTED subjects have discs, keyed by uid so
+       duplicate subjects never collide and `enter` fires exactly once. */
+    const spawned = completed ? steps : steps.slice(0, index + 1);
+    const n = spawned.length;
+    const superseded = !!rec.supersededBy;
+    const expanded = ui.expanded != null ? ui.expanded : (!completed && !superseded);
+    ui._eff = expanded;
+    const liveIdx = Math.min(index, n - 1);
+    const pin = ui.pin != null && ui.pin >= 0 && ui.pin < n ? ui.pin : null;
+    const selIdx = pin != null ? pin : liveIdx;
+    const sel = steps[selIdx];
+    const shut = completed && !expanded;
 
-    /* An accumulating rail. `enter` only ever lands on a node that pmPatch
-       has just created, so pm-disc-in plays once per step and never on a
-       plain re-render. The previous disc simply changes class and lets its
-       width/tint transition run — that is the demotion in the reference. */
-    const track = list.map((s, i) => {
-      const cur = !shut && i === index;
-      const cls = 'pm-rail-item rail8-item ' + (cur ? 'current enter' : 'done');
-      const act = completed ? ` data-action="inspect-work-step" data-value="${i}"` : '';
-      const btn = `<button type="button" class="${cls}" data-k="ri:${s.id}"${act} title="${esc(s.label)} · ${esc(s.verb)}" aria-label="${esc(s.label)}">${icon(s.icon, 11)}</button>`;
-      if (!completed) return btn;
-      const m = railMeta(s);
-      const pop = `<span class="rail8-pop" data-k="p8:${s.id}"><span class="rail8-pastlabel"><b>${esc(m[1])}</b><i>${esc(m[2])}</i></span><span class="rail8-poprows pm-rows">${rail8Rows(ctx, s).map((r, j) => rail8Row(r, j, `pp8:${s.id}:${j}`)).join('')}</span></span>`;
-      return btn + pop;
+    const track = spawned.map((s, i) => {
+      const cur = !completed && i === liveIdx;
+      const cls = 'pm-rail-item rail8-item ' + (cur ? 'current enter' : 'done') + (i === selIdx && pin != null ? ' pinned' : '');
+      const st = i < liveIdx ? 'completed' : cur ? 'in progress' : 'completed';
+      const statBit = s.stat ? `${s.label} · ${s.stat}` : s.label;
+      return `<button type="button" class="${cls}" data-k="ri:${esc(s.uid)}" data-action="rail8-pin" data-value="${i}" data-step-kind="${esc(s.kind)}" data-hover-key="${esc(ctx.cardId + ':r8:' + s.uid)}" data-hover-tip="${esc(statBit + '\n' + s.verb + ' (' + st + ')')}" aria-pressed="${i === selIdx && pin != null ? 'true' : 'false'}" aria-label="${esc(s.label)}${s.stat ? ', ' + esc(s.stat) : ''}">${icon(s.icon, 11)}</button>`;
     }).join('');
 
-    const m = railMeta(step);
-    /* Verb and count are keyed by step id, so pmPatch re-mounts them on a
-       real swap and only then: the 90ms settle plays once per handoff and
-       never on a plain re-render. The 1370ms shimmer rides the same node —
-       its band is inside the box from ~493ms to ~973ms, comfortably within
-       the 1050ms a step lasts, so one full crossing is seen per step. */
+    const m = railMeta(sel);
+    const past = completed || selIdx < liveIdx;
     const label = shut
       ? `<span class="rail8-head-label" data-k="l8"><span class="rail8-sum">${M.roll(total)} tools used</span></span>`
-      : `<span class="rail8-head-label" data-k="l8"><span class="rail8-verb ${running ? 'pm-shimmer' : 'pm-shimmer pm-settled'}" data-k="v8:${step.id}">${esc(completed ? m[1] : m[0])}</span><span class="rail8-count" data-k="c8:${step.id}">${esc(m[2])}</span></span>`;
+      : `<span class="rail8-head-label" data-k="l8"><span class="rail8-verb ${running && pin == null && !completed ? 'pm-shimmer' : 'pm-shimmer pm-settled'}" data-k="v8:${esc(sel.uid)}">${esc(past ? m[1] : m[0])}</span><span class="rail8-count" data-k="c8:${esc(sel.uid)}">${esc(sel.stat || m[2])}</span></span>`;
 
-    const chev = completed
-      ? `<button type="button" class="rail8-chev ${shut ? '' : 'open'}" data-k="chev8" data-action="inspect-work-step" data-value="${shut ? editIdx : total - 1}" title="${shut ? 'Re-open the editing step' : 'Collapse back to the summary'}">${icon('down', 12)}</button>`
-      : '';
+    /* The chevron is a REAL region toggle now — present live and completed,
+       and it never touches the record. */
+    const chev = `<button type="button" class="rail8-chev ${expanded ? 'open' : ''}" data-k="chev8" data-action="rail8-toggle" data-hover-key="${esc(ctx.cardId + ':chev8')}" data-hover-tip="${esc(expanded ? 'Collapse the detail rows' : 'Show the detail rows')}" aria-expanded="${expanded ? 'true' : 'false'}">${icon('down', 12)}</button>`;
 
-    const under = shut
-      ? `<span class="rail8-idle" data-k="idle8">${workReceipt()}</span>`
-      : rail8Rows(ctx, step).map((r, j) => rail8Row(r, j, `r8:${step.id}:${j}`)).join('');
+    let under = '';
+    if (expanded) under = rail8Rows(ctx, sel).map((r, j) => rail8Row(ctx, sel, r, j, `r8:${sel.uid}:${j}`)).join('');
+    else if (completed) under = `<span class="rail8-idle" data-k="idle8">${workReceipt({ elapsed: false })}</span>`;
 
-    return `<div class="rail8 ${completed ? 'done8' : ''}" data-k="rail8" style="--rail8-n:${total}">`
-      + `<div class="rail8-head" data-k="rail8-head"><span class="pm-rail rail8-track" data-k="rail8-track">${track}</span>${label}<span class="rail8-spacer"></span>${chev}</div>`
-      + `<div class="rail8-under pm-rows" data-k="u8">${under}</div>`
+    return `<div class="rail8 ${completed ? 'done8' : ''}" data-k="rail8" style="--rail8-n:${n}">`
+      + `<div class="rail8-head" data-k="rail8-head"><span class="pm-rail rail8-track" data-k="rail8-track">${track}</span><div class="rail8-head-tail" data-k="t8">${label}<span class="rail8-spacer"></span>${chev}</div></div>`
+      + `<div class="rail8-under pm-rows${expanded && !completed ? ' rail8-live' : ''}" data-k="u8">${under}</div>`
       + `</div>`;
   };
   W[8].ownsAgents = true;

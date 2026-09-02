@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.attention_event.alert_dismissed.schema.v1",
+  "$comment": "Static payload shape only. The owner/runtime must prove current revision, authorized dismissal, and result revision succession. This schema grants no append or dispatch authority.",
+  "title": "alert.dismissed payload",
+  "description": "Closed project-scoped payload for dismissing one durable alert occurrence with an explicit rationale code.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "project_id", "alert_id", "alert_record_ref",
+    "actor_ref", "prior_revision", "result_revision", "currentness_basis_ref",
+    "prior_alert_state", "result_alert_state", "dismissal_reason_code", "origin",
+    "handler_target", "command_id", "correlation_id", "idempotency_key", "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.attention_event.alert_dismissed.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/non_empty_id"},
+    "alert_id": {"$ref": "#/$defs/non_empty_id"},
+    "alert_record_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "prior_revision": {"type": "integer", "minimum": 1},
+    "result_revision": {"type": "integer", "minimum": 2},
+    "currentness_basis_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "prior_alert_state": {"enum": ["unacknowledged", "acknowledged", "snoozed"]},
+    "result_alert_state": {"const": "dismissed"},
+    "dismissal_reason_code": {"$ref": "#/$defs/reason_code"},
+    "origin": {"$ref": "#/$defs/origin"},
+    "handler_target": {"const": "handlers::alert::dismiss"},
+    "command_id": {"const": "cmd.alert.dismiss"},
+    "correlation_id": {"$ref": "#/$defs/non_empty_id"},
+    "idempotency_key": {"$ref": "#/$defs/non_empty_id"},
+    "source_refs": {"$ref": "#/$defs/ref_array"},
+    "evidence_refs": {"$ref": "#/$defs/ref_array"},
+    "ts": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "origin": {"enum": ["orchestrator", "attention_center", "dashboard", "notification_center", "api"]},
+    "ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "maxItems": 32, "uniqueItems": true}
+  }
+}

@@ -1855,7 +1855,7 @@ unblocks: []
 acceptance_criteria:
   - GUI-USG-001 through GUI-USG-008 are present as named checklist fixtures and cover missing usage, provider zero, unknown cost, hidden BYOK/subscription cost, disabled quota, cache zero versus unsupported, no-double-count, and partial/aborted streams.
   - GUI-CBP-001 and GUI-CBP-002 verify Antigravity CLI `antigravity_cli` route `agy`, missing `/stats` `/usage` `/quota` `/credits`, disabled buckets, and G1 credits as credits-only state.
-  - GUI-ROUTE-001 verifies route_target.object_kind = usage_event and object_id from usage_event_ref when usage_event_ref exists, plus UsageRecord/runtime/provider passthrough.
+  - GUI-ROUTE-001 verifies the PMConcept7 Ledger attempt branch uses route_target.object_kind = usage_attempt and object_id from attempt_id, repeats attempt_id at top level, retains usage_event_ref plus UsageRecord/runtime/provider refs as correlation, and carries no OpenSubject; event-primary artifact routes remain usage_event/usage_event_ref.
   - GUI-RAW-001 verifies Curated normalized fields and Raw redacted refs, hashes, omitted counts, and permission state without credentials, account identifiers, local paths, or raw provider secrets.
   - GUI-RAP-001 verifies cost_usage and tool_llm_trace artifacts validate against the envelope plus matching per-type schema and reject envelope-only or arbitrary non-empty type_payload payloads.
   - Checklist evidence spans Usage, Ledger, Context Detail Pane, chat usage surfaces, Dashboard-hosted Usage widgets, Runtime Artifacts, Run Graph, Orchestrator, provider/settings rows, and model rows.

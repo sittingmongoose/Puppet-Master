@@ -97,7 +97,14 @@
         "ContractName:Plans/web_research_run_fixtures.json",
         "ContractName:Plans/storage_value_registry.schema.json",
         "ContractName:Plans/storage_value_registry.json",
-        "ContractName:Plans/storage_recovery_contracts.schema.json"
+        "ContractName:Plans/storage_recovery_contracts.schema.json",
+        "ContractName:Plans/00-plans-index.md",
+        "ContractName:Plans/usage-feature.md",
+        "ContractName:Plans/Widget_System.md",
+        "ContractName:Plans/storage-plan.md",
+        "ContractName:Plans/Commands_System.md",
+        "ContractName:Plans/UI_Wiring_Rules.md",
+        "ContractName:Plans/DRY_Rules.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -111,7 +118,9 @@
         "dec-2026-07-06-non-executable-readiness-closure-evidence-schema-governance-registration",
         "dec-2026-07-06-non-executable-readiness-closure-evidence-governance-registration",
         "dec-2026-07-09-web-capability-agentic-routing-governance-registration",
-        "dec-2026-08-10-storage-value-registry-v2-governance-registration"
+        "dec-2026-08-10-storage-value-registry-v2-governance-registration",
+        "dec-2026-08-28-pm7-usage-recovery",
+        "dec-2026-08-29-pm7-widget-followup"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -329,6 +338,41 @@
           "kind": "file",
           "ref": "Plans/storage_recovery_contracts.schema.json",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/00-plans-index.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/usage-feature.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Widget_System.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage-plan.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Commands_System.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/UI_Wiring_Rules.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/DRY_Rules.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -541,6 +585,41 @@
           "kind": "file",
           "ref": "Plans/storage_recovery_contracts.schema.json",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/00-plans-index.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/usage-feature.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Widget_System.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage-plan.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Commands_System.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/UI_Wiring_Rules.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/DRY_Rules.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "policy_mode": "workspace-write",
@@ -616,20 +695,29 @@
         "dec-2026-06-09-exact-build-governance-support-seal",
         "dec-2026-06-10-clean-repo-governance-seal",
         "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
-        "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair"
+        "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair",
+        "dec-2026-08-29-pm7-widget-followup"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
-        "ref": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        "ref": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
       },
       "evidence_required": {
-        "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
         "schema_id": "pm.evidence.schema.v1"
       },
       "inputs": [
         {
           "kind": "file",
           "ref": "Plans/sharding_config.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/evidence_artifact_binding_modes.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/evidence_artifact_binding_modes.schema.json"
         }
       ],
       "node_id": "pm.build-governance.shard-regeneration",
@@ -639,10 +727,14 @@
           "kind": "directory",
           "ref": "Plans/_shards"
         },
-        {
-          "kind": "file",
-          "ref": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
-        }
+      {
+        "kind": "file",
+        "ref": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json"
+      },
+      {
+        "kind": "file",
+        "ref": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard-check-report.json"
+      }
       ],
       "policy_mode": "workspace-write",
       "spec_lock_requirements": {
@@ -656,9 +748,9 @@
         "pm.build-governance.final-seal"
       ],
       "verifier_result": {
-        "message": "Configured plan shards regenerated from current live Plans docs.",
+        "message": "Configured plan shards regenerated from current live Plans docs; the successor evidence is live-current while prior evidence bundles remain immutable historical snapshots. PNC-019 readiness and audit-closure failures remain open.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-11T21:23:55Z"
+        "timestamp_utc": "2026-08-30T00:01:26Z"
       }
     },
     {

@@ -1,0 +1,5481 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json",
+  "title": "Puppet Master common forge integration contracts",
+  "description": "Provider-neutral repository bindings, authority, capabilities, mirrors, immutable review revisions and threads, pipelines, app grants, signed webhooks, API compatibility, provider adapter profiles, and discriminated Forge command request/result/error/availability/receipt contracts. Static shape closure does not establish central registration, Event Authority, native handlers, production wiring, protected-browser execution, or runtime proof.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/repository_binding"
+    },
+    {
+      "$ref": "#/$defs/automation_binding"
+    },
+    {
+      "$ref": "#/$defs/provider_instance_profile"
+    },
+    {
+      "$ref": "#/$defs/automation_shell_projection"
+    },
+    {
+      "$ref": "#/$defs/capability_envelope"
+    },
+    {
+      "$ref": "#/$defs/mirror_topology"
+    },
+    {
+      "$ref": "#/$defs/review_revision"
+    },
+    {
+      "$ref": "#/$defs/review_thread"
+    },
+    {
+      "$ref": "#/$defs/pipeline_projection"
+    },
+    {
+      "$ref": "#/$defs/app_installation"
+    },
+    {
+      "$ref": "#/$defs/installation_receipt"
+    },
+    {
+      "$ref": "#/$defs/token_lease"
+    },
+    {
+      "$ref": "#/$defs/signed_webhook_delivery"
+    },
+    {
+      "$ref": "#/$defs/api_compatibility"
+    },
+    {
+      "$ref": "#/$defs/command_receipt"
+    },
+    {
+      "$ref": "#/$defs/provider_adapter_profile"
+    },
+    {
+      "$ref": "#/$defs/command_request"
+    },
+    {
+      "$ref": "#/$defs/command_result"
+    },
+    {
+      "$ref": "#/$defs/command_error_record"
+    },
+    {
+      "$ref": "#/$defs/command_availability"
+    },
+    {
+      "$ref": "#/$defs/provider_capability_matrix"
+    },
+    {
+      "$ref": "#/$defs/origin_cli_operation_profile"
+    },
+    {
+      "$ref": "#/$defs/hosted_administration_surface"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer|cookie|private[_-]?key))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "provider": {
+      "enum": [
+        "github",
+        "gitlab",
+        "azure_devops",
+        "bitbucket_cloud",
+        "bitbucket_data_center",
+        "forgejo",
+        "gitea",
+        "generic_host",
+        "cursor_origin"
+      ]
+    },
+    "authority_role": {
+      "enum": [
+        "authority",
+        "secondary",
+        "disabled",
+        "unsupported",
+        "not_applicable"
+      ]
+    },
+    "capability_name": {
+      "enum": [
+        "repository",
+        "storage",
+        "review",
+        "review_threads",
+        "review_versions",
+        "checks",
+        "pipelines",
+        "automation",
+        "repository_policy",
+        "runner_administration",
+        "releases",
+        "release_assets",
+        "issues",
+        "transport",
+        "mirror",
+        "apps",
+        "webhooks"
+      ]
+    },
+    "repository_binding": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "binding_id",
+        "provider",
+        "provider_variant",
+        "normalized_host",
+        "account_id",
+        "repo_id",
+        "provider_repository_id",
+        "repository_locator",
+        "authority",
+        "credential_ref",
+        "adapter_ref",
+        "capability_catalog_ref",
+        "binding_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.repository_binding.v1"
+        },
+        "binding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_host": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider_repository_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_locator": {
+          "type": "object",
+          "required": [
+            "organization_or_workspace",
+            "project",
+            "repository_slug"
+          ],
+          "properties": {
+            "organization_or_workspace": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "project": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "repository_slug": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "authority": {
+          "type": "object",
+          "required": [
+            "storage",
+            "review",
+            "checks",
+            "automation",
+            "issues",
+            "transport",
+            "mirror"
+          ],
+          "properties": {
+            "storage": {
+              "$ref": "#/$defs/authority_role"
+            },
+            "review": {
+              "$ref": "#/$defs/authority_role"
+            },
+            "checks": {
+              "$ref": "#/$defs/authority_role"
+            },
+            "automation": {
+              "$ref": "#/$defs/authority_role",
+              "description": "Compatibility projection for repository-local automation capability only. It never selects an automation service, provider, instance, account, permission, or generation; pm.forge.automation_binding.v1 is authoritative for hosted automation."
+            },
+            "issues": {
+              "$ref": "#/$defs/authority_role"
+            },
+            "transport": {
+              "$ref": "#/$defs/authority_role"
+            },
+            "mirror": {
+              "$ref": "#/$defs/authority_role"
+            }
+          },
+          "additionalProperties": false
+        },
+        "credential_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "adapter_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "capability_catalog_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "enum": [
+                  "azure_devops",
+                  "bitbucket_data_center"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "repository_locator": {
+                "properties": {
+                  "project": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "automation_binding": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "automation_binding_id",
+        "project_id",
+        "repo_id",
+        "service_kind",
+        "provider",
+        "instance_id",
+        "normalized_host",
+        "account_id",
+        "repository_binding_ref",
+        "repository_relationship",
+        "capability_snapshot_ref",
+        "catalog_ref",
+        "permission_snapshot_ref",
+        "currentness_ref",
+        "credential_or_grant_ref",
+        "binding_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.automation_binding.v1"
+        },
+        "automation_binding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "service_kind": {
+          "enum": [
+            "github_actions",
+            "gitlab_pipelines",
+            "azure_pipelines",
+            "bitbucket_pipelines",
+            "forgejo_actions",
+            "gitea_actions",
+            "external_ci"
+          ]
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_host": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "repository_relationship": {
+          "enum": [
+            "same_forge",
+            "different_service",
+            "external",
+            "unbound"
+          ]
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "catalog_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "credential_or_grant_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "repository_relationship": {
+                "const": "unbound"
+              }
+            },
+            "required": [
+              "repository_relationship"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_binding_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "repository_relationship": {
+                "enum": [
+                  "same_forge",
+                  "different_service",
+                  "external"
+                ]
+              }
+            },
+            "required": [
+              "repository_relationship"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "service_kind": {
+                "const": "github_actions"
+              }
+            },
+            "required": [
+              "service_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider": {
+                "const": "github"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "service_kind": {
+                "const": "gitlab_pipelines"
+              }
+            },
+            "required": [
+              "service_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider": {
+                "const": "gitlab"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "service_kind": {
+                "const": "azure_pipelines"
+              }
+            },
+            "required": [
+              "service_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider": {
+                "const": "azure_devops"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "service_kind": {
+                "const": "bitbucket_pipelines"
+              }
+            },
+            "required": [
+              "service_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider": {
+                "const": "bitbucket_cloud"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "service_kind": {
+                "const": "forgejo_actions"
+              }
+            },
+            "required": [
+              "service_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider": {
+                "const": "forgejo"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "service_kind": {
+                "const": "gitea_actions"
+              }
+            },
+            "required": [
+              "service_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider": {
+                "const": "gitea"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "provider_instance_profile": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "instance_id",
+        "provider",
+        "provider_variant",
+        "normalized_host",
+        "web_base_url",
+        "api_root",
+        "api_base_path",
+        "ssh_host",
+        "ssh_port",
+        "private_ca_ref",
+        "known_host_proof_ref",
+        "account_id",
+        "organization_locator",
+        "detected_product",
+        "product_version",
+        "api_schema_version",
+        "api_state",
+        "git_transport_state",
+        "actions_state",
+        "actions_capability_ref",
+        "auth_method",
+        "oauth_registration_ref",
+        "credential_access",
+        "credential_ref",
+        "transport_api_independent",
+        "redirect_credential_policy",
+        "restricted_network_target_policy",
+        "currentness_ref",
+        "discovered_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.provider_instance_profile.v1"
+        },
+        "instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "enum": [
+            "forgejo",
+            "gitea"
+          ]
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_host": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "web_base_url": {
+          "type": "string",
+          "pattern": "^https://[^/?#]+(?:/[^?#]*)?$"
+        },
+        "api_root": {
+          "type": "string",
+          "pattern": "^https://[^/?#]+(?:/[^?#]*)?$"
+        },
+        "api_base_path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "ssh_host": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "ssh_port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "private_ca_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "known_host_proof_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "organization_locator": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "detected_product": {
+          "enum": [
+            "forgejo",
+            "gitea"
+          ]
+        },
+        "product_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "api_schema_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "api_state": {
+          "enum": [
+            "available",
+            "disabled",
+            "unreachable",
+            "unsupported"
+          ]
+        },
+        "git_transport_state": {
+          "enum": [
+            "available",
+            "degraded",
+            "unavailable"
+          ]
+        },
+        "actions_state": {
+          "enum": [
+            "enabled",
+            "disabled",
+            "no_runner",
+            "no_workflow",
+            "insufficient_permission",
+            "unsupported",
+            "unknown"
+          ]
+        },
+        "actions_capability_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "auth_method": {
+          "enum": [
+            "pat_ref",
+            "oauth_pkce",
+            "ssh_ref"
+          ]
+        },
+        "oauth_registration_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "credential_access": {
+          "enum": [
+            "read_only",
+            "read_write",
+            "administration",
+            "ssh_only"
+          ]
+        },
+        "credential_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "transport_api_independent": {
+          "const": true
+        },
+        "redirect_credential_policy": {
+          "const": "strip_authorization_on_origin_change"
+        },
+        "restricted_network_target_policy": {
+          "const": "deny_localhost_and_metadata_unless_explicitly_approved"
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "discovered_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "forgejo"
+              }
+            },
+            "required": [
+              "provider"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "enum": [
+                  "forgejo_self_managed",
+                  "forgejo_cloud"
+                ]
+              },
+              "detected_product": {
+                "const": "forgejo"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "gitea"
+              }
+            },
+            "required": [
+              "provider"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "enum": [
+                  "gitea_self_managed",
+                  "gitea_cloud"
+                ]
+              },
+              "detected_product": {
+                "const": "gitea"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "auth_method": {
+                "const": "oauth_pkce"
+              }
+            },
+            "required": [
+              "auth_method"
+            ]
+          },
+          "then": {
+            "properties": {
+              "oauth_registration_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "automation_shell_projection": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "panel_id",
+        "shell_label",
+        "legacy_input_aliases",
+        "selected_automation_binding_ref",
+        "automation_binding_count",
+        "binding_selector_visible",
+        "provider_heading",
+        "provider_noun_source",
+        "content_regions",
+        "no_automation_message"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.automation_shell_projection.v1"
+        },
+        "panel_id": {
+          "const": "repository_automation"
+        },
+        "shell_label": {
+          "const": "Actions & Pipelines"
+        },
+        "legacy_input_aliases": {
+          "type": "array",
+          "contains": {
+            "const": "github_actions"
+          },
+          "minContains": 1,
+          "maxContains": 1,
+          "uniqueItems": true
+        },
+        "selected_automation_binding_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "automation_binding_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_selector_visible": {
+          "type": "boolean"
+        },
+        "provider_heading": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "GitHub Actions",
+            "GitLab Pipelines",
+            "Azure Pipelines",
+            "Bitbucket Pipelines",
+            "Forgejo Actions",
+            "Gitea Actions",
+            null
+          ]
+        },
+        "provider_noun_source": {
+          "const": "selected_automation_binding_adapter"
+        },
+        "content_regions": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "repository_automation_context" },
+            { "const": "current_checks" },
+            { "const": "pinned_definitions" },
+            { "const": "definitions_workflows_pipelines" },
+            { "const": "runs" },
+            { "const": "gates_approvals" },
+            { "const": "stage_job_step_detail" },
+            { "const": "logs_trace" },
+            { "const": "artifacts" },
+            { "const": "manual_dispatch" },
+            { "const": "runners_secrets_variables" },
+            { "const": "external_or_unsupported_state" }
+          ],
+          "items": false,
+          "minItems": 12,
+          "maxItems": 12
+        },
+        "no_automation_message": {
+          "const": "Connect automation service"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "automation_binding_count": {
+                "minimum": 2
+              }
+            },
+            "required": [
+              "automation_binding_count"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_selector_visible": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "binding_selector_visible": {
+                "const": false
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "capability_entry": {
+      "type": "object",
+      "required": [
+        "capability",
+        "requested",
+        "effective",
+        "state",
+        "reason_codes",
+        "mutation_safe",
+        "fallbacks"
+      ],
+      "properties": {
+        "capability": {
+          "$ref": "#/$defs/capability_name"
+        },
+        "requested": {
+          "type": "boolean"
+        },
+        "effective": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "available",
+            "degraded",
+            "unavailable",
+            "unsupported",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "mutation_safe": {
+          "type": "boolean"
+        },
+        "fallbacks": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "validated_api_read",
+              "low_level_git_data",
+              "git_transport",
+              "structured_json_cli",
+              "official_page",
+              "none"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "capability_envelope": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "provider",
+        "repository_binding_ref",
+        "catalog_generation",
+        "adapter_version",
+        "requested_at_utc",
+        "currentness",
+        "capabilities"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.capability_envelope.v1"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "currentness": {
+          "enum": [
+            "cached",
+            "probing",
+            "current",
+            "stale",
+            "degraded",
+            "unavailable"
+          ]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_entry"
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "mirror_topology": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "mirror_id",
+        "mode",
+        "source_binding_ref",
+        "destination_binding_ref",
+        "authority_binding_ref",
+        "requested_mode",
+        "effective_mode",
+        "revision_fence",
+        "dedupe_key",
+        "lag_state",
+        "health",
+        "last_verified_at_utc",
+        "transition_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.mirror_topology.v1"
+        },
+        "mirror_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "mode": {
+          "enum": [
+            "native",
+            "outbound_mirror",
+            "inbound_mirror",
+            "detached",
+            "transitioning",
+            "degraded",
+            "unavailable"
+          ]
+        },
+        "source_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "destination_binding_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "authority_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_mode": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "effective_mode": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "revision_fence": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "dedupe_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "lag_state": {
+          "enum": [
+            "unknown",
+            "current",
+            "behind",
+            "diverged",
+            "blocked"
+          ]
+        },
+        "health": {
+          "enum": [
+            "ready",
+            "ready_with_limits",
+            "needs_attention",
+            "blocked",
+            "unavailable"
+          ]
+        },
+        "last_verified_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "transition_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "review_revision": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "review_revision_id",
+        "provider",
+        "repository_binding_ref",
+        "provider_review_id",
+        "version",
+        "base_revision",
+        "head_revision",
+        "merge_base_revision",
+        "evidence_refs",
+        "evidence_state",
+        "created_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_revision.v1"
+        },
+        "review_revision_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider_review_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "base_revision": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "head_revision": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "merge_base_revision": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "evidence_state": {
+          "enum": [
+            "current",
+            "stale_head_changed",
+            "revalidation_required",
+            "invalid"
+          ]
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "review_thread": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "thread_id",
+        "review_revision_ref",
+        "path",
+        "range",
+        "participants",
+        "comments",
+        "resolution_state",
+        "resolution_actor_ref",
+        "evidence_refs",
+        "blocking"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_thread.v1"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "review_revision_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "range": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "start_line",
+                "end_line"
+              ],
+              "properties": {
+                "start_line": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "end_line": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "resolution_state": {
+          "enum": [
+            "unresolved",
+            "resolved",
+            "outdated",
+            "dismissed"
+          ]
+        },
+        "resolution_actor_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "blocking": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pipeline_projection": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "pipeline_id",
+        "provider",
+        "repository_binding_ref",
+        "review_revision_ref",
+        "provider_pipeline_id",
+        "state",
+        "jobs",
+        "checks",
+        "currentness",
+        "observable_work_id",
+        "updated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.pipeline_projection.v1"
+        },
+        "pipeline_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "review_revision_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "provider_pipeline_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "state": {
+          "enum": [
+            "queued",
+            "running",
+            "waiting",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "skipped",
+            "unknown"
+          ]
+        },
+        "jobs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "currentness": {
+          "enum": [
+            "cached",
+            "refreshing",
+            "current",
+            "stale",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "observable_work_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "app_installation": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "installation_id",
+        "provider",
+        "account_id",
+        "provider_installation_id",
+        "grant_refs",
+        "state",
+        "credential_key_ref",
+        "created_at_utc",
+        "updated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.app_installation.v1"
+        },
+        "installation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider_installation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "grant_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "active",
+            "reauthorization_required",
+            "revoked",
+            "unavailable"
+          ]
+        },
+        "credential_key_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "installation_receipt": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "provider",
+        "state",
+        "issuer",
+        "audience",
+        "installation_identity",
+        "issued_at_utc",
+        "expires_at_utc",
+        "valid_for_seconds",
+        "nonce",
+        "signature_key_id",
+        "verification_state",
+        "consumed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.installation_receipt.v1"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "state": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "issuer": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "audience": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "installation_identity": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "valid_for_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "nonce": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "signature_key_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "verification_state": {
+          "enum": [
+            "verified",
+            "rejected_signature",
+            "rejected_expired",
+            "rejected_state",
+            "rejected_identity",
+            "rejected_replay"
+          ]
+        },
+        "consumed_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "cursor_origin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "valid_for_seconds": {
+                "const": 300
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "token_lease": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "token_lease_id",
+        "provider",
+        "installation_ref",
+        "repository_binding_ref",
+        "scope_grant_refs",
+        "credential_ref",
+        "issued_at_utc",
+        "expires_at_utc",
+        "ttl_seconds",
+        "state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.installation_token_lease.v1"
+        },
+        "token_lease_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "installation_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope_grant_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "credential_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "ttl_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "state": {
+          "enum": [
+            "active",
+            "expired",
+            "revoked",
+            "consumed"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "cursor_origin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "ttl_seconds": {
+                "maximum": 900
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "signed_webhook_delivery": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "provider",
+        "delivery_id",
+        "repository_binding_ref",
+        "received_at_utc",
+        "provider_timestamp_utc",
+        "raw_body_sha256",
+        "signature_key_id",
+        "signature_algorithm",
+        "verification_state",
+        "replay_state",
+        "dedupe_state",
+        "ack_state",
+        "recovery_state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.signed_webhook_delivery.v1"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "delivery_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "received_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "provider_timestamp_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "raw_body_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "signature_key_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "signature_algorithm": {
+          "enum": [
+            "ed25519",
+            "hmac_sha256",
+            "provider_native_verified"
+          ]
+        },
+        "verification_state": {
+          "enum": [
+            "verified_before_parse",
+            "rejected_signature",
+            "rejected_timestamp",
+            "rejected_context",
+            "rejected_unknown_key"
+          ]
+        },
+        "replay_state": {
+          "enum": [
+            "fresh",
+            "replayed",
+            "outside_window"
+          ]
+        },
+        "dedupe_state": {
+          "enum": [
+            "new",
+            "duplicate_ignored",
+            "conflicting_duplicate"
+          ]
+        },
+        "ack_state": {
+          "enum": [
+            "pending",
+            "acknowledged",
+            "failed"
+          ]
+        },
+        "recovery_state": {
+          "enum": [
+            "not_required",
+            "retry_scheduled",
+            "inspection_required",
+            "redelivery_queued",
+            "recovered",
+            "failed_terminal"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "cursor_origin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "signature_algorithm": {
+                "const": "ed25519"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "api_compatibility": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "provider",
+        "provider_variant",
+        "adapter_version",
+        "openapi_or_contract_sha256",
+        "catalog_generation",
+        "probe_id",
+        "endpoints",
+        "scopes",
+        "features",
+        "mutation_safety",
+        "requested_capabilities",
+        "effective_capabilities",
+        "rate_budget",
+        "probed_at_utc",
+        "currentness"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.api_compatibility.v1"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "openapi_or_contract_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probe_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_name"
+          },
+          "uniqueItems": true
+        },
+        "mutation_safety": {
+          "enum": [
+            "verified",
+            "reads_only",
+            "unknown_fail_closed",
+            "blocked"
+          ]
+        },
+        "requested_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_name"
+          },
+          "uniqueItems": true
+        },
+        "effective_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_name"
+          },
+          "uniqueItems": true
+        },
+        "rate_budget": {
+          "type": "object",
+          "required": [
+            "remaining",
+            "reset_at_utc",
+            "retry_after_seconds"
+          ],
+          "properties": {
+            "remaining": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "reset_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "retry_after_seconds": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "probed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "degraded",
+            "unavailable"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_receipt": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "receipt_id",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "provider",
+        "repository_binding_ref",
+        "requested_authority_role",
+        "effective_authority_role",
+        "review_revision_ref",
+        "expected_binding_generation",
+        "credential_or_grant_ref",
+        "idempotency_key",
+        "outcome",
+        "observable_work_id",
+        "event_refs",
+        "recovery_actions",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.command_receipt.v1"
+        },
+        "receipt_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "$ref": "#/$defs/command_id"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_authority_role": {
+          "$ref": "#/$defs/authority_role"
+        },
+        "effective_authority_role": {
+          "$ref": "#/$defs/authority_role"
+        },
+        "review_revision_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "expected_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automation_binding_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "expected_automation_binding_generation": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "credential_or_grant_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "blocked",
+            "degraded",
+            "failed",
+            "cancelled",
+            "recovery_required",
+            "effect_unknown"
+          ]
+        },
+        "observable_work_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "event_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "recovery_actions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^cmd\\.[a-z0-9_.]+$"
+          },
+          "uniqueItems": true
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.repository.fork",
+                  "cmd.forge.pipeline.approve",
+                  "cmd.forge.review.checks",
+                  "cmd.forge.repository.policy.preview",
+                  "cmd.forge.repository.policy.apply",
+                  "cmd.forge.runner.registration.apply",
+                  "cmd.forge.runner.remove",
+                  "cmd.forge.release.list",
+                  "cmd.forge.release.asset.download"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "event_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "provider_adapter_profile": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "provider",
+        "provider_variant",
+        "host_class",
+        "account_container_kind",
+        "repository_container_kind",
+        "review_noun",
+        "pipeline_noun",
+        "auth_methods",
+        "required_capabilities",
+        "optional_capabilities",
+        "version_or_tier_gate",
+        "official_page_route_ref",
+        "structured_cli_fallback",
+        "self_host_catalog_ref",
+        "unsupported_reason_codes"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.provider_adapter_profile.v1"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "host_class": {
+          "enum": [
+            "cloud",
+            "self_managed",
+            "dedicated",
+            "server",
+            "preview_hosted"
+          ]
+        },
+        "account_container_kind": {
+          "enum": [
+            "organization",
+            "workspace",
+            "account",
+            "collection"
+          ]
+        },
+        "repository_container_kind": {
+          "enum": [
+            "repository",
+            "project_repository",
+            "workspace_repository"
+          ]
+        },
+        "review_noun": {
+          "enum": [
+            "pull_request",
+            "merge_request"
+          ]
+        },
+        "pipeline_noun": {
+          "enum": [
+            "pipeline",
+            "build",
+            "checks",
+            "actions",
+            "none"
+          ]
+        },
+        "auth_methods": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "oauth",
+              "oauth_pkce",
+              "device_code",
+              "pat_ref",
+              "app_installation",
+              "entra",
+              "ssh_ref",
+              "jit_token",
+              "cli_session_ref"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "required_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_name"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "optional_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_name"
+          },
+          "uniqueItems": true
+        },
+        "version_or_tier_gate": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "official_page_route_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "structured_cli_fallback": {
+          "type": "boolean"
+        },
+        "self_host_catalog_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "unsupported_reason_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "product_family": {
+          "enum": [
+            "forgejo",
+            "gitea"
+          ]
+        },
+        "supported_api_schema_versions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "instance_contract_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "version_detection_strategy": {
+          "const": "bounded_safe_read_then_signed_catalog_match"
+        },
+        "api_git_transport_independent": {
+          "const": true
+        },
+        "oauth_pkce_requires_registered_instance": {
+          "const": true
+        },
+        "actions_capability_states": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "enabled" },
+            { "const": "disabled" },
+            { "const": "no_runner" },
+            { "const": "no_workflow" },
+            { "const": "insufficient_permission" },
+            { "const": "unsupported" },
+            { "const": "unknown" }
+          ],
+          "items": false,
+          "minItems": 7,
+          "maxItems": 7
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "cursor_origin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "const": "preview"
+              },
+              "host_class": {
+                "const": "preview_hosted"
+              },
+              "review_noun": {
+                "const": "pull_request"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "gitlab"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "enum": [
+                  "gitlab_com",
+                  "gitlab_self_managed",
+                  "gitlab_dedicated"
+                ]
+              },
+              "review_noun": {
+                "const": "merge_request"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "azure_devops"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "enum": [
+                  "azure_devops_services",
+                  "azure_devops_server"
+                ]
+              },
+              "repository_container_kind": {
+                "const": "project_repository"
+              },
+              "review_noun": {
+                "const": "pull_request"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "bitbucket_cloud"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "const": "bitbucket_cloud"
+              },
+              "host_class": {
+                "const": "cloud"
+              },
+              "account_container_kind": {
+                "const": "workspace"
+              },
+              "repository_container_kind": {
+                "const": "workspace_repository"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "bitbucket_data_center"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "const": "bitbucket_data_center"
+              },
+              "host_class": {
+                "const": "self_managed"
+              },
+              "repository_container_kind": {
+                "const": "project_repository"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "forgejo"
+              }
+            },
+            "required": [
+              "provider"
+            ]
+          },
+          "then": {
+            "required": [
+              "product_family",
+              "supported_api_schema_versions",
+              "instance_contract_ref",
+              "version_detection_strategy",
+              "api_git_transport_independent",
+              "oauth_pkce_requires_registered_instance",
+              "actions_capability_states"
+            ],
+            "properties": {
+              "provider_variant": {
+                "enum": [
+                  "forgejo_self_managed",
+                  "forgejo_cloud"
+                ]
+              },
+              "host_class": {
+                "enum": [
+                  "self_managed",
+                  "cloud"
+                ]
+              },
+              "review_noun": {
+                "const": "pull_request"
+              },
+              "pipeline_noun": {
+                "const": "actions"
+              },
+              "product_family": {
+                "const": "forgejo"
+              },
+              "self_host_catalog_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "gitea"
+              }
+            },
+            "required": [
+              "provider"
+            ]
+          },
+          "then": {
+            "required": [
+              "product_family",
+              "supported_api_schema_versions",
+              "instance_contract_ref",
+              "version_detection_strategy",
+              "api_git_transport_independent",
+              "oauth_pkce_requires_registered_instance",
+              "actions_capability_states"
+            ],
+            "properties": {
+              "provider_variant": {
+                "enum": [
+                  "gitea_self_managed",
+                  "gitea_cloud"
+                ]
+              },
+              "host_class": {
+                "enum": [
+                  "self_managed",
+                  "cloud"
+                ]
+              },
+              "review_noun": {
+                "const": "pull_request"
+              },
+              "pipeline_noun": {
+                "const": "actions"
+              },
+              "product_family": {
+                "const": "gitea"
+              },
+              "self_host_catalog_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "command_id": {
+      "enum": [
+        "cmd.forge.repository.list",
+        "cmd.forge.repository.refresh",
+        "cmd.forge.repository.create",
+        "cmd.forge.repository.fork",
+        "cmd.forge.repository.policy.preview",
+        "cmd.forge.repository.policy.apply",
+        "cmd.forge.repository.open_in_browser",
+        "cmd.forge.mirror.connect",
+        "cmd.forge.mirror.sync",
+        "cmd.forge.mirror.inspect",
+        "cmd.forge.mirror.detach",
+        "cmd.forge.review.create",
+        "cmd.forge.review.open",
+        "cmd.forge.review.refresh",
+        "cmd.forge.review.mark_ready",
+        "cmd.forge.review.approve",
+        "cmd.forge.review.request_changes",
+        "cmd.forge.review.comment",
+        "cmd.forge.review.merge",
+        "cmd.forge.review.close",
+        "cmd.forge.review.reopen",
+        "cmd.forge.review.checkout",
+        "cmd.forge.review.checks",
+        "cmd.forge.review.open_in_browser",
+        "cmd.forge.review.thread.list",
+        "cmd.forge.review.thread.reply",
+        "cmd.forge.review.thread.resolve",
+        "cmd.forge.review.thread.reopen",
+        "cmd.forge.review.version.open",
+        "cmd.forge.review.version.compare",
+        "cmd.forge.pipeline.list",
+        "cmd.forge.pipeline.refresh",
+        "cmd.forge.pipeline.run",
+        "cmd.forge.pipeline.retry",
+        "cmd.forge.pipeline.cancel",
+        "cmd.forge.pipeline.approve",
+        "cmd.forge.pipeline.open_job",
+        "cmd.forge.pipeline.open_logs",
+        "cmd.forge.pipeline.open_in_browser",
+        "cmd.forge.webhook.delivery.list",
+        "cmd.forge.webhook.redeliver",
+        "cmd.forge.runner.registration.apply",
+        "cmd.forge.runner.remove",
+        "cmd.forge.release.list",
+        "cmd.forge.release.asset.download",
+        "cmd.forge.connection.reauthorize"
+      ]
+    },
+    "disabled_reason_code": {
+      "enum": [
+        "repository_binding_missing",
+        "binding_generation_stale",
+        "provider_binding_mismatch",
+        "provider_identity_unproven",
+        "host_unreachable",
+        "host_untrusted",
+        "network_blocked_by_policy",
+        "account_invalid",
+        "credential_or_grant_missing",
+        "credential_or_grant_revoked",
+        "missing_scope",
+        "tier_or_license_unsupported",
+        "server_version_unsupported",
+        "adapter_uncertified",
+        "catalog_stale",
+        "api_compatibility_unknown",
+        "rate_limited",
+        "offline",
+        "managed_policy_blocked",
+        "capability_unavailable",
+        "capability_unsupported",
+        "mutation_unsafe",
+        "authority_insufficient",
+        "review_revision_stale",
+        "review_actor_unauthorized",
+        "pipeline_projection_stale",
+        "pipeline_projection_partial",
+        "pipeline_not_actionable",
+        "mirror_authority_ambiguous",
+        "mirror_revision_stale",
+        "mirror_lag_or_divergence",
+        "webhook_signature_unverified",
+        "webhook_replay_rejected",
+        "webhook_duplicate_effect_blocked",
+        "official_page_route_unavailable",
+        "official_page_route_not_allowlisted",
+        "protected_auth_browser_human_only",
+        "permission_denied",
+        "confirmation_required",
+        "confirmation_target_mismatch",
+        "source_control_handoff_unavailable",
+        "auth_lifecycle_unavailable",
+        "automation_binding_missing",
+        "automation_binding_generation_stale",
+        "automation_gate_stale",
+        "actions_disabled",
+        "actions_runner_unavailable",
+        "actions_workflow_missing",
+        "actions_permission_insufficient",
+        "policy_revision_stale",
+        "runner_preview_missing",
+        "runner_host_revision_stale",
+        "release_asset_digest_mismatch",
+        "effect_unknown_reconciliation_required"
+      ]
+    },
+    "error_code": {
+      "enum": [
+        "repository_binding_missing",
+        "binding_generation_stale",
+        "provider_binding_mismatch",
+        "provider_identity_unproven",
+        "host_unreachable",
+        "host_untrusted",
+        "network_blocked_by_policy",
+        "account_invalid",
+        "credential_or_grant_missing",
+        "credential_or_grant_revoked",
+        "missing_scope",
+        "tier_or_license_unsupported",
+        "server_version_unsupported",
+        "adapter_uncertified",
+        "catalog_stale",
+        "api_compatibility_unknown",
+        "rate_limited",
+        "offline",
+        "managed_policy_blocked",
+        "capability_unavailable",
+        "capability_unsupported",
+        "mutation_unsafe",
+        "authority_insufficient",
+        "review_revision_stale",
+        "review_actor_unauthorized",
+        "pipeline_projection_stale",
+        "pipeline_projection_partial",
+        "pipeline_not_actionable",
+        "mirror_authority_ambiguous",
+        "mirror_revision_stale",
+        "mirror_lag_or_divergence",
+        "webhook_signature_unverified",
+        "webhook_replay_rejected",
+        "webhook_duplicate_effect_blocked",
+        "official_page_route_unavailable",
+        "official_page_route_not_allowlisted",
+        "protected_auth_browser_human_only",
+        "permission_denied",
+        "confirmation_required",
+        "confirmation_target_mismatch",
+        "source_control_handoff_unavailable",
+        "auth_lifecycle_unavailable",
+        "automation_binding_missing",
+        "automation_binding_generation_stale",
+        "automation_gate_stale",
+        "actions_disabled",
+        "actions_runner_unavailable",
+        "actions_workflow_missing",
+        "actions_permission_insufficient",
+        "policy_revision_stale",
+        "runner_preview_missing",
+        "runner_host_revision_stale",
+        "release_asset_digest_mismatch",
+        "effect_unknown_reconciliation_required",
+        "provider_failed",
+        "operation_cancelled",
+        "receipt_unavailable",
+        "terminal_result_unavailable"
+      ]
+    },
+    "availability_payload": {
+      "type": "object",
+      "required": [
+        "requested",
+        "effective",
+        "state",
+        "reason_codes",
+        "disabled_reason_code",
+        "allowed_action_ids",
+        "evaluated_at_utc"
+      ],
+      "properties": {
+        "requested": {
+          "type": "boolean"
+        },
+        "effective": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "available",
+            "degraded",
+            "unavailable",
+            "unsupported",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/disabled_reason_code"
+          },
+          "uniqueItems": true
+        },
+        "disabled_reason_code": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/disabled_reason_code"
+            }
+          ]
+        },
+        "allowed_action_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^cmd\\.[a-z0-9_.]+$"
+          },
+          "uniqueItems": true
+        },
+        "evaluated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "available"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective": {
+                "const": true
+              },
+              "reason_codes": {
+                "maxItems": 0
+              },
+              "disabled_reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective": {
+                "const": true
+              },
+              "reason_codes": {
+                "minItems": 1
+              },
+              "disabled_reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "unavailable",
+                  "unsupported",
+                  "blocked"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective": {
+                "const": false
+              },
+              "reason_codes": {
+                "minItems": 1
+              },
+              "disabled_reason_code": {
+                "$ref": "#/$defs/disabled_reason_code"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "permission_decision": {
+      "type": "object",
+      "required": [
+        "permission_snapshot_ref",
+        "decision",
+        "scope",
+        "actor_kind",
+        "target_binding_sha256",
+        "preflight_revision",
+        "evaluated_at_utc"
+      ],
+      "properties": {
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "ask",
+            "deny"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "read",
+            "local_mutation",
+            "remote_side_effect",
+            "recovery",
+            "external_navigation",
+            "authentication"
+          ]
+        },
+        "actor_kind": {
+          "enum": [
+            "human",
+            "agent",
+            "automation"
+          ]
+        },
+        "target_binding_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preflight_revision": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "evaluated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "confirmation": {
+      "type": "object",
+      "required": [
+        "confirmation_id",
+        "actor_ref",
+        "confirmed_at_utc",
+        "confirmation_text_sha256",
+        "target_binding_sha256",
+        "expected_revision_ref"
+      ],
+      "properties": {
+        "confirmation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "confirmed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "confirmation_text_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "target_binding_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expected_revision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_currentness": {
+      "type": "object",
+      "required": [
+        "binding_generation",
+        "catalog_generation",
+        "api_probe_ref",
+        "state",
+        "mutation_safety",
+        "projection_updated_at_utc",
+        "direct_revalidation_ref",
+        "rate_budget_ref"
+      ],
+      "properties": {
+        "binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "api_probe_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "stale",
+            "degraded",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "mutation_safety": {
+          "enum": [
+            "verified",
+            "reads_only",
+            "unknown_fail_closed",
+            "blocked"
+          ]
+        },
+        "projection_updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "direct_revalidation_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "rate_budget_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      },
+      "additionalProperties": false
+    },
+    "protected_browser_handoff": {
+      "type": "object",
+      "required": [
+        "session_class",
+        "actor_class",
+        "foreground_human_confirmation_ref",
+        "allowed_origin_ref",
+        "official_page_route_ref",
+        "agent_access",
+        "tool_access",
+        "automation_access",
+        "capture_allowed",
+        "persistence_allowed"
+      ],
+      "properties": {
+        "session_class": {
+          "const": "protected_auth_browser"
+        },
+        "actor_class": {
+          "const": "human"
+        },
+        "foreground_human_confirmation_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "allowed_origin_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "official_page_route_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "agent_access": {
+          "const": false
+        },
+        "tool_access": {
+          "const": false
+        },
+        "automation_access": {
+          "const": false
+        },
+        "capture_allowed": {
+          "const": false
+        },
+        "persistence_allowed": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "webhook_redelivery_gate": {
+      "type": "object",
+      "required": [
+        "delivery_ref",
+        "signature_verification_state",
+        "replay_state",
+        "dedupe_state",
+        "redelivery_idempotency_key"
+      ],
+      "properties": {
+        "delivery_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "signature_verification_state": {
+          "const": "verified_before_parse"
+        },
+        "replay_state": {
+          "const": "fresh"
+        },
+        "dedupe_state": {
+          "enum": [
+            "new",
+            "duplicate_ignored"
+          ]
+        },
+        "redelivery_idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_target": {
+      "type": "object",
+      "required": [
+        "target_kind",
+        "identity_source",
+        "remote_text_used_for_identity",
+        "provider_repository_id",
+        "repository_locator_ref",
+        "mirror_id",
+        "source_binding_ref",
+        "destination_binding_ref",
+        "authority_resolution_state",
+        "provider_review_id",
+        "review_revision_ref",
+        "thread_id",
+        "left_review_revision_ref",
+        "right_review_revision_ref",
+        "source_revision",
+        "target_revision",
+        "pipeline_id",
+        "pipeline_definition_ref",
+        "job_id",
+        "delivery_id",
+        "connection_id",
+        "official_page_route_ref",
+        "webhook_redelivery_gate",
+        "source_control_handoff_ref"
+      ],
+      "properties": {
+        "target_kind": {
+          "enum": [
+            "repository",
+            "mirror",
+            "review",
+            "review_thread",
+            "review_version",
+            "pipeline",
+            "pipeline_job",
+            "automation_gate",
+            "review_checks",
+            "repository_policy",
+            "runner",
+            "release",
+            "release_asset",
+            "webhook_delivery",
+            "connection"
+          ]
+        },
+        "identity_source": {
+          "enum": [
+            "validated_repository_binding",
+            "validated_account_container",
+            "validated_automation_binding",
+            "validated_execution_host"
+          ]
+        },
+        "remote_text_used_for_identity": {
+          "const": false
+        },
+        "provider_repository_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "repository_locator_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "mirror_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "source_binding_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "destination_binding_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "authority_resolution_state": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "enum": [
+                "verified",
+                "ambiguous",
+                "stale",
+                "blocked"
+              ]
+            }
+          ]
+        },
+        "provider_review_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "review_revision_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "left_review_revision_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "right_review_revision_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "source_revision": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "target_revision": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "pipeline_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "pipeline_definition_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "job_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "delivery_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "connection_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "official_page_route_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "webhook_redelivery_gate": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/webhook_redelivery_gate"
+            }
+          ]
+        },
+        "source_control_handoff_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "target_namespace": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "automation_run_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "automation_gate_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "approval_decision": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "approve",
+            null
+          ]
+        },
+        "expected_automation_revision": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "review_head_oid": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40,64}$"
+        },
+        "policy_resource_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "provider_patch_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "policy_preview_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "expected_policy_revision": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "runner_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "registration_preview_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "execution_host_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "expected_host_revision": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "step_up_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "execution_host_consent_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "release_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "release_asset_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "download_destination_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "expected_digest": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_error_payload": {
+      "type": "object",
+      "required": [
+        "code",
+        "message",
+        "retry_disposition",
+        "effect_state",
+        "provider_error_ref",
+        "recovery_action_ids"
+      ],
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/error_code"
+        },
+        "message": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "retry_disposition": {
+          "enum": [
+            "never",
+            "after_revalidation",
+            "after_user_action",
+            "after_rate_window",
+            "after_reconciliation"
+          ]
+        },
+        "effect_state": {
+          "enum": [
+            "none",
+            "known_applied",
+            "known_not_applied",
+            "unknown"
+          ]
+        },
+        "provider_error_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "recovery_action_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^cmd\\.[a-z0-9_.]+$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "effect_state": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "effect_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retry_disposition": {
+                "const": "after_reconciliation"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "command_request": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "command_id",
+        "command_instance_id",
+        "idempotency_key",
+        "provider",
+        "provider_variant",
+        "normalized_host",
+        "account_id",
+        "repo_id",
+        "repository_binding_ref",
+        "expected_binding_generation",
+        "requested_authority_role",
+        "effective_authority_role",
+        "requested_capability",
+        "capability_snapshot_ref",
+        "api_compatibility_ref",
+        "credential_or_grant_ref",
+        "currentness",
+        "permission",
+        "file_safe_decision_ref",
+        "confirmation",
+        "target",
+        "availability",
+        "browser_handoff",
+        "observable_work_id",
+        "invocation_source",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.command_request.v1"
+        },
+        "command_id": {
+          "$ref": "#/$defs/command_id"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_host": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automation_binding_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "expected_automation_binding_generation": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "requested_authority_role": {
+          "$ref": "#/$defs/authority_role"
+        },
+        "effective_authority_role": {
+          "$ref": "#/$defs/authority_role"
+        },
+        "requested_capability": {
+          "$ref": "#/$defs/capability_name"
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "api_compatibility_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "credential_or_grant_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "currentness": {
+          "$ref": "#/$defs/command_currentness"
+        },
+        "permission": {
+          "$ref": "#/$defs/permission_decision"
+        },
+        "confirmation": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/confirmation"
+            }
+          ]
+        },
+        "target": {
+          "$ref": "#/$defs/command_target"
+        },
+        "availability": {
+          "$ref": "#/$defs/availability_payload"
+        },
+        "observable_work_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "invocation_source": {
+          "enum": [
+            "gui",
+            "assistant_chat",
+            "orchestrator",
+            "automation",
+            "headless_api"
+          ]
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "file_safe_decision_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "browser_handoff": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/browser_handoff"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "availability": {
+              "properties": {
+                "state": {
+                  "enum": [
+                    "available",
+                    "degraded"
+                  ]
+                },
+                "effective": {
+                  "const": true
+                },
+                "disabled_reason_code": {
+                  "type": "null"
+                }
+              }
+            },
+            "permission": {
+              "properties": {
+                "decision": {
+                  "const": "allow"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                "cmd.forge.repository.create",
+                "cmd.forge.repository.fork",
+                "cmd.forge.mirror.connect",
+                  "cmd.forge.mirror.sync",
+                  "cmd.forge.mirror.detach",
+                  "cmd.forge.review.create",
+                  "cmd.forge.review.mark_ready",
+                  "cmd.forge.review.approve",
+                  "cmd.forge.review.request_changes",
+                  "cmd.forge.review.comment",
+                  "cmd.forge.review.merge",
+                  "cmd.forge.review.close",
+                  "cmd.forge.review.reopen",
+                  "cmd.forge.review.thread.reply",
+                  "cmd.forge.review.thread.resolve",
+                  "cmd.forge.review.thread.reopen",
+                  "cmd.forge.pipeline.run",
+                  "cmd.forge.pipeline.retry",
+                "cmd.forge.pipeline.cancel",
+                "cmd.forge.pipeline.approve",
+                "cmd.forge.repository.policy.apply",
+                "cmd.forge.runner.registration.apply",
+                "cmd.forge.runner.remove",
+                "cmd.forge.release.asset.download",
+                "cmd.forge.webhook.redeliver"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_authority_role": {
+                "const": "authority"
+              },
+              "currentness": {
+                "properties": {
+                  "state": {
+                    "const": "current"
+                  },
+                  "mutation_safety": {
+                    "const": "verified"
+                  },
+                  "direct_revalidation_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                },
+                "required": [
+                  "direct_revalidation_ref"
+                ]
+              },
+              "availability": {
+                "properties": {
+                  "state": {
+                    "const": "available"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.mirror.detach",
+                  "cmd.forge.review.mark_ready",
+                  "cmd.forge.review.approve",
+                  "cmd.forge.review.request_changes",
+                  "cmd.forge.review.merge",
+                  "cmd.forge.review.close",
+                  "cmd.forge.pipeline.run",
+                  "cmd.forge.pipeline.retry",
+                  "cmd.forge.pipeline.cancel",
+                  "cmd.forge.repository.fork",
+                  "cmd.forge.pipeline.approve",
+                  "cmd.forge.repository.policy.apply",
+                  "cmd.forge.runner.registration.apply",
+                  "cmd.forge.runner.remove",
+                  "cmd.forge.release.asset.download",
+                  "cmd.forge.webhook.redeliver"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "confirmation": {
+                "$ref": "#/$defs/confirmation"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.repository.open_in_browser",
+                  "cmd.forge.review.open_in_browser",
+                  "cmd.forge.pipeline.open_in_browser"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "invocation_source": {
+                "const": "gui"
+              },
+              "target": {
+                "properties": {
+                  "official_page_route_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              "browser_handoff": {
+                "$ref": "#/$defs/browser_handoff"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.repository.list",
+                  "cmd.forge.repository.refresh",
+                  "cmd.forge.repository.create",
+                  "cmd.forge.repository.fork",
+                  "cmd.forge.repository.open_in_browser"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "repository"
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "repository"
+                  },
+                  "repository_locator_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.mirror.connect",
+                  "cmd.forge.mirror.sync",
+                  "cmd.forge.mirror.inspect",
+                  "cmd.forge.mirror.detach"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "mirror"
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "mirror"
+                  },
+                  "mirror_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "authority_resolution_state": {
+                    "const": "verified"
+                  },
+                  "source_binding_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.review.thread.list",
+                  "cmd.forge.review.thread.reply",
+                  "cmd.forge.review.thread.resolve",
+                  "cmd.forge.review.thread.reopen"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "review_threads"
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "review_thread"
+                  },
+                  "provider_review_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "review_revision_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.review.version.open",
+                  "cmd.forge.review.version.compare"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "review_versions"
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "review_version"
+                  },
+                  "provider_review_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "review_revision_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.review.version.compare"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "left_review_revision_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "right_review_revision_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.review.create",
+                  "cmd.forge.review.open",
+                  "cmd.forge.review.refresh",
+                  "cmd.forge.review.mark_ready",
+                  "cmd.forge.review.approve",
+                  "cmd.forge.review.request_changes",
+                  "cmd.forge.review.comment",
+                  "cmd.forge.review.merge",
+                  "cmd.forge.review.close",
+                  "cmd.forge.review.reopen",
+                  "cmd.forge.review.checkout",
+                  "cmd.forge.review.open_in_browser"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "review"
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "review"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.review.create"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "provider_review_id": {
+                    "type": "null"
+                  },
+                  "review_revision_ref": {
+                    "type": "null"
+                  },
+                  "source_revision": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "target_revision": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.review.open",
+                  "cmd.forge.review.refresh",
+                  "cmd.forge.review.mark_ready",
+                  "cmd.forge.review.approve",
+                  "cmd.forge.review.request_changes",
+                  "cmd.forge.review.comment",
+                  "cmd.forge.review.merge",
+                  "cmd.forge.review.close",
+                  "cmd.forge.review.reopen",
+                  "cmd.forge.review.checkout",
+                  "cmd.forge.review.open_in_browser"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "provider_review_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "review_revision_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.pipeline.list",
+                  "cmd.forge.pipeline.refresh",
+                  "cmd.forge.pipeline.run",
+                  "cmd.forge.pipeline.retry",
+                  "cmd.forge.pipeline.cancel",
+                  "cmd.forge.pipeline.open_job",
+                  "cmd.forge.pipeline.open_logs",
+                  "cmd.forge.pipeline.open_in_browser"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "enum": [
+                  "pipelines",
+                  "checks"
+                ]
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "enum": [
+                      "pipeline",
+                      "pipeline_job"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.pipeline.open_job",
+                  "cmd.forge.pipeline.open_logs"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "pipeline_job"
+                  },
+                  "pipeline_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "job_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.pipeline.run",
+                  "cmd.forge.pipeline.retry",
+                  "cmd.forge.pipeline.cancel"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "pipeline_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.pipeline.list",
+                  "cmd.forge.pipeline.refresh",
+                  "cmd.forge.pipeline.run",
+                  "cmd.forge.pipeline.retry",
+                  "cmd.forge.pipeline.cancel",
+                  "cmd.forge.pipeline.approve",
+                  "cmd.forge.pipeline.open_job",
+                  "cmd.forge.pipeline.open_logs",
+                  "cmd.forge.pipeline.open_in_browser",
+                  "cmd.forge.runner.registration.apply",
+                  "cmd.forge.runner.remove"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "automation_binding_ref",
+              "expected_automation_binding_generation"
+            ],
+            "properties": {
+              "automation_binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "expected_automation_binding_generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.fork"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "repository"
+              },
+              "target": {
+                "required": [
+                  "provider_repository_id",
+                  "target_namespace"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "repository"
+                  },
+                  "provider_repository_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "target_namespace": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "identity_source": {
+                    "const": "validated_repository_binding"
+                  }
+                }
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.review.checks"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "checks"
+              },
+              "currentness": {
+                "properties": {
+                  "state": {
+                    "const": "current"
+                  }
+                }
+              },
+              "target": {
+                "required": [
+                  "provider_review_id",
+                  "review_head_oid"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "review_checks"
+                  },
+                  "provider_review_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "review_head_oid": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40,64}$"
+                  },
+                  "identity_source": {
+                    "const": "validated_repository_binding"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.repository.policy.preview",
+                  "cmd.forge.repository.policy.apply"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "repository_policy"
+              },
+              "currentness": {
+                "properties": {
+                  "state": {
+                    "const": "current"
+                  }
+                }
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "repository_policy"
+                  },
+                  "identity_source": {
+                    "const": "validated_repository_binding"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.policy.preview"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "required": [
+                  "policy_resource_id",
+                  "provider_patch_ref",
+                  "expected_policy_revision"
+                ],
+                "properties": {
+                  "policy_resource_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "provider_patch_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "expected_policy_revision": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.policy.apply"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "required": [
+                  "policy_preview_ref",
+                  "expected_policy_revision"
+                ],
+                "properties": {
+                  "policy_preview_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "expected_policy_revision": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.pipeline.approve"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "automation"
+              },
+              "target": {
+                "required": [
+                  "automation_run_id",
+                  "automation_gate_id",
+                  "approval_decision",
+                  "expected_automation_revision"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "automation_gate"
+                  },
+                  "identity_source": {
+                    "const": "validated_automation_binding"
+                  },
+                  "automation_run_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "automation_gate_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "approval_decision": {
+                    "const": "approve"
+                  },
+                  "expected_automation_revision": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.runner.registration.apply"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "runner_administration"
+              },
+              "target": {
+                "required": [
+                  "registration_preview_ref",
+                  "execution_host_ref",
+                  "expected_host_revision",
+                  "step_up_ref",
+                  "execution_host_consent_ref"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "runner"
+                  },
+                  "identity_source": {
+                    "const": "validated_execution_host"
+                  },
+                  "registration_preview_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "execution_host_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "expected_host_revision": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "step_up_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "execution_host_consent_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.runner.remove"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "runner_administration"
+              },
+              "target": {
+                "required": [
+                  "runner_id",
+                  "registration_preview_ref"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "runner"
+                  },
+                  "identity_source": {
+                    "const": "validated_automation_binding"
+                  },
+                  "runner_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "registration_preview_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.release.list"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "releases"
+              },
+              "currentness": {
+                "properties": {
+                  "state": {
+                    "const": "current"
+                  }
+                }
+              },
+              "target": {
+                "required": [
+                  "provider_repository_id"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "release"
+                  },
+                  "identity_source": {
+                    "const": "validated_repository_binding"
+                  },
+                  "provider_repository_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.release.asset.download"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "release_assets"
+              },
+              "target": {
+                "required": [
+                  "release_id",
+                  "release_asset_id",
+                  "download_destination_ref",
+                  "expected_digest"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "release_asset"
+                  },
+                  "identity_source": {
+                    "const": "validated_repository_binding"
+                  },
+                  "release_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "release_asset_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "download_destination_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "expected_digest": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                }
+              },
+              "file_safe_decision_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "permission": {
+                "properties": {
+                  "scope": {
+                    "const": "local_mutation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.webhook.delivery.list",
+                  "cmd.forge.webhook.redeliver"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "const": "webhooks"
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "webhook_delivery"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.webhook.redeliver"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "delivery_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "webhook_redelivery_gate": {
+                    "$ref": "#/$defs/webhook_redelivery_gate"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.connection.reauthorize"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_capability": {
+                "enum": [
+                  "apps",
+                  "repository"
+                ]
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "connection"
+                  },
+                  "connection_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              },
+              "permission": {
+                "properties": {
+                  "scope": {
+                    "const": "authentication"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.review.thread.list"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "thread_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.review.thread.reply",
+                  "cmd.forge.review.thread.resolve",
+                  "cmd.forge.review.thread.reopen"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "thread_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.pipeline.run"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "pipeline_definition_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.pipeline.open_in_browser"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "pipeline_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.review.checkout"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "source_control_handoff_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              "file_safe_decision_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "permission": {
+                "properties": {
+                  "scope": {
+                    "const": "local_mutation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.mirror.detach"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "file_safe_decision_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.repository.list",
+                  "cmd.forge.repository.refresh",
+                  "cmd.forge.repository.create",
+                  "cmd.forge.repository.fork",
+                  "cmd.forge.repository.policy.preview",
+                  "cmd.forge.repository.policy.apply",
+                  "cmd.forge.mirror.connect",
+                  "cmd.forge.mirror.sync",
+                  "cmd.forge.mirror.inspect",
+                  "cmd.forge.mirror.detach",
+                  "cmd.forge.review.create",
+                  "cmd.forge.review.open",
+                  "cmd.forge.review.refresh",
+                  "cmd.forge.review.mark_ready",
+                  "cmd.forge.review.approve",
+                  "cmd.forge.review.request_changes",
+                  "cmd.forge.review.comment",
+                  "cmd.forge.review.merge",
+                  "cmd.forge.review.close",
+                  "cmd.forge.review.reopen",
+                  "cmd.forge.review.checkout",
+                  "cmd.forge.review.checks",
+                  "cmd.forge.review.thread.list",
+                  "cmd.forge.review.thread.reply",
+                  "cmd.forge.review.thread.resolve",
+                  "cmd.forge.review.thread.reopen",
+                  "cmd.forge.review.version.open",
+                  "cmd.forge.review.version.compare",
+                  "cmd.forge.pipeline.list",
+                  "cmd.forge.pipeline.refresh",
+                  "cmd.forge.pipeline.run",
+                  "cmd.forge.pipeline.retry",
+                  "cmd.forge.pipeline.cancel",
+                  "cmd.forge.pipeline.approve",
+                  "cmd.forge.pipeline.open_job",
+                  "cmd.forge.pipeline.open_logs",
+                  "cmd.forge.runner.registration.apply",
+                  "cmd.forge.runner.remove",
+                  "cmd.forge.release.list",
+                  "cmd.forge.release.asset.download",
+                  "cmd.forge.webhook.delivery.list",
+                  "cmd.forge.webhook.redeliver"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "browser_handoff": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "browser_handoff": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "browser_handoff"
+            ]
+          },
+          "then": {
+            "properties": {
+              "invocation_source": {
+                "const": "gui"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.create"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "identity_source": {
+                    "const": "validated_account_container"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.repository.list",
+                  "cmd.forge.repository.refresh",
+                  "cmd.forge.repository.open_in_browser",
+                  "cmd.forge.mirror.connect",
+                  "cmd.forge.mirror.sync",
+                  "cmd.forge.mirror.inspect",
+                  "cmd.forge.mirror.detach",
+                  "cmd.forge.review.create",
+                  "cmd.forge.review.open",
+                  "cmd.forge.review.refresh",
+                  "cmd.forge.review.mark_ready",
+                  "cmd.forge.review.approve",
+                  "cmd.forge.review.request_changes",
+                  "cmd.forge.review.comment",
+                  "cmd.forge.review.merge",
+                  "cmd.forge.review.close",
+                  "cmd.forge.review.reopen",
+                  "cmd.forge.review.checkout",
+                  "cmd.forge.review.open_in_browser",
+                  "cmd.forge.review.thread.list",
+                  "cmd.forge.review.thread.reply",
+                  "cmd.forge.review.thread.resolve",
+                  "cmd.forge.review.thread.reopen",
+                  "cmd.forge.review.version.open",
+                  "cmd.forge.review.version.compare",
+                  "cmd.forge.webhook.delivery.list",
+                  "cmd.forge.webhook.redeliver",
+                  "cmd.forge.connection.reauthorize"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "identity_source": {
+                    "const": "validated_repository_binding"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "command_result": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "provider",
+        "repository_binding_ref",
+        "expected_binding_generation",
+        "outcome",
+        "target_ref",
+        "availability",
+        "error",
+        "observable_work_id",
+        "terminal_provider_result_ref",
+        "receipt_ref",
+        "event_refs",
+        "recovery_action_ids",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.command_result.v1"
+        },
+        "command_id": {
+          "$ref": "#/$defs/command_id"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automation_binding_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "expected_automation_binding_generation": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "blocked",
+            "degraded",
+            "failed",
+            "cancelled",
+            "recovery_required",
+            "effect_unknown"
+          ]
+        },
+        "target_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "availability": {
+          "$ref": "#/$defs/availability_payload"
+        },
+        "error": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/command_error_payload"
+            }
+          ]
+        },
+        "observable_work_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "terminal_provider_result_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "receipt_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "event_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer|cookie|private[_-]?key))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
+          "uniqueItems": true
+        },
+        "recovery_action_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^cmd\\.[a-z0-9_.]+$"
+          },
+          "uniqueItems": true
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "accepted",
+                  "succeeded",
+                  "degraded"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observable_work_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "terminal_provider_result_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "blocked",
+                  "failed",
+                  "cancelled",
+                  "recovery_required",
+                  "effect_unknown"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "$ref": "#/$defs/command_error_payload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "terminal_provider_result_ref": {
+                "type": "null"
+              },
+              "error": {
+                "properties": {
+                  "effect_state": {
+                    "const": "unknown"
+                  },
+                  "retry_disposition": {
+                    "const": "after_reconciliation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.forge.repository.fork",
+                  "cmd.forge.pipeline.approve",
+                  "cmd.forge.review.checks",
+                  "cmd.forge.repository.policy.preview",
+                  "cmd.forge.repository.policy.apply",
+                  "cmd.forge.runner.registration.apply",
+                  "cmd.forge.runner.remove",
+                  "cmd.forge.release.list",
+                  "cmd.forge.release.asset.download"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "event_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "command_error_record": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "command_id",
+        "command_instance_id",
+        "provider",
+        "repository_binding_ref",
+        "error",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.command_error.v1"
+        },
+        "command_id": {
+          "$ref": "#/$defs/command_id"
+        },
+        "command_instance_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "error": {
+          "$ref": "#/$defs/command_error_payload"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_availability": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "command_id",
+        "provider",
+        "repository_binding_ref",
+        "expected_binding_generation",
+        "requested_capability",
+        "availability",
+        "currentness",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.command_availability.v1"
+        },
+        "command_id": {
+          "$ref": "#/$defs/command_id"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requested_capability": {
+          "$ref": "#/$defs/capability_name"
+        },
+        "availability": {
+          "$ref": "#/$defs/availability_payload"
+        },
+        "currentness": {
+          "$ref": "#/$defs/command_currentness"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "official_page_handoff": {
+      "type": "object",
+      "required": [
+        "session_class",
+        "actor_class",
+        "foreground_human_confirmation_ref",
+        "allowed_origin_ref",
+        "official_page_route_ref"
+      ],
+      "properties": {
+        "session_class": {
+          "const": "allowlisted_official_page"
+        },
+        "actor_class": {
+          "const": "human"
+        },
+        "foreground_human_confirmation_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "allowed_origin_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "official_page_route_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      },
+      "additionalProperties": false
+    },
+    "browser_handoff": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/official_page_handoff"
+        },
+        {
+          "$ref": "#/$defs/protected_browser_handoff"
+        }
+      ]
+    },
+    "provider_matrix_profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile_id", "review_vocabulary", "automation_service", "authentication_methods", "git_transport", "transport_authority_independent_of_api", "capability_default", "operation_admission", "account_password_allowed", "ordinary_admin_scope_grant", "native_windows_origin_cli_support", "origin_windows_fallbacks", "implicit_wsl_enable", "provider_specific_facts"],
+      "properties": {
+        "profile_id": {"enum": ["github_cloud", "github_enterprise", "gitlab_saas", "gitlab_self_managed", "azure_devops_services", "azure_devops_server", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin_native", "cursor_origin_github_mirror", "generic_git"]},
+        "review_vocabulary": {"enum": ["Pull request", "Merge request", null]}, "automation_service": {"type": ["string", "null"]},
+        "authentication_methods": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["PM_direct_OAuth", "GitHub_App", "scoped_token", "enterprise_registered_OAuth_or_App", "registered_OAuth_PKCE", "instance_registered_OAuth_PKCE", "scoped_PAT", "Microsoft_Entra_OAuth", "approved_scoped_PAT_or_workload_identity", "supported_onprem_token_or_enterprise_auth", "OAuth", "scoped_API_token", "instance_supported_PAT_or_enterprise_auth", "instance_OAuth_PKCE_when_registered", "guided_scoped_PAT", "official_Origin_CLI_browser_auth", "verified_Git_credential_helper", "Origin_CLI_profile", "GitHub_API_profile_for_GitHub_owned_features", "scoped_HTTPS_Git_credentials", "scoped_SSH_agent"]}},
+        "git_transport": {"type": "array", "prefixItems": [{"const": "clone"}, {"const": "fetch"}, {"const": "push"}], "items": false}, "transport_authority_independent_of_api": {"const": true},
+        "capability_default": {"const": "unknown_until_supported_evidence"}, "operation_admission": {"const": "instance_version_tier_adapter_permissions_policy_freshness"}, "account_password_allowed": {"const": false}, "ordinary_admin_scope_grant": {"const": false},
+        "native_windows_origin_cli_support": {"enum": ["not_applicable", "unverified"]}, "origin_windows_fallbacks": {"type": "array", "uniqueItems": true, "items": {"enum": ["WSL", "remote_compatible_host"]}}, "implicit_wsl_enable": {"const": false},
+        "provider_specific_facts": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["github_direct_api_no_gh_requirement", "enterprise_instance_version_sso_policy", "gitlab_native_mr_pipeline_stage_job_trace_child_pipeline", "azure_repos_and_pipelines_separate", "azure_services_no_legacy_oauth", "azure_server_versioned_onprem_profile", "tfvc_not_git_or_jj", "bitbucket_cloud_current_oauth_or_scoped_api_token", "bitbucket_cloud_no_app_password_onboarding", "bitbucket_data_center_no_cloud_pipelines_inheritance", "forgejo_distinct_versioned_adapter", "gitea_distinct_versioned_adapter", "actions_enabled_runner_and_operations_probed_independently", "origin_authoritative_git_read_write", "origin_cli_profile_not_cursor_agent_auth", "origin_mirror_github_write_review_ci_authority", "generic_git_transport_only", "jj_never_cloud_hosting_account", "no_fabricated_pr_or_ci"]}}
+      },
+      "allOf": [
+        {"if": {"properties": {"profile_id": {"enum": ["gitlab_saas", "gitlab_self_managed"]}}, "required": ["profile_id"]}, "then": {"properties": {"review_vocabulary": {"const": "Merge request"}, "automation_service": {"type": "string", "pattern": "^GitLab Pipelines"}}}},
+        {"if": {"properties": {"profile_id": {"const": "bitbucket_data_center"}}, "required": ["profile_id"]}, "then": {"properties": {"automation_service": {"type": "null"}}}},
+        {"if": {"properties": {"profile_id": {"const": "generic_git"}}, "required": ["profile_id"]}, "then": {"properties": {"review_vocabulary": {"type": "null"}, "automation_service": {"type": "null"}}}},
+        {"if": {"properties": {"profile_id": {"const": "cursor_origin_native"}}, "required": ["profile_id"]}, "then": {"properties": {"native_windows_origin_cli_support": {"const": "unverified"}, "origin_windows_fallbacks": {"type": "array", "minItems": 2, "maxItems": 2, "allOf": [{"contains": {"const": "WSL"}}, {"contains": {"const": "remote_compatible_host"}}]}}}},
+        {"if": {"properties": {"profile_id": {"not": {"const": "cursor_origin_native"}}}, "required": ["profile_id"]}, "then": {"properties": {"native_windows_origin_cli_support": {"const": "not_applicable"}, "origin_windows_fallbacks": {"maxItems": 0}}}}
+      ]
+    },
+    "provider_capability_matrix": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "profile_generation", "local_vcs_profiles", "capability_dimensions", "profiles", "github_regression_inventory_ref", "no_github_compatible_boolean", "runtime_support_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.forge.provider_capability_matrix.v1"}, "profile_generation": {"type": "integer", "minimum": 0},
+        "local_vcs_profiles": {"type": "array", "prefixItems": [{"const": "git"}, {"const": "jj_git_colocated"}, {"const": "jj_git_noncolocated"}, {"const": "none"}], "items": false},
+        "capability_dimensions": {"type": "array", "prefixItems": [{"const": "git_transport"}, {"const": "repository_discovery"}, {"const": "repository_create"}, {"const": "review_read"}, {"const": "review_write"}, {"const": "review_approve_merge"}, {"const": "checks"}, {"const": "automation_definitions"}, {"const": "run_read"}, {"const": "log_read"}, {"const": "artifact_read"}, {"const": "dispatch_cancel_rerun"}, {"const": "webhook_poll"}, {"const": "branch_policy"}, {"const": "secrets_variables"}, {"const": "runner_management"}, {"const": "release_assets"}, {"const": "external_url_fallback"}], "items": false},
+        "profiles": {"type": "array", "minItems": 13, "maxItems": 13, "items": {"$ref": "#/$defs/provider_matrix_profile"}, "allOf": [
+          {"contains": {"properties": {"profile_id": {"const": "github_cloud"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "github_enterprise"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "gitlab_saas"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "gitlab_self_managed"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "azure_devops_services"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "azure_devops_server"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "bitbucket_cloud"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "bitbucket_data_center"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "forgejo"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "gitea"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "cursor_origin_native"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "cursor_origin_github_mirror"}}, "required": ["profile_id"]}}, {"contains": {"properties": {"profile_id": {"const": "generic_git"}}, "required": ["profile_id"]}}
+        ]},
+        "github_regression_inventory_ref": {"$ref": "#/$defs/non_secret_ref"}, "no_github_compatible_boolean": {"const": true}, "runtime_support_claimed": {"const": false}
+      }
+    },
+    "origin_cli_operation_profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "adapter_ref", "pinned_cli_version_ref", "operations", "json_output_required", "explicit_repository_head_base_target", "current_working_branch_defaults_allowed", "source_checkout_separate_from_read_only_review", "create_push_requires_publication_preview", "cursor_agent_auth_proves_origin_access", "mirror_github_authority_preserved", "duplicate_ci_dispatch_allowed", "github_workflow_files_are_tree_content", "runtime_support_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.forge.origin_cli_operation_profile.v1"}, "adapter_ref": {"$ref": "#/$defs/non_secret_ref"}, "pinned_cli_version_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "operations": {"type": "array", "uniqueItems": true, "minItems": 22, "items": {"enum": ["pr_list", "pr_view", "pr_create", "pr_diff", "pr_checks", "pr_edit", "pr_ready", "pr_draft", "review_approve", "review_request_changes", "review_comment", "review_thread_reply", "review_thread_resolve", "review_thread_reopen", "merge", "close", "reopen", "stale_version_refresh", "clone", "fetch", "pull", "push"]}, "allOf": [{"contains": {"const": "pr_list"}}, {"contains": {"const": "pr_create"}}, {"contains": {"const": "review_thread_resolve"}}, {"contains": {"const": "stale_version_refresh"}}, {"contains": {"const": "push"}}]},
+        "json_output_required": {"const": true}, "explicit_repository_head_base_target": {"const": true}, "current_working_branch_defaults_allowed": {"const": false}, "source_checkout_separate_from_read_only_review": {"const": true}, "create_push_requires_publication_preview": {"const": true}, "cursor_agent_auth_proves_origin_access": {"const": false}, "mirror_github_authority_preserved": {"const": true}, "duplicate_ci_dispatch_allowed": {"const": false}, "github_workflow_files_are_tree_content": {"const": true}, "runtime_support_claimed": {"const": false}
+      }
+    },
+    "hosted_administration_surface": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "provider", "instance_profile_ref", "field_schema_ref", "actions", "secret_submission", "runner_registration", "unsupported_action_fallback", "fake_success_allowed", "runtime_support_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.forge.hosted_administration_surface.v1"}, "provider": {"$ref": "#/$defs/provider"}, "instance_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "field_schema_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "actions": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["area", "read_state", "write_state", "permission_ref", "receipt_or_external_route_ref"], "properties": {"area": {"enum": ["repository_policy", "branch_policy", "ci_environments", "deployment_approvals", "secrets", "variables", "runners", "release_assets"]}, "read_state": {"enum": ["ready", "permission_denied", "unsupported", "external_only", "unknown"]}, "write_state": {"enum": ["ready", "permission_denied", "policy_blocked", "protected", "unsupported", "external_only", "unknown"]}, "permission_ref": {"$ref": "#/$defs/non_secret_ref"}, "receipt_or_external_route_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        "secret_submission": {"type": "object", "additionalProperties": false, "required": ["human_only_broker", "readback_allowed", "metadata_names_are_values"], "properties": {"human_only_broker": {"const": true}, "readback_allowed": {"const": false}, "metadata_names_are_values": {"const": false}}},
+        "runner_registration": {"type": "object", "additionalProperties": false, "required": ["explicit_execution_host_target", "explicit_consent", "enabled_by_ci_connection_alone"], "properties": {"explicit_execution_host_target": {"const": true}, "explicit_consent": {"const": true}, "enabled_by_ci_connection_alone": {"const": false}}},
+        "unsupported_action_fallback": {"const": "clearly_labeled_external_link"}, "fake_success_allowed": {"const": false}, "runtime_support_claimed": {"const": false}
+      }
+    }
+  }
+}

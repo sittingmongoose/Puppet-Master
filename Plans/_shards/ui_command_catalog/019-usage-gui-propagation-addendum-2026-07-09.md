@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8138-L8206
+Source lines: L8141-L8211
 
-Source SHA256: `f93f6e4068b3fbc187156116ccdcce168571267d7048d1a50ba2ce87d7de25a2`
+Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
 
 ---
 
@@ -20,14 +20,14 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Usage navigation commands normalize to object-first route/open identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target and OpenSubject plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. When usage_event_ref is present, route_target.object_kind is `usage_event` and route_target.object_id is the canonical usage event id. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize to `cmd.nav.open_usage_subject` or the thread Context Detail Pane command family before dispatch.
+  Usage navigation commands normalize to typed object-first route identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. The two pre-existing artifact wrapper rows retain their artifact route/open `OpenSubject` bridge and remain event-primary in this bounded recovery; they are not part of the PMConcept7 row enrichment. Event-primary `cmd.nav.open_usage_subject` callers use `usage_event` plus object_id from `usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt` plus object_id from `attempt_id`, repeats attempt_id at top level, retains usage_event_ref as correlation, and carries no OpenSubject. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize before dispatch.
 gui_related: true
 gui_classification_reason: Usage route/open commands determine user-visible navigation from chat, artifacts, ledger, and command palette surfaces.
 depends_on: [UCC-060, UCC-086, ACD-434, F3-418, UF-087, RAP-043, CV-316]
 unblocks: [WM-043]
 acceptance_criteria:
   - "`cmd.nav.open_usage_subject` and artifact Usage/Ledger commands preserve usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health when present."
-  - Payload validation fails when a Usage route with usage_event_ref does not normalize to route_target.object_kind = usage_event and a stable object_id.
+  - Payload validation is primary-selector aware: an event-primary cmd.nav.open_usage_subject route requires usage_event/usage_event_ref, while its PMConcept7 Ledger attempt-primary route requires usage_attempt/attempt_id and retains usage_event_ref as correlation; both cmd.nav selector branches require route_target and set open_subject_required false. The two pre-existing artifact wrapper rows remain event-primary, preserve their owner-declared artifact OpenSubject bridge, and do not admit the attempt-primary selector in this bounded recovery.
   - Legacy callers citing `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` normalize before dispatch and never emit those IDs as canonical production command_id values.
   - "`cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, and `cmd.chat.close_thread_context_details` remain the thread Context Detail Pane commands; they are not aliases for app-wide Usage."
   - Timestamp, run-only, thread-only, or tier-only payloads may narrow filters but cannot satisfy the primary Usage route identity when usage_event_ref is available.
@@ -66,12 +66,14 @@ preserved_exact_tokens:
   - cmd.chat.close_thread_usage
   - route_target.object_kind
   - usage_event
-  - OpenSubject
+  - 'open_subject_required: false'
+  - 'open_subject_required: true'
   - raw_payload_ref
 negative_constraints:
   - Do not register retired chat usage IDs as canonical production UICommands.
   - Do not route Usage by timestamp, run-only, thread-only, or tier-only filters when usage_event_ref is available.
   - Do not drop provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, or raw_payload_ref during artifact/usage drill-through.
+  - Do not attach OpenSubject to either cmd.nav.open_usage_subject selector branch or remove the pre-existing artifact source-realization bridge from cmd.artifacts.show_in_usage/cmd.artifacts.show_in_ledger without a separately owned migration.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md

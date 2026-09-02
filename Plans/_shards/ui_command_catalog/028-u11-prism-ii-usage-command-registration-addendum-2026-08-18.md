@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11158-L11265
+Source lines: L11163-L11272
 
-Source SHA256: `f93f6e4068b3fbc187156116ccdcce168571267d7048d1a50ba2ce87d7de25a2`
+Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
 
 ---
 
@@ -36,15 +36,15 @@ in two of its own rows. Hundreds of certified catalog rows already carry three o
 
 | Token | Disposition | Canonical target and notes |
 |---|---|---|
-| `cmd.provider.usage.open_management` | rejected candidate; not registered | `cmd.nav.open_usage_subject` already owns usage-subject opens per the `Plans/DRY_Rules.md` normalization boundary, so a second opener duplicates an existing canonical command. The token is recorded in `Plans/Wiring_Matrix.production.exclusions.json` alongside the other adjudicated non-commands and must not receive a primary production wiring row. |
+| `cmd.provider.usage.open_management` | rejected candidate; not registered and no alias | Provider/account/panel aggregate details are local projections and dispatch nothing. Provider setup or management opens the owning Settings destination through `cmd.settings.bloom.open`; this rejected token does not normalize to `cmd.nav.open_usage_subject` or any other command. The token is recorded in `Plans/Wiring_Matrix.production.exclusions.json` and must receive neither a primary production wiring row nor an alias. |
 
 ### Settings destination identity
 
 Usage never owns a Settings value. A Usage affordance that would change one deep-links to the owning
 Settings surface through the existing `cmd.settings.bloom.open` row, whose canonical envelope is F3-434's
 `open(category, focusSettingId)` and whose certified production row is `catalog.settings_bloom_open`. The
-category is one of the twelve in `Plans/settings_inventory.json` and the focus target is a real setting id
-from the same inventory. The concept's earlier destination envelope, and its manager, section, and
+provider setup/management destination uses category `ai` and focus target
+`ai.accounts.provider-connections` from `Plans/settings_inventory.json`. The concept's earlier destination envelope, and its manager, section, and
 focus-reason vocabulary, were unregistered inventions and carry no catalog standing.
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/FinalGUISpec.md
@@ -62,11 +62,12 @@ canonical_text: >-
   receipt or projection effect that carries the missing-event-registration disposition while the Event
   Authority denominator remains UNKNOWN_OPEN. Its dotted shape is legal under UCC-006, which sets no segment
   cap and is machine-enforced by an unbounded dotted pattern. cmd.provider.usage.open_management is
-  adjudicated as a rejected candidate rather than an alias because cmd.nav.open_usage_subject already owns
-  usage-subject opens; it receives no primary row and is recorded as an excluded token. Usage-initiated
-  Settings navigation registers no new command: it reuses cmd.settings.bloom.open with a real Settings
-  category and a real setting id from the canonical Settings inventory, and the concept's earlier manager,
-  section, and focus-reason destination vocabulary is retired as unregistered.
+  adjudicated as a rejected candidate with no alias: provider, account, and presentation-panel aggregate
+  details are local projections that dispatch no UICommand, while provider setup or management reuses
+  cmd.settings.bloom.open. It receives no primary row and is recorded as an excluded token. Usage-initiated
+  Settings navigation registers no new command: it reuses cmd.settings.bloom.open with category ai and the
+  ai.accounts.provider-connections setting id from the canonical Settings inventory, and the concept's
+  earlier manager, section, and focus-reason destination vocabulary is retired as unregistered.
 gui_related: true
 gui_classification_reason: Catalog metadata governs the visible label, availability, disabled announcement, handler dispatch, and accessible activation of the Usage forecast affordance and the Usage-to-Settings deep link.
 depends_on: [UCC-006, UCC-109, UCC-116, CS-067, UF-092]
@@ -74,8 +75,8 @@ unblocks: []
 acceptance_criteria:
   - cmd.usage.forecast.request has typed request and result references, a state selector, a closed disabled-reason set, a sole handler, and normalization metadata, and is the only new canonical id in this addendum.
   - Its effect is receipt or projection only and carries the missing-event-registration disposition; no event family is named while the Event Authority denominator remains UNKNOWN_OPEN.
-  - cmd.provider.usage.open_management receives no primary catalog row and is recorded as an excluded token whose canonical target is cmd.nav.open_usage_subject.
-  - Every Usage-initiated Settings destination resolves to cmd.settings.bloom.open with a category and setting id that exist in the canonical Settings inventory.
+  - Provider/account/presentation-panel aggregate details remain local and dispatch no UICommand; cmd.provider.usage.open_management receives no primary catalog row and no alias, and is recorded only as an excluded token.
+  - Every provider setup or management destination resolves to cmd.settings.bloom.open with category ai and focusSettingId ai.accounts.provider-connections from the canonical Settings inventory.
   - The retired destination vocabulary is recorded as unregistered and never appears as catalog metadata.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -108,6 +109,7 @@ preserved_exact_tokens:
   - UNKNOWN_OPEN
 negative_constraints:
   - Do not give the rejected candidate a primary catalog or production wiring row.
+  - Do not alias or normalize cmd.provider.usage.open_management to cmd.nav.open_usage_subject or any other command.
   - Do not name or emit an event family for the new command while the Event Authority denominator remains UNKNOWN_OPEN.
   - Do not mint a Usage-specific Settings navigation command; reuse the canonical Settings deep-link identity.
   - Do not restore the retired manager, section, or focus-reason destination vocabulary as catalog metadata.

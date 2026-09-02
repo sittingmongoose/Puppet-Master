@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4729-L4802
+Source lines: L4729-L4806
 
-Source SHA256: `f1c8531358918d5788c18d3a0f0c407701b78f97c679da3fbbaa5dbbf2cd9aa9`
+Source SHA256: `94877149d1b497059f7b921e13eb98409c6de5f1862ae5e6bc7bbcf566b4988a`
 
 ---
 
@@ -33,9 +33,12 @@ canonical_text: >-
   command: disclosure level, page scope, date range, and per-widget filters are view state and dispatch no
   command; a page-scope pick is never an account switch and must not dispatch the account profile selection
   command; every persisted widget layout mutation dispatches the existing widget command family rather than
-  writing layout storage directly; a usage-subject open dispatches the existing usage-subject navigation
-  command; and a Settings change dispatches cmd.settings.bloom.open against the canonical Settings
-  destination identity.
+  writing layout storage directly; only object-backed Usage/Ledger drill-through carrying its stable selector
+  dispatches the existing usage-subject navigation command. Event-primary callers use usage_event/usage_event_ref;
+  a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains the event, provider, account,
+  and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
+  dispatch no command; and a Settings change dispatches cmd.settings.bloom.open against the canonical
+  Settings destination identity.
 gui_related: true
 gui_classification_reason: The family decides which Usage affordances dispatch a command, what their disabled and busy announcements say, and which affordances are view-local.
 depends_on: [CS-066, UF-092]
@@ -44,7 +47,7 @@ acceptance_criteria:
   - cmd.usage.forecast.request carries a typed request and result reference, a state selector, a closed disabled-reason set, one sole handler, CAS and idempotency, and restart-safe replay under the CS-066 envelope.
   - Its effect is receipt or projection only and carries the missing-event-registration disposition; it names no event family while the Event Authority denominator remains UNKNOWN_OPEN.
   - A forecast result is a labelled projection and is never presented as a quota run-out date or a countdown.
-  - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command.
+  - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command; event-primary Usage callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate provider/account/panel cards stay local with no command, receipt, or event.
   - A persisted Usage widget layout mutation dispatches the existing widget command family with a layout revision expectation and an idempotency key rather than writing layout storage directly.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -77,6 +80,7 @@ negative_constraints:
   - Do not present a forecast as a quota run-out date or a countdown.
   - Do not promote a view-local disclosure, scope, range, or filter selection into a command.
   - Do not dispatch the account profile selection command for a read-only view-scope change.
+  - Do not dispatch cmd.nav.open_usage_subject without the stable selector required by its event-primary or attempt-primary branch, attach OpenSubject to either cmd.nav selector branch, or promote a current PMConcept7 aggregate card presentation id into route identity; the pre-existing artifact route/open bridge remains separately owned.
 owner_hints:
   - Plans/Commands_System.md
   - Plans/UI_Command_Catalog.md
