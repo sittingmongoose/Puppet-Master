@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.file_manager_event.file_exported.schema.v1",
+  "$comment": "Static payload schema only. Runtime must prove destination authorization and a completed copy-out while project-relative identity remains unchanged. Destination_path_ref is opaque and never a local path. No append or dispatch authority is granted.",
+  "title": "file.exported payload",
+  "description": "Closed project-scoped receipt payload for Save Local Copy of one file to a user-authorized destination without persisting paths or bytes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "project_id", "node_kind", "operation_id",
+    "source_path_ref", "destination_path_ref", "affected_path_refs", "source_node_ref",
+    "destination_authorization_ref", "path_snapshot_revision", "export_mode",
+    "project_identity_unchanged", "operation_status", "origin", "handler_target",
+    "command_id", "correlation_id", "receipt_ref", "evidence_refs", "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.file_manager_event.file_exported.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/safe_id"},
+    "node_kind": {"const": "file"},
+    "operation_id": {"$ref": "#/$defs/safe_id"},
+    "source_path_ref": {"$ref": "#/$defs/path_ref"},
+    "destination_path_ref": {"$ref": "#/$defs/path_ref"},
+    "affected_path_refs": {"$ref": "#/$defs/path_ref_array"},
+    "source_node_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "destination_authorization_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "path_snapshot_revision": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "export_mode": {"const": "save_local_copy"},
+    "project_identity_unchanged": {"const": true},
+    "operation_status": {"const": "completed"},
+    "filesafe_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "origin": {"$ref": "#/$defs/origin"},
+    "handler_target": {"const": "handlers::file::save_local_copy"},
+    "command_id": {"const": "cmd.file.save_local_copy"},
+    "correlation_id": {"$ref": "#/$defs/safe_id"},
+    "receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "evidence_refs": {"$ref": "#/$defs/non_empty_ref_array"},
+    "ts": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "safe_id": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "path_ref": {"type": "string", "minLength": 20, "maxLength": 220, "pattern": "^pm-path-ref:v1:[a-z][a-z0-9_-]{0,31}:[A-Za-z0-9][A-Za-z0-9._-]*$", "not": {"pattern": "\\.\\."}},
+    "path_ref_array": {"type": "array", "items": {"$ref": "#/$defs/path_ref"}, "minItems": 1, "maxItems": 256, "uniqueItems": true},
+    "non_empty_ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "minItems": 1, "maxItems": 64, "uniqueItems": true},
+    "origin": {"enum": ["file_manager", "editor", "command_palette", "api"]}
+  }
+}

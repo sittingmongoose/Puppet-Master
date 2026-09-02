@@ -382,7 +382,7 @@ The following rows are required for the promoted Section 15 feature set and the 
 | Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
 | Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
 | Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
-| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; emit started/completed/failed events and return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed status |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; project the receipt/result as started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed; no `context.compaction.*` EventRecord family is currently registered |
 | Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
 | Goal status update icon, `/goal again`, or natural-language update request | `cmd.chat.goal.update` | Assistant Chat status/menu / composer / slash-command dispatcher | Goal Runtime controller | Submit an active-goal update through the Goal Runtime event envelope without inventing concrete payload schemas in Wiring_Matrix |
 | Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
@@ -1749,7 +1749,7 @@ plan_unit_id: WM-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, context.compaction.failed or equivalent visible degraded-state wiring, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
+canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered context.compaction.* EventRecord, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible project/thread command wiring rows.'
 split_recommended: false
@@ -1798,10 +1798,12 @@ preserved_exact_tokens:
 - 'project'
 - 'shell'
 - 'history'
-negative_constraints: []
+negative_constraints:
+- The preserved context.compaction.failed token is historical source lineage and must not be emitted or registered as an EventRecord family.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The former context.compaction.failed event wording is retired; the production row uses command result/receipt projection and an empty expected_event_types list.
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/assistant-chat-design.md'
@@ -3256,18 +3258,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Notifications and Sounds wiring maps `cmd.settings.open_notifications` to Settings > General > Notifications & Sounds;
-  destination create/update/delete/toggle/test commands to notification destination storage, credential custody, live-send
-  authority, delivery service, and receipt projection; mapping/override commands to global/project override records; and
-  sound preview/upload/pack import/asset delete/asset restore/asset export/mapping set commands to sound asset validation,
-  manifest storage, PM-managed blobs, and local-only preview. Destination create/update wiring validates provider-specific
-  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram profile payloads against CV-298 before writing non-secret
-  settings and credential refs. This PlanUnit records wiring obligations only and does not generate wiring JSON.
+  Notifications and Sounds wiring opens the exact Settings target through `cmd.settings.open`; the predecessor
+  `cmd.settings.open_notifications` spelling remains searchable source lineage only and is neither a production wiring
+  row nor a compatibility alias. Destination create/update/delete/toggle/test commands map to notification destination
+  storage, credential custody, live-send authority, delivery service, and receipt projection; mapping/override commands
+  map to global/project override records; and sound preview/upload/pack import/asset delete/asset restore/asset export/
+  mapping set commands map to sound asset validation, manifest storage, PM-managed blobs, and local-only preview.
+  Destination create/update wiring validates provider-specific Slack, Discord, generic webhook, ntfy, Pushover, and
+  Telegram profile payloads against CV-298 before writing non-secret settings and credential refs. This PlanUnit records
+  wiring obligations only and does not generate wiring JSON.
 gui_related: true
 gui_classification_reason: Defines user-visible settings command wiring and command-to-surface behavior.
 depends_on: [UCC-103, F3-405, CV-298, SP-222, PS-124]
 unblocks: [ATS-016]
 acceptance_criteria:
+  - Settings entry uses `cmd.settings.open`; no production row or compatibility alias exists for `cmd.settings.open_notifications`.
   - Destination test-send wiring requires explicit user action, enabled destination, masking, rate limit, and receipt recording.
   - Provider-specific destination payloads are validated before storage or live-send test wiring can proceed.
   - Sound preview wiring stays local-only and cannot send remote notifications.
@@ -3293,7 +3298,7 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
 source_atom_ids: [atom-0064, atom-0065, atom-0068]
 preserved_exact_tokens:
-  - "cmd.settings.open_notifications"
+  - "cmd.settings.open"
   - "cmd.notifications.destination.create"
   - "cmd.notifications.destination.update"
   - "cmd.notifications.destination.delete"
@@ -3308,6 +3313,8 @@ preserved_exact_tokens:
   - "cmd.sound.asset.restore"
   - "cmd.sound.asset.export"
   - "cmd.sound.mapping.set"
+stale_retired_dispositions:
+  - "cmd.settings.open_notifications is source-lineage-only; it is neither a production row nor a compatibility alias."
 negative_constraints:
   - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
   - Do not wire local preview through remote delivery.
@@ -3331,15 +3338,15 @@ unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Production wiring for Usage route/open commands consumes UI_Command_Catalog alias metadata. `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are retired compatibility aliases and must not appear as canonical production UICommand rows. Wiring evidence for `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` must prove route_open effect_kind, route_target.object_kind = usage_event when usage_event_ref is present, OpenSubject preservation, and correlation passthrough for usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where present.
+  Production wiring for Usage route/open commands consumes UI_Command_Catalog alias metadata. `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are retired compatibility aliases and must not appear as canonical production UICommand rows. Typed selector proof is caller-aware: the pre-existing `cmd.artifacts.show_in_usage` and `cmd.artifacts.show_in_ledger` rows remain event-primary with usage_event/usage_event_ref and retain their artifact route/open OpenSubject bridge; event-primary `cmd.nav.open_usage_subject` uses the same event selector without OpenSubject; and a PMConcept7 Ledger attempt row uses `cmd.nav.open_usage_subject` with usage_attempt/attempt_id, retains usage_event_ref as correlation, and carries no OpenSubject. Wiring evidence must prove route_open effect_kind, the command-appropriate selector/OpenSubject disposition, and correlation passthrough for UsageRecord/provider/runtime fields. Current PMConcept7 aggregate provider/account/panel cards are local inspectors with no command, receipt, or event.
 gui_related: true
 gui_classification_reason: Wiring determines whether visible Usage navigation controls dispatch canonical commands.
 depends_on: [WM-034, WM-042, UCC-109, CV-316]
 unblocks: []
 acceptance_criteria:
   - validate-wiring-matrix fails if production wiring registers `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical command rows instead of compatibility aliases or exclusions.
-  - Usage route/open wiring entries declare effect_kind route_open or mixed with route_open detail, not generic receipt-only success.
-  - Wiring fixtures prove Usage correlation refs survive dispatch and route restoration without being replaced by timestamp/run/thread/tier filters.
+  - Usage route/open wiring entries declare effect_kind route_open or mixed with route_open detail, not generic receipt-only success; event-primary dispatch proves usage_event/usage_event_ref, while a PMConcept7 Ledger attempt dispatch proves usage_attempt/attempt_id plus usage_event_ref correlation. The two cmd.nav.open_usage_subject selector branches carry no OpenSubject; the two pre-existing artifact rows retain their artifact OpenSubject bridge and remain event-primary; all preserve applicable provider/account/runtime refs.
+  - Wiring fixtures prove Usage correlation refs survive dispatch and route restoration without being replaced by timestamp/run/thread/tier filters, while current PMConcept7 aggregate provider/account/panel cards remain local inspectors with no command, receipt, event, route object id, or invented route kind.
   - Wiring evidence distinguishes thread Context Detail Pane commands from app-wide Usage route/open commands.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -3379,6 +3386,7 @@ negative_constraints:
   - Do not certify retired chat usage IDs as live production UICommands.
   - Do not let generic family-root exclusions hide concrete stale command rows.
   - Do not accept receipt-only wiring for a command whose effect is route/open navigation.
+  - Do not route without the stable selector required by the chosen branch, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, remove the pre-existing artifact OpenSubject bridge without a separately owned migration, substitute correlation identity for the selected object_id, or invent an aggregate-card route kind.
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/UI_Command_Catalog.md
@@ -3454,9 +3462,9 @@ owner_hints:
 
 ## Ledger Compile Addendum - pldg-20260701-001-feature-intake
 
-This addendum compiles first-run onboarding route wiring obligations from bootstrap ledger `pldg-20260701-001-feature-intake` into Wiring_Matrix ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, wiring JSON, generated governance artifacts, or a governance seal.
+This addendum preserves the first-run/provider-command proposal from bootstrap ledger `pldg-20260701-001-feature-intake` as source lineage and reconciles WM-041 to the current Product Onboarding and Guided Tour owner contracts. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, wiring JSON, generated governance artifacts, or a governance seal.
 
-### WM-041 - First-Run Onboarding CTA And Route Wiring
+### WM-041 - Product Onboarding And Guided Tour Typed Local Action And Owner-Route Wiring
 
 ```yaml
 plan_unit_id: WM-041
@@ -3464,37 +3472,104 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  First-run onboarding wiring maps the visible wizard CTAs to the UI_Command_Catalog onboarding command family and
-  owner-doc consumers. `Set up a paid provider`, `Use this provider`, `Sign in`, `Set up provider`, and `Reconnect`
-  open or resume provider/account setup with return context. `Skip for now` writes or references limited
-  `onboarding_setup_state` and opens Planning Wizard in limited setup state without marking Doctor/Health Ready.
-  `Review Free Models`, `Maybe later`, and `Continue to Planning Wizard` preserve the paid-provider-before-Free-Models
-  sequence and saved top-10 order. `Open Planning Wizard` routes to Planning Wizard as the first full app page after
-  setup or skip. The onboarding Teacher copy routes through Assistant Chat/Teacher contracts rather than a separate
-  Teacher surface. Health/Doctor `Set up provider` reuses the same provider setup route and return context. This PlanUnit
-  records wiring obligations only and does not generate wiring JSON.
+  Current Product Onboarding wiring binds the exact nine-stage `welcome -> simple_path -> first_project ->
+  source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan -> automatic_preparation ->
+  ready` main path and exact six-stage `welcome -> simple_path -> remote_access_setup -> review_setup_plan ->
+  automatic_preparation -> ready` connect-existing shortcut to exactly thirteen typed local actions:
+  `ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`,
+  `ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`,
+  `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`. These
+  actions transition or project local Product Onboarding state; they are not UICommands and receive no command-catalog
+  row, semantic command handler, generic Onboarding mutation handler, or EventRecord. They use the closed
+  pm.product_onboarding.action_request.v1 -> pm.product_onboarding.action_result.v1 local contract. Every request has
+  required closed, normalized, secret-free local_context fields; arbitrary/raw payload fields, additional keys, and
+  secret-bearing values are rejected. Exact intent/scope/choice/branch combinations distinguish setup/project disclosure
+  from branch-local more_ways updates and whole-session Skip from Project/Remote-Access optional-scope Skip. When a selected branch needs owner
+  work, its local draft queues only the typed owner route and intent. No network probe, command, handler, or owner
+  mutation is reachable until the person confirms the current `review_setup_plan`. That confirmation binds
+  `path_kind`, `queued_setup_plan_ref`, `queued_setup_plan_revision`, `reviewed_setup_plan_revision`,
+  `review_confirmation=person_confirmed_reviewed_plan`, `approved_setup_plan_sha256`, revision, and continuation
+  generation; only a matching `automatic_preparation_currentness_ref` admits the existing canonical command to that
+  owner's sole handler once. Current owner ObservableWork/results/receipts reverse-project through the exact reviewed
+  revision and plan hash; terminal success may advance without a second confirmation, while stale, mismatched, blocked,
+  failed, cancelled, or recovery-required results dispatch nothing new and cannot replace the last accepted projection.
+  Session/continuation wiring preserves independent `scm_backend_selection` for local Git/Jujutsu Safe History and
+  `forge_provider_selection` for an optional online copy. Legacy migration supplies exact `mapped_stage_counts` and
+  `mapped_path_counts`, maps unresolved work to unconfirmed Review, and never replays owner work.
+
+  Guided Tour wiring is a separate ephemeral three-scene film in exact `usage -> planning_wizard -> chat_teacher` order
+  over the real mounted application. Its exact ten typed local actions are `ui.guided_tour.start`,
+  `ui.guided_tour.next`, `ui.guided_tour.back`, `ui.guided_tour.pause`, `ui.guided_tour.resume`,
+  `ui.guided_tour.skip`, `ui.guided_tour.focus_route`, `ui.guided_tour.toggle_eli5`, `ui.guided_tour.finish`, and
+  `ui.guided_tour.replay`; they are not UICommands, owner mutations, EventRecords, or persistence authority. Usage Watch
+  observes the same real card hide and return through widget-owner results, and Usage Try advances only from that same
+  card's exact mounted Options control. Planning advances only from the exact mounted intent-chip result. Chat is placed
+  at the far right through the layout owner, then advances only through the real guide selector, `Teacher` selection,
+  real composer send, and deterministic local reply in that conversation. ELI5 stays at the top beside Pause and Skip;
+  Reduced Motion is read from and changed through Settings, never a Tour-owned toggle. Skip reverse-routes restoration of
+  the captured pre-tour layout, composer placeholder, and focus through their existing owners; Finish retains Chat at the
+  far right without a keep-layout action. Generic Next, narration, timers, or look-alike controls cannot fabricate a
+  performed checkpoint. Guided Tour state is not persisted, and static/schema/browser evidence proves no native handler.
+
+  The eleven predecessor
+  `cmd.onboarding.*` spellings listed below and their provider-first/Free-Models CTA choreography remain searchable source
+  lineage only; none is a production wiring row or compatibility alias. The separate packet candidates
+  cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish,
+  cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are source-lineage candidate tokens only and
+  are rejected as commands, aliases, and handlers because typed local ui.onboarding.* actions own those semantics. This
+  PlanUnit records wiring obligations only and does not generate wiring JSON.
 gui_related: true
-gui_classification_reason: Defines user-visible CTA routing, first-run step transitions, and cross-surface GUI route behavior.
-depends_on: [F3-411, UCC-106, CV-305, MA-066, MS-122, ACD-431, PWIZ-017]
-unblocks: [ATS-020]
+gui_classification_reason: Defines user-visible nine-/six-stage Product Onboarding and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520]
+unblocks: []
 acceptance_criteria:
-  - Every accepted first-run CTA maps to a cataloged UI command or existing Teacher/Planning Wizard route.
-  - Skip routing preserves limited setup state and cannot produce a false-ready Health state.
-  - Provider setup return context routes back to onboarding, Planning Wizard limited state, Health, or the originating Free Models row/list as appropriate.
-  - Free Models review/defer wiring occurs only after the paid-provider prompt.
-  - Wiring consumes owner docs rather than redefining provider auth, model readiness, Teacher behavior, or Planning Wizard state.
+  - The main path is exactly `welcome`, `simple_path`, `first_project`, `source_control_setup`, `server_storage_client`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready`; the connect-existing shortcut is exactly `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready`, omitting rather than executing the three main-path-only stages.
+  - Back consumes the exact durable path history: connect-existing `remote_access_setup` returns to `simple_path`, while main-path `remote_access_setup` returns to `server_storage_client`; no skipped shortcut stage is synthesized into reverse wiring.
+  - The exact current action set contains the thirteen named `ui.onboarding.*` IDs; every authored control emits one typed local action and no action is registered as a UICommand, domain event, or production wiring row. `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior.
+  - Requests and results validate against the closed action schema; applied, disabled, and rejected are distinct, and disabled/rejected results dispatch no owner work, write no session/continuation, carry no production receipt, and expose exact reasons.
+  - Every request carries the exact required closed local_context fields intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition. `review_confirmation` is the sole additionally admitted field and is required only for the schema-gated current Review/Automatic-Preparation owner-flow cases; missing gated proof, any other additional/arbitrary/raw field, or secret-bearing context fails closed.
+  - more_ways uses toggle_setup_options plus setup_options/project_options and a matching choice for stage disclosure, or update_branch_state plus non-null canonical branch_kind and choice=null for branch-local updates; the variants cannot normalize into each other.
+  - Skip uses skip_product_onboarding/product_onboarding/choice=null with session_skipped and skipped status, or skip_optional_scope with matching Project/Remote-Access choice/scope/branch and optional_scope_skipped while the session remains active.
+  - Defer durably writes exact path/stage/setup-mode/local-backend/forge/queued-plan/review/branch/history/revision/continuation/initiating-Client/focus-return state before dismissal; Close is non-completing; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and has no owner command.
+  - Every inline SVG `?` choice-help control reuses `ui.onboarding.open_details` with `intent=toggle_choice_explanation`, exact current-stage scope, a stable help-topic `selection_ref`, and exact expanded state; it is same-stage, non-persistent, keyboard reachable, accessibility-linked, and owner-route-free.
+  - Before person confirmation of the current Review revision, all choices are local draft writes or cached reads and reverse wiring exposes no network probe, owner route, command, handler, mutation, or production receipt.
+  - Person confirmation requires matching `path_kind`, `queued_setup_plan_ref`, queued/reviewed revision, exact approved-plan SHA-256, session revision, and continuation generation. Automatic Preparation additionally requires the matching currentness ref; stale, unconfirmed, expanded, revision-mismatched, hash-mismatched, path-mismatched, or currentness-mismatched plans dispatch nothing.
+  - Owner work uses the selected owner's existing canonical command and sole handler; each unchanged reviewed operation dispatches at most once, current terminal owner results reverse-project through ObservableWork/receipt refs, and retry/reload/resume observes the existing dedupe identity instead of launching a duplicate.
+  - Confirmed intents route only to existing Project, Git/Jujutsu/forge, Server/Storage/Client, Remote Access, backup/restore, provider, authentication, Settings, widget, layout, Planning, or Assistant Chat owners as applicable; Wiring Matrix creates no parallel owner or generic mutation handler.
+  - A new local Project routes through `cmd.project.new_local {init_git:true}`; `cmd.source_control.repository.init` has no request, alias, handler, or visible route.
+  - Safe History backend selection (`git|jujutsu|null`) is local and independent from optional forge selection (`github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|cursor_origin|none|null`). Git and Jujutsu have no service accounts; account connection/sign-in or verified official signup-page handoff, repository list/create, backend-appropriate clone/publish, and Project registration follow their existing owners and exact terminal results.
+  - First Project, Source Control, Server/Storage/Client, and Remote Access remain distinct progressive stages and owner routes; protected AuthBrowserSession content and credentials never enter Onboarding state, transport, or evidence.
+  - Legacy provider-first/four-screen, predecessor-five-stage, and superseded seven-stage rows map once to the first unresolved current stage, force `review_confirmation=unconfirmed`, report exact `mapped_stage_counts` and `mapped_path_counts`, quarantine secret-bearing rows, and never replay owner work.
+  - Skip and Close preserve truthful incomplete state, and arrival at `ready` never marks skipped Server, provider, Project, restore, Doctor, or other owner work Ready.
+  - Guided Tour uses exactly the three scenes `usage`, `planning_wizard`, `chat_teacher` and exactly the ten named `ui.guided_tour.*` actions; those actions are typed local transport only, the session is ephemeral/nonpersisted, and no Tour action is a command, owner handler, or EventRecord.
+  - The `ui.guided_tour.focus_route` action changes only the mounted application's visible route and focus; it cannot satisfy an owner-observed performed checkpoint.
+  - Tour Next and Back may reverse-route watch-only narration with exact scene-heading focus, but neither can satisfy Usage Options, Planning intent, Teacher selection, composer send, deterministic reply, or any other required performed checkpoint.
+  - Usage Watch observes one real card's owner-confirmed hide and return, and Usage Try advances only from that same card's exact mounted Options control; move, resize, configure, and focus are explanation text rather than separate performed checkpoints.
+  - Planning advances only from the exact mounted Planning intent-chip handler result. Chat is owner-placed at the far right and advances only through the real guide selector, `Teacher`, a real composer send, and a deterministic local reply in the same conversation.
+  - ELI5 is at the top beside Pause and Skip. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
+  - Skip restores the exact captured pre-tour layout, composer placeholder, and focus through existing owners; Finish keeps Chat at the far right. Neither behavior introduces `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or a generic owner mutation.
+  - Retired five-chapter ordering and `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` have no current Tour control, request, alias, handler, or production row; similarly named canonical layout or Settings commands remain available to unrelated non-Tour consumers under their existing owners.
+  - Disabled/rejected Tour actions change no scene or owner state. Stale owner observations, missing exact mounted targets, restoration failure, layout failure, or deterministic-reply failure pause or fail closed with a named recovery reason and never synthesize completion.
+  - The eleven listed `cmd.onboarding.*` spellings remain source-lineage-only and appear as neither production wiring rows nor compatibility aliases.
+  - The eight packet candidate `cmd.onboarding.*` tokens remain source-lineage-only and are rejected as commands, aliases, handlers, and production rows.
+  - The provider-first, paid-provider-before-Free-Models, direct limited-Planning-Wizard, and Teacher-copy proposal is predecessor lineage rather than current stage, route, or command authority.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future first-run onboarding command wiring fixture
-  - future Health provider-setup return-route fixture
-risk_class: onboarding_wiring_gap
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - Plans/guided_tour_contracts.schema.json
+  - Plans/guided_tour_contract_fixtures.json
+  - Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
+  - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
+  - future native Product Onboarding and Guided Tour local-action, owner-route, reverse-wiring, accessibility, and visual fixtures
+risk_class: onboarding_fake_command_or_parallel_owner_wiring
 reasoning_tier: high
-context_scope: first_run_onboarding_wiring
+context_scope: product_onboarding_and_guided_tour_wiring
 implementation_surfaces:
   - Plans/Wiring_Matrix.md
-  - future first-run onboarding route wiring
+  - future Product Onboarding and Guided Tour local-action and owner-route bindings
 node_compile_hint:
-  mode: first_run_onboarding_wiring
+  mode: product_onboarding_typed_local_action_wiring
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -3519,6 +3594,59 @@ source_lineage:
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:
+  - "welcome"
+  - "simple_path"
+  - "first_project"
+  - "source_control_setup"
+  - "server_storage_client"
+  - "remote_access_setup"
+  - "review_setup_plan"
+  - "automatic_preparation"
+  - "ready"
+  - "path_kind"
+  - "queued_setup_plan_ref"
+  - "queued_setup_plan_revision"
+  - "reviewed_setup_plan_revision"
+  - "review_confirmation"
+  - "approved_setup_plan_sha256"
+  - "automatic_preparation_currentness_ref"
+  - "mapped_stage_counts"
+  - "mapped_path_counts"
+  - "scm_backend_selection"
+  - "forge_provider_selection"
+  - "ui.onboarding.start"
+  - "ui.onboarding.next"
+  - "ui.onboarding.back"
+  - "ui.onboarding.close"
+  - "ui.onboarding.skip"
+  - "ui.onboarding.defer"
+  - "ui.onboarding.open_details"
+  - "ui.onboarding.more_ways"
+  - "ui.onboarding.choose_simple_path"
+  - "ui.onboarding.open_owner_flow"
+  - "ui.onboarding.run_automatic_preparation"
+  - "ui.onboarding.choose_first_project"
+  - "ui.onboarding.finish"
+  - "usage"
+  - "planning_wizard"
+  - "chat_teacher"
+  - "ui.guided_tour.start"
+  - "ui.guided_tour.next"
+  - "ui.guided_tour.back"
+  - "ui.guided_tour.pause"
+  - "ui.guided_tour.resume"
+  - "ui.guided_tour.skip"
+  - "ui.guided_tour.focus_route"
+  - "ui.guided_tour.toggle_eli5"
+  - "ui.guided_tour.finish"
+  - "ui.guided_tour.replay"
+  - "local_context"
+  - "skip_product_onboarding"
+  - "skip_optional_scope"
+  - "toggle_setup_options"
+  - "update_branch_state"
+  - "session_skipped"
+  - "optional_scope_skipped"
   - "Set up a paid provider"
   - "Use this provider"
   - "Sign in"
@@ -3532,12 +3660,45 @@ preserved_exact_tokens:
   - "onboarding_setup_state"
   - "Provider setup is not finished"
   - "Teacher"
+  - "cmd.onboarding.back"
+  - "cmd.onboarding.cancel"
+  - "cmd.onboarding.continue"
+  - "cmd.onboarding.defer"
+  - "cmd.onboarding.finish"
+  - "cmd.onboarding.open_details"
+  - "cmd.onboarding.resume"
+  - "cmd.onboarding.skip"
+stale_retired_dispositions:
+  - "server_setup is superseded seven-stage source lineage only; current wiring uses server_storage_client."
+  - "The five-chapter chat_teacher, shell_navigation, panel_layout, widget_workspace, planning_wizard order is retired source lineage and never a current Tour route."
+  - "ui.guided_tour.restore_layout is retired as a Tour action; existing layout-owner commands remain available to unrelated consumers."
+  - "ui.guided_tour.keep_layout is retired as a Tour action; existing layout-owner commands remain available to unrelated consumers."
+  - "ui.guided_tour.toggle_reduced_motion is retired as a Tour action; Settings remains the sole Reduced Motion owner for every consumer."
+  - "cmd.onboarding.first_run.open is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.provider_setup.open is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.provider_setup.use_provider is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.skip_to_planning_wizard is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.free_models.review is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.free_models.defer is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.review_setup is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.open_planning_wizard is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.free_models.refresh is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.free_models.retry is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.free_models.setup is source-lineage-only; it is neither a production row nor a compatibility alias."
+  - "cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are packet source-lineage candidates rejected as commands, aliases, and handlers."
 negative_constraints:
   - Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
-  - Do not route skip to the dense Home shell by default.
-  - Do not mark Doctor/Health as Ready when provider setup was skipped.
-  - Do not define UICommand payload/result schemas outside UI_Command_Catalog.
-  - Do not redefine provider/account readiness or Teacher behavior in Wiring_Matrix.
+  - Do not register a `cmd.onboarding.*` semantic command, production row, compatibility alias, generic handler, or EventRecord.
+  - Do not give a local `ui.onboarding.*` action a fictitious domain handler or let it replay owner work.
+  - Do not accept open-ended local_context, raw/arbitrary payload copies, secret-bearing values, or ambiguous more_ways/skip variants.
+  - Do not claim native Slint, dispatcher, handler, persistence, or runtime wiring from schemas, static assertions, PMConcept7, or browser evidence.
+  - Do not turn the bounded modal into a route or add browser-style Back/breadcrumb chrome.
+  - Do not restore the provider-first flow, add provider/advanced setup/Guided Tour as a canonical stage, or treat `ready` as owner readiness.
+  - Do not dispatch any external Onboarding owner work before person-confirmed current Review or accept a stale revision, hash, path, continuation, or currentness ref.
+  - Do not restore the retired five-chapter Tour, synthesize separate move/resize/configure/focus checkpoints, or admit retired restore-layout, keep-layout, or Tour-owned Reduced Motion actions.
+  - Do not let narration, timers, generic Next, look-alike controls, or browser/static fixtures fabricate a performed Tour checkpoint, owner result, native handler, production receipt, or completion.
+  - Do not persist Guided Tour scene, status, Teacher text, focus, motion, demonstrated-action, or completed-action state.
+  - Do not redefine installation, claim, pairing, remote access, provider auth, Project, backup/restore, update, Doctor, storage, or Planning Wizard engines in Wiring_Matrix.
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/UI_Command_Catalog.md
@@ -3556,17 +3717,19 @@ canonical_text: >-
   DRY Method settings wiring maps `cmd.settings.agent_rules.dry_method_default_guard.set` from Settings > General >
   Agent Rules to `app.agent_rules.dry_method_default_guard` storage, emits
   `settings.agent_rules.dry_method_default_guard.updated`, refreshes Assistant Chat and run-detail DRY disclosure
-  projections, and records receipt provenance for enabled and disabled_by_user states. This wiring does not generate
+  projections, binds the SSYS-023 Settings consumer to the same requested/effective owner projection, and records receipt
+  provenance for enabled and disabled_by_user states. This wiring does not generate
   wiring JSON and does not disable explicit instructions, safety, secrets, source authority, governance, permissions,
   or source-control hygiene when the default DRY guard is turned off.
 gui_related: true
 gui_classification_reason: Defines user-visible settings toggle wiring and disclosure refresh behavior.
-depends_on: [UCC-104, CV-299, SP-223, ACD-429]
+depends_on: [UCC-104, CV-299, SP-223, ACD-429, SSYS-023]
 unblocks: [ATS-018]
 acceptance_criteria:
   - The Settings toggle writes only enabled or disabled_by_user to the DRY default-guard setting.
   - Assistant Chat and run-detail disclosures refresh after the setting changes.
   - Disabled DRY state remains receipt-backed and does not bypass non-DRY authority boundaries.
+  - Settings renders the same requested/effective DRY owner projection and never becomes a second DRY owner.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - DRY Method settings wiring fixture
@@ -3700,4 +3863,456 @@ owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md
+```
+
+## PMConcept7 settled interaction production wiring addendum - 2026-08-27
+
+Production wiring for the recovered PMConcept7 surfaces is command-owner-first and settled-state-only.
+The machine-readable rows in `Plans/Wiring_Matrix.production.json` carry the same producer, handler,
+state selector, effect, cancellation, error, and evidence boundaries summarized here.
+
+| Producer | Command/disposition | Handler/reducer and owner state | Persistence/effect | Consumer | Cancel/error path |
+|---|---|---|---|---|---|
+| Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` or `widget_layout:v1:dashboard`; dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
+| Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers, Dashboard resize peers remain frozen | one settled write and receipt; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once; Dashboard reflows after commit | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
+| Home move/resize/collapse/reset | existing `cmd.workspace_layout.*` rows | `handlers::workspace_layout::*`; `pm.home_workspace_layout.v1` owner | one revision-checked commit; existing `workspace.layout_changed` effect; no preview effect | Home hosts, saved dock/size/collapse projection | cancel/invalid/stale revision restores prior layout and emits no command/effect; error projects owner reason |
+| Home preset size | concept alias normalized to `cmd.workspace_layout.resize_surface` | preset resolver produces committed width/height/flex and optional `preset_id` | same resize commit as direct resize | Home surface layout | no primary `cmd.workspace_layout.size_surface` row or handler exists |
+| Usage Refresh | `cmd.usage.refresh` | `handlers::usage::refresh`; existing Usage projection owner | no-persist dispatch receipt; background refresh remains independent | Usage freshness/health projection | unavailable/stale failure remains visible and does not overwrite current projection |
+| PMConcept7 Ledger attempt drill-through | `cmd.nav.open_usage_subject`, with stable `attempt_id` and `usage_event_ref` | `handlers::nav::open_usage_subject`; route/open owner resolves `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`; usage_event/provider/account/runtime refs are correlation | route/open receipt, no fabricated domain event, no `OpenSubject` | canonical Usage attempt inspector/route | missing/invalid attempt identity or unavailable target returns typed route/open failure without state mutation |
+| Aggregate provider/account/panel details | `view_only` local inspector | current Usage projection; no router or command handler | no command, receipt, domain event, or persistence | local inspector | missing presentation data remains local; no fallback route or invented object kind |
+| Usage room/scope/range/disclosure/filter/More-menu | `view_only` | current Usage view projection | no command/receipt/event; settled preference storage remains storage-owned | current Usage render | dismissal/cancel restores or retains prior local selection |
+| Context ring popup/hover | `view_only` | shared Assistant local overlay projection | no command/receipt/event | compact context summary | dismissal emits nothing |
+| Context ring `Compact Now` | `cmd.chat.compact_context` | `handlers::chat::compact_context`; live Prompt Pipeline/context owner | explicit dispatch receipt and visible result/projection; no fabricated `context.compaction.*` event while unregistered | the same ring and Context Detail Pane | already-running/no-op/degraded/unavailable/retry/failed states remain visible and preserve thread identity |
+| Context ring `More Details` and pane focus/close | existing thread Context Detail Pane commands | `handlers::chat::*thread_context_details`; shared Assistant/thread state | no-persist receipt/layout state | one shared Context Detail Pane | unavailable/close returns focus deterministically; no second pane store |
+| Chat visibility/seat | `cmd.panel.switch` for visibility; re-seating itself is shell-local identity-preserving projection | shell panel reducer plus one shared Assistant node/store | no clone and no transcript/state fork | Home saved dock or right-side global dock | failed seat restores the prior host; node identity and thread state remain intact |
+
+The production matrix does not register `cmd.workspace_layout.size_surface`, does not register
+`cmd.provider.usage.open_management`, and does not add an event for preview frames. A command receipt
+proves dispatch/admission only; a committed owner projection or declared event proves the settled effect.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+### WM-045 - PMConcept7 Producer Commit Cancel Error And Shared Assistant Wiring
+
+```yaml
+plan_unit_id: WM-045
+unit_type: wiring_contract
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  The PMConcept7 production wiring matrix binds every relevant producer to an existing
+  command or view_only disposition, its sole handler/reducer, owner projection/store,
+  settled persistence or declared effect, dispatch receipt, consumer, cancel path, and
+  error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize may locally advance
+  its target footprint and visibly repack only obstructed peers while Dashboard resize peers remain frozen; one changed
+  pointer release, keyboard reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or
+  cmd.workspace_layout.*; Usage refresh and stable-event
+  drill-through reuse their existing rows while current PMConcept7 aggregate provider/account/panel details
+  remain local inspectors; Context-ring actions reuse their existing rows; and the same
+  Assistant node/store is re-seated across Home and global docks without cloning. The concept-only size_surface
+  token is normalized to resize_surface, rejected provider management stays unwired, and
+  no pointer-preview event family is added.
+gui_related: true
+gui_classification_reason: The wiring contract connects the recovered visible controls, their disabled/error states, and the shared Assistant seating behavior.
+split_recommended: false
+depends_on: [WM-044, CS-068, UCC-147, WS-019, SP-249, SP-250]
+unblocks: [UIW-012, DR-039, ACD-448]
+acceptance_criteria:
+  - Prose and production JSON agree on producer, command/disposition, handler, selector/store, persistence/effect, receipt, consumer, cancel, and error behavior for every covered family; event-primary callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation. Current aggregate cards remain local with no command, receipt, or event. The production matrix retains all 726 keys and this recovery enriches exactly 40 existing rows, comprising the 13 named catalog rows for Chat Context, Usage, panel switching, and widget commands plus the 27 existing home.* rows; cmd.artifacts.show_in_usage and cmd.artifacts.show_in_ledger retain their pre-recovery bytes and are not counted in that enrichment set.
+  - Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage writes.
+  - Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases produce exactly one existing semantic command and settle only after owner acceptance.
+  - The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
+  - No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: pm7_production_wiring_or_cancel_path_drift
+reasoning_tier: high
+context_scope: pm7_commands_wiring_dry_assistant
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: pm7_production_wiring_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+preserved_exact_tokens:
+  - view_only
+  - widget_layout:v1:usage
+  - widget_layout:v1:dashboard
+  - pm.home_workspace_layout.v1
+  - workspace.layout_changed
+  - pm:command-dispatch
+negative_constraints:
+  - Do not treat a receipt as terminal domain success.
+  - Do not emit a command, event, or persistence write from pointer-preview or cancel state.
+  - Do not clone the Assistant or create a second pane/store while re-seating it.
+  - Do not create production rows for compatibility-only or rejected command tokens.
+  - Do not route aggregate Usage cards, dispatch cmd.nav.open_usage_subject without the branch's stable selector, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use correlation identity as the PMConcept7 Ledger object_id.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+```
+
+## Packet-owner command and Touch Closure wiring addendum - 2026-08-31
+
+The Settings/Onboarding/Doctor/Server/WAN/Backup/Browser/Capture/SCM/Forge/plugin/performance wave uses `Plans/touch_closure.json` as its bidirectional coverage register and `Plans/Wiring_Matrix.production.json` as the production-intent row set. Each canonical command has one catalog entry and one sole handler target, while every GUI-required command has every intended visible consumer enumerated in reverse. Typed local UI actions use the same availability, disabled-reason, accessibility, return-route, and evidence discipline but do not receive fictitious domain handlers or EventRecords.
+
+Current Product Onboarding uses exactly thirteen typed local actions: `ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`, `ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`, `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`. These are not semantic commands or production wiring rows. The main path is exactly `welcome` -> `simple_path` -> `first_project` -> `source_control_setup` -> `server_storage_client` -> `remote_access_setup` -> `review_setup_plan` -> `automatic_preparation` -> `ready`; connect existing is exactly `welcome` -> `simple_path` -> `remote_access_setup` -> `review_setup_plan` -> `automatic_preparation` -> `ready`. Every pre-Review choice is a local draft transition or cached read. No network probe, owner route, or mutation may begin until the person confirms the current Review Setup Plan revision; Automatic Preparation then dispatches the approved-plan hash once and observes current owner projections.
+
+The actions use `pm.product_onboarding.action_request.v1` -> `pm.product_onboarding.action_result.v1`, including closed applied/disabled/rejected results and zero-dispatch/zero-write disabled or rejected behavior. Each request carries closed normalized secret-free `local_context`; its only fields are `intent`, optional `review_confirmation`, `scope`, `branch_kind`, `branch_step`, `selection_ref`, `target_ref`, `owner_operation_ref`, `owner_branch_ref`, `expanded`, `start_tour`, and `recovery_condition`, so arbitrary/raw payloads and secret-bearing values fail closed. Setup/project disclosure and branch-local `more_ways` updates use different intent/scope/choice/branch combinations. Whole-session Skip yields `session_skipped`/skipped status, while Project/Remote-Access optional-scope Skip yields `optional_scope_skipped` and leaves the session active. Defer durably preserves the exact path, stage, draft, queued/reviewed revisions, Review confirmation, approved-plan hash, Automatic Preparation currentness, independent backend/forge/Server/Storage/Client choices, active branch, bounded history, continuation generation, initiating Client, and return focus; Close is a non-completion dismissal; and Details is an ephemeral same-stage disclosure with no persistence or owner command. A selected owner route uses that owner's existing canonical command and sole handler; no generic Onboarding wrapper handler is created. The predecessor `cmd.onboarding.first_run.open`, `cmd.onboarding.provider_setup.open`, `cmd.onboarding.provider_setup.use_provider`, `cmd.onboarding.skip_to_planning_wizard`, `cmd.onboarding.free_models.review`, `cmd.onboarding.free_models.defer`, `cmd.onboarding.review_setup`, `cmd.onboarding.open_planning_wizard`, `cmd.onboarding.free_models.refresh`, `cmd.onboarding.free_models.retry`, and `cmd.onboarding.free_models.setup` spellings are source-lineage-only: none is a production row or compatibility alias. The separate packet candidates `cmd.onboarding.back`, `cmd.onboarding.cancel`, `cmd.onboarding.continue`, `cmd.onboarding.defer`, `cmd.onboarding.finish`, `cmd.onboarding.open_details`, `cmd.onboarding.resume`, and `cmd.onboarding.skip` are source-lineage candidate tokens only and are rejected as commands, aliases, and handlers because typed local `ui.onboarding.*` actions own their semantics.
+
+Current Guided Tour uses exactly ten typed local actions: `ui.guided_tour.start`, `ui.guided_tour.next`, `ui.guided_tour.back`, `ui.guided_tour.pause`, `ui.guided_tour.resume`, `ui.guided_tour.skip`, `ui.guided_tour.focus_route`, `ui.guided_tour.toggle_eli5`, `ui.guided_tour.finish`, and `ui.guided_tour.replay`. Its exact scene order is `usage` -> `planning_wizard` -> `chat_teacher`. The Tour observes existing `cmd.widget.remove`/`cmd.widget.add` results for the Usage Watch moment, advances Try only from the exact mounted Usage-card Options control, advances Planning only from the exact mounted intent-chip result, and uses existing `cmd.panel.switch`/`cmd.panel.redock` behavior to finish with Assistant Chat at the far right. `cmd.panel.undock`, `cmd.widget.configure`, `cmd.widget.move`, `cmd.widget.resize`, `cmd.workspace_layout.move_surface`, and `cmd.workspace_layout.resize_surface` remain separately owned Home/Widget behaviors and are not Tour checkpoints. `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` are retired current actions; Skip performs exact restoration, Finish keeps Chat at the far right, and Reduced Motion remains Settings-owned.
+
+The retired Settings spellings `cmd.settings.open_notifications`, `cmd.settings.category.reset`, and `cmd.settings.suggestion.dismiss` are likewise source-lineage-only and are neither production rows nor compatibility aliases. Exact Settings navigation uses `cmd.settings.open`; reset and dismissal compose `cmd.settings.transaction.preview` plus `cmd.settings.transaction.apply`.
+
+Rows whose Rust/native dispatcher, owner handler, persistence adapter, or runtime receipt does not exist remain `planned`/`partial` with explicit evidence requirements. PMConcept7 action logs, fixture adapters, schemas, and browser verifiers are concept/static evidence only. Event candidates stay `receipt_only_no_eventrecord_pending_event_authority` unless their individual family is admitted into `Plans/event_family_registry.json` with a closed payload contract.
+
+ContractRef: ContractName:Plans/touch_closure.json, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/event_family_registry.json
+
+### WM-046 - Bidirectional Touch Closure and production-intent wiring
+
+```yaml
+plan_unit_id: WM-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Every touched canonical command has exactly one catalog identity, one request/result/error/availability/permission
+  contract, one sole owner-handler route, one production-intent wiring row, and reverse coverage to every intended GUI
+  consumer. Every touched local UI action has a typed action contract, accessibility and disabled behavior, exact return,
+  and reverse consumer coverage without a false domain handler. The hash-bound SSYS-023 packet disposition registry is
+  transitive input: canonical replacements require rows, typed local actions require rows, and retired or rejected packet
+  spellings remain non-actionable. Missing native dispatch, handler, persistence, event admission, or runtime receipt
+  remains explicitly planned or partial; schemas, fixtures, PMConcept7 simulations, and browser evidence cannot satisfy
+  those dimensions.
+gui_related: true
+gui_classification_reason: Connects every touched visible control and command to handlers, consumers, responses, and evidence.
+split_recommended: false
+depends_on: [WM-045, DR-040, UIW-013, SSYS-023]
+unblocks: []
+acceptance_criteria:
+  - Commands, handlers, and GUI consumers are each complete in both directions with no duplicate primary ID or owner.
+  - Typed local actions carry availability, disabled reason, accessibility, and exact-return evidence without fictitious runtime command rows.
+  - "Product Onboarding exposes exactly the thirteen `ui.onboarding.*` typed local actions and routes owner work through existing owner commands/handlers; no `cmd.onboarding.*` production row, compatibility alias, generic handler, or EventRecord is admitted."
+  - "Product Onboarding follows the exact nine-stage main and six-stage connect-existing paths; pre-Review work is local draft/cached read only, current Review confirmation fences every owner dispatch, and Automatic Preparation observes the once-dispatched approved plan with exact revision/hash/currentness fields."
+  - "Every Product Onboarding request carries the closed normalized secret-free local_context; more_ways and skip variants are exact and non-ambiguous, and arbitrary/raw/secret-bearing context is rejected."
+  - "Guided Tour exposes exactly ten typed local actions and exactly three scenes in Usage/Planning Wizard/Assistant Chat order; its only Tour-observed owner commands are panel switch/redock and widget remove/add, while unrelated Home/Widget commands retain separate consumers."
+  - "The packet candidates `cmd.onboarding.back`, `cmd.onboarding.cancel`, `cmd.onboarding.continue`, `cmd.onboarding.defer`, `cmd.onboarding.finish`, `cmd.onboarding.open_details`, `cmd.onboarding.resume`, and `cmd.onboarding.skip` are source-lineage only and rejected as commands, aliases, and handlers."
+  - "`cmd.settings.open_notifications`, `cmd.settings.category.reset`, and `cmd.settings.suggestion.dismiss` remain source-lineage-only and appear as neither production rows nor compatibility aliases."
+  - "The exact seven local actions `settings.search.focus`, `settings.search.result.activate`, `settings.category.select`, `settings.subcategory.select`, `settings.setting.focus`, `settings.scope.details.open`, and `settings.provider.installation.select` have Touch Closure rows and no domain handlers."
+  - "The named projections `settings.manager.teacher-help`, `settings.manager.project-search-index`, and `settings.manager.dry-method` have presentation rows, while their four owner commands retain their existing sole owner routes and reverse consumers."
+  - The 80-token Settings registry retains the exact 41/7/1/31 disposition partition, and no replacement spelling, retired bakeoff token, or rejected token becomes a command or alias.
+  - Orphan controls, commands without handlers, handlers without commands, missing reverse consumers, duplicate IDs, stale PlanRefs, and incomplete Touch Closure rows fail gates.
+  - Event effects remain receipt-only unless individually admitted by Event Authority.
+  - Concept, static, browser, native-runtime, visual, motion, accessibility, performance, and readiness evidence classes remain separate.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-touch-closure-verify.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: one_way_or_false_production_wiring
+reasoning_tier: high
+context_scope: packet_owner_touch_closure_wiring
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json]
+node_compile_hint: {mode: touch_closure_wiring, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+  - scratchpad/approval-gated-touch-closure-packet-custody-20260831-001/central-contract-map/central-contract-map.json
+  - scratchpad/pm-integration-20260831/audits/settings-owner-closure/settings-owner-central-delta-proposal.json
+preserved_exact_tokens: [planned, partial, receipt_only_no_eventrecord_pending_event_authority, "ui.onboarding.*", cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply]
+negative_constraints:
+  - Do not claim production wiring from PMConcept7 or browser evidence.
+  - Do not assign two handlers or owners to one primary command.
+  - Do not admit an EventRecord family through a wiring row.
+  - Do not omit reverse GUI coverage for a GUI-required command.
+  - "Do not normalize a predecessor `cmd.onboarding.*` or retired Settings spelling into a production row or compatibility alias."
+owner_hints: [Plans/Wiring_Matrix.md, Plans/UI_Command_Catalog.md, Plans/Commands_System.md]
+```
+
+## Guided Tour typed local route wiring disposition - 2026-09-01
+
+`ui.guided_tour.focus_route` is covered by Touch Closure profile
+`TCP-GUIDED-NAV`, not by the production command matrix. Its one concept
+consumer is the Guided Tour `Open Usage` control; its one specified local
+controller consumes `route_target.page_id`, checks the mounted application router,
+changes visible route/focus only, and returns the closed
+`pm.guided_tour.focus_route_result.v1` no-domain/no-persistence local result.
+The native Slint presentation controller remains absent and must not be
+inferred from the authored HTML or browser verifier.
+
+`catalog.nav_focus_route` is removed because it falsely implied an adopted
+command and `handlers::nav::focus_route`. The retained historical token
+`cmd.nav.focus_route` is exclusions-only. This disposition does not affect the
+separately adopted `cmd.nav.open_subject` and
+`cmd.nav.open_usage_subject` wrapper rows.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-072, ContractName:Plans/UI_Command_Catalog.md#UCC-150, ContractName:Plans/touch_closure.json#TCP-GUIDED-NAV
+
+### WM-049 - Guided Tour focus route uses Touch Closure, not false production wiring
+
+```yaml
+plan_unit_id: WM-049
+unit_type: wiring_disposition
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  TCP-GUIDED-NAV binds ui.guided_tour.focus_route to its typed route target,
+  mounted-application local controller, exact result, accessible disabled state,
+  return route, tests, and sole Guided Tour consumer. cmd.nav.focus_route and
+  catalog.nav_focus_route have no production standing and no handler claim.
+gui_related: true
+gui_classification_reason: Governs exact GUI-to-local-controller and reverse-consumer coverage for the Guided Tour route step.
+depends_on: [WM-046, CS-072, UCC-150, PWIZ-023]
+unblocks: []
+acceptance_criteria:
+  - TCP-GUIDED-NAV has one typed UI action, one local concept controller, one GUI trigger, one exact return, and browser/static tests.
+  - No production matrix row, dispatcher, handler, domain event, or persistence effect is attributed to cmd.nav.focus_route.
+  - Missing-router state remains keyboard-focusable, hover-bound, described, and non-dispatching.
+  - Concept, browser, native Slint, and production-runtime evidence remain separate.
+validation_surfaces: [Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, python3 scripts/pm-touch-closure-verify.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, Concepts/pm7-tools/verify/guided_tour.mjs]
+risk_class: false_production_wiring_or_missing_reverse_local_action_coverage
+reasoning_tier: high
+context_scope: guided_tour_application_focus_route
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json]
+node_compile_hint: {mode: guided_tour_local_action_wiring_disposition, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+  - Plans/Planning_Wizard.md#PWIZ-023
+preserved_exact_tokens: [TCP-GUIDED-NAV, ui.guided_tour.focus_route, route_target.page_id, pm.guided_tour.focus_route_result.v1, cmd.nav.focus_route, catalog.nav_focus_route]
+negative_constraints:
+  - Do not restore catalog.nav_focus_route or invent handlers::nav::focus_route.
+  - Do not treat the PMConcept7 controller as a native Slint or production handler.
+  - Do not remove the adopted open-subject wrapper rows.
+owner_hints: [Plans/Wiring_Matrix.md, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Planning_Wizard.md]
+```
+
+## Agent plugin production-intent and consumer wiring addendum - 2026-09-01
+
+The production-intent matrix carries one row for each CS-071/UCC-149 identity. Each row names the one future
+Plugins target and every Plugins/Settings/Doctor/palette consumer, but remains default-disabled with
+`handler_unavailable` until a native dispatcher, handler, package operation, persistence path, and fresh
+runtime receipt exist. These are planned routing contracts, not fake Rust handlers or production proof.
+
+| Wiring row | Command | Specified target | Primary reverse consumers |
+|---|---|---|---|
+| `catalog.agent_plugin_scan` | `cmd.agent_plugin.scan` | `handlers::plugins::scan` | Plugins inventory; Settings manager; Doctor recheck; palette |
+| `catalog.agent_plugin_install` | `cmd.agent_plugin.install` | `handlers::plugins::install` | Plugins catalog/local import; Settings manager; palette |
+| `catalog.agent_plugin_update` | `cmd.agent_plugin.update` | `handlers::plugins::update` | Plugins update review; Settings manager; Doctor remediation |
+| `catalog.agent_plugin_enable` | `cmd.agent_plugin.enable` | `handlers::plugins::enable` | Plugins row/details; Settings manager |
+| `catalog.agent_plugin_disable` | `cmd.agent_plugin.disable` | `handlers::plugins::disable` | Plugins row/details; Settings manager; Doctor remediation |
+| `catalog.agent_plugin_reload` | `cmd.agent_plugin.reload` | `handlers::plugins::reload` | Plugins details/review; Settings manager |
+| `catalog.agent_plugin_remove` | `cmd.agent_plugin.remove` | `handlers::plugins::remove` | Plugins details; Settings manager |
+| `catalog.agent_plugin_validate` | `cmd.agent_plugin.validate` | `handlers::plugins::validate` | Plugins details; Settings manager; Doctor checks |
+| `catalog.agent_plugin_review_changes` | `cmd.agent_plugin.review_changes` | `handlers::plugins::review_changes` | Plugins review; Settings manager; Doctor permission/update review |
+| `catalog.agent_plugin_rollback` | `cmd.agent_plugin.rollback` | `handlers::plugins::rollback` | Plugins recovery; Settings manager; Doctor rollback health |
+| `catalog.agent_plugin_open_details` | `cmd.agent_plugin.open_details` | `handlers::plugins::open_details` | Plugins/Settings/Doctor bounded Details |
+| `catalog.agent_plugin_open_logs` | `cmd.agent_plugin.open_logs` | `handlers::plugins::open_logs` | Plugins/Settings/Doctor bounded Logs |
+
+Every request/result binds the exact package/plugin, Host/Environment, package/permission/topology generations,
+manifest lane and separate hashes, admitted package/supply-chain/conformance/permission/update-diff/rollback refs,
+idempotency, confirmation where required, bounded projection, and exact caller return. Mutating and long work retains
+`ObservableWork`; read-only Details and Logs do not claim mutation. Effects are typed results and immutable receipts
+under `receipt_only_no_eventrecord_pending_event_authority`. Caller close never silently cancels owner work; only the
+exact owner cancellation semantics may do so. Error or stale state changes no package generation/status.
+
+Settings and Doctor consume the same Plugins owner facts. Settings does not parse packages, run adapters, migrate
+manifests, validate signatures, scan containment, or mutate lifecycle state. Doctor reads cached/fresh projections,
+routes recheck/remediation, and never privately performs a Plugins action. All browser-concept controls stay disabled
+and return the exact reason; their action logs prove neither dispatch nor owner work.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-071, ContractName:Plans/UI_Command_Catalog.md#UCC-149, ContractName:Plans/Plugins_System.md#PLUG-070, ContractName:Plans/touch_closure.json
+
+### WM-048 - Agent plugin production-intent and reverse-route closure
+
+```yaml
+plan_unit_id: WM-048
+unit_type: wiring_contract
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Twelve planned production-intent rows bind every exact agent-plugin identity to its Plugins-owned
+  request/result contracts, one specified future target, truthful handler_unavailable projection, receipt-only
+  effect, exact return, accessibility, tests, and all Plugins/Settings/Doctor/palette reverse consumers. The rows
+  do not prove a native handler or runtime effect, and Settings, Doctor, and PMConcept7 never simulate owner success.
+gui_related: true
+gui_classification_reason: Connects every visible plugin lifecycle, review, recovery, details, and logs control to one owner route and return path.
+depends_on: [WM-047, CS-071, UCC-149, PLUG-070]
+unblocks: []
+acceptance_criteria:
+  - Exactly twelve unique production-intent rows cover the twelve CS-071 identities, each with one Plugins target, typed request/result, availability selector, disabled reason, receipt effect, accessibility, tests, and reverse consumers.
+  - Every row is disabled with handler_unavailable until executable dispatcher/handler and fresh runtime proof exist; a target string, schema, fixture, concept log, or browser pass is not handler evidence.
+  - Mutating work preserves confirmation, currentness, conformance, provenance, containment, permission, update-diff, rollback, ObservableWork, cancellation, recovery, and exact-return requirements.
+  - Settings and Doctor consume Plugins owner facts and commands without private parsing, validation, adapter, migration, repair, or lifecycle mutation.
+  - All effects remain receipt-only and no plugin.* or agent_plugin.* EventRecord, alias, second handler, or success simulation is admitted.
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/plugin_contract_fixtures.json, Concepts/pm7-tools/systems_integration_source.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
+risk_class: plugin_wiring_or_false_runtime_closure
+reasoning_tier: high
+context_scope: agent_plugin_production_intent
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py]
+node_compile_hint: {mode: agent_plugin_production_intent, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Commands_System.md#CS-071
+  - Plans/UI_Command_Catalog.md#UCC-149
+  - scratchpad/pm-integration-20260831/authority-repairs/plugin-contract-closure/central-settings-doctor-delta-proposal.md
+preserved_exact_tokens: [catalog.agent_plugin_scan, catalog.agent_plugin_install, catalog.agent_plugin_update, catalog.agent_plugin_enable, catalog.agent_plugin_disable, catalog.agent_plugin_reload, catalog.agent_plugin_remove, catalog.agent_plugin_validate, catalog.agent_plugin_review_changes, catalog.agent_plugin_rollback, catalog.agent_plugin_open_details, catalog.agent_plugin_open_logs, handler_unavailable, receipt_only_no_eventrecord_pending_event_authority]
+negative_constraints:
+  - Do not treat planned wiring, a handler-location string, PMConcept7 behavior, or browser evidence as native/runtime proof.
+  - Do not let Settings or Doctor become a plugin lifecycle, adapter, migration, validation, or repair owner.
+  - Do not enable a control, simulate a successful owner result, expose unbounded/private data, or invent an EventRecord family.
+owner_hints: [Plans/Wiring_Matrix.md, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Plugins_System.md]
+```
+
+## Cross-owner setup, restore, Server, pairing, and protected-auth wiring addendum - 2026-09-01
+
+The production-intent matrix adds one row for each of the ten commands registered by CS-070/UCC-148 and
+strengthens the existing Project and Authentication rows. These rows specify the required future native
+route; they do not assert that a dispatcher, handler, persistence path, or native runtime currently exists.
+Every new row is default-disabled with `handler_unavailable` until those executable surfaces and fresh
+runtime evidence exist.
+
+| Wiring row | Command | Specified target | Reverse GUI consumers | Effect/return |
+|---|---|---|---|---|
+| `catalog.source_control_repository_clone` | `cmd.source_control.repository.clone` | `handlers::source_control::repository_clone` | Onboarding first project; Settings SCM/Origin | Owner receipt plus exact caller return; no Project row until registration succeeds. |
+| `catalog.jujutsu_git_clone` | `cmd.jujutsu.git.clone` | `handlers::jujutsu::git_clone` | Onboarding first project; Settings SCM/Origin | JJ operation receipt plus exact caller return. |
+| `catalog.restore_preview` | `cmd.restore.preview` | `handlers::backup_restore::preview_restore` | Onboarding restore; Settings Backup/Restore; Doctor recovery | Read-only validation/preview receipt; no activation. |
+| `catalog.server_connect` | `cmd.server.connect` | `handlers::server::connect` | Onboarding discovery; Settings Server; Doctor | Exact connect/reconnect/resume result and focus return. |
+| `catalog.server_bootstrap_start` | `cmd.server.bootstrap.start` | `handlers::server::bootstrap_start` | Onboarding post-claim; Settings Server | Observable bootstrap receipt; unavailable without native handler. |
+| `catalog.client_pair_start` | `cmd.client.pair.start` | `handlers::client_pairing::start` | Onboarding pairing; Settings paired clients | Pairing-run receipt; no trust grant. |
+| `catalog.client_pair_approve` | `cmd.client.pair.approve` | `handlers::client_pairing::approve` | Settings pairing request; Onboarding return | Current-generation approval result. |
+| `catalog.client_pair_reject` | `cmd.client.pair.reject` | `handlers::client_pairing::reject` | Settings pairing request; Onboarding return | Terminal refusal result. |
+| `catalog.client_pair_cancel` | `cmd.client.pair.cancel` | `handlers::client_pairing::cancel` | Settings pairing progress; Onboarding return | Requester abort and cleanup result. |
+| `catalog.client_revoke` | `cmd.client.revoke` | `handlers::client_trust::revoke` | Settings paired-client detail; Doctor remediation | Durable revocation receipt and exact return. |
+
+The `catalog.project_new_local`, `catalog.project_add_existing`, and `catalog.project_open` rows use the
+Project owner request/result schemas and preserve exact identity, currentness, receipt, and caller return
+context. The `catalog.authentication_start|cancel|resume` rows retain their sole shared-runtime handlers
+and additionally prove initiating active Client/session generation, same operation/revision, exact return
+target, redacted timeout/cancel/success, and rejection of wrong-Client or stale-operation returns.
+
+PMConcept7 is a concept consumer only. The bounded Product Onboarding modal maps standalone/container
+post-claim work to `cmd.server.bootstrap.start`, pairing-method initiation to `cmd.client.pair.start`, known
+Server connection to `cmd.server.connect`, ordinary Git and JJ clone to their distinct owners, and
+protected-auth cancellation to `cmd.authentication.cancel`. The Settings/Doctor Server manager exposes
+the five pairing/trust operations as separate controls. No browser interaction or action log satisfies the
+native-handler evidence requirement.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-070, ContractName:Plans/UI_Command_Catalog.md#UCC-148, ContractName:Plans/touch_closure.json
+
+### WM-047 - Cross-owner production-intent and reverse-route closure
+
+```yaml
+plan_unit_id: WM-047
+unit_type: wiring_contract
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Ten owner-backed production-intent rows and six strengthened existing rows bind exact commands,
+  request/results, specified targets, availability/disabled projections, receipt-only effects,
+  accessibility, and every intended PMConcept7/Settings/Onboarding/Doctor reverse consumer. All missing
+  native handlers remain truthfully unavailable; static wiring is not production execution evidence.
+gui_related: true
+gui_classification_reason: Governs visible setup, project, restore, Server, pairing, trust, and authentication control routing and exact focus return.
+depends_on: [WM-046, CS-070, UCC-148]
+unblocks: []
+acceptance_criteria:
+  - Exactly ten new production-intent rows exist with unique commands and keys, exact owner schemas, one specified target, selectors, disabled reasons, accessibility, tests, and reverse consumers.
+  - The three Project and three Authentication rows are strengthened in place rather than duplicated.
+  - Pairing start/approve/reject/cancel and Client trust revocation remain separate operations; reconnect/resume remain modes of cmd.server.connect.
+  - Protected-auth return is fenced to the initiating active Client/session and exact operation/revision with no content exposure, capture, recording, persistence, or fallback navigation.
+  - Product Onboarding modal close restores focus but does not cancel owner work; explicit cancellation uses the exact owner command.
+  - Every row remains partial/default-disabled until its native handler and fresh runtime evidence exist, and no EventRecord is invented.
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.schema.json, Plans/touch_closure.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
+risk_class: missing_reverse_wiring_or_false_production_claim
+reasoning_tier: high
+context_scope: cross_owner_setup_wiring
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/UI_Command_Catalog.md, Plans/touch_closure.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/systems_integration_source.py]
+node_compile_hint: {mode: cross_owner_production_intent_wiring, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - scratchpad/pm-integration-20260831/authority-repairs/central-owner-merge/merged-central-owner-delta-manifest.json
+  - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+preserved_exact_tokens: [catalog.source_control_repository_clone, catalog.jujutsu_git_clone, catalog.restore_preview, catalog.server_connect, catalog.server_bootstrap_start, catalog.client_pair_start, catalog.client_pair_approve, catalog.client_pair_reject, catalog.client_pair_cancel, catalog.client_revoke, handler_unavailable]
+negative_constraints:
+  - Do not claim native implementation from a production-intent row or handler string.
+  - Do not add rejected aliases, false owner-local authentication commands, or an EventRecord family.
+  - Do not omit exact return, accessibility, disabled reason, or reverse consumers.
+owner_hints: [Plans/Wiring_Matrix.md, Plans/UI_Command_Catalog.md, Plans/Commands_System.md]
+```
+## Server/Egolite Production-Intent Wiring Addendum - 2026-09-01
+
+
+The exact machine partition is 171 packet rows: 86 new canonical commands, 43 pre-policy aliases, 39 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 103 obligation references collapse to **102 unique primary command/catalog/production-intent rows**; the packet primary denominator remains 92 (`86 + 6`). Denominators must never be silently substituted for one another.
+
+Every primary row below is static central intent. A named `handler_location` is the sole future dispatch target, not evidence that Rust code, registration, provider execution, persistence, native Slint wiring, security behavior, or runtime success exists. Initial availability remains `handler_unavailable`; the exact disabled reason is projected accessibly. All rows use receipt/projection-only effects and `expected_event_types=[]` until Event Authority separately admits an exact family. `ObservableWork` applies only where the owner contract declares asynchronous work. Exact owner permissions, generations, currentness, idempotency, cancellation, reconciliation, and exact-return rules remain intact.
+
+
+`Plans/Wiring_Matrix.production.json` carries the 102 unique primary rows keyed `catalog.<command_snake>`. Every row names the exact primary command, sole planned target, exact request/result schema pointers, all intended GUI consumers, `state.commands.<command_snake>.availability`, `state.commands.<command_snake>.disabled_reason`, an empty EventRecord list, receipt/projection-only effect, accessibility semantics, and four required future evidence classes: dispatcher fixture, state projection, receipt-or-event assertion, and accessibility regression. `Plans/Wiring_Matrix.production.exclusions.json` covers exactly the 43 aliases, 39 command-shaped typed-local predecessors, and three rejections from this adjudication; it never excludes one of the 102 primaries.
+
+Aliases are represented in `Plans/touch_closure.json#/alias_bindings`, not as production rows. Their exact target supplies availability, permission, handler, result, and effect. Typed local targets appear only as `ui_action` Touch rows and owner-local GUI wiring. Rejected spellings have neither a Touch action row nor a production route.
+
+### WM-050 - Server And Egolite Production-Intent Closure
+
+```yaml
+plan_unit_id: WM-050
+unit_type: wiring_contract
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: Production intent binds 102 unique server/Egolite primary commands to exact owner contracts, one sole planned target, complete GUI consumers, truthful handler-unavailable state, receipt/projection-only effects, and future evidence requirements while aliases, local predecessors, and rejections receive no peer production rows.
+gui_related: true
+depends_on: [CS-073, UCC-151]
+unblocks: [UIW-016]
+acceptance_criteria:
+  - The production matrix validates and contains all 102 unique rows with exact command, handler, schema, state, disabled-reason, effect, accessibility, and evidence fields.
+  - The exclusion list contains the complete 85 source-token partition and excludes none of the 102 primaries.
+  - Touch alias bindings have exact targets with no independent handler/wiring and every intended GUI consumer appears in reverse coverage.
+  - All rows remain static production intent and handler_unavailable until native dispatcher and runtime evidence exists.
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.schema.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-plans-verify.py, scripts/pm-touch-closure-verify.py]
+risk_class: wiring_or_reverse_coverage_false_completion
+reasoning_tier: high
+context_scope: server_egolite_production_intent
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json]
+node_compile_hint: {mode: production_intent_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
+negative_constraints: [No peer alias handler., No domain handler for local presentation., No unadmitted event., No native proof from static wiring.]
+```
+
+## Central Touch Production Wiring Closure Addendum - 2026-09-01
+
+`Plans/Wiring_Matrix.production.json` now carries one production-intent row for every actionable Touch primary command. The final Touch denominator is 425 primary command rows: 424 have at least one production entry and exactly one handler identity; `cmd.artifacts.open_panel` remains the single blocked non-admitted false inventory with no handler or production row. The 227 rows in the current closure preserve owner schemas, `handler_unavailable`, `expected_event_types=[]`, owner receipt/projection semantics, exact state/disabled-reason selectors, accessibility, deterministic return, and future-evidence requirements.
+
+Added profile counts: `TCP-AUTH-PROFILE`=7, `TCP-BACKUP`=40, `TCP-BROWSER`=14, `TCP-CAPTURE`=10, `TCP-FORGE`=43, `TCP-INSTALL`=1, `TCP-JJ`=30, `TCP-NAMED`=6, `TCP-REMOTE`=43, `TCP-SCM`=8, `TCP-SERVER`=25.
+
+The machine registries now contain exactly 425 primary command rows (424 actionable plus one blocked false inventory), 55 compatibility aliases, 101 typed local UI actions, seven presentation rows, 588 Touch rows, 87 profiles, and 1065 production-intent entries. The nine Forge and sixteen Backup additions plus the Remote Access three-primary/four-alias replacement remain event-silent and handler-unavailable.
+
+### WM-051 - Remaining Touch Production-Intent Wiring
+
+```yaml
+plan_unit_id: WM-051
+unit_type: production_wiring
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: All 424 actionable Touch primary commands have production-intent wiring and one sole handler identity; the one blocked false-inventory token has neither. Static rows prove no runtime implementation and admit no new EventRecord type.
+gui_related: true
+gui_classification_reason: Production rows bind GUI controls to availability, disabled reasons, dispatch targets, results, accessibility, and return routes.
+depends_on: [WM-050, CS-074, UCC-152]
+unblocks: []
+acceptance_criteria:
+- Production JSON contains exactly 1065 unique entry keys after this merge and validates against Plans/Wiring_Matrix.schema.json.
+- Every non-blocked Touch primary command has production wiring and resolves to exactly one handler identity; aliases have no peer production rows.
+- Every new row uses expected_event_types=[] and remains handler_unavailable until native source-hashed evidence exists.
+validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+risk_class: production_intent_wiring_and_claim_boundary
+reasoning_tier: high
+context_scope: touch_production_closure
+implementation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: touch_production_closure, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Commands_System.md#CS-074, Plans/UI_Command_Catalog.md#UCC-152]
+negative_constraints: [Do not claim native runtime implementation from static wiring., Do not register an event without Event Authority.]
+compile_disposition: extend_existing_owner
 ```

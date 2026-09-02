@@ -48,6 +48,9 @@ HOME_MARKUP = r'''<!-- PM7 T20: Home workspace model-first hosts -->
   <button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-top-action="reset-layout" data-pm-home-action="reset-layout">
     <span>Reset Layout</span>
   </button>
+  <button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-top-action="run-onboarding" data-pm-home-action="run-onboarding" data-ui-action-id="ui.onboarding.start" data-source-surface="home_menu">
+    <span>Run setup wizard</span>
+  </button>
 </div>
 
 <div id="pm-home-open-panel-flyout" class="pm-home-portal pm-home-flyout-portal" role="menu" aria-label="Open panel" data-portal-display="block" style="display:none">
@@ -269,8 +272,10 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   max-height: none !important;
 }
 /* Floors the surfaces genuinely need, restated at id specificity because the
-   blanket min-width/min-height above is gone. */
-#dashboardView.pm-home-surface { min-width: 280px; }
+   blanket min-width/min-height above is gone. Dashboard's 280px preferred
+   floor is capped by the owning host: a narrow side dock must not let the
+   surface and its corner grip overflow underneath the adjacent main host. */
+#dashboardView.pm-home-surface { min-width: min(100%, 280px); }
 #chatPanel.pm-home-surface { min-width: 0; min-height: 300px; }
 #editorPane1.pm-home-surface,
 #editorPane2.pm-home-surface,
@@ -314,6 +319,40 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 }
 .pm-home-editor-shell { flex-direction: column; }
 .pm-home-editor-shell .editor-tabs { flex: 0 0 auto; }
+.pm-home-surface[data-pm-home-kind="editor_panel"] .editor-tabs .tab {
+  /* Under the four-panel fair-share layout a pane can be narrower than one
+     tab's intrinsic label. `min-width:auto` then lets that one retained tab
+     push the overflow chip through the reserved right-edge chrome lane. The
+     active tab remains present and focusable, but its paint may ellipsize so
+     the overflow affordance and surface kebab can stay inside the pane. */
+  min-width: 0;
+  flex-shrink: 1 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pm-home-surface[data-pm-home-kind="editor_panel"] .pm-ed-overflow[data-pm-home-overflow-mode="compact"] {
+  padding-inline: 4px;
+  font-size: 0;
+}
+.pm-home-surface[data-pm-home-kind="editor_panel"] .pm-ed-overflow[data-pm-home-overflow-mode="compact"]::before {
+  content: attr(data-pm-home-compact-label);
+  font-size: 11px;
+}
+.pm-home-surface[data-pm-home-kind="editor_panel"] .pm-ed-overflow[data-pm-home-overflow-mode="ellipsis"] {
+  width: 20px;
+  min-width: 20px;
+  padding-inline: 2px;
+  overflow: hidden;
+  font-size: 0;
+}
+.pm-home-surface[data-pm-home-kind="editor_panel"] .pm-ed-overflow[data-pm-home-overflow-mode="ellipsis"]::before {
+  content: "\2026";
+  font-size: 11px;
+}
+.pm-home-surface[data-pm-home-kind="editor_panel"] .pm-ed-overflow[data-pm-home-overflow-mode="hidden"] {
+  display: none !important;
+}
 .pm-home-editor-shell .editor-area,
 .pm-home-editor-shell .browser-tab-content { min-width: 0; min-height: 0; }
 .pm-home-editor-shell .editor-code { overflow: auto; }
@@ -853,8 +892,10 @@ HOME_SCRIPT = r'''
   }
   var PROJECT_ID = (document.body && document.body.getAttribute("data-project-id")) || "tastebook";
   var WORKSPACE_TAB_ID = (document.body && document.body.getAttribute("data-workspace-tab-id")) || "home";
-  var STORAGE_KEY = "pm.homeWorkspaceLayout:v1:" + PROJECT_ID + ":" + WORKSPACE_TAB_ID;
+  var CURRENT_LAYOUT_VERSION = "1.1.0";
+  var STORAGE_KEY = "pm.homeWorkspaceLayout:v2:" + PROJECT_ID + ":" + WORKSPACE_TAB_ID;
   var LEGACY_STORAGE_KEYS = [
+    "pm.homeWorkspaceLayout:v1:" + PROJECT_ID + ":" + WORKSPACE_TAB_ID,
     "home_workspace_layout.v1:" + PROJECT_ID + ":" + WORKSPACE_TAB_ID,
     "home_workspace_layout:v1:" + PROJECT_ID + ":" + WORKSPACE_TAB_ID,
     "pm.home_workspace_layout:v1:" + PROJECT_ID + ":" + WORKSPACE_TAB_ID
@@ -883,9 +924,10 @@ HOME_SCRIPT = r'''
     lastPersistenceKey: STORAGE_KEY,
     lastRecoveryReason: null
   };
+  var FACTORY_FILE_PATHS = ["src/main.rs", "src/routes/recipes.rs", "web/src/routes/+page.svelte", "Cargo.toml", "src/models/recipe.rs", "docker-compose.yml", "Dockerfile"];
   var editorOwners = {
-    editor_panel_1: { editor_panel_id: "editor_panel_1", editor_group_id: "editor_group_1", worktree_id: "worktree:main", active_buffer_id: "buffer:src/main.rs", buffer_ids: ["buffer:src/main.rs", "buffer:src/routes/recipes.rs", "buffer:web/src/routes/+page.svelte", "buffer:Cargo.toml"], dirty_buffer_ids: ["buffer:src/routes/recipes.rs"] },
-    editor_panel_2: { editor_panel_id: "editor_panel_2", editor_group_id: "editor_group_2", worktree_id: "worktree:main", active_buffer_id: "buffer:src/models/recipe.rs", buffer_ids: ["buffer:src/models/recipe.rs", "buffer:docker-compose.yml", "buffer:Dockerfile"], dirty_buffer_ids: [] },
+    editor_panel_1: { editor_panel_id: "editor_panel_1", editor_group_id: "editor_group_1", worktree_id: "worktree:main", active_buffer_id: "buffer:src/main.rs", buffer_ids: ["buffer:src/main.rs", "buffer:src/routes/recipes.rs", "buffer:web/src/routes/+page.svelte", "buffer:Cargo.toml", "buffer:src/models/recipe.rs", "buffer:docker-compose.yml", "buffer:Dockerfile"], dirty_buffer_ids: ["buffer:src/routes/recipes.rs"] },
+    editor_panel_2: { editor_panel_id: "editor_panel_2", editor_group_id: "editor_group_2", worktree_id: "worktree:main", active_buffer_id: null, buffer_ids: [], dirty_buffer_ids: [] },
     editor_panel_3: { editor_panel_id: "editor_panel_3", editor_group_id: "editor_group_3", worktree_id: "worktree:main", active_buffer_id: "buffer:README.md", buffer_ids: ["buffer:README.md"], dirty_buffer_ids: [] },
     editor_panel_4: { editor_panel_id: "editor_panel_4", editor_group_id: "editor_group_4", worktree_id: "worktree:main", active_buffer_id: "buffer:src/routes/auth.rs", buffer_ids: ["buffer:src/routes/auth.rs"], dirty_buffer_ids: [] }
   };
@@ -907,6 +949,10 @@ HOME_SCRIPT = r'''
     target_panels: {},
     created_event_emitted: false
   };
+  /* The base editor renderer rebuilds tab strips. Retain the two canonical
+     Browser tab nodes so a rebuild can re-seat, rather than duplicate, the
+     complete workspace-preview/automation session chrome in its owner pane. */
+  var browserChrome = { preview: null, automation: null };
   /* Pristine seed for terminal section 1. Kept as a top-level constant so
      defaultLayout can rebuild a WORKING terminal even after the live record
      has been blanked by a workgroup move (makeSurface reads this whenever no
@@ -958,7 +1004,7 @@ HOME_SCRIPT = r'''
   function isFutureVersion(value) {
     var parts = versionParts(value);
     if (!parts) return true;
-    return parts[0] > 1 || (parts[0] === 1 && (parts[1] > 0 || (parts[1] === 0 && parts[2] > 0)));
+    return parts[0] > 1 || (parts[0] === 1 && (parts[1] > 1 || (parts[1] === 1 && parts[2] > 0)));
   }
 
   function makeSurface(id, kind, host, slot, visible) {
@@ -1010,19 +1056,22 @@ HOME_SCRIPT = r'''
   }
 
   function defaultLayout() {
+    var panelOne = makeSurface("editor_panel_1", "editor_panel", "home_main", 0, true);
+    panelOne.domain_ref.browser_session_id = browserOwner.browser_session_id;
+    panelOne.domain_ref.browser_active = true;
     return {
       schema_id: "pm.home_workspace_layout.v1",
-      schema_version: "1.0.0",
+      schema_version: CURRENT_LAYOUT_VERSION,
       project_id: PROJECT_ID,
       workspace_tab_id: WORKSPACE_TAB_ID,
       layout_revision: 0,
       surfaces: [
-        makeSurface("editor_panel_1", "editor_panel", "home_main", 0, true),
-        makeSurface("editor_panel_2", "editor_panel", "home_main", 1, true),
+        panelOne,
+        makeSurface("editor_panel_2", "editor_panel", "home_main", 2, false),
         makeSurface("editor_panel_3", "editor_panel", "home_main", 3, false),
         makeSurface("editor_panel_4", "editor_panel", "home_main", 4, false),
-        makeSurface("dashboard", "dashboard", "home_main", 2, true),
-        makeSurface("chat", "chat", "dock_right", 0, false),
+        makeSurface("dashboard", "dashboard", "home_main", 1, true),
+        makeSurface("chat", "chat", "dock_right", 0, true),
         makeSurface("terminal_section:terminal_section_1", "terminal_section", "dock_bottom", 0, true)
       ],
       saved_at_utc: now(),
@@ -1241,7 +1290,7 @@ HOME_SCRIPT = r'''
     var out = clone(candidate);
     var warnings = [];
     out.schema_id = "pm.home_workspace_layout.v1";
-    out.schema_version = "1.0.0";
+    out.schema_version = CURRENT_LAYOUT_VERSION;
     out.project_id = PROJECT_ID;
     out.workspace_tab_id = WORKSPACE_TAB_ID;
     out.layout_revision = Math.max(0, Number(out.layout_revision) || 0);
@@ -1281,10 +1330,10 @@ HOME_SCRIPT = r'''
       return next;
     });
     EDITOR_IDS.forEach(function (id, index) {
-      if (!surfaceById(out, id)) out.surfaces.push(makeSurface(id, "editor_panel", "home_main", index, index < 2));
+      if (!surfaceById(out, id)) out.surfaces.push(makeSurface(id, "editor_panel", "home_main", index, index < 1));
     });
     if (!surfaceById(out, "dashboard")) out.surfaces.push(makeSurface("dashboard", "dashboard", "home_main", 4, true));
-    if (!surfaceById(out, "chat")) out.surfaces.push(makeSurface("chat", "chat", "dock_right", 0, false));
+    if (!surfaceById(out, "chat")) out.surfaces.push(makeSurface("chat", "chat", "dock_right", 0, true));
     var terminals = out.surfaces.filter(function (surface) { return surface.surface_kind === "terminal_section"; });
     if (!terminals.length) out.surfaces.push(makeSurface("terminal_section:terminal_section_1", "terminal_section", "dock_bottom", 0, true));
     terminals = out.surfaces.filter(function (surface) { return surface.surface_kind === "terminal_section"; });
@@ -1328,7 +1377,7 @@ HOME_SCRIPT = r'''
   }
 
   function validateLayout(layout) {
-    if (!layout || layout.schema_id !== "pm.home_workspace_layout.v1" || layout.schema_version !== "1.0.0") return "schema_mismatch";
+    if (!layout || layout.schema_id !== "pm.home_workspace_layout.v1" || layout.schema_version !== CURRENT_LAYOUT_VERSION) return "schema_mismatch";
     if (layout.project_id !== PROJECT_ID || layout.workspace_tab_id !== WORKSPACE_TAB_ID) return "scope_mismatch";
     if (!Array.isArray(layout.surfaces)) return "surfaces_missing";
     var seen = Object.create(null);
@@ -1434,6 +1483,37 @@ HOME_SCRIPT = r'''
     setTimeout(function () { if (toast.parentNode) toast.remove(); }, 5200);
   }
 
+  /* The full-thread packet changes only the untouched factory arrangement.
+     Copy-forward every customized layout. A legacy record qualifies only
+     when its complete surface placement, visibility, collapse, bounds,
+     sizing, and Browser ownership still equal the former 1.0.0 seed. */
+  function isUntouchedLegacyFactoryLayout(layout) {
+    if (!layout || layout.schema_id !== "pm.home_workspace_layout.v1" || layout.schema_version !== "1.0.0" || !Array.isArray(layout.surfaces) || layout.surfaces.length !== 7) return false;
+    var expected = {
+      editor_panel_1: ["editor_panel", "home_main", 0, true, 360],
+      editor_panel_2: ["editor_panel", "home_main", 1, true, 360],
+      editor_panel_3: ["editor_panel", "home_main", 3, false, 360],
+      editor_panel_4: ["editor_panel", "home_main", 4, false, 360],
+      dashboard: ["dashboard", "home_main", 2, true, 360],
+      chat: ["chat", "dock_right", 0, false, 360],
+      "terminal_section:terminal_section_1": ["terminal_section", "dock_bottom", 0, true, 260]
+    };
+    return Object.keys(expected).every(function (id) {
+      var row = surfaceById(layout, id);
+      var want = expected[id];
+      if (!row || row.surface_kind !== want[0] || row.host !== want[1] || Number(row.slot_index) !== want[2] || Boolean(row.visible) !== want[3]) return false;
+      if (Boolean(row.collapsed) || row.floating_bounds != null) return false;
+      var size = row.size || {};
+      if (Number(size.basis_px || want[4]) !== want[4]) return false;
+      if (size.cross_basis_px != null && Number(size.cross_basis_px) !== want[4]) return false;
+      if (row.surface_kind === "editor_panel") {
+        var ref = row.domain_ref || {};
+        if (Boolean(ref.browser_active) || ref.browser_session_id != null) return false;
+      }
+      return true;
+    });
+  }
+
   function readLayout() {
     var raw = null;
     var sourceKey = STORAGE_KEY;
@@ -1460,23 +1540,33 @@ HOME_SCRIPT = r'''
         setTimeout(function () { recoveryToast("future_schema_version"); }, 0);
         return futureRecovered;
       }
-      if (parsed && parsed.schema_version && parsed.schema_version !== "1.0.0" && Array.isArray(parsed.surfaces)) {
+      if (isUntouchedLegacyFactoryLayout(parsed)) {
+        var factoryMigrated = defaultLayout();
+        factoryMigrated.layout_revision = Math.max(0, Number(parsed.layout_revision) || 0);
+        factoryMigrated.migration = { from_schema_version: "1.0.0", migrated_at_utc: now(), source_key: sourceKey, disposition: "factory_default_upgrade" };
+        factoryMigrated.validation.status = "migrated";
+        var factoryWrite = writeAndVerify(factoryMigrated);
+        receipt("storage.migration", factoryWrite.ok ? "applied" : "failed", { reason: factoryWrite.ok ? "factory_default_upgrade" : factoryWrite.reason, source_key: sourceKey, persisted: factoryWrite.ok });
+        if (factoryWrite.ok && sourceKey !== STORAGE_KEY) try { window.localStorage.removeItem(sourceKey); } catch (ignoredFactory) {}
+        return factoryMigrated;
+      }
+      if (parsed && parsed.schema_version && parsed.schema_version !== CURRENT_LAYOUT_VERSION && Array.isArray(parsed.surfaces)) {
         var migrated = normalizeLayout(parsed, null);
-        migrated.migration = { from_schema_version: String(parsed.schema_version), migrated_at_utc: now(), source_key: sourceKey, disposition: "copy_forward" };
+        migrated.migration = { from_schema_version: String(parsed.schema_version), migrated_at_utc: now(), source_key: sourceKey, disposition: "copy_forward_customized" };
         migrated.validation.status = "migrated";
         migrated.validation.last_validation_errors = [];
         var migrationWrite = writeAndVerify(migrated);
-        receipt("storage.migration", migrationWrite.ok ? "applied" : "failed", { reason: migrationWrite.ok ? "copy_forward" : migrationWrite.reason, source_key: sourceKey, persisted: migrationWrite.ok });
+        receipt("storage.migration", migrationWrite.ok ? "applied" : "failed", { reason: migrationWrite.ok ? "copy_forward_customized" : migrationWrite.reason, source_key: sourceKey, persisted: migrationWrite.ok });
         if (migrationWrite.ok && sourceKey !== STORAGE_KEY) try { window.localStorage.removeItem(sourceKey); } catch (ignored) {}
         return migrated;
       }
       var errorCode = validateLayout(parsed);
       var normalized = errorCode ? normalizeLayout(parsed, errorCode) : normalizeLayout(parsed, null);
       if (sourceKey !== STORAGE_KEY && !errorCode) {
-        normalized.migration = { from_schema_version: String(parsed.schema_version || "1.0.0"), migrated_at_utc: now(), source_key: sourceKey, disposition: "copy_forward" };
+        normalized.migration = { from_schema_version: String(parsed.schema_version || "1.0.0"), migrated_at_utc: now(), source_key: sourceKey, disposition: "copy_forward_customized" };
         normalized.validation.status = "migrated";
         var legacyWrite = writeAndVerify(normalized);
-        receipt("storage.migration", legacyWrite.ok ? "applied" : "failed", { reason: legacyWrite.ok ? "copy_forward" : legacyWrite.reason, source_key: sourceKey, persisted: legacyWrite.ok });
+        receipt("storage.migration", legacyWrite.ok ? "applied" : "failed", { reason: legacyWrite.ok ? "copy_forward_customized" : legacyWrite.reason, source_key: sourceKey, persisted: legacyWrite.ok });
         if (legacyWrite.ok) try { window.localStorage.removeItem(sourceKey); } catch (ignoredLegacy) {}
         return normalized;
       }
@@ -1697,26 +1787,89 @@ HOME_SCRIPT = r'''
     return null;
   }
 
+  function captureBrowserChrome() {
+    if (!browserChrome.preview) browserChrome.preview = document.getElementById("browserPreviewTab");
+    if (!browserChrome.automation) browserChrome.automation = document.getElementById("automationBrowserTab");
+    return browserChrome;
+  }
+
+  /* The shared Panel 1 overflow fitter owns only its collapsed file tabs, but
+     legacy fit passes clear inline display on every tab before measuring. Keep
+     Automation's separate session visibility truthful after those passes:
+     inactive is absent from layout and focus order; active remains revealable. */
+  function syncAutomationTabVisibility() {
+    var chrome = captureBrowserChrome();
+    var automation = chrome.automation;
+    if (!automation) return;
+    /* Preview wins any transient dual-active residue left by the retired Pane 2
+       switcher after both canonical Browser tabs move into Panel 1. */
+    var previewActive = Boolean(chrome.preview && chrome.preview.classList.contains("active"));
+    var active = automation.classList.contains("active") && !previewActive;
+    if (!active) automation.classList.remove("active");
+    var display = active ? "" : "none";
+    if (automation.style.display !== display) automation.style.display = display;
+    automation.setAttribute("aria-hidden", active ? "false" : "true");
+    automation.setAttribute("tabindex", active ? "0" : "-1");
+    automation.setAttribute("data-pm-home-automation-active", active ? "true" : "false");
+  }
+
+  /* PM_DEMO is intentionally non-persistent. Seed its first-open file model
+     from the accepted factory arrangement, then remove the retired Panel 2
+     copies. Context tabs created before Home boots are retained after the
+     seven factory buffers; ordinary file duplication is not. */
+  function syncFactoryEditorProjection() {
+    var state = null;
+    try { state = window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.files; } catch (error) {}
+    if (state && Array.isArray(state.openTabs)) {
+      var contexts = state.openTabs.filter(function (path) { return String(path).indexOf("context:") === 0; });
+      state.openTabs.length = 0;
+      FACTORY_FILE_PATHS.concat(contexts).forEach(function (path) {
+        if (state.openTabs.indexOf(path) === -1) state.openTabs.push(path);
+      });
+      if (state.openTabs.indexOf(state.activeTab) === -1) state.activeTab = FACTORY_FILE_PATHS[0];
+      if (typeof window.PM6_RENDER_EDITOR_TABS === "function") {
+        try { window.PM6_RENDER_EDITOR_TABS(); } catch (error) {}
+      }
+    }
+    var paneTwoStrip = document.querySelector("#editorPane2 .editor-tabs");
+    if (paneTwoStrip) {
+      Array.prototype.forEach.call(paneTwoStrip.querySelectorAll('.tab[data-file]'), function (tab) { tab.remove(); });
+    }
+  }
+
   function ensureBrowserTab(surfaceId, element) {
     if (!element) return null;
     var tabs = element.querySelector(".editor-tabs");
     if (!tabs) return null;
-    var existing = tabs.querySelector('[data-pm-home-browser-tab="' + surfaceId + '"]');
-    if (existing) return existing;
-    if (surfaceId === "editor_panel_2") existing = document.getElementById("browserPreviewTab");
-    if (!existing) {
-      existing = document.createElement("span");
-      existing.className = "tab pm-home-browser-tab";
-      existing.setAttribute("role", "tab");
-      existing.setAttribute("tabindex", "0");
-      existing.innerHTML = '<svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Browser';
-      /* insert before the overflow chevron when the strip has one (it sits
-         before the pinned actions cluster); fall back to the cluster */
-      tabs.insertBefore(existing, tabs.querySelector(".pm-ed-overflow") || tabs.querySelector(".pane-tabbar-actions"));
-    }
+    if (browserOwner.target_editor_panel_id !== surfaceId) return null;
+    var chrome = captureBrowserChrome();
+    var existing = chrome.preview;
+    if (!existing) return null;
+    var before = tabs.querySelector(".pm-ed-overflow") || tabs.querySelector(".pane-tabbar-actions");
     existing.removeAttribute("onclick");
+    existing.classList.add("pm-home-browser-tab");
+    existing.setAttribute("role", "tab");
+    existing.setAttribute("tabindex", "0");
     existing.setAttribute("data-pm-home-browser-tab", surfaceId);
     existing.setAttribute("aria-label", "Open Browser in Panel " + (EDITOR_IDS.indexOf(surfaceId) + 1));
+    if (chrome.automation) {
+      chrome.automation.removeAttribute("onclick");
+      chrome.automation.setAttribute("role", "tab");
+      chrome.automation.setAttribute("tabindex", "0");
+      chrome.automation.setAttribute("data-pm-home-automation-tab", surfaceId);
+      chrome.automation.setAttribute("aria-label", "Open automation Browser in Panel " + (EDITOR_IDS.indexOf(surfaceId) + 1));
+      var browserGroupStable = existing.parentNode === tabs &&
+        chrome.automation.parentNode === tabs &&
+        existing.nextElementSibling === chrome.automation &&
+        chrome.automation.nextElementSibling === before;
+      if (!browserGroupStable) {
+        tabs.insertBefore(existing, before);
+        tabs.insertBefore(chrome.automation, before);
+      }
+      syncAutomationTabVisibility();
+    } else if (existing.parentNode !== tabs || existing.nextElementSibling !== before) {
+      tabs.insertBefore(existing, before);
+    }
     return existing;
   }
 
@@ -2291,6 +2444,7 @@ HOME_SCRIPT = r'''
     content.style.display = "flex";
     content.setAttribute("data-pm-home-browser-session-id", browserOwner.browser_session_id);
     content.setAttribute("data-pm-home-browser-target-panel", browserOwner.target_editor_panel_id);
+    syncAutomationTabVisibility();
   }
 
   function eligibleBottomTerminal(layout) {
@@ -3208,6 +3362,11 @@ HOME_SCRIPT = r'''
       result = moveSurface(surfaceId, (redockTarget && redockTarget.last_docked_host) || "home_main");
     }
     else if (action === "reset-layout") result = resetWorkspaceAndDemo();
+    else if (action === "run-onboarding") {
+      var onboarding = window.PM7_ONBOARDING_CINEMATIC;
+      if (onboarding && typeof onboarding.replay === "function") result = onboarding.replay({ source_surface: "home_menu" });
+      else { announce("Setup is not available yet."); result = false; }
+    }
     else if (action === "file-open-panel") result = openFileInPanel(surfaceId, fileManagerTargetPath() || "src/main.rs");
     else if (action === "split-terminal-pane") result = splitTerminalPane(surfaceId);
     else if (action === "move-workgroup-new-section") { activeTerminalSectionId = surfaceId; result = moveWorkgroupToHost(surfaceById(committed, surfaceId).host, null, true); }
@@ -4331,18 +4490,28 @@ HOME_SCRIPT = r'''
 
   function installSettingsReset() {
     document.addEventListener("click", function (event) {
-      var button = event.target && event.target.closest ? event.target.closest('.s4-row[data-sid="general.startup.reset-home-layout"] .s4-action') : null;
+      /* T44 owns the Settings renderer and exposes actions semantically. This
+         exact typed control is the sole Settings-to-Home bridge; capture it
+         before T44's generic concept-preview handler, while leaving every
+         other `run-setting-action` untouched. Keep the retired selector only
+         as a compatibility input for older transformed candidates. */
+      var button = event.target && event.target.closest ? event.target.closest('[data-action="run-setting-action"][data-setting="general.startup.reset-home-layout"], .s4-row[data-sid="general.startup.reset-home-layout"] .s4-action') : null;
       if (!button) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       var result = resetLayout();
-      button.textContent = result && result.ok ? "Reset" : "Unavailable";
-      if (typeof window.toast === "function") window.toast(result && result.ok ? "Home workspace layout reset" : "Home workspace layout could not be reset");
+      var ok = Boolean(result && result.ok);
+      var noChange = Boolean(ok && result.no_change);
+      button.setAttribute("data-pm-home-reset-outcome", ok ? (noChange ? "no_change" : "applied") : "failed");
+      button.setAttribute("aria-label", ok ? (noChange ? "Home workspace layout is already at the safe default" : "Home workspace layout reset") : "Home workspace layout reset unavailable");
+      if (typeof window.toast === "function") {
+        window.toast(ok ? (noChange ? "Home workspace layout is already at the safe default" : "Home workspace layout reset") : "Home workspace layout could not be reset");
+      }
     }, true);
     if (window.MutationObserver) {
       var observer = new MutationObserver(function () {
-        document.querySelectorAll('.s4-row[data-sid="general.startup.reset-home-layout"] .s4-action').forEach(function (button) {
-          if (!button.classList.contains("s4-working") && button.textContent !== "Reset") button.textContent = "Reset";
+        document.querySelectorAll('[data-action="run-setting-action"][data-setting="general.startup.reset-home-layout"], .s4-row[data-sid="general.startup.reset-home-layout"] .s4-action').forEach(function (button) {
+          if (!button.classList.contains("s4-working") && !button.textContent.trim()) button.textContent = "Reset";
         });
       });
       observer.observe(document.body, { childList: true, subtree: true });
@@ -4423,6 +4592,23 @@ HOME_SCRIPT = r'''
       if (localAction) { event.preventDefault(); event.stopImmediatePropagation(); handleAction(localAction); return; }
       var browserTab = event.target && event.target.closest ? event.target.closest("[data-pm-home-browser-tab]") : null;
       if (browserTab) { event.preventDefault(); openBrowser(browserTab.getAttribute("data-pm-home-browser-tab")); }
+      var automationTab = event.target && event.target.closest ? event.target.closest("[data-pm-home-automation-tab]") : null;
+      if (automationTab) {
+        event.preventDefault();
+        var automationPanel = automationTab.getAttribute("data-pm-home-automation-tab");
+        openBrowser(automationPanel);
+        var automationBanner = document.getElementById("automationBanner");
+        var sessionBadge = document.getElementById("browserSessionBadge");
+        var addressBar = document.getElementById("browserAddressBar");
+        var previewTab = browserChrome.preview;
+        if (previewTab) previewTab.classList.remove("active");
+        automationTab.style.display = "";
+        automationTab.classList.add("active");
+        syncAutomationTabVisibility();
+        if (automationBanner) automationBanner.style.display = "flex";
+        if (sessionBadge) { sessionBadge.className = "browser-session-badge automation"; sessionBadge.textContent = "automation_session"; }
+        if (addressBar) addressBar.value = "http://localhost:5173/test-runner";
+      }
       var codeTab = event.target && event.target.closest ? event.target.closest("[data-pm-home-surface] .editor-tabs .tab[data-file]") : null;
       if (codeTab) {
         var surfaceEl = codeTab.closest("[data-pm-home-surface]");
@@ -4520,6 +4706,111 @@ HOME_SCRIPT = r'''
      the chrome whenever a claimed surface's subtree is rebuilt, rather than
      hoping the 250ms/1000ms boot catch-ups land after the last re-render. */
   var chromeWatch = { observer: null, queued: false, busy: false, watched: null };
+  var overflowSafety = { observed: typeof WeakSet === "function" ? new WeakSet() : null, states: typeof WeakMap === "function" ? new WeakMap() : null };
+
+  function overflowChipWidth(chip, label) {
+    if (!chip || !document.body) return 0;
+    var cloneChip = chip.cloneNode(false);
+    cloneChip.removeAttribute("id");
+    cloneChip.removeAttribute("data-pm-home-overflow-mode");
+    cloneChip.textContent = label;
+    cloneChip.style.cssText = "position:fixed!important;left:-10000px!important;top:-10000px!important;display:block!important;visibility:hidden!important;width:auto!important;min-width:0!important;max-width:none!important;pointer-events:none!important;";
+    document.body.appendChild(cloneChip);
+    var width = cloneChip.getBoundingClientRect().width;
+    cloneChip.remove();
+    return width;
+  }
+
+  function overflowHiddenCount(strip, chip) {
+    var textMatch = /\+(\d+)/.exec(chip.textContent || "");
+    if (textMatch) return Number(textMatch[1]) || 0;
+    var stored = Number(chip.getAttribute("data-pm-home-hidden-count"));
+    if (stored > 0) return stored;
+    if (strip._pmEdHidden && strip._pmEdHidden.length) return strip._pmEdHidden.length;
+    return strip.querySelectorAll('.tab[data-ed-hidden], .tab[data-ed2-hidden], .tab[style*="display: none"]').length;
+  }
+
+  /* The base fitter correctly chooses which tabs collapse, but under extreme
+     fair-share compression its final one-tab floor can still put the chip in
+     the surface kebab's lane. Keep the full label when it fits, then degrade
+     only the chip's presentation (+N, then an accessible ellipsis). If even
+     20px cannot coexist with four pixels of clearance, hide the chip until a
+     ResizeObserver sees usable space again. Domain state and hidden-tab
+     ownership stay in the base fitter; this is presentation containment only. */
+  function enforceHomeOverflowClearance(strip) {
+    if (!strip || !strip.isConnected) return;
+    var surface = strip.closest('[data-pm-home-surface][data-pm-home-kind="editor_panel"]');
+    var chip = strip.querySelector(".pm-ed-overflow");
+    var kebab = surface && surface.querySelector(':scope > [data-pm-home-surface-options]');
+    if (!surface || !chip || !kebab) return;
+    var stripWidth = strip.getBoundingClientRect().width;
+    if (chip.getAttribute("data-pm-home-overflow-mode") === "hidden") {
+      var hiddenAtWidth = Number(chip.getAttribute("data-pm-home-hidden-at-width"));
+      if (Number.isFinite(hiddenAtWidth) && Math.abs(hiddenAtWidth - stripWidth) < 1) return;
+      chip.removeAttribute("data-pm-home-overflow-mode");
+      chip.removeAttribute("data-pm-home-hidden-at-width");
+      chip.setAttribute("aria-hidden", "false");
+      if (typeof window.PM6_FIT_EDITOR_TABS === "function") {
+        try { window.PM6_FIT_EDITOR_TABS(strip); } catch (error) {}
+      }
+      scheduleHomeOverflowClearance(strip);
+      return;
+    }
+    if (getComputedStyle(chip).display === "none") return;
+    var count = overflowHiddenCount(strip, chip);
+    if (!count) return;
+    chip.setAttribute("data-pm-home-hidden-count", String(count));
+    chip.setAttribute("aria-label", count + " collapsed editor tab" + (count === 1 ? "" : "s"));
+    var full = "+" + count + " more";
+    var compact = "+" + count;
+    chip.setAttribute("data-pm-home-compact-label", compact);
+    var stripRect = strip.getBoundingClientRect();
+    var kebabRect = kebab.getBoundingClientRect();
+    var allowedRight = Math.min(stripRect.right, kebabRect.left - 4);
+    var chipRect = chip.getBoundingClientRect();
+    var available = Math.max(0, allowedRight - chipRect.left);
+    var fullWidth = overflowChipWidth(chip, full);
+    var compactWidth = overflowChipWidth(chip, compact);
+    var mode = fullWidth <= available + .5 ? "full" : (compactWidth <= available + .5 ? "compact" : (20 <= available + .5 ? "ellipsis" : "hidden"));
+    if (mode === "full") chip.removeAttribute("data-pm-home-overflow-mode");
+    else chip.setAttribute("data-pm-home-overflow-mode", mode);
+    if (mode === "hidden") chip.setAttribute("data-pm-home-hidden-at-width", String(stripWidth));
+    else chip.removeAttribute("data-pm-home-hidden-at-width");
+    chip.setAttribute("aria-hidden", mode === "hidden" ? "true" : "false");
+    chip.setAttribute("data-pm-home-clearance-px", String(Math.floor(allowedRight - chip.getBoundingClientRect().right)));
+  }
+
+  function scheduleHomeOverflowClearance(strip) {
+    if (!strip || !strip.isConnected) return;
+    var state = overflowSafety.states && overflowSafety.states.get(strip);
+    if (!state) {
+      state = { queued: false };
+      if (overflowSafety.states) overflowSafety.states.set(strip, state);
+      else state = strip._pmHomeOverflowSafety || (strip._pmHomeOverflowSafety = { queued: false });
+    }
+    if (state.queued) return;
+    state.queued = true;
+    requestAnimationFrame(function () {
+      state.queued = false;
+      enforceHomeOverflowClearance(strip);
+    });
+  }
+
+  function enrolHomeOverflowSafety(element) {
+    var strip = element && element.querySelector && element.querySelector(".editor-tabs");
+    if (!strip) return;
+    if (overflowSafety.observed && overflowSafety.observed.has(strip)) { scheduleHomeOverflowClearance(strip); return; }
+    if (overflowSafety.observed) overflowSafety.observed.add(strip);
+    if (typeof ResizeObserver === "function") {
+      try { new ResizeObserver(function () { scheduleHomeOverflowClearance(strip); }).observe(strip); } catch (error) {}
+    }
+    if (typeof MutationObserver === "function") {
+      try {
+        new MutationObserver(function () { syncAutomationTabVisibility(); scheduleHomeOverflowClearance(strip); }).observe(strip, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["style"] });
+      } catch (error) {}
+    }
+    scheduleHomeOverflowClearance(strip);
+  }
 
   function reseatSurfaceChrome() {
     chromeWatch.queued = false;
@@ -4530,6 +4821,10 @@ HOME_SCRIPT = r'''
         if (!surface.visible) return;
         var record = surfaceRegistry[surface.surface_instance_id];
         if (!record || !record.element || !record.element.isConnected) return;
+        if (surface.surface_kind === "editor_panel") {
+          ensureBrowserTab(surface.surface_instance_id, record.element);
+          enrolHomeOverflowSafety(record.element);
+        }
         attachSurfaceControls(surface);
         syncCollapseControl(surface, record.element);
       });
@@ -4572,9 +4867,11 @@ HOME_SCRIPT = r'''
     root = document.getElementById("pm-home-workspace");
     grid = document.getElementById("pm-home-host-grid");
     if (!root || !grid || !mountWorkspace()) return;
+    captureBrowserChrome();
     committed = readLayout();
     committed = demoteFloatingAtBoot(committed);
     restoreOwnerRefs(committed);
+    syncFactoryEditorProjection();
     restoreFocusSequence(committed);
     installTitlebarHomeControl();
     installFileManagerOpenTargets();
@@ -4697,3 +4994,26 @@ LEGACY_SURFACE_DND_PATTERN = (
     r"\n[ \t]*/\* -+ editor tab drag-reorder \(delegated\)"
 )
 LEGACY_SURFACE_DND_ANCHOR = "/* ---------- editor tab drag-reorder (delegated) ----------------------"
+
+
+# Import-time authored-source guard consumed by the active T48 bounded refresh.
+# It protects the Automation session from regressing to the legacy Panel 1
+# fitter's indiscriminate display reset without making a browser/runtime claim.
+if (
+    HOME_SCRIPT.count("function syncAutomationTabVisibility()") != 1
+    or HOME_SCRIPT.count("syncAutomationTabVisibility();") != 4
+    or not all(
+        token in HOME_SCRIPT
+        for token in (
+            'automation.style.display !== display',
+            'automation.setAttribute("aria-hidden", active ? "false" : "true")',
+            'automation.setAttribute("tabindex", active ? "0" : "-1")',
+            'var active = automation.classList.contains("active") && !previewActive',
+            'syncAutomationTabVisibility(); scheduleHomeOverflowClearance(strip)',
+            'existing.nextElementSibling === chrome.automation',
+            'chrome.automation.nextElementSibling === before',
+            'tabs.insertBefore(existing, before);\n        tabs.insertBefore(chrome.automation, before);',
+        )
+    )
+):
+    raise AssertionError("T48 Home source: Automation tab visibility contract drifted")

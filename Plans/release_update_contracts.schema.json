@@ -1,0 +1,1638 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/release_update.schema.json",
+  "title": "Application update, bundled artifact, and OAuth release-admission contracts",
+  "x-schema-id": "pm.release_update.contracts.v1",
+  "x-command-count": 7,
+  "x-command-ids": [
+    "cmd.update.app.automatic.set_enabled",
+    "cmd.update.app.cancel_download",
+    "cmd.update.app.check",
+    "cmd.update.app.download",
+    "cmd.update.app.install_restart",
+    "cmd.update.app.remind_later",
+    "cmd.update.app.rollback"
+  ],
+  "x-local-action-count": 3,
+  "x-local-action-ids": [
+    "ui.update.app.open_details",
+    "ui.update.app.open_logs",
+    "ui.update.app.open_release_notes"
+  ],
+  "x-command-contracts": {
+    "cmd.update.app.automatic.set_enabled": {
+      "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
+      "result_ref": "#/$defs/ApplicationUpdateCommandResult",
+      "error_ref": "#/$defs/ApplicationUpdateCommandError",
+      "availability_ref": "#/$defs/ApplicationUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ApplicationUpdateDisabledReason",
+      "permission_ref": "#/$defs/ApplicationUpdatePermissionDecision",
+      "sole_handler": "handlers::application_update::automatic_set_enabled",
+      "gui_consumers": [
+        "Settings > Updates",
+        "bottom Update Available item",
+        "Server permanent web UI",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.update.app.cancel_download": {
+      "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
+      "result_ref": "#/$defs/ApplicationUpdateCommandResult",
+      "error_ref": "#/$defs/ApplicationUpdateCommandError",
+      "availability_ref": "#/$defs/ApplicationUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ApplicationUpdateDisabledReason",
+      "permission_ref": "#/$defs/ApplicationUpdatePermissionDecision",
+      "sole_handler": "handlers::application_update::cancel_download",
+      "gui_consumers": [
+        "Settings > Updates",
+        "bottom Update Available item",
+        "Server permanent web UI",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.update.app.check": {
+      "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
+      "result_ref": "#/$defs/ApplicationUpdateCommandResult",
+      "error_ref": "#/$defs/ApplicationUpdateCommandError",
+      "availability_ref": "#/$defs/ApplicationUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ApplicationUpdateDisabledReason",
+      "permission_ref": "#/$defs/ApplicationUpdatePermissionDecision",
+      "sole_handler": "handlers::application_update::check",
+      "gui_consumers": [
+        "Settings > Updates",
+        "bottom Update Available item",
+        "Server permanent web UI",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.update.app.download": {
+      "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
+      "result_ref": "#/$defs/ApplicationUpdateCommandResult",
+      "error_ref": "#/$defs/ApplicationUpdateCommandError",
+      "availability_ref": "#/$defs/ApplicationUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ApplicationUpdateDisabledReason",
+      "permission_ref": "#/$defs/ApplicationUpdatePermissionDecision",
+      "sole_handler": "handlers::application_update::download",
+      "gui_consumers": [
+        "Settings > Updates",
+        "bottom Update Available item",
+        "Server permanent web UI",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.update.app.install_restart": {
+      "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
+      "result_ref": "#/$defs/ApplicationUpdateCommandResult",
+      "error_ref": "#/$defs/ApplicationUpdateCommandError",
+      "availability_ref": "#/$defs/ApplicationUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ApplicationUpdateDisabledReason",
+      "permission_ref": "#/$defs/ApplicationUpdatePermissionDecision",
+      "sole_handler": "handlers::application_update::install_restart",
+      "gui_consumers": [
+        "Settings > Updates",
+        "bottom Update Available item",
+        "Server permanent web UI",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.update.app.remind_later": {
+      "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
+      "result_ref": "#/$defs/ApplicationUpdateCommandResult",
+      "error_ref": "#/$defs/ApplicationUpdateCommandError",
+      "availability_ref": "#/$defs/ApplicationUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ApplicationUpdateDisabledReason",
+      "permission_ref": "#/$defs/ApplicationUpdatePermissionDecision",
+      "sole_handler": "handlers::application_update::remind_later",
+      "gui_consumers": [
+        "Settings > Updates",
+        "bottom Update Available item",
+        "Server permanent web UI",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.update.app.rollback": {
+      "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
+      "result_ref": "#/$defs/ApplicationUpdateCommandResult",
+      "error_ref": "#/$defs/ApplicationUpdateCommandError",
+      "availability_ref": "#/$defs/ApplicationUpdateCommandAvailability",
+      "disabled_reason_ref": "#/$defs/ApplicationUpdateDisabledReason",
+      "permission_ref": "#/$defs/ApplicationUpdatePermissionDecision",
+      "sole_handler": "handlers::application_update::rollback",
+      "gui_consumers": [
+        "Settings > Updates",
+        "bottom Update Available item",
+        "Server permanent web UI",
+        "Doctor"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    }
+  },
+  "x-claim-boundary": "static source contract only; no central registration, native handler, runtime, security attack, restart execution, or certification proof",
+  "$defs": {
+    "ApplicationUpdateNonSecretRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "not": {
+        "pattern": "(^|[._:/-])(raw|password|secret|access_token|refresh_token|api_key|cookie|authorization)([._:/-]|$)"
+      }
+    },
+    "ApplicationUpdateSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ApplicationUpdateTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ApplicationUpdateReturnContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "route_id",
+        "focus_target",
+        "invocation_token",
+        "return_generation"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "route_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "focus_target": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ApplicationUpdateIntegrationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "central_registered",
+        "schema_bound",
+        "native_handler_bound",
+        "permission_route_bound",
+        "production_wired",
+        "receipt_or_admitted_event_bound"
+      ],
+      "properties": {
+        "central_registered": {
+          "type": "boolean"
+        },
+        "schema_bound": {
+          "type": "boolean"
+        },
+        "native_handler_bound": {
+          "type": "boolean"
+        },
+        "permission_route_bound": {
+          "type": "boolean"
+        },
+        "production_wired": {
+          "type": "boolean"
+        },
+        "receipt_or_admitted_event_bound": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ApplicationUpdateCommandId": {
+      "type": "string",
+      "enum": [
+        "cmd.update.app.automatic.set_enabled",
+        "cmd.update.app.cancel_download",
+        "cmd.update.app.check",
+        "cmd.update.app.download",
+        "cmd.update.app.install_restart",
+        "cmd.update.app.remind_later",
+        "cmd.update.app.rollback"
+      ]
+    },
+    "ApplicationUpdateOperation": {
+      "type": "string",
+      "enum": [
+        "automatic_set_enabled",
+        "cancel_download",
+        "check",
+        "download",
+        "install_restart",
+        "remind_later",
+        "rollback"
+      ]
+    },
+    "ApplicationUpdateCommandPayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "enabled",
+            "policy_generation",
+            "manual_checks_remain_enabled"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.app.automatic.set_enabled"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "policy_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "manual_checks_remain_enabled": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "update_operation_id",
+            "expected_phase",
+            "preserve_active_generation"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.app.cancel_download"
+            },
+            "update_operation_id": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "expected_phase": {
+              "enum": [
+                "downloading",
+                "verifying"
+              ]
+            },
+            "preserve_active_generation": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "channel_id",
+            "cache_policy",
+            "coalesce_key"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.app.check"
+            },
+            "channel_id": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "cache_policy": {
+              "enum": [
+                "use_current_cache",
+                "refresh_if_stale"
+              ]
+            },
+            "coalesce_key": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "release_id",
+            "artifact_manifest_ref",
+            "signing_policy_ref",
+            "activate_after_download"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.app.download"
+            },
+            "release_id": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "artifact_manifest_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "signing_policy_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "activate_after_download": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "release_id",
+            "verified_artifact_ref",
+            "recovery_boundary_ref",
+            "migration_preflight_ref",
+            "install_source_ref",
+            "rollback_generation_ref",
+            "confirmation"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.app.install_restart"
+            },
+            "release_id": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "verified_artifact_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "recovery_boundary_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "migration_preflight_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "install_source_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "rollback_generation_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "confirmation": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "reminder_policy_ref",
+            "defer_seconds",
+            "checks_remain_enabled"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.app.remind_later"
+            },
+            "reminder_policy_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "defer_seconds": {
+              "type": "integer",
+              "minimum": 300,
+              "maximum": 604800
+            },
+            "checks_remain_enabled": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "target_generation_ref",
+            "compatibility_proof_ref",
+            "recovery_boundary_ref",
+            "confirmation"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.update.app.rollback"
+            },
+            "target_generation_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "compatibility_proof_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "recovery_boundary_ref": {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            "confirmation": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdateCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "idempotency_key",
+        "application_id",
+        "channel_id",
+        "update_operation_id",
+        "active_generation_ref",
+        "expected_catalog_generation",
+        "expected_update_generation",
+        "permission_snapshot_ref",
+        "return_context",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.command_request.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateCommandRequest"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ApplicationUpdateCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/ApplicationUpdateOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "application_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "channel_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "update_operation_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "active_generation_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "expected_catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_update_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/ApplicationUpdateReturnContext"
+        },
+        "payload": {
+          "$ref": "#/$defs/ApplicationUpdateCommandPayload"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.automatic.set_enabled"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "automatic_set_enabled"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.automatic.set_enabled"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.cancel_download"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "cancel_download"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.cancel_download"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.check"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "check"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.check"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.download"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "download"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.download"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.install_restart"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "install_restart"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.install_restart"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.remind_later"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "remind_later"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.remind_later"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.rollback"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rollback"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.rollback"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdateCommandOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "changed",
+        "state",
+        "currentness",
+        "operation_receipt_ref",
+        "resulting_generation",
+        "restart_disposition",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/ApplicationUpdateCommandId"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "running",
+            "paused",
+            "completed",
+            "cancelled",
+            "rolled_back",
+            "blocked",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "conflicted",
+            "unknown"
+          ]
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "resulting_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restart_disposition": {
+          "enum": [
+            "not_applicable",
+            "resume",
+            "rollback",
+            "recovery_required"
+          ]
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "ApplicationUpdateCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "status",
+        "application_id",
+        "channel_id",
+        "update_operation_id",
+        "active_generation_ref",
+        "expected_catalog_generation",
+        "expected_update_generation",
+        "receipt_ref",
+        "observable_work_ref",
+        "return_context",
+        "event_effect_policy",
+        "output",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.command_result.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateCommandResult"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ApplicationUpdateCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/ApplicationUpdateOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "no_change",
+            "blocked",
+            "cancelled",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "application_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "channel_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "update_operation_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "active_generation_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "expected_catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_update_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "observable_work_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/ApplicationUpdateReturnContext"
+        },
+        "event_effect_policy": {
+          "const": "receipt_only_no_eventrecord_pending_event_authority"
+        },
+        "output": {
+          "$ref": "#/$defs/ApplicationUpdateCommandOutput"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.automatic.set_enabled"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "automatic_set_enabled"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.automatic.set_enabled"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.cancel_download"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "cancel_download"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.cancel_download"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.check"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "check"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.check"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.download"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "download"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.download"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.install_restart"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "install_restart"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.install_restart"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.remind_later"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "remind_later"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.remind_later"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.update.app.rollback"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rollback"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.update.app.rollback"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdateCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "code",
+        "retryability",
+        "safe_message",
+        "return_context",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.command_error.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateCommandError"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ApplicationUpdateCommandId"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "code": {
+          "enum": [
+            "invalid_request",
+            "handler_unavailable",
+            "permission_denied",
+            "filesafe_denied",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_conflict",
+            "duplicate_conflict",
+            "plan_or_checkpoint_mismatch",
+            "recovery_required",
+            "internal_fail_closed"
+          ]
+        },
+        "retryability": {
+          "enum": [
+            "not_retryable",
+            "retry_after_state_change",
+            "retry_same_idempotent_operation",
+            "manual_recovery_required"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "return_context": {
+          "$ref": "#/$defs/ApplicationUpdateReturnContext"
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "ApplicationUpdateDisabledReason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "code",
+        "safe_message",
+        "blocking_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.disabled_reason.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateDisabledReason"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ApplicationUpdateCommandId"
+        },
+        "code": {
+          "enum": [
+            "central_registration_missing",
+            "schema_binding_missing",
+            "handler_unavailable",
+            "permission_route_missing",
+            "production_wiring_missing",
+            "receipt_or_event_disposition_missing",
+            "stale_generation",
+            "identity_mismatch",
+            "operation_in_progress",
+            "recovery_required",
+            "permission_denied",
+            "filesafe_denied"
+          ]
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "blocking_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+          }
+        }
+      }
+    },
+    "ApplicationUpdateCommandAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "available",
+        "integration_evidence",
+        "disabled_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.availability.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateCommandAvailability"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ApplicationUpdateCommandId"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "integration_evidence": {
+          "$ref": "#/$defs/ApplicationUpdateIntegrationEvidence"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateDisabledReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "integration_evidence": {
+                "properties": {
+                  "central_registered": {
+                    "const": true
+                  },
+                  "schema_bound": {
+                    "const": true
+                  },
+                  "native_handler_bound": {
+                    "const": true
+                  },
+                  "permission_route_bound": {
+                    "const": true
+                  },
+                  "production_wired": {
+                    "const": true
+                  },
+                  "receipt_or_admitted_event_bound": {
+                    "const": true
+                  }
+                }
+              },
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/ApplicationUpdateDisabledReason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdatePermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "permission_snapshot_ref",
+        "permission_class",
+        "decision",
+        "authority_widening",
+        "secret_material_exposed",
+        "reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.permission_decision.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdatePermissionDecision"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ApplicationUpdateCommandId"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "permission_class": {
+          "enum": [
+            "application.update.manage",
+            "application.update.install"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "deny",
+                  "prompt_human"
+                ]
+              }
+            },
+            "required": [
+              "decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdateCommandRoundTrip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/ApplicationUpdateCommandRequest"
+        },
+        "result": {
+          "$ref": "#/$defs/ApplicationUpdateCommandResult"
+        }
+      },
+      "x-semantic-invariants": [
+        "request.command_id == result.command_id",
+        "request.command_instance_id == result.command_instance_id",
+        "request return_context is byte-identical to result return_context",
+        "result generations never regress"
+      ]
+    },
+    "ApplicationUpdateLocalActionId": {
+      "type": "string",
+      "enum": [
+        "ui.update.app.open_details",
+        "ui.update.app.open_logs",
+        "ui.update.app.open_release_notes"
+      ]
+    },
+    "ApplicationUpdateLocalActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "expected_projection_generation",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.local_action_request.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateLocalActionRequest"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/ApplicationUpdateLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "expected_projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context": {
+          "$ref": "#/$defs/ApplicationUpdateReturnContext"
+        }
+      }
+    },
+    "ReleaseBundledArtifactAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "artifact_id",
+        "artifact_kind",
+        "artifact_role",
+        "release_id",
+        "pinned_version_ref",
+        "source_revision_ref",
+        "dependency_graph_ref",
+        "license_notice_ref",
+        "sbom_ref",
+        "provenance_ref",
+        "artifact_sha256",
+        "signing_evidence_ref",
+        "platform_matrix_ref",
+        "protocol_compatibility_ref",
+        "state_format_migration_ref",
+        "activation_unit",
+        "independent_updater_allowed",
+        "acquisition_state",
+        "disabled_reason",
+        "implementation_time_reverification_required",
+        "runtime_evidence_claimed",
+        "event_effect_policy",
+        "evaluated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.release_update.bundled_artifact_admission.v1"},
+        "record_kind": {"const": "ReleaseBundledArtifactAdmission"},
+        "artifact_id": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "artifact_kind": {"enum": ["pm_tailnet_connector", "backup_engine_restic", "backup_transport_rclone"]},
+        "artifact_role": {"enum": ["core_release_component", "local_backup_engine", "backup_transport"]},
+        "release_id": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "pinned_version_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "source_revision_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "dependency_graph_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "license_notice_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "sbom_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "provenance_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "artifact_sha256": {"$ref": "#/$defs/ApplicationUpdateSha256"},
+        "signing_evidence_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "platform_matrix_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "protocol_compatibility_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "state_format_migration_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "activation_unit": {"const": "same_puppet_master_release_or_image"},
+        "independent_updater_allowed": {"const": false},
+        "acquisition_state": {"enum": ["handler_unavailable", "blocked_missing_evidence", "admitted_static_only"]},
+        "disabled_reason": {"anyOf": [{"enum": ["handler_unavailable", "provenance_missing", "license_review_required", "platform_unverified", "protocol_incompatible", "state_migration_unverified"]}, {"type": "null"}]},
+        "implementation_time_reverification_required": {"const": true},
+        "runtime_evidence_claimed": {"const": false},
+        "event_effect_policy": {"const": "receipt_only_no_eventrecord_pending_event_authority"},
+        "evaluated_at_utc": {"$ref": "#/$defs/ApplicationUpdateTimestamp"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"artifact_kind": {"const": "pm_tailnet_connector"}}, "required": ["artifact_kind"]},
+          "then": {
+            "properties": {
+              "artifact_role": {"const": "core_release_component"},
+              "protocol_compatibility_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+              "state_format_migration_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"artifact_kind": {"const": "backup_engine_restic"}}, "required": ["artifact_kind"]},
+          "then": {"properties": {"artifact_role": {"const": "local_backup_engine"}}}
+        },
+        {
+          "if": {"properties": {"artifact_kind": {"const": "backup_transport_rclone"}}, "required": ["artifact_kind"]},
+          "then": {"properties": {"artifact_role": {"const": "backup_transport"}}}
+        },
+        {
+          "if": {"properties": {"acquisition_state": {"enum": ["handler_unavailable", "blocked_missing_evidence"]}}, "required": ["acquisition_state"]},
+          "then": {"properties": {"disabled_reason": {"type": "string"}}}
+        }
+      ]
+    },
+    "ReleaseOAuthRegistrationGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "provider_kind",
+        "registration_ref",
+        "callback_registration_ref",
+        "client_id_provenance_ref",
+        "confidential_client_material_ref",
+        "registration_state",
+        "provider_approval_state",
+        "callback_mode",
+        "distributed_binary_contains_confidential_material",
+        "release_gate_state",
+        "disabled_reason",
+        "runtime_test_status",
+        "handler_available",
+        "event_effect_policy",
+        "evaluated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.release_update.oauth_registration_gate.v1"},
+        "record_kind": {"const": "ReleaseOAuthRegistrationGate"},
+        "provider_kind": {"enum": ["google_drive", "microsoft_onedrive"]},
+        "registration_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "callback_registration_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "client_id_provenance_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "confidential_client_material_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "registration_state": {"enum": ["unregistered", "approval_pending", "registered"]},
+        "provider_approval_state": {"enum": ["not_submitted", "pending", "approved", "rejected"]},
+        "callback_mode": {"enum": ["native_registered_redirect", "registered_web_callback", "approved_device_flow", "unavailable"]},
+        "distributed_binary_contains_confidential_material": {"const": false},
+        "release_gate_state": {"enum": ["handler_unavailable", "blocked", "admitted_static_only"]},
+        "disabled_reason": {"anyOf": [{"enum": ["registration_missing", "provider_approval_pending", "callback_unavailable", "client_id_provenance_missing", "confidential_material_custody_missing", "handler_unavailable"]}, {"type": "null"}]},
+        "runtime_test_status": {"const": "NOT_RUN"},
+        "handler_available": {"const": false},
+        "event_effect_policy": {"const": "receipt_only_no_eventrecord_pending_event_authority"},
+        "evaluated_at_utc": {"$ref": "#/$defs/ApplicationUpdateTimestamp"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"registration_state": {"enum": ["unregistered", "approval_pending"]}}, "required": ["registration_state"]},
+          "then": {"properties": {"release_gate_state": {"enum": ["handler_unavailable", "blocked"]}, "disabled_reason": {"type": "string"}}}
+        },
+        {
+          "if": {"properties": {"release_gate_state": {"const": "admitted_static_only"}}, "required": ["release_gate_state"]},
+          "then": {
+            "properties": {
+              "registration_state": {"const": "registered"},
+              "provider_approval_state": {"const": "approved"},
+              "registration_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+              "callback_registration_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+              "client_id_provenance_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdateLocalActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "projection_ref",
+        "projection_generation",
+        "redacted",
+        "lazy",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "accessible_focus_target",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.local_action_result.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateLocalActionResult"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/ApplicationUpdateLocalActionId"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted": {
+          "const": true
+        },
+        "lazy": {
+          "const": true
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "accessible_focus_target": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "return_context": {
+          "$ref": "#/$defs/ApplicationUpdateReturnContext"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ApplicationUpdateCommandRequest"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateCommandResult"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateCommandError"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateCommandAvailability"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateDisabledReason"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdatePermissionDecision"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateCommandRoundTrip"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateLocalActionRequest"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateLocalActionResult"
+    },
+    {
+      "$ref": "#/$defs/ReleaseBundledArtifactAdmission"
+    },
+    {
+      "$ref": "#/$defs/ReleaseOAuthRegistrationGate"
+    }
+  ]
+}

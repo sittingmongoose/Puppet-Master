@@ -9221,3 +9221,215 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
   - 'Plans/runtime_integration_disposition.json#items[PRM-012]'
 ```
+
+### PS-135 - Browser State Minimum Export Boundary
+
+```yaml
+plan_unit_id: PS-135
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Browser profile state, cookies, origin/local/session storage, and authentication headers are non-exportable by
+  default and are never wholesale exported. An ordinary Browser subject may export only explicitly allowlisted
+  minimum fields under one purpose-bound permission, redaction profile, destination, expiry, and export receipt; a
+  state-class, origin, profile, or wildcard grant is insufficient. Raw Set-Cookie/Cookie/Authorization/
+  Proxy-Authorization values, bearer tokens, credential-store material, and complete cookie jars, profile bundles,
+  or storage databases remain absent from exports, receipts, artifacts, logs, model context, and normal display.
+  Protected AuthBrowserSession is structurally ineligible for export, capture, recording, inspection, automation,
+  or inference.
+gui_related: true
+gui_classification_reason: Export availability, denial, redaction, purpose, and receipt state are user-visible.
+depends_on: [PS-075, PS-106, PS-108, SMPFS-143]
+unblocks: []
+acceptance_criteria:
+  - SEC-003 covers cookies, storage, and auth headers under `minimum_allowlisted_fields_only` with wholesale export forbidden.
+  - Every allowed field is field-by-field allowlisted, purpose/destination/expiry bound, redacted before persistence/display/export, and receipted without raw secret bytes; default export posture is off.
+  - Protected AuthBrowserSession remains structurally non-exportable even with user permission or an ordinary Browser receipt.
+  - A positive fixture may export only an explicitly permitted redacted minimum ordinary-Browser field and proves the receipt contains identity, decision, field-name/hash, purpose, destination, expiry, and omission refs without the original secret value.
+  - Negative secret-exfiltration fixtures reject a complete cookie jar/profile/storage database, any raw Cookie/Set-Cookie/Authorization/Proxy-Authorization or bearer-token value, wildcard/state-class/origin-wide export, receipt/log/artifact/model-context secret echo, unredacted persistence/display, and every protected-auth subject.
+  - Static fixtures do not prove secret isolation, redaction effectiveness, Browser process isolation, or attack resistance.
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, focused Egolite remediation validator, future ordinary-browser field-allowlist and secret-exfiltration matrix]
+risk_class: wholesale_browser_state_or_auth_export
+reasoning_tier: high
+context_scope: browser_state_export_security
+implementation_surfaces: [Plans/Permissions_System.md, Plans/Section15_MVP_Promoted_Features_Spec.md, future Browser export service]
+node_compile_hint: {mode: permission_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:SEC-003]
+preserved_exact_tokens: [cookies, storage, auth headers, not wholesale exported, AuthBrowserSession]
+negative_constraints:
+  - Do not export protected-auth state under any ordinary capability or permission.
+  - Do not persist raw Cookie, Set-Cookie, Authorization, Proxy-Authorization, token, or credential values.
+  - Do not treat a wildcard, origin, profile, or whole state class as a minimum-field allowlist.
+owner_hints: [Plans/Permissions_System.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/FileSafe.md]
+```
+
+### PS-136 - Public Ingress PM API Only
+
+```yaml
+plan_unit_id: PS-136
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Explicit public ingress exposes only endpoints registered as PM API endpoints: the Puppet Master HTTPS/API/
+  WebSocket surfaces in the `pm_api` class. Public exposure is off by default and each request is authenticated,
+  rate-gated, generation-fenced, body-bounded, and policy-admitted before domain hydration or mutation. Internal
+  automation/control sockets, credential/broker/SSH IPC, CEF/CDP/browser-debug endpoints, terminal/PTY and
+  container-engine sockets, device bridges, recorder ports, local-daemon control planes, and plugin/MCP private
+  transports are never public ingress; they are not reverse-proxy targets and cannot be made public by TLS, Funnel,
+  proxy, route, or WebSocket reachability alone.
+gui_related: false
+gui_classification_reason: Public endpoint classification and pre-hydration network admission are transport/security contracts rather than GUI presentation.
+depends_on: [PS-075, SIR-016]
+unblocks: []
+acceptance_criteria:
+  - SEC-007 accepts public endpoint_class=pm_api only; every internal/control/debug/broker socket class fails closed.
+  - Authentication and rate decisions are mandatory before expensive hydration, body processing, Browser creation, model dispatch, or mutation.
+  - A positive ingress fixture admits only an explicitly exposed, generation-current pm_api route with successful authentication, rate, body-bound, and policy decisions; HTTPS or WebSocket transport alone does not classify an endpoint as pm_api.
+  - Negative port/proxy fixtures reject every internal automation/control, credential/broker/SSH, CEF/CDP/debug, terminal/PTY, container-engine, device-bridge, recorder, local-daemon, plugin, and MCP endpoint class, including when a Funnel/reverse-proxy/TLS route can reach it.
+  - Missing/failed authentication, rate, generation, body-bound, endpoint-registration, or policy evidence denies before Project/Vault/provider/plugin hydration, Browser creation, model dispatch, expensive routing, or durable mutation.
+  - Proxy or route configuration cannot widen endpoint class, auth scope, permission, or generation.
+  - Static fixtures do not prove port exposure, firewall behavior, proxy configuration, authentication, rate limiting, or attack resistance.
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, focused Egolite remediation validator, future endpoint-class census and live bind/port/Funnel/reverse-proxy negative matrix]
+risk_class: internal_control_plane_public_exposure
+reasoning_tier: high
+context_scope: public_ingress_endpoint_class
+implementation_surfaces: [Plans/Permissions_System.md, Plans/Shared_Integration_Runtime.md, future Server/Remote Access ingress]
+node_compile_hint: {mode: permission_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:SEC-007]
+preserved_exact_tokens: [Public ingress exposes PM API only, internal automation/control sockets, credential and broker sockets, browser debug]
+negative_constraints:
+  - Do not expose internal control, credential/broker/SSH, Browser debug/CDP, PTY, container-engine, device-bridge, recorder, plugin, MCP, or local-daemon sockets publicly.
+  - Do not treat TLS or route reachability as authentication or endpoint admission.
+owner_hints: [Plans/Permissions_System.md, Plans/Shared_Integration_Runtime.md]
+```
+
+### PS-137 - Actual Network Effect Authorization
+
+```yaml
+plan_unit_id: PS-137
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  The effective WebEgressPolicy is enforced on each actual outbound request and at every actual navigation,
+  redirect, WebSocket handshake/reconnect, form submission, upload, download initiation/follow-up, and low-level
+  browser network effect.
+  The permit binds normalized destination, current DNS/IP result, method, headers class, body class/hash, effect kind,
+  redirect hop, proxy/trust policy, permission snapshot, policy generation, and expiry; dynamic assembly, DNS result,
+  destination, or effect changes require fresh authorization at the effect boundary. Uploads and downloads additionally
+  require the applicable FileSafe staging/destination and transfer admission. URL literal/source scanning is lint
+  evidence only and can never authorize or replace actual-effect gates.
+gui_related: false
+gui_classification_reason: Egress interception, permit binding, DNS/redirect rechecks, and FileSafe joins are network/security contracts rather than GUI presentation.
+depends_on: [PS-081, PS-128]
+unblocks: []
+acceptance_criteria:
+  - SEC-008 covers actual navigation, request, redirect, WebSocket, form submission, upload, download, and low-level network effects with effective WebEgressPolicy authorization immediately before the effect.
+  - Redirect, dynamic URL, DNS/destination, and connection changes re-run SSRF/private-host/link-local/localhost/file/internal-metadata, permission, proxy/trust, and effective WebEgressPolicy checks against the current resolved address.
+  - WebSocket reconnect and navigation/form/upload/download follow-ups cannot reuse a permit whose destination, DNS result, method, headers class, body class/hash, effect kind, redirect hop, permission snapshot, policy generation, proxy/trust state, or expiry changed.
+  - Uploads and downloads require independent FileSafe admission before source bytes leave staging or response bytes reach a destination.
+  - A positive effect matrix proves every admitted effect carries a current permit whose bound fields match the actual effect and that a permitted same-origin request does not authorize a changed redirect/reconnect/follow-up implicitly.
+  - Negative dynamic-network fixtures reject source-literal-only approval, dynamically assembled disallowed URLs, redirect-to-private/link-local/localhost/metadata targets, DNS rebinding, mismatched method/header/body/effect kind, stale permission/policy generation, WebSocket reconnect reuse, form/upload/download follow-up reuse, and missing FileSafe transfer admission.
+  - Static fixtures do not prove network interception, DNS behavior, WebSocket/form/download enforcement, FileSafe execution, or attack resistance.
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, Plans/web_policy_negative_fixtures.json, focused Egolite remediation validator, future actual-navigation/request/redirect/DNS/WebSocket/form/upload/download/low-level effect matrix]
+risk_class: url_scan_substitutes_for_actual_egress_enforcement
+reasoning_tier: high
+context_scope: actual_network_effect_authorization
+implementation_surfaces: [Plans/Permissions_System.md, future WebOperation and Browser transport gates, Plans/FileSafe.md]
+node_compile_hint: {mode: permission_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:SEC-008]
+preserved_exact_tokens: [WebEgressPolicy, actual navigations, requests, redirects, WebSockets, forms, uploads, downloads, low-level effects, not URL-source scanning]
+negative_constraints:
+  - Do not authorize network effects from source-code or URL-literal scanning.
+  - Do not reuse an egress permit across a changed destination, DNS result, method, body, headers class, effect kind, redirect hop, permission, proxy/trust state, expiry, or policy generation.
+  - Do not let a Browser page, adapter, form, script, WebSocket, upload, download, or low-level path bypass the same effective WebEgressPolicy boundary.
+owner_hints: [Plans/Permissions_System.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/FileSafe.md]
+```
+
+## Post-Integration Forge, Backup, And Connector Permission Addendum - 2026-09-01
+
+Provider capability discovery is not authorization. Forgejo/Gitea API reads may remain usable when mutation is `read_only`; `handler_unavailable`, insufficient token scope, unsupported API, and denied PM permission remain distinct. `repository_automation` has its own explicit AutomationBinding and does not inherit provider identity, Git credentials, an enabled CI surface, or a user's interactive authority. Repository/branch-policy mutation, force-push, release-asset publication, runner registration/removal, secret/variable submission, and organization administration bind the exact provider instance, repository/environment/runner target, credential scope, permission snapshot, confirmation/currentness tier, and operation generation. Secret values are protected write-only/reference-only inputs and never become inspectable merely because their metadata is readable.
+
+Backup authorization is separately layered: destination login does not unlock encrypted repositories; browse does not grant Recovery Key export; retrieve does not grant restore; ordinary upload credentials do not imply prune/delete/object-lock authority; and tailnet membership does not grant any Backup or PM authority. Recovery material, destination secrets, Headscale pre-auth keys, connector state, and `AuthBrowserSession` content use human-only protected channels unavailable to agents and adapters. In-place Project restore, Full Server replacement, high-risk delete-all/prune, costly archival retrieval, recovery-kit export, connector identity reset, and public Funnel enablement require current explicit target-bound approval. A protected/read-only/unavailable state fails closed and emits only its owner's bounded receipt/projection; it never fabricates an EventRecord or runtime success.
+
+### PS-138 - Forge And Repository Automation Effect Authorization
+
+```yaml
+plan_unit_id: PS-138
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Forgejo/Gitea hosting effects and repository_automation effects require current target-bound PM permission plus the exact independent provider or AutomationBinding capability. Readable metadata does not grant mutation, repository_automation never inherits interactive credentials or authority, protected secret values remain human-only write/reference inputs, and read_only or handler_unavailable states fail closed without disabling an independently ready Git transport.
+gui_related: true
+gui_classification_reason: Source Control, Actions & Pipelines, provider administration, and protected secret forms expose capability, permission, read-only, unsupported, confirmation, and unavailable states.
+depends_on: [PS-123, PS-125, PS-135, SIR-032, GAAAF-015]
+unblocks: []
+acceptance_criteria:
+  - Git transport credentials, hosting API credentials, and repository_automation AutomationBinding remain independent and cannot authorize one another by provider selection or cached capability.
+  - Repository/branch policy, force-push, release assets, runner registration/removal, secrets/variables, and organization administration bind the exact instance, repository/environment/runner target, credential scope, permission/currentness snapshot, risk tier, confirmation, and operation generation.
+  - Read-only API capability permits bounded reads only; it does not dispatch mutation and does not mark an independently ready Git transport unavailable.
+  - Unsupported API, insufficient token scope, denied PM permission, stale capability/currentness, and handler_unavailable remain distinct denied outcomes.
+  - Secret values enter only through the protected human channel, are write-only/reference-only where providers prohibit readback, and remain unavailable to agents, adapters, Chat, Usage, logs, receipts, and recordings.
+  - Static permission fixtures and owner projections claim no provider mutation, secret isolation, runner registration, release upload, Git transport, or runtime evidence.
+validation_surfaces: [Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future provider authorization/effect matrix]
+risk_class: provider_capability_or_automation_binding_authority_escalation
+reasoning_tier: high
+context_scope: post_integration_forge_and_repository_automation_permissions
+implementation_surfaces: [Plans/Permissions_System.md, Plans/shared_integration_runtime.schema.json, Plans/protected_auth_browser_contracts.schema.json]
+node_compile_hint: {mode: permission_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:23-45
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:23-37
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/14_COMMAND_CONTRACTS.md:124-131
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+preserved_exact_tokens: [Forgejo, Gitea, repository_automation, AutomationBinding, read_only, handler_unavailable, human-only]
+negative_constraints:
+  - Do not infer provider identity, Git/API credential role, CI authority, secret authority, or mutation permission from a shell, provider label, selected repository, or discovered capability.
+  - Do not expose provider secret values or protected auth content to agents or adapters.
+  - Do not treat a static capability/permission row as execution or runtime authorization evidence.
+```
+
+### PS-139 - Backup Recovery And Connector Protected Effects
+
+```yaml
+plan_unit_id: PS-139
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Backup destination authorization, repository unlock, browse, retrieve, restore, destructive maintenance, recovery-material export, connector identity reset, and public Funnel enablement are separate effects with separate target-bound permissions and protected human approvals. Tailnet identity is audit context only; AuthBrowserSession, Recovery Key, destination, and connector secrets are non-recordable, non-inspectable, and unavailable to agents/adapters, while protected, read_only, and handler_unavailable states fail closed.
+gui_related: true
+gui_classification_reason: Backup setup/restore, recovery-kit handoff, Remote Access, Funnel, and destructive confirmation surfaces display these distinct protected permission states.
+depends_on: [PS-075, PS-082, PS-095, PS-136, SIR-032, GAAAF-015]
+unblocks: []
+acceptance_criteria:
+  - Destination authentication does not unlock encrypted backup repositories; list/browse, retrieve/export, restore, key export, prune/delete, object-lock maintenance, and costly archival retrieval use separate applicable permissions.
+  - Recovery Key/kit export is owner-step-up, audience-bound, short-lived, exact-Client, no-store, and human-only; ordinary agents/adapters and snapshot browsers cannot reveal or redeem recovery material.
+  - In-place Project restore and Full Server replacement bind immutable snapshot/capture identity, exact target, permission/currentness generation, pre-restore recovery or explicit emergency consent, and destructive confirmation.
+  - Routine Backup credentials lack unnecessary prune/delete authority; protected prune/delete-all, retention-lock change, and billable archival retrieval require distinct current approval and keep the last known good recovery point unless explicitly overridden.
+  - Tailnet membership, connector WhoIs identity, or route reachability never grants PM, Backup, restore, forge, repository_automation, or administrator authority.
+  - Connector identity reset is distinct from disable/signout and destructive; Funnel enablement requires explicit public-exposure consent and all PM ingress security gates, while handler_unavailable/read_only/protected states cannot dispatch.
+  - AuthBrowserSession and connector/recovery/destination secret content remain human-only, non-recordable, non-inspectable, non-persistent in ordinary state, and unavailable to agents/adapters; static contracts claim no runtime isolation or successful effect.
+validation_surfaces: [Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, future Backup/restore/connector permission and secret-exclusion matrices]
+risk_class: recovery_or_connector_protected_effect_authority_escalation
+reasoning_tier: high
+context_scope: post_integration_backup_recovery_and_connector_permissions
+implementation_surfaces: [Plans/Permissions_System.md, Plans/protected_auth_browser_contracts.schema.json, Plans/shared_integration_runtime.schema.json]
+node_compile_hint: {mode: permission_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/08_CLOUD_DESTINATIONS_AND_SIGN_IN.md:55-61
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/09_ENCRYPTION_RECOVERY_KEY_AND_DELIVERY.md:23-61
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/10_RESTORE_BROWSE_RETRIEVE_GUI_AND_SAFETY.md:15-69
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/11_BACKUP_AUTOMATION_RETENTION_AND_OPERATIONS.md:23-37
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/13_TSNET_INTEGRATION_AND_CROSS_DOMAIN_BOUNDARIES.md:31-45
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/tsnet/07_SECURITY_BACKUP_UPDATE_BOUNDARIES.md:3-64
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+preserved_exact_tokens: [Backup Recovery Key, AuthBrowserSession, human-only, non-recordable, non-inspectable, handler_unavailable, read_only, Funnel, WhoIs]
+negative_constraints:
+  - Do not let tailnet membership, destination login, repository browse, or a capability projection substitute for effect-specific PM authorization.
+  - Do not expose Recovery Key, recovery kit, destination credential, connector state, authorization URL, pre-auth key, or AuthBrowserSession content to agents, adapters, logs, recordings, screenshots, receipts, Chat, or Usage.
+  - Do not claim restore, prune, archival retrieval, identity reset, Funnel exposure, secret isolation, or runtime authorization from static fixtures.
+```

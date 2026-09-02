@@ -506,6 +506,1150 @@
       "policy_version": "1.0.0"
     }
   ],
+  "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
+  "contract_family_dispositions": [
+    {
+      "disposition_id": "scd.settings.durable.v1",
+      "system_id": "settings",
+      "owner_doc": "Plans/Settings_System.md",
+      "schema_ref": "Plans/settings_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.project_settings_snapshot.v1",
+        "pm.settings_transaction_result.v1",
+        "pm.settings_export_manifest.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-CONFIG-CURRENT",
+          "RP-DELIVERY-365D"
+        ],
+        "hold_rule": "Project snapshot is current-value authority; terminal transaction/export metadata is hold-eligible while referenced by migration, rollback, backup, or audit custody.",
+        "expiry_rule": "Snapshot replacement never deletes referenced rollback or export custody; physical rows remain unavailable until exact key and policy registration closes."
+      },
+      "redaction_transform_ids": [
+        "rt.settings_project_snapshot.v1"
+      ],
+      "migration_rule": "Settings migration preview is not a receipt. Physical migration is owned by StorageMigrationCoordinator and the sole terminal pm.storage_value.migration_receipt.v1.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "not_applicable",
+      "runtime_evidence": false,
+      "rationale": "Project settings values and terminal transaction/export facts are durable owner state, but exact physical families are not yet registered in the legacy 84-row materialization denominator.",
+      "source_refs": [
+        "Plans/Settings_System.md",
+        "Plans/settings_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.settings.transient.v1",
+      "system_id": "settings",
+      "owner_doc": "Plans/Settings_System.md",
+      "schema_ref": "Plans/settings_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.settings_transaction_preview.v1",
+        "pm.settings_transaction_preview_request.v1",
+        "pm.settings_transaction_apply_request.v1",
+        "pm.settings_transaction_rollback_request.v1",
+        "pm.settings_export_request.v1",
+        "pm.settings_route_request.v1",
+        "pm.settings_route_return.v1",
+        "pm.settings_owner_projection.v1",
+        "pm.settings_doctor_projection.v1",
+        "pm.settings_migration_preview.v1",
+        "pm.settings_appearance_preview.v1",
+        "pm.settings_ui_action_projection.v1",
+        "pm.settings_concept_boundary.v1",
+        "pm.settings_system_contract_fixtures.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "None; a referenced durable result or snapshot is retained by its owner instead.",
+        "expiry_rule": "Discard at request completion, route return, preview invalidation, or concept/test teardown."
+      },
+      "redaction_transform_ids": [
+        "rt.settings_project_snapshot.v1"
+      ],
+      "migration_rule": "These request, preview, route, projection, concept-boundary, and fixture records are never migration authorities.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "not_applicable",
+      "runtime_evidence": false,
+      "rationale": "Requests and presentation projections must not become a parallel Settings store.",
+      "source_refs": [
+        "Plans/Settings_System.md",
+        "Plans/settings_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.project.durable.v1",
+      "system_id": "project",
+      "owner_doc": "Plans/Project_System.md",
+      "schema_ref": "Plans/project_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.project.record.v1",
+        "pm.project.migration_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-IDENTITY-365D"
+        ],
+        "hold_rule": "Active, archived, backup, restore, source-lineage, and migration references hold Project identity and receipts.",
+        "expiry_rule": "Only owner-proven deletion plus reference release may compact non-authoritative history."
+      },
+      "redaction_transform_ids": [
+        "rt.project_named_plan.v1"
+      ],
+      "migration_rule": "Bind the claimed projects:v1 authority only after exact physical registration; project_state:v1:{project_id} remains a separate shell projection. The domain migration receipt references Storage migration custody.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "not_applicable",
+      "runtime_evidence": false,
+      "rationale": "Project aggregate identity and its migration receipt are durable; action transport is not.",
+      "source_refs": [
+        "Plans/Project_System.md",
+        "Plans/project_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.project.actions.v1",
+      "system_id": "project",
+      "owner_doc": "Plans/Project_System.md",
+      "schema_ref": "Plans/project_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.project.action_request.v1",
+        "pm.project.action_result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Durable Project record and owner receipt carry authoritative effects.",
+        "expiry_rule": "Discard transport objects after correlated owner outcome."
+      },
+      "redaction_transform_ids": [
+        "rt.project_named_plan.v1"
+      ],
+      "migration_rule": "Action request/result transport cannot migrate or replace the Project aggregate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "not_applicable",
+      "runtime_evidence": false,
+      "rationale": "Typed command transport is not a storage family by itself.",
+      "source_refs": [
+        "Plans/Project_System.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.named_plan.durable.v1",
+      "system_id": "named_plan",
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "schema_ref": "Plans/named_plan_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.named_plan.record.v1",
+        "pm.named_plan.migration_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-IDENTITY-365D"
+        ],
+        "hold_rule": "Active, archived, child-plan, approval, Goal, backup, and migration references hold the aggregate.",
+        "expiry_rule": "Only owner-proven deletion and complete reference release may compact eligible history."
+      },
+      "redaction_transform_ids": [
+        "rt.project_named_plan.v1"
+      ],
+      "migration_rule": "Named Plan aggregate and migration receipt require exact key/index/checkpoint registration before writers enable.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "not_applicable",
+      "runtime_evidence": false,
+      "rationale": "Named Plan identity is durable authority and cannot be inferred from UI focus or action transport.",
+      "source_refs": [
+        "Plans/Named_Plan_System.md",
+        "Plans/named_plan_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.named_plan.actions.v1",
+      "system_id": "named_plan",
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "schema_ref": "Plans/named_plan_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.named_plan.action_request.v1",
+        "pm.named_plan.action_result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Durable aggregate and owner receipts carry effects.",
+        "expiry_rule": "Discard after correlated owner result."
+      },
+      "redaction_transform_ids": [
+        "rt.project_named_plan.v1"
+      ],
+      "migration_rule": "Transport objects never become migration or aggregate authority.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "not_applicable",
+      "runtime_evidence": false,
+      "rationale": "Typed action transport is explicitly nonpersisted.",
+      "source_refs": [
+        "Plans/Named_Plan_System.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.product_onboarding.session.v1",
+      "system_id": "product_onboarding",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session",
+      "record_kinds": [
+        "pm.product_onboarding.session.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "materialized_existing_family",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/onboarding_state"
+      ],
+      "retention_disposition": {
+        "mode": "existing_catalog_policy",
+        "refs": [
+          "RP-CONFIG-CURRENT",
+          "Q-RESETTABLE"
+        ],
+        "hold_rule": "Keep current revision and one verified migration backup generation; active owner operations hold referenced receipts outside this row.",
+        "expiry_rule": "Completed or cancelled sessions remain replace-current until explicit reset; corrupt or secret-bearing inputs quarantine and reset without replaying owner work."
+      },
+      "redaction_transform_ids": [
+        "rt.onboarding_state.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Legacy provider-first/four-screen, predecessor-five-stage, and superseded seven-stage records map once to the first unresolved stage on the exact current nine-stage guided-setup path or six-stage connect-existing shortcut; predecessor server_setup maps only to server_storage_client. simple_path and simple_path_selection are current, path_kind must agree with the selected setup mode, and every migrated draft is forced to review_setup_plan with review_confirmation=unconfirmed, null reviewed/hash/currentness fields, exact mapped_stage_counts and mapped_path_counts, and no owner-work replay. Preserve only admissible stable decisions, valid receipt refs, independent scm_backend_selection and forge_provider_selection axes, and bounded warnings; quarantine secret-bearing or ambiguous rows and never infer one Safe History/forge axis from the other.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "The existing physical family binds the current nine-stage Product Onboarding session and exact six-stage connect-existing shortcut, including path_kind, queued setup-plan identity/revision, reviewed revision, person-confirmation state, approved-plan SHA-256, automatic-preparation currentness ref, continuation generation, and non-secret refs/handles only; Guided Tour state remains ephemeral and nonpersisted.",
+      "source_refs": [
+        "Plans/Planning_Wizard.md#product-onboarding-and-guided-tour-owner-addendum-2026-08-31",
+        "Plans/product_onboarding_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.product_onboarding.migration.v1",
+      "system_id": "product_onboarding",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_legacy_migration_receipt",
+      "record_kinds": [
+        "pm.product_onboarding.legacy_migration_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/migration_receipt"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE"
+        ],
+        "hold_rule": "The domain reconciliation receipt and referenced Storage migration receipt remain held as migration authority.",
+        "expiry_rule": "No ordinary expiry; hashed manifests may outlive eligible quarantined payload bytes."
+      },
+      "redaction_transform_ids": [
+        "rt.onboarding_state.v1"
+      ],
+      "migration_rule": "The domain receipt must reference the sole terminal pm.storage_value.migration_receipt.v1 and may not act as peer commit authority.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "The typed domain reconciliation record closes the former schema gap while physical registration remains explicit and incomplete.",
+      "source_refs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/product_onboarding_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.product_onboarding.actions.v1",
+      "system_id": "product_onboarding",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "schema_ref": "Plans/product_onboarding_contracts.schema.json",
+      "record_kinds": [
+        "pm.product_onboarding.action_request.v1",
+        "pm.product_onboarding.return_context.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Stable return context embedded in the durable session is retained there; transport instances are not.",
+        "expiry_rule": "Discard after action completion, safe branch exit, or continuation invalidation."
+      },
+      "redaction_transform_ids": [
+        "rt.onboarding_state.v1"
+      ],
+      "migration_rule": "Standalone action/return transport cannot become a second session store.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Typed UI transport is explicitly nonpersisted while its stable consequences are captured by the session and owner records.",
+      "source_refs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/product_onboarding_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.guided_tour.ephemeral.v1",
+      "system_id": "guided_tour",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "schema_ref": "Plans/guided_tour_contracts.schema.json",
+      "record_kinds": [
+        "pm.guided_tour.session.v1",
+        "pm.guided_tour.action_request.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Only stable layout snapshot and owner receipt refs may outlive the session under their existing owners.",
+        "expiry_rule": "Discard all tour step, status, Teacher text, focus, motion, and demonstrated/completed action state at session end or process exit."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Guided Tour sessions are never migrated or resumed; replay creates a new session and layout recovery uses the existing layout owner.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "The owner schema fixes durability_class=ephemeral_session and session_persistence=not_persisted.",
+      "source_refs": [
+        "Plans/Planning_Wizard.md#guided-tour-real-application-contract",
+        "Plans/guided_tour_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.doctor.durable.v1",
+      "system_id": "doctor",
+      "owner_doc": "Plans/newtools.md",
+      "schema_ref": "Plans/doctor_contracts.schema.json",
+      "record_kinds": [
+        "pm.doctor.check_descriptor.v1",
+        "pm.doctor.finding_projection.v1",
+        "pm.doctor.cache_migration_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/migration_receipt"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-PROJECTION-3GEN",
+          "Q-RESETTABLE",
+          "RP-AUTHORITY-INDEFINITE"
+        ],
+        "hold_rule": "Descriptor authority and migration receipt are held; finding/cache projections obey descriptor TTL, target generation, owner currentness, and evidence custody.",
+        "expiry_rule": "Stale projections remain stale until rechecked; eligible cache history compacts without upgrading freshness, and secret-bearing rows quarantine."
+      },
+      "redaction_transform_ids": [
+        "rt.doctor_bounded_evidence.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Legacy aliases resolve to one active descriptor; migration preserves compatible currentness, marks uncertainty stale, names dropped/quarantined rows, references the sole Storage migration receipt, and performs no repair.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Doctor requires bounded cached-first durable projections and typed migration reconciliation, but exact physical keys remain pending.",
+      "source_refs": [
+        "Plans/newtools.md#doctor-registry-router-and-settings-workspace-addendum-2026-08-31",
+        "Plans/doctor_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.doctor.actions.v1",
+      "system_id": "doctor",
+      "owner_doc": "Plans/newtools.md",
+      "schema_ref": "Plans/doctor_contracts.schema.json#/$defs/doctor_action_request",
+      "record_kinds": [
+        "pm.doctor.action_request.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Owner ObservableWork and receipts retain any durable consequence.",
+        "expiry_rule": "Discard after routing or refusal."
+      },
+      "redaction_transform_ids": [
+        "rt.doctor_bounded_evidence.v1"
+      ],
+      "migration_rule": "Doctor action requests never become repair authority or cache migration records.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Doctor is a router and cannot persist private repair requests as owner truth.",
+      "source_refs": [
+        "Plans/newtools.md",
+        "Plans/doctor_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.server.durable.v1",
+      "system_id": "server",
+      "owner_doc": "Plans/Server_System.md",
+      "schema_ref": "Plans/server_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.server_system.server_catalog.v1",
+        "pm.server_system.server_record.v1",
+        "pm.server_system.server_endpoint_record.v1",
+        "pm.server_system.discovery_observation.v1",
+        "pm.server_system.client_record.v1",
+        "pm.server_system.client_access_policy.v1",
+        "pm.server_system.client_trust_record.v1",
+        "pm.server_system.pairing_run.v1",
+        "pm.server_system.revocation_record.v1",
+        "pm.server_system.session_record.v1",
+        "pm.server_system.server_connection_projection.v1",
+        "pm.server_system.server_mutation_receipt.v1",
+        "pm.server_system.pairing_receipt.v1",
+        "pm.server_system.revocation_receipt.v1",
+        "pm.server_system.server_connection_test_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Catalog, trust, revocation, policy, and receipt authority honor active client/server, recovery, backup, legal, and audit references.",
+        "expiry_rule": "Discovery, session, and connection projections may compact only after generation/currentness and reference release; trust/revocation authority never expires by cache pressure."
+      },
+      "redaction_transform_ids": [
+        "rt.server_remote_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "StorageMigrationCoordinator owns schema/key migration; domain receipts are not peer migration receipts and ambiguous server identity fails closed.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Server catalog, identity, trust, sessions, projections, and domain receipts are durable owner values requiring distinct physical families.",
+      "source_refs": [
+        "Plans/Server_System.md",
+        "Plans/server_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.remote_access.durable.v1",
+      "system_id": "remote_access",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "schema_ref": "Plans/remote_access_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.remote_access_system.remote_route_record.v1",
+        "pm.remote_access_system.remote_access_projection.v1",
+        "pm.remote_access_system.remote_route_migration_record.v1",
+        "pm.remote_access_system.remote_route_migration_receipt.v1",
+        "pm.remote_access_system.tailscale_connector_configuration.v1",
+        "pm.remote_access_system.tailscale_connector_process_projection.v1",
+        "pm.remote_access_system.tailscale_authorization_session.v1",
+        "pm.remote_access_system.tailscale_private_endpoint_projection.v1",
+        "pm.remote_access_system.tailscale_native_egress_policy.v1",
+        "pm.remote_access_system.tailscale_funnel_projection.v1",
+        "pm.remote_access_system.tailscale_connector_receipt.v1",
+        "pm.remote_access_system.tailscale_connector_migration_record.v1",
+        "pm.remote_access_system.tailscale_connector_security_policy.v1",
+        "pm.remote_access_system.tailscale_connector_backup_policy.v1",
+        "pm.remote_access_system.tailscale_external_endpoint_projection.v1",
+        "pm.remote_access_system.reverse_proxy_configuration.v1",
+        "pm.remote_access_system.remote_link_configuration.v1",
+        "pm.remote_access_system.public_ingress_security_policy.v1",
+        "pm.remote_access_system.remote_access_test_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/migration_receipt"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Active routes, connector identity/configuration generations, redacted authorization-operation metadata, public-ingress policy, migration journals/receipts, tests, recovery, and backup refs hold required values.",
+        "expiry_rule": "Old route/connector generations and bounded process/health projections compact only after migration commit, reconnect convergence, rollback release, secure-state reference release, and reference release."
+      },
+      "redaction_transform_ids": [
+        "rt.server_remote_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "The former pm.remote_access_system.tailscale_route_configuration.v1 is a read-only compatibility input to the connector migration record, never a continuing writer or host-state import. The migration binds one connector_id to one server_id, preserves only non-secret route intent and redacted refs, emits a domain receipt distinct from the sole terminal Storage migration receipt, and never ingests or clones host Tailscale state, node/auth/pre-auth keys, reusable authorization URLs, cookies, IPC secrets, or tailnet identity.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Remote route and PM-owned connector configuration, identity, redacted authorization-operation metadata, policy/projection, health, migration, and receipt facts are durable public values and remain physically unregistered. secure_state_ref is an opaque Server-owned reference only; raw tsnet state and key material are outside ordinary redb/seglog custody.",
+      "source_refs": [
+        "Plans/Remote_Access_System.md",
+        "Plans/remote_access_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.remote_access.connector_transport.v1",
+      "system_id": "remote_access",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "schema_ref": "Plans/remote_access_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.remote_access_system.tailscale_connector_ipc_envelope.v1",
+        "remote_access.command.payload.v1",
+        "remote_access.command.result.v1",
+        "remote_access.command.error.v1",
+        "remote_access.command.availability.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Only the bounded redacted connector receipt, health projection, and authorization-operation metadata may outlive transport.",
+        "expiry_rule": "Destroy IPC/request/result/error/availability transport and protected authorization handoff content at terminal, expiry, cancellation, revocation, disconnect, or restart."
+      },
+      "redaction_transform_ids": [
+        "rt.server_remote_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No legacy IPC payload, reusable authorization URL/query, protected browser state, cookie, connector key, or raw tsnet state is copied forward; only owner-validated non-secret refs and terminal receipt facts may be re-established.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Connector IPC and public command transport are transient. Durable authorization continuity stores operation/session refs and redacted lifecycle facts, never the protected URL or connector payload.",
+      "source_refs": [
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/remote_access_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.remote_access.tailscale_legacy_input.v1",
+      "system_id": "remote_access",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/legacy_tailscale_route_configuration_migration_reader",
+      "record_kinds": [
+        "pm.remote_access_system.tailscale_route_configuration.v1"
+      ],
+      "persistence_disposition": "compatibility_input_only_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "The typed connector migration journal/receipt, not the predecessor payload, retains migration disposition.",
+        "expiry_rule": "Discard after verified copy-forward, quarantine, or blocked disposition; never continue dual-read or write authority."
+      },
+      "redaction_transform_ids": [
+        "rt.server_remote_metadata.v1"
+      ],
+      "migration_rule": "Read once only to map admissible non-secret route intent into pm.remote_access_system.tailscale_connector_configuration.v1; serve_private normalizes to the private connector route. Host installation/state reuse, raw node identity, keys, URLs, cookies, and IPC state are rejected rather than migrated.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "The Serve/full-install predecessor is migration input, not an active durable connector family.",
+      "source_refs": [
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/legacy_tailscale_route_configuration_migration_reader"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup_restore.durable.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup_restore_system.destination_family_profile.v2",
+        "pm.backup_restore_system.destination_family_registry.v2",
+        "pm.backup_restore_system.backup_destination.v2",
+        "pm.backup_restore_system.backup_repository_binding.v2",
+        "pm.backup_restore_system.backup_policy.v2",
+        "pm.backup_restore_system.backup_run.v2",
+        "pm.backup_restore_system.backup_manifest.v2",
+        "pm.backup_restore_system.backup_retention_decision.v1",
+        "pm.backup_restore_system.backup_schedule_occurrence.v2",
+        "pm.backup_restore_system.retention_preview.v2",
+        "pm.backup_restore_system.backup_browse_operation.v2",
+        "pm.backup_restore_system.recovery_set_public.v2",
+        "pm.backup_restore_system.recovery_kit_delivery_session.v2",
+        "pm.backup_restore_system.backup_health_projection.v2",
+        "pm.backup_restore_system.contract_migration_record.v2",
+        "pm.backup_restore_system.portable_secret_envelope.v1",
+        "pm.backup_restore_system.recovery_key_record.v1",
+        "pm.backup_restore_system.restore_run.v2",
+        "pm.backup_restore_system.restore_preview.v2",
+        "pm.backup_restore_system.backup_receipt.v2",
+        "pm.backup_restore_system.backup_verification_receipt.v1",
+        "pm.backup_restore_system.restore_preview_receipt.v1",
+        "pm.backup_restore_system.restore_receipt.v1",
+        "pm.backup_restore_system.recovery_point_receipt.v1"
+      ],
+      "persistence_disposition": "durable_metadata_external_bytes",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/migration_receipt"
+      ],
+      "retention_disposition": {
+        "mode": "domain_policy_value",
+        "refs": [
+          "pm.backup_restore_system.backup_policy.v2",
+          "pm.backup_restore_system.backup_retention_decision.v1",
+          "Q-CRITICAL",
+          "RP-AUTHORITY-INDEFINITE"
+        ],
+        "hold_rule": "Repository/RecoverySet generation, legal, recovery, verification, test-restore, archive retrieval, replacement-restore, rollback, quarantine, schedule/outbox, and in-flight refs override ordinary generation eligibility.",
+        "expiry_rule": "BackupPolicy v2 and a durable BackupRetentionDecision choose eligible generations; no active/protected/quarantined evidence is silently evicted, and RecoverySet/Recovery Kit metadata is never sufficient to reveal key or protected session material."
+      },
+      "redaction_transform_ids": [
+        "rt.backup_manifest_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "StorageMigrationCoordinator reads aggregate pm.backup_restore_system.contracts.v1 values only through pm.backup_restore_system.contract_migration_record.v2 and maps old policy scope without changing existing choices, scalar destinations to ordered singleton bindings, aggregate run state to the v2 phase plus independent capture/upload/integrity/drill axes, legacy settings modes to settings_strategy, and verify_browse_only to a read-only browse operation. RecoveryKeyRecord becomes pm.backup_restore_system.recovery_set_public.v2 only after exact repository/key-slot verification; that Backup encryption-domain identity is unrelated to the deterministic storage.boot_recovery recovery_set_id work-set identity. Migration never manufactures or exports a key, Kit, delivery-session payload, source closure, verification, runtime execution, or provider readiness. Backup product receipts remain distinct from the sole terminal Storage migration receipt.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Backup v2 destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule/outbox occurrence, retention/browse/health, RecoverySet public metadata, no-store delivery-session metadata, migration, restore, and five receipt families are durable. Snapshot/repository/export bytes stay in Backup-owned external custody; raw Recovery Key/Kit bytes and protected session payload never enter this registry; exact physical family registration remains pending.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_restore_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup_restore.command_transport.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup_restore_system.command_request.v1",
+        "pm.backup_restore_system.command_result.v1",
+        "pm.backup_restore_system.command_error.v1",
+        "pm.backup_restore_system.command_availability.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Only separately typed redacted receipts, public health/currentness projections, and ObservableWork refs may outlive command transport.",
+        "expiry_rule": "Discard request/result/error/availability transport at terminal or invalidation; protected key/Kit submissions and delivery payloads are no-store and are destroyed earlier on close, expiry, cancellation, or revocation."
+      },
+      "redaction_transform_ids": [
+        "rt.backup_manifest_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Legacy ordinary command/history payloads containing keys, Kits, protected submissions, destination auth, browser material, raw paths/hosts, or capture content are rejected; only typed non-secret refs may be reissued under the current command contract.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Public request/result/error/availability shapes are validated and redacted transport, not a durable value family; terminal durable truth is held by the owner receipts and projections.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md#BRS-011",
+        "Plans/Backup_Restore_System.md#BRS-012",
+        "Plans/backup_restore_system_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.durable.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/source_control_contracts.schema.json",
+      "record_kinds": [
+        "pm.source_control.writer_lease.v1",
+        "pm.source_control.repository_context.v1",
+        "pm.source_control.setup_state.v1",
+        "pm.source_control.operation_receipt.v1",
+        "pm.source_control.projection.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Repository identity, immutable revisions, active writer fencing, effect-unknown recovery, backup, and audit refs hold authority and receipts.",
+        "expiry_rule": "Expired lease metadata remains only as bounded fencing history; projections compact after a newer current generation and reference release."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1"
+      ],
+      "migration_rule": "Backend and immutable revision discriminators migrate explicitly; ambiguous provider/origin/path-only identity fails closed.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Writer lease metadata is durable fencing authority; repository/setup/projection and operation receipts are durable owner values.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/source_control_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.ephemeral.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/source_control_contracts.schema.json",
+      "record_kinds": [
+        "pm.source_control.credential_lease.v1",
+        "pm.source_control.operation_request.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Only non-secret receipt facts and broker-owned credential identity may outlive the operation.",
+        "expiry_rule": "Credential and request leases expire and are destroyed at operation terminal or earlier revocation."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1"
+      ],
+      "migration_rule": "Credential leases and operation requests are never copied into durable storage or backups.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Operation-scoped credential authority is ephemeral even when its non-secret lease metadata appears in a terminal receipt.",
+      "source_refs": [
+        "Plans/Source_Control_System.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.durable.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.repository_binding.v1",
+        "pm.forge.automation_binding.v1",
+        "pm.forge.provider_instance_profile.v1",
+        "pm.forge.automation_shell_projection.v1",
+        "pm.forge.capability_envelope.v1",
+        "pm.forge.mirror_topology.v1",
+        "pm.forge.review_revision.v1",
+        "pm.forge.review_thread.v1",
+        "pm.forge.pipeline_projection.v1",
+        "pm.forge.app_installation.v1",
+        "pm.forge.installation_receipt.v1",
+        "pm.forge.installation_token_lease.v1",
+        "pm.forge.signed_webhook_delivery.v1",
+        "pm.forge.api_compatibility.v1",
+        "pm.forge.command_receipt.v1",
+        "pm.forge.provider_adapter_profile.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Repository and independent automation binding/authority, provider-instance identity/currentness, immutable reviews, mirror transfer, webhook dedupe, package/app installation, recovery, backup, and audit refs hold values.",
+        "expiry_rule": "Token-lease rows retain only non-secret expiry/revocation metadata; automation shell, pipeline, instance-health, and webhook history compact only after a newer current generation plus dedupe/recovery/reference release."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Provider-native instance, repository-binding, and independent automation-binding identities and capabilities migrate explicitly. Canonical automation shell writes use repository_automation.project_state.{project_id}; github_actions.project_state.{project_id} and gha_panel_state.v1:{project_id} are read-only aliases that normalize only with a verified GitHub automation binding. Preserve selected binding, provider/service/instance/account refs, generations, provider-native definition/run/gate/job/stage/step/artifact IDs, GitHub pins, filters, focus, layout, route/bookmark/help refs, and currentness. Canonical data wins; only provably nonconflicting legacy fields merge; ambiguity quarantines. Bare origin, raw CLI output, credential contents, and inferred repository/automation equality never become canonical values.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Forge provider-instance, repository binding, independent automation binding/shell, review, pipeline, app, webhook, API, lease metadata, and receipt facts are durable non-secret refs and generations while raw grants, PATs, OAuth material, headers, cookies, private CA bytes, SSH material, and other credential contents remain exclusively in their protected owners and are never duplicated here.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/Cursor_Origin_Integration.md",
+        "Plans/GitLab_Integration.md",
+        "Plans/Azure_DevOps_Integration.md",
+        "Plans/Bitbucket_Integration.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.command_transport.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.command_request.v1",
+        "pm.forge.command_result.v1",
+        "pm.forge.command_error.v1",
+        "pm.forge.command_availability.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Only the typed redacted command receipt and owner projections retain terminal non-secret facts.",
+        "expiry_rule": "Discard public request/result/error/availability transport after terminal, invalidation, or cancellation; destroy protected-auth and credential leases earlier at owner revocation/expiry."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Reissue only typed provider/instance/repository/automation refs under current generation guards; never copy raw provider credentials, authorization headers/codes/tokens, protected-browser data, CLI output, unsafe SCM configuration, private paths/hosts, or webhook bodies/signatures into command history.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Forge public command transport is redaction-covered but nonpersistent; durable command truth is the bounded owner receipt, not replayable request or protected provider content.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_integration_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.browser_program.durable.v1",
+      "system_id": "browser_program",
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "schema_ref": "Plans/section15_browser_program_contracts.schema.json",
+      "record_kinds": [
+        "pm.browser_program.compile_result.v1",
+        "pm.browser_program.compile_error.v1",
+        "pm.browser_program.program.v1",
+        "pm.browser_program.workspace_revision.v1",
+        "pm.browser_program.controller_lease_receipt.v1",
+        "pm.browser_program.segment_receipt.v1",
+        "pm.browser_program.handoff_receipt.v1",
+        "pm.browser_program.transfer_receipt.v1",
+        "pm.browser_program.routing_decision.v1",
+        "pm.browser_program.routine_record.v1",
+        "pm.browser_program.external_adapter_receipt.v1",
+        "pm.browser_program.result.v1",
+        "pm.browser_program.observable_work_projection.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/observable_work_projection"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Active program, workspace, controller, handoff, transfer, routine promotion, recovery, evidence, and audit refs hold values.",
+        "expiry_rule": "Workspace/result/history compacts only after owner terminal, spill/checkpoint reconciliation, and reference release; routines require explicit invalidation/disable custody."
+      },
+      "redaction_transform_ids": [
+        "rt.browser_ordinary_session.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Legacy aggregate payload IDs are pre-validation input only and must map to one exact schema_id and record_kind; unknown/missing kinds reject and AuthBrowserSession never maps.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "BrowserProgram definitions/results, revisioned workspaces, routines, routing, projections, and five receipt families are durable ordinary-session values pending physical registration.",
+      "source_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-static-contract-closure-addendum-2026-08-31",
+        "Plans/section15_browser_program_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.browser_program.transient.v1",
+      "system_id": "browser_program",
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "schema_ref": "Plans/section15_browser_program_contracts.schema.json",
+      "record_kinds": [
+        "pm.browser_program.compile_request.v1",
+        "pm.browser_program.representation_query.v1",
+        "pm.browser_program.representation_query_result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "A promoted Program, durable result, receipt, or ordinary runtime artifact owns any retained consequence.",
+        "expiry_rule": "Discard request/query transport after response or generation invalidation."
+      },
+      "redaction_transform_ids": [
+        "rt.browser_ordinary_session.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Requests and representation queries are not restored, backed up, or promoted as stored page content.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Compile/query transport is ephemeral and cannot become a persistent page/DOM store.",
+      "source_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/section15_browser_program_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.test_capture.durable.v1",
+      "system_id": "test_capture",
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "schema_ref": "Plans/test_capture_motion_evidence_contracts.schema.json",
+      "record_kinds": [
+        "pm.test_capture.session.v1",
+        "pm.test_capture.target_switch_receipt.v1",
+        "pm.test_capture.segment_manifest.v1",
+        "pm.test_capture.health_receipt.v1",
+        "pm.test_capture.artifact.v1",
+        "pm.test_capture.raw_capture.v1",
+        "pm.test_capture.derivation_manifest.v1",
+        "pm.test_capture.demonstration_video.v1",
+        "pm.test_capture.provenance_selection.v1",
+        "pm.test_capture.observable_work_projection.v1"
+      ],
+      "persistence_disposition": "durable_metadata_external_bytes",
+      "physical_family_status": "external_artifact_store_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/observable_work_projection"
+      ],
+      "retention_disposition": {
+        "mode": "external_artifact_owner",
+        "refs": [
+          "Plans/Runtime_Artifacts_Panel.md",
+          "Plans/Test_Capture_and_Motion_Evidence.md",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Raw evidence, provenance, gap/failure, test, audit, legal, user-preserve, derived lineage, and recovery refs hold immutable media and metadata.",
+        "expiry_rule": "Raw and derived identities prune independently under artifact policy; retained provenance/hash/gap summaries remain truthful and corrupt segments quarantine."
+      },
+      "redaction_transform_ids": [
+        "rt.capture_retained_media.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Legacy aggregate IDs require one exact schema_id/record_kind before admission; single-MP4 or focus/latest-target lineage cannot invent missing raw evidence, frames, or target proof.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Capture session, segment, receipt, raw/derived artifact, provenance, and projection metadata are durable; media bytes require external artifact custody and registered physical bindings.",
+      "source_refs": [
+        "Plans/Test_Capture_and_Motion_Evidence.md",
+        "Plans/test_capture_motion_evidence_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.test_capture.playback_state.v1",
+      "system_id": "test_capture",
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "schema_ref": "Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_playback_comparison_state",
+      "record_kinds": [
+        "pm.test_capture.playback_comparison_state.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Referenced artifacts retain under their owners; playback cursor and comparison presentation do not.",
+        "expiry_rule": "Discard when comparison closes or source generations change."
+      },
+      "redaction_transform_ids": [
+        "rt.capture_retained_media.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Playback presentation state is not evidence or migration authority.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Comparison UI state is transient even when its artifact refs are durable.",
+      "source_refs": [
+        "Plans/Test_Capture_and_Motion_Evidence.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.full_thread_runtime.durable.v1",
+      "system_id": "full_thread_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/full_thread_runtime_contracts.schema.json",
+      "record_kinds": [
+        "governor_decision",
+        "command_outcome",
+        "observable_work",
+        "full_thread_projection",
+        "continuity",
+        "public_ingress_gate"
+      ],
+      "persistence_disposition": "durable_existing_family_migration_required",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/runtime_resource_admission",
+        "Plans/storage_value_registry.json#/families/observable_work_projection",
+        "Plans/storage_value_registry.json#/families/thread_command_outbox_record",
+        "Plans/storage_value_registry.json#/families/replay_snapshot_checkpoint"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "RP-COORDINATION-180D",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Active command/work, recovery-required, continuity, public-ingress security, receipt, audit, and replay refs hold records.",
+        "expiry_rule": "Projections compact only after a newer current generation; terminal command/work history remains bounded without collapsing governor, command, and work axes."
+      },
+      "redaction_transform_ids": [
+        "rt.full_thread_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Existing pm.shared_runtime values normalize once to pm.full_thread_runtime.contracts.v1 record kinds; ambiguous legacy states fail closed and consumers never expose both vocabularies.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "The new aggregate schema is durable value authority, but exact physical family aliases and migration are not yet materialized; existing rows cannot be silently reinterpreted.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#full-thread-performance-owner-addendum-2026-08-31",
+        "Plans/full_thread_runtime_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.plugins.durable.v1",
+      "system_id": "plugins",
+      "owner_doc": "Plans/Plugins_System.md",
+      "schema_ref": "Plans/plugin_package_contracts.schema.json",
+      "record_kinds": [
+        "portable_plugin_manifest",
+        "pm_plugin_manifest",
+        "plugin_package",
+        "PluginPackageSupplyChainProof",
+        "portable_conformance_report",
+        "agent_plugin_conformance_report",
+        "plugin_lifecycle_receipt"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-DELIVERY-365D",
+          "RP-RUNTIME-365D",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Installed package, supply-chain proof, signature, conformance, rollback, quarantine, release, and audit refs hold authoritative metadata.",
+        "expiry_rule": "Lifecycle receipts compact only after rollback/uninstall/reference release; package/proof authority remains held while installed or admitted."
+      },
+      "redaction_transform_ids": [
+        "rt.plugin_package_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Portable plugin.json and PM-native pm-plugin.json normalize under explicit precedence/migration; package identity and lifecycle receipt record_kind remain exact.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Plugin package, proof, conformance, and lifecycle receipt metadata are durable; no plugin EventRecord is admitted.",
+      "source_refs": [
+        "Plans/Plugins_System.md",
+        "Plans/Release_Supply_Chain.md",
+        "Plans/plugin_package_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.plugins.request.v1",
+      "system_id": "plugins",
+      "owner_doc": "Plans/Plugins_System.md",
+      "schema_ref": "Plans/plugin_package_contracts.schema.json#/$defs/PluginLifecycleCommandRequest",
+      "record_kinds": [
+        "plugin_lifecycle_command_request"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "The resulting owner receipt and ObservableWork carry durable consequence.",
+        "expiry_rule": "Discard after admission, refusal, or terminal correlation."
+      },
+      "redaction_transform_ids": [
+        "rt.plugin_package_metadata.v1"
+      ],
+      "migration_rule": "Lifecycle command transport is not a package, receipt, or migration authority.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Command requests remain transport rather than a second plugin lifecycle store.",
+      "source_refs": [
+        "Plans/Plugins_System.md",
+        "Plans/plugin_package_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.auth_browser_session.exclusion.v1",
+      "system_id": "auth_browser_session",
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "schema_ref": "Plans/protected_auth_browser_contracts.schema.json",
+      "record_kinds": [
+        "AuthBrowserSession protected content and state"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No protected-session content/state hold exists in ordinary storage or backup.",
+        "expiry_rule": "Destroy transient protected store on close, expiry, crash, restart, or disconnect; never restore, copy, promote, capture, inspect, or export."
+      },
+      "redaction_transform_ids": [
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Legacy auth_session tokens normalize only as source-lineage identity for the protected ephemeral boundary and never preserve old persistent-profile behavior.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "AuthBrowserSession is human-only, non-recordable, non-inspectable, non-restorable, and structurally unavailable to agents, adapters, plugins, Doctor, capture, and backup.",
+      "source_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#smpfs-143-protected-authbrowsersession-boundary",
+        "Plans/Test_Capture_and_Motion_Evidence.md",
+        "Plans/Remote_Access_System.md"
+      ]
+    }
+  ],
   "families": [
     {
       "family_id": "approved_plan_pack",
@@ -5542,7 +6686,7 @@
         "backup_ref",
         "rollback_result"
       ],
-      "replay_behavior": "Completed history is append-historical by migration_id and round-trips the one storage-owned terminal receipt; external journals retain failed and nonterminal recovery evidence.",
+      "replay_behavior": "Completed history is append-historical by migration_id and round-trips the one storage-owned terminal receipt; external journals retain failed and nonterminal recovery evidence. Progress is derived only from the durable migration journal and is neither a receipt nor a storage family.",
       "migration": "The exact value schema is owned by Plans/storage_recovery_contracts.schema.json#/$defs/migration_receipt. StorageMigrationCoordinator emits it only after recursive preflight arithmetic, transition, step, verification, timestamp, rollback, data-risk, and non-secret-ref validation. Progress remains journal-derived and is not a receipt.",
       "migration_disposition": {
         "mode": "store_coordinator",
@@ -6796,44 +7940,76 @@
       "storage_kind": "redb",
       "status": "materialized",
       "tier": "later_gui_or_feature_projection",
-      "key_shape": "onboarding_state.v1:{project_id}",
+      "key_shape": "onboarding_state.v2:{onboarding_session_id}",
       "compatibility_key_shapes": [
+        "onboarding_state.v1:{project_id}",
         "onboarding:v1"
       ],
-      "value_schema_id": "pm.storage_value.onboarding_state.v1",
-      "value_schema_ref": "Plans/storage_value_registry.json#/families/onboarding_state/value_schema",
-      "owner_doc": "Plans/storage-plan.md",
+      "value_schema_id": "pm.product_onboarding.session.v1",
+      "value_schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session",
+      "owner_doc": "Plans/Planning_Wizard.md#product-onboarding-and-guided-tour-owner-addendum-2026-08-31",
       "producer": [
-        "onboarding state writer"
+        "Product Onboarding session owner after path, review-plan, revision, hash, currentness, and continuation-generation validation"
       ],
       "consumers": [
         "FinalGUI startup restore",
-        "onboarding and provider-setup surfaces"
+        "Product Onboarding",
+        "Settings replay entry point",
+        "Guided Tour handoff"
       ],
       "schema_version": "1.0.0",
       "encoding": "json_canonical",
       "required_fields": [
         "schema_id",
         "schema_version",
+        "onboarding_session_id",
         "project_id",
-        "onboarding_version",
-        "completed_step_ids",
-        "dismissed_prompt_ids",
-        "provider_setup_state",
-        "updated_at_utc",
-        "redaction_profile"
+        "stage",
+        "status",
+        "path_kind",
+        "simple_path_selection",
+        "scm_backend_selection",
+        "forge_provider_selection",
+        "active_branch",
+        "provider_selection_ref",
+        "project_selection_ref",
+        "queued_setup_plan_ref",
+        "queued_setup_plan_revision",
+        "reviewed_setup_plan_revision",
+        "review_confirmation",
+        "approved_setup_plan_sha256",
+        "automatic_preparation_currentness_ref",
+        "owner_operation_refs",
+        "warning_codes",
+        "revision",
+        "continuation_generation",
+        "return_context",
+        "guided_tour_handoff_ref",
+        "updated_at_utc"
       ],
-      "optional_fields": [
-        "first_run_completed_at_utc"
-      ],
+      "optional_fields": [],
       "nullable_fields": [
-        "first_run_completed_at_utc"
+        "project_id",
+        "path_kind",
+        "simple_path_selection",
+        "scm_backend_selection",
+        "forge_provider_selection",
+        "active_branch",
+        "provider_selection_ref",
+        "project_selection_ref",
+        "queued_setup_plan_ref",
+        "queued_setup_plan_revision",
+        "reviewed_setup_plan_revision",
+        "approved_setup_plan_sha256",
+        "automatic_preparation_currentness_ref",
+        "return_context",
+        "guided_tour_handoff_ref"
       ],
-      "replay_behavior": "Restore project onboarding progress. Missing state uses first-run defaults; corrupt state resets with the canonical warning card.",
-      "migration": "Compatibility aliases are read only under StorageMigrationCoordinator copy-forward. New writes use only the canonical dotted key; ambiguous project identity fails closed.",
-      "retention_compaction": "Retain the latest valid state per project plus one alias-migration backup generation.",
-      "redaction_no_secret_rule": "Provider setup stores readiness state and provider refs only, never keys, tokens, credentials, OAuth values, or credential paths.",
-      "legacy_canonical_crosswalk_status": "canonical dotted project key with global colon-form read-only migration alias",
+      "replay_behavior": "Restore only the latest valid current session revision on the exact nine-stage welcome/simple_path/first_project/source_control_setup/server_storage_client/remote_access_setup/review_setup_plan/automatic_preparation/ready guided-setup path or exact six-stage welcome/simple_path/remote_access_setup/review_setup_plan/automatic_preparation/ready connect-existing shortcut; completed requires ready and missing state starts at welcome. path_kind and the current simple_path_selection must agree. Before person-confirmed Review, reviewed_setup_plan_revision, approved_setup_plan_sha256, and automatic_preparation_currentness_ref remain null and no external owner dispatch is authorized. Automatic Preparation resumes only when the queued/reviewed revisions, person confirmation, approved hash, currentness ref, session revision, and continuation generation are current. Independent scm_backend_selection and forge_provider_selection restore local Safe History and the optional online copy without conflation. Corrupt, stale-generation, path-inconsistent, review-inconsistent, ambiguous, or secret-bearing state is quarantined and disclosed; replay observes valid existing owner refs and never repeats external side effects.",
+      "migration": "StorageMigrationCoordinator reads onboarding_state.v1:{project_id} and onboarding:v1 once, maps each admissible legacy provider-first/four-screen, predecessor-five-stage, or superseded seven-stage server_setup row to the first applicable unresolved current nine-/six-stage decision, maps server_setup only to server_storage_client, and forces review_setup_plan with review_confirmation=unconfirmed before any new owner dispatch. It preserves only admissible stable decisions, valid receipt refs, and bounded warnings; never infers local Safe History from online-forge selection or the reverse; reports exact source/accepted/stale/dropped/quarantined counts plus mapped_stage_counts and mapped_path_counts; hashes the disposition manifest; and emits the sole terminal pm.storage_value.migration_receipt.v1 plus the typed pm.product_onboarding.legacy_migration_receipt.v1 reconciliation record with owner_work_replayed=false. New writes use onboarding_state.v2:{onboarding_session_id} only; ambiguous, corrupt, or secret-bearing rows fail closed and quarantine, and migration never replays owner work.",
+      "retention_compaction": "Retain the latest valid session revision plus one verified migration backup generation under RP-CONFIG-CURRENT; migrated source payloads become eligible only after both receipts and read-back verification, while quarantine follows Q-RESETTABLE.",
+      "redaction_no_secret_rule": "Apply rt.onboarding_state.v1 and rt.auth_browser_session_exclusion.v1. Store only stable session/path/setup-plan identities, revisions, enums, SHA-256 values, continuation generations, bounded warnings, and non-secret owner/receipt/layout/tour-handoff refs or handles. Never store a setup-plan body, raw transcript, API key, token, auth URL/code, credential, profile root, broad local path, AuthBrowserSession content/state, or Guided Tour session/scene/action/Teacher/focus/motion/checkpoint state.",
+      "legacy_canonical_crosswalk_status": "canonical v2 nine-/six-stage session identity; onboarding_state.v1:{project_id} and onboarding:v1 are read-once provider-first/four-screen, predecessor-five-stage, or superseded-seven-stage inputs and never continuing write or dual-read authorities; server_setup is predecessor lineage only",
       "recovery_disposition": {
         "authority_class": "resettable_ui_state",
         "strategy": "reset_to_defaults_after_quarantine",
@@ -6852,90 +8028,908 @@
         "required": [
           "schema_id",
           "schema_version",
+          "onboarding_session_id",
           "project_id",
-          "onboarding_version",
-          "completed_step_ids",
-          "dismissed_prompt_ids",
-          "provider_setup_state",
-          "updated_at_utc",
-          "redaction_profile"
+          "stage",
+          "status",
+          "path_kind",
+          "simple_path_selection",
+          "scm_backend_selection",
+          "forge_provider_selection",
+          "active_branch",
+          "provider_selection_ref",
+          "project_selection_ref",
+          "queued_setup_plan_ref",
+          "queued_setup_plan_revision",
+          "reviewed_setup_plan_revision",
+          "review_confirmation",
+          "approved_setup_plan_sha256",
+          "automatic_preparation_currentness_ref",
+          "owner_operation_refs",
+          "warning_codes",
+          "revision",
+          "continuation_generation",
+          "return_context",
+          "guided_tour_handoff_ref",
+          "updated_at_utc"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.storage_value.onboarding_state.v1"
+            "const": "pm.product_onboarding.session.v1"
           },
           "schema_version": {
             "const": "1.0.0"
           },
+          "onboarding_session_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
           "project_id": {
-            "type": "string",
-            "minLength": 1
-          },
-          "onboarding_version": {
-            "type": "string",
-            "minLength": 1
-          },
-          "completed_step_ids": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "dismissed_prompt_ids": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "provider_setup_state": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "status",
-              "provider_refs"
-            ],
-            "properties": {
-              "status": {
-                "type": "string",
-                "enum": [
-                  "not_started",
-                  "in_progress",
-                  "complete",
-                  "skipped"
-                ]
-              },
-              "provider_refs": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              }
-            }
-          },
-          "first_run_completed_at_utc": {
             "type": [
               "string",
               "null"
             ],
-            "format": "date-time"
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
+          "stage": {
+            "enum": [
+              "welcome",
+              "simple_path",
+              "first_project",
+              "source_control_setup",
+              "server_storage_client",
+              "remote_access_setup",
+              "review_setup_plan",
+              "automatic_preparation",
+              "ready"
+            ]
+          },
+          "status": {
+            "enum": [
+              "active",
+              "interrupted",
+              "deferred",
+              "skipped",
+              "completed",
+              "cancelled"
+            ]
+          },
+          "path_kind": {
+            "oneOf": [
+              {
+                "enum": [
+                  "guided_setup",
+                  "connect_existing"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "simple_path_selection": {
+            "enum": [
+              "start_on_this_computer",
+              "connect_existing_server",
+              "setup_server",
+              "restore_backup",
+              null
+            ]
+          },
+          "scm_backend_selection": {
+            "enum": [
+              "git",
+              "jujutsu",
+              null
+            ]
+          },
+          "forge_provider_selection": {
+            "enum": [
+              "github",
+              "gitlab",
+              "azure_devops",
+              "bitbucket_cloud",
+              "bitbucket_data_center",
+              "forgejo",
+              "gitea",
+              "cursor_origin",
+              "none",
+              null
+            ]
+          },
+          "active_branch": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "branch_kind",
+                  "branch_step",
+                  "selection_ref",
+                  "target_ref",
+                  "expected_revision",
+                  "continuation_generation",
+                  "owner_operation_id",
+                  "owner_branch_ref",
+                  "initiating_client_id",
+                  "return_stage",
+                  "return_focus_id",
+                  "pending_owner_action_id"
+                ],
+                "properties": {
+                  "branch_kind": {
+                    "enum": [
+                      "server-connect",
+                      "server-claim",
+                      "source-control",
+                      "provider",
+                      "project",
+                      "remote-access"
+                    ]
+                  },
+                  "branch_step": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "selection_ref": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "target_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "expected_revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "continuation_generation": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "owner_operation_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "owner_branch_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "initiating_client_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "return_stage": {
+                    "enum": [
+                      "welcome",
+                      "simple_path",
+                      "first_project",
+                      "source_control_setup",
+                      "server_storage_client",
+                      "remote_access_setup",
+                      "review_setup_plan",
+                      "automatic_preparation",
+                      "ready"
+                    ]
+                  },
+                  "return_focus_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "pending_owner_action_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "provider_selection_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
+          "project_selection_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
+          "queued_setup_plan_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
+          "queued_setup_plan_revision": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reviewed_setup_plan_revision": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "review_confirmation": {
+            "enum": [
+              "unconfirmed",
+              "person_confirmed_reviewed_plan"
+            ]
+          },
+          "approved_setup_plan_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "automatic_preparation_currentness_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
+          "owner_operation_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 32,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+            }
+          },
+          "warning_codes": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 32,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "continuation_generation": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "return_context": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "return_context_id",
+                  "onboarding_session_id",
+                  "stage",
+                  "owner_route_ref",
+                  "project_id",
+                  "server_id",
+                  "execution_host_id",
+                  "execution_environment_id",
+                  "owner_operation_id",
+                  "expected_revision",
+                  "continuation_generation",
+                  "initiating_client_id",
+                  "client_handoff_policy",
+                  "return_focus_id",
+                  "created_at_utc"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.product_onboarding.return_context.v1"
+                  },
+                  "schema_version": {
+                    "const": "1.0.0"
+                  },
+                  "return_context_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "onboarding_session_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "stage": {
+                    "enum": [
+                      "welcome",
+                      "simple_path",
+                      "first_project",
+                      "source_control_setup",
+                      "server_storage_client",
+                      "remote_access_setup",
+                      "review_setup_plan",
+                      "automatic_preparation",
+                      "ready"
+                    ]
+                  },
+                  "owner_route_ref": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "project_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "server_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "execution_host_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "execution_environment_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "owner_operation_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "expected_revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "continuation_generation": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "initiating_client_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "client_handoff_policy": {
+                    "const": "initiating_active_client_only"
+                  },
+                  "return_focus_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                  },
+                  "created_at_utc": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "guided_tour_handoff_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
           },
           "updated_at_utc": {
             "type": "string",
             "format": "date-time"
-          },
-          "redaction_profile": {
-            "type": "string",
-            "enum": [
-              "no_secrets",
-              "redacted_refs_only"
-            ]
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "completed"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "stage": {
+                  "const": "ready"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "deferred"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "return_context": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "stage": {
+                  "enum": [
+                    "first_project",
+                    "source_control_setup",
+                    "server_storage_client",
+                    "remote_access_setup",
+                    "review_setup_plan",
+                    "automatic_preparation",
+                    "ready"
+                  ]
+                }
+              },
+              "required": [
+                "stage"
+              ]
+            },
+            "then": {
+              "properties": {
+                "path_kind": {
+                  "enum": [
+                    "guided_setup",
+                    "connect_existing"
+                  ]
+                },
+                "simple_path_selection": {
+                  "enum": [
+                    "start_on_this_computer",
+                    "connect_existing_server",
+                    "setup_server",
+                    "restore_backup"
+                  ]
+                },
+                "queued_setup_plan_ref": {
+                  "type": "string"
+                },
+                "queued_setup_plan_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "path_kind": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "path_kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "stage": {
+                  "enum": [
+                    "welcome",
+                    "simple_path"
+                  ]
+                },
+                "simple_path_selection": {
+                  "type": "null"
+                },
+                "queued_setup_plan_ref": {
+                  "type": "null"
+                },
+                "queued_setup_plan_revision": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "simple_path_selection": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "simple_path_selection"
+              ]
+            },
+            "then": {
+              "properties": {
+                "stage": {
+                  "enum": [
+                    "welcome",
+                    "simple_path"
+                  ]
+                },
+                "path_kind": {
+                  "type": "null"
+                },
+                "queued_setup_plan_ref": {
+                  "type": "null"
+                },
+                "queued_setup_plan_revision": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "path_kind": {
+                  "const": "connect_existing"
+                }
+              },
+              "required": [
+                "path_kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "simple_path_selection": {
+                  "const": "connect_existing_server"
+                },
+                "stage": {
+                  "enum": [
+                    "welcome",
+                    "simple_path",
+                    "remote_access_setup",
+                    "review_setup_plan",
+                    "automatic_preparation",
+                    "ready"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "path_kind": {
+                  "const": "guided_setup"
+                }
+              },
+              "required": [
+                "path_kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "simple_path_selection": {
+                  "enum": [
+                    "start_on_this_computer",
+                    "setup_server",
+                    "restore_backup"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "simple_path_selection": {
+                  "const": "connect_existing_server"
+                }
+              },
+              "required": [
+                "simple_path_selection"
+              ]
+            },
+            "then": {
+              "properties": {
+                "path_kind": {
+                  "const": "connect_existing"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "simple_path_selection": {
+                  "enum": [
+                    "start_on_this_computer",
+                    "setup_server",
+                    "restore_backup"
+                  ]
+                }
+              },
+              "required": [
+                "simple_path_selection"
+              ]
+            },
+            "then": {
+              "properties": {
+                "path_kind": {
+                  "const": "guided_setup"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "stage": {
+                  "enum": [
+                    "welcome",
+                    "simple_path",
+                    "first_project",
+                    "source_control_setup",
+                    "server_storage_client",
+                    "remote_access_setup"
+                  ]
+                }
+              },
+              "required": [
+                "stage"
+              ]
+            },
+            "then": {
+              "properties": {
+                "reviewed_setup_plan_revision": {
+                  "type": "null"
+                },
+                "review_confirmation": {
+                  "const": "unconfirmed"
+                },
+                "approved_setup_plan_sha256": {
+                  "type": "null"
+                },
+                "automatic_preparation_currentness_ref": {
+                  "type": "null"
+                },
+                "active_branch": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "stage": {
+                  "const": "review_setup_plan"
+                }
+              },
+              "required": [
+                "stage"
+              ]
+            },
+            "then": {
+              "properties": {
+                "queued_setup_plan_ref": {
+                  "type": "string"
+                },
+                "queued_setup_plan_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "automatic_preparation_currentness_ref": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "review_confirmation": {
+                  "const": "unconfirmed"
+                }
+              },
+              "required": [
+                "review_confirmation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "reviewed_setup_plan_revision": {
+                  "type": "null"
+                },
+                "approved_setup_plan_sha256": {
+                  "type": "null"
+                },
+                "automatic_preparation_currentness_ref": {
+                  "type": "null"
+                },
+                "active_branch": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "review_confirmation": {
+                  "const": "person_confirmed_reviewed_plan"
+                }
+              },
+              "required": [
+                "review_confirmation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "stage": {
+                  "enum": [
+                    "review_setup_plan",
+                    "automatic_preparation",
+                    "ready"
+                  ]
+                },
+                "queued_setup_plan_ref": {
+                  "type": "string"
+                },
+                "queued_setup_plan_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "reviewed_setup_plan_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "approved_setup_plan_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "stage": {
+                  "enum": [
+                    "automatic_preparation",
+                    "ready"
+                  ]
+                }
+              },
+              "required": [
+                "stage"
+              ]
+            },
+            "then": {
+              "properties": {
+                "queued_setup_plan_ref": {
+                  "type": "string"
+                },
+                "queued_setup_plan_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "reviewed_setup_plan_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "review_confirmation": {
+                  "const": "person_confirmed_reviewed_plan"
+                },
+                "approved_setup_plan_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "automatic_preparation_currentness_ref": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "x-puppet-master-assertions": [
+          "path_kind is null exactly while simple_path_selection is null; otherwise connect_existing agrees only with connect_existing_server and guided_setup agrees only with start_on_this_computer, setup_server, or restore_backup",
+          "the exact guided_setup stage order is welcome -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready",
+          "the exact connect_existing stage order is welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready and omits rather than executes first_project, source_control_setup, and server_storage_client",
+          "person_confirmed_reviewed_plan requires queued_setup_plan_revision == reviewed_setup_plan_revision and approved_setup_plan_sha256 is the canonical SHA-256 of that exact queued revision",
+          "any queued plan, path, selection, or consequence change increments revision, clears reviewed_setup_plan_revision, approved_setup_plan_sha256, automatic_preparation_currentness_ref, and active_branch, and sets review_confirmation to unconfirmed",
+          "external owner work starts only from a person-confirmed current review whose session, path, queued/reviewed revision, approved hash, continuation generation, target refs, and automatic-preparation currentness match; stale or mismatched state dispatches nothing",
+          "legacy owner or receipt refs are observational evidence only and never authorize replay or a new dispatch",
+          "server_setup is predecessor seven-stage lineage only and is never admitted as a current stage or return stage",
+          "guided_tour_handoff_ref is a stable non-secret handoff ref only and never serializes Guided Tour session, scene, action, Teacher, focus, motion, or checkpoint state"
+        ]
       },
       "retention_policy_ref": "RP-CONFIG-CURRENT",
       "migration_disposition": {
@@ -6945,12 +8939,17 @@
         "ambiguity_policy": "fail_closed",
         "alias_dispositions": [
           {
+            "key_shape": "onboarding_state.v1:{project_id}",
+            "disposition": "coordinator_copy_forward"
+          },
+          {
             "key_shape": "onboarding:v1",
             "disposition": "coordinator_copy_forward"
           }
         ],
         "source_refs": [
-          "Plans/storage-plan.md#alias-lifecycle-migration-history-and-preflight"
+          "Plans/storage-plan.md#packet-authoritative-storage-disposition-and-redaction-addendum-2026-08-31",
+          "Plans/Planning_Wizard.md#product-onboarding-and-guided-tour-owner-addendum-2026-08-31"
         ]
       },
       "restore_disposition": {
@@ -6959,7 +8958,7 @@
         "outcome_owner_ref": null,
         "mutation_fence_on_unresolved": false,
         "source_refs": [
-          "Plans/storage-plan.md#case-l-6-safe-point-restore-transaction-restore-point-and-required-mvp-persistence"
+          "Plans/storage-plan.md#packet-authoritative-storage-disposition-and-redaction-addendum-2026-08-31"
         ]
       }
     },
@@ -18674,9 +20673,10 @@
         "migration"
       ],
       "optional_fields": [
-        "surface.floating_bounds",
         "migration.from_schema_version",
-        "migration.source_key"
+        "migration.source_key",
+        "surface.floating_bounds",
+        "surface.size.preset_id"
       ],
       "nullable_fields": [
         "surface.floating_bounds",
@@ -19019,6 +21019,7 @@
             "additionalProperties": false,
             "required": [
               "basis_px",
+              "cross_basis_px",
               "flex_weight",
               "min_width_px",
               "min_height_px"
@@ -19026,21 +21027,42 @@
             "properties": {
               "basis_px": {
                 "type": "number",
-                "minimum": 0
+                "minimum": 0,
+                "description": "Committed main-axis basis for a docked Home surface, or the normalized basis used by the current host."
+              },
+              "cross_basis_px": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Committed cross-axis basis. For dock_top and dock_bottom this is the shared row-dock track thickness; pre-field records migrate it from basis_px before canonical validation."
+              },
+              "preset_id": {
+                "type": "string",
+                "enum": [
+                  "compact",
+                  "standard",
+                  "wide",
+                  "tall",
+                  "focus"
+                ],
+                "description": "Optional committed semantic size preset used to restore adaptive Home surface content. It is absent until a curated preset is selected and never contains preview state."
               },
               "flex_weight": {
                 "type": "number",
-                "minimum": 0
+                "minimum": 0,
+                "description": "Committed proportional main-axis weight used when the host distributes remaining space."
               },
               "min_width_px": {
                 "type": "number",
-                "minimum": 1
+                "minimum": 1,
+                "description": "Committed minimum rendered width for the surface."
               },
               "min_height_px": {
                 "type": "number",
-                "minimum": 1
+                "minimum": 1,
+                "description": "Committed minimum rendered height for the surface."
               }
-            }
+            },
+            "description": "Settled Home surface sizing only. Pointer-preview dimensions, ghosts, placeholders, and animation state are not schema fields."
           },
           "bounds": {
             "type": "object",

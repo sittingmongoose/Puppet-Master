@@ -1,0 +1,1619 @@
+{
+  "schema_id": "pm.plugin.command_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "contract_schema": "Plans/plugin_contracts.schema.json",
+  "claim_boundary": "Static positive and negative owner schema fixtures only; central registration and production-intent wiring are separately admitted, but no native handler, EventRecord producer, package effect, or runtime proof is claimed.",
+  "request_cases": [
+    {
+      "name": "scan_internal_interchange_without_activation",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.scan",
+        "operation": "scan",
+        "command_instance_id": "cmdinst-scan-1",
+        "idempotency_key": "idem-scan-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-scan",
+        "plugin_id": "plugin-scan",
+        "project_id": null,
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 0,
+        "expected_permission_generation": 0,
+        "permission_snapshot_ref": "permission-snapshot-1",
+        "confirmation_ref": null,
+        "observable_work_ref": "work-scan-1",
+        "return_context_ref": "return-plugins-list",
+        "payload": {
+          "manifest_class": "pm_internal_interchange",
+          "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "pm_manifest_sha256": null,
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": null,
+          "conformance_refs": [],
+          "permission_diff_ref": null,
+          "rollback_ref": null,
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "install_dual_manifest_with_explicit_approval",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.install",
+        "operation": "install",
+        "command_instance_id": "cmdinst-install-1",
+        "idempotency_key": "idem-install-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-install",
+        "plugin_id": "plugin-install",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 0,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": "approval-install-1",
+        "observable_work_ref": "work-install-1",
+        "return_context_ref": "return-plugin-install",
+        "payload": {
+          "manifest_class": "dual_manifest",
+          "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-1",
+          "conformance_refs": [
+            "portable-conformance-1",
+            "native-conformance-1"
+          ],
+          "permission_diff_ref": "permission-diff-1",
+          "rollback_ref": "rollback-plan-1",
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "update_pm_native_with_diff_and_rollback",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.update",
+        "operation": "update",
+        "command_instance_id": "cmdinst-update-1",
+        "idempotency_key": "idem-update-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-update",
+        "plugin_id": "plugin-update",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": "approval-update-1",
+        "observable_work_ref": "work-update-1",
+        "return_context_ref": "return-plugin-update",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-2",
+          "conformance_refs": [
+            "native-conformance-2"
+          ],
+          "permission_diff_ref": "permission-diff-2",
+          "rollback_ref": "rollback-plan-2",
+          "data_disposition": "migrate_owned_data",
+          "bounded_projection_ref": "update-diff-2",
+          "reload_authority_change_ref": null,
+          "update_diff_ref": "update-diff-2"
+        }
+      }
+    },
+    {
+      "name": "enable_pm_native_generation",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.enable",
+        "operation": "enable",
+        "command_instance_id": "cmdinst-enable-1",
+        "idempotency_key": "idem-enable-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-enable",
+        "plugin_id": "plugin-enable",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": "approval-enable-1",
+        "observable_work_ref": "work-enable-1",
+        "return_context_ref": "return-plugin-enable",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-enable",
+          "conformance_refs": [
+            "native-conformance-enable"
+          ],
+          "permission_diff_ref": "permission-diff-enable",
+          "rollback_ref": "rollback-enable",
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "disable_exact_generation",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.disable",
+        "operation": "disable",
+        "command_instance_id": "cmdinst-disable-1",
+        "idempotency_key": "idem-disable-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-disable",
+        "plugin_id": "plugin-disable",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": null,
+        "observable_work_ref": "work-disable-1",
+        "return_context_ref": "return-plugin-disable",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-disable",
+          "conformance_refs": [
+            "native-conformance-disable"
+          ],
+          "permission_diff_ref": "permission-diff-disable",
+          "rollback_ref": "rollback-disable",
+          "data_disposition": "retain_owned_data",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "reload_generation_fenced",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.reload",
+        "operation": "reload",
+        "command_instance_id": "cmdinst-reload-1",
+        "idempotency_key": "idem-reload-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-reload",
+        "plugin_id": "plugin-reload",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": "approval-reload-1",
+        "observable_work_ref": "work-reload-1",
+        "return_context_ref": "return-plugin-reload",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-reload",
+          "conformance_refs": [
+            "native-conformance-reload"
+          ],
+          "permission_diff_ref": "permission-diff-reload",
+          "rollback_ref": "rollback-reload",
+          "data_disposition": "retain_owned_data",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": "reload-authority-diff-1",
+          "update_diff_ref": "update-diff-reload"
+        }
+      }
+    },
+    {
+      "name": "remove_with_owned_data_disposition",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.remove",
+        "operation": "remove",
+        "command_instance_id": "cmdinst-remove-1",
+        "idempotency_key": "idem-remove-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-remove",
+        "plugin_id": "plugin-remove",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": "approval-remove-1",
+        "observable_work_ref": "work-remove-1",
+        "return_context_ref": "return-plugin-remove",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-remove",
+          "conformance_refs": [
+            "native-conformance-remove"
+          ],
+          "permission_diff_ref": "permission-diff-remove",
+          "rollback_ref": "rollback-remove",
+          "data_disposition": "remove_owned_data",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "validate_dual_manifest",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.validate",
+        "operation": "validate",
+        "command_instance_id": "cmdinst-validate-1",
+        "idempotency_key": "idem-validate-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-validate",
+        "plugin_id": "plugin-validate",
+        "project_id": null,
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": null,
+        "observable_work_ref": "work-validate-1",
+        "return_context_ref": "return-plugin-validate",
+        "payload": {
+          "manifest_class": "dual_manifest",
+          "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-validate",
+          "conformance_refs": [
+            "portable-conformance-validate",
+            "native-conformance-validate"
+          ],
+          "permission_diff_ref": "permission-diff-validate",
+          "rollback_ref": null,
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": "conformance-details-validate",
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "review_update_diff_without_apply",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.review_changes",
+        "operation": "review_changes",
+        "command_instance_id": "cmdinst-review-1",
+        "idempotency_key": "idem-review-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-review",
+        "plugin_id": "plugin-review",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": null,
+        "observable_work_ref": "work-review-1",
+        "return_context_ref": "return-plugin-review",
+        "payload": {
+          "manifest_class": "dual_manifest",
+          "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-review",
+          "conformance_refs": [
+            "portable-conformance-review",
+            "native-conformance-review"
+          ],
+          "permission_diff_ref": "permission-diff-review",
+          "rollback_ref": "rollback-review",
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": "update-diff-review",
+          "reload_authority_change_ref": null,
+          "update_diff_ref": "update-diff-review"
+        }
+      }
+    },
+    {
+      "name": "rollback_exact_prior_generation",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.rollback",
+        "operation": "rollback",
+        "command_instance_id": "cmdinst-rollback-1",
+        "idempotency_key": "idem-rollback-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-rollback",
+        "plugin_id": "plugin-rollback",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 8,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": "approval-rollback-1",
+        "observable_work_ref": "work-rollback-1",
+        "return_context_ref": "return-plugin-rollback",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "prior-package-proof-7",
+          "conformance_refs": [
+            "native-conformance-prior-7"
+          ],
+          "permission_diff_ref": "permission-diff-rollback",
+          "rollback_ref": "rollback-target-7",
+          "data_disposition": "migrate_owned_data",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": null,
+          "update_diff_ref": "update-diff-rollback"
+        }
+      }
+    },
+    {
+      "name": "open_bounded_redacted_details",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.open_details",
+        "operation": "open_details",
+        "command_instance_id": "cmdinst-details-1",
+        "idempotency_key": "idem-details-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-details",
+        "plugin_id": "plugin-details",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": null,
+        "observable_work_ref": null,
+        "return_context_ref": "return-plugin-details",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-details",
+          "conformance_refs": [
+            "native-conformance-details"
+          ],
+          "permission_diff_ref": "permission-diff-details",
+          "rollback_ref": "rollback-details",
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": "plugin-details-redacted-1",
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "open_bounded_redacted_logs",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.open_logs",
+        "operation": "open_logs",
+        "command_instance_id": "cmdinst-logs-1",
+        "idempotency_key": "idem-logs-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-logs",
+        "plugin_id": "plugin-logs",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 7,
+        "expected_permission_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "confirmation_ref": null,
+        "observable_work_ref": null,
+        "return_context_ref": "return-plugin-logs",
+        "payload": {
+          "manifest_class": "pm_native",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": "package-proof-logs",
+          "conformance_refs": [
+            "native-conformance-logs"
+          ],
+          "permission_diff_ref": "permission-diff-logs",
+          "rollback_ref": "rollback-logs",
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": "plugin-logs-redacted-1",
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    }
+  ],
+  "other_positive_cases": [
+    {
+      "name": "registered_install_without_native_handler_is_truthfully_unavailable",
+      "target_def": "PluginCommandAvailability",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_availability",
+        "command_id": "cmd.agent_plugin.install",
+        "package_id": "pkg-install",
+        "plugin_id": "plugin-install",
+        "package_generation": 0,
+        "permission_generation": 4,
+        "topology_generation": 3,
+        "state": "unavailable",
+        "disabled_reason": "handler_unavailable",
+        "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+        "evaluated_at_utc": "2026-08-31T23:30:00Z"
+      }
+    },
+    {
+      "name": "registered_details_without_native_handler_is_truthfully_unavailable",
+      "target_def": "PluginCommandAvailability",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_availability",
+        "command_id": "cmd.agent_plugin.open_details",
+        "package_id": "pkg-details",
+        "plugin_id": "plugin-details",
+        "package_generation": 7,
+        "permission_generation": 4,
+        "topology_generation": 3,
+        "state": "unavailable",
+        "disabled_reason": "handler_unavailable",
+        "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+        "evaluated_at_utc": "2026-08-31T23:30:00Z"
+      }
+    },
+    {
+      "name": "permission_decision_cannot_widen_authority",
+      "target_def": "PluginPermissionDecision",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_permission_decision",
+        "decision_id": "permission-decision-1",
+        "command_id": "cmd.agent_plugin.update",
+        "package_id": "pkg-update",
+        "plugin_id": "plugin-update",
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "required_scopes": [
+          "plugin_package_update",
+          "plugin_review"
+        ],
+        "decision": "admitted",
+        "approval_ref": "approval-update-1",
+        "credential_material_exposed": false,
+        "protected_auth_access_allowed": false,
+        "private_absolute_path_exposed": false,
+        "authority_widening": false,
+        "decided_at_utc": "2026-08-31T23:30:00Z"
+      }
+    },
+    {
+      "name": "legacy_import_requires_explicit_migration_receipt",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.scan",
+        "operation": "scan",
+        "command_instance_id": "cmdinst-legacy-scan-1",
+        "idempotency_key": "idem-legacy-scan-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-legacy",
+        "plugin_id": "plugin-legacy",
+        "project_id": null,
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 3,
+        "expected_package_generation": 0,
+        "expected_permission_generation": 0,
+        "permission_snapshot_ref": "permission-snapshot-1",
+        "confirmation_ref": null,
+        "observable_work_ref": "work-legacy-scan-1",
+        "return_context_ref": "return-plugins-list",
+        "payload": {
+          "manifest_class": "legacy_imported",
+          "portable_manifest_sha256": null,
+          "pm_manifest_sha256": null,
+          "legacy_manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "migration_receipt_ref": "migration-receipt-legacy-1",
+          "package_proof_ref": null,
+          "conformance_refs": [],
+          "permission_diff_ref": null,
+          "rollback_ref": null,
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": null,
+          "reload_authority_change_ref": null,
+          "update_diff_ref": null
+        }
+      }
+    },
+    {
+      "name": "result_scan_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-scan-1",
+        "command_id": "cmd.agent_plugin.scan",
+        "command_instance_id": "cmdinst-scan-1",
+        "package_id": "pkg-scan",
+        "plugin_id": "plugin-scan",
+        "prior_package_generation": 0,
+        "result_package_generation": 0,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.scan",
+          "package_id": "pkg-scan",
+          "plugin_id": "plugin-scan",
+          "package_generation": 0,
+          "permission_generation": 0,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-scan",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-scan"
+        ],
+        "permission_diff_ref": "permission-diff-result-scan",
+        "supply_chain_ref": "supply-chain-result-scan",
+        "rollback_ref": "rollback-result-scan",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-scan-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugins-list",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-scan",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    },
+    {
+      "name": "result_install_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-install-1",
+        "command_id": "cmd.agent_plugin.install",
+        "command_instance_id": "cmdinst-install-1",
+        "package_id": "pkg-install",
+        "plugin_id": "plugin-install",
+        "prior_package_generation": 0,
+        "result_package_generation": 0,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.install",
+          "package_id": "pkg-install",
+          "plugin_id": "plugin-install",
+          "package_generation": 1,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-install",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-install"
+        ],
+        "permission_diff_ref": "permission-diff-result-install",
+        "supply_chain_ref": "supply-chain-result-install",
+        "rollback_ref": "rollback-result-install",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-install-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-install",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-install",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    },
+    {
+      "name": "result_update_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-update-1",
+        "command_id": "cmd.agent_plugin.update",
+        "command_instance_id": "cmdinst-update-1",
+        "package_id": "pkg-update",
+        "plugin_id": "plugin-update",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.update",
+          "package_id": "pkg-update",
+          "plugin_id": "plugin-update",
+          "package_generation": 8,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-update",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-update"
+        ],
+        "permission_diff_ref": "permission-diff-result-update",
+        "supply_chain_ref": "supply-chain-result-update",
+        "rollback_ref": "rollback-result-update",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-update-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-update",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-update",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": "update-diff-2"
+      }
+    },
+    {
+      "name": "result_enable_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-enable-1",
+        "command_id": "cmd.agent_plugin.enable",
+        "command_instance_id": "cmdinst-enable-1",
+        "package_id": "pkg-enable",
+        "plugin_id": "plugin-enable",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.enable",
+          "package_id": "pkg-enable",
+          "plugin_id": "plugin-enable",
+          "package_generation": 8,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-enable",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-enable"
+        ],
+        "permission_diff_ref": "permission-diff-result-enable",
+        "supply_chain_ref": "supply-chain-result-enable",
+        "rollback_ref": "rollback-result-enable",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-enable-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-enable",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-enable",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    },
+    {
+      "name": "result_disable_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-disable-1",
+        "command_id": "cmd.agent_plugin.disable",
+        "command_instance_id": "cmdinst-disable-1",
+        "package_id": "pkg-disable",
+        "plugin_id": "plugin-disable",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.disable",
+          "package_id": "pkg-disable",
+          "plugin_id": "plugin-disable",
+          "package_generation": 8,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-disable",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-disable"
+        ],
+        "permission_diff_ref": "permission-diff-result-disable",
+        "supply_chain_ref": "supply-chain-result-disable",
+        "rollback_ref": "rollback-result-disable",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-disable-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-disable",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-disable",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    },
+    {
+      "name": "result_reload_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-reload-1",
+        "command_id": "cmd.agent_plugin.reload",
+        "command_instance_id": "cmdinst-reload-1",
+        "package_id": "pkg-reload",
+        "plugin_id": "plugin-reload",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.reload",
+          "package_id": "pkg-reload",
+          "plugin_id": "plugin-reload",
+          "package_generation": 8,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-reload",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-reload"
+        ],
+        "permission_diff_ref": "permission-diff-result-reload",
+        "supply_chain_ref": "supply-chain-result-reload",
+        "rollback_ref": "rollback-result-reload",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-reload-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-reload",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-reload",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": "update-diff-reload"
+      }
+    },
+    {
+      "name": "result_remove_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-remove-1",
+        "command_id": "cmd.agent_plugin.remove",
+        "command_instance_id": "cmdinst-remove-1",
+        "package_id": "pkg-remove",
+        "plugin_id": "plugin-remove",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.remove",
+          "package_id": "pkg-remove",
+          "plugin_id": "plugin-remove",
+          "package_generation": 8,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-remove",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-remove"
+        ],
+        "permission_diff_ref": "permission-diff-result-remove",
+        "supply_chain_ref": "supply-chain-result-remove",
+        "rollback_ref": "rollback-result-remove",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-remove-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-remove",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-remove",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    },
+    {
+      "name": "result_validate_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-validate-1",
+        "command_id": "cmd.agent_plugin.validate",
+        "command_instance_id": "cmdinst-validate-1",
+        "package_id": "pkg-validate",
+        "plugin_id": "plugin-validate",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.validate",
+          "package_id": "pkg-validate",
+          "plugin_id": "plugin-validate",
+          "package_generation": 7,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-validate",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-validate"
+        ],
+        "permission_diff_ref": "permission-diff-result-validate",
+        "supply_chain_ref": "supply-chain-result-validate",
+        "rollback_ref": "rollback-result-validate",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-validate-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-validate",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-validate",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    },
+    {
+      "name": "result_review_changes_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-review_changes-1",
+        "command_id": "cmd.agent_plugin.review_changes",
+        "command_instance_id": "cmdinst-review-1",
+        "package_id": "pkg-review",
+        "plugin_id": "plugin-review",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.review_changes",
+          "package_id": "pkg-review",
+          "plugin_id": "plugin-review",
+          "package_generation": 7,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-review_changes",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-review_changes"
+        ],
+        "permission_diff_ref": "permission-diff-result-review_changes",
+        "supply_chain_ref": "supply-chain-result-review_changes",
+        "rollback_ref": "rollback-result-review_changes",
+        "bounded_projection_ref": "update-diff-review",
+        "observable_work_ref": "work-review-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-review",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-review_changes",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": "update-diff-review"
+      }
+    },
+    {
+      "name": "result_rollback_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-rollback-1",
+        "command_id": "cmd.agent_plugin.rollback",
+        "command_instance_id": "cmdinst-rollback-1",
+        "package_id": "pkg-rollback",
+        "plugin_id": "plugin-rollback",
+        "prior_package_generation": 8,
+        "result_package_generation": 8,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.rollback",
+          "package_id": "pkg-rollback",
+          "plugin_id": "plugin-rollback",
+          "package_generation": 9,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-rollback",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-rollback"
+        ],
+        "permission_diff_ref": "permission-diff-result-rollback",
+        "supply_chain_ref": "supply-chain-result-rollback",
+        "rollback_ref": "rollback-result-rollback",
+        "bounded_projection_ref": null,
+        "observable_work_ref": "work-rollback-1",
+        "return_settlement": {
+          "return_context_ref": "return-plugin-rollback",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-rollback",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": "update-diff-rollback"
+      }
+    },
+    {
+      "name": "result_open_details_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-open_details-1",
+        "command_id": "cmd.agent_plugin.open_details",
+        "command_instance_id": "cmdinst-details-1",
+        "package_id": "pkg-details",
+        "plugin_id": "plugin-details",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.open_details",
+          "package_id": "pkg-details",
+          "plugin_id": "plugin-details",
+          "package_generation": 7,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-open_details",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-open_details"
+        ],
+        "permission_diff_ref": "permission-diff-result-open_details",
+        "supply_chain_ref": "supply-chain-result-open_details",
+        "rollback_ref": "rollback-result-open_details",
+        "bounded_projection_ref": "plugin-details-redacted-1",
+        "observable_work_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return-plugin-details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-open_details",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    },
+    {
+      "name": "result_open_logs_settles_return_context",
+      "target_def": "PluginCommandResult",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_result",
+        "result_id": "result-open_logs-1",
+        "command_id": "cmd.agent_plugin.open_logs",
+        "command_instance_id": "cmdinst-logs-1",
+        "package_id": "pkg-logs",
+        "plugin_id": "plugin-logs",
+        "prior_package_generation": 7,
+        "result_package_generation": 7,
+        "outcome": "rejected",
+        "state_changed": false,
+        "package_status_before": "pm_extended",
+        "package_status_after": "pm_extended",
+        "availability": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_availability",
+          "command_id": "cmd.agent_plugin.open_logs",
+          "package_id": "pkg-logs",
+          "plugin_id": "plugin-logs",
+          "package_generation": 7,
+          "permission_generation": 4,
+          "topology_generation": 3,
+          "state": "unavailable",
+          "disabled_reason": "handler_unavailable",
+          "owner_contract_ref": "Plans/plugin_contracts.schema.json",
+          "evaluated_at_utc": "2026-09-01T00:10:00Z"
+        },
+        "permission_decision_ref": "permission-decision-open_logs",
+        "component_result_refs": [],
+        "conformance_refs": [
+          "conformance-result-open_logs"
+        ],
+        "permission_diff_ref": "permission-diff-result-open_logs",
+        "supply_chain_ref": "supply-chain-result-open_logs",
+        "rollback_ref": "rollback-result-open_logs",
+        "bounded_projection_ref": "plugin-logs-redacted-1",
+        "observable_work_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return-plugin-logs",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": {
+          "schema_id": "pm.plugin.command_contracts.v1",
+          "record_kind": "plugin_command_error",
+          "error_code": "handler_unavailable",
+          "retryable": false,
+          "safe_message": "Plugin action is centrally registered but unavailable until a native Plugins handler exists.",
+          "technical_details_ref": null,
+          "effect_state": "none"
+        },
+        "receipt_ref": "receipt-result-open_logs",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:10:00Z",
+        "update_diff_ref": null
+      }
+    }
+  ],
+  "negative_cases": [
+    {
+      "name": "interchange_manifest_cannot_carry_pm_native_hash",
+      "target_def": "PluginCommandRequest",
+      "instance": {
+        "schema_id": "pm.plugin.command_contracts.v1",
+        "record_kind": "plugin_command_request",
+        "command_id": "cmd.agent_plugin.scan",
+        "operation": "scan",
+        "command_instance_id": "bad-1",
+        "idempotency_key": "bad-idem-1",
+        "origin": "plugins_gui",
+        "package_id": "pkg-bad",
+        "plugin_id": "plugin-bad",
+        "project_id": null,
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "topology_generation": 1,
+        "expected_package_generation": 0,
+        "expected_permission_generation": 0,
+        "permission_snapshot_ref": "permission-snapshot-1",
+        "confirmation_ref": null,
+        "observable_work_ref": "work-bad",
+        "return_context_ref": "return-bad",
+        "payload": {
+          "manifest_class": "pm_internal_interchange",
+          "portable_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "pm_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "legacy_manifest_sha256": null,
+          "package_proof_ref": null,
+          "conformance_refs": [],
+          "permission_diff_ref": null,
+          "rollback_ref": null,
+          "data_disposition": "not_applicable",
+          "bounded_projection_ref": null,
+          "update_diff_ref": null
+        }
+      },
+      "expected_failure": "plugin.json internal-interchange lane cannot carry PM-native manifest authority"
+    },
+    {
+      "name": "install_requires_confirmation",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "install_dual_manifest_with_explicit_approval",
+      "patch": {
+        "confirmation_ref": null
+      },
+      "expected_failure": "install confirmation"
+    },
+    {
+      "name": "mismatched_command_and_operation",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "enable_pm_native_generation",
+      "patch": {
+        "operation": "disable"
+      },
+      "expected_failure": "command discriminator"
+    },
+    {
+      "name": "details_cannot_claim_observable_work",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "open_bounded_redacted_details",
+      "patch": {
+        "observable_work_ref": "work-should-not-exist"
+      },
+      "expected_failure": "read-only details route"
+    },
+    {
+      "name": "unavailable_state_requires_disabled_reason",
+      "target_def": "PluginCommandAvailability",
+      "base_positive_case": "registered_install_without_native_handler_is_truthfully_unavailable",
+      "patch": {
+        "disabled_reason": null
+      },
+      "expected_failure": "unavailable state requires an exact disabled reason"
+    },
+    {
+      "name": "permission_decision_cannot_widen_authority",
+      "target_def": "PluginPermissionDecision",
+      "base_positive_case": "permission_decision_cannot_widen_authority",
+      "patch": {
+        "authority_widening": true
+      },
+      "expected_failure": "authority_widening must remain false"
+    },
+    {
+      "name": "permission_decision_cannot_expose_protected_auth",
+      "target_def": "PluginPermissionDecision",
+      "base_positive_case": "permission_decision_cannot_widen_authority",
+      "patch": {
+        "protected_auth_access_allowed": true
+      },
+      "expected_failure": "AuthBrowserSession remains unavailable to plugins and adapters"
+    },
+    {
+      "name": "legacy_import_without_migration_receipt_is_rejected",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "legacy_import_requires_explicit_migration_receipt",
+      "patch": {
+        "payload.migration_receipt_ref": null
+      },
+      "expected_failure": "legacy manifests require an explicit migration receipt"
+    },
+    {
+      "name": "install_requires_package_proof",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "install_dual_manifest_with_explicit_approval",
+      "patch": {
+        "payload.package_proof_ref": null
+      },
+      "expected_failure": "install package proof"
+    },
+    {
+      "name": "install_requires_conformance",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "install_dual_manifest_with_explicit_approval",
+      "patch": {
+        "payload.conformance_refs": []
+      },
+      "expected_failure": "install conformance"
+    },
+    {
+      "name": "install_requires_rollback",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "install_dual_manifest_with_explicit_approval",
+      "patch": {
+        "payload.rollback_ref": null
+      },
+      "expected_failure": "install rollback"
+    },
+    {
+      "name": "update_requires_permission_diff",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "update_pm_native_with_diff_and_rollback",
+      "patch": {
+        "payload.permission_diff_ref": null
+      },
+      "expected_failure": "update permission diff"
+    },
+    {
+      "name": "enable_rejects_portable_only_manifest",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "enable_pm_native_generation",
+      "patch": {
+        "payload.manifest_class": "pm_internal_interchange"
+      },
+      "expected_failure": "enable PM-native runtime requirement"
+    },
+    {
+      "name": "reload_requires_approval",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "reload_generation_fenced",
+      "patch": {
+        "confirmation_ref": null
+      },
+      "expected_failure": "reload approval"
+    },
+    {
+      "name": "reload_requires_authority_diff",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "reload_generation_fenced",
+      "patch": {
+        "payload.reload_authority_change_ref": null
+      },
+      "expected_failure": "reload authority revalidation"
+    },
+    {
+      "name": "remove_requires_owned_data_disposition",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "remove_with_owned_data_disposition",
+      "patch": {
+        "payload.data_disposition": "not_applicable"
+      },
+      "expected_failure": "remove data disposition"
+    },
+    {
+      "name": "rollback_requires_package_proof",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "rollback_exact_prior_generation",
+      "patch": {
+        "payload.package_proof_ref": null
+      },
+      "expected_failure": "rollback package proof"
+    },
+    {
+      "name": "scan_result_cannot_claim_state_change",
+      "target_def": "PluginCommandResult",
+      "base_positive_case": "result_scan_settles_return_context",
+      "patch": {
+        "state_changed": true
+      },
+      "expected_failure": "scan no-effect state"
+    },
+    {
+      "name": "return_settlement_restored_requires_surface_restore",
+      "target_def": "PluginCommandResult",
+      "base_positive_case": "result_install_settles_return_context",
+      "patch": {
+        "return_settlement.initiating_surface_restored": false
+      },
+      "expected_failure": "exact return settlement"
+    },
+    {
+      "name": "update_requires_typed_update_diff",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "update_pm_native_with_diff_and_rollback",
+      "patch": {
+        "payload.update_diff_ref": null
+      },
+      "expected_failure": "update diff is mandatory for update"
+    },
+    {
+      "name": "reload_requires_typed_update_diff",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "reload_generation_fenced",
+      "patch": {
+        "payload.update_diff_ref": null
+      },
+      "expected_failure": "update diff is mandatory for reload"
+    },
+    {
+      "name": "review_changes_requires_typed_update_diff",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "review_update_diff_without_apply",
+      "patch": {
+        "payload.update_diff_ref": null
+      },
+      "expected_failure": "update diff is mandatory for review"
+    },
+    {
+      "name": "rollback_requires_typed_update_diff",
+      "target_def": "PluginCommandRequest",
+      "base_positive_case": "rollback_exact_prior_generation",
+      "patch": {
+        "payload.update_diff_ref": null
+      },
+      "expected_failure": "update diff is mandatory for rollback"
+    },
+    {
+      "name": "result_cannot_claim_success_without_native_handler",
+      "target_def": "PluginCommandResult",
+      "base_positive_case": "result_install_settles_return_context",
+      "patch": {
+        "outcome": "succeeded",
+        "state_changed": true,
+        "error": null
+      },
+      "expected_failure": "current registered fixture remains fail closed without a native handler"
+    }
+  ],
+  "coverage": {
+    "exact_command_ids": [
+      "cmd.agent_plugin.scan",
+      "cmd.agent_plugin.install",
+      "cmd.agent_plugin.update",
+      "cmd.agent_plugin.enable",
+      "cmd.agent_plugin.disable",
+      "cmd.agent_plugin.reload",
+      "cmd.agent_plugin.remove",
+      "cmd.agent_plugin.validate",
+      "cmd.agent_plugin.review_changes",
+      "cmd.agent_plugin.rollback",
+      "cmd.agent_plugin.open_details",
+      "cmd.agent_plugin.open_logs"
+    ],
+    "request_case_count": 12,
+    "negative_case_count": 24,
+    "manifest_precedence_covered": true,
+    "legacy_migration_covered_by_contract": true,
+    "native_runtime_claimed": false,
+    "event_registration_claimed": false,
+    "positive_result_case_count": 12,
+    "all_commands_have_positive_request_and_result": true,
+    "return_settlement_covered": true,
+    "no_effect_commands_machine_closed": true,
+    "package_conformance_permission_diff_rollback_constraints_covered": true,
+    "current_phase_result_disposition": "12_of_12_registered_rejected_unavailable_handler_unavailable_no_effect",
+    "typed_update_diff_bound_commands": [
+      "cmd.agent_plugin.reload",
+      "cmd.agent_plugin.review_changes",
+      "cmd.agent_plugin.rollback",
+      "cmd.agent_plugin.update"
+    ]
+  }
+}

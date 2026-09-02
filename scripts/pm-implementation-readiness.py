@@ -512,6 +512,7 @@ EVENT_FAMILY_REQUIRED_SCOPE_POLICIES = {
 
 STORAGE_VALUE_REGISTRY_SCHEMA_PATH = PLANS / "storage_value_registry.schema.json"
 STORAGE_VALUE_REGISTRY_PATH = PLANS / "storage_value_registry.json"
+HOME_WORKSPACE_LAYOUT_SCHEMA_PATH = PLANS / "home_workspace_layout.schema.json"
 SHARED_RUNTIME_CONTRACTS_SCHEMA_PATH = PLANS / "shared_runtime_contracts.schema.json"
 STORAGE_RECOVERY_CONTRACTS_SCHEMA_PATH = PLANS / "storage_recovery_contracts.schema.json"
 CASE_L_COMMAND_CATALOG_PATH = PLANS / "UI_Command_Catalog.md"
@@ -581,6 +582,34 @@ CASE_L_PROGRESS_ASSERTIONS = [
         "expression": "bytes_done is absent or 0 <= bytes_done <= bytes_total",
     },
 ]
+CASE_L_STORAGE_RECOVERY_DEFINITIONS = {
+    "non_secret_ref",
+    "nullable_non_secret_ref",
+    "data_loss_risk",
+    "migration_preflight_result",
+    "migration_progress_snapshot",
+    "migration_receipt",
+    "migration_transition",
+    "migration_applied_step",
+    "migration_verification_result",
+    "migration_rollback_result",
+}
+CASE_L_STORAGE_RECOVERY_DISPATCH = [
+    {"$ref": "#/$defs/migration_preflight_result"},
+    {"$ref": "#/$defs/migration_progress_snapshot"},
+    {"$ref": "#/$defs/migration_receipt"},
+]
+CASE_L_MIGRATION_RECEIPT_MATERIALIZED_DEFINITIONS = {
+    "non_secret_ref",
+    "nullable_non_secret_ref",
+    "data_loss_risk",
+    "migration_preflight_result",
+    "migration_transition",
+    "migration_applied_step",
+    "migration_verification_result",
+    "migration_rollback_result",
+}
+CASE_L_MIGRATION_RECEIPT_SCHEMA_ID = "https://puppetmaster.local/schemas/storage_value/migration_receipt/1.0.0/migration_receipt.schema.json"
 CASE_L_FALLBACK_COMMAND_HANDLERS = {
     "cmd.storage.fallback.keep_logical_root": "handlers::storage::fallback_keep_logical_root",
     "cmd.storage.fallback.fork_new_instance": "handlers::storage::fallback_fork_new_instance",
@@ -706,16 +735,16 @@ STORAGE_VALUE_REGISTRY_SCHEMA_VERSION = "2.0.0"
 STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
     "https://puppetmaster.local/schemas/storage_value_registry/2.0.0/storage_value_registry.schema.json"
 )
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 59
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 84
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 24
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 41,
+    "materialized": 66,
     "deferred_not_build_blocking": 17,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 16,
-    "later_gui_or_feature_projection": 42,
+    "later_gui_or_feature_projection": 67,
     "migration_only": 1,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
@@ -740,6 +769,7 @@ STORAGE_VALUE_REQUIRED_MVP_FAMILIES = [
     "migration_receipt",
     "editor_buffer_recovery_state",
     "editor_workspace_state",
+    "home_workspace_layout",
     "hotreload_state",
     "onboarding_state",
     "safe_point_record",
@@ -755,9 +785,33 @@ STORAGE_VALUE_REQUIRED_MVP_FAMILIES = [
     "storage_deletion_record",
     "requested_effective_runtime",
     "recovery_unavailable_resolution_receipt",
-    "home_workspace_layout",
     "permission_snapshot_record",
     "provider_dispatch_admission_receipt",
+    "runtime_topology_projection",
+    "installation_lifecycle_record",
+    "environment_connection_state",
+    "environment_domain_sync_state",
+    "runtime_resource_admission",
+    "observable_work_projection",
+    "operational_awareness_projection",
+    "prompt_runtime_projection",
+    "installation_inventory_record",
+    "capability_provisioning_operation",
+    "conditional_rule_record",
+    "conditional_rule_intervention_receipt",
+    "runtime_resource_lease",
+    "bsd_runtime_record",
+    "dev_session_record",
+    "eval_session_record",
+    "thread_command_outbox_record",
+    "replay_snapshot_checkpoint",
+    "stream_coalescing_record",
+    "goal_runtime_lineage_record",
+    "thread_shell_projection",
+    "pinned_summary_projection",
+    "thread_detail_projection",
+    "mcp_server_lifecycle_record",
+    "operational_attribution_record",
 ]
 STORAGE_VALUE_EVENT_IDENTITY_CONTRACT = {
     "event_schema_id": "pm.event.v0",
@@ -828,16 +882,6 @@ STORAGE_VALUE_REQUIRED_RECOVERY_AUTHORITIES = {
     "permission_snapshot_record": "canonical_non_rebuildable",
     "provider_dispatch_admission_receipt": "canonical_non_rebuildable",
 }
-SHARED_RUNTIME_STORAGE_PRIMITIVE_DEFS = [
-    "non_empty_string",
-    "nullable_non_empty_string",
-    "timestamp",
-    "nullable_timestamp",
-    "sha256",
-    "non_secret_ref",
-    "nullable_non_secret_ref",
-    "ref_list",
-]
 SHARED_RUNTIME_STORAGE_FAMILIES = {
     "permission_snapshot_record": {
         "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/permission_snapshot_record",
@@ -3591,6 +3635,132 @@ def json_without_comments(value: Any) -> Any:
     return value
 
 
+def iter_json_schema_refs(value: Any, path: str = "$"):
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_path = f"{path}.{key}"
+            if key == "$ref":
+                yield child_path, child
+            yield from iter_json_schema_refs(child, child_path)
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from iter_json_schema_refs(child, f"{path}[{index}]")
+
+
+def local_defs_ref_failures(schema: Any, *, path_label: str) -> list[dict[str, Any]]:
+    """Require every schema reference to resolve through this document's local $defs."""
+    failures: list[dict[str, Any]] = []
+    if not isinstance(schema, dict):
+        return [{"path": path_label, "error": "schema_not_object_for_local_ref_validation"}]
+    defs = schema.get("$defs", {}) if isinstance(schema.get("$defs"), dict) else {}
+    prefix = "#/$defs/"
+    for ref_path, ref in iter_json_schema_refs(schema):
+        if not isinstance(ref, str) or not ref.startswith(prefix) or "/" in ref[len(prefix):]:
+            failures.append({"path": path_label, "error": "schema_external_or_nondefinition_ref", "ref_path": ref_path, "ref": ref})
+            continue
+        definition_name = ref[len(prefix):]
+        if definition_name not in defs:
+            failures.append(
+                {
+                    "path": path_label,
+                    "error": "schema_local_definition_ref_unresolved",
+                    "ref_path": ref_path,
+                    "ref": ref,
+                    "definition_name": definition_name,
+                }
+            )
+    return failures
+
+
+def migration_receipt_materialization_failures(
+    sidecar: dict[str, Any],
+    migration_row: dict[str, Any],
+    *,
+    path_label: str,
+) -> list[dict[str, Any]]:
+    """Compare the registry's self-contained receipt schema to the sidecar owner recursively."""
+    failures: list[dict[str, Any]] = []
+    sidecar_defs = sidecar.get("$defs", {}) if isinstance(sidecar.get("$defs"), dict) else {}
+    materialized = migration_row.get("value_schema")
+    if not isinstance(materialized, dict):
+        return [{"path": path_label, "error": "migration_receipt_value_schema_missing"}]
+
+    if materialized.get("$schema") != sidecar.get("$schema"):
+        failures.append({"path": path_label, "error": "migration_receipt_materialization_draft_mismatch"})
+    if materialized.get("$id") != CASE_L_MIGRATION_RECEIPT_SCHEMA_ID:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "migration_receipt_materialization_schema_id_mismatch",
+                "expected": CASE_L_MIGRATION_RECEIPT_SCHEMA_ID,
+                "actual": materialized.get("$id"),
+            }
+        )
+
+    expected_root = sidecar_defs.get("migration_receipt", {})
+    actual_root = {
+        key: value
+        for key, value in materialized.items()
+        if key not in {"$schema", "$id", "$defs"}
+    }
+    if json_without_comments(actual_root) != json_without_comments(expected_root):
+        failures.append({"path": path_label, "error": "migration_receipt_materialization_root_semantic_mismatch", "ignored_keys": ["$comment"]})
+
+    materialized_defs = materialized.get("$defs", {}) if isinstance(materialized.get("$defs"), dict) else {}
+    if set(materialized_defs) != CASE_L_MIGRATION_RECEIPT_MATERIALIZED_DEFINITIONS:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "migration_receipt_materialization_definition_set_mismatch",
+                "expected": sorted(CASE_L_MIGRATION_RECEIPT_MATERIALIZED_DEFINITIONS),
+                "actual": sorted(materialized_defs),
+            }
+        )
+    for definition_name in sorted(CASE_L_MIGRATION_RECEIPT_MATERIALIZED_DEFINITIONS & set(materialized_defs)):
+        if json_without_comments(materialized_defs[definition_name]) != json_without_comments(sidecar_defs.get(definition_name)):
+            failures.append(
+                {
+                    "path": path_label,
+                    "error": "migration_receipt_materialization_definition_semantic_mismatch",
+                    "definition_name": definition_name,
+                    "ignored_keys": ["$comment"],
+                }
+            )
+
+    preflight_projection = materialized.get("properties", {}).get("preflight_result")
+    expected_preflight_projection = {"$ref": "#/$defs/migration_preflight_result"}
+    if json_without_comments(preflight_projection) != expected_preflight_projection:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "migration_receipt_preflight_projection_semantic_mismatch",
+                "expected": expected_preflight_projection,
+                "actual": preflight_projection,
+                "ignored_keys": ["$comment"],
+            }
+        )
+    elif json_without_comments(materialized_defs.get("migration_preflight_result")) != json_without_comments(sidecar_defs.get("migration_preflight_result")):
+        failures.append(
+            {
+                "path": path_label,
+                "error": "migration_receipt_preflight_projection_semantic_mismatch",
+                "resolved_ref": expected_preflight_projection["$ref"],
+                "ignored_keys": ["$comment"],
+            }
+        )
+
+    failures.extend(local_defs_ref_failures(materialized, path_label=path_label))
+    try:
+        from jsonschema import Draft202012Validator
+
+        Draft202012Validator.check_schema(materialized)
+    except ImportError as exc:
+        failures.append({"path": rel(Path(__file__).resolve()), "error": "migration_receipt_materialization_validator_unavailable", "detail": str(exc)})
+    except Exception as exc:  # noqa: BLE001
+        failures.append({"path": path_label, "error": "migration_receipt_materialization_schema_invalid", "detail": str(exc)})
+    return failures
+
+
 def migration_preflight_context_failures(value: Any, schema: dict[str, Any], *, path_label: str) -> list[dict[str, Any]]:
     failures = draft202012_schema_failures(value, schema, path_label=path_label)
     if not isinstance(value, dict):
@@ -3666,6 +3836,7 @@ def case_l_storage_contract_fixture_results(sidecar: dict[str, Any]) -> tuple[li
     defs = sidecar.get("$defs", {}) if isinstance(sidecar.get("$defs"), dict) else {}
     preflight_schema = defs.get("migration_preflight_result", {})
     progress_schema = defs.get("migration_progress_snapshot", {})
+    preflight_validation_schema = {"$defs": defs, **preflight_schema}
     progress_validation_schema = {"$defs": defs, **progress_schema}
 
     small_ready = {
@@ -3716,7 +3887,7 @@ def case_l_storage_contract_fixture_results(sidecar: dict[str, Any]) -> tuple[li
     ]
     for case_id, kind, value in positives:
         case_failures = (
-            migration_preflight_context_failures(value, preflight_schema, path_label=f"self-test:{case_id}")
+            migration_preflight_context_failures(value, preflight_validation_schema, path_label=f"self-test:{case_id}")
             if kind == "preflight"
             else migration_progress_context_failures(value, progress_validation_schema, path_label=f"self-test:{case_id}")
         )
@@ -3741,7 +3912,7 @@ def case_l_storage_contract_fixture_results(sidecar: dict[str, Any]) -> tuple[li
     ]
     for case_id, kind, value in negatives:
         case_failures = (
-            migration_preflight_context_failures(value, preflight_schema, path_label=f"self-test:{case_id}")
+            migration_preflight_context_failures(value, preflight_validation_schema, path_label=f"self-test:{case_id}")
             if kind == "preflight"
             else migration_progress_context_failures(value, progress_validation_schema, path_label=f"self-test:{case_id}")
         )
@@ -3770,17 +3941,13 @@ def case_l_storage_contract_data_failures(
         failures.append({"path": rel(Path(__file__).resolve()), "error": "storage_recovery_draft_2020_12_validator_unavailable", "detail": str(exc)})
     except Exception as exc:  # noqa: BLE001
         failures.append({"path": path_label, "error": "storage_recovery_contracts_schema_invalid", "detail": str(exc)})
+    failures.extend(local_defs_ref_failures(sidecar, path_label=path_label))
 
     defs = sidecar.get("$defs", {}) if isinstance(sidecar.get("$defs"), dict) else {}
-    expected_defs = {"migration_preflight_result", "migration_progress_snapshot"}
-    if set(defs) != expected_defs:
-        failures.append({"path": path_label, "error": "storage_recovery_definition_set_mismatch", "expected": sorted(expected_defs), "actual": sorted(defs)})
-    expected_dispatch = [
-        {"$ref": "#/$defs/migration_preflight_result"},
-        {"$ref": "#/$defs/migration_progress_snapshot"},
-    ]
-    if sidecar.get("oneOf") != expected_dispatch:
-        failures.append({"path": path_label, "error": "storage_recovery_definition_dispatch_mismatch"})
+    if set(defs) != CASE_L_STORAGE_RECOVERY_DEFINITIONS:
+        failures.append({"path": path_label, "error": "storage_recovery_definition_set_mismatch", "expected": sorted(CASE_L_STORAGE_RECOVERY_DEFINITIONS), "actual": sorted(defs)})
+    if sidecar.get("oneOf") != CASE_L_STORAGE_RECOVERY_DISPATCH:
+        failures.append({"path": path_label, "error": "storage_recovery_definition_dispatch_mismatch", "expected": CASE_L_STORAGE_RECOVERY_DISPATCH, "actual": sidecar.get("oneOf")})
 
     preflight = defs.get("migration_preflight_result", {}) if isinstance(defs.get("migration_preflight_result"), dict) else {}
     if preflight.get("required") != CASE_L_PREFLIGHT_REQUIRED_FIELDS:
@@ -3824,13 +3991,13 @@ def case_l_storage_contract_data_failures(
             failures.append({"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "migration_receipt_authority_count_mismatch", "expected": 1, "actual": len(migration_rows)})
         else:
             migration_row = migration_rows[0]
-            inline = migration_row.get("value_schema", {}).get("properties", {}).get("preflight_result")
-            if not isinstance(inline, dict):
-                failures.append({"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "migration_receipt_preflight_projection_missing"})
-            elif json_without_comments(inline) != json_without_comments(preflight):
-                failures.append({"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "migration_receipt_preflight_projection_semantic_mismatch", "ignored_keys": ["$comment"]})
-            if isinstance(inline, dict) and any(key == "$ref" for key in _iter_json_keys(inline)):
-                failures.append({"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "migration_receipt_preflight_projection_contains_external_or_local_ref"})
+            failures.extend(
+                migration_receipt_materialization_failures(
+                    sidecar,
+                    migration_row,
+                    path_label=rel(STORAGE_VALUE_REGISTRY_PATH),
+                )
+            )
             if migration_row.get("value_schema_id") != "pm.storage_value.migration_receipt.v1":
                 failures.append({"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "migration_receipt_schema_authority_mismatch"})
             authority_text = " ".join(str(migration_row.get(field, "")) for field in ("migration", "legacy_canonical_crosswalk_status", "replay_behavior"))
@@ -4650,9 +4817,21 @@ def case_l_non_event_materialization_self_test_checks() -> dict[str, bool]:
         failure.get("error") == "storage_recovery_definition_set_mismatch"
         for failure in case_l_storage_contract_data_failures(wrong_defs, storage_registry, event_registry, path_label="self-test:l032-extra-def")
     )
+    missing_owner_definition = clone(sidecar)
+    del missing_owner_definition["$defs"]["migration_receipt"]
+    checks["l032_ten_definition_owner_set_required"] = any(
+        failure.get("error") == "storage_recovery_definition_set_mismatch"
+        for failure in case_l_storage_contract_data_failures(missing_owner_definition, storage_registry, event_registry, path_label="self-test:l032-missing-owner-def")
+    )
+    missing_receipt_dispatch = clone(sidecar)
+    missing_receipt_dispatch["oneOf"] = missing_receipt_dispatch["oneOf"][:2]
+    checks["l032_three_root_dispatch_required"] = any(
+        failure.get("error") == "storage_recovery_definition_dispatch_mismatch"
+        for failure in case_l_storage_contract_data_failures(missing_receipt_dispatch, storage_registry, event_registry, path_label="self-test:l032-missing-receipt-dispatch")
+    )
     drifted_registry = clone(storage_registry)
     migration_row = next(row for row in drifted_registry["families"] if row.get("family_id") == "migration_receipt")
-    migration_row["value_schema"]["properties"]["preflight_result"]["properties"]["free_bytes"]["minimum"] = 1
+    migration_row["value_schema"]["$defs"]["migration_preflight_result"]["properties"]["free_bytes"]["minimum"] = 1
     checks["l032_registry_semantic_drift_rejected"] = any(
         failure.get("error") == "migration_receipt_preflight_projection_semantic_mismatch"
         for failure in case_l_storage_contract_data_failures(sidecar, drifted_registry, event_registry, path_label="self-test:l032-registry-drift")
@@ -4663,6 +4842,22 @@ def case_l_non_event_materialization_self_test_checks() -> dict[str, bool]:
     checks["l032_registry_comment_only_difference_allowed"] = not any(
         failure.get("error") == "migration_receipt_preflight_projection_semantic_mismatch"
         for failure in case_l_storage_contract_data_failures(sidecar, comment_only_registry, event_registry, path_label="self-test:l032-comment-only")
+    )
+
+    missing_local_definition = clone(storage_registry)
+    missing_local_definition_row = next(row for row in missing_local_definition["families"] if row.get("family_id") == "migration_receipt")
+    del missing_local_definition_row["value_schema"]["$defs"]["non_secret_ref"]
+    checks["l032_missing_local_definition_rejected"] = any(
+        failure.get("error") in {"migration_receipt_materialization_definition_set_mismatch", "schema_local_definition_ref_unresolved"}
+        for failure in case_l_storage_contract_data_failures(sidecar, missing_local_definition, event_registry, path_label="self-test:l032-missing-local-def")
+    )
+
+    wrong_local_ref = clone(storage_registry)
+    wrong_local_ref_row = next(row for row in wrong_local_ref["families"] if row.get("family_id") == "migration_receipt")
+    wrong_local_ref_row["value_schema"]["properties"]["preflight_result"]["$ref"] = "#/$defs/migration_progress_snapshot"
+    checks["l032_wrong_local_ref_rejected"] = any(
+        failure.get("error") in {"migration_receipt_preflight_projection_semantic_mismatch", "schema_local_definition_ref_unresolved"}
+        for failure in case_l_storage_contract_data_failures(sidecar, wrong_local_ref, event_registry, path_label="self-test:l032-wrong-local-ref")
     )
 
     missing_fallback = clone(wiring)
@@ -5453,6 +5648,40 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
     return checks
 
 
+def local_schema_ref_names(value: Any) -> set[str]:
+    """Return local ``#/$defs`` names referenced anywhere under one schema node."""
+    names: set[str] = set()
+    if isinstance(value, dict):
+        ref = value.get("$ref")
+        if isinstance(ref, str) and ref.startswith("#/$defs/"):
+            names.add(ref.removeprefix("#/$defs/"))
+        for child in value.values():
+            names.update(local_schema_ref_names(child))
+    elif isinstance(value, list):
+        for child in value:
+            names.update(local_schema_ref_names(child))
+    return names
+
+
+def transitive_local_schema_definitions(
+    definitions: dict[str, Any], root_name: str
+) -> dict[str, Any]:
+    """Project the exact transitive local-definition closure for ``root_name``."""
+    if root_name not in definitions:
+        raise ValueError(f"missing local root definition {root_name}")
+    pending = list(local_schema_ref_names(definitions[root_name]))
+    collected: dict[str, Any] = {}
+    while pending:
+        name = pending.pop()
+        if name == root_name or name in collected:
+            continue
+        if name not in definitions:
+            raise ValueError(f"{root_name} references missing local definition {name}")
+        collected[name] = definitions[name]
+        pending.extend(local_schema_ref_names(definitions[name]) - collected.keys())
+    return {name: collected[name] for name in sorted(collected)}
+
+
 def storage_value_registry_data_failures(
     registry: Any,
     *,
@@ -6093,18 +6322,28 @@ def storage_value_registry_data_failures(
                         "family_id": family_id,
                     }
                 )
-            expected_defs = {
-                name: shared_runtime_defs.get(name)
-                for name in SHARED_RUNTIME_STORAGE_PRIMITIVE_DEFS
-            }
-            if value_schema.get("$defs") != expected_defs:
+            try:
+                expected_defs = transitive_local_schema_definitions(
+                    shared_runtime_defs, family_id
+                )
+            except ValueError as exc:
                 failures.append(
                     {
                         "path": row_path,
-                        "error": "shared_runtime_storage_inline_primitive_defs_drift",
+                        "error": "shared_runtime_storage_owner_definition_closure_invalid",
                         "family_id": family_id,
+                        "detail": str(exc),
                     }
                 )
+            else:
+                if value_schema.get("$defs") != expected_defs:
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "error": "shared_runtime_storage_inline_primitive_defs_drift",
+                            "family_id": family_id,
+                        }
+                    )
         else:
             failures.append(
                 {
@@ -6113,6 +6352,58 @@ def storage_value_registry_data_failures(
                     "family_id": family_id,
                 }
             )
+    home_family = by_family.get("home_workspace_layout")
+    home_row_path = f"{path_label}:families/home_workspace_layout"
+    try:
+        home_owner_schema = read_json(HOME_WORKSPACE_LAYOUT_SCHEMA_PATH)
+    except Exception as exc:  # noqa: BLE001
+        failures.append(
+            {
+                "path": home_row_path,
+                "error": "home_workspace_layout_schema_authority_unavailable",
+                "detail": str(exc),
+            }
+        )
+    else:
+        if not isinstance(home_family, dict):
+            failures.append(
+                {
+                    "path": home_row_path,
+                    "error": "home_workspace_layout_storage_family_missing",
+                }
+            )
+        else:
+            if home_family.get("value_schema") != home_owner_schema:
+                failures.append(
+                    {
+                        "path": home_row_path,
+                        "error": "home_workspace_layout_inline_schema_drift",
+                    }
+                )
+            optional_fields = home_family.get("optional_fields", [])
+            if "surface.size.preset_id" not in optional_fields:
+                failures.append(
+                    {
+                        "path": home_row_path,
+                        "error": "home_workspace_layout_preset_metadata_missing",
+                    }
+                )
+            size_schema = home_owner_schema.get("$defs", {}).get("size", {})
+            if "cross_basis_px" not in size_schema.get("required", []):
+                failures.append(
+                    {
+                        "path": home_row_path,
+                        "error": "home_workspace_layout_cross_basis_owner_requirement_missing",
+                    }
+                )
+            preset_schema = size_schema.get("properties", {}).get("preset_id", {})
+            if preset_schema.get("enum") != ["compact", "standard", "wide", "tall", "focus"]:
+                failures.append(
+                    {
+                        "path": home_row_path,
+                        "error": "home_workspace_layout_preset_owner_enum_mismatch",
+                    }
+                )
     normalized_family_ids = {
         "".join(character for character in family_id.casefold() if character.isalnum())
         for family_id in by_family

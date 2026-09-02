@@ -16,6 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
+EVIDENCE_ARTIFACT_BINDING_MANIFEST = PLANS / "evidence_artifact_binding_modes.json"
 
 SPEC_LOCK_SCHEMA_VERSION_RULES = {
     "storage_value_registry": {
@@ -52,6 +53,32 @@ def utc_now() -> str:
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def require_live_current_evidence(path: Path) -> str:
+    """Refuse to mutate immutable historical evidence bundles."""
+    try:
+        path_ref = path.resolve().relative_to(ROOT.resolve()).as_posix()
+    except (OSError, ValueError):
+        raise SystemExit(f"evidence path must resolve inside the repository: {path}") from None
+    try:
+        manifest = load_json(EVIDENCE_ARTIFACT_BINDING_MANIFEST)
+    except Exception as exc:  # noqa: BLE001
+        raise SystemExit(f"evidence binding manifest is unavailable: {exc}") from None
+    matches = [
+        entry
+        for entry in manifest.get("entries", [])
+        if isinstance(entry, dict) and entry.get("path") == path_ref
+    ]
+    if len(matches) != 1:
+        raise SystemExit(f"evidence path must have exactly one binding-mode entry: {path_ref}")
+    mode = matches[0].get("mode")
+    if mode != "live_current":
+        raise SystemExit(
+            f"refusing to refresh immutable {mode!r} evidence bundle: {path_ref}; "
+            "create or update a declared live_current successor instead"
+        )
+    return path_ref
 
 
 def write_json(path: Path, data: Any) -> None:
@@ -447,11 +474,49 @@ def validate_schema_changing_hash_inventory(data: dict[str, Any]) -> list[tuple[
 def refresh_spec_lock(
     path: Path,
     schema_version_requests: list[dict[str, str]] | None = None,
+    register_files: list[str] | None = None,
 ) -> dict[str, Any]:
     requests = sorted(schema_version_requests or [], key=lambda request: request["key"])
+    files_to_register = sorted(set(register_files or []))
+    unresolved_path = path
+    if unresolved_path.is_symlink():
+        raise SystemExit(f"Spec Lock path cannot be a symlink: {unresolved_path}")
+    try:
+        path = unresolved_path.resolve()
+        path.relative_to(ROOT.resolve())
+    except (OSError, ValueError):
+        raise SystemExit(f"Spec Lock path must resolve inside the repository: {path}") from None
     data = load_spec_lock(path)
+    if not isinstance(data, dict):
+        raise SystemExit("Spec Lock root must be a JSON object")
+
+    registered_files: list[str] = []
+    if files_to_register:
+        registry = data.get("canonical_ssot_hashes")
+        if not isinstance(registry, dict):
+            raise SystemExit("Spec Lock canonical_ssot_hashes must be a JSON object")
+        files = registry.get("files")
+        if not isinstance(files, list):
+            raise SystemExit("Spec Lock canonical_ssot_hashes.files must be a JSON array")
+        existing_paths = {
+            entry.get("path")
+            for entry in files
+            if isinstance(entry, dict) and isinstance(entry.get("path"), str)
+        }
+        for rel in files_to_register:
+            target = repo_path(rel)
+            if target.resolve() == path:
+                raise SystemExit(f"Spec Lock cannot register itself: {rel}")
+            if not target.exists() or not target.is_file():
+                raise SystemExit(f"Spec Lock registration path is missing or not a file: {rel}")
+            if rel in existing_paths:
+                continue
+            files.append({"path": rel, "sha256": sha256_file(target)})
+            existing_paths.add(rel)
+            registered_files.append(rel)
+
     schema_version_updates: list[dict[str, str]] = []
-    if requests:
+    if requests or files_to_register:
         schema_version_updates = validate_schema_changing_spec_lock(data, requests)
         schema_versions = data["schema_versions"]
         for request in requests:
@@ -476,7 +541,7 @@ def refresh_spec_lock(
         try:
             digest = sha256_file(target)
         except OSError as exc:
-            if requests:
+            if requests or files_to_register:
                 raise SystemExit(f"Spec Lock registered SSOT path could not be hashed: {rel}: {exc}") from None
             continue
         if entry.get("sha256") != digest:
@@ -484,19 +549,23 @@ def refresh_spec_lock(
             changed_paths.append(rel)
     changed_paths.sort()
     schema_version_updates.sort(key=lambda update: update["key"])
-    changed = bool(schema_version_updates or changed_paths)
+    changed = bool(registered_files or schema_version_updates or changed_paths)
     if changed:
         write_json_atomic(path, data)
-    return {
+    report = {
         "path": str(path.relative_to(ROOT)),
         "changed": changed,
         "schema_version_requests": requests,
         "schema_version_updates": schema_version_updates,
         "updated_hashes": changed_paths,
     }
+    if files_to_register:
+        report["registered_files"] = registered_files
+    return report
 
 
 def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
+    require_live_current_evidence(path)
     data = load_json(path)
     changed_node_fields: list[str] = []
     node = data.setdefault("node", {})
@@ -556,6 +625,7 @@ def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
 
 
 def sync_plan_sharding_evidence(evidence_path: Path, report_path: Path) -> dict[str, Any]:
+    require_live_current_evidence(evidence_path)
     data = load_json(evidence_path)
     report = load_json(report_path)
     existing_by_path = {
@@ -578,6 +648,13 @@ def sync_plan_sharding_evidence(evidence_path: Path, report_path: Path) -> dict[
         artifact_for(str(report.get("config_path", "Plans/sharding_config.json"))),
         artifact_for(str(report_path.relative_to(ROOT))),
     ]
+    check_report_path = report_path.with_name("shard-check-report.json")
+    if not check_report_path.exists() or not check_report_path.is_file():
+        raise SystemExit(
+            "live-current plan-sharding evidence requires the adjacent shard-check-report.json: "
+            f"{check_report_path.relative_to(ROOT)}"
+        )
+    artifacts.append(artifact_for(str(check_report_path.relative_to(ROOT))))
     for doc in report.get("docs", []):
         source_path = doc.get("source", {}).get("path")
         if source_path:
@@ -612,9 +689,39 @@ def cmd_refresh(args: argparse.Namespace) -> int:
     schema_version_requests = parse_schema_version_assignments(args.schema_version)
     if schema_version_requests and not args.spec_lock:
         raise SystemExit("--schema-version requires --spec-lock")
+    register_files: list[str] = []
+    for raw_path in args.register_file:
+        candidate = Path(raw_path)
+        normalized = candidate.as_posix()
+        if (
+            candidate.is_absolute()
+            or normalized in {"", "."}
+            or ".." in candidate.parts
+            or normalized != raw_path
+        ):
+            raise SystemExit(
+                "--register-file requires a normalized repository-relative path: "
+                f"{raw_path!r}"
+            )
+        try:
+            repo_path(candidate).resolve().relative_to(ROOT.resolve())
+        except (OSError, ValueError):
+            raise SystemExit(
+                "--register-file path must resolve inside the repository: "
+                f"{raw_path!r}"
+            ) from None
+        if normalized in register_files:
+            raise SystemExit(f"--register-file was assigned more than once: {normalized}")
+        register_files.append(normalized)
+    if register_files and not args.spec_lock:
+        raise SystemExit("--register-file requires --spec-lock")
     report: dict[str, Any] = {"spec_lock": None, "evidence": []}
     if args.spec_lock:
-        report["spec_lock"] = refresh_spec_lock(repo_path(args.spec_lock), schema_version_requests)
+        report["spec_lock"] = refresh_spec_lock(
+            repo_path(args.spec_lock),
+            schema_version_requests,
+            register_files,
+        )
     for evidence_path in args.evidence:
         report["evidence"].append(refresh_evidence(repo_path(evidence_path), args))
     print(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True))
@@ -649,8 +756,9 @@ def cmd_register_canonical_docs(args: argparse.Namespace) -> int:
             args.spec_lock,
             args.plan_graph,
             "Plans/_shards/**",
-            "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-            "Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+            "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+            "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json",
+            "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard-check-report.json",
         ]
         contract_refs = [
             "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
@@ -688,6 +796,12 @@ def main() -> int:
         default=[],
         metavar="KEY=SCHEMA_ID",
         help="Update an explicitly supported existing Spec Lock schema_versions key before refreshing hashes.",
+    )
+    refresh.add_argument(
+        "--register-file",
+        action="append",
+        default=[],
+        help="Register an existing repository file in Spec Lock before refreshing all configured hashes.",
     )
     refresh.add_argument("--evidence", action="append", default=[], help="Evidence bundle to refresh.")
     refresh.add_argument("--ledger-command", default=None, help="Canonical ledger validation command to record.")

@@ -152,3 +152,71 @@ owner_hints: [Plans/Project_Sync_and_Backbone.md, Plans/usage-feature.md]
 ## 7. Stage boundary
 
 These PlanUnits close canonical ownership only. They create no WorkNodes, NodeSeeds, WorkGraphs, queues, implementation manifests, runtime code, deployment code, or certification evidence. Generated shards, indexes, evidence, and governance seals remain pending the post-PNC seal handoff.
+
+## 8. Server command-gap closure (2026-09-01)
+
+`Plans/project_sync_backbone_contracts.schema.json` owns exactly two DRY typed families for this packet: `ProjectMoveCommandRequest|ProjectMoveCommandResult|ProjectMoveCommandError|ProjectMoveCommandAvailability|ProjectMoveDisabledReason|ProjectMovePermissionDecision` plus `ProjectMoveLocalActionRequest|ProjectMoveLocalActionResult`, and the parallel `ContentUpdate*` family. The schema carries each exact packet source ref and intended semantic; `Plans/project_sync_backbone_contract_fixtures.json` covers the two families without claiming runtime proof.
+
+The Project Move command rows are:
+
+| Row / packet line | Exact command and sole handler | Retained semantic |
+|---|---|---|
+| 109 / `machine/command_census.json:1254` | `cmd.project.move.cancel` -> `handlers::project_move::cancel` | Cancel the exact current move only when its semantic owner reports it cancellable. |
+| 111 / `machine/command_census.json:1266` | `cmd.project.move.pause` -> `handlers::project_move::pause` | Request a durable safe-point pause; never freeze or serialize a live process as proof. |
+| 112 / `machine/command_census.json:1272` | `cmd.project.move.preflight` -> `handlers::project_move::preflight` | Build an immutable Project/Vault move plan with exact topology, inventory, capacity, conflict, permission, FileSafe, recovery, and credential-readiness evidence. |
+| 113 / `machine/command_census.json:1278` | `cmd.project.move.resume` -> `handlers::project_move::resume` | Resume the same fenced move from its durable continuation and current owner state. |
+| 114 / `machine/command_census.json:1284` | `cmd.project.move.retry` -> `handlers::project_move::retry` | Retry the same idempotent move only after revalidating currentness and its typed failure. |
+| 115 / `machine/command_census.json:1290` | `cmd.project.move.rollback` -> `handlers::project_move::rollback` | Restore the last verified placement from the exact recovery boundary or report `recovery_required`. |
+| 116 / `machine/command_census.json:1296` | `cmd.project.move.start` -> `handlers::project_move::start` | Start the approved staged move while retaining the verified source and one-writer authority until cutover. |
+
+`cmd.project.move.open_details` is not a domain command. It is source spelling for `ui.project.move.open_details`, a typed local bounded/redacted/lazy projection with an exact request/result, no semantic-domain handler, and no domain EventRecord.
+
+The PM content-update rows are:
+
+| Row / packet line | Exact command and sole handler | Retained semantic |
+|---|---|---|
+| 167 / `machine/command_census.json:2220` | `cmd.update.content.activate` -> `handlers::content_update::activate` | Atomically activate a verified staged PM content/catalog generation while retaining last-known-good rollback state. |
+| 168 / `machine/command_census.json:2226` | `cmd.update.content.check` -> `handlers::content_update::check` | Run one coalesced, cached, policy-bounded check for the exact channel or catalog. |
+| 169 / `machine/command_census.json:2232` | `cmd.update.content.download` -> `handlers::content_update::download` | Download and verify the selected artifact without activating it early. |
+| 171 / `machine/command_census.json:2244` | `cmd.update.content.rollback` -> `handlers::content_update::rollback` | Roll back to a verified retained generation or report `recovery_required`. |
+
+`cmd.update.content.open_details` is retained only as source spelling for `ui.update.content.open_details`, with the same no-domain-handler and no-domain-EventRecord local-action boundary. Project Move consumers are exactly Projects > Move Project, Settings > Hosting & Files, Doctor, and status bar. Content Update consumers are exactly Settings > Updates > Content, content attention/status, and Doctor.
+
+All eleven commands are `handler_unavailable` until the exact named native handler has central registration, schema binding, permission/FileSafe integration, production wiring, and receipt-or-separately-admitted-event evidence. Asynchronous work uses `ObservableWork`; acceptance receipts remain receipt-only until Event Authority separately admits an exact family. Restart, duplicate, stale-generation, race, permission, FileSafe, secret-redaction, and exact-return outcomes fail closed.
+
+The packet source base for every line above is `PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json`; the schema preserves each complete `packet_source_ref` byte-for-byte.
+
+### PSB-005 - Project Move And Content Update Command Closure
+
+```yaml
+plan_unit_id: PSB-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Sync_and_Backbone.md
+canonical_text: >-
+  Project Sync and Backbone owns seven exact Project Move commands and four exact PM content-update commands through
+  two closed DRY request/result/error/availability/disabled/permission families, plus two typed presentation-only
+  detail actions. Every command remains handler_unavailable until its named sole native handler and complete central
+  integration exist; local actions create neither a semantic-domain handler nor a domain EventRecord.
+gui_related: true
+gui_classification_reason: Move/update availability, progress, blockers, recovery, details, and exact return are visible across the named GUI consumers.
+depends_on: [PSB-001, PSB-002, PSB-003]
+unblocks: []
+acceptance_criteria:
+  - The owner schema and fixtures cover exactly eleven commands and two local actions from adjudication rows 109-116 and 167-171.
+  - Every command binds one named sole handler and remains handler_unavailable without exact native integration evidence.
+  - Project Move and Content Update remain separate typed families and preserve exact packet semantics and source refs.
+  - Local details actions mutate no domain state, invoke no semantic-domain handler, and emit no domain EventRecord.
+  - Permission, FileSafe, idempotency, currentness, ObservableWork, restart/race, redaction, and exact-return negatives fail closed.
+validation_surfaces: [Plans/project_sync_backbone_contracts.schema.json, Plans/project_sync_backbone_contract_fixtures.json, focused Server owner-bundle-B validator]
+risk_class: project_move_or_content_update_false_success
+reasoning_tier: high
+context_scope: server_command_gap_project_sync_backbone
+implementation_surfaces: [Plans/Project_Sync_and_Backbone.md, Plans/project_sync_backbone_contracts.schema.json, future Project Move and Content Update native handlers]
+node_compile_hint: {mode: project_sync_backbone_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:server-command-gap-adjudication:rows-109-116, source_ref:server-command-gap-adjudication:rows-167-171]
+negative_constraints:
+  - Do not claim live-process serialization, early content activation, or success without verified readback.
+  - Do not create a domain handler or EventRecord for either typed local details action.
+  - Do not make any command available from schema, fixture, catalog prose, or static evidence alone.
+```

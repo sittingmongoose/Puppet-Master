@@ -31,7 +31,7 @@ ContractRef: Primitive:Invariant, PolicyRule:Decision_Policy.md§1
   - `tier_id` may remain a human-readable grouping label for compatibility, but canonical execution correlation is owned by runtime identity fields and EventRecord payload contracts.
   - Route and open args MUST carry a normalized subject or route target. New producers/docs emit `subject_id` or `object_kind`/`object_id` forms and include explicit migration notes when replacing raw local ids.
   ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
-  - `usage_event_ref` is a usage/accounting bridge only. Before route/open handling, it normalizes to `object_kind = usage_event` plus `object_id`; it MUST NOT be reintroduced as a top-level route special case or as canonical navigation transport.
+  - `usage_event_ref` is canonical usage/accounting identity and the event-primary routing bridge. Event-primary callers normalize it to `object_kind = usage_event` plus `object_id`; a PMConcept7 Ledger attempt row instead selects `object_kind = usage_attempt` plus `object_id = attempt_id` and retains `usage_event_ref` only as correlation. Neither branch may reintroduce a top-level route special case or bypass typed object-route identity.
   - `resume_url?` and similar transport hints are not canonical persisted identity; persisted shell state and local destination defaults may be reused only when they do not violate current owner-doc integrity, routing, usage/evidence correlation, or runtime identity constraints.
 **Rule:** Tool invocation correlation MUST be consistent:
 - In normalized provider streams, every `tool_use` MUST have exactly one matching `tool_result` with the same `tool_use_id` (no orphan tool events).  
@@ -691,8 +691,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Architecture_Invariants.md
 canonical_text: Runtime identity demotes tier_id from canonical execution correlation, preserves thread_id and correlation_id
-  tracing, migrates raw local IDs to subject_id or object_kind/object_id, normalizes usage_event_ref as object_kind = usage_event,
-  and keeps resume_url? as transport rather than canonical identity.
+  tracing, migrates raw local IDs to subject_id or object_kind/object_id, normalizes event-primary usage_event_ref as
+  object_kind = usage_event and PMConcept7 Ledger attempt_id as object_kind = usage_attempt while retaining the event
+  ref as correlation, and keeps resume_url? as transport rather than canonical identity.
 gui_related: false
 gui_classification_reason: This unit covers runtime and route identity normalization, not GUI behavior.
 split_recommended: false
@@ -4546,5 +4547,5 @@ Phase 2B batches 115 and 116 atomized `Architecture_Invariants-S0001` through `A
 This addendum repairs non-runtime architecture-invariant rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-60e840c059b6db237485d48c`: raw reconciliation fragments preceding INV-001 are audit-lineage only. The canonical invariant is that correlation, usage, permission, route, and artifact identity must be represented by named owner fields and must not be reintroduced as anonymous prose aliases.
-- Repairs `sfk-ddd4dece078c664fd31f6de5`: INV-001 now requires `correlation_id` trace-through across provider/runtime dispatch, persisted EventRecord/domain events, artifacts, receipts, and route/open payloads; `usage_event_ref` is normalized to `object_kind = usage_event` plus `object_id` before routing and is not a top-level route special case. Evidence: this section, `AI-004`, and `Plans/Contracts_V0.md` route/runtime identity contracts.
+- Repairs `sfk-ddd4dece078c664fd31f6de5`: INV-001 now requires `correlation_id` trace-through across provider/runtime dispatch, persisted EventRecord/domain events, artifacts, receipts, and route/open payloads; event-primary `usage_event_ref` normalizes to `object_kind = usage_event`, while PMConcept7 Ledger attempt-primary routing normalizes `attempt_id` to `object_kind = usage_attempt` and retains the event ref as correlation. Neither is a top-level route special case. Evidence: this section, `AI-004`, and `Plans/Contracts_V0.md` route/runtime identity contracts.
 - Repairs `sfk-937c36d705a22bf16645cca2`: `GATE-001`, `GATE-003`, and `GATE-010` are routed through `Plans/Progression_Gates.md`; this section now states that `GATE-003` owns invariant governance while current `run-gates` enforcement remains partial until a dedicated invariant verifier exists.

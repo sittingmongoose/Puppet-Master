@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.attention_event.alert_rule_muted.schema.v1",
+  "$comment": "Static payload shape only. The owner/runtime must prove the rule revision is current, result_revision is its successor, and any expiry is applied by policy. This schema grants no append or dispatch authority.",
+  "title": "alert.rule_muted payload",
+  "description": "Closed project-scoped payload for muting one alert rule, distinct from dismissing a single alert occurrence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "project_id", "alert_rule_id", "alert_rule_ref",
+    "actor_ref", "prior_revision", "result_revision", "currentness_basis_ref",
+    "prior_mute_state", "result_mute_state", "mute_scope", "mute_reason_code",
+    "origin", "handler_target", "command_id", "correlation_id", "idempotency_key", "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.attention_event.alert_rule_muted.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/non_empty_id"},
+    "alert_rule_id": {"$ref": "#/$defs/non_empty_id"},
+    "alert_rule_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "prior_revision": {"type": "integer", "minimum": 1},
+    "result_revision": {"type": "integer", "minimum": 2},
+    "currentness_basis_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "prior_mute_state": {"enum": ["unmuted", "expired"]},
+    "result_mute_state": {"const": "muted"},
+    "mute_scope": {"const": "project"},
+    "mute_reason_code": {"$ref": "#/$defs/reason_code"},
+    "mute_expires_at": {"type": "string", "format": "date-time"},
+    "origin": {"$ref": "#/$defs/origin"},
+    "handler_target": {"const": "handlers::alert::mute_rule"},
+    "command_id": {"const": "cmd.alert.mute_rule"},
+    "correlation_id": {"$ref": "#/$defs/non_empty_id"},
+    "idempotency_key": {"$ref": "#/$defs/non_empty_id"},
+    "source_refs": {"$ref": "#/$defs/ref_array"},
+    "evidence_refs": {"$ref": "#/$defs/ref_array"},
+    "ts": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "origin": {"enum": ["orchestrator", "attention_center", "dashboard", "notification_center", "api"]},
+    "ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "maxItems": 32, "uniqueItems": true}
+  }
+}

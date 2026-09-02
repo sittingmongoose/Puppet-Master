@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/named_plan_system/1.0.0/named_plan_system_contracts.schema.json",
+  "title": "Puppet Master Named Plan System contracts",
+  "description": "Closed NamedPlan aggregate, lifecycle command, result, and migration receipt contracts.",
+  "oneOf": [
+    {"$ref": "#/$defs/named_plan_record"},
+    {"$ref": "#/$defs/named_plan_action_request"},
+    {"$ref": "#/$defs/named_plan_action_result"},
+    {"$ref": "#/$defs/named_plan_action_error"},
+    {"$ref": "#/$defs/named_plan_action_availability"},
+    {"$ref": "#/$defs/named_plan_migration_receipt"}
+  ],
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 512},
+    "safe_ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:secret|password|passwd|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"},
+    "nullable_safe_ref": {"oneOf": [{"$ref": "#/$defs/safe_ref"}, {"type": "null"}]},
+    "nullable_string": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
+    "phase": {"enum": ["idea", "prd", "planning", "approved", "compiling", "executing", "paused", "blocked", "completed"]},
+    "named_plan_command_id": {"enum": ["cmd.named_plan.create", "cmd.named_plan.open", "cmd.named_plan.rename", "cmd.named_plan.archive", "cmd.named_plan.restore", "cmd.named_plan.set_priority"]},
+    "named_plan_disabled_reason": {"enum": ["command_not_registered", "native_handler_absent", "production_wiring_absent", "event_authority_absent", "storage_not_registered", "permission_denied", "stale_projection", "active_child_work_requires_review", "owner_unavailable"]},
+    "named_plan_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "named_plan_id", "project_id", "name", "lifecycle", "priority", "phase", "phase_freshness", "progress_percent", "active_agent_count", "queued_agent_count", "attention_codes", "primary_prd_ref", "current_planning_run_ref", "current_approved_plan_pack_ref", "current_plan_compile_run_ref", "current_goal_run_refs", "historical_child_refs", "thread_group_ref", "revision", "currentness_sha256", "created_at_utc", "updated_at_utc", "last_activity_at_utc", "migration_alias_refs"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.record.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "named_plan_id": {"$ref": "#/$defs/non_empty_string"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 160},
+        "lifecycle": {"enum": ["active", "archived"]},
+        "priority": {"enum": ["low", "normal", "high", "urgent"]},
+        "phase": {"$ref": "#/$defs/phase"},
+        "phase_freshness": {"enum": ["fresh", "aging", "stale", "conflicting", "unknown"]},
+        "progress_percent": {"oneOf": [{"type": "integer", "minimum": 0, "maximum": 100}, {"type": "null"}]},
+        "active_agent_count": {"type": "integer", "minimum": 0},
+        "queued_agent_count": {"type": "integer", "minimum": 0},
+        "attention_codes": {"type": "array", "uniqueItems": true, "maxItems": 32, "items": {"$ref": "#/$defs/non_empty_string"}},
+        "primary_prd_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "current_planning_run_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "current_approved_plan_pack_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "current_plan_compile_run_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "current_goal_run_refs": {"type": "array", "uniqueItems": true, "maxItems": 64, "items": {"$ref": "#/$defs/safe_ref"}},
+        "historical_child_refs": {"type": "array", "uniqueItems": true, "maxItems": 4096, "items": {"$ref": "#/$defs/safe_ref"}},
+        "thread_group_ref": {"$ref": "#/$defs/safe_ref"},
+        "revision": {"type": "integer", "minimum": 1},
+        "currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "created_at_utc": {"type": "string", "format": "date-time"},
+        "updated_at_utc": {"type": "string", "format": "date-time"},
+        "last_activity_at_utc": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
+        "migration_alias_refs": {"type": "array", "uniqueItems": true, "maxItems": 32, "items": {"$ref": "#/$defs/safe_ref"}}
+      },
+      "allOf": [
+        {"if": {"properties": {"phase_freshness": {"enum": ["stale", "conflicting", "unknown"]}}}, "then": {"properties": {"progress_percent": {"type": "null"}}}}
+      ]
+    },
+    "named_plan_action_request": {
+      "$anchor": "NamedPlanActionRequest",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "project_id", "named_plan_id", "name", "priority", "expected_named_plan_revision", "expected_currentness_sha256", "actor_ref", "permission_snapshot_ref", "idempotency_key", "source_surface", "return_route_ref", "active_child_work_expected", "child_work_disposition", "confirmation_receipt_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.action_request.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/named_plan_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "named_plan_id": {"$ref": "#/$defs/nullable_string"},
+        "name": {"oneOf": [{"type": "string", "minLength": 1, "maxLength": 160}, {"type": "null"}]},
+        "priority": {"oneOf": [{"enum": ["low", "normal", "high", "urgent"]}, {"type": "null"}]},
+        "expected_named_plan_revision": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+        "expected_currentness_sha256": {"oneOf": [{"type": "string", "pattern": "^[0-9a-f]{64}$"}, {"type": "null"}]},
+        "actor_ref": {"$ref": "#/$defs/safe_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
+        "source_surface": {"enum": ["shell_header", "plans_page", "project_page", "assistant_chat", "prd_builder", "planning_wizard", "orchestrator", "command_palette", "deep_link", "migration"]},
+        "return_route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "active_child_work_expected": {"type": "boolean"},
+        "child_work_disposition": {"enum": ["no_child_runtime_created", "preserve_unchanged"]},
+        "confirmation_receipt_ref": {"$ref": "#/$defs/nullable_safe_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.named_plan.create"}}}, "then": {"properties": {"named_plan_id": {"type": "null"}, "name": {"type": "string", "minLength": 1, "maxLength": 160}, "priority": {"enum": ["low", "normal", "high", "urgent"]}, "expected_named_plan_revision": {"type": "null"}, "expected_currentness_sha256": {"type": "null"}, "active_child_work_expected": {"const": false}, "child_work_disposition": {"const": "no_child_runtime_created"}, "confirmation_receipt_ref": {"type": "null"}}}},
+        {"if": {"properties": {"command_id": {"not": {"const": "cmd.named_plan.create"}}}}, "then": {"properties": {"named_plan_id": {"$ref": "#/$defs/non_empty_string"}, "expected_currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "child_work_disposition": {"const": "preserve_unchanged"}}}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.named_plan.rename", "cmd.named_plan.archive", "cmd.named_plan.restore", "cmd.named_plan.set_priority"]}}}, "then": {"properties": {"expected_named_plan_revision": {"type": "integer", "minimum": 1}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.named_plan.rename"}}}, "then": {"properties": {"name": {"type": "string", "minLength": 1, "maxLength": 160}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.named_plan.set_priority"}}}, "then": {"properties": {"priority": {"enum": ["low", "normal", "high", "urgent"]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.named_plan.archive"}, "active_child_work_expected": {"const": true}}, "required": ["command_id", "active_child_work_expected"]}, "then": {"properties": {"confirmation_receipt_ref": {"$ref": "#/$defs/safe_ref"}}}}
+      ]
+    },
+    "named_plan_action_result": {
+      "$anchor": "NamedPlanActionResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "outcome", "project_id", "named_plan_id", "named_plan_revision", "currentness_sha256", "thread_group_ref", "route_ref", "receipt_refs", "projection_ref", "disabled_reason", "error_code", "child_work_mutated", "replayed"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.action_result.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/named_plan_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "outcome": {"enum": ["accepted", "rejected", "cancelled", "no_change"]},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "named_plan_id": {"$ref": "#/$defs/nullable_string"},
+        "named_plan_revision": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+        "currentness_sha256": {"oneOf": [{"type": "string", "pattern": "^[0-9a-f]{64}$"}, {"type": "null"}]},
+        "thread_group_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "receipt_refs": {"type": "array", "uniqueItems": true, "maxItems": 32, "items": {"$ref": "#/$defs/safe_ref"}},
+        "projection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/named_plan_disabled_reason"}, {"type": "null"}]},
+        "error_code": {"oneOf": [{"enum": ["invalid_request", "project_not_found", "named_plan_not_found", "stale_named_plan_revision", "stale_currentness", "duplicate_id_conflict", "command_not_registered", "permission_denied", "archive_state_required", "active_child_work_requires_review", "parent_edge_invalid", "migration_required", "owner_unavailable", "cancelled"]}, {"type": "null"}]},
+        "child_work_mutated": {"const": false},
+        "replayed": {"type": "boolean"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"enum": ["accepted", "no_change"]}}}, "then": {"properties": {"named_plan_id": {"$ref": "#/$defs/non_empty_string"}, "named_plan_revision": {"type": "integer", "minimum": 1}, "currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "projection_ref": {"$ref": "#/$defs/safe_ref"}, "disabled_reason": {"type": "null"}, "error_code": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"const": "accepted"}}}, "then": {"properties": {"receipt_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"outcome": {"const": "rejected"}}}, "then": {"properties": {"error_code": {"type": "string"}}}},
+        {"if": {"properties": {"disabled_reason": {"type": "string"}}}, "then": {"properties": {"outcome": {"const": "rejected"}, "error_code": {"type": "string"}}}}
+      ]
+    },
+    "named_plan_action_error": {
+      "title": "NamedPlanActionError",
+      "$anchor": "NamedPlanActionError",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "project_id", "named_plan_id", "error_code", "message_code", "retriable", "currentness_sha256", "safe_next_action_ref", "child_work_mutated"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.action_error.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/named_plan_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "named_plan_id": {"$ref": "#/$defs/nullable_string"},
+        "error_code": {"enum": ["invalid_request", "project_not_found", "named_plan_not_found", "stale_named_plan_revision", "stale_currentness", "duplicate_id_conflict", "command_not_registered", "native_handler_absent", "production_wiring_absent", "permission_denied", "archive_state_required", "active_child_work_requires_review", "parent_edge_invalid", "migration_required", "owner_unavailable", "cancelled"]},
+        "message_code": {"$ref": "#/$defs/non_empty_string"},
+        "retriable": {"type": "boolean"},
+        "currentness_sha256": {"oneOf": [{"type": "string", "pattern": "^[0-9a-f]{64}$"}, {"type": "null"}]},
+        "safe_next_action_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "child_work_mutated": {"const": false}
+      }
+    },
+    "named_plan_action_availability": {
+      "title": "NamedPlanActionAvailability",
+      "$anchor": "NamedPlanActionAvailability",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "project_id", "named_plan_id", "availability", "currentness_sha256", "disabled_reason", "missing_requirement_refs", "safe_next_action_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.action_availability.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/named_plan_command_id"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "named_plan_id": {"$ref": "#/$defs/nullable_string"},
+        "availability": {"enum": ["available", "disabled"]},
+        "currentness_sha256": {"oneOf": [{"type": "string", "pattern": "^[0-9a-f]{64}$"}, {"type": "null"}]},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/named_plan_disabled_reason"}, {"type": "null"}]},
+        "missing_requirement_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
+        "safe_next_action_ref": {"$ref": "#/$defs/nullable_safe_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"availability": {"const": "available"}}}, "then": {"properties": {"disabled_reason": {"type": "null"}, "missing_requirement_refs": {"maxItems": 0}, "safe_next_action_ref": {"type": "null"}}}},
+        {"if": {"properties": {"availability": {"const": "disabled"}}}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/named_plan_disabled_reason"}, "missing_requirement_refs": {"minItems": 1}, "safe_next_action_ref": {"$ref": "#/$defs/safe_ref"}}}}
+      ]
+    },
+    "named_plan_migration_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "migration_id", "source_ref", "source_sha256", "result_sha256", "created_named_plan_ids", "alias_mappings", "accepted_child_refs", "quarantined_child_refs", "unresolved_risk_codes", "completed_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.migration_receipt.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "migration_id": {"$ref": "#/$defs/non_empty_string"},
+        "source_ref": {"$ref": "#/$defs/safe_ref"},
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "created_named_plan_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_empty_string"}},
+        "alias_mappings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["legacy_ref", "named_plan_id"],
+            "properties": {"legacy_ref": {"$ref": "#/$defs/safe_ref"}, "named_plan_id": {"$ref": "#/$defs/non_empty_string"}}
+          }
+        },
+        "accepted_child_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
+        "quarantined_child_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
+        "unresolved_risk_codes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_empty_string"}},
+        "completed_at_utc": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}

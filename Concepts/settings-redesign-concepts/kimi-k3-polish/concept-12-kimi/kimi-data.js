@@ -123,6 +123,18 @@
       ]
     },
     {
+      id: 'assistant-chat', label: 'Assistant Chat', eyebrow: 'Conversation',
+      description: 'Control how assistant work in progress is presented inside the chat transcript.',
+      settings: [
+        setting('working-activity-style', 'Working activity style', 'Choose how in-progress assistant activity is displayed while a turn is running.', 'segmented', 'Orbit', details(
+          'Changes the presentation of tool calls, file reads, web work, and subagents while the assistant is working: subjects appear as they start, stream their detail rows, and collapse to a compact summary you can reopen per subject.',
+          'Orbit is the default — an animated dial with a live detail panel. Step Rail is the simplified option: the same engine as a plain rail of step discs, for people who do not want the full animation.',
+          'Choose Step Rail when you want a quieter transcript during long agentic runs; every subject stays one click away in both styles.',
+          'This project. Takes effect on the next assistant turn.',
+          ['Show Activity Cards', 'Interface motion', 'Contextual help level']), { options: ['Orbit', 'Step Rail'], searchTerms: ['activity', 'progress', 'working', 'tool calls', 'orbit', 'step rail', 'transcript', 'animation'] })
+      ]
+    },
+    {
       id: 'help', label: 'Help & Getting Started', eyebrow: 'Learning',
       description: 'Choose how Puppet Master teaches features and surfaces contextual help.',
       settings: [

@@ -1,0 +1,3813 @@
+{
+  "schema_id": "pm.server_system.contract_fixtures.v1",
+  "contract_schema_id": "pm.server_system.contracts.v1",
+  "evidence_level": "schema_fixture_only",
+  "owner_schema": "Plans/server_system_contracts.schema.json",
+  "claim_boundary": "Fixture/schema validation proves static shape and named invariants only; it does not prove command registration, native handlers, production wiring, event admission, persistence execution, trust cryptography, runtime behavior, readiness, or certification.",
+  "coverage": {
+    "primary_command_count": 26,
+    "primary_command_ids": [
+      "cmd.server.add",
+      "cmd.server.claim",
+      "cmd.server.connect",
+      "cmd.server.select",
+      "cmd.server.rename",
+      "cmd.server.test_connection",
+      "cmd.server.open_web",
+      "cmd.server.processing.set_enabled",
+      "cmd.server.capabilities.refresh",
+      "cmd.server.restart",
+      "cmd.server.stop",
+      "cmd.server.remove",
+      "cmd.server.open_details",
+      "cmd.server.open_logs",
+      "cmd.server.update_policy",
+      "cmd.server.discovery.refresh",
+      "cmd.server.discovery.set_enabled",
+      "cmd.server.discovery.open_nearby",
+      "cmd.server.endpoint.add_manual",
+      "cmd.server.endpoint.update",
+      "cmd.server.endpoint.remove",
+      "cmd.server.endpoint.test",
+      "cmd.server.endpoint.set_preferred",
+      "cmd.server.endpoint.copy",
+      "cmd.server.endpoint.open",
+      "cmd.server.endpoint.open_details"
+    ],
+    "payload_positive_case_count": 26,
+    "owner_command_count": 36,
+    "supplemental_command_count": 6,
+    "supplemental_command_ids": [
+      "cmd.server.bootstrap.start",
+      "cmd.client.pair.start",
+      "cmd.client.pair.approve",
+      "cmd.client.pair.reject",
+      "cmd.client.pair.cancel",
+      "cmd.client.revoke"
+    ],
+    "supplemental_payload_positive_case_count": 10,
+    "compatibility_alias_count": 0,
+    "client_trust_command_count": 4,
+    "client_trust_command_ids": [
+      "cmd.client.access.update",
+      "cmd.client.remove",
+      "cmd.client.rename",
+      "cmd.client.session.revoke"
+    ],
+    "client_trust_local_action_count": 1,
+    "client_trust_local_action_ids": [
+      "ui.client.open_details"
+    ],
+    "server_gap_rows": [
+      18,
+      19,
+      20,
+      21,
+      22
+    ]
+  },
+  "semantic_rules": {
+    "exact_return_context": "request and result command_id, command_instance_id, correlation_id, and return_context must be byte-equivalent JSON values",
+    "command_action_parity": "command_result.command_id must equal command_result.output.action"
+  },
+  "fixture_summary": {
+    "total_cases": 139,
+    "positive_cases": 89,
+    "negative_cases": 50,
+    "preserved_system_positive_cases": 6,
+    "preserved_system_negative_cases": 6,
+    "merged_short_positive_cases": 41,
+    "merged_short_negative_cases": 14,
+    "added_action_parity_negative_cases": 1,
+    "supplemental_payload_positive_cases": 10,
+    "supplemental_result_positive_cases": 6,
+    "supplemental_contract_positive_cases": 10,
+    "supplemental_negative_cases": 19,
+    "client_trust_positive_cases": 15,
+    "client_trust_negative_cases": 9,
+    "srv_013_positive_cases": 1,
+    "srv_013_negative_cases": 1
+  },
+  "source_sha256": {
+    "Plans/server_system_contracts.schema.json": "7d0b96e9154107046d10cdd5349a2d1dd173502ae9c0460cd5a9b0d86b5f63ad",
+    "Plans/server_system_contract_fixtures.json": "32c09967a4336fe699b80a3f95d941095a2e906cf8924ce15686415adae0b16e",
+    "Plans/server_contracts.schema.json": "d2db6d15735730bcd82e58caee3670090a0d8429b6e46ddf6c1f1b191bf0f6bd",
+    "Plans/server_contract_fixtures.json": "32dc356eb16f2ac1c26c33878a4039e14bbb3e714c0761fa06d21a0f4a47676f"
+  },
+  "valid": [
+    {
+      "name": "catalog_keeps_only_small_registration_and_reference_state",
+      "definition": "server_catalog",
+      "value": {
+        "schema_id": "pm.server_system.server_catalog.v1",
+        "schema_version": "1.0.0",
+        "catalog_id": "server-catalog:home",
+        "catalog_revision": 8,
+        "server_ids": [
+          "server:home-01"
+        ],
+        "project_registrations": [
+          {
+            "project_id": "project:alpha",
+            "project_vault_id": "project-vault:alpha",
+            "home_server_id": "server:home-01",
+            "vault_manifest_ref": "manifest:vault:alpha:7",
+            "registration_state": "registered"
+          }
+        ],
+        "global_template_refs": [
+          "template:global:default"
+        ],
+        "backup_configuration_refs": [
+          "backup-policy:server:default"
+        ],
+        "update_configuration_refs": [
+          "update-policy:server:default"
+        ],
+        "integration_catalog_refs": [
+          "integration-catalog:home:4"
+        ],
+        "aggregate_health_refs": [
+          "health:server:home-01:8"
+        ],
+        "non_reconstructable_state_refs": [
+          "trust-metadata:server:home-01:5"
+        ],
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "currentness_ref": "currentness:server-catalog:8",
+        "default_server_id": "server:home-01",
+        "migration_generation": 1,
+        "durable_projection_cursor": "cursor:server-catalog:8",
+        "contains_project_payload_bytes": false
+      }
+    },
+    {
+      "name": "identity_mismatch_endpoint_fails_closed_and_is_not_preferred",
+      "definition": "server_endpoint_record",
+      "value": {
+        "schema_id": "pm.server_system.server_endpoint_record.v1",
+        "schema_version": "1.0.0",
+        "server_endpoint_id": "server-endpoint:manual-01",
+        "server_id": "server:home-01",
+        "endpoint_kind": "manual",
+        "address": "https://pm.example.test",
+        "tls_required": true,
+        "identity_verification": "mismatch",
+        "observed_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "expected_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "endpoint_generation": 2,
+        "preferred": false,
+        "state": "identity_mismatch",
+        "last_test_receipt_ref": "receipt:server-connection-test:manual-01",
+        "updated_at_utc": "2026-08-31T12:01:00Z"
+      }
+    },
+    {
+      "name": "mdns_discovery_is_minimal_observation_not_trust",
+      "definition": "discovery_observation",
+      "value": {
+        "schema_id": "pm.server_system.discovery_observation.v1",
+        "schema_version": "1.0.0",
+        "observation_id": "discovery-observation:mdns-01",
+        "discovery_source": "dns_sd_mdns",
+        "server_identity_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "human_name": "Home Server",
+        "port": 443,
+        "tls": true,
+        "protocol_range": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "claim_pairing_summary": "pairing_required",
+        "availability": "available",
+        "capability_summary": [
+          "api",
+          "event_stream",
+          "web_ui",
+          "pairing"
+        ],
+        "observed_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-08-31T12:02:00Z",
+        "trust_disposition": "observation_only_not_trust",
+        "grants_trust": false
+      }
+    },
+    {
+      "name": "completed_pairing_has_identity_approval_and_receipt",
+      "definition": "pairing_run",
+      "value": {
+        "schema_id": "pm.server_system.pairing_run.v1",
+        "schema_version": "1.0.0",
+        "pairing_session_id": "pairing-session:01",
+        "server_id": "server:home-01",
+        "candidate_client_id": "client:desktop-01",
+        "pairing_candidate_id": "pairing-candidate:desktop-01",
+        "pairing_generation": 2,
+        "method": "qr",
+        "state": "complete",
+        "pairing_material_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "pairing_secret_persisted": false,
+        "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "approval_actor_ref": "actor:owner:01",
+        "requested_access_policy_id": "client-access-policy:desktop-default",
+        "idempotency_key": "pair-client-desktop-01",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-08-31T12:10:00Z",
+        "terminal_at_utc": "2026-08-31T12:01:00Z",
+        "receipt_ref": "receipt:pairing:01",
+        "failure_ref": null,
+        "explicit_approval": true
+      }
+    },
+    {
+      "name": "current_connection_requires_trust_session_and_cursor",
+      "definition": "server_connection_projection",
+      "value": {
+        "schema_id": "pm.server_system.server_connection_projection.v1",
+        "schema_version": "1.0.0",
+        "projection_id": "server-connection-projection:01",
+        "server_id": "server:home-01",
+        "client_id": "client:desktop-01",
+        "server_endpoint_id": "server-endpoint:lan-01",
+        "remote_route_id": null,
+        "state": "current",
+        "server_generation": 4,
+        "endpoint_generation": 3,
+        "trust_generation": 2,
+        "session_id": "session:desktop-01:2",
+        "cursor_ref": "cursor:server:home-01:985",
+        "snapshot_ref": null,
+        "disabled_reason": null,
+        "observed_at_utc": "2026-08-31T12:05:00Z",
+        "currentness_ref": "currentness:server-connection:985"
+      }
+    },
+    {
+      "name": "revoked_trust_links_durable_revocation_record",
+      "definition": "client_trust_record",
+      "value": {
+        "schema_id": "pm.server_system.client_trust_record.v1",
+        "schema_version": "1.0.0",
+        "client_trust_id": "client-trust:desktop-01",
+        "server_id": "server:home-01",
+        "client_id": "client:desktop-01",
+        "client_access_policy_id": "client-access-policy:desktop-default",
+        "policy_generation": 2,
+        "trust_generation": 3,
+        "verification_method": "qr",
+        "verified_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "state": "revoked",
+        "issued_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": null,
+        "revocation_record_id": "revocation:desktop-01:3",
+        "currentness_ref": "currentness:trust:desktop-01:3",
+        "scopes": [
+          "observe",
+          "command"
+        ],
+        "revoked_at_utc": "2026-08-31T12:06:00Z"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.add",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.add",
+        "command_instance_id": "scmd_case-000000000001",
+        "correlation_id": "corr_case-000000000001",
+        "idempotency_key": "idem_case-000000000001",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "endpoint": "https://server.example.test:7443",
+          "label": "Home Server"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.claim",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.claim",
+        "command_instance_id": "scmd_case-000000000002",
+        "correlation_id": "corr_case-000000000002",
+        "idempotency_key": "idem_case-000000000002",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "discovery_observation_id": "discovery-observation:abcdefghijkl",
+          "pairing_session_id": "pairing-session:abcdefghijkl",
+          "identity_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.connect",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_case-000000000003",
+        "correlation_id": "corr_case-000000000003",
+        "idempotency_key": "idem_case-000000000003",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "connection_mode": "connect",
+          "prior_session_id": null,
+          "resume_cursor_ref": null
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.select",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.select",
+        "command_instance_id": "scmd_case-000000000004",
+        "correlation_id": "corr_case-000000000004",
+        "idempotency_key": "idem_case-000000000004",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "project_id": "project:abcdefghijkl"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.rename",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.rename",
+        "command_instance_id": "scmd_case-000000000005",
+        "correlation_id": "corr_case-000000000005",
+        "idempotency_key": "idem_case-000000000005",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "new_name": "Studio Server",
+          "reason": "User requested rename"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.test_connection",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.test_connection",
+        "command_instance_id": "scmd_case-000000000006",
+        "correlation_id": "corr_case-000000000006",
+        "idempotency_key": "idem_case-000000000006",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.open_web",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.open_web",
+        "command_instance_id": "scmd_case-000000000007",
+        "correlation_id": "corr_case-000000000007",
+        "idempotency_key": "idem_case-000000000007",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.processing.set_enabled",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.processing.set_enabled",
+        "command_instance_id": "scmd_case-000000000008",
+        "correlation_id": "corr_case-000000000008",
+        "idempotency_key": "idem_case-000000000008",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "enabled": true,
+          "confirmation": true
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.capabilities.refresh",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.capabilities.refresh",
+        "command_instance_id": "scmd_case-000000000009",
+        "correlation_id": "corr_case-000000000009",
+        "idempotency_key": "idem_case-000000000009",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "include_execution_hosts": true
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.restart",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.restart",
+        "command_instance_id": "scmd_case-000000000010",
+        "correlation_id": "corr_case-000000000010",
+        "idempotency_key": "idem_case-000000000010",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "drain_mode": "checkpoint",
+          "confirmation": true,
+          "reason": "Apply update"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.stop",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.stop",
+        "command_instance_id": "scmd_case-000000000011",
+        "correlation_id": "corr_case-000000000011",
+        "idempotency_key": "idem_case-000000000011",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "drain_mode": "drain",
+          "confirmation": true,
+          "reason": "Planned maintenance"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.remove",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.remove",
+        "command_instance_id": "scmd_case-000000000012",
+        "correlation_id": "corr_case-000000000012",
+        "idempotency_key": "idem_case-000000000012",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "confirmation": true,
+          "retain_project_registrations": true,
+          "reason": "Retire endpoint"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.open_details",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.open_details",
+        "command_instance_id": "scmd_case-000000000013",
+        "correlation_id": "corr_case-000000000013",
+        "idempotency_key": "idem_case-000000000013",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "section": "identity"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.open_logs",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.open_logs",
+        "command_instance_id": "scmd_case-000000000014",
+        "correlation_id": "corr_case-000000000014",
+        "idempotency_key": "idem_case-000000000014",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "cursor": "cursor-17",
+          "limit": 100
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.update_policy",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.update_policy",
+        "command_instance_id": "scmd_case-000000000015",
+        "correlation_id": "corr_case-000000000015",
+        "idempotency_key": "idem_case-000000000015",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "policy_patch": {
+            "update_channel": "stable",
+            "automatic_updates": true
+          },
+          "reason": "Use stable updates"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.discovery.refresh",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.discovery.refresh",
+        "command_instance_id": "scmd_case-000000000016",
+        "correlation_id": "corr_case-000000000016",
+        "idempotency_key": "idem_case-000000000016",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "sources": [
+            "mdns",
+            "dns_sd"
+          ]
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.discovery.set_enabled",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.discovery.set_enabled",
+        "command_instance_id": "scmd_case-000000000017",
+        "correlation_id": "corr_case-000000000017",
+        "idempotency_key": "idem_case-000000000017",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.discovery.open_nearby",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.discovery.open_nearby",
+        "command_instance_id": "scmd_case-000000000018",
+        "correlation_id": "corr_case-000000000018",
+        "idempotency_key": "idem_case-000000000018",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {}
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.add_manual",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.add_manual",
+        "command_instance_id": "scmd_case-000000000019",
+        "correlation_id": "corr_case-000000000019",
+        "idempotency_key": "idem_case-000000000019",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "url": "https://server.example.test:7443",
+          "label": "Primary",
+          "identity_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.update",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.update",
+        "command_instance_id": "scmd_case-000000000020",
+        "correlation_id": "corr_case-000000000020",
+        "idempotency_key": "idem_case-000000000020",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "expected_endpoint_revision": 2,
+          "label": "LAN endpoint"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.remove",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.remove",
+        "command_instance_id": "scmd_case-000000000021",
+        "correlation_id": "corr_case-000000000021",
+        "idempotency_key": "idem_case-000000000021",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "expected_endpoint_revision": 2,
+          "confirmation": true
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.test",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.test",
+        "command_instance_id": "scmd_case-000000000022",
+        "correlation_id": "corr_case-000000000022",
+        "idempotency_key": "idem_case-000000000022",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.set_preferred",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.set_preferred",
+        "command_instance_id": "scmd_case-000000000023",
+        "correlation_id": "corr_case-000000000023",
+        "idempotency_key": "idem_case-000000000023",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "expected_endpoint_revision": 2
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.copy",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.copy",
+        "command_instance_id": "scmd_case-000000000024",
+        "correlation_id": "corr_case-000000000024",
+        "idempotency_key": "idem_case-000000000024",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "field": "url"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.open",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.open",
+        "command_instance_id": "scmd_case-000000000025",
+        "correlation_id": "corr_case-000000000025",
+        "idempotency_key": "idem_case-000000000025",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.payload.cmd.server.endpoint.open_details",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.open_details",
+        "command_instance_id": "scmd_case-000000000026",
+        "correlation_id": "corr_case-000000000026",
+        "idempotency_key": "idem_case-000000000026",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "positive.supplemental_payload.cmd.server.bootstrap.start",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.server.bootstrap.start",
+        "command_instance_id": "scmd_supp-000000000001",
+        "correlation_id": "corr_supp-000000000001",
+        "idempotency_key": "idem_supp-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.claim-bootstrap",
+          "route_id": "server/claim-bootstrap",
+          "focus_target": "bootstrap-progress",
+          "invocation_token": "ret_supp-000000000001"
+        },
+        "args": {
+          "server_bootstrap_run_id": "server-bootstrap:standalone-01",
+          "claim_receipt_ref": "receipt:server-claim:standalone-01",
+          "requested_execution_form": "standalone",
+          "standalone_platform": "linux",
+          "container_platform": null,
+          "catalog_root_ref": "storage-root:catalog:standalone-01",
+          "project_vault_root_ref": "storage-root:vaults:standalone-01",
+          "tool_store_root_ref": "storage-root:tool-store:standalone-01",
+          "execution_baseline_manifest_ref": "manifest:execution-baseline:linux-01",
+          "persistent_mounts_verified": false,
+          "disposable_layer_mutation_allowed": false,
+          "remote_access_disposition": "defer",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_bootstrap_container",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.server.bootstrap.start",
+        "command_instance_id": "scmd_supp-000000000002",
+        "correlation_id": "corr_supp-000000000002",
+        "idempotency_key": "idem_supp-000000000002",
+        "server_id": "server:container-01",
+        "expected_generations": {
+          "catalog_revision": 1,
+          "server_generation": 1,
+          "trust_generation": 1,
+          "topology_generation": 1,
+          "session_generation": 1
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.claim-bootstrap",
+          "route_id": "server/claim-bootstrap",
+          "focus_target": "bootstrap-progress",
+          "invocation_token": "ret_supp-000000000002"
+        },
+        "args": {
+          "server_bootstrap_run_id": "server-bootstrap:container-01",
+          "claim_receipt_ref": "receipt:server-claim:container-01",
+          "requested_execution_form": "container",
+          "standalone_platform": null,
+          "container_platform": "truenas",
+          "catalog_root_ref": "storage-root:catalog:container-01",
+          "project_vault_root_ref": "storage-root:vaults:container-01",
+          "tool_store_root_ref": "storage-root:tool-store:container-01",
+          "execution_baseline_manifest_ref": "manifest:execution-baseline:container-01",
+          "persistent_mounts_verified": true,
+          "disposable_layer_mutation_allowed": false,
+          "remote_access_disposition": "configure_now",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_payload.cmd.client.pair.start",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.pair.start",
+        "command_instance_id": "scmd_supp-000000000003",
+        "correlation_id": "corr_supp-000000000003",
+        "idempotency_key": "idem_supp-000000000003",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pairing-progress",
+          "invocation_token": "ret_supp-000000000003"
+        },
+        "args": {
+          "pairing_session_id": "pairing-session:qr-01",
+          "pairing_candidate_id": "pairing-candidate:qr-01",
+          "candidate_client_id": "client:mobile-01",
+          "candidate_source": "qr_pairing_link",
+          "requested_pairing_method": "qr",
+          "pairing_material_handle_ref": "ephemeral-secret-handle:qr-01",
+          "pairing_material_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "approving_client_id": null,
+          "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "requested_access_policy_id": "client-access-policy:mobile-default",
+          "requested_pairing_state": "created",
+          "expires_in_seconds": 300
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_pair_start_short_code",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.pair.start",
+        "command_instance_id": "scmd_supp-000000000004",
+        "correlation_id": "corr_supp-000000000004",
+        "idempotency_key": "idem_supp-000000000004",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pairing-progress",
+          "invocation_token": "ret_supp-000000000004"
+        },
+        "args": {
+          "pairing_session_id": "pairing-session:code-01",
+          "pairing_candidate_id": "pairing-candidate:known-01",
+          "candidate_client_id": "client:desktop-02",
+          "candidate_source": "known_endpoint",
+          "requested_pairing_method": "short_code",
+          "pairing_material_handle_ref": "ephemeral-secret-handle:code-01",
+          "pairing_material_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "approving_client_id": null,
+          "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "requested_access_policy_id": "client-access-policy:desktop-default",
+          "requested_pairing_state": "created",
+          "expires_in_seconds": 120
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_pair_start_trusted_approval",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.pair.start",
+        "command_instance_id": "scmd_supp-000000000005",
+        "correlation_id": "corr_supp-000000000005",
+        "idempotency_key": "idem_supp-000000000005",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pairing-progress",
+          "invocation_token": "ret_supp-000000000005"
+        },
+        "args": {
+          "pairing_session_id": "pairing-session:approval-01",
+          "pairing_candidate_id": "pairing-candidate:approval-01",
+          "candidate_client_id": "client:tablet-01",
+          "candidate_source": "known_endpoint",
+          "requested_pairing_method": "trusted_client_approval",
+          "pairing_material_handle_ref": null,
+          "pairing_material_sha256": null,
+          "approving_client_id": "client:trusted-admin-01",
+          "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "requested_access_policy_id": "client-access-policy:tablet-default",
+          "requested_pairing_state": "created",
+          "expires_in_seconds": 300
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_pair_start_tailnet_peer",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.pair.start",
+        "command_instance_id": "scmd_supp-000000000006",
+        "correlation_id": "corr_supp-000000000006",
+        "idempotency_key": "idem_supp-000000000006",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pairing-progress",
+          "invocation_token": "ret_supp-000000000006"
+        },
+        "args": {
+          "pairing_session_id": "pairing-session:tailnet-01",
+          "pairing_candidate_id": "pairing-candidate:tailscale-peer-01",
+          "candidate_client_id": "client:laptop-01",
+          "candidate_source": "tailscale_peer",
+          "requested_pairing_method": "lan_discovery",
+          "pairing_material_handle_ref": null,
+          "pairing_material_sha256": null,
+          "approving_client_id": null,
+          "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "requested_access_policy_id": "client-access-policy:laptop-default",
+          "requested_pairing_state": "created",
+          "expires_in_seconds": 300
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_payload.cmd.client.pair.approve",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.pair.approve",
+        "command_instance_id": "scmd_supp-000000000007",
+        "correlation_id": "corr_supp-000000000007",
+        "idempotency_key": "idem_supp-000000000007",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "paired-client-row",
+          "invocation_token": "ret_supp-000000000007"
+        },
+        "args": {
+          "pairing_session_id": "pairing-session:approval-01",
+          "expected_pairing_generation": 2,
+          "expected_pairing_state": "waiting_for_approval",
+          "observed_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "approval_actor_ref": "actor:trusted-client-admin:01",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_payload.cmd.client.pair.reject",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.pair.reject",
+        "command_instance_id": "scmd_supp-000000000008",
+        "correlation_id": "corr_supp-000000000008",
+        "idempotency_key": "idem_supp-000000000008",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pairing-request-row",
+          "invocation_token": "ret_supp-000000000008"
+        },
+        "args": {
+          "pairing_session_id": "pairing-session:reject-01",
+          "expected_pairing_generation": 1,
+          "expected_pairing_state": "waiting_for_approval",
+          "approval_actor_ref": "actor:trusted-client-admin:01",
+          "reason_code": "unexpected_client",
+          "reason": "The requesting Client is not recognized.",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_payload.cmd.client.pair.cancel",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.pair.cancel",
+        "command_instance_id": "scmd_supp-000000000009",
+        "correlation_id": "corr_supp-000000000009",
+        "idempotency_key": "idem_supp-000000000009",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pair-server-button",
+          "invocation_token": "ret_supp-000000000009"
+        },
+        "args": {
+          "pairing_session_id": "pairing-session:cancel-01",
+          "expected_pairing_generation": 1,
+          "expected_pairing_state": "waiting_for_identity_confirmation",
+          "requesting_client_id": "client:mobile-01",
+          "reason_code": "user_cancelled",
+          "reason": "The requesting Client cancelled pairing.",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_payload.cmd.client.revoke",
+      "definition": "supplemental_command_payload",
+      "value": {
+        "record_type": "server.owner_command.payload.v1",
+        "command_id": "cmd.client.revoke",
+        "command_instance_id": "scmd_supp-000000000010",
+        "correlation_id": "corr_supp-000000000010",
+        "idempotency_key": "idem_supp-000000000010",
+        "server_id": "server:abcdefghijkl",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "server.clients",
+          "route_id": "server/clients",
+          "focus_target": "client-row-next",
+          "invocation_token": "ret_supp-000000000010"
+        },
+        "args": {
+          "client_id": "client:desktop-01",
+          "client_trust_id": "client-trust:desktop-01",
+          "expected_trust_generation": 2,
+          "revoke_scope": "trust_and_all_sessions",
+          "reason_code": "user_revoked",
+          "reason": "The owner revoked this Client.",
+          "actor_ref": "actor:owner:01",
+          "confirmation": true
+        }
+      }
+    },
+    {
+      "name": "positive.result",
+      "definition": "command_result",
+      "value": {
+        "record_type": "server.command.result.v1",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_result-00000000001",
+        "resulting_catalog_revision": 8,
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "output": {
+          "action": "cmd.server.connect",
+          "changed": true,
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "currentness": "current",
+          "requested_connection_mode": "reconnect",
+          "effective_connection_mode": "reconnect",
+          "session_id": "session:abcdefghijkl",
+          "cursor_ref": "cursor:server:abcdefghijkl:984"
+        }
+      }
+    },
+    {
+      "name": "positive.error",
+      "definition": "command_error",
+      "value": {
+        "record_type": "server.command.error.v1",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_error-000000000001",
+        "correlation_id": "corr_error-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "failed",
+        "code": "endpoint_unreachable",
+        "retryable": true,
+        "message": "Endpoint did not answer the typed API probe.",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        }
+      }
+    },
+    {
+      "name": "positive.disabled_reason",
+      "definition": "command_disabled_reason",
+      "value": {
+        "record_type": "server.command.disabled_reason.v1",
+        "command_id": "cmd.server.connect",
+        "code": "native_handler_missing",
+        "message": "The native Server command handler is not registered.",
+        "blocking_refs": [
+          "Plans/Wiring_Matrix.production.json"
+        ],
+        "remediation_command_id": null
+      }
+    },
+    {
+      "name": "positive.availability_disabled_static",
+      "definition": "command_availability",
+      "value": {
+        "record_type": "server.command.availability.v1",
+        "command_id": "cmd.server.connect",
+        "server_id": "server:abcdefghijkl",
+        "available": false,
+        "currentness": "blocked",
+        "evaluated_at": "2026-08-31T00:00:00Z",
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "record_type": "server.command.disabled_reason.v1",
+          "command_id": "cmd.server.connect",
+          "code": "native_handler_missing",
+          "message": "The native Server command handler is not registered.",
+          "blocking_refs": [
+            "Plans/Wiring_Matrix.production.json"
+          ],
+          "remediation_command_id": null
+        }
+      }
+    },
+    {
+      "name": "positive.permission",
+      "definition": "command_permission",
+      "value": {
+        "record_type": "server.command.permission.v1",
+        "command_id": "cmd.server.connect",
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "principal_id": "local-user",
+        "permission_class": "server.manage",
+        "decision": "allowed",
+        "policy_generation": 3,
+        "evaluated_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.catalog",
+      "definition": "server_catalog",
+      "value": {
+        "schema_id": "pm.server_system.server_catalog.v1",
+        "schema_version": "1.0.0",
+        "catalog_id": "server-catalog:command-contract",
+        "catalog_revision": 8,
+        "server_ids": [
+          "server:home-01"
+        ],
+        "project_registrations": [
+          {
+            "project_id": "project:alpha",
+            "project_vault_id": "project-vault:alpha",
+            "home_server_id": "server:home-01",
+            "vault_manifest_ref": "manifest:vault:alpha:7",
+            "registration_state": "registered"
+          }
+        ],
+        "global_template_refs": [
+          "template:global:default"
+        ],
+        "backup_configuration_refs": [
+          "backup-policy:server:default"
+        ],
+        "update_configuration_refs": [
+          "update-policy:server:default"
+        ],
+        "integration_catalog_refs": [
+          "integration-catalog:home:4"
+        ],
+        "aggregate_health_refs": [
+          "health:server:home-01:8"
+        ],
+        "non_reconstructable_state_refs": [
+          "trust-metadata:server:home-01:5"
+        ],
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "currentness_ref": "currentness:server-catalog:8",
+        "default_server_id": "server:home-01",
+        "migration_generation": 1,
+        "durable_projection_cursor": "cursor:server-catalog:8",
+        "contains_project_payload_bytes": false
+      }
+    },
+    {
+      "name": "positive.server_record",
+      "definition": "server_record",
+      "value": {
+        "schema_id": "pm.server_system.server_record.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server:contract-positive",
+        "display_name": "Contract Server",
+        "identity_public_key_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "claim_state": "claimed",
+        "server_generation": 4,
+        "protocol_range": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "processing_enabled": true,
+        "endpoint_ids": [
+          "server-endpoint:contract-positive"
+        ],
+        "project_ids": [
+          "project:contract-positive"
+        ],
+        "created_at_utc": "2026-08-31T12:00:00Z",
+        "updated_at_utc": "2026-08-31T12:05:00Z",
+        "currentness_ref": "currentness:server:contract-positive:4",
+        "catalog_revision": 8,
+        "trust_generation": 2
+      }
+    },
+    {
+      "name": "positive.endpoint",
+      "definition": "server_endpoint_record",
+      "value": {
+        "schema_id": "pm.server_system.server_endpoint_record.v1",
+        "schema_version": "1.0.0",
+        "server_endpoint_id": "server-endpoint:contract-positive",
+        "server_id": "server:contract-positive",
+        "endpoint_kind": "manual",
+        "address": "https://pm.example.test",
+        "tls_required": true,
+        "identity_verification": "verified",
+        "observed_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "endpoint_generation": 2,
+        "preferred": true,
+        "state": "ready",
+        "last_test_receipt_ref": "receipt:server-connection-test:contract-positive",
+        "updated_at_utc": "2026-08-31T12:01:00Z"
+      }
+    },
+    {
+      "name": "positive.discovery_minimal",
+      "definition": "discovery_observation",
+      "value": {
+        "schema_id": "pm.server_system.discovery_observation.v1",
+        "schema_version": "1.0.0",
+        "observation_id": "discovery-observation:contract-positive",
+        "discovery_source": "dns_sd_mdns",
+        "server_identity_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "human_name": "Home Server",
+        "port": 443,
+        "tls": true,
+        "protocol_range": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "claim_pairing_summary": "pairing_required",
+        "availability": "available",
+        "capability_summary": [
+          "api",
+          "event_stream",
+          "web_ui",
+          "pairing"
+        ],
+        "observed_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-08-31T12:02:00Z",
+        "trust_disposition": "observation_only_not_trust",
+        "grants_trust": false
+      }
+    },
+    {
+      "name": "positive.client_trust",
+      "definition": "client_trust_record",
+      "value": {
+        "schema_id": "pm.server_system.client_trust_record.v1",
+        "schema_version": "1.0.0",
+        "client_trust_id": "client-trust:contract-positive",
+        "server_id": "server:contract-positive",
+        "client_id": "client:contract-positive",
+        "client_access_policy_id": "client-access-policy:contract-positive",
+        "policy_generation": 2,
+        "trust_generation": 2,
+        "verification_method": "qr",
+        "verified_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "state": "active",
+        "issued_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-09-01T12:00:00Z",
+        "revocation_record_id": null,
+        "currentness_ref": "currentness:trust:contract-positive:2",
+        "scopes": [
+          "observe",
+          "command"
+        ],
+        "revoked_at_utc": null
+      }
+    },
+    {
+      "name": "positive.pairing_approved",
+      "definition": "pairing_run",
+      "value": {
+        "schema_id": "pm.server_system.pairing_run.v1",
+        "schema_version": "1.0.0",
+        "pairing_session_id": "pairing-session:contract-positive",
+        "server_id": "server:home-01",
+        "candidate_client_id": "client:contract-positive",
+        "pairing_candidate_id": "pairing-candidate:contract-positive",
+        "pairing_generation": 2,
+        "method": "qr",
+        "state": "complete",
+        "pairing_material_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "pairing_secret_persisted": false,
+        "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "approval_actor_ref": "actor:owner:01",
+        "requested_access_policy_id": "client-access-policy:desktop-default",
+        "idempotency_key": "pair-client-desktop-01",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-08-31T12:10:00Z",
+        "terminal_at_utc": "2026-08-31T12:01:00Z",
+        "receipt_ref": "receipt:pairing:01",
+        "failure_ref": null,
+        "explicit_approval": true
+      }
+    },
+    {
+      "name": "positive.pairing_receipt_paired",
+      "definition": "pairing_receipt",
+      "value": {
+        "schema_id": "pm.server_system.pairing_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:pairing:paired-01",
+        "server_id": "server:home-01",
+        "operation_id": "pairing-session:paired-01",
+        "command_id": "cmd.client.pair.approve",
+        "idempotency_key": "idem-pairing-approve-01",
+        "correlation_id": "correlation:pairing:paired-01",
+        "terminal_status": "succeeded",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "completed_at_utc": "2026-08-31T12:01:00Z",
+        "evidence_refs": [
+          "evidence:pairing:fingerprint-01",
+          "evidence:pairing:approval-01"
+        ],
+        "failure_ref": null,
+        "redaction_profile": "no_secrets",
+        "pairing_session_id": "pairing-session:paired-01",
+        "pairing_outcome": "paired",
+        "client_id": "client:desktop-01",
+        "client_trust_id": "client-trust:desktop-01",
+        "client_access_policy_id": "client-access-policy:desktop-default",
+        "policy_generation": 2,
+        "trust_generation": 3,
+        "verified_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "pairing_material_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "pairing_secret_persisted": false
+      }
+    },
+    {
+      "name": "positive.pairing_receipt_rejected",
+      "definition": "pairing_receipt",
+      "value": {
+        "schema_id": "pm.server_system.pairing_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:pairing:rejected-01",
+        "server_id": "server:home-01",
+        "operation_id": "pairing-session:rejected-01",
+        "command_id": "cmd.client.pair.reject",
+        "idempotency_key": "idem-pairing-reject-01",
+        "correlation_id": "correlation:pairing:rejected-01",
+        "terminal_status": "succeeded",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "completed_at_utc": "2026-08-31T12:01:00Z",
+        "evidence_refs": [
+          "evidence:pairing:rejection-01"
+        ],
+        "failure_ref": null,
+        "redaction_profile": "no_secrets",
+        "pairing_session_id": "pairing-session:rejected-01",
+        "pairing_outcome": "rejected",
+        "client_id": "client:unexpected-01",
+        "client_trust_id": null,
+        "client_access_policy_id": "client-access-policy:desktop-default",
+        "policy_generation": 2,
+        "trust_generation": null,
+        "verified_fingerprint": null,
+        "pairing_material_sha256": null,
+        "pairing_secret_persisted": false
+      }
+    },
+    {
+      "name": "positive.session",
+      "definition": "session_record",
+      "value": {
+        "schema_id": "pm.server_system.session_record.v1",
+        "schema_version": "1.0.0",
+        "session_id": "session:contract-positive",
+        "server_id": "server:contract-positive",
+        "client_id": "client:contract-positive",
+        "trust_generation": 2,
+        "client_access_policy_id": "client-access-policy:contract-positive",
+        "policy_generation": 2,
+        "protocol_version": 1,
+        "state": "active",
+        "issued_at_utc": "2026-08-31T12:00:00Z",
+        "last_activity_at_utc": "2026-08-31T12:05:00Z",
+        "expires_at_utc": "2026-09-01T12:00:00Z",
+        "revoked_at_utc": null,
+        "cursor_ref": "cursor:server:contract-positive:100",
+        "currentness_ref": "currentness:session:contract-positive:2",
+        "contains_secret_token_bytes": false
+      }
+    },
+    {
+      "name": "positive.bootstrap_run_standalone",
+      "definition": "server_bootstrap_run",
+      "value": {
+        "schema_id": "pm.server_system.server_bootstrap_run.v1",
+        "schema_version": "1.0.0",
+        "server_bootstrap_run_id": "server-bootstrap:standalone-01",
+        "server_id": "server:standalone-01",
+        "claim_receipt_ref": "receipt:server-claim:standalone-01",
+        "requested_execution_form": "standalone",
+        "effective_execution_form": "standalone",
+        "standalone_platform": "linux",
+        "container_platform": null,
+        "state": "complete",
+        "bootstrap_generation": 1,
+        "catalog_root_ref": "storage-root:catalog:standalone-01",
+        "project_vault_root_ref": "storage-root:vaults:standalone-01",
+        "tool_store_root_ref": "storage-root:tool-store:standalone-01",
+        "execution_baseline_manifest_ref": "manifest:execution-baseline:linux-01",
+        "execution_enabled_by_default": true,
+        "control_plane_only": false,
+        "persistent_mounts_verified": false,
+        "disposable_layer_mutation_allowed": false,
+        "requested_remote_access_disposition": "defer",
+        "effective_remote_access_disposition": "defer",
+        "observable_work_id": "work_bootstrap-000000000001",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "completed_at_utc": "2026-08-31T12:02:00Z",
+        "receipt_ref": "receipt:server-bootstrap:standalone-01",
+        "failure_ref": null
+      }
+    },
+    {
+      "name": "positive.bootstrap_run_container",
+      "definition": "server_bootstrap_run",
+      "value": {
+        "schema_id": "pm.server_system.server_bootstrap_run.v1",
+        "schema_version": "1.0.0",
+        "server_bootstrap_run_id": "server-bootstrap:container-01",
+        "server_id": "server:container-01",
+        "claim_receipt_ref": "receipt:server-claim:container-01",
+        "requested_execution_form": "container",
+        "effective_execution_form": "container",
+        "standalone_platform": null,
+        "container_platform": "kubernetes",
+        "state": "complete",
+        "bootstrap_generation": 2,
+        "catalog_root_ref": "storage-root:catalog:container-01",
+        "project_vault_root_ref": "storage-root:vaults:container-01",
+        "tool_store_root_ref": "storage-root:tool-store:container-01",
+        "execution_baseline_manifest_ref": "manifest:execution-baseline:container-01",
+        "execution_enabled_by_default": true,
+        "control_plane_only": false,
+        "persistent_mounts_verified": true,
+        "disposable_layer_mutation_allowed": false,
+        "requested_remote_access_disposition": "configure_now",
+        "effective_remote_access_disposition": "configure_now",
+        "observable_work_id": "work_bootstrap-000000000002",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "completed_at_utc": "2026-08-31T12:03:00Z",
+        "receipt_ref": "receipt:server-bootstrap:container-01",
+        "failure_ref": null
+      }
+    },
+    {
+      "name": "positive.bootstrap_receipt",
+      "definition": "server_bootstrap_receipt",
+      "value": {
+        "schema_id": "pm.server_system.server_bootstrap_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:server-bootstrap:standalone-01",
+        "server_id": "server:standalone-01",
+        "operation_id": "server-bootstrap:standalone-01",
+        "command_id": "cmd.server.bootstrap.start",
+        "idempotency_key": "idem-bootstrap-standalone-01",
+        "correlation_id": "correlation:bootstrap:standalone-01",
+        "terminal_status": "succeeded",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "completed_at_utc": "2026-08-31T12:02:00Z",
+        "evidence_refs": [
+          "evidence:execution-baseline:standalone-01",
+          "evidence:roots:standalone-01"
+        ],
+        "failure_ref": null,
+        "redaction_profile": "no_secrets",
+        "server_bootstrap_run_id": "server-bootstrap:standalone-01",
+        "claim_receipt_ref": "receipt:server-claim:standalone-01",
+        "requested_execution_form": "standalone",
+        "effective_execution_form": "standalone",
+        "previous_bootstrap_generation": 0,
+        "effective_bootstrap_generation": 1,
+        "execution_baseline_manifest_ref": "manifest:execution-baseline:linux-01",
+        "execution_enabled_by_default": true,
+        "control_plane_only": false
+      }
+    },
+    {
+      "name": "positive.supplemental_result.bootstrap_start",
+      "definition": "supplemental_command_result",
+      "value": {
+        "record_type": "server.owner_command.result.v1",
+        "command_id": "cmd.server.bootstrap.start",
+        "command_instance_id": "scmd_supp-000000000001",
+        "correlation_id": "corr_supp-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "accepted",
+        "receipt_id": "srcpt_supp-000000000001",
+        "return_context": {
+          "surface_id": "server.claim-bootstrap",
+          "route_id": "server/claim-bootstrap",
+          "focus_target": "bootstrap-progress",
+          "invocation_token": "ret_supp-000000000001"
+        },
+        "observable_work": {
+          "work_id": "work_supp-000000000001",
+          "state": "accepted",
+          "durable_cursor": "cursor:server-bootstrap:standalone-01"
+        },
+        "output": {
+          "action": "cmd.server.bootstrap.start",
+          "changed": true,
+          "currentness": "current",
+          "server_bootstrap_run_id": "server-bootstrap:standalone-01",
+          "requested_execution_form": "standalone",
+          "effective_execution_form": "standalone",
+          "bootstrap_state": "accepted"
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_result.pair_start",
+      "definition": "supplemental_command_result",
+      "value": {
+        "record_type": "server.owner_command.result.v1",
+        "command_id": "cmd.client.pair.start",
+        "command_instance_id": "scmd_supp-000000000003",
+        "correlation_id": "corr_supp-000000000003",
+        "server_id": "server:abcdefghijkl",
+        "status": "accepted",
+        "receipt_id": "srcpt_supp-000000000003",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pairing-progress",
+          "invocation_token": "ret_supp-000000000003"
+        },
+        "observable_work": {
+          "work_id": "work_supp-000000000003",
+          "state": "accepted",
+          "durable_cursor": "cursor:pairing-session:qr-01"
+        },
+        "output": {
+          "action": "cmd.client.pair.start",
+          "changed": true,
+          "currentness": "current",
+          "pairing_session_id": "pairing-session:qr-01",
+          "pairing_state": "waiting_for_identity_confirmation",
+          "requested_pairing_method": "qr",
+          "effective_pairing_method": "qr"
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_result.pair_approve",
+      "definition": "supplemental_command_result",
+      "value": {
+        "record_type": "server.owner_command.result.v1",
+        "command_id": "cmd.client.pair.approve",
+        "command_instance_id": "scmd_supp-000000000007",
+        "correlation_id": "corr_supp-000000000007",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_supp-000000000007",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "paired-client-row",
+          "invocation_token": "ret_supp-000000000007"
+        },
+        "observable_work": null,
+        "output": {
+          "action": "cmd.client.pair.approve",
+          "changed": true,
+          "currentness": "current",
+          "pairing_session_id": "pairing-session:approval-01",
+          "pairing_state": "complete"
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_result.pair_reject",
+      "definition": "supplemental_command_result",
+      "value": {
+        "record_type": "server.owner_command.result.v1",
+        "command_id": "cmd.client.pair.reject",
+        "command_instance_id": "scmd_supp-000000000008",
+        "correlation_id": "corr_supp-000000000008",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_supp-000000000008",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pairing-request-row",
+          "invocation_token": "ret_supp-000000000008"
+        },
+        "observable_work": null,
+        "output": {
+          "action": "cmd.client.pair.reject",
+          "changed": true,
+          "currentness": "current",
+          "pairing_session_id": "pairing-session:reject-01",
+          "pairing_state": "rejected"
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_result.pair_cancel",
+      "definition": "supplemental_command_result",
+      "value": {
+        "record_type": "server.owner_command.result.v1",
+        "command_id": "cmd.client.pair.cancel",
+        "command_instance_id": "scmd_supp-000000000009",
+        "correlation_id": "corr_supp-000000000009",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_supp-000000000009",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pair-server-button",
+          "invocation_token": "ret_supp-000000000009"
+        },
+        "observable_work": null,
+        "output": {
+          "action": "cmd.client.pair.cancel",
+          "changed": true,
+          "currentness": "current",
+          "pairing_session_id": "pairing-session:cancel-01",
+          "pairing_state": "cancelled"
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_result.client_revoke",
+      "definition": "supplemental_command_result",
+      "value": {
+        "record_type": "server.owner_command.result.v1",
+        "command_id": "cmd.client.revoke",
+        "command_instance_id": "scmd_supp-000000000010",
+        "correlation_id": "corr_supp-000000000010",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_supp-000000000010",
+        "return_context": {
+          "surface_id": "server.clients",
+          "route_id": "server/clients",
+          "focus_target": "client-row-next",
+          "invocation_token": "ret_supp-000000000010"
+        },
+        "observable_work": null,
+        "output": {
+          "action": "cmd.client.revoke",
+          "changed": true,
+          "currentness": "current",
+          "client_trust_id": "client-trust:desktop-01",
+          "previous_trust_generation": 2,
+          "effective_trust_generation": 3,
+          "revoked_session_ids": [
+            "session:desktop-01:1",
+            "session:desktop-01:2"
+          ]
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_error",
+      "definition": "supplemental_command_error",
+      "value": {
+        "record_type": "server.owner_command.error.v1",
+        "command_id": "cmd.client.pair.start",
+        "command_instance_id": "scmd_supp-000000000003",
+        "correlation_id": "corr_supp-000000000003",
+        "server_id": "server:abcdefghijkl",
+        "status": "failed",
+        "code": "pairing_secret_unavailable",
+        "retryable": true,
+        "message": "The short-lived pairing material expired and was not persisted.",
+        "return_context": {
+          "surface_id": "server.pairing",
+          "route_id": "server/pairing",
+          "focus_target": "pair-server-button",
+          "invocation_token": "ret_supp-000000000003"
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_availability_disabled",
+      "definition": "supplemental_command_availability",
+      "value": {
+        "record_type": "server.owner_command.availability.v1",
+        "command_id": "cmd.client.pair.start",
+        "server_id": "server:abcdefghijkl",
+        "available": false,
+        "currentness": "blocked",
+        "evaluated_at": "2026-08-31T12:00:00Z",
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "record_type": "server.owner_command.disabled_reason.v1",
+          "command_id": "cmd.client.pair.start",
+          "code": "central_registration_missing",
+          "message": "The pairing command is not centrally registered or wired.",
+          "blocking_refs": [
+            "Plans/Commands_System.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Wiring_Matrix.production.json"
+          ],
+          "remediation_command_id": null
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_permission_pairing",
+      "definition": "supplemental_command_permission",
+      "value": {
+        "record_type": "server.owner_command.permission.v1",
+        "command_id": "cmd.client.pair.approve",
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:trusted-admin-01",
+        "principal_id": "local-owner",
+        "permission_class": "server.trust.manage",
+        "decision": "allowed",
+        "policy_generation": 3,
+        "evaluated_at": "2026-08-31T12:00:00Z"
+      }
+    },
+    {
+      "name": "positive.supplemental_permission_bootstrap",
+      "definition": "supplemental_command_permission",
+      "value": {
+        "record_type": "server.owner_command.permission.v1",
+        "command_id": "cmd.server.bootstrap.start",
+        "permission_snapshot_id": "perm_bootstrap-000000000001",
+        "server_id": "server:standalone-01",
+        "client_id": "client:owner-01",
+        "principal_id": "local-owner",
+        "permission_class": "server.manage",
+        "decision": "allowed",
+        "policy_generation": 1,
+        "evaluated_at": "2026-08-31T12:00:00Z"
+      }
+    },
+    {
+      "name": "positive.lifecycle_persistent",
+      "definition": "server_lifecycle_record",
+      "value": {
+        "record_type": "server.lifecycle.v1",
+        "server_id": "server:abcdefghijkl",
+        "lifecycle_generation": 4,
+        "state": "running",
+        "durable_journal_ref": "redb:server-lifecycle:4",
+        "observable_work_id": "work_abcdefghijkl",
+        "gui_close_stops_server": false,
+        "client_disconnect_cancels_work": false,
+        "restart_convergence": "resume",
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.catalog_migration",
+      "definition": "catalog_migration_record",
+      "value": {
+        "record_type": "server.catalog_migration.v1",
+        "migration_id": "smig_abcdefghijkl",
+        "phase": "active",
+        "project_id": "project:abcdefghijkl",
+        "expected_catalog_revision": 7,
+        "rollback_generation": 6,
+        "pre_migration_backup_verified": true,
+        "durable_journal_ref": "redb:catalog-migration:1",
+        "hash_verified": true,
+        "event_projection_verified": true,
+        "blob_verified": true,
+        "unrelated_projects_remain_available": true,
+        "restart_convergence": "commit",
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.exact_return",
+      "definition": "command_round_trip",
+      "value": {
+        "record_type": "server.command.round_trip.v1",
+        "request": {
+          "record_type": "server.command.payload.v1",
+          "command_id": "cmd.server.connect",
+          "command_instance_id": "scmd_case-000000000100",
+          "correlation_id": "corr_case-000000000100",
+          "idempotency_key": "idem_case-000000000100",
+          "expected_generations": {
+            "catalog_revision": 7,
+            "server_generation": 3,
+            "trust_generation": 2,
+            "topology_generation": 4,
+            "session_generation": 5
+          },
+          "permission_snapshot_id": "perm_abcdefghijkl",
+          "return_context": {
+            "surface_id": "settings.server",
+            "route_id": "settings/server",
+            "focus_target": "server-card",
+            "invocation_token": "ret_abcdefghijkl"
+          },
+          "args": {
+            "server_endpoint_id": "server-endpoint:abcdefghijkl",
+            "connection_mode": "resume",
+            "prior_session_id": "session:abcdefghijkl",
+            "resume_cursor_ref": "cursor:server:abcdefghijkl:985"
+          },
+          "server_id": "server:abcdefghijkl"
+        },
+        "result": {
+          "record_type": "server.command.result.v1",
+          "command_id": "cmd.server.connect",
+          "command_instance_id": "scmd_case-000000000100",
+          "correlation_id": "corr_case-000000000100",
+          "server_id": "server:abcdefghijkl",
+          "status": "succeeded",
+          "receipt_id": "srcpt_result-00000000001",
+          "resulting_catalog_revision": 8,
+          "return_context": {
+            "surface_id": "settings.server",
+            "route_id": "settings/server",
+            "focus_target": "server-card",
+            "invocation_token": "ret_abcdefghijkl"
+          },
+          "output": {
+            "action": "cmd.server.connect",
+            "changed": true,
+            "server_endpoint_id": "server-endpoint:abcdefghijkl",
+            "currentness": "current",
+            "requested_connection_mode": "resume",
+            "effective_connection_mode": "resume",
+            "session_id": "session:abcdefghijkl",
+            "cursor_ref": "cursor:server:abcdefghijkl:985"
+          }
+        }
+      }
+    },
+    {
+      "name": "positive.supplemental_exact_return",
+      "definition": "supplemental_command_round_trip",
+      "value": {
+        "record_type": "server.owner_command.round_trip.v1",
+        "request": {
+          "record_type": "server.owner_command.payload.v1",
+          "command_id": "cmd.client.pair.cancel",
+          "command_instance_id": "scmd_supp-000000000099",
+          "correlation_id": "corr_supp-000000000099",
+          "idempotency_key": "idem_supp-000000000099",
+          "server_id": "server:abcdefghijkl",
+          "expected_generations": {
+            "catalog_revision": 7,
+            "server_generation": 3,
+            "trust_generation": 2,
+            "topology_generation": 4,
+            "session_generation": 5
+          },
+          "permission_snapshot_id": "perm_abcdefghijkl",
+          "return_context": {
+            "surface_id": "product-onboarding",
+            "route_id": "onboarding/server-pairing",
+            "focus_target": "pair-server-button",
+            "invocation_token": "ret_supp-000000000099"
+          },
+          "args": {
+            "pairing_session_id": "pairing-session:cancel-99",
+            "expected_pairing_generation": 4,
+            "expected_pairing_state": "waiting_for_approval",
+            "requesting_client_id": "client:mobile-99",
+            "reason_code": "route_changed",
+            "reason": "The Client selected another verified route.",
+            "confirmation": true
+          }
+        },
+        "result": {
+          "record_type": "server.owner_command.result.v1",
+          "command_id": "cmd.client.pair.cancel",
+          "command_instance_id": "scmd_supp-000000000099",
+          "correlation_id": "corr_supp-000000000099",
+          "server_id": "server:abcdefghijkl",
+          "status": "succeeded",
+          "receipt_id": "srcpt_supp-000000000099",
+          "return_context": {
+            "surface_id": "product-onboarding",
+            "route_id": "onboarding/server-pairing",
+            "focus_target": "pair-server-button",
+            "invocation_token": "ret_supp-000000000099"
+          },
+          "observable_work": null,
+          "output": {
+            "action": "cmd.client.pair.cancel",
+            "changed": true,
+            "currentness": "current",
+            "pairing_session_id": "pairing-session:cancel-99",
+            "pairing_state": "cancelled"
+          }
+        }
+      }
+    },
+    {
+      "name": "positive.access_update.request",
+      "definition": "ClientTrustCommandRequest",
+      "value": {
+        "schema_id": "pm.client_trust.command_request.v1",
+        "record_kind": "ClientTrustCommandRequest",
+        "command_id": "cmd.client.access.update",
+        "operation": "access_update",
+        "command_instance_id": "command:client_trust:1",
+        "idempotency_key": "idempotency:client_trust:1",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "permission_snapshot_ref": "permission:client_trust:1",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "access-policy",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.client.access.update",
+          "client_access_policy_id": "client-access-policy:limited",
+          "expected_policy_generation": 2,
+          "confirmation": true
+        }
+      },
+      "row_index": 18
+    },
+    {
+      "name": "positive.access_update.result",
+      "definition": "ClientTrustCommandResult",
+      "value": {
+        "schema_id": "pm.client_trust.command_result.v1",
+        "record_kind": "ClientTrustCommandResult",
+        "command_id": "cmd.client.access.update",
+        "operation": "access_update",
+        "command_instance_id": "command:client_trust:1",
+        "status": "succeeded",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "receipt_ref": "receipt:client_trust:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "access-policy",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.client.access.update",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:client_trust:1",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 18
+    },
+    {
+      "name": "positive.access_update.handler_unavailable",
+      "definition": "ClientTrustCommandAvailability",
+      "value": {
+        "schema_id": "pm.client_trust.availability.v1",
+        "record_kind": "ClientTrustCommandAvailability",
+        "command_id": "cmd.client.access.update",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.client_trust.disabled_reason.v1",
+          "record_kind": "ClientTrustDisabledReason",
+          "command_id": "cmd.client.access.update",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::client_trust::access_update"
+          ]
+        }
+      },
+      "row_index": 18
+    },
+    {
+      "name": "positive.remove.request",
+      "definition": "ClientTrustCommandRequest",
+      "value": {
+        "schema_id": "pm.client_trust.command_request.v1",
+        "record_kind": "ClientTrustCommandRequest",
+        "command_id": "cmd.client.remove",
+        "operation": "remove",
+        "command_instance_id": "command:client_trust:2",
+        "idempotency_key": "idempotency:client_trust:2",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "permission_snapshot_ref": "permission:client_trust:2",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "client-row-next",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.client.remove",
+          "client_trust_state": "revoked",
+          "active_session_count": 0,
+          "unsettled_dependency_count": 0,
+          "confirmation": true
+        }
+      },
+      "row_index": 20
+    },
+    {
+      "name": "positive.remove.result",
+      "definition": "ClientTrustCommandResult",
+      "value": {
+        "schema_id": "pm.client_trust.command_result.v1",
+        "record_kind": "ClientTrustCommandResult",
+        "command_id": "cmd.client.remove",
+        "operation": "remove",
+        "command_instance_id": "command:client_trust:2",
+        "status": "succeeded",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "receipt_ref": "receipt:client_trust:2",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "client-row-next",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.client.remove",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:client_trust:2",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 20
+    },
+    {
+      "name": "positive.remove.handler_unavailable",
+      "definition": "ClientTrustCommandAvailability",
+      "value": {
+        "schema_id": "pm.client_trust.availability.v1",
+        "record_kind": "ClientTrustCommandAvailability",
+        "command_id": "cmd.client.remove",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.client_trust.disabled_reason.v1",
+          "record_kind": "ClientTrustDisabledReason",
+          "command_id": "cmd.client.remove",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::client_trust::remove"
+          ]
+        }
+      },
+      "row_index": 20
+    },
+    {
+      "name": "positive.rename.request",
+      "definition": "ClientTrustCommandRequest",
+      "value": {
+        "schema_id": "pm.client_trust.command_request.v1",
+        "record_kind": "ClientTrustCommandRequest",
+        "command_id": "cmd.client.rename",
+        "operation": "rename",
+        "command_instance_id": "command:client_trust:3",
+        "idempotency_key": "idempotency:client_trust:3",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "permission_snapshot_ref": "permission:client_trust:3",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "client-name",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.client.rename",
+          "new_display_name": "Work Laptop"
+        }
+      },
+      "row_index": 21
+    },
+    {
+      "name": "positive.rename.result",
+      "definition": "ClientTrustCommandResult",
+      "value": {
+        "schema_id": "pm.client_trust.command_result.v1",
+        "record_kind": "ClientTrustCommandResult",
+        "command_id": "cmd.client.rename",
+        "operation": "rename",
+        "command_instance_id": "command:client_trust:3",
+        "status": "succeeded",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "receipt_ref": "receipt:client_trust:3",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "client-name",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.client.rename",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:client_trust:3",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 21
+    },
+    {
+      "name": "positive.rename.handler_unavailable",
+      "definition": "ClientTrustCommandAvailability",
+      "value": {
+        "schema_id": "pm.client_trust.availability.v1",
+        "record_kind": "ClientTrustCommandAvailability",
+        "command_id": "cmd.client.rename",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.client_trust.disabled_reason.v1",
+          "record_kind": "ClientTrustDisabledReason",
+          "command_id": "cmd.client.rename",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::client_trust::rename"
+          ]
+        }
+      },
+      "row_index": 21
+    },
+    {
+      "name": "positive.session_revoke.request",
+      "definition": "ClientTrustCommandRequest",
+      "value": {
+        "schema_id": "pm.client_trust.command_request.v1",
+        "record_kind": "ClientTrustCommandRequest",
+        "command_id": "cmd.client.session.revoke",
+        "operation": "session_revoke",
+        "command_instance_id": "command:client_trust:4",
+        "idempotency_key": "idempotency:client_trust:4",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "permission_snapshot_ref": "permission:client_trust:4",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "session-row-next",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.client.session.revoke",
+          "target_session_id": "session:client:1",
+          "preserve_client_trust": true,
+          "preserve_peer_sessions": true,
+          "confirmation": true
+        }
+      },
+      "row_index": 22
+    },
+    {
+      "name": "positive.session_revoke.result",
+      "definition": "ClientTrustCommandResult",
+      "value": {
+        "schema_id": "pm.client_trust.command_result.v1",
+        "record_kind": "ClientTrustCommandResult",
+        "command_id": "cmd.client.session.revoke",
+        "operation": "session_revoke",
+        "command_instance_id": "command:client_trust:4",
+        "status": "succeeded",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "receipt_ref": "receipt:client_trust:4",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "session-row-next",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.client.session.revoke",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:client_trust:4",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 22
+    },
+    {
+      "name": "positive.session_revoke.handler_unavailable",
+      "definition": "ClientTrustCommandAvailability",
+      "value": {
+        "schema_id": "pm.client_trust.availability.v1",
+        "record_kind": "ClientTrustCommandAvailability",
+        "command_id": "cmd.client.session.revoke",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.client_trust.disabled_reason.v1",
+          "record_kind": "ClientTrustDisabledReason",
+          "command_id": "cmd.client.session.revoke",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::client_trust::session_revoke"
+          ]
+        }
+      },
+      "row_index": 22
+    },
+    {
+      "name": "positive.permission_deny_is_explicit",
+      "definition": "ClientTrustPermissionDecision",
+      "value": {
+        "schema_id": "pm.client_trust.permission_decision.v1",
+        "record_kind": "ClientTrustPermissionDecision",
+        "command_id": "cmd.client.access.update",
+        "permission_snapshot_ref": "permission:client_trust:deny",
+        "permission_class": "server.trust.manage",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied"
+      },
+      "row_index": null
+    },
+    {
+      "name": "positive.local.1.request",
+      "definition": "ClientTrustLocalActionRequest",
+      "value": {
+        "schema_id": "pm.client_trust.local_action_request.v1",
+        "record_kind": "ClientTrustLocalActionRequest",
+        "local_action_id": "ui.client.open_details",
+        "projection_ref": "projection:client_trust:1",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 19
+    },
+    {
+      "name": "positive.local.1.result",
+      "definition": "ClientTrustLocalActionResult",
+      "value": {
+        "schema_id": "pm.client_trust.local_action_result.v1",
+        "record_kind": "ClientTrustLocalActionResult",
+        "local_action_id": "ui.client.open_details",
+        "projection_ref": "projection:client_trust:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "client-details",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 19
+    },
+    {
+      "name": "srv_013.reference_only_continuity_projection",
+      "definition": "server_cross_owner_continuity_projection",
+      "value": {
+        "record_type": "server_cross_owner_continuity_projection",
+        "schema_id": "pm.server_cross_owner_continuity_projection.v1",
+        "plan_unit_ref": "Plans/Server_System.md#SRV-013",
+        "server_id": "server:home",
+        "backup_owner_refs": ["Plans/Backup_Restore_System.md#BRS-012", "Plans/Backup_Restore_System.md#BRS-015", "Plans/Backup_Restore_System.md#BRS-016"],
+        "remote_access_owner_ref": "Plans/Remote_Access_System.md#RAS-015",
+        "schedule_occurrence": {"occurrence_id": "backup-occurrence:server-home:1", "durable_outbox_ref": "outbox:backup-occurrence:server-home:1", "writer_authority": "one_server_owned_writer", "survives_client_exit": true, "restart_safe": true, "project_move_policy": "owner_preflight_rebind_then_one_writer_transfer"},
+        "bootstrap_recovery": {"safe_local_claim_first": true, "recovery_safe": false, "schedules_paused": true, "execution_paused": true, "remote_exposure_paused": true, "machine_relationship": "foreign_machine", "identity_policy": "new_server_and_connector_identity_repair_clients", "collision_fence": "new_identity_no_takeover"},
+        "endpoint_provenance": [
+          {"endpoint_id": "server-endpoint:private", "route_kind": "connector_private", "observed_server_id": "server:home", "identity_verified": true, "pairing_verified": true, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false},
+          {"endpoint_id": "server-endpoint:funnel", "route_kind": "hosted_funnel", "observed_server_id": "server:home", "identity_verified": false, "pairing_verified": false, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false},
+          {"endpoint_id": "server-endpoint:external-tailnet", "route_kind": "external_host_tailscale", "observed_server_id": "server:home", "identity_verified": true, "pairing_verified": true, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false}
+        ],
+        "command_availability": "handler_unavailable",
+        "expected_event_types": [],
+        "runtime_claim": false
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "srv_013.rejects_same_host_without_exclusive_fence",
+      "definition": "server_cross_owner_continuity_projection",
+      "instance": {
+        "record_type": "server_cross_owner_continuity_projection",
+        "schema_id": "pm.server_cross_owner_continuity_projection.v1",
+        "plan_unit_ref": "Plans/Server_System.md#SRV-013",
+        "server_id": "server:home",
+        "backup_owner_refs": ["Plans/Backup_Restore_System.md#BRS-012", "Plans/Backup_Restore_System.md#BRS-015", "Plans/Backup_Restore_System.md#BRS-016"],
+        "remote_access_owner_ref": "Plans/Remote_Access_System.md#RAS-015",
+        "schedule_occurrence": {"occurrence_id": "occurrence:1", "durable_outbox_ref": "outbox:1", "writer_authority": "one_server_owned_writer", "survives_client_exit": true, "restart_safe": true, "project_move_policy": "owner_preflight_rebind_then_one_writer_transfer"},
+        "bootstrap_recovery": {"safe_local_claim_first": true, "recovery_safe": false, "schedules_paused": true, "execution_paused": true, "remote_exposure_paused": true, "machine_relationship": "verified_same_host", "identity_policy": "recover_existing_identity", "collision_fence": "new_identity_no_takeover"},
+        "endpoint_provenance": [{"endpoint_id": "server-endpoint:private", "route_kind": "connector_private", "observed_server_id": "server:home", "identity_verified": true, "pairing_verified": true, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false}],
+        "command_availability": "handler_unavailable",
+        "expected_event_types": [],
+        "runtime_claim": false
+      }
+    },
+    {
+      "name": "discovery_rejects_project_metadata",
+      "definition": "discovery_observation",
+      "base_valid": "mdns_discovery_is_minimal_observation_not_trust",
+      "patch": {
+        "project_ids": [
+          "project:alpha"
+        ]
+      },
+      "expected_invariant": "discovery_metadata_minimal"
+    },
+    {
+      "name": "discovery_cannot_claim_trust",
+      "definition": "discovery_observation",
+      "base_valid": "mdns_discovery_is_minimal_observation_not_trust",
+      "patch": {
+        "trust_disposition": "trusted"
+      },
+      "expected_invariant": "discovery_is_not_trust"
+    },
+    {
+      "name": "identity_mismatch_cannot_be_preferred",
+      "definition": "server_endpoint_record",
+      "base_valid": "identity_mismatch_endpoint_fails_closed_and_is_not_preferred",
+      "patch": {
+        "preferred": true
+      },
+      "expected_invariant": "identity_mismatch_fails_closed"
+    },
+    {
+      "name": "completed_pairing_requires_approval_actor",
+      "definition": "pairing_run",
+      "base_valid": "completed_pairing_has_identity_approval_and_receipt",
+      "patch": {
+        "approval_actor_ref": null
+      },
+      "expected_invariant": "pairing_requires_explicit_approval"
+    },
+    {
+      "name": "current_projection_requires_session",
+      "definition": "server_connection_projection",
+      "base_valid": "current_connection_requires_trust_session_and_cursor",
+      "patch": {
+        "session_id": null
+      },
+      "expected_invariant": "current_requires_trusted_session"
+    },
+    {
+      "name": "active_trust_cannot_link_revocation",
+      "definition": "client_trust_record",
+      "base_valid": "revoked_trust_links_durable_revocation_record",
+      "patch": {
+        "state": "active"
+      },
+      "expected_invariant": "active_trust_has_no_revocation_record"
+    },
+    {
+      "name": "negative.pairing_run_cannot_persist_secret",
+      "definition": "pairing_run",
+      "base_valid": "completed_pairing_has_identity_approval_and_receipt",
+      "patch": {
+        "pairing_secret_persisted": true
+      },
+      "expected_invariant": "pairing_secret_not_persisted"
+    },
+    {
+      "name": "negative.qr_pairing_run_requires_material_digest",
+      "definition": "pairing_run",
+      "base_valid": "completed_pairing_has_identity_approval_and_receipt",
+      "patch": {
+        "pairing_material_sha256": null
+      },
+      "expected_invariant": "durable_pairing_material_digest_required_without_raw_secret"
+    },
+    {
+      "name": "negative.pairing_receipt_cannot_persist_secret",
+      "definition": "pairing_receipt",
+      "base_valid": "positive.pairing_receipt_paired",
+      "patch": {
+        "pairing_secret_persisted": true
+      }
+    },
+    {
+      "name": "negative.rejected_pairing_cannot_issue_trust",
+      "definition": "pairing_receipt",
+      "base_valid": "positive.pairing_receipt_rejected",
+      "patch": {
+        "client_trust_id": "client-trust:unexpected-01",
+        "trust_generation": 3
+      }
+    },
+    {
+      "name": "negative.connect_resume_requires_cursor",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.server.connect",
+      "patch": {
+        "args.connection_mode": "resume",
+        "args.prior_session_id": "session:abcdefghijkl",
+        "args.resume_cursor_ref": null
+      }
+    },
+    {
+      "name": "negative.connect_reconnect_cannot_supply_resume_cursor",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.server.connect",
+      "patch": {
+        "args.connection_mode": "reconnect",
+        "args.prior_session_id": "session:abcdefghijkl",
+        "args.resume_cursor_ref": "cursor:server:abcdefghijkl:985"
+      }
+    },
+    {
+      "name": "negative.pair_start_rejects_raw_qr_payload",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.client.pair.start",
+      "patch": {
+        "args.qr_payload": "forbidden-raw-pairing-secret"
+      }
+    },
+    {
+      "name": "negative.pair_start_qr_requires_ephemeral_handle",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.client.pair.start",
+      "patch": {
+        "args.pairing_material_handle_ref": null
+      }
+    },
+    {
+      "name": "negative.qr_candidate_cannot_claim_short_code_method",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.client.pair.start",
+      "patch": {
+        "args.requested_pairing_method": "short_code"
+      }
+    },
+    {
+      "name": "negative.trusted_approval_requires_approving_client",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_pair_start_trusted_approval",
+      "patch": {
+        "args.approving_client_id": null
+      }
+    },
+    {
+      "name": "negative.pair_approve_requires_confirmation",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.client.pair.approve",
+      "patch": {
+        "args.confirmation": false
+      }
+    },
+    {
+      "name": "negative.pair_reject_requires_reason",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.client.pair.reject",
+      "remove": [
+        "args.reason"
+      ]
+    },
+    {
+      "name": "negative.pair_cancel_rejects_terminal_state",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.client.pair.cancel",
+      "patch": {
+        "args.expected_pairing_state": "complete"
+      }
+    },
+    {
+      "name": "negative.client_revoke_cannot_leave_other_sessions_active",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.client.revoke",
+      "patch": {
+        "args.revoke_scope": "single_session_only"
+      }
+    },
+    {
+      "name": "negative.bootstrap_requires_prior_claim_receipt",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_payload.cmd.server.bootstrap.start",
+      "remove": [
+        "args.claim_receipt_ref"
+      ]
+    },
+    {
+      "name": "negative.container_bootstrap_requires_verified_mounts",
+      "definition": "supplemental_command_payload",
+      "base_valid": "positive.supplemental_bootstrap_container",
+      "patch": {
+        "args.persistent_mounts_verified": false
+      }
+    },
+    {
+      "name": "negative.bootstrap_run_cannot_be_control_plane_only",
+      "definition": "server_bootstrap_run",
+      "base_valid": "positive.bootstrap_run_container",
+      "patch": {
+        "control_plane_only": true
+      }
+    },
+    {
+      "name": "negative.supplemental_available_without_integration",
+      "definition": "supplemental_command_availability",
+      "base_valid": "positive.supplemental_availability_disabled",
+      "patch": {
+        "available": true,
+        "currentness": "current"
+      }
+    },
+    {
+      "name": "negative.supplemental_permission_denied_without_reason",
+      "definition": "supplemental_command_permission",
+      "base_valid": "positive.supplemental_permission_pairing",
+      "patch": {
+        "decision": "denied"
+      }
+    },
+    {
+      "name": "negative.unknown_command",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.unknown",
+        "command_instance_id": "scmd_case-000000000201",
+        "correlation_id": "corr_case-000000000201",
+        "idempotency_key": "idem_case-000000000201",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "negative.connect_missing_server_identity",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_case-000000000202",
+        "correlation_id": "corr_case-000000000202",
+        "idempotency_key": "idem_case-000000000202",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "connection_mode": "connect",
+          "prior_session_id": null,
+          "resume_cursor_ref": null
+        }
+      }
+    },
+    {
+      "name": "negative.secret_field_in_command_args",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.endpoint.add_manual",
+        "command_instance_id": "scmd_case-000000000203",
+        "correlation_id": "corr_case-000000000203",
+        "idempotency_key": "idem_case-000000000203",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "url": "https://server.example.test:7443",
+          "label": "Primary",
+          "identity_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "api_key": "forbidden"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "negative.lifecycle_without_confirmation",
+      "definition": "command_payload",
+      "instance": {
+        "record_type": "server.command.payload.v1",
+        "command_id": "cmd.server.stop",
+        "command_instance_id": "scmd_case-000000000204",
+        "correlation_id": "corr_case-000000000204",
+        "idempotency_key": "idem_case-000000000204",
+        "expected_generations": {
+          "catalog_revision": 7,
+          "server_generation": 3,
+          "trust_generation": 2,
+          "topology_generation": 4,
+          "session_generation": 5
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "args": {
+          "drain_mode": "drain",
+          "confirmation": false,
+          "reason": "Planned maintenance"
+        },
+        "server_id": "server:abcdefghijkl"
+      }
+    },
+    {
+      "name": "negative.discovery_project_metadata_leak",
+      "definition": "discovery_observation",
+      "instance": {
+        "schema_id": "pm.server_system.discovery_observation.v1",
+        "schema_version": "1.0.0",
+        "observation_id": "discovery-observation:contract-positive",
+        "discovery_source": "dns_sd_mdns",
+        "server_identity_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "human_name": "Home Server",
+        "port": 443,
+        "tls": true,
+        "protocol_range": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "claim_pairing_summary": "pairing_required",
+        "availability": "available",
+        "capability_summary": [
+          "api",
+          "event_stream",
+          "web_ui",
+          "pairing"
+        ],
+        "observed_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-08-31T12:02:00Z",
+        "trust_disposition": "observation_only_not_trust",
+        "grants_trust": false,
+        "project_ids": [
+          "project:alpha"
+        ]
+      }
+    },
+    {
+      "name": "negative.verified_endpoint_missing_verified_fingerprint",
+      "definition": "server_endpoint_record",
+      "instance": {
+        "schema_id": "pm.server_system.server_endpoint_record.v1",
+        "schema_version": "1.0.0",
+        "server_endpoint_id": "server-endpoint:contract-positive",
+        "server_id": "server:contract-positive",
+        "endpoint_kind": "manual",
+        "address": "https://pm.example.test",
+        "tls_required": true,
+        "identity_verification": "verified",
+        "observed_fingerprint": null,
+        "expected_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "endpoint_generation": 2,
+        "preferred": true,
+        "state": "ready",
+        "last_test_receipt_ref": "receipt:server-connection-test:contract-positive",
+        "updated_at_utc": "2026-08-31T12:01:00Z"
+      }
+    },
+    {
+      "name": "negative.pairing_approved_without_explicit_approval",
+      "definition": "pairing_run",
+      "instance": {
+        "schema_id": "pm.server_system.pairing_run.v1",
+        "schema_version": "1.0.0",
+        "pairing_session_id": "pairing-session:contract-positive",
+        "server_id": "server:home-01",
+        "candidate_client_id": "client:contract-positive",
+        "pairing_candidate_id": "pairing-candidate:contract-positive",
+        "pairing_generation": 2,
+        "method": "qr",
+        "state": "complete",
+        "pairing_material_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "pairing_secret_persisted": false,
+        "expected_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_server_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "approval_actor_ref": "actor:owner:01",
+        "requested_access_policy_id": "client-access-policy:desktop-default",
+        "idempotency_key": "pair-client-desktop-01",
+        "started_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-08-31T12:10:00Z",
+        "terminal_at_utc": "2026-08-31T12:01:00Z",
+        "receipt_ref": "receipt:pairing:01",
+        "failure_ref": null,
+        "explicit_approval": false
+      }
+    },
+    {
+      "name": "negative.revoked_trust_without_revocation_time",
+      "definition": "client_trust_record",
+      "instance": {
+        "schema_id": "pm.server_system.client_trust_record.v1",
+        "schema_version": "1.0.0",
+        "client_trust_id": "client-trust:contract-positive",
+        "server_id": "server:contract-positive",
+        "client_id": "client:contract-positive",
+        "client_access_policy_id": "client-access-policy:contract-positive",
+        "policy_generation": 2,
+        "trust_generation": 2,
+        "verification_method": "qr",
+        "verified_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "state": "revoked",
+        "issued_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-09-01T12:00:00Z",
+        "revocation_record_id": "revocation:contract-positive:3",
+        "currentness_ref": "currentness:trust:contract-positive:2",
+        "scopes": [
+          "observe",
+          "command"
+        ],
+        "revoked_at_utc": null
+      }
+    },
+    {
+      "name": "negative.gui_close_stops_server",
+      "definition": "server_lifecycle_record",
+      "instance": {
+        "record_type": "server.lifecycle.v1",
+        "server_id": "server:abcdefghijkl",
+        "lifecycle_generation": 4,
+        "state": "running",
+        "durable_journal_ref": "redb:server-lifecycle:4",
+        "observable_work_id": "work_abcdefghijkl",
+        "gui_close_stops_server": true,
+        "client_disconnect_cancels_work": false,
+        "restart_convergence": "resume",
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.activation_without_verified_backup",
+      "definition": "catalog_migration_record",
+      "instance": {
+        "record_type": "server.catalog_migration.v1",
+        "migration_id": "smig_abcdefghijkl",
+        "phase": "active",
+        "project_id": "project:abcdefghijkl",
+        "expected_catalog_revision": 7,
+        "rollback_generation": 6,
+        "pre_migration_backup_verified": false,
+        "durable_journal_ref": "redb:catalog-migration:1",
+        "hash_verified": true,
+        "event_projection_verified": true,
+        "blob_verified": true,
+        "unrelated_projects_remain_available": true,
+        "restart_convergence": "commit",
+        "persisted_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.available_without_integration",
+      "definition": "command_availability",
+      "instance": {
+        "record_type": "server.command.availability.v1",
+        "command_id": "cmd.server.connect",
+        "server_id": "server:abcdefghijkl",
+        "available": true,
+        "currentness": "current",
+        "evaluated_at": "2026-08-31T00:00:00Z",
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        }
+      }
+    },
+    {
+      "name": "negative.permission_denied_without_reason",
+      "definition": "command_permission",
+      "instance": {
+        "record_type": "server.command.permission.v1",
+        "command_id": "cmd.server.connect",
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "server_id": "server:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "principal_id": "local-user",
+        "permission_class": "server.manage",
+        "decision": "denied",
+        "policy_generation": 3,
+        "evaluated_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.unknown_disabled_reason",
+      "definition": "command_disabled_reason",
+      "instance": {
+        "record_type": "server.command.disabled_reason.v1",
+        "command_id": "cmd.server.connect",
+        "code": "unknown_gap",
+        "message": "The native Server command handler is not registered.",
+        "blocking_refs": [
+          "Plans/Wiring_Matrix.production.json"
+        ],
+        "remediation_command_id": null
+      }
+    },
+    {
+      "name": "negative.exact_return_context_mismatch",
+      "definition": "command_round_trip",
+      "instance": {
+        "record_type": "server.command.round_trip.v1",
+        "request": {
+          "record_type": "server.command.payload.v1",
+          "command_id": "cmd.server.connect",
+          "command_instance_id": "scmd_case-000000000100",
+          "correlation_id": "corr_case-000000000100",
+          "idempotency_key": "idem_case-000000000100",
+          "expected_generations": {
+            "catalog_revision": 7,
+            "server_generation": 3,
+            "trust_generation": 2,
+            "topology_generation": 4,
+            "session_generation": 5
+          },
+          "permission_snapshot_id": "perm_abcdefghijkl",
+          "return_context": {
+            "surface_id": "settings.server",
+            "route_id": "settings/server",
+            "focus_target": "server-card",
+            "invocation_token": "ret_abcdefghijkl"
+          },
+          "args": {
+            "server_endpoint_id": "server-endpoint:abcdefghijkl",
+            "connection_mode": "resume",
+            "prior_session_id": "session:abcdefghijkl",
+            "resume_cursor_ref": "cursor:server:abcdefghijkl:985"
+          },
+          "server_id": "server:abcdefghijkl"
+        },
+        "result": {
+          "record_type": "server.command.result.v1",
+          "command_id": "cmd.server.connect",
+          "command_instance_id": "scmd_case-000000000100",
+          "correlation_id": "corr_case-000000000100",
+          "server_id": "server:abcdefghijkl",
+          "status": "succeeded",
+          "receipt_id": "srcpt_result-00000000001",
+          "resulting_catalog_revision": 8,
+          "return_context": {
+            "surface_id": "settings.server",
+            "route_id": "settings/server",
+            "focus_target": "different-control",
+            "invocation_token": "ret_abcdefghijkl"
+          },
+          "output": {
+            "action": "cmd.server.connect",
+            "changed": true,
+            "server_endpoint_id": "server-endpoint:abcdefghijkl",
+            "currentness": "current"
+          }
+        }
+      },
+      "semantic_rule": "exact_return_context"
+    },
+    {
+      "name": "negative.command_action_mismatch",
+      "definition": "command_result",
+      "instance": {
+        "record_type": "server.command.result.v1",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_result-00000000001",
+        "resulting_catalog_revision": 8,
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "output": {
+          "action": "cmd.server.stop",
+          "changed": true,
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "currentness": "current"
+        }
+      },
+      "semantic_rule": "command_action_parity"
+    },
+    {
+      "name": "negative.raw_secret",
+      "definition": "ClientTrustCommandRequest",
+      "instance": {
+        "schema_id": "pm.client_trust.command_request.v1",
+        "record_kind": "ClientTrustCommandRequest",
+        "command_id": "cmd.client.access.update",
+        "operation": "access_update",
+        "command_instance_id": "command:client_trust:1",
+        "idempotency_key": "idempotency:client_trust:1",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "permission_snapshot_ref": "permission:client_trust:1",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "access-policy",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.client.access.update",
+          "client_access_policy_id": "client-access-policy:limited",
+          "expected_policy_generation": 2,
+          "confirmation": true,
+          "raw_secret": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "negative.available_without_handler",
+      "definition": "ClientTrustCommandAvailability",
+      "instance": {
+        "schema_id": "pm.client_trust.availability.v1",
+        "record_kind": "ClientTrustCommandAvailability",
+        "command_id": "cmd.client.access.update",
+        "available": true,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.client_trust.disabled_reason.v1",
+          "record_kind": "ClientTrustDisabledReason",
+          "command_id": "cmd.client.access.update",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::client_trust::access_update"
+          ]
+        }
+      }
+    },
+    {
+      "name": "negative.denied_without_reason",
+      "definition": "ClientTrustPermissionDecision",
+      "instance": {
+        "schema_id": "pm.client_trust.permission_decision.v1",
+        "record_kind": "ClientTrustPermissionDecision",
+        "command_id": "cmd.client.access.update",
+        "permission_snapshot_ref": "permission:client_trust:deny",
+        "permission_class": "server.trust.manage",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "negative.secret_exposed",
+      "definition": "ClientTrustCommandResult",
+      "instance": {
+        "schema_id": "pm.client_trust.command_result.v1",
+        "record_kind": "ClientTrustCommandResult",
+        "command_id": "cmd.client.access.update",
+        "operation": "access_update",
+        "command_instance_id": "command:client_trust:1",
+        "status": "succeeded",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "receipt_ref": "receipt:client_trust:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "access-policy",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.client.access.update",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:client_trust:1",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": true,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "negative.local_domain_event",
+      "definition": "ClientTrustLocalActionResult",
+      "instance": {
+        "schema_id": "pm.client_trust.local_action_result.v1",
+        "record_kind": "ClientTrustLocalActionResult",
+        "local_action_id": "ui.client.open_details",
+        "projection_ref": "projection:client_trust:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "accessible_focus_target": "client-details",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        }
+      }
+    },
+    {
+      "name": "negative.restart_false_success",
+      "definition": "ClientTrustCommandResult",
+      "instance": {
+        "schema_id": "pm.client_trust.command_result.v1",
+        "record_kind": "ClientTrustCommandResult",
+        "command_id": "cmd.client.access.update",
+        "operation": "access_update",
+        "command_instance_id": "command:client_trust:1",
+        "status": "succeeded",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "receipt_ref": "receipt:client_trust:1",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "access-policy",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.client.access.update",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:client_trust:1",
+          "resulting_generation": 8,
+          "restart_disposition": "claim_success",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "negative.exact_return_mismatch",
+      "definition": "ClientTrustCommandRoundTrip",
+      "instance": {
+        "request": {
+          "schema_id": "pm.client_trust.command_request.v1",
+          "record_kind": "ClientTrustCommandRequest",
+          "command_id": "cmd.client.access.update",
+          "operation": "access_update",
+          "command_instance_id": "command:client_trust:1",
+          "idempotency_key": "idempotency:client_trust:1",
+          "server_id": "server:home",
+          "client_id": "client:laptop",
+          "client_trust_id": "client-trust:laptop",
+          "expected_trust_generation": 4,
+          "expected_session_generation": 6,
+          "expected_catalog_generation": 9,
+          "permission_snapshot_ref": "permission:client_trust:1",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "access-policy",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.client.access.update",
+            "client_access_policy_id": "client-access-policy:limited",
+            "expected_policy_generation": 2,
+            "confirmation": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.client_trust.command_result.v1",
+          "record_kind": "ClientTrustCommandResult",
+          "command_id": "cmd.client.access.update",
+          "operation": "access_update",
+          "command_instance_id": "command:client_trust:1",
+          "status": "succeeded",
+          "server_id": "server:home",
+          "client_id": "client:laptop",
+          "client_trust_id": "client-trust:laptop",
+          "expected_trust_generation": 4,
+          "expected_session_generation": 6,
+          "expected_catalog_generation": 9,
+          "receipt_ref": "receipt:client_trust:1",
+          "observable_work_ref": null,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "different-control",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": -1
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.client.access.update",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:client_trust:1",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "negative.race_generation_regression",
+      "definition": "ClientTrustCommandRoundTrip",
+      "instance": {
+        "request": {
+          "schema_id": "pm.client_trust.command_request.v1",
+          "record_kind": "ClientTrustCommandRequest",
+          "command_id": "cmd.client.access.update",
+          "operation": "access_update",
+          "command_instance_id": "command:client_trust:1",
+          "idempotency_key": "idempotency:client_trust:1",
+          "server_id": "server:home",
+          "client_id": "client:laptop",
+          "client_trust_id": "client-trust:laptop",
+          "expected_trust_generation": 4,
+          "expected_session_generation": 6,
+          "expected_catalog_generation": 9,
+          "permission_snapshot_ref": "permission:client_trust:1",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "access-policy",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.client.access.update",
+            "client_access_policy_id": "client-access-policy:limited",
+            "expected_policy_generation": 2,
+            "confirmation": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.client_trust.command_result.v1",
+          "record_kind": "ClientTrustCommandResult",
+          "command_id": "cmd.client.access.update",
+          "operation": "access_update",
+          "command_instance_id": "command:client_trust:1",
+          "status": "succeeded",
+          "server_id": "server:home",
+          "client_id": "client:laptop",
+          "client_trust_id": "client-trust:laptop",
+          "expected_trust_generation": 4,
+          "expected_session_generation": 6,
+          "expected_catalog_generation": 9,
+          "receipt_ref": "receipt:client_trust:1",
+          "observable_work_ref": null,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "access-policy",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.client.access.update",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:client_trust:1",
+            "resulting_generation": -1,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "negative.unknown_command",
+      "definition": "ClientTrustCommandRequest",
+      "instance": {
+        "schema_id": "pm.client_trust.command_request.v1",
+        "record_kind": "ClientTrustCommandRequest",
+        "command_id": "cmd.unknown",
+        "operation": "access_update",
+        "command_instance_id": "command:client_trust:1",
+        "idempotency_key": "idempotency:client_trust:1",
+        "server_id": "server:home",
+        "client_id": "client:laptop",
+        "client_trust_id": "client-trust:laptop",
+        "expected_trust_generation": 4,
+        "expected_session_generation": 6,
+        "expected_catalog_generation": 9,
+        "permission_snapshot_ref": "permission:client_trust:1",
+        "return_context": {
+          "surface_id": "settings.clients",
+          "route_id": "settings/clients",
+          "focus_target": "access-policy",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.client.access.update",
+          "client_access_policy_id": "client-access-policy:limited",
+          "expected_policy_generation": 2,
+          "confirmation": true
+        }
+      }
+    }
+  ]
+}

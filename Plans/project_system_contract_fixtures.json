@@ -1,0 +1,2108 @@
+{
+  "schema_id": "pm.project_system.contract_fixtures.v1",
+  "owner_schema": "Plans/project_system_contracts.schema.json",
+  "valid": [
+    {
+      "name": "listed_git_project_is_identity_not_path",
+      "definition": "project_record",
+      "value": {
+        "schema_id": "pm.project.record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:git:01",
+        "display_name": "Git Project",
+        "lifecycle": "listed",
+        "registration_kind": "git_clone",
+        "stable_config_ref": "project_config:git:01",
+        "project_home_server_ref": "server:home:01",
+        "project_vault_ref": "vault:git:01",
+        "source_location_refs": [
+          "source_location:git:01"
+        ],
+        "repository_refs": [
+          "repository:git:01"
+        ],
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:00:00Z",
+        "last_opened_at_utc": null,
+        "revision": 1,
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "warning_codes": [],
+        "migration_alias_refs": []
+      }
+    },
+    {
+      "name": "listed_jujutsu_project_preserves_distinct_registration_kind",
+      "definition": "project_record",
+      "value": {
+        "schema_id": "pm.project.record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:jj:01",
+        "display_name": "Jujutsu Project",
+        "lifecycle": "listed",
+        "registration_kind": "jujutsu_clone",
+        "stable_config_ref": "project_config:jj:01",
+        "project_home_server_ref": "server:home:01",
+        "project_vault_ref": "vault:jj:01",
+        "source_location_refs": [
+          "source_location:jj:01"
+        ],
+        "repository_refs": [
+          "repository:jj:01"
+        ],
+        "created_at_utc": "2026-08-31T00:01:00Z",
+        "updated_at_utc": "2026-08-31T00:01:00Z",
+        "last_opened_at_utc": null,
+        "revision": 1,
+        "currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "warning_codes": [],
+        "migration_alias_refs": []
+      }
+    },
+    {
+      "name": "command_project_new_local_from_onboarding",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.new_local",
+        "command_instance_id": "command:project:new-local:01",
+        "project_id": null,
+        "display_name": "New Project",
+        "registration_kind": "new_local",
+        "source_ref": "source-candidate:new-local:01",
+        "project_home_server_ref": "server:home:01",
+        "source_location_ref": "source_location:new-local:01",
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:create:01",
+        "filesafe_evidence_ref": "filesafe:project:create:01",
+        "idempotency_key": "idempotency:project:new-local:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.create_project",
+          "invocation_token": "return:project:new-local:01",
+          "caller_context_ref": "onboarding-return:first-project:01",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        }
+      }
+    },
+    {
+      "name": "command_project_add_existing_local",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.add_existing",
+        "command_instance_id": "command:project:add-local:01",
+        "project_id": null,
+        "display_name": "Existing Local",
+        "registration_kind": "existing_local",
+        "source_ref": "source-inspection:local:01",
+        "project_home_server_ref": "server:home:01",
+        "source_location_ref": "source_location:local:01",
+        "repository_ref": null,
+        "owner_receipt_refs": [
+          "receipt:filesafe:inspection:01"
+        ],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:add:01",
+        "filesafe_evidence_ref": "filesafe:project:add:01",
+        "idempotency_key": "idempotency:project:add-local:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.open_existing",
+          "invocation_token": "return:project:add-local:01",
+          "caller_context_ref": "onboarding-return:first-project:02",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        }
+      }
+    },
+    {
+      "name": "command_project_registers_completed_git_clone",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.add_existing",
+        "command_instance_id": "command:project:add-git-clone:01",
+        "project_id": null,
+        "display_name": "Cloned Git",
+        "registration_kind": "git_clone",
+        "source_ref": "source-inspection:git-clone:01",
+        "project_home_server_ref": "server:home:01",
+        "source_location_ref": "source_location:git-clone:01",
+        "repository_ref": "repository:git-clone:01",
+        "owner_receipt_refs": [
+          "receipt:source-control:clone:01"
+        ],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:add:02",
+        "filesafe_evidence_ref": "filesafe:project:add:02",
+        "idempotency_key": "idempotency:project:add-git-clone:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.clone_project",
+          "invocation_token": "return:project:add-git-clone:01",
+          "caller_context_ref": "onboarding-return:first-project:03",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        }
+      }
+    },
+    {
+      "name": "command_project_registers_completed_jujutsu_clone_without_git_collapse",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.add_existing",
+        "command_instance_id": "command:project:add-jj-clone:01",
+        "project_id": null,
+        "display_name": "Cloned Jujutsu",
+        "registration_kind": "jujutsu_clone",
+        "source_ref": "source-inspection:jj-clone:01",
+        "project_home_server_ref": "server:home:01",
+        "source_location_ref": "source_location:jj-clone:01",
+        "repository_ref": "repository:jj-clone:01",
+        "owner_receipt_refs": [
+          "receipt:jujutsu:clone:01"
+        ],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:add:03",
+        "filesafe_evidence_ref": "filesafe:project:add:03",
+        "idempotency_key": "idempotency:project:add-jj-clone:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.jj_project",
+          "invocation_token": "return:project:add-jj-clone:01",
+          "caller_context_ref": "onboarding-return:first-project:04",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        }
+      }
+    },
+    {
+      "name": "command_project_registers_verified_ssh_server_source",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.add_existing",
+        "command_instance_id": "command:project:add-ssh:01",
+        "project_id": null,
+        "display_name": "Server Project",
+        "registration_kind": "ssh_remote",
+        "source_ref": "remote-source-inspection:ssh:01",
+        "project_home_server_ref": "server:connected:01",
+        "source_location_ref": "source_location:ssh:01",
+        "repository_ref": null,
+        "owner_receipt_refs": [
+          "receipt:remote-access:verified-source:01",
+          "receipt:server:connection-current:01"
+        ],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:add:ssh:01",
+        "filesafe_evidence_ref": "filesafe:project:add:ssh:01",
+        "idempotency_key": "idempotency:project:add-ssh:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.ssh_project",
+          "invocation_token": "return:project:add-ssh:01",
+          "caller_context_ref": "onboarding-return:first-project:05",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        }
+      }
+    },
+    {
+      "name": "command_project_registers_verified_restore_result_not_preview",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.add_existing",
+        "command_instance_id": "command:project:add-restore:01",
+        "project_id": null,
+        "display_name": "Restored Project",
+        "registration_kind": "restore_as_new",
+        "source_ref": "restore-result:project:01",
+        "project_home_server_ref": "server:home:01",
+        "source_location_ref": "source_location:restore:01",
+        "repository_ref": null,
+        "owner_receipt_refs": [
+          "receipt:backup-restore:terminal:01"
+        ],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:add:restore:01",
+        "filesafe_evidence_ref": "filesafe:project:add:restore:01",
+        "idempotency_key": "idempotency:project:add-restore:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.restore_project",
+          "invocation_token": "return:project:add-restore:01",
+          "caller_context_ref": "onboarding-return:first-project:06",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        }
+      }
+    },
+    {
+      "name": "command_project_new_github_repo",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.new_github_repo",
+        "command_instance_id": "command:project:new-github:01",
+        "project_id": null,
+        "display_name": "New GitHub Project",
+        "registration_kind": "forge_created",
+        "source_ref": "forge-create-intent:github:01",
+        "project_home_server_ref": "server:home:01",
+        "source_location_ref": "source_location:github-new:01",
+        "repository_ref": "repository:github-new:01",
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:new-github:01",
+        "filesafe_evidence_ref": "filesafe:project:new-github:01",
+        "idempotency_key": "idempotency:project:new-github:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "projects.add_project",
+          "invocation_token": "return:project:new-github:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      }
+    },
+    {
+      "name": "command_project_open_verified_detected_project",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.open",
+        "command_instance_id": "command:project:open:01",
+        "project_id": "project:open:01",
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": 1,
+        "expected_project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:open:01",
+        "filesafe_evidence_ref": null,
+        "idempotency_key": "idempotency:project:open:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.open_detected_project",
+          "invocation_token": "return:project:open:01",
+          "caller_context_ref": "onboarding-return:first-project:07",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        }
+      }
+    },
+    {
+      "name": "command_project_archive",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.archive",
+        "command_instance_id": "command:project:archive:01",
+        "project_id": "project:archive:01",
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": 1,
+        "expected_project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:archive:01",
+        "filesafe_evidence_ref": null,
+        "idempotency_key": "idempotency:project:archive:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "project.row.git.01",
+          "invocation_token": "return:project:archive:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      }
+    },
+    {
+      "name": "command_project_remove_from_list",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.remove",
+        "command_instance_id": "command:project:remove:01",
+        "project_id": "project:remove:01",
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": 1,
+        "expected_project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:remove:01",
+        "filesafe_evidence_ref": null,
+        "idempotency_key": "idempotency:project:remove:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "projects.add_project",
+          "invocation_token": "return:project:remove:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      }
+    },
+    {
+      "name": "command_project_refresh_registry",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.refresh",
+        "command_instance_id": "command:project:refresh:01",
+        "project_id": null,
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:refresh:01",
+        "filesafe_evidence_ref": null,
+        "idempotency_key": "idempotency:project:refresh:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "projects.refresh",
+          "invocation_token": "return:project:refresh:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      }
+    },
+    {
+      "name": "command_project_open_settings",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.open_settings",
+        "command_instance_id": "command:project:settings:01",
+        "project_id": "project:settings:01",
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": 1,
+        "expected_project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:settings:01",
+        "filesafe_evidence_ref": null,
+        "idempotency_key": "idempotency:project:settings:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "project.row.git.01.settings",
+          "invocation_token": "return:project:settings:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      }
+    },
+    {
+      "name": "command_project_delete_data_routes_storage_owned_intent",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.delete_data",
+        "command_instance_id": "command:project:delete-data:01",
+        "project_id": "project:delete-data:01",
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": 1,
+        "expected_project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:delete-data:01",
+        "filesafe_evidence_ref": "filesafe:project:delete-data:01",
+        "idempotency_key": "idempotency:project:delete-data:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "project.row.git.01",
+          "invocation_token": "return:project:delete-data:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      }
+    },
+    {
+      "name": "ui_project_restore_archived_owner_local_action",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.project.restore_archived",
+        "command_instance_id": "ui-action:project:restore-archived:01",
+        "project_id": "project:archived:01",
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 5,
+        "expected_registry_currentness_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "expected_project_revision": 2,
+        "expected_project_currentness_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:restore-archived:01",
+        "filesafe_evidence_ref": null,
+        "idempotency_key": "idempotency:project:restore-archived:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:archived",
+          "focus_id": "project.row.git.01",
+          "invocation_token": "return:project:restore-archived:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      }
+    },
+    {
+      "name": "project_open_result_echoes_exact_onboarding_return",
+      "definition": "project_action_result",
+      "value": {
+        "schema_id": "pm.project.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.open",
+        "command_instance_id": "command:project:open:01",
+        "outcome": "accepted",
+        "project_id": "project:git:01",
+        "project_revision": 1,
+        "project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "resulting_registry_revision": 4,
+        "resulting_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "lifecycle": "listed",
+        "route_ref": "route:project:git:01",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.open_detected_project",
+          "invocation_token": "return:project:open:01",
+          "caller_context_ref": "onboarding-return:first-project:07",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        },
+        "receipt_refs": [],
+        "persistence_disposition": "no_persist_navigation",
+        "error_code": null,
+        "replayed": false
+      }
+    },
+    {
+      "name": "project_registration_cancelled_returns_without_half_row",
+      "definition": "project_action_result",
+      "value": {
+        "schema_id": "pm.project.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.add_existing",
+        "command_instance_id": "command:project:add-ssh:cancelled:01",
+        "outcome": "cancelled",
+        "project_id": null,
+        "project_revision": null,
+        "project_currentness_sha256": null,
+        "resulting_registry_revision": 4,
+        "resulting_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "lifecycle": null,
+        "route_ref": "route:onboarding:first_project",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.ssh_project",
+          "invocation_token": "return:project:add-ssh:cancelled:01",
+          "caller_context_ref": "onboarding-return:first-project:08",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        },
+        "receipt_refs": [
+          "receipt:project-registration:cancelled:01"
+        ],
+        "persistence_disposition": "not_attempted",
+        "error_code": "cancelled",
+        "replayed": false
+      }
+    },
+    {
+      "name": "project_migration_receipt_is_identity_bounded",
+      "definition": "project_migration_receipt",
+      "value": {
+        "schema_id": "pm.project.migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "migration_id": "migration:project-registry:01",
+        "source_registry_ref": "registry:legacy-projects:01",
+        "source_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "result_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "accepted_project_ids": [
+          "project:git:01"
+        ],
+        "new_project_ids": [],
+        "stale_entry_refs": [],
+        "skipped_entry_refs": [],
+        "quarantined_entry_refs": [],
+        "alias_refs": [
+          "project-alias:legacy:01"
+        ],
+        "selected_project_id": "project:git:01",
+        "completed_at_utc": "2026-08-31T02:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.positive.duplicate_configuration.request",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.project.duplicate_configuration",
+        "operation": "duplicate_configuration",
+        "command_instance_id": "command:project_composition:1",
+        "idempotency_key": "idempotency:project_composition:1",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:1",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-configuration",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.duplicate_configuration",
+          "portable_settings_ref": "portable-settings:project:1",
+          "portable_bindings_ref": "portable-bindings:project:1",
+          "excluded_history": true,
+          "excluded_live_work": true,
+          "excluded_host_paths": true,
+          "excluded_raw_secrets": true
+        }
+      },
+      "row_index": 104
+    },
+    {
+      "name": "server_gap_b.positive.duplicate_configuration.result",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project.duplicate_configuration",
+        "operation": "duplicate_configuration",
+        "command_instance_id": "command:project_composition:1",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:1",
+        "observable_work_ref": "work:project_composition:1",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-configuration",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.duplicate_configuration",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:1",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 104
+    },
+    {
+      "name": "server_gap_b.positive.duplicate_configuration.handler_unavailable",
+      "definition": "ProjectCompositionCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_composition.availability.v1",
+        "record_kind": "ProjectCompositionCommandAvailability",
+        "command_id": "cmd.project.duplicate_configuration",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_composition.disabled_reason.v1",
+          "record_kind": "ProjectCompositionDisabledReason",
+          "command_id": "cmd.project.duplicate_configuration",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project::duplicate_configuration"
+          ]
+        }
+      },
+      "row_index": 104
+    },
+    {
+      "name": "server_gap_b.positive.duplicate_with_history.request",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.project.duplicate_with_history",
+        "operation": "duplicate_with_history",
+        "command_instance_id": "command:project_composition:2",
+        "idempotency_key": "idempotency:project_composition:2",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:2",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-with-history",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.duplicate_with_history",
+          "verified_backup_ref": "verified-backup:project:1",
+          "identity_rewrite_plan_ref": "identity-rewrite:project:1",
+          "inclusion_manifest_ref": "inclusion-manifest:project:1",
+          "duplicate_execution_lease": false
+        }
+      },
+      "row_index": 105
+    },
+    {
+      "name": "server_gap_b.positive.duplicate_with_history.result",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project.duplicate_with_history",
+        "operation": "duplicate_with_history",
+        "command_instance_id": "command:project_composition:2",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:2",
+        "observable_work_ref": "work:project_composition:2",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-with-history",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.duplicate_with_history",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:2",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 105
+    },
+    {
+      "name": "server_gap_b.positive.duplicate_with_history.handler_unavailable",
+      "definition": "ProjectCompositionCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_composition.availability.v1",
+        "record_kind": "ProjectCompositionCommandAvailability",
+        "command_id": "cmd.project.duplicate_with_history",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_composition.disabled_reason.v1",
+          "record_kind": "ProjectCompositionDisabledReason",
+          "command_id": "cmd.project.duplicate_with_history",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project::duplicate_with_history"
+          ]
+        }
+      },
+      "row_index": 105
+    },
+    {
+      "name": "server_gap_b.positive.template_create_project.request",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.project_template.create_project",
+        "operation": "template_create_project",
+        "command_instance_id": "command:project_composition:3",
+        "idempotency_key": "idempotency:project_composition:3",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:3",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "create-project",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project_template.create_project",
+          "template_version_ref": "project-template-version:1",
+          "placeholder_resolution_ref": "placeholder-resolution:1",
+          "template_secret_free": true
+        }
+      },
+      "row_index": 129
+    },
+    {
+      "name": "server_gap_b.positive.template_create_project.result",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project_template.create_project",
+        "operation": "template_create_project",
+        "command_instance_id": "command:project_composition:3",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:3",
+        "observable_work_ref": "work:project_composition:3",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "create-project",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project_template.create_project",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:3",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 129
+    },
+    {
+      "name": "server_gap_b.positive.template_create_project.handler_unavailable",
+      "definition": "ProjectCompositionCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_composition.availability.v1",
+        "record_kind": "ProjectCompositionCommandAvailability",
+        "command_id": "cmd.project_template.create_project",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_composition.disabled_reason.v1",
+          "record_kind": "ProjectCompositionDisabledReason",
+          "command_id": "cmd.project_template.create_project",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project::template_create_project"
+          ]
+        }
+      },
+      "row_index": 129
+    },
+    {
+      "name": "server_gap_b.positive.template_delete.request",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.project_template.delete",
+        "operation": "template_delete",
+        "command_instance_id": "command:project_composition:4",
+        "idempotency_key": "idempotency:project_composition:4",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:4",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "delete-template",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project_template.delete",
+          "destructive_confirmation_ref": "confirmation:project-template:delete:1",
+          "dependency_check_ref": "dependency-check:project-template:1",
+          "hold_check_ref": "hold-check:project-template:1",
+          "data_disposition_ref": "data-disposition:project-template:delete:1"
+        }
+      },
+      "row_index": 130
+    },
+    {
+      "name": "server_gap_b.positive.template_delete.result",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project_template.delete",
+        "operation": "template_delete",
+        "command_instance_id": "command:project_composition:4",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:4",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "delete-template",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project_template.delete",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:4",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 130
+    },
+    {
+      "name": "server_gap_b.positive.template_delete.handler_unavailable",
+      "definition": "ProjectCompositionCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_composition.availability.v1",
+        "record_kind": "ProjectCompositionCommandAvailability",
+        "command_id": "cmd.project_template.delete",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_composition.disabled_reason.v1",
+          "record_kind": "ProjectCompositionDisabledReason",
+          "command_id": "cmd.project_template.delete",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project::template_delete"
+          ]
+        }
+      },
+      "row_index": 130
+    },
+    {
+      "name": "server_gap_b.positive.template_rename.request",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.project_template.rename",
+        "operation": "template_rename",
+        "command_instance_id": "command:project_composition:5",
+        "idempotency_key": "idempotency:project_composition:5",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:5",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "rename-template",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project_template.rename",
+          "new_display_name": "Portable Rust Project",
+          "stable_identity_preserved": true
+        }
+      },
+      "row_index": 132
+    },
+    {
+      "name": "server_gap_b.positive.template_rename.result",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project_template.rename",
+        "operation": "template_rename",
+        "command_instance_id": "command:project_composition:5",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:5",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "rename-template",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project_template.rename",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:5",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 132
+    },
+    {
+      "name": "server_gap_b.positive.template_rename.handler_unavailable",
+      "definition": "ProjectCompositionCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_composition.availability.v1",
+        "record_kind": "ProjectCompositionCommandAvailability",
+        "command_id": "cmd.project_template.rename",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_composition.disabled_reason.v1",
+          "record_kind": "ProjectCompositionDisabledReason",
+          "command_id": "cmd.project_template.rename",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project::template_rename"
+          ]
+        }
+      },
+      "row_index": 132
+    },
+    {
+      "name": "server_gap_b.positive.template_save.request",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.project_template.save",
+        "operation": "template_save",
+        "command_instance_id": "command:project_composition:6",
+        "idempotency_key": "idempotency:project_composition:6",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:6",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "save-template",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project_template.save",
+          "portable_configuration_ref": "portable-project-configuration:1",
+          "template_version_ref": "project-template-version:1",
+          "secret_scan_ref": "safety-scan:project-template:1",
+          "template_secret_free": true
+        }
+      },
+      "row_index": 133
+    },
+    {
+      "name": "server_gap_b.positive.template_save.result",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project_template.save",
+        "operation": "template_save",
+        "command_instance_id": "command:project_composition:6",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:6",
+        "observable_work_ref": "work:project_composition:6",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "save-template",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project_template.save",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:6",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 133
+    },
+    {
+      "name": "server_gap_b.positive.template_save.handler_unavailable",
+      "definition": "ProjectCompositionCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_composition.availability.v1",
+        "record_kind": "ProjectCompositionCommandAvailability",
+        "command_id": "cmd.project_template.save",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_composition.disabled_reason.v1",
+          "record_kind": "ProjectCompositionDisabledReason",
+          "command_id": "cmd.project_template.save",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project::template_save"
+          ]
+        }
+      },
+      "row_index": 133
+    },
+    {
+      "name": "server_gap_b.positive.permission_deny_is_explicit",
+      "definition": "ProjectCompositionPermissionDecision",
+      "value": {
+        "schema_id": "pm.project_composition.permission_decision.v1",
+        "record_kind": "ProjectCompositionPermissionDecision",
+        "command_id": "cmd.project.duplicate_configuration",
+        "permission_snapshot_ref": "permission:project_composition:deny",
+        "permission_class": "project.compose",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied"
+      }
+    },
+    {
+      "name": "server_gap_b.positive.local.1.request",
+      "definition": "project_local_action_request",
+      "value": {
+        "schema_id": "pm.project_composition.local_action_request.v1",
+        "record_kind": "ProjectCompositionLocalActionRequest",
+        "local_action_id": "ui.project.open_details",
+        "projection_ref": "projection:project_composition:1",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "project-details",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 117
+    },
+    {
+      "name": "server_gap_b.positive.local.1.result",
+      "definition": "project_local_action_result",
+      "value": {
+        "schema_id": "pm.project_composition.local_action_result.v1",
+        "record_kind": "ProjectCompositionLocalActionResult",
+        "local_action_id": "ui.project.open_details",
+        "projection_ref": "projection:project_composition:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "project-details",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "project-details",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 117
+    },
+    {
+      "name": "server_gap_b.positive.local.2.request",
+      "definition": "project_local_action_request",
+      "value": {
+        "schema_id": "pm.project_composition.local_action_request.v1",
+        "record_kind": "ProjectCompositionLocalActionRequest",
+        "local_action_id": "ui.project.restore_archived",
+        "projection_ref": "projection:project_composition:2",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "restore-archived",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 128
+    },
+    {
+      "name": "server_gap_b.positive.local.2.result",
+      "definition": "project_local_action_result",
+      "value": {
+        "schema_id": "pm.project_composition.local_action_result.v1",
+        "record_kind": "ProjectCompositionLocalActionResult",
+        "local_action_id": "ui.project.restore_archived",
+        "projection_ref": "projection:project_composition:2",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "restore-archived",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "restore-archived",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 128
+    },
+    {
+      "name": "server_gap_b.positive.local.3.request",
+      "definition": "project_local_action_request",
+      "value": {
+        "schema_id": "pm.project_composition.local_action_request.v1",
+        "record_kind": "ProjectCompositionLocalActionRequest",
+        "local_action_id": "ui.project_template.open_details",
+        "projection_ref": "projection:project_composition:3",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "project-template-details",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 131
+    },
+    {
+      "name": "server_gap_b.positive.local.3.result",
+      "definition": "project_local_action_result",
+      "value": {
+        "schema_id": "pm.project_composition.local_action_result.v1",
+        "record_kind": "ProjectCompositionLocalActionResult",
+        "local_action_id": "ui.project_template.open_details",
+        "projection_ref": "projection:project_composition:3",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "project-template-details",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "project-template-details",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 131
+    },
+    {
+      "name": "project_backup_preferences_copy_without_credentials_schedule_or_billing",
+      "definition": "project_backup_consumer_projection",
+      "value": {
+        "schema_id": "pm.project_system.backup_consumer_projection.v1",
+        "project_id": "project:alpha-copy",
+        "project_vault_ref": "vault:project:alpha-copy",
+        "server_catalog_ref": "catalog:server:home",
+        "operation": "copy_preferences",
+        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
+        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "secret_bytes_present": false,
+        "credentials_copied": false,
+        "recovery_key_copied": false,
+        "schedule_or_writer_duplicated": false,
+        "billing_consent_inherited": false,
+        "one_writer_transfer_verified": false,
+        "fresh_project_id_required": false,
+        "external_repository_revalidation_required": false,
+        "recovered_runtime_activated": false,
+        "owner_route_ref": "route:backup:project-preferences-copy",
+        "return_context_ref": "return:project-settings:backup",
+        "handler_availability": "handler_unavailable",
+        "expected_event_types": [],
+        "proc_execution_evidence": "partial_not_implemented",
+        "runtime_evidence_claimed": false
+      }
+    },
+    {
+      "name": "project_move_requires_one_backup_writer_transfer",
+      "definition": "project_backup_consumer_projection",
+      "value": {
+        "schema_id": "pm.project_system.backup_consumer_projection.v1",
+        "project_id": "project:alpha-move",
+        "project_vault_ref": "vault:project:alpha-move",
+        "server_catalog_ref": "catalog:server:target",
+        "operation": "move_project",
+        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
+        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "secret_bytes_present": false,
+        "credentials_copied": false,
+        "recovery_key_copied": false,
+        "schedule_or_writer_duplicated": false,
+        "billing_consent_inherited": false,
+        "one_writer_transfer_verified": true,
+        "fresh_project_id_required": false,
+        "external_repository_revalidation_required": true,
+        "recovered_runtime_activated": false,
+        "owner_route_ref": "route:project-move:backup-preflight",
+        "return_context_ref": "return:project-move:backup-readiness",
+        "handler_availability": "handler_unavailable",
+        "expected_event_types": [],
+        "proc_execution_evidence": "partial_not_implemented",
+        "runtime_evidence_claimed": false
+      }
+    },
+    {
+      "name": "restore_as_new_requires_fresh_project_and_external_repository_revalidation",
+      "definition": "project_backup_consumer_projection",
+      "value": {
+        "schema_id": "pm.project_system.backup_consumer_projection.v1",
+        "project_id": "project:restored-new-alpha",
+        "project_vault_ref": "vault:project:restored-new-alpha",
+        "server_catalog_ref": "catalog:server:home",
+        "operation": "restore_as_new",
+        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
+        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "secret_bytes_present": false,
+        "credentials_copied": false,
+        "recovery_key_copied": false,
+        "schedule_or_writer_duplicated": false,
+        "billing_consent_inherited": false,
+        "one_writer_transfer_verified": false,
+        "fresh_project_id_required": true,
+        "external_repository_revalidation_required": true,
+        "recovered_runtime_activated": false,
+        "owner_route_ref": "route:backup:restore-as-new",
+        "return_context_ref": "return:projects:restored-new-alpha",
+        "handler_availability": "handler_unavailable",
+        "expected_event_types": [],
+        "proc_execution_evidence": "partial_not_implemented",
+        "runtime_evidence_claimed": false
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "raw_path_cannot_be_project_identity",
+      "definition": "project_record",
+      "base_valid": "listed_git_project_is_identity_not_path",
+      "patch": {
+        "path": "/tmp/project"
+      },
+      "expected_error": "additional property path is forbidden"
+    },
+    {
+      "name": "settings_values_do_not_belong_in_project_record",
+      "definition": "project_record",
+      "base_valid": "listed_git_project_is_identity_not_path",
+      "patch": {
+        "settings": {
+          "appearance.theme": "Friendly Dark"
+        }
+      },
+      "expected_error": "additional property settings is forbidden"
+    },
+    {
+      "name": "collapsed_clone_registration_kind_is_forbidden",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_completed_git_clone",
+      "patch": {
+        "registration_kind": "clone"
+      },
+      "expected_error": "Git and Jujutsu clone registration kinds remain distinct"
+    },
+    {
+      "name": "project_cannot_own_restore_preview_command",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_verified_restore_result_not_preview",
+      "patch": {
+        "action_id": "cmd.project.restore.preview"
+      },
+      "expected_error": "cmd.restore.preview remains Backup Restore owned"
+    },
+    {
+      "name": "project_cannot_own_source_control_clone_command",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_completed_git_clone",
+      "patch": {
+        "action_id": "cmd.project.clone"
+      },
+      "expected_error": "clone executes through Source Control or Jujutsu owner"
+    },
+    {
+      "name": "project_cannot_own_jj_clone_command",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_completed_jujutsu_clone_without_git_collapse",
+      "patch": {
+        "action_id": "cmd.project.jj_clone"
+      },
+      "expected_error": "Jujutsu clone remains cmd.jujutsu.git.clone"
+    },
+    {
+      "name": "project_cannot_own_standalone_execution_form",
+      "definition": "project_action_request",
+      "base_valid": "command_project_new_local_from_onboarding",
+      "patch": {
+        "execution_form": "standalone"
+      },
+      "expected_error": "execution form is Server Deployment owned"
+    },
+    {
+      "name": "project_cannot_own_container_execution_form",
+      "definition": "project_action_request",
+      "base_valid": "command_project_new_local_from_onboarding",
+      "patch": {
+        "container_runtime_ref": "container-runtime:01"
+      },
+      "expected_error": "container execution form is Server Deployment owned"
+    },
+    {
+      "name": "ssh_registration_requires_verified_owner_receipt",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_verified_ssh_server_source",
+      "patch": {
+        "owner_receipt_refs": []
+      },
+      "expected_error": "SSH identity and connection must be verified before registration"
+    },
+    {
+      "name": "ssh_raw_endpoint_cannot_replace_source_identity",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_verified_ssh_server_source",
+      "patch": {
+        "ssh_endpoint": "ssh://host.example/project"
+      },
+      "expected_error": "raw SSH endpoint is not Project identity"
+    },
+    {
+      "name": "git_clone_registration_requires_repository_ref",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_completed_git_clone",
+      "patch": {
+        "repository_ref": null
+      },
+      "expected_error": "completed clone registration requires repository identity"
+    },
+    {
+      "name": "new_local_requires_exact_registration_kind",
+      "definition": "project_action_request",
+      "base_valid": "command_project_new_local_from_onboarding",
+      "patch": {
+        "registration_kind": "existing_local"
+      },
+      "expected_error": "new local command requires new_local"
+    },
+    {
+      "name": "new_github_requires_forge_created_kind",
+      "definition": "project_action_request",
+      "base_valid": "command_project_new_github_repo",
+      "patch": {
+        "registration_kind": "git_clone"
+      },
+      "expected_error": "GitHub creation remains forge-created registration"
+    },
+    {
+      "name": "open_requires_project_identity",
+      "definition": "project_action_request",
+      "base_valid": "command_project_open_verified_detected_project",
+      "patch": {
+        "project_id": null
+      },
+      "expected_error": "open uses project_id not focus or path"
+    },
+    {
+      "name": "archive_requires_expected_project_revision",
+      "definition": "project_action_request",
+      "base_valid": "command_project_archive",
+      "patch": {
+        "expected_project_revision": null
+      },
+      "expected_error": "archive is revision fenced"
+    },
+    {
+      "name": "remove_requires_project_currentness",
+      "definition": "project_action_request",
+      "base_valid": "command_project_remove_from_list",
+      "patch": {
+        "expected_project_currentness_sha256": null
+      },
+      "expected_error": "list removal is currentness fenced"
+    },
+    {
+      "name": "refresh_rejects_invalid_registry_revision",
+      "definition": "project_action_request",
+      "base_valid": "command_project_refresh_registry",
+      "patch": {
+        "expected_registry_revision": -1
+      },
+      "expected_error": "registry revision cannot be stale sentinel"
+    },
+    {
+      "name": "open_settings_requires_exact_focus_return",
+      "definition": "project_action_request",
+      "base_valid": "command_project_open_settings",
+      "remove": [
+        "return_context.focus_id"
+      ],
+      "expected_error": "return focus is mandatory"
+    },
+    {
+      "name": "delete_data_requires_filesafe_evidence",
+      "definition": "project_action_request",
+      "base_valid": "command_project_delete_data_routes_storage_owned_intent",
+      "patch": {
+        "filesafe_evidence_ref": null
+      },
+      "expected_error": "Storage-owned purge intent remains FileSafe gated"
+    },
+    {
+      "name": "restore_archived_requires_project_identity",
+      "definition": "project_action_request",
+      "base_valid": "ui_project_restore_archived_owner_local_action",
+      "patch": {
+        "project_id": null
+      },
+      "expected_error": "restore archived targets exact project identity"
+    },
+    {
+      "name": "caller_return_requires_continuation_context",
+      "definition": "project_action_request",
+      "base_valid": "command_project_open_verified_detected_project",
+      "remove": [
+        "return_context.caller_context_ref"
+      ],
+      "expected_error": "exact owner return context is closed"
+    },
+    {
+      "name": "registration_source_ref_cannot_be_absolute_path",
+      "definition": "project_action_request",
+      "base_valid": "command_project_add_existing_local",
+      "patch": {
+        "source_ref": "/home/user/project"
+      },
+      "expected_error": "raw path cannot replace source identity"
+    },
+    {
+      "name": "project_ssh_alias_is_not_invented",
+      "definition": "project_action_request",
+      "base_valid": "command_project_registers_verified_ssh_server_source",
+      "patch": {
+        "action_id": "cmd.project.ssh.open"
+      },
+      "expected_error": "SSH registration uses add_existing after owner verification"
+    },
+    {
+      "name": "cancelled_result_cannot_claim_persisted_success",
+      "definition": "project_action_result",
+      "base_valid": "project_registration_cancelled_returns_without_half_row",
+      "patch": {
+        "persistence_disposition": "persisted",
+        "error_code": null
+      },
+      "expected_error": "cancelled registration leaves no listed row"
+    },
+    {
+      "name": "open_result_requires_exact_return_focus",
+      "definition": "project_action_result",
+      "base_valid": "project_open_result_echoes_exact_onboarding_return",
+      "remove": [
+        "return_context.focus_id"
+      ],
+      "expected_error": "terminal result preserves exact focus return"
+    },
+    {
+      "name": "server_gap_b.negative.unknown_command",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.unknown",
+        "operation": "duplicate_configuration",
+        "command_instance_id": "command:project_composition:1",
+        "idempotency_key": "idempotency:project_composition:1",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:1",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-configuration",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.duplicate_configuration",
+          "portable_settings_ref": "portable-settings:project:1",
+          "portable_bindings_ref": "portable-bindings:project:1",
+          "excluded_history": true,
+          "excluded_live_work": true,
+          "excluded_host_paths": true,
+          "excluded_raw_secrets": true
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.raw_secret",
+      "definition": "ProjectCompositionCommandRequest",
+      "value": {
+        "schema_id": "pm.project_composition.command_request.v1",
+        "record_kind": "ProjectCompositionCommandRequest",
+        "command_id": "cmd.project.duplicate_configuration",
+        "operation": "duplicate_configuration",
+        "command_instance_id": "command:project_composition:1",
+        "idempotency_key": "idempotency:project_composition:1",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "permission_snapshot_ref": "permission:project_composition:1",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-configuration",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.project.duplicate_configuration",
+          "portable_settings_ref": "portable-settings:project:1",
+          "portable_bindings_ref": "portable-bindings:project:1",
+          "excluded_history": true,
+          "excluded_live_work": true,
+          "excluded_host_paths": true,
+          "excluded_raw_secrets": true,
+          "raw_secret": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.available_without_handler",
+      "definition": "ProjectCompositionCommandAvailability",
+      "value": {
+        "schema_id": "pm.project_composition.availability.v1",
+        "record_kind": "ProjectCompositionCommandAvailability",
+        "command_id": "cmd.project.duplicate_configuration",
+        "available": true,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.project_composition.disabled_reason.v1",
+          "record_kind": "ProjectCompositionDisabledReason",
+          "command_id": "cmd.project.duplicate_configuration",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::project::duplicate_configuration"
+          ]
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.denied_without_reason",
+      "definition": "ProjectCompositionPermissionDecision",
+      "value": {
+        "schema_id": "pm.project_composition.permission_decision.v1",
+        "record_kind": "ProjectCompositionPermissionDecision",
+        "command_id": "cmd.project.duplicate_configuration",
+        "permission_snapshot_ref": "permission:project_composition:deny",
+        "permission_class": "project.compose",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "server_gap_b.negative.secret_exposed",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project.duplicate_configuration",
+        "operation": "duplicate_configuration",
+        "command_instance_id": "command:project_composition:1",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:1",
+        "observable_work_ref": "work:project_composition:1",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-configuration",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.duplicate_configuration",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:1",
+          "resulting_generation": 8,
+          "restart_disposition": "rollback",
+          "secret_material_exposed": true,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.negative.local_domain_event",
+      "definition": "project_local_action_result",
+      "value": {
+        "schema_id": "pm.project_composition.local_action_result.v1",
+        "record_kind": "ProjectCompositionLocalActionResult",
+        "local_action_id": "ui.project_template.open_details",
+        "projection_ref": "projection:project_composition:3",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "accessible_focus_target": "project-template-details",
+        "return_context": {
+          "surface_id": "project.templates",
+          "route_id": "project/templates",
+          "focus_target": "project-template-details",
+          "invocation_token": "return:project.templates:1",
+          "return_generation": 3
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.restart_false_success",
+      "definition": "ProjectCompositionCommandResult",
+      "value": {
+        "schema_id": "pm.project_composition.command_result.v1",
+        "record_kind": "ProjectCompositionCommandResult",
+        "command_id": "cmd.project.duplicate_configuration",
+        "operation": "duplicate_configuration",
+        "command_instance_id": "command:project_composition:1",
+        "status": "succeeded",
+        "project_id": "project:source-or-reserved:1",
+        "template_id": "project-template:source-or-reserved:1",
+        "expected_registry_generation": 4,
+        "expected_project_generation": 5,
+        "expected_template_generation": 6,
+        "receipt_ref": "receipt:project_composition:1",
+        "observable_work_ref": "work:project_composition:1",
+        "return_context": {
+          "surface_id": "projects",
+          "route_id": "projects",
+          "focus_target": "duplicate-configuration",
+          "invocation_token": "return:projects:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.project.duplicate_configuration",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:project_composition:1",
+          "resulting_generation": 8,
+          "restart_disposition": "claim_success",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.negative.exact_return_mismatch",
+      "definition": "ProjectCompositionCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.project_composition.command_request.v1",
+          "record_kind": "ProjectCompositionCommandRequest",
+          "command_id": "cmd.project.duplicate_configuration",
+          "operation": "duplicate_configuration",
+          "command_instance_id": "command:project_composition:1",
+          "idempotency_key": "idempotency:project_composition:1",
+          "project_id": "project:source-or-reserved:1",
+          "template_id": "project-template:source-or-reserved:1",
+          "expected_registry_generation": 4,
+          "expected_project_generation": 5,
+          "expected_template_generation": 6,
+          "permission_snapshot_ref": "permission:project_composition:1",
+          "return_context": {
+            "surface_id": "projects",
+            "route_id": "projects",
+            "focus_target": "duplicate-configuration",
+            "invocation_token": "return:projects:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.project.duplicate_configuration",
+            "portable_settings_ref": "portable-settings:project:1",
+            "portable_bindings_ref": "portable-bindings:project:1",
+            "excluded_history": true,
+            "excluded_live_work": true,
+            "excluded_host_paths": true,
+            "excluded_raw_secrets": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.project_composition.command_result.v1",
+          "record_kind": "ProjectCompositionCommandResult",
+          "command_id": "cmd.project.duplicate_configuration",
+          "operation": "duplicate_configuration",
+          "command_instance_id": "command:project_composition:1",
+          "status": "succeeded",
+          "project_id": "project:source-or-reserved:1",
+          "template_id": "project-template:source-or-reserved:1",
+          "expected_registry_generation": 4,
+          "expected_project_generation": 5,
+          "expected_template_generation": 6,
+          "receipt_ref": "receipt:project_composition:1",
+          "observable_work_ref": "work:project_composition:1",
+          "return_context": {
+            "surface_id": "projects",
+            "route_id": "projects",
+            "focus_target": "different-control",
+            "invocation_token": "return:projects:1",
+            "return_generation": -1
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.project.duplicate_configuration",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:project_composition:1",
+            "resulting_generation": 8,
+            "restart_disposition": "rollback",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.race_generation_regression",
+      "definition": "ProjectCompositionCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.project_composition.command_request.v1",
+          "record_kind": "ProjectCompositionCommandRequest",
+          "command_id": "cmd.project.duplicate_configuration",
+          "operation": "duplicate_configuration",
+          "command_instance_id": "command:project_composition:1",
+          "idempotency_key": "idempotency:project_composition:1",
+          "project_id": "project:source-or-reserved:1",
+          "template_id": "project-template:source-or-reserved:1",
+          "expected_registry_generation": 4,
+          "expected_project_generation": 5,
+          "expected_template_generation": 6,
+          "permission_snapshot_ref": "permission:project_composition:1",
+          "return_context": {
+            "surface_id": "projects",
+            "route_id": "projects",
+            "focus_target": "duplicate-configuration",
+            "invocation_token": "return:projects:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.project.duplicate_configuration",
+            "portable_settings_ref": "portable-settings:project:1",
+            "portable_bindings_ref": "portable-bindings:project:1",
+            "excluded_history": true,
+            "excluded_live_work": true,
+            "excluded_host_paths": true,
+            "excluded_raw_secrets": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.project_composition.command_result.v1",
+          "record_kind": "ProjectCompositionCommandResult",
+          "command_id": "cmd.project.duplicate_configuration",
+          "operation": "duplicate_configuration",
+          "command_instance_id": "command:project_composition:1",
+          "status": "succeeded",
+          "project_id": "project:source-or-reserved:1",
+          "template_id": "project-template:source-or-reserved:1",
+          "expected_registry_generation": 4,
+          "expected_project_generation": 5,
+          "expected_template_generation": 6,
+          "receipt_ref": "receipt:project_composition:1",
+          "observable_work_ref": "work:project_composition:1",
+          "return_context": {
+            "surface_id": "projects",
+            "route_id": "projects",
+            "focus_target": "duplicate-configuration",
+            "invocation_token": "return:projects:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.project.duplicate_configuration",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:project_composition:1",
+            "resulting_generation": -1,
+            "restart_disposition": "rollback",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {"name":"project_backup_preferences_cannot_copy_credentials","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"credentials_copied":true},"expected_error":"credentials_remain_server_protected_refs"},
+    {"name":"project_copy_cannot_duplicate_schedule_or_writer","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"schedule_or_writer_duplicated":true},"expected_error":"copy_does_not_activate_jobs_or_writer_authority"},
+    {"name":"project_move_requires_verified_one_writer_transfer","definition":"project_backup_consumer_projection","base_valid":"project_move_requires_one_backup_writer_transfer","patch":{"one_writer_transfer_verified":false},"expected_error":"move_has_exactly_one_scheduler_writer_prune_authority"},
+    {"name":"restore_as_new_requires_fresh_project_identity","definition":"project_backup_consumer_projection","base_valid":"restore_as_new_requires_fresh_project_and_external_repository_revalidation","patch":{"fresh_project_id_required":false},"expected_error":"restore_as_new_never_reuses_source_project_id"},
+    {"name":"project_backup_consumer_cannot_activate_recovered_runtime","definition":"project_backup_consumer_projection","base_valid":"restore_as_new_requires_fresh_project_and_external_repository_revalidation","patch":{"recovered_runtime_activated":true},"expected_error":"registration_does_not_activate_goals_leases_push_or_automation"},
+    {"name":"project_backup_consumer_cannot_claim_proc_execution","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"proc_execution_evidence":"implemented"},"expected_error":"proc_001_002_remain_later_execution_evidence"}
+  ],
+  "server_gap_b_coverage": {
+    "rows": 11,
+    "commands": 6,
+    "local_actions": 3,
+    "aliases": 1,
+    "rejections": 1,
+    "positive_cases": 25,
+    "negative_cases": 9
+  }
+}

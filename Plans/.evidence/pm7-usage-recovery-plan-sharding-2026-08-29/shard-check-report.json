@@ -1,0 +1,794 @@
+{
+  "body_reconstruction_checked": 1959,
+  "body_reconstruction_mismatches": 0,
+  "config_path": "Plans/sharding_config.json",
+  "docs": [
+    {
+      "body_reconstruction_checked": 12,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/orchestrator-subagent-integration",
+      "failures": [],
+      "shard_count": 12,
+      "source": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "body_reconstruction_checked": 70,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/finalguispec",
+      "failures": [],
+      "shard_count": 70,
+      "source": "Plans/FinalGUISpec.md"
+    },
+    {
+      "body_reconstruction_checked": 10,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/interview-subagent-integration",
+      "failures": [],
+      "shard_count": 10,
+      "source": "Plans/interview-subagent-integration.md"
+    },
+    {
+      "body_reconstruction_checked": 30,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/newtools",
+      "failures": [],
+      "shard_count": 30,
+      "source": "Plans/newtools.md"
+    },
+    {
+      "body_reconstruction_checked": 10,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/rewrite-tie-in-memo",
+      "failures": [],
+      "shard_count": 10,
+      "source": "Plans/rewrite-tie-in-memo.md"
+    },
+    {
+      "body_reconstruction_checked": 23,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/agent-rules-context",
+      "failures": [],
+      "shard_count": 23,
+      "source": "Plans/agent-rules-context.md"
+    },
+    {
+      "body_reconstruction_checked": 17,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/opencode_deep_extraction",
+      "failures": [],
+      "shard_count": 17,
+      "source": "Plans/OpenCode_Deep_Extraction.md"
+    },
+    {
+      "body_reconstruction_checked": 24,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/lspsupport",
+      "failures": [],
+      "shard_count": 24,
+      "source": "Plans/LSPSupport.md"
+    },
+    {
+      "body_reconstruction_checked": 30,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/filemanager",
+      "failures": [],
+      "shard_count": 30,
+      "source": "Plans/FileManager.md"
+    },
+    {
+      "body_reconstruction_checked": 43,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/filesafe",
+      "failures": [],
+      "shard_count": 43,
+      "source": "Plans/FileSafe.md"
+    },
+    {
+      "body_reconstruction_checked": 23,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/project_output_artifacts",
+      "failures": [],
+      "shard_count": 23,
+      "source": "Plans/Project_Output_Artifacts.md"
+    },
+    {
+      "body_reconstruction_checked": 40,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/chain-wizard-flexibility",
+      "failures": [],
+      "shard_count": 40,
+      "source": "Plans/chain-wizard-flexibility.md"
+    },
+    {
+      "body_reconstruction_checked": 63,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/assistant-chat-design",
+      "failures": [],
+      "shard_count": 63,
+      "source": "Plans/assistant-chat-design.md"
+    },
+    {
+      "body_reconstruction_checked": 19,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/assistant-memory-subsystem",
+      "failures": [],
+      "shard_count": 19,
+      "source": "Plans/assistant-memory-subsystem.md"
+    },
+    {
+      "body_reconstruction_checked": 32,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/miscplan",
+      "failures": [],
+      "shard_count": 32,
+      "source": "Plans/MiscPlan.md"
+    },
+    {
+      "body_reconstruction_checked": 12,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/newfeatures",
+      "failures": [],
+      "shard_count": 12,
+      "source": "Plans/newfeatures.md"
+    },
+    {
+      "body_reconstruction_checked": 33,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/worktreegitimprovement",
+      "failures": [],
+      "shard_count": 33,
+      "source": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "body_reconstruction_checked": 39,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/tools",
+      "failures": [],
+      "shard_count": 39,
+      "source": "Plans/Tools.md"
+    },
+    {
+      "body_reconstruction_checked": 15,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/github_integration",
+      "failures": [],
+      "shard_count": 15,
+      "source": "Plans/GitHub_Integration.md"
+    },
+    {
+      "body_reconstruction_checked": 12,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/feature-list",
+      "failures": [],
+      "shard_count": 12,
+      "source": "Plans/feature-list.md"
+    },
+    {
+      "body_reconstruction_checked": 34,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/usage-feature",
+      "failures": [],
+      "shard_count": 34,
+      "source": "Plans/usage-feature.md"
+    },
+    {
+      "body_reconstruction_checked": 19,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/run_graph_view",
+      "failures": [],
+      "shard_count": 19,
+      "source": "Plans/Run_Graph_View.md"
+    },
+    {
+      "body_reconstruction_checked": 19,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/orchestrator_page",
+      "failures": [],
+      "shard_count": 19,
+      "source": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "body_reconstruction_checked": 43,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/storage-plan",
+      "failures": [],
+      "shard_count": 43,
+      "source": "Plans/storage-plan.md"
+    },
+    {
+      "body_reconstruction_checked": 34,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/runtime_artifacts_panel",
+      "failures": [],
+      "shard_count": 34,
+      "source": "Plans/Runtime_Artifacts_Panel.md"
+    },
+    {
+      "body_reconstruction_checked": 39,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/permissions_system",
+      "failures": [],
+      "shard_count": 39,
+      "source": "Plans/Permissions_System.md"
+    },
+    {
+      "body_reconstruction_checked": 44,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/contracts_v0",
+      "failures": [],
+      "shard_count": 44,
+      "source": "Plans/Contracts_V0.md"
+    },
+    {
+      "body_reconstruction_checked": 15,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/crosswalk",
+      "failures": [],
+      "shard_count": 15,
+      "source": "Plans/Crosswalk.md"
+    },
+    {
+      "body_reconstruction_checked": 16,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/section15_mvp_promoted_features_spec",
+      "failures": [],
+      "shard_count": 16,
+      "source": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+    },
+    {
+      "body_reconstruction_checked": 15,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/mcp_integration",
+      "failures": [],
+      "shard_count": 15,
+      "source": "Plans/MCP_Integration.md"
+    },
+    {
+      "body_reconstruction_checked": 14,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/cli_bridged_providers",
+      "failures": [],
+      "shard_count": 14,
+      "source": "Plans/CLI_Bridged_Providers.md"
+    },
+    {
+      "body_reconstruction_checked": 37,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/models_system",
+      "failures": [],
+      "shard_count": 37,
+      "source": "Plans/Models_System.md"
+    },
+    {
+      "body_reconstruction_checked": 27,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/run_modes",
+      "failures": [],
+      "shard_count": 27,
+      "source": "Plans/Run_Modes.md"
+    },
+    {
+      "body_reconstruction_checked": 26,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/commands_system",
+      "failures": [],
+      "shard_count": 26,
+      "source": "Plans/Commands_System.md"
+    },
+    {
+      "body_reconstruction_checked": 28,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/executor_protocol",
+      "failures": [],
+      "shard_count": 28,
+      "source": "Plans/Executor_Protocol.md"
+    },
+    {
+      "body_reconstruction_checked": 29,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/ui_command_catalog",
+      "failures": [],
+      "shard_count": 29,
+      "source": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "body_reconstruction_checked": 16,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/skills_system",
+      "failures": [],
+      "shard_count": 16,
+      "source": "Plans/Skills_System.md"
+    },
+    {
+      "body_reconstruction_checked": 27,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/multi-account",
+      "failures": [],
+      "shard_count": 27,
+      "source": "Plans/Multi-Account.md"
+    },
+    {
+      "body_reconstruction_checked": 23,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/personas",
+      "failures": [],
+      "shard_count": 23,
+      "source": "Plans/Personas.md"
+    },
+    {
+      "body_reconstruction_checked": 26,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/provider_opencode",
+      "failures": [],
+      "shard_count": 26,
+      "source": "Plans/Provider_OpenCode.md"
+    },
+    {
+      "body_reconstruction_checked": 21,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/human-in-the-loop",
+      "failures": [],
+      "shard_count": 21,
+      "source": "Plans/human-in-the-loop.md"
+    },
+    {
+      "body_reconstruction_checked": 22,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/00-plans-index",
+      "failures": [],
+      "shard_count": 22,
+      "source": "Plans/00-plans-index.md"
+    },
+    {
+      "body_reconstruction_checked": 36,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/architecture_invariants",
+      "failures": [],
+      "shard_count": 36,
+      "source": "Plans/Architecture_Invariants.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/binarylocator_spec",
+      "failures": [],
+      "shard_count": 20,
+      "source": "Plans/BinaryLocator_Spec.md"
+    },
+    {
+      "body_reconstruction_checked": 25,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/containers_registry_and_unraid",
+      "failures": [],
+      "shard_count": 25,
+      "source": "Plans/Containers_Registry_and_Unraid.md"
+    },
+    {
+      "body_reconstruction_checked": 23,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/dry_rules",
+      "failures": [],
+      "shard_count": 23,
+      "source": "Plans/DRY_Rules.md"
+    },
+    {
+      "body_reconstruction_checked": 8,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/decision_log",
+      "failures": [],
+      "shard_count": 8,
+      "source": "Plans/Decision_Log.md"
+    },
+    {
+      "body_reconstruction_checked": 17,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/decision_policy",
+      "failures": [],
+      "shard_count": 17,
+      "source": "Plans/Decision_Policy.md"
+    },
+    {
+      "body_reconstruction_checked": 14,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/document_packaging_policy",
+      "failures": [],
+      "shard_count": 14,
+      "source": "Plans/Document_Packaging_Policy.md"
+    },
+    {
+      "body_reconstruction_checked": 13,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/formatters_system",
+      "failures": [],
+      "shard_count": 13,
+      "source": "Plans/Formatters_System.md"
+    },
+    {
+      "body_reconstruction_checked": 10,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/github_api_auth_and_flows",
+      "failures": [],
+      "shard_count": 10,
+      "source": "Plans/GitHub_API_Auth_and_Flows.md"
+    },
+    {
+      "body_reconstruction_checked": 13,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/glossary",
+      "failures": [],
+      "shard_count": 13,
+      "source": "Plans/Glossary.md"
+    },
+    {
+      "body_reconstruction_checked": 6,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/media_generation_and_capabilities",
+      "failures": [],
+      "shard_count": 6,
+      "source": "Plans/Media_Generation_and_Capabilities.md"
+    },
+    {
+      "body_reconstruction_checked": 11,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/opencode_coverage_matrix",
+      "failures": [],
+      "shard_count": 11,
+      "source": "Plans/OpenCode_Coverage_Matrix.md"
+    },
+    {
+      "body_reconstruction_checked": 22,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/plugins_system",
+      "failures": [],
+      "shard_count": 22,
+      "source": "Plans/Plugins_System.md"
+    },
+    {
+      "body_reconstruction_checked": 35,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/progression_gates",
+      "failures": [],
+      "shard_count": 35,
+      "source": "Plans/Progression_Gates.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/provider_stream_mapping_external_reference_a2a",
+      "failures": [],
+      "shard_count": 20,
+      "source": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+    },
+    {
+      "body_reconstruction_checked": 16,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/ui_wiring_rules",
+      "failures": [],
+      "shard_count": 16,
+      "source": "Plans/UI_Wiring_Rules.md"
+    },
+    {
+      "body_reconstruction_checked": 11,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/planning_ledger_system",
+      "failures": [],
+      "shard_count": 11,
+      "source": "Plans/Planning_Ledger_System.md"
+    },
+    {
+      "body_reconstruction_checked": 10,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/plan_document_system",
+      "failures": [],
+      "shard_count": 10,
+      "source": "Plans/Plan_Document_System.md"
+    },
+    {
+      "body_reconstruction_checked": 11,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/plan_to_node_compilation",
+      "failures": [],
+      "shard_count": 11,
+      "source": "Plans/Plan_To_Node_Compilation.md"
+    },
+    {
+      "body_reconstruction_checked": 27,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/automated_testing_system",
+      "failures": [],
+      "shard_count": 27,
+      "source": "Plans/Automated_Testing_System.md"
+    },
+    {
+      "body_reconstruction_checked": 8,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/bootstrap_planning_migration",
+      "failures": [],
+      "shard_count": 8,
+      "source": "Plans/Bootstrap_Planning_Migration.md"
+    },
+    {
+      "body_reconstruction_checked": 21,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/prompt_pipeline",
+      "failures": [],
+      "shard_count": 21,
+      "source": "Plans/Prompt_Pipeline.md"
+    },
+    {
+      "body_reconstruction_checked": 28,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/wiring_matrix",
+      "failures": [],
+      "shard_count": 28,
+      "source": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "body_reconstruction_checked": 18,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/gui_rebuild_requirements_checklist",
+      "failures": [],
+      "shard_count": 18,
+      "source": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+    },
+    {
+      "body_reconstruction_checked": 14,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/widget_system",
+      "failures": [],
+      "shard_count": 14,
+      "source": "Plans/Widget_System.md"
+    },
+    {
+      "body_reconstruction_checked": 17,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/goal_runtime_system",
+      "failures": [],
+      "shard_count": 17,
+      "source": "Plans/Goal_Runtime_System.md"
+    },
+    {
+      "body_reconstruction_checked": 13,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/prd_builder",
+      "failures": [],
+      "shard_count": 13,
+      "source": "Plans/PRD_Builder.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/planning_wizard",
+      "failures": [],
+      "shard_count": 20,
+      "source": "Plans/Planning_Wizard.md"
+    },
+    {
+      "body_reconstruction_checked": 2,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/prd_planning_runtime_contracts",
+      "failures": [],
+      "shard_count": 2,
+      "source": "Plans/prd_planning_runtime_contracts.json"
+    },
+    {
+      "body_reconstruction_checked": 4,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/prd_planning_runtime_contracts.schema",
+      "failures": [],
+      "shard_count": 4,
+      "source": "Plans/prd_planning_runtime_contracts.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 15,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/release_supply_chain",
+      "failures": [],
+      "shard_count": 15,
+      "source": "Plans/Release_Supply_Chain.md"
+    },
+    {
+      "body_reconstruction_checked": 2,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/event_record.schema",
+      "failures": [],
+      "shard_count": 2,
+      "source": "Plans/event_record.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 5,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/storage_value_registry.schema",
+      "failures": [],
+      "shard_count": 5,
+      "source": "Plans/storage_value_registry.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 96,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/storage_value_registry",
+      "failures": [],
+      "shard_count": 96,
+      "source": "Plans/storage_value_registry.json"
+    },
+    {
+      "body_reconstruction_checked": 3,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/non_executable_closure_evidence.schema",
+      "failures": [],
+      "shard_count": 3,
+      "source": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 4,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/non_executable_closure_evidence",
+      "failures": [],
+      "shard_count": 4,
+      "source": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
+    },
+    {
+      "body_reconstruction_checked": 2,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_agent_policy_fixtures",
+      "failures": [],
+      "shard_count": 2,
+      "source": "Plans/web_agent_policy_fixtures.json"
+    },
+    {
+      "body_reconstruction_checked": 1,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_capability_findings_coverage",
+      "failures": [],
+      "shard_count": 1,
+      "source": "Plans/web_capability_findings_coverage.json"
+    },
+    {
+      "body_reconstruction_checked": 1,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_capability_findings_coverage.schema",
+      "failures": [],
+      "shard_count": 1,
+      "source": "Plans/web_capability_findings_coverage.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 1,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_capability_source_packet_receipt",
+      "failures": [],
+      "shard_count": 1,
+      "source": "Plans/web_capability_source_packet_receipt.json"
+    },
+    {
+      "body_reconstruction_checked": 1,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_capability_source_packet_receipt.schema",
+      "failures": [],
+      "shard_count": 1,
+      "source": "Plans/web_capability_source_packet_receipt.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 2,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_intent_routing_fixtures",
+      "failures": [],
+      "shard_count": 2,
+      "source": "Plans/web_intent_routing_fixtures.json"
+    },
+    {
+      "body_reconstruction_checked": 2,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_operation_card_fixtures",
+      "failures": [],
+      "shard_count": 2,
+      "source": "Plans/web_operation_card_fixtures.json"
+    },
+    {
+      "body_reconstruction_checked": 5,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_operation_contracts.schema",
+      "failures": [],
+      "shard_count": 5,
+      "source": "Plans/web_operation_contracts.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 1,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_operation_job_fixtures",
+      "failures": [],
+      "shard_count": 1,
+      "source": "Plans/web_operation_job_fixtures.json"
+    },
+    {
+      "body_reconstruction_checked": 1,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_policy_negative_fixtures",
+      "failures": [],
+      "shard_count": 1,
+      "source": "Plans/web_policy_negative_fixtures.json"
+    },
+    {
+      "body_reconstruction_checked": 1,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_policy_negative_fixtures.schema",
+      "failures": [],
+      "shard_count": 1,
+      "source": "Plans/web_policy_negative_fixtures.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 6,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_provider_adapter_registry.seed",
+      "failures": [],
+      "shard_count": 6,
+      "source": "Plans/web_provider_adapter_registry.seed.json"
+    },
+    {
+      "body_reconstruction_checked": 2,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_provider_projection_fixtures",
+      "failures": [],
+      "shard_count": 2,
+      "source": "Plans/web_provider_projection_fixtures.json"
+    },
+    {
+      "body_reconstruction_checked": 3,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/web_research_run_fixtures",
+      "failures": [],
+      "shard_count": 3,
+      "source": "Plans/web_research_run_fixtures.json"
+    },
+    {
+      "body_reconstruction_checked": 96,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/settings_inventory",
+      "failures": [],
+      "shard_count": 96,
+      "source": "Plans/settings_inventory.json"
+    },
+    {
+      "body_reconstruction_checked": 2,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/settings_inventory.schema",
+      "failures": [],
+      "shard_count": 2,
+      "source": "Plans/settings_inventory.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 3,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/storage_recovery_contracts.schema",
+      "failures": [],
+      "shard_count": 3,
+      "source": "Plans/storage_recovery_contracts.schema.json"
+    },
+    {
+      "body_reconstruction_checked": 21,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/shared_integration_runtime",
+      "failures": [],
+      "shard_count": 21,
+      "source": "Plans/Shared_Integration_Runtime.md"
+    },
+    {
+      "body_reconstruction_checked": 59,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/runtime_integration_disposition",
+      "failures": [],
+      "shard_count": 59,
+      "source": "Plans/runtime_integration_disposition.json"
+    }
+  ],
+  "docs_checked": 97,
+  "failures": [],
+  "generated_at_utc": "2026-08-30T00:17:37Z",
+  "mode": "check",
+  "output_root": "Plans/_shards",
+  "root_index_failures": [],
+  "root_index_path": "Plans/00-plans-index.md",
+  "schema_id": "pm.plan_shards.report.v1",
+  "shards_checked": 1959,
+  "source_count": 97,
+  "status": "pass"
+}

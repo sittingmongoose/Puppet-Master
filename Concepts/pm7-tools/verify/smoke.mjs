@@ -1,7 +1,7 @@
 /* smoke.mjs -- functional smoke checklist for PM6-vs-PM7 behavior parity.
  *
- * Runs one scripted session against a served file and emits JSON:
- *   { url, parity: {...}, info: {...}, errors: [...] }
+ * Runs one scripted session against one immutable generated artifact and emits
+ * certifying browser-concept JSON with product and provenance checks.
  * `parity` must deep-equal between the PM6 base run and the PM7 run
  * (compare with diff_parity.mjs); `info` is file-specific evidence (e.g.
  * the PM7 baked-wallpaper background-image) and is not compared.
@@ -17,32 +17,123 @@
  * Determinism: seeded Math.random, frozen Date, demo clock paused at engine
  * assignment, preset localStorage -- identical for both files.
  *
- * Usage: node smoke.mjs --file <served name> --out <json> --modules <dir>
+ * Usage:
+ *   node smoke.mjs --file <generated.html> --outdir <evidence-dir> \
+ *     --modules <dir> --chromium <direct-executable> \
+ *     --expected-artifact-sha256 <sha256> --expected-verifier-sha256 <sha256> \
+ *     --expected-helper-sha256 <sha256>
  */
 
-import { createRequire } from 'node:module';
-import { writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import {
+  BROWSER_ONLY_BOUNDARY,
+  assertProvenanceAdmission,
+  parseStrictVerifierArgs,
+  prepareProvenanceRun
+} from './browser_verifier_provenance.mjs';
 
-const args = {};
-for (let i = 2; i < process.argv.length; i += 2) {
-  args[process.argv[i].replace(/^--/, '')] = process.argv[i + 1];
-}
-for (const k of ['file', 'out', 'modules']) {
-  if (!args[k]) { console.error('missing --' + k); process.exit(2); }
-}
-const require2 = createRequire(join(args.modules, 'noop.js'));
-const { chromium } = require2('playwright-core');
+const digest = value => /^[0-9a-f]{64}$/.test(value);
+const cli = parseStrictVerifierArgs(process.argv, {
+  file: { required: true },
+  outdir: { required: true },
+  modules: { required: true },
+  chromium: { required: true },
+  'expected-artifact-sha256': { required: true, validate: digest },
+  'expected-verifier-sha256': { required: true, validate: digest },
+  'expected-helper-sha256': { required: true, validate: digest },
+  'provenance-launch-receipt': { required: true },
+  'expected-launch-receipt-sha256': { required: true, validate: digest }
+});
+const args = cli.parsed_args;
+const artifactPath = resolve(args.file);
+const outputDir = resolve(args.outdir);
+const outputPath = join(outputDir, 'smoke-results.json');
+mkdirSync(outputDir, { recursive: true });
 
-const SERVER = 'http://127.0.0.1:8741/';
-const browser = await chromium.launch();
-const page = await browser.newPage({
-  viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+let provenanceRun;
+let browser;
+try {
+  provenanceRun = await prepareProvenanceRun({
+    verifierUrl: import.meta.url,
+    artifactPath,
+    expectedArtifactSha256: args['expected-artifact-sha256'],
+    expectedVerifierSha256: args['expected-verifier-sha256'],
+    expectedHelperSha256: args['expected-helper-sha256'],
+    launchReceiptPath: args['provenance-launch-receipt'],
+    expectedLaunchReceiptSha256: args['expected-launch-receipt-sha256'],
+    modulesPath: args.modules,
+    chromiumPath: args.chromium,
+    command: cli,
+    effectiveConfig: {
+      verifier: 'smoke',
+      artifact_path: artifactPath,
+      outdir: outputDir,
+      context_profile: '1920x1080,dpr1,en-US,UTC,dark',
+      timeout_ms: 60000,
+      service_workers: 'block',
+      certification_mode: true
+    }
+  });
+  const { chromium } = provenanceRun.loadPlaywright();
+  if (!chromium) throw new Error('bound Playwright Chromium implementation is unavailable');
+  ({ browser } = await provenanceRun.launchChromium());
+} catch (error) {
+  let failureProvenance = provenanceRun?.envelope || null;
+  if (provenanceRun) {
+    try { failureProvenance = await provenanceRun.fail('bootstrap', error); }
+    catch (_failureError) {}
+  }
+  const failure = {
+    schema_id: 'pm.pmconcept7.smoke_provenance_failure.v1',
+    disposition: 'provenance_preparation_or_launch_failed',
+    generated_at_utc: new Date().toISOString(),
+    certification_boundary: { ...BROWSER_ONLY_BOUNDARY },
+    execution_boundary: { ...BROWSER_ONLY_BOUNDARY },
+    command: cli,
+    error: { kind: 'bootstrap', text: String(error?.stack || error) },
+    provenance: failureProvenance
+  };
+  writeFileSync(outputPath, JSON.stringify(failure, null, 2) + '\n');
+  console.log(JSON.stringify({ disposition: failure.disposition, result: outputPath }));
+  process.exit(1);
+}
+
+const out = {
+  schema_id: 'pm.pmconcept7.smoke_browser_verification.v2',
+  disposition: 'fail',
+  generated_at_utc: new Date().toISOString(),
+  url: provenanceRun.artifactUrl(),
+  certification_boundary: { ...BROWSER_ONLY_BOUNDARY },
+  execution_boundary: { ...BROWSER_ONLY_BOUNDARY },
+  provenance: provenanceRun.envelope,
+  parity: {},
+  info: {},
+  checks: {},
+  errors: [],
+  runtime_errors: []
+};
+const P = out.parity;
 const errors = [];
-page.on('console', m => { if (m.type() === 'error') errors.push(m.text().slice(0, 200)); });
-page.on('pageerror', e => errors.push('pageerror: ' + String(e).slice(0, 200)));
+function recordCheck(name, pass, evidence) {
+  out.checks[name] = { pass: Boolean(pass), evidence: evidence === undefined ? null : evidence };
+}
 
-await page.addInitScript(() => {
+let context;
+let page;
+let guard;
+try {
+const contextConfig = {
+  viewport: { width: 1920, height: 1080 },
+  deviceScaleFactor: 1,
+  locale: 'en-US',
+  timezoneId: 'UTC',
+  colorScheme: 'dark',
+  serviceWorkers: 'block',
+  acceptDownloads: false
+};
+({ context, guard } = await provenanceRun.createBoundContext(browser, { case_id: 'smoke', context_config: contextConfig }));
+await context.addInitScript(() => {
   (() => {
     let s = 0x9E3779B9 | 0;
     Math.random = function () {
@@ -79,11 +170,17 @@ await page.addInitScript(() => {
     localStorage.setItem('pm.theme', 'friendly-dark');
   } catch (e) {}
 });
+page = await context.newPage();
+await guard.instrumentPage(page);
+page.on('console', m => { if (m.type() === 'error') errors.push(m.text().slice(0, 200)); });
+page.on('pageerror', e => errors.push('pageerror: ' + String(e).slice(0, 200)));
 
-const out = { url: SERVER + args.file, parity: {}, info: {} };
-const P = out.parity;
-
-await page.goto(SERVER + args.file, { waitUntil: 'load', timeout: 60000 });
+await guard.gotoBound(page, {
+  navigation_id: 'smoke:initial',
+  url: provenanceRun.artifactUrl({ case: 'smoke' }),
+  wait_until: 'load',
+  timeout_ms: 60000
+});
 await page.waitForFunction(
   () => window.PM_DEMO && !window.PM_DEMO._shim && window.PM_PAGES,
   null, { timeout: 30000 });
@@ -424,10 +521,13 @@ if (P.devPanel.resetAvailable) {
   const reset = page.locator(
     '[class*="dev-panel"] button, [id*="devPanel"] button, [class*="pm6-dev"] button'
   ).filter({ hasText: /reset/i }).first();
-  await Promise.all([
-    page.waitForNavigation({ waitUntil: 'load', timeout: 30000 }),
-    reset.click()
-  ]);
+  await guard.triggerBoundNavigation(page, {
+    navigation_id: 'smoke:dev-panel-reset',
+    target_url: provenanceRun.artifactUrl({ case: 'smoke' }),
+    trigger: () => reset.click(),
+    wait_until: 'load',
+    timeout_ms: 30000
+  });
   await page.waitForFunction(() => Boolean(window.PM_DEMO && window.PM_DEMO.state), null, { timeout: 30000 });
   P.devPanel.resetStory = await page.evaluate(() => {
     if (window.PM_DEMO.state.clock.playing) window.PM_DEMO.clock.pause();
@@ -447,8 +547,126 @@ P.reducedMotion = await page.evaluate(async () => {
   return res;
 });
 
-out.errors = errors;
-P.totalConsoleErrors = errors.length;
-writeFileSync(args.out, JSON.stringify(out, null, 2));
-console.error(args.file + ': smoke done, consoleErrors=' + errors.length);
-await browser.close();
+recordCheck('load_and_page_sweep_error_free',
+  Array.isArray(P.loadErrors) && P.loadErrors.length === 0 &&
+    Array.isArray(P.sweepNewErrors) && P.sweepNewErrors.length === 0,
+  { load_errors: P.loadErrors, sweep_new_errors: P.sweepNewErrors });
+const expectedThemes = ['friendly-dark', 'friendly-light', 'retro-dark', 'retro-light',
+  'basic-light', 'basic-dark', 'glass-dark', 'glass-light'];
+recordCheck('all_eight_themes_switch',
+  JSON.stringify(Object.keys(P.themes || {})) === JSON.stringify(expectedThemes) &&
+    expectedThemes.every(theme => typeof P.themes[theme]?.bodyBg === 'string' && P.themes[theme].bodyBg.length > 0 &&
+      typeof P.themes[theme]?.glassBgShown === 'string' && P.themes[theme].glassBgShown.length > 0),
+  P.themes);
+recordCheck('glass_modes_and_alpha_matrix',
+  ['mesh', 'depth', 'minimal'].every(mode => P.glass?.modes?.[mode]?.[mode] !== 'none') &&
+    ['min', 'mid', 'max'].every(level => typeof P.glass?.alpha?.[level] === 'string') &&
+    new Set(Object.values(P.glass?.alpha || {})).size === 3,
+  P.glass);
+recordCheck('baked_wallpaper_uses_embedded_webp', out.info.bakedWallpaper?.meshLayerUsesWebpData === true,
+  out.info.bakedWallpaper);
+recordCheck('settings_search_bloom_and_deep_link',
+  P.settingsSearch?.rows > 0 && !P.settingsBloom?.error && P.settingsBloom?.open === true && P.settingsBloom?.rows > 0 &&
+    !P.settingsDeepLink?.error && (P.settingsDeepLink?.open === true || P.settingsDeepLink?.flashed > 0),
+  { search: P.settingsSearch, bloom: P.settingsBloom, deep_link: P.settingsDeepLink });
+recordCheck('chat_thread_model_and_fab',
+  !P.chatThreadSwitch?.error && P.chatThreadSwitch?.items >= 2 && P.chatThreadSwitch?.activeIdx === 1 &&
+    !P.chatModelPopout?.error && P.chatModelPopout?.popouts > 0 &&
+    !P.chatFab?.error && P.chatFab?.portal === true && P.chatFab?.active === true && P.chatFab?.items > 0,
+  { thread: P.chatThreadSwitch, model: P.chatModelPopout, fab: P.chatFab });
+recordCheck('floating_chat_layout_cycle',
+  !P.floatingChat?.error && P.floatingChat?.afterPopOut && P.floatingChat?.afterCycle,
+  P.floatingChat);
+recordCheck('wizard_stage_advance',
+  !P.wizard?.error && P.wizard?.stage != null && P.wizard?.engineStage != null &&
+    String(P.wizard.stage) === String(P.wizard.engineStage),
+  P.wizard);
+const expectedOrchestratorTabs = ['progress', 'plan_compile', 'seams', 'node_graph', 'evidence', 'history', 'ledger'];
+recordCheck('orchestrator_tabs_and_node_inspector',
+  expectedOrchestratorTabs.every(tab => P.orchestrator?.tabs?.[tab] === 'true') &&
+    Boolean(P.orchestrator?.nodeClicked) && P.orchestrator?.inspector?.visible === true,
+  P.orchestrator);
+recordCheck('terminal_split_2x2_and_max_guard',
+  !P.terminal?.error && P.terminal?.panesAfter3Splits === 4 && P.terminal?.panesAfterGuard === 4,
+  P.terminal);
+recordCheck('dashboard_editor_overflow_and_widget_drag',
+  P.editorOverflow?.filesOpened > 0 && P.editorOverflow?.moreChips > 0 &&
+    P.widgetDrag?.attempted === true && Array.isArray(P.widgetDrag?.newErrors) && P.widgetDrag.newErrors.length === 0 &&
+    Array.isArray(P.widgetDrag?.order) && P.widgetDrag.order.length > 0,
+  { editor_overflow: P.editorOverflow, widget_drag: P.widgetDrag });
+recordCheck('dev_panel_toggle_play_chapter_and_reset',
+  P.devPanel?.open === true && P.devPanel?.playToggle !== 'no button' && P.devPanel?.chapterJump === true &&
+    P.devPanel?.resetAvailable === true && P.devPanel?.resetStory && typeof P.devPanel.resetStory === 'object',
+  P.devPanel);
+recordCheck('reduced_motion_toggle', P.reducedMotion?.attr === 'reduced' && P.reducedMotion?.cleared === null,
+  P.reducedMotion);
+} catch (error) {
+  const text = String(error?.stack || error);
+  out.runtime_errors.push({ kind: 'product-or-harness', text });
+  errors.push('harness: ' + text.slice(0, 600));
+} finally {
+  if (context) {
+    try { await context.close(); }
+    catch (error) {
+      out.runtime_errors.push({ kind: 'context-close', text: String(error?.stack || error) });
+    }
+  }
+  try {
+    await provenanceRun.finalizeBeforeBrowserClose(browser);
+    await browser.close();
+    out.provenance = await provenanceRun.finalizeAfterBrowserClose();
+  } catch (error) {
+    out.runtime_errors.push({ kind: 'provenance-finalize', text: String(error?.stack || error) });
+    try { out.provenance = await provenanceRun.fail('finalize', error); }
+    catch (failureError) {
+      out.runtime_errors.push({ kind: 'provenance-fail', text: String(failureError?.stack || failureError) });
+      out.provenance = provenanceRun.envelope;
+    }
+  }
+
+  P.totalConsoleErrors = errors.length;
+  out.errors = errors.slice();
+  let provenanceAdmissionError = null;
+  try { assertProvenanceAdmission(out.provenance); }
+  catch (error) { provenanceAdmissionError = String(error?.stack || error); }
+  recordCheck('shared_browser_provenance_admission',
+    provenanceAdmissionError === null && out.provenance?.admission?.pass === true,
+    {
+      admission: out.provenance?.admission,
+      error: provenanceAdmissionError,
+      artifact: out.provenance?.artifact,
+      verifier: out.provenance?.verifier,
+      helper: out.provenance?.helper,
+      browser: out.provenance?.browser,
+      command: out.provenance?.command,
+      navigation_count: out.provenance?.navigations?.length,
+      network: out.provenance?.network,
+      certification_boundary: out.provenance?.certification_boundary
+    });
+  recordCheck('exact_browser_only_certification_boundary',
+    JSON.stringify(out.provenance?.certification_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY) &&
+      JSON.stringify(out.certification_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY) &&
+      JSON.stringify(out.execution_boundary) === JSON.stringify(BROWSER_ONLY_BOUNDARY),
+    {
+      provenance_boundary: out.provenance?.certification_boundary,
+      certification_boundary: out.certification_boundary,
+      execution_boundary: out.execution_boundary
+    });
+  recordCheck('shared_provenance_runtime_clean',
+    errors.length === 0 && out.runtime_errors.length === 0 && out.provenance?.runtime_errors?.count === 0,
+    { console_and_page_errors: errors, verifier: out.runtime_errors, provenance: out.provenance?.runtime_errors });
+
+  const failedChecks = Object.entries(out.checks).filter(([, check]) => !check.pass).map(([name]) => name);
+  out.summary = {
+    check_count: Object.keys(out.checks).length,
+    passed_checks: Object.keys(out.checks).length - failedChecks.length,
+    failed_checks: failedChecks,
+    console_and_page_error_count: errors.length,
+    runtime_error_count: out.runtime_errors.length,
+    status: failedChecks.length === 0 && errors.length === 0 && out.runtime_errors.length === 0 ? 'PASS' : 'FAIL'
+  };
+  out.disposition = out.summary.status === 'PASS' ? 'pass' : 'fail';
+  writeFileSync(outputPath, JSON.stringify(out, null, 2) + '\n');
+  console.log(JSON.stringify({ result: outputPath, summary: out.summary }));
+  if (out.summary.status !== 'PASS') process.exitCode = 1;
+}

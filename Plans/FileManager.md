@@ -519,6 +519,27 @@ The local tree filter is a File Manager filter/type-ahead, not semantic search. 
 
 `cmd.file.save_local_copy` is the explicit Download / Save Local Copy `/copy-out` flow for workspace nodes: it exports a readable source to a user-chosen local destination without changing the node's project-relative path identity. For remote projects, this is the canonical remote-to-local escape hatch and remains distinct from tree Copy/Paste, editor Save As, or a move into the workspace.
 
+### 11.5 Backup snapshot browse and delivery consumer
+
+File Manager, File Editor, and diff/review surfaces may consume the Backup-owned `BackupBrowseOperation` and its exact commands; they do not own snapshot catalogs, repository bytes, archive staging, decryption, restore execution, or private file-fetch handlers. The route identity is the tuple of `repository_id`, immutable `snapshot_id`, `capture_set_id`, `backup_destination_id`, `server_id`, optional `project_id`, `source_host_id`, `source_environment_id`, `initiating_client_id`, `selected_path_refs`, currentness, `return_route_ref`, and `focus_ref`. A refresh, stale selection, reconstructed tab, or Back navigation must not silently substitute the newest snapshot, a current workspace file, or another Project.
+
+| File surface action | Backup-owned command | Required consumer behavior |
+|---|---|---|
+| Browse snapshot | `cmd.backup.browse` | Show a paginated, read-only, untrusted snapshot tree/preview pinned to the explicit backup/repository/snapshot/capture set. Browsing does not open a writable workspace buffer, run preview content, or become a restore mode. |
+| Download to this Client | `cmd.backup.file.download` | Deliver only to the `initiating_client_id` through the Client-owned picker/transfer surface. It is not `cmd.file.save_local_copy`, does not redirect to a Server because the Client disconnects, and does not change workspace or snapshot path identity. |
+| Extract to Host | `cmd.backup.extract` | Require the explicitly selected `target_host_id`, owning Server/Environment, an authorized target path reference, permission/currentness, and a FileSafe decision before any output. Symlink/reparse traversal, case/Unicode collision, reserved-name, metadata, executable-bit, ACL/xattr, existing-target, partial-output, cancellation, and rollback rules fail closed. |
+| Compare with current | `cmd.backup.file.compare` | Bind the immutable snapshot-side path and content identity plus the exact current Project/file/source version and currentness. The compare surface is read-only; a user must choose again when either side is ambiguous or stale, and no branch, worktree, current file, or latest snapshot is inferred. |
+| Export portable backup | `cmd.backup.export` | Disclose output destination, artifact kind, encryption/protection state, selected coverage, dependency closure, and whether the result is partial/non-restorable before writing. A decrypted export warns that ordinary saved files no longer have backup encryption. Export is a delivery artifact, not a restored Project or Full Server archive, and never activates or executes content. |
+| Retrieve archived snapshot | `cmd.backup.archive.retrieve` | Project provider capability, wait/external prerequisite, and fee/cost note without a hard-coded price; require explicit human consent before a billable external effect and show correlated `ObservableWork`/indeterminate-outcome recovery. Retrieval alone neither downloads nor restores content. |
+
+`F-055` remains the workspace-node `cmd.file.save_local_copy` owner and is not an alias or handler for Backup download. `F-058` continues to split view/compare/FileSafe/Source Control ownership; it gains only a pivot to the Backup-owned immutable compare route. `F-059` compare defaults apply only when an exact target is current; a Backup side is never selected through `latest` or branch/worktree implication. FileSafe and Permissions own all target-write decisions. Ordinary results, logs, Usage, Chat, evidence, and reverse routes contain no raw Recovery Key/Kit material or unredacted foreign absolute path.
+
+Every completion, failure, cancellation, Back, and reopen returns to the exact caller surface, Project, repository, immutable snapshot, capture set, selected path/filter, editor panel/group or file-tree row, focus target, initiating Client, and caller/Backup currentness. Browse, download, extract, compare, export, and archive retrieval remain outside the four `RestoreRun` modes and cannot mutate or activate a Project, execute recovered content, resume jobs, or register a Project.
+
+These routes consume the Backup/Restore request/result/error/availability family and receipts or `ObservableWork` where applicable. File Manager adds no `handlers::file*` or `handlers::file_manager*` wrapper for them and emits no new EventRecord; `expected_event_types=[]` remains mandatory pending separate Event Authority admission. All named future Backup handlers remain `handler_unavailable` without source-hashed native proof. This prose, its route names, and any schema/fixture/static wiring are future contract truth only, not executable Files/Backup behavior, native Slint proof, provider readiness, security certification, or successful delivery evidence.
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-014, ContractName:Plans/Backup_Restore_System.md#BRS-016, SchemaID:pm.backup_restore_system.contracts.v2, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+
 ## 12. Source Control handoff, compare, and review
 
 Source Control handoff from FileManager keeps file identity, worktree identity, and compare targets explicit. Handoff prose must not leave unresolved `if needed` or `only if clarification text is needed` conditions; a handoff either routes through a canonical command or is recorded as out of scope for the current surface.
@@ -4947,4 +4968,50 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - The one-floating-editor limit is retired.
 owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
+```
+
+## Backup v2 File consumer addendum - 2026-09-01
+
+### F-081 - Immutable Backup Snapshot Browse And Delivery Consumer
+
+```yaml
+plan_unit_id: F-081
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  File Manager consumes Backup-owned immutable snapshot browse, initiating-Client download,
+  explicitly authorized Host extraction, snapshot-to-current-file compare, disclosed portable
+  export, and consented archive retrieval. Every route preserves repository, snapshot, capture
+  set, Project/path/current-file, Client/Host, currentness, return, and focus identity; no Files
+  handler, latest-by-implication, RestoreRun mode, Project activation, or content execution is
+  created.
+gui_related: true
+gui_classification_reason: Snapshot tree, download/extract/compare/export/retrieve choices, FileSafe decisions, progress, disabled reasons, and exact reverse focus are visible Files surfaces.
+depends_on: [F-055, F-058, F-059, BRS-014, BRS-016]
+unblocks: []
+acceptance_criteria:
+  - Snapshot browse remains read-only and pinned to repository_id, immutable snapshot_id, capture_set_id, exact selected paths, currentness, return route, and focus.
+  - cmd.backup.file.download returns only to the initiating Client and never aliases cmd.file.save_local_copy or redirects implicitly to a Host.
+  - cmd.backup.extract requires an explicit authorized Host/path plus FileSafe and fails closed for traversal, collision, stale-target, partial-output, cancellation, and rollback ambiguity.
+  - cmd.backup.file.compare binds immutable snapshot/path identity and exact current Project/file/version currentness; ambiguity or staleness requires a new choice and never implies latest.
+  - cmd.backup.export discloses artifact destination, protection, coverage, closure, and non-restorable limits and cannot activate or execute content.
+  - cmd.backup.archive.retrieve requires capability/wait/cost disclosure and human consent before billable external effect, with ObservableWork or indeterminate-outcome recovery.
+  - Files owns no private Backup handler or EventRecord; expected_event_types stays empty and static contract evidence remains handler_unavailable without native proof.
+validation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future Files snapshot topology FileSafe currentness reverse-route archive-consent and event-silence tests]
+risk_class: backup_snapshot_wrong_target_or_files_owner_leak
+reasoning_tier: high
+context_scope: file_manager_backup_snapshot_consumer
+implementation_surfaces: [Plans/FileManager.md, future File Manager snapshot browser and compare surfaces, future Backup Restore native owner]
+node_compile_hint: {mode: filemanager_backup_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:2026-09-01:REST-002-REST-005
+  - source_ref:packet:2026-09-01:REST-009
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+negative_constraints:
+  - Do not create FileManager-owned snapshot, fetch, download, extract, compare, export, archive, or restore handlers.
+  - Do not infer latest snapshot, current file, Host, Project, path, or successful delivery.
+  - Do not activate a Project, execute browsed/exported content, or model delivery as RestoreRun.
+  - Do not expose raw Recovery Key/Kit material or foreign absolute paths in ordinary evidence.
+owner_hints: [Plans/FileManager.md, Plans/Backup_Restore_System.md, Plans/FileSafe.md, Plans/Permissions_System.md, Plans/Source_Control_System.md]
 ```

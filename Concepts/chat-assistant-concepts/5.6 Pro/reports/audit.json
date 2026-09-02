@@ -1,7 +1,7 @@
 {
   "overall": "PASS",
   "summary": {
-    "passed": 447,
+    "passed": 451,
     "failed": 0,
     "consoleErrors": 0,
     "pageErrors": 0
@@ -9,6 +9,22 @@
   "orphanGate": {
     "hard": [],
     "soft": [
+      {
+        "sheet": "activity-panel.css",
+        "selector": ".activity-panel[data-variant] .pmap-section",
+        "dead": [
+          "pmap-section"
+        ],
+        "hard": [],
+        "soft": [
+          "pmap-section"
+        ],
+        "softOwners": {
+          "pmap-section": [
+            "activity-panel.js"
+          ]
+        }
+      },
       {
         "sheet": "activity-panel.css",
         "selector": ".pmap-chips-foot",
@@ -171,80 +187,48 @@
       },
       {
         "sheet": "activity-panel.css",
-        "selector": ".pmap-tile label",
+        "selector": ".pmap-accordion .pmap-section",
         "dead": [
-          "pmap-tile"
+          "pmap-section"
         ],
         "hard": [],
         "soft": [
-          "pmap-tile"
+          "pmap-section"
         ],
         "softOwners": {
-          "pmap-tile": [
+          "pmap-section": [
             "activity-panel.js"
           ]
         }
       },
       {
         "sheet": "activity-panel.css",
-        "selector": ".pmap-tile label span",
+        "selector": ".pmap-accordion .pmap-section.is-focus",
         "dead": [
-          "pmap-tile"
+          "pmap-section"
         ],
         "hard": [],
         "soft": [
-          "pmap-tile"
+          "pmap-section"
         ],
         "softOwners": {
-          "pmap-tile": [
+          "pmap-section": [
             "activity-panel.js"
           ]
         }
       },
       {
         "sheet": "activity-panel.css",
-        "selector": ".pmap-tile > strong",
+        "selector": ".pmap-focus-pill",
         "dead": [
-          "pmap-tile"
+          "pmap-focus-pill"
         ],
         "hard": [],
         "soft": [
-          "pmap-tile"
+          "pmap-focus-pill"
         ],
         "softOwners": {
-          "pmap-tile": [
-            "activity-panel.js"
-          ]
-        }
-      },
-      {
-        "sheet": "activity-panel.css",
-        "selector": ".pmap-tile.is-focus",
-        "dead": [
-          "pmap-tile"
-        ],
-        "hard": [],
-        "soft": [
-          "pmap-tile"
-        ],
-        "softOwners": {
-          "pmap-tile": [
-            "activity-panel.js"
-          ]
-        }
-      },
-      {
-        "sheet": "activity-panel.css",
-        "selector": ".pmap-tile.is-focus > strong",
-        "dead": [
-          "pmap-tile"
-        ],
-        "hard": [],
-        "soft": [
-          "pmap-tile"
-        ],
-        "softOwners": {
-          "pmap-tile": [
+          "pmap-focus-pill": [
             "activity-panel.js"
           ]
         }
@@ -362,6 +346,38 @@
         }
       },
       {
+        "sheet": "composer.css",
+        "selector": ".hover-card.hover-tip.hover-label",
+        "dead": [
+          "hover-label"
+        ],
+        "hard": [],
+        "soft": [
+          "hover-label"
+        ],
+        "softOwners": {
+          "hover-label": [
+            "app.js"
+          ]
+        }
+      },
+      {
+        "sheet": "composer.css",
+        "selector": ".hover-card.hover-tip.hover-label strong",
+        "dead": [
+          "hover-label"
+        ],
+        "hard": [],
+        "soft": [
+          "hover-label"
+        ],
+        "softOwners": {
+          "hover-label": [
+            "app.js"
+          ]
+        }
+      },
+      {
         "sheet": "context.css",
         "selector": ".ctx-meter.hot i",
         "dead": [
@@ -439,27 +455,8 @@
         ],
         "softOwners": {
           "busy": [
-            "context.js"
-          ]
-        }
-      },
-      {
-        "sheet": "context.css",
-        "selector": ".ctx-status.ok",
-        "dead": [
-          "ok"
-        ],
-        "hard": [],
-        "soft": [
-          "ok"
-        ],
-        "softOwners": {
-          "ok": [
             "context.js",
-            "data.js",
-            "orbit.js",
-            "questions.js",
-            "variants-a.js"
+            "data.js"
           ]
         }
       },
@@ -481,6 +478,27 @@
             "data.js",
             "goals.js",
             "threadops.js"
+          ]
+        }
+      },
+      {
+        "sheet": "context.css",
+        "selector": ".ctx-fallback.used",
+        "dead": [
+          "used"
+        ],
+        "hard": [],
+        "soft": [
+          "used"
+        ],
+        "softOwners": {
+          "used": [
+            "app.js",
+            "context.js",
+            "data.js",
+            "goals.js",
+            "threadops.js",
+            "variants-a.js"
           ]
         }
       },
@@ -552,6 +570,348 @@
         }
       },
       {
+        "sheet": "goals.css",
+        "selector": ".goal-budget",
+        "dead": [
+          "goal-budget"
+        ],
+        "hard": [],
+        "soft": [
+          "goal-budget"
+        ],
+        "softOwners": {
+          "goal-budget": [
+            "goals.js"
+          ]
+        }
+      },
+      {
+        "sheet": "goals.css",
+        "selector": ".goal-budget.is-over",
+        "dead": [
+          "goal-budget"
+        ],
+        "hard": [],
+        "soft": [
+          "goal-budget"
+        ],
+        "softOwners": {
+          "goal-budget": [
+            "goals.js"
+          ]
+        }
+      },
+      {
+        "sheet": "goals.css",
+        "selector": ".goal-budget.is-over .goal-meter i",
+        "dead": [
+          "goal-budget"
+        ],
+        "hard": [],
+        "soft": [
+          "goal-budget"
+        ],
+        "softOwners": {
+          "goal-budget": [
+            "goals.js"
+          ]
+        }
+      },
+      {
+        "sheet": "goals.css",
+        "selector": ".goal-budget.is-over .goal-budget-note",
+        "dead": [
+          "goal-budget"
+        ],
+        "hard": [],
+        "soft": [
+          "goal-budget"
+        ],
+        "softOwners": {
+          "goal-budget": [
+            "goals.js"
+          ]
+        }
+      },
+      {
+        "sheet": "goals.css",
+        "selector": ".goal-phases",
+        "dead": [
+          "goal-phases"
+        ],
+        "hard": [],
+        "soft": [
+          "goal-phases"
+        ],
+        "softOwners": {
+          "goal-phases": [
+            "goals.js"
+          ]
+        }
+      },
+      {
+        "sheet": "goals.css",
+        "selector": ".goal-phase.pending    .goal-phase-glyph",
+        "dead": [
+          "pending"
+        ],
+        "hard": [],
+        "soft": [
+          "pending"
+        ],
+        "softOwners": {
+          "pending": [
+            "activity-bar.js",
+            "activity-panel.js",
+            "app.js",
+            "data.js",
+            "goals.js",
+            "orbit.js",
+            "threadops.js"
+          ]
+        }
+      },
+      {
+        "sheet": "goals.css",
+        "selector": ".goal-doc .goal-phases",
+        "dead": [
+          "goal-phases"
+        ],
+        "hard": [],
+        "soft": [
+          "goal-phases"
+        ],
+        "softOwners": {
+          "goal-phases": [
+            "goals.js"
+          ]
+        }
+      },
+      {
+        "sheet": "history.css",
+        "selector": ".ph-chrome",
+        "dead": [
+          "ph-chrome"
+        ],
+        "hard": [],
+        "soft": [
+          "ph-chrome"
+        ],
+        "softOwners": {
+          "ph-chrome": [
+            "history.js"
+          ]
+        }
+      },
+      {
+        "sheet": "history.css",
+        "selector": ".ph-chrome",
+        "dead": [
+          "ph-chrome"
+        ],
+        "hard": [],
+        "soft": [
+          "ph-chrome"
+        ],
+        "softOwners": {
+          "ph-chrome": [
+            "history.js"
+          ]
+        }
+      },
+      {
+        "sheet": "history.css",
+        "selector": ".ph-chrome-state",
+        "dead": [
+          "ph-chrome-state"
+        ],
+        "hard": [],
+        "soft": [
+          "ph-chrome-state"
+        ],
+        "softOwners": {
+          "ph-chrome-state": [
+            "history.js"
+          ]
+        }
+      },
+      {
+        "sheet": "history.css",
+        "selector": ".ph-pin",
+        "dead": [
+          "ph-pin"
+        ],
+        "hard": [],
+        "soft": [
+          "ph-pin"
+        ],
+        "softOwners": {
+          "ph-pin": [
+            "history.js"
+          ]
+        }
+      },
+      {
+        "sheet": "history.css",
+        "selector": ".ph-pin:hover",
+        "dead": [
+          "ph-pin"
+        ],
+        "hard": [],
+        "soft": [
+          "ph-pin"
+        ],
+        "softOwners": {
+          "ph-pin": [
+            "history.js"
+          ]
+        }
+      },
+      {
+        "sheet": "history.css",
+        "selector": ".ph-pin.is-pinned",
+        "dead": [
+          "ph-pin"
+        ],
+        "hard": [],
+        "soft": [
+          "ph-pin"
+        ],
+        "softOwners": {
+          "ph-pin": [
+            "history.js"
+          ]
+        }
+      },
+      {
+        "sheet": "history.css",
+        "selector": ".ph-pin svg",
+        "dead": [
+          "ph-pin"
+        ],
+        "hard": [],
+        "soft": [
+          "ph-pin"
+        ],
+        "softOwners": {
+          "ph-pin": [
+            "history.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".lens-ops",
+        "dead": [
+          "lens-ops"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-ops"
+        ],
+        "softOwners": {
+          "lens-ops": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".lens-op-row",
+        "dead": [
+          "lens-op-row"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-op-row"
+        ],
+        "softOwners": {
+          "lens-op-row": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".lens-op-icon",
+        "dead": [
+          "lens-op-icon"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-op-icon"
+        ],
+        "softOwners": {
+          "lens-op-icon": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".lens-op-copy",
+        "dead": [
+          "lens-op-copy"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-op-copy"
+        ],
+        "softOwners": {
+          "lens-op-copy": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".lens-op-copy strong",
+        "dead": [
+          "lens-op-copy"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-op-copy"
+        ],
+        "softOwners": {
+          "lens-op-copy": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".lens-op-copy span",
+        "dead": [
+          "lens-op-copy"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-op-copy"
+        ],
+        "softOwners": {
+          "lens-op-copy": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".lens-op-row .text-button",
+        "dead": [
+          "lens-op-row"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-op-row"
+        ],
+        "softOwners": {
+          "lens-op-row": [
+            "lens.js"
+          ]
+        }
+      },
+      {
         "sheet": "lens.css",
         "selector": ".lens-mode-item[data-value=\"off\"] .menu-icon",
         "dead": [
@@ -568,143 +928,241 @@
         }
       },
       {
-        "sheet": "orbit.css",
-        "selector": ".orbit-node.open",
+        "sheet": "lens.css",
+        "selector": ".overlay-menu.lens-strip",
         "dead": [
-          "open"
+          "lens-strip"
         ],
         "hard": [],
         "soft": [
-          "open"
+          "lens-strip"
         ],
         "softOwners": {
-          "open": [
-            "activity-panel.js",
+          "lens-strip": [
+            "app.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".overlay-menu.lens-strip .lens-mode-row",
+        "dead": [
+          "lens-strip"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-strip"
+        ],
+        "softOwners": {
+          "lens-strip": [
+            "app.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".overlay-menu.lens-strip .lens-mode-item",
+        "dead": [
+          "lens-strip",
+          "lens-mode-item"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-strip",
+          "lens-mode-item"
+        ],
+        "softOwners": {
+          "lens-strip": [
+            "app.js"
+          ],
+          "lens-mode-item": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".overlay-menu.lens-strip .lens-mode-item .menu-copy span",
+        "dead": [
+          "lens-strip",
+          "lens-mode-item"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-strip",
+          "lens-mode-item"
+        ],
+        "softOwners": {
+          "lens-strip": [
+            "app.js"
+          ],
+          "lens-mode-item": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".overlay-menu.lens-strip .lens-status",
+        "dead": [
+          "lens-strip"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-strip"
+        ],
+        "softOwners": {
+          "lens-strip": [
+            "app.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".overlay-menu.lens-strip .lens-ops",
+        "dead": [
+          "lens-strip",
+          "lens-ops"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-strip",
+          "lens-ops"
+        ],
+        "softOwners": {
+          "lens-strip": [
+            "app.js"
+          ],
+          "lens-ops": [
+            "lens.js"
+          ]
+        }
+      },
+      {
+        "sheet": "lens.css",
+        "selector": ".overlay-menu.lens-strip .lens-actions",
+        "dead": [
+          "lens-strip"
+        ],
+        "hard": [],
+        "soft": [
+          "lens-strip"
+        ],
+        "softOwners": {
+          "lens-strip": [
+            "app.js"
+          ]
+        }
+      },
+      {
+        "sheet": "motion.css",
+        "selector": ".pm-shimmer.pm-settled",
+        "dead": [
+          "pm-settled"
+        ],
+        "hard": [],
+        "soft": [
+          "pm-settled"
+        ],
+        "softOwners": {
+          "pm-settled": [
             "app.js",
-            "audit-inventory.js",
-            "data.js",
-            "goals.js",
-            "history.js",
-            "orbit.js",
-            "threadops.js",
             "variants-a.js"
           ]
         }
       },
       {
         "sheet": "orbit.css",
-        "selector": ".orbit-node.open.live",
+        "selector": ".pm-rail-item.orbit-strip-item",
         "dead": [
-          "open"
+          "orbit-strip-item"
         ],
         "hard": [],
         "soft": [
-          "open"
+          "orbit-strip-item"
         ],
         "softOwners": {
-          "open": [
-            "activity-panel.js",
-            "app.js",
-            "audit-inventory.js",
-            "data.js",
-            "goals.js",
-            "history.js",
-            "orbit.js",
-            "threadops.js",
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "orbit.css",
-        "selector": ".orbit-sat.ok",
-        "dead": [
-          "ok"
-        ],
-        "hard": [],
-        "soft": [
-          "ok"
-        ],
-        "softOwners": {
-          "ok": [
-            "context.js",
-            "data.js",
-            "orbit.js",
-            "questions.js",
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "orbit.css",
-        "selector": ".orbit-sat.bad",
-        "dead": [
-          "bad"
-        ],
-        "hard": [],
-        "soft": [
-          "bad"
-        ],
-        "softOwners": {
-          "bad": [
-            "data.js",
+          "orbit-strip-item": [
             "orbit.js"
           ]
         }
       },
       {
         "sheet": "orbit.css",
-        "selector": ".orbit-chip.ok",
+        "selector": ".wa-disc.orbit-strip-item.done",
         "dead": [
-          "ok"
+          "orbit-strip-item"
         ],
         "hard": [],
         "soft": [
-          "ok"
+          "orbit-strip-item"
         ],
         "softOwners": {
-          "ok": [
-            "context.js",
-            "data.js",
-            "orbit.js",
-            "questions.js",
-            "variants-a.js"
+          "orbit-strip-item": [
+            "orbit.js"
           ]
         }
       },
       {
         "sheet": "orbit.css",
-        "selector": ".orbit-agent-state.ok",
+        "selector": ".pm-rail-item.orbit-strip-item.current",
         "dead": [
-          "ok"
+          "orbit-strip-item"
         ],
         "hard": [],
         "soft": [
-          "ok"
+          "orbit-strip-item"
         ],
         "softOwners": {
-          "ok": [
-            "context.js",
-            "data.js",
-            "orbit.js",
-            "questions.js",
-            "variants-a.js"
+          "orbit-strip-item": [
+            "orbit.js"
           ]
         }
       },
       {
         "sheet": "orbit.css",
-        "selector": ".orbit-agent-state.bad",
+        "selector": ".orbit-strip-item:hover",
         "dead": [
-          "bad"
+          "orbit-strip-item"
         ],
         "hard": [],
         "soft": [
-          "bad"
+          "orbit-strip-item"
         ],
         "softOwners": {
-          "bad": [
-            "data.js",
+          "orbit-strip-item": [
+            "orbit.js"
+          ]
+        }
+      },
+      {
+        "sheet": "orbit.css",
+        "selector": ".orbit-strip-item",
+        "dead": [
+          "orbit-strip-item"
+        ],
+        "hard": [],
+        "soft": [
+          "orbit-strip-item"
+        ],
+        "softOwners": {
+          "orbit-strip-item": [
+            "orbit.js"
+          ]
+        }
+      },
+      {
+        "sheet": "orbit.css",
+        "selector": ".orbit-strip-item",
+        "dead": [
+          "orbit-strip-item"
+        ],
+        "hard": [],
+        "soft": [
+          "orbit-strip-item"
+        ],
+        "softOwners": {
+          "orbit-strip-item": [
             "orbit.js"
           ]
         }
@@ -1150,54 +1608,6 @@
       },
       {
         "sheet": "styles.css",
-        "selector": ".wa-chev.open",
-        "dead": [
-          "open"
-        ],
-        "hard": [],
-        "soft": [
-          "open"
-        ],
-        "softOwners": {
-          "open": [
-            "activity-panel.js",
-            "app.js",
-            "audit-inventory.js",
-            "data.js",
-            "goals.js",
-            "history.js",
-            "orbit.js",
-            "threadops.js",
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "styles.css",
-        "selector": ".wa-disc.open",
-        "dead": [
-          "open"
-        ],
-        "hard": [],
-        "soft": [
-          "open"
-        ],
-        "softOwners": {
-          "open": [
-            "activity-panel.js",
-            "app.js",
-            "audit-inventory.js",
-            "data.js",
-            "goals.js",
-            "history.js",
-            "orbit.js",
-            "threadops.js",
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "styles.css",
         "selector": ".activity-filter.hidden",
         "dead": [
           "hidden"
@@ -1211,8 +1621,87 @@
             "activity-panel.js",
             "app.js",
             "data.js",
-            "orbit.js",
             "threadops.js"
+          ]
+        }
+      },
+      {
+        "sheet": "styles.css",
+        "selector": ".activity-summary-card",
+        "dead": [
+          "activity-summary-card"
+        ],
+        "hard": [],
+        "soft": [
+          "activity-summary-card"
+        ],
+        "softOwners": {
+          "activity-summary-card": [
+            "activity-panel.js"
+          ]
+        }
+      },
+      {
+        "sheet": "styles.css",
+        "selector": ".activity-summary-card strong",
+        "dead": [
+          "activity-summary-card"
+        ],
+        "hard": [],
+        "soft": [
+          "activity-summary-card"
+        ],
+        "softOwners": {
+          "activity-summary-card": [
+            "activity-panel.js"
+          ]
+        }
+      },
+      {
+        "sheet": "styles.css",
+        "selector": ".activity-summary-card p",
+        "dead": [
+          "activity-summary-card"
+        ],
+        "hard": [],
+        "soft": [
+          "activity-summary-card"
+        ],
+        "softOwners": {
+          "activity-summary-card": [
+            "activity-panel.js"
+          ]
+        }
+      },
+      {
+        "sheet": "styles.css",
+        "selector": ".activity-panel[data-variant=\"1\"] .activity-summary-card",
+        "dead": [
+          "activity-summary-card"
+        ],
+        "hard": [],
+        "soft": [
+          "activity-summary-card"
+        ],
+        "softOwners": {
+          "activity-summary-card": [
+            "activity-panel.js"
+          ]
+        }
+      },
+      {
+        "sheet": "styles.css",
+        "selector": ".activity-panel[data-variant=\"7\"] .activity-summary-card",
+        "dead": [
+          "activity-summary-card"
+        ],
+        "hard": [],
+        "soft": [
+          "activity-summary-card"
+        ],
+        "softOwners": {
+          "activity-summary-card": [
+            "activity-panel.js"
           ]
         }
       },
@@ -1497,6 +1986,22 @@
       },
       {
         "sheet": "transcript.css",
+        "selector": ".message-meta .meta-quiet",
+        "dead": [
+          "meta-quiet"
+        ],
+        "hard": [],
+        "soft": [
+          "meta-quiet"
+        ],
+        "softOwners": {
+          "meta-quiet": [
+            "transcript.js"
+          ]
+        }
+      },
+      {
+        "sheet": "transcript.css",
         "selector": ".pm-overflow-item",
         "dead": [
           "pm-overflow-item"
@@ -1593,71 +2098,37 @@
       },
       {
         "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .done8 .rail8-item",
+        "selector": ".working-variant-8 .rail8-verb.pm-shimmer.pm-settled",
         "dead": [
-          "done8"
+          "pm-settled"
         ],
         "hard": [],
         "soft": [
-          "done8"
+          "pm-settled"
         ],
         "softOwners": {
-          "done8": [
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .done8 .rail8-item:hover",
-        "dead": [
-          "done8"
-        ],
-        "hard": [],
-        "soft": [
-          "done8"
-        ],
-        "softOwners": {
-          "done8": [
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .done8 .rail8-item:focus-visible",
-        "dead": [
-          "done8"
-        ],
-        "hard": [],
-        "soft": [
-          "done8"
-        ],
-        "softOwners": {
-          "done8": [
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .rail8-chev.open",
-        "dead": [
-          "open"
-        ],
-        "hard": [],
-        "soft": [
-          "open"
-        ],
-        "softOwners": {
-          "open": [
-            "activity-panel.js",
+          "pm-settled": [
             "app.js",
-            "audit-inventory.js",
+            "variants-a.js"
+          ]
+        }
+      },
+      {
+        "sheet": "variants-a.css",
+        "selector": ".working-variant-8 .rail8-item.pinned",
+        "dead": [
+          "pinned"
+        ],
+        "hard": [],
+        "soft": [
+          "pinned"
+        ],
+        "softOwners": {
+          "pinned": [
+            "app.js",
+            "context.js",
             "data.js",
-            "goals.js",
             "history.js",
-            "orbit.js",
             "threadops.js",
             "variants-a.js"
           ]
@@ -1665,112 +2136,51 @@
       },
       {
         "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .rail8.done8:has(.rail8-item:hover) .rail8-head-label",
+        "selector": ".working-variant-10 .tc10-line b.pm-shimmer.pm-settled",
         "dead": [
-          "done8"
+          "pm-settled"
         ],
         "hard": [],
         "soft": [
-          "done8"
+          "pm-settled"
         ],
         "softOwners": {
-          "done8": [
+          "pm-settled": [
+            "app.js",
             "variants-a.js"
           ]
         }
       },
       {
         "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .rail8.done8:has(.rail8-item:focus-visible) .rail8-head-label",
+        "selector": ".working-variant-8 .rail8-verb.pm-shimmer.pm-settled",
         "dead": [
-          "done8"
+          "pm-settled"
         ],
         "hard": [],
         "soft": [
-          "done8"
+          "pm-settled"
         ],
         "softOwners": {
-          "done8": [
+          "pm-settled": [
+            "app.js",
             "variants-a.js"
           ]
         }
       },
       {
         "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .rail8.done8:has(.rail8-item:hover) .rail8-under",
+        "selector": ".working-variant-10 .tc10-line b.pm-shimmer.pm-settled",
         "dead": [
-          "done8"
+          "pm-settled"
         ],
         "hard": [],
         "soft": [
-          "done8"
+          "pm-settled"
         ],
         "softOwners": {
-          "done8": [
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-a.css",
-        "selector": ".working-variant-8 .rail8.done8:has(.rail8-item:focus-visible) .rail8-under",
-        "dead": [
-          "done8"
-        ],
-        "hard": [],
-        "soft": [
-          "done8"
-        ],
-        "softOwners": {
-          "done8": [
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-a.css",
-        "selector": ".working-variant-11 .dt-row.retired",
-        "dead": [
-          "retired"
-        ],
-        "hard": [],
-        "soft": [
-          "retired"
-        ],
-        "softOwners": {
-          "retired": [
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-a.css",
-        "selector": ".working-variant-11 .dt-row.retired",
-        "dead": [
-          "retired"
-        ],
-        "hard": [],
-        "soft": [
-          "retired"
-        ],
-        "softOwners": {
-          "retired": [
-            "variants-a.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-a.css",
-        "selector": ".working-variant-11 .dt-row.retired",
-        "dead": [
-          "retired"
-        ],
-        "hard": [],
-        "soft": [
-          "retired"
-        ],
-        "softOwners": {
-          "retired": [
+          "pm-settled": [
+            "app.js",
             "variants-a.js"
           ]
         }
@@ -1821,7 +2231,9 @@
         "softOwners": {
           "end": [
             "activity-bar.js",
+            "app.js",
             "context.js",
+            "data.js",
             "variants-b.js"
           ]
         }
@@ -1839,33 +2251,19 @@
         "softOwners": {
           "end": [
             "activity-bar.js",
+            "app.js",
             "context.js",
+            "data.js",
             "variants-b.js"
-          ]
-        }
-      },
-      {
-        "sheet": "variants-b.css",
-        "selector": ".working-variant-15 .pm15-scroll.scrolled",
-        "dead": [
-          "scrolled"
-        ],
-        "hard": [],
-        "soft": [
-          "scrolled"
-        ],
-        "softOwners": {
-          "scrolled": [
-            "data.js"
           ]
         }
       }
     ],
-    "live": 1143,
-    "staticTokens": 1002,
-    "patterns": 106,
-    "unconstrainedPatterns": 246,
-    "runtimeClasses": 707
+    "live": 1229,
+    "staticTokens": 1077,
+    "patterns": 119,
+    "unconstrainedPatterns": 306,
+    "runtimeClasses": 754
   },
   "passes": [
     {
@@ -1887,7 +2285,7 @@
     },
     {
       "label": "Viewport containment: Context compact menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1076.88916015625,\"top\":87.77426147460938,\"right\":1430.3902587890625,\"bottom\":408.58123779296875,\"width\":353.5010986328125,\"height\":320.8069763183594},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1079.7813720703125,\"top\":83.45934295654297,\"right\":1430.2314453125,\"bottom\":375.39476776123047,\"width\":350.4500732421875,\"height\":291.9354248046875},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Context Ring opens compact menu"
@@ -1897,97 +2295,111 @@
     },
     {
       "label": "Viewport containment: goal hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":903.140625,\"top\":471.55877685546875,\"right\":1257.140625,\"bottom\":698.0744018554688,\"width\":354,\"height\":226.515625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":923.796875,\"top\":333.15625,\"right\":1277.796875,\"bottom\":683.15625,\"width\":354,\"height\":350},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: goal"
     },
     {
-      "label": "Activity click opens all-category detail: goal"
+      "label": "Activity click opens focused Status Board: goal"
     },
     {
       "label": "Viewport containment: todo hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":958.53125,\"top\":387.5810241699219,\"right\":1312.53125,\"bottom\":696.4560546875,\"width\":354,\"height\":308.8750305175781},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":974.796875,\"top\":332.38433837890625,\"right\":1328.796875,\"bottom\":682.3843383789062,\"width\":354,\"height\":350},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: todo"
     },
     {
-      "label": "Activity click opens all-category detail: todo"
+      "label": "Activity click opens focused Status Board: todo"
     },
     {
       "label": "Viewport containment: subagents hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1012.484375,\"top\":391.234375,\"right\":1366.484375,\"bottom\":700.109375,\"width\":354,\"height\":308.875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1021.296875,\"top\":351.1771240234375,\"right\":1375.296875,\"bottom\":683.1771240234375,\"width\":354,\"height\":332},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: subagents"
     },
     {
-      "label": "Activity click opens all-category detail: subagents"
+      "label": "Activity click opens focused Status Board: subagents"
     },
     {
       "label": "Viewport containment: changes hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":402.2496643066406,\"right\":1432,\"bottom\":698.0777587890625,\"width\":354,\"height\":295.8280944824219},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":335.6017150878906,\"right\":1432,\"bottom\":685.6016845703125,\"width\":354,\"height\":349.9999694824219},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: changes"
     },
     {
-      "label": "Activity click opens all-category detail: changes"
+      "label": "Activity click opens focused Status Board: changes"
     },
     {
       "label": "Viewport containment: artifacts hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":424.2929382324219,\"right\":1432,\"bottom\":698.07421875,\"width\":354,\"height\":273.7812805175781},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":399.7240905761719,\"right\":1432,\"bottom\":682.72412109375,\"width\":354,\"height\":283.0000305175781},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: artifacts"
     },
     {
-      "label": "Activity click opens all-category detail: artifacts"
+      "label": "Activity click opens focused Status Board: artifacts"
+    },
+    {
+      "label": "Activity Detail Show all and domain drill-down"
     },
     {
       "label": "Activity Detail pin and unpin"
     },
     {
       "label": "Viewport containment: model picker",
-      "detail": "{\"ok\":true,\"r\":{\"left\":967.9718627929688,\"top\":550.2000122070312,\"right\":1270.371826171875,\"bottom\":819,\"width\":302.39996337890625,\"height\":268.79998779296875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":918.8848266601562,\"top\":287.43463134765625,\"right\":1275.05810546875,\"bottom\":836.379638671875,\"width\":356.17327880859375,\"height\":548.9450073242188},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: model sidecar",
-      "detail": "{\"ok\":true,\"r\":{\"left\":509.1819152832031,\"top\":248.91432189941406,\"right\":858.7280883789062,\"bottom\":477.77398681640625,\"width\":349.5461730957031,\"height\":228.8596649169922},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":684.796875,\"top\":174.046875,\"right\":912.796875,\"bottom\":395.65625,\"width\":228,\"height\":221.609375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Model picker and effort sidecar"
     },
     {
       "label": "Viewport containment: Plan sidecar",
-      "detail": "{\"ok\":true,\"r\":{\"left\":918.015625,\"top\":571.296875,\"right\":1139.46875,\"bottom\":732.15625,\"width\":221.453125,\"height\":160.859375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":902,\"top\":520.265625,\"right\":1130,\"bottom\":704.46875,\"width\":228,\"height\":184.203125},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: Deep Plan sidecar",
-      "detail": "{\"ok\":true,\"r\":{\"left\":905.96875,\"top\":571.3125,\"right\":1139.46875,\"bottom\":693.53125,\"width\":233.5,\"height\":122.21875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":902,\"top\":602.703125,\"right\":1130,\"bottom\":745.46875,\"width\":228,\"height\":142.765625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Plan and Deep Plan hover sidecars"
     },
     {
       "label": "Viewport containment: goal-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":828.9375,\"top\":532.65625,\"right\":1131.5625,\"bottom\":654.875,\"width\":302.625,\"height\":122.21875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":892,\"top\":519.828125,\"right\":1120,\"bottom\":662.59375,\"width\":228,\"height\":142.765625},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Viewport containment: crew-menu",
+      "detail": "{\"ok\":true,\"r\":{\"left\":880.5084228515625,\"top\":568.7793579101562,\"right\":1120,\"bottom\":721.210205078125,\"width\":239.4915771484375,\"height\":152.43084716796875},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: bsd-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":931.0074462890625,\"top\":532.9642333984375,\"right\":1131.9580078125,\"bottom\":692.1126098632812,\"width\":200.9505615234375,\"height\":159.14837646484375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":880.5093994140625,\"top\":566.1383666992188,\"right\":1120,\"bottom\":767.429931640625,\"width\":239.4906005859375,\"height\":201.29156494140625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
-      "label": "Viewport containment: context-lens",
-      "detail": "{\"ok\":true,\"r\":{\"left\":711.578125,\"top\":532.671875,\"right\":1131.578125,\"bottom\":820.09375,\"width\":420,\"height\":287.421875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "label": "Viewport containment: eli5-menu",
+      "detail": "{\"ok\":true,\"r\":{\"left\":880.509521484375,\"top\":636.9776611328125,\"right\":1120,\"bottom\":805.3252563476562,\"width\":239.490478515625,\"height\":168.34759521484375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: thought-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":887.765625,\"top\":532.65625,\"right\":1131.5625,\"bottom\":654.875,\"width\":243.796875,\"height\":122.21875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":880.8358764648438,\"top\":664.9605102539062,\"right\":1120,\"bottom\":848.431884765625,\"width\":239.16412353515625,\"height\":183.47137451171875},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Capability hover sidecars"
+    },
+    {
+      "label": "Viewport containment: Context Lens strip",
+      "detail": "{\"ok\":true,\"r\":{\"left\":1047.7430419921875,\"top\":84.5678482055664,\"right\":1409.65185546875,\"bottom\":193.60006713867188,\"width\":361.9088134765625,\"height\":109.03221893310547},\"vp\":{\"w\":1440,\"h\":900}}"
+    },
+    {
+      "label": "Context Lens header strip"
     },
     {
       "label": "Working Animation controls and history"
@@ -2136,19 +2548,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 430"
@@ -2159,19 +2571,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 650"
@@ -2182,19 +2594,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 1024"
@@ -2205,19 +2617,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 1440"
@@ -2228,19 +2640,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 1920"
@@ -2251,19 +2663,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 430"
@@ -2274,19 +2686,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 650"
@@ -2297,19 +2709,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 1024"
@@ -2320,19 +2732,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 1440"
@@ -2343,19 +2755,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell basic-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 1920"
@@ -2366,19 +2778,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":703.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":171.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":655.15625,\"right\":420,\"bottom\":695.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 430"
@@ -2389,19 +2801,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":733.15625,\"right\":650,\"bottom\":875,\"width\":450.328125,\"height\":141.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":685.15625,\"right\":640,\"bottom\":725.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 650"
@@ -2412,19 +2824,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.15625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.296875,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":698.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":176.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":650.15625,\"right\":1014,\"bottom\":690.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 1024"
@@ -2435,19 +2847,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":733.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":141.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":685.15625,\"right\":1430,\"bottom\":725.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 1440"
@@ -2458,19 +2870,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":733.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":141.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":685.15625,\"right\":1910,\"bottom\":725.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 1920"
@@ -2481,19 +2893,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":703.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":171.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":655.15625,\"right\":420,\"bottom\":695.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 430"
@@ -2504,19 +2916,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":733.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":141.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450.015625,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":685.15625,\"right\":640,\"bottom\":725.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 650"
@@ -2527,19 +2939,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":698.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":176.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":650.15625,\"right\":1014,\"bottom\":690.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 1024"
@@ -2550,19 +2962,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":733.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":141.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":685.15625,\"right\":1430,\"bottom\":725.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 1440"
@@ -2573,19 +2985,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell friendly-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":733.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":141.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":685.15625,\"right\":1910,\"bottom\":725.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 1920"
@@ -2596,19 +3008,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 430"
@@ -2619,19 +3031,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":196.84375,\"top\":42,\"right\":650,\"bottom\":876,\"width\":453.15625,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450.109375,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 650"
@@ -2642,19 +3054,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":754.375,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":269.625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.15625,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.296875,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 1024"
@@ -2665,19 +3077,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 1440"
@@ -2688,19 +3100,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 1920"
@@ -2711,19 +3123,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":763.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":112.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":712.15625,\"right\":430,\"bottom\":763.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 430"
@@ -2734,19 +3146,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":198.75,\"top\":42,\"right\":650,\"bottom\":876,\"width\":451.25,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":743.109375,\"right\":650,\"bottom\":876,\"width\":450.328125,\"height\":132.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":690.109375,\"right\":650,\"bottom\":743.109375,\"width\":450.015625,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 650"
@@ -2757,19 +3169,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":730.0625,\"right\":1024,\"bottom\":876,\"width\":270.3125,\"height\":145.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.15625,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":677.0625,\"right\":1024,\"bottom\":730.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.703125,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.296875,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 1024"
@@ -2780,19 +3192,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":743.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":132.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":690.109375,\"right\":1440,\"bottom\":743.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 1440"
@@ -2803,19 +3215,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell glass-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":743.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":132.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":690.109375,\"right\":1920,\"bottom\":743.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 1920"
@@ -2826,19 +3238,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":762.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":113.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":702.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":172.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":711.15625,\"right\":430,\"bottom\":762.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":654.15625,\"right\":420,\"bottom\":694.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 430"
@@ -2849,19 +3261,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":742.109375,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":133.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":732.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":142.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":689.109375,\"right\":650,\"bottom\":742.109375,\"width\":450,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":684.15625,\"right\":640,\"bottom\":724.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 650"
@@ -2872,19 +3284,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.296875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":729.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":146.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":697.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":177.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":676.0625,\"right\":1024,\"bottom\":729.0625,\"width\":270.296875,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":649.15625,\"right\":1014,\"bottom\":689.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 1024"
@@ -2895,19 +3307,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.578125,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.421875,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":742.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":133.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":732.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":142.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":689.109375,\"right\":1440,\"bottom\":742.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":684.15625,\"right\":1430,\"bottom\":724.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 1440"
@@ -2918,19 +3330,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":742.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":133.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":732.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":142.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":689.109375,\"right\":1920,\"bottom\":742.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":684.15625,\"right\":1910,\"bottom\":724.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 1920"
@@ -2941,19 +3353,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":430,\"bottom\":900,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":430,\"bottom\":899,\"width\":430,\"height\":900},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":40,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":762.15625,\"right\":430,\"bottom\":876,\"width\":249.40625,\"height\":113.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":702.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":172.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":711.15625,\"right\":430,\"bottom\":762.15625,\"width\":249.40625,\"height\":51},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":654.15625,\"right\":420,\"bottom\":694.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 430"
@@ -2964,19 +3376,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":650,\"bottom\":900,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":650,\"bottom\":899,\"width\":650,\"height\":900},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":42,\"right\":650,\"bottom\":876,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":742.109375,\"right\":650,\"bottom\":876,\"width\":450.109375,\"height\":133.890625},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":732.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":142.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.984375,\"top\":689.109375,\"right\":650,\"bottom\":742.109375,\"width\":450.015625,\"height\":53},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":684.15625,\"right\":640,\"bottom\":724.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 650"
@@ -2987,19 +3399,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1024,\"bottom\":900,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1024,\"bottom\":899,\"width\":1024,\"height\":900},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":42,\"right\":1024,\"bottom\":876,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":729.0625,\"right\":1024,\"bottom\":876,\"width\":270.25,\"height\":146.9375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":697.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":177.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":676.0625,\"right\":1024,\"bottom\":729.0625,\"width\":270.3125,\"height\":53},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":649.15625,\"right\":1014,\"bottom\":689.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 1024"
@@ -3010,19 +3422,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1440,\"bottom\":900,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1440,\"bottom\":899,\"width\":1440,\"height\":900},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.5625,\"top\":42,\"right\":1440,\"bottom\":876,\"width\":457.4375,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":41,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":834},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":742.109375,\"right\":1440,\"bottom\":876,\"width\":457.40625,\"height\":133.890625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":732.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":142.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":689.109375,\"right\":1440,\"bottom\":742.109375,\"width\":457.40625,\"height\":53},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":684.15625,\"right\":1430,\"bottom\":724.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 1440"
@@ -3033,19 +3445,19 @@
     },
     {
       "label": "Viewport containment: .pm-shell retro-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":0,\"right\":1920,\"bottom\":900,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":0,\"top\":-1,\"right\":1920,\"bottom\":899,\"width\":1920,\"height\":900},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":42,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":41,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":834},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":742.109375,\"right\":1920,\"bottom\":876,\"width\":678.203125,\"height\":133.890625},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":732.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":142.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":689.109375,\"right\":1920,\"bottom\":742.109375,\"width\":678.203125,\"height\":53},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":684.15625,\"right\":1910,\"bottom\":724.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 1920"
@@ -3487,7 +3899,7 @@
     },
     {
       "label": "Orphan gate: the emitted-token set is real",
-      "detail": "LIVE 1143 (static 1002 + 106 patterns, runtime 707); 246 wildcard patterns discarded"
+      "detail": "LIVE 1229 (static 1077 + 119 patterns, runtime 754); 306 wildcard patterns discarded"
     }
   ],
   "failures": [],
@@ -3527,11 +3939,11 @@
     {
       "text": "83.9K",
       "exact": false,
-      "found": 2,
-      "allow": 2
+      "found": 1,
+      "allow": 1
     },
     {
-      "text": "78%",
+      "text": "78.34%",
       "exact": false,
       "found": 1,
       "allow": 1
@@ -3591,7 +4003,7 @@
       "allow": 1
     },
     {
-      "text": "Worked for",
+      "text": "Completed",
       "exact": false,
       "found": 1,
       "allow": 1
@@ -3875,7 +4287,7 @@
       "tries": 2
     },
     {
-      "after": "Activity click opens all-category detail: goal",
+      "after": "Activity click opens focused Status Board: goal",
       "before": {
         "menu": false,
         "dialog": false,
@@ -3883,7 +4295,7 @@
         "decision": false,
         "ctxDetails": false,
         "activityOpen": true,
-        "activityPinned": false,
+        "activityPinned": true,
         "domMenu": 0,
         "domSidecar": 0,
         "domHover": 0,
@@ -3907,7 +4319,7 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 2
+      "tries": 3
     },
     {
       "after": "Activity hover preview: todo",
@@ -3945,7 +4357,7 @@
       "tries": 2
     },
     {
-      "after": "Activity click opens all-category detail: todo",
+      "after": "Activity click opens focused Status Board: todo",
       "before": {
         "menu": false,
         "dialog": false,
@@ -3953,7 +4365,7 @@
         "decision": false,
         "ctxDetails": false,
         "activityOpen": true,
-        "activityPinned": false,
+        "activityPinned": true,
         "domMenu": 0,
         "domSidecar": 0,
         "domHover": 0,
@@ -3977,7 +4389,7 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 2
+      "tries": 3
     },
     {
       "after": "Activity hover preview: subagents",
@@ -4015,7 +4427,7 @@
       "tries": 2
     },
     {
-      "after": "Activity click opens all-category detail: subagents",
+      "after": "Activity click opens focused Status Board: subagents",
       "before": {
         "menu": false,
         "dialog": false,
@@ -4023,7 +4435,7 @@
         "decision": false,
         "ctxDetails": false,
         "activityOpen": true,
-        "activityPinned": false,
+        "activityPinned": true,
         "domMenu": 0,
         "domSidecar": 0,
         "domHover": 0,
@@ -4047,7 +4459,7 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 2
+      "tries": 3
     },
     {
       "after": "Activity hover preview: changes",
@@ -4085,7 +4497,7 @@
       "tries": 2
     },
     {
-      "after": "Activity click opens all-category detail: changes",
+      "after": "Activity click opens focused Status Board: changes",
       "before": {
         "menu": false,
         "dialog": false,
@@ -4093,7 +4505,7 @@
         "decision": false,
         "ctxDetails": false,
         "activityOpen": true,
-        "activityPinned": false,
+        "activityPinned": true,
         "domMenu": 0,
         "domSidecar": 0,
         "domHover": 0,
@@ -4117,7 +4529,7 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 2
+      "tries": 3
     },
     {
       "after": "Activity hover preview: artifacts",
@@ -4155,7 +4567,7 @@
       "tries": 2
     },
     {
-      "after": "Activity click opens all-category detail: artifacts",
+      "after": "Activity click opens focused Status Board: artifacts",
       "before": {
         "menu": false,
         "dialog": false,
@@ -4163,7 +4575,7 @@
         "decision": false,
         "ctxDetails": false,
         "activityOpen": true,
-        "activityPinned": false,
+        "activityPinned": true,
         "domMenu": 0,
         "domSidecar": 0,
         "domHover": 0,
@@ -4187,7 +4599,42 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 2
+      "tries": 3
+    },
+    {
+      "after": "Activity Detail Show all and domain drill-down",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": true,
+        "activityPinned": true,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 1,
+        "domGhost": 0
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 3
     },
     {
       "after": "Activity Detail pin and unpin",
@@ -4198,7 +4645,7 @@
         "decision": false,
         "ctxDetails": false,
         "activityOpen": true,
-        "activityPinned": false,
+        "activityPinned": true,
         "domMenu": 0,
         "domSidecar": 0,
         "domHover": 0,
@@ -4222,7 +4669,7 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 2
+      "tries": 3
     },
     {
       "after": "Model picker and effort sidecar",
@@ -4264,14 +4711,14 @@
       "before": {
         "menu": true,
         "dialog": false,
-        "hover": true,
+        "hover": false,
         "decision": false,
         "ctxDetails": false,
         "activityOpen": false,
         "activityPinned": false,
         "domMenu": 1,
         "domSidecar": 1,
-        "domHover": 1,
+        "domHover": 0,
         "domDrawer": 0,
         "domPanel": 0,
         "domGhost": 0
@@ -4328,6 +4775,41 @@
       },
       "stuck": [],
       "tries": 4
+    },
+    {
+      "after": "Context Lens header strip",
+      "before": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 1
+      },
+      "after_": {
+        "menu": false,
+        "dialog": false,
+        "hover": false,
+        "decision": false,
+        "ctxDetails": false,
+        "activityOpen": false,
+        "activityPinned": false,
+        "domMenu": 0,
+        "domSidecar": 0,
+        "domHover": 0,
+        "domDrawer": 0,
+        "domPanel": 0,
+        "domGhost": 0
+      },
+      "stuck": [],
+      "tries": 3
     },
     {
       "after": "Working Animation controls and history",
@@ -6115,5 +6597,5 @@
       "tries": 1
     }
   ],
-  "generatedAt": "2026-08-25T23:15:03.348Z"
+  "generatedAt": "2026-08-31T20:51:46.828Z"
 }

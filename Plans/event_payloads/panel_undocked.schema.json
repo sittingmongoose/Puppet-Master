@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/1.0.0",
+  "title": "panel.undocked settled host-transition event payload",
+  "description": "Closed payload for the successful transition of one panel from a workspace host into a detached window. Pointer previews, command acceptance, rejected results, and window-open attempts are not this event.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "workspace_tab_id",
+    "panel_id",
+    "command_id",
+    "interaction_transaction_id",
+    "origin",
+    "correlation_id",
+    "idempotency_key",
+    "command_result_ref",
+    "dispatch_receipt_ref",
+    "prior_layout_revision",
+    "new_layout_revision",
+    "source_host",
+    "target_window_id",
+    "settled_panel_state_ref",
+    "settled_at_utc",
+    "settled_only",
+    "preview_state_included",
+    "persisted",
+    "workspace_layout_changed_coemitted",
+    "workspace_layout_event_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event.panel_undocked.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "workspace_tab_id": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "panel_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "command_id": {
+      "const": "cmd.panel.undock"
+    },
+    "interaction_transaction_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "origin": {
+      "enum": ["home_workspace", "global_shell"]
+    },
+    "correlation_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "idempotency_key": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "command_result_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "dispatch_receipt_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "prior_layout_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "new_layout_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_host": {
+      "$ref": "#/$defs/workspace_host"
+    },
+    "target_window_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "settled_panel_state_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "settled_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "settled_only": {
+      "const": true
+    },
+    "preview_state_included": {
+      "const": false
+    },
+    "persisted": {
+      "const": true
+    },
+    "workspace_layout_changed_coemitted": {
+      "type": "boolean"
+    },
+    "workspace_layout_event_ref": {
+      "type": ["string", "null"],
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspace_host": {
+      "type": "string",
+      "enum": [
+        "home_main",
+        "dock_left",
+        "dock_right",
+        "dock_top",
+        "dock_bottom",
+        "side_panel",
+        "bottom_panel",
+        "editor"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "workspace_layout_changed_coemitted": {"const": true}
+        },
+        "required": ["workspace_layout_changed_coemitted"]
+      },
+      "then": {
+        "properties": {
+          "workspace_layout_event_ref": {"type": "string", "minLength": 1}
+        }
+      },
+      "else": {
+        "properties": {
+          "workspace_layout_event_ref": {"const": null}
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,480 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/guided_tour/2.0.0/guided_tour_contracts.schema.json",
+  "title": "Puppet Master directed Guided Tour contracts",
+  "description": "Closed static contracts for the current orientation-plus-three-scene directed beginner film. These records describe concept-only choreography and mounted-owner observations, never runtime proof; the source-owned local focus-route result remains v1.",
+  "oneOf": [
+    {"$ref": "#/$defs/guided_tour_storyboard"},
+    {"$ref": "#/$defs/guided_tour_session"},
+    {"$ref": "#/$defs/guided_tour_action_request"},
+    {"$ref": "#/$defs/guided_tour_focus_route_result"},
+    {"$ref": "#/$defs/guided_tour_usage_progression"},
+    {"$ref": "#/$defs/guided_tour_planning_progression"},
+    {"$ref": "#/$defs/guided_tour_chat_teacher_progression"},
+    {"$ref": "#/$defs/guided_tour_teacher_copy_contract"},
+    {"$ref": "#/$defs/guided_tour_teacher_library_contract"},
+    {"$ref": "#/$defs/guided_tour_presentation_contract"},
+    {"$ref": "#/$defs/guided_tour_terminal_result"}
+  ],
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 4096},
+    "safe_ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:secret|password|token|cookie|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"},
+    "nullable_safe_ref": {"oneOf": [{"$ref": "#/$defs/safe_ref"}, {"type": "null"}]},
+    "story_order": {
+      "type": "array",
+      "prefixItems": [{"const": "usage"}, {"const": "planning_wizard"}, {"const": "chat_teacher"}],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "ui_actions": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "ui.guided_tour.start"}, {"const": "ui.guided_tour.next"}, {"const": "ui.guided_tour.back"},
+        {"const": "ui.guided_tour.pause"}, {"const": "ui.guided_tour.resume"}, {"const": "ui.guided_tour.skip"},
+        {"const": "ui.guided_tour.focus_route"}, {"const": "ui.guided_tour.toggle_eli5"}, {"const": "ui.guided_tour.finish"},
+        {"const": "ui.guided_tour.replay"}
+      ],
+      "items": false,
+      "minItems": 10,
+      "maxItems": 10
+    },
+    "storyboard_revision": {"const": "orientation-panel-usage-planning-teacher-2026-09-01"},
+    "teacher_topic_ids": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "app_map"}, {"const": "page_navigation"}, {"const": "panel_move"}, {"const": "panel_resize"}, {"const": "panel_restore"}, {"const": "panel_definition"}, {"const": "usage"}, {"const": "cards"}, {"const": "costs_limits"}, {"const": "open_local_folder"}, {"const": "bring_online"}, {"const": "cursor_origin"}, {"const": "already_connected_source"}, {"const": "project"}, {"const": "requirements"}, {"const": "review_approval"}, {"const": "planning"}, {"const": "source_control"}, {"const": "safe_history"}, {"const": "filesafe"}, {"const": "github"}, {"const": "gitlab"}, {"const": "ssh_folder"}, {"const": "network_share"}, {"const": "backup_location"}, {"const": "connect_existing"}, {"const": "local_discovery"}, {"const": "vpn"}, {"const": "tailscale"}, {"const": "headscale"}, {"const": "reverse_proxy"}, {"const": "remote_link"}, {"const": "pairing"}, {"const": "tls_certificates"}, {"const": "permissions"}, {"const": "privacy_secrets"}, {"const": "runs_queue"}, {"const": "teacher_doctor"}, {"const": "settings_accessibility"}, {"const": "remote_access"}, {"const": "server"}, {"const": "teacher"}, {"const": "getting_started"}, {"const": "device_name_address"}, {"const": "authentication"}, {"const": "setup_summary"}, {"const": "supported_topics"}
+      ],
+      "items": false,
+      "minItems": 47,
+      "maxItems": 47
+    },
+    "captured_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layout_snapshot_ref", "composer_placeholder", "focus_id"],
+      "properties": {
+        "layout_snapshot_ref": {"$ref": "#/$defs/safe_ref"},
+        "composer_placeholder": {"type": "string", "maxLength": 512},
+        "focus_id": {"$ref": "#/$defs/safe_ref"}
+      }
+    },
+    "effective_reduced_motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["setting_id", "owner", "effective", "tour_write"],
+      "properties": {
+        "setting_id": {"const": "general.visual.reduce-animations"},
+        "owner": {"const": "Settings"},
+        "effective": {"type": "boolean"},
+        "tour_write": {"const": false}
+      }
+    },
+    "heading_focus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "element", "tabindex", "focus_exemption", "automatic_action", "pm_hover_tag_opened"],
+      "properties": {
+        "target": {"enum": ["guided_tour.usage.heading", "guided_tour.planning_wizard.heading", "guided_tour.chat_teacher.heading"]},
+        "element": {"const": "h2"},
+        "tabindex": {"const": -1},
+        "focus_exemption": {"const": "programmatic-focus-landmark"},
+        "automatic_action": {"const": false},
+        "pm_hover_tag_opened": {"const": false}
+      }
+    },
+    "owner_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_id", "target_id", "scene", "mode", "status", "mounted_owner_result_observed", "observation_ref", "evidence_scope", "production_receipt_claim"],
+      "properties": {
+        "action_id": {"enum": ["cmd.workspace_layout.move_surface", "cmd.widget.resize", "cmd.widget.remove", "cmd.widget.add", "cmd.panel.switch", "cmd.panel.redock"]},
+        "target_id": {"$ref": "#/$defs/safe_ref"},
+        "scene": {"enum": ["usage", "chat_teacher"]},
+        "mode": {"const": "watch"},
+        "status": {"enum": ["applied", "no_change"]},
+        "mounted_owner_result_observed": {"const": true},
+        "observation_ref": {"$ref": "#/$defs/safe_ref"},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "teacher_practice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chat_host", "guide_picker_opened", "selected_guide", "composer_placeholder", "send_surface", "user_message", "message_sent", "answer_id", "response_message_id", "copy_mode", "deterministic_reply", "same_chat", "finish_available"],
+      "properties": {
+        "chat_host": {"enum": ["hidden", "dock_right"]},
+        "guide_picker_opened": {"type": "boolean"},
+        "selected_guide": {"enum": [null, "Teacher"]},
+        "composer_placeholder": {"enum": [null, "Ask Teacher anything about Puppet Master…"]},
+        "send_surface": {"enum": ["not_entered", "real_assistant_chat_composer"]},
+        "user_message": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
+        "message_sent": {"type": "boolean"},
+        "answer_id": {"oneOf": [{"$ref": "#/$defs/safe_ref"}, {"type": "null"}]},
+        "response_message_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "copy_mode": {"enum": ["normal", "eli5"]},
+        "deterministic_reply": {"type": "boolean"},
+        "same_chat": {"type": "boolean"},
+        "finish_available": {"type": "boolean"}
+      }
+    },
+    "guided_tour_storyboard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "revision", "predecessor", "order", "scene_count", "ui_actions", "scenes", "continuity", "mobile_rule"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.storyboard.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "revision": {"$ref": "#/$defs/storyboard_revision"},
+        "predecessor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["schema_id", "disposition", "migration"],
+          "properties": {
+            "schema_id": {"const": "pm.guided_tour.storyboard.v1"},
+            "disposition": {"const": "rejected_five_chapter_predecessor"},
+            "migration": {"const": "replace_with_directed_three_scene_film"}
+          }
+        },
+        "order": {"$ref": "#/$defs/story_order"},
+        "scene_count": {"const": 3},
+        "ui_actions": {"$ref": "#/$defs/ui_actions"},
+        "scenes": {
+          "type": "array",
+          "prefixItems": [
+            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "usage"}, "purpose": {"const": "Orient to page navigation, watch real work panels rearrange and return, then verify one Usage card menu before a reversible resize, hide, and reveal film."}}},
+            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "planning_wizard"}, "purpose": {"const": "Visit the mounted Planning intake, choose an unselected work type, and open the mounted requirements experience."}}},
+            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "chat_teacher"}, "purpose": {"const": "Use Chat’s mounted guide picker to select Teacher, send a real suggested question, and receive a built-in reply."}}}
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "continuity": {"const": "The story moves forward from orientation and Usage to Planning and then Chat."},
+        "mobile_rule": {"const": "Compact callouts stay fully visible and never replace the exact control being taught."}
+      }
+    },
+    "guided_tour_session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "predecessor_schema_id", "migration_disposition", "tour_session_id", "project_id", "onboarding_session_id", "storyboard_schema_id", "storyboard_revision", "story_order", "scene_count", "step", "step_index", "phase", "status", "durability_class", "session_persistence", "captured_state", "layout_disposition", "owner_observations", "teacher_mode", "provider_use_count", "network_used", "model_id", "token_budget", "effective_reduced_motion", "teacher_practice", "heading_focus", "low_resource_profile", "shell_squeezed", "demonstrated_action_ids", "completed_action_ids", "evidence_scope", "production_receipt_claim", "revision", "currentness_sha256", "updated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.session.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "predecessor_schema_id": {"const": "pm.guided_tour.session.v1"},
+        "migration_disposition": {"const": "migrated_breaking_directed_film"},
+        "tour_session_id": {"$ref": "#/$defs/safe_ref"},
+        "project_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "onboarding_session_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "storyboard_schema_id": {"const": "pm.guided_tour.storyboard.v2"},
+        "storyboard_revision": {"$ref": "#/$defs/storyboard_revision"},
+        "story_order": {"$ref": "#/$defs/story_order"},
+        "scene_count": {"const": 3},
+        "step": {"enum": ["usage", "planning_wizard", "chat_teacher"]},
+        "step_index": {"type": "integer", "minimum": 0, "maximum": 2},
+        "phase": {"enum": ["orientation", "panel_round_trip", "open_usage", "usage_overview", "usage_options_try", "usage_card_film", "usage_success", "planning_scan", "planning_intent_try", "planning_requirements_try", "planning_success", "planning_review", "chat_picker", "teacher_select", "teacher_composer", "teacher_wait", "teacher_reply"]},
+        "status": {"enum": ["first_launch", "demonstrating", "awaiting_user", "paused", "interrupted", "skipped", "completed"]},
+        "durability_class": {"const": "ephemeral_session"},
+        "session_persistence": {"const": "not_persisted"},
+        "captured_state": {"$ref": "#/$defs/captured_state"},
+        "layout_disposition": {"enum": ["pending", "restore", "keep"]},
+        "owner_observations": {"type": "array", "uniqueItems": true, "maxItems": 16, "items": {"$ref": "#/$defs/owner_observation"}},
+        "teacher_mode": {"const": "local_deterministic_zero_provider"},
+        "provider_use_count": {"const": 0},
+        "network_used": {"const": false},
+        "model_id": {"type": "null"},
+        "token_budget": {"type": "null"},
+        "effective_reduced_motion": {"$ref": "#/$defs/effective_reduced_motion"},
+        "teacher_practice": {"$ref": "#/$defs/teacher_practice"},
+        "heading_focus": {"$ref": "#/$defs/heading_focus"},
+        "low_resource_profile": {"type": "boolean"},
+        "shell_squeezed": {"type": "boolean"},
+        "demonstrated_action_ids": {"type": "array", "uniqueItems": true, "maxItems": 64, "items": {"$ref": "#/$defs/safe_ref"}},
+        "completed_action_ids": {"type": "array", "uniqueItems": true, "maxItems": 64, "items": {"$ref": "#/$defs/safe_ref"}},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false},
+        "revision": {"type": "integer", "minimum": 1},
+        "currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "updated_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"step": {"const": "usage"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 0}, "phase": {"enum": ["orientation", "panel_round_trip", "open_usage", "usage_overview", "usage_options_try", "usage_card_film", "usage_success"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.usage.heading"}}}}}},
+        {"if": {"properties": {"step": {"const": "planning_wizard"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 1}, "phase": {"enum": ["planning_scan", "planning_intent_try", "planning_requirements_try", "planning_success", "planning_review"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.planning_wizard.heading"}}}}}},
+        {"if": {"properties": {"step": {"const": "chat_teacher"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 2}, "phase": {"enum": ["chat_picker", "teacher_select", "teacher_composer", "teacher_wait", "teacher_reply"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.chat_teacher.heading"}}}}}},
+        {"if": {"properties": {"phase": {"const": "teacher_reply"}}, "required": ["phase"]}, "then": {"properties": {"teacher_practice": {"properties": {"chat_host": {"const": "dock_right"}, "guide_picker_opened": {"const": true}, "selected_guide": {"const": "Teacher"}, "composer_placeholder": {"const": "Ask Teacher anything about Puppet Master…"}, "send_surface": {"const": "real_assistant_chat_composer"}, "user_message": {"$ref": "#/$defs/non_empty_string"}, "message_sent": {"const": true}, "answer_id": {"not": {"type": "null"}}, "response_message_id": {"$ref": "#/$defs/safe_ref"}, "deterministic_reply": {"const": true}, "same_chat": {"const": true}, "finish_available": {"const": true}}}}}},
+        {"if": {"properties": {"status": {"const": "completed"}}, "required": ["status"]}, "then": {"properties": {"step": {"const": "chat_teacher"}, "phase": {"const": "teacher_reply"}, "layout_disposition": {"const": "keep"}}}},
+        {"if": {"properties": {"status": {"const": "skipped"}}, "required": ["status"]}, "then": {"properties": {"layout_disposition": {"const": "restore"}}}}
+      ]
+    },
+    "guided_tour_action_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "predecessor_schema_id", "migration_disposition", "action_id", "command_instance_id", "tour_session_id", "expected_revision", "expected_currentness_sha256", "step", "target_surface_id", "target_control_id", "target_label", "actor_ref", "idempotency_key", "return_focus_id"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.action_request.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "predecessor_schema_id": {"const": "pm.guided_tour.action_request.v1"},
+        "migration_disposition": {"const": "retired_restore_keep_and_added_eli5_finish"},
+        "action_id": {"enum": ["ui.guided_tour.start", "ui.guided_tour.next", "ui.guided_tour.back", "ui.guided_tour.pause", "ui.guided_tour.resume", "ui.guided_tour.skip", "ui.guided_tour.focus_route", "ui.guided_tour.toggle_eli5", "ui.guided_tour.finish", "ui.guided_tour.replay"]},
+        "command_instance_id": {"$ref": "#/$defs/safe_ref"},
+        "tour_session_id": {"$ref": "#/$defs/safe_ref"},
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "expected_currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "step": {"enum": ["usage", "planning_wizard", "chat_teacher"]},
+        "target_surface_id": {"$ref": "#/$defs/safe_ref"},
+        "target_control_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "target_label": {"$ref": "#/$defs/non_empty_string"},
+        "route_target": {"type": "object", "additionalProperties": false, "required": ["page_id"], "properties": {"page_id": {"const": "usage"}}},
+        "captured_state": {"$ref": "#/$defs/captured_state"},
+        "actor_ref": {"$ref": "#/$defs/safe_ref"},
+        "idempotency_key": {"$ref": "#/$defs/safe_ref"},
+        "return_focus_id": {"enum": ["guided_tour.usage.heading", "guided_tour.planning_wizard.heading", "guided_tour.chat_teacher.heading"]}
+      },
+      "allOf": [
+        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.focus_route"}}, "required": ["action_id"]}, "then": {"required": ["route_target"], "properties": {"step": {"const": "usage"}, "target_surface_id": {"const": "usage"}, "target_control_id": {"const": "ui.guided_tour.focus_route"}, "return_focus_id": {"const": "guided_tour.usage.heading"}}}, "else": {"not": {"required": ["route_target"]}}},
+        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.skip"}}, "required": ["action_id"]}, "then": {"required": ["captured_state"], "properties": {"target_control_id": {"const": "ui.guided_tour.skip"}, "target_label": {"const": "Skip Tour"}}}, "else": {"not": {"required": ["captured_state"]}}},
+        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.toggle_eli5"}}, "required": ["action_id"]}, "then": {"properties": {"target_control_id": {"const": "ui.guided_tour.toggle_eli5"}, "target_label": {"enum": ["ELI5: Off", "ELI5: On"]}}}},
+        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.finish"}}, "required": ["action_id"]}, "then": {"properties": {"step": {"const": "chat_teacher"}, "target_control_id": {"const": "ui.guided_tour.finish"}, "target_label": {"const": "Finish tour"}, "return_focus_id": {"const": "guided_tour.chat_teacher.heading"}}}}
+      ]
+    },
+    "guided_tour_focus_route_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "action_id", "tour_session_id", "route_target", "status", "before_page_id", "after_page_id", "error_code", "reason", "domain_mutation", "persistence_write", "return_focus_id", "result_revision"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.focus_route_result.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "action_id": {"const": "ui.guided_tour.focus_route"},
+        "tour_session_id": {"$ref": "#/$defs/safe_ref"},
+        "route_target": {"type": "object", "additionalProperties": false, "required": ["page_id"], "properties": {"page_id": {"const": "usage"}}},
+        "status": {"enum": ["applied", "failed", "disabled"]},
+        "before_page_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "after_page_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "error_code": {"enum": [null, "route_target_missing", "page_router_unavailable", "route_not_activated"]},
+        "reason": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
+        "domain_mutation": {"const": false},
+        "persistence_write": {"const": false},
+        "return_focus_id": {"const": "guided_tour.usage.heading"},
+        "result_revision": {"type": "integer", "minimum": 1}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "applied"}}, "required": ["status"]}, "then": {"properties": {"after_page_id": {"const": "usage"}, "error_code": {"type": "null"}, "reason": {"type": "null"}}}},
+        {"if": {"properties": {"status": {"const": "disabled"}}, "required": ["status"]}, "then": {"properties": {"error_code": {"enum": ["route_target_missing", "page_router_unavailable"]}, "reason": {"$ref": "#/$defs/non_empty_string"}}}},
+        {"if": {"properties": {"status": {"const": "failed"}}, "required": ["status"]}, "then": {"properties": {"error_code": {"const": "route_not_activated"}, "reason": {"$ref": "#/$defs/non_empty_string"}}}}
+      ]
+    },
+    "guided_tour_usage_progression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "storyboard_revision", "step", "orientation", "panel_round_trip", "options_try", "card_film"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.usage_progression.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "storyboard_revision": {"$ref": "#/$defs/storyboard_revision"},
+        "step": {"const": "usage"},
+        "orientation": {
+          "type": "object", "additionalProperties": false,
+          "required": ["page_navigation_explained", "panel_purpose_explained", "real_visible_panels"],
+          "properties": {"page_navigation_explained": {"const": true}, "panel_purpose_explained": {"const": true}, "real_visible_panels": {"const": true}}
+        },
+        "panel_round_trip": {
+          "type": "object", "additionalProperties": false,
+          "required": ["demo_name", "visible_panel_count", "rearranged_surface_ids", "mounted_owner_result_observed", "round_trip_restore", "interruptible"],
+          "properties": {
+            "demo_name": {"const": "panel-round-trip"}, "visible_panel_count": {"const": 2},
+            "rearranged_surface_ids": {"type": "array", "items": {"$ref": "#/$defs/safe_ref"}, "minItems": 2, "maxItems": 2, "uniqueItems": true},
+            "mounted_owner_result_observed": {"const": true}, "round_trip_restore": {"const": true}, "interruptible": {"const": true}
+          }
+        },
+        "options_try": {
+          "type": "object", "additionalProperties": false,
+          "required": ["target_token", "target_control_kind", "activation", "completion_source", "first_click", "bounded_owner_readiness_ms", "same_frame_acknowledgement", "look_alike", "timer_only", "narration_only"],
+          "properties": {
+            "target_token": {"const": "exact_usage_card_options"}, "target_control_kind": {"const": "card_options"},
+            "activation": {"const": "user"}, "completion_source": {"const": "exact_mounted_control_activation"},
+            "first_click": {"const": true}, "bounded_owner_readiness_ms": {"const": 250}, "same_frame_acknowledgement": {"const": true},
+            "look_alike": {"const": false}, "timer_only": {"const": false}, "narration_only": {"const": false}
+          }
+        },
+        "card_film": {
+          "type": "object", "additionalProperties": false,
+          "required": ["demo_name", "card_id", "same_card", "mounted_controls", "sequence", "round_trip_restore", "completion_source", "interruptible"],
+          "properties": {
+            "demo_name": {"const": "usage-card-film"}, "card_id": {"$ref": "#/$defs/safe_ref"}, "same_card": {"const": true},
+            "mounted_controls": {"type": "array", "prefixItems": [{"const": "card_size_option"}, {"const": "remove_panel"}, {"const": "panel_chooser"}], "items": false, "minItems": 3, "maxItems": 3},
+            "sequence": {"type": "array", "prefixItems": [{"const": "resize"}, {"const": "hide"}, {"const": "reveal"}, {"const": "restore"}], "items": false, "minItems": 4, "maxItems": 4},
+            "round_trip_restore": {"const": true}, "completion_source": {"const": "mounted_owner_results"}, "interruptible": {"const": true}
+          }
+        }
+      }
+    },
+    "guided_tour_planning_progression": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "storyboard_revision", "step", "preview_beats", "intent", "requirements", "review_approval"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.planning_progression.v2"}, "schema_version": {"const": "2.0.0"},
+        "storyboard_revision": {"$ref": "#/$defs/storyboard_revision"}, "step": {"const": "planning_wizard"},
+        "preview_beats": {"type": "array", "prefixItems": [{"const": "attach"}, {"const": "intent"}, {"const": "continue"}], "items": false, "minItems": 3, "maxItems": 3},
+        "intent": {"type": "object", "additionalProperties": false, "required": ["target_token", "real_mounted_control", "plain_language_choice", "activation", "auto_advance_after_activation"], "properties": {"target_token": {"const": "exact_planning_choice"}, "real_mounted_control": {"const": true}, "plain_language_choice": {"const": true}, "activation": {"const": "user"}, "auto_advance_after_activation": {"const": true}}},
+        "requirements": {"type": "object", "additionalProperties": false, "required": ["target_token", "real_mounted_control", "stage", "opened", "auto_advance_after_activation"], "properties": {"target_token": {"const": "exact_planning_requirements"}, "real_mounted_control": {"const": true}, "stage": {"const": "requirements"}, "opened": {"const": true}, "auto_advance_after_activation": {"const": true}}},
+        "review_approval": {"type": "object", "additionalProperties": false, "required": ["copy", "editable_before_approval", "work_starts_before_approval", "explicit_approval_required", "redundant_confirmation_required", "confirmation_clicks"], "properties": {"copy": {"const": "Read and change the plan here. Nothing starts until you approve it."}, "editable_before_approval": {"const": true}, "work_starts_before_approval": {"const": false}, "explicit_approval_required": {"const": true}, "redundant_confirmation_required": {"const": false}, "confirmation_clicks": {"const": 0}}}
+      }
+    },
+    "guided_tour_chat_teacher_progression": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "storyboard_revision", "step", "entry", "picker", "selection", "composer", "reply", "finish"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.chat_teacher_progression.v2"}, "schema_version": {"const": "2.0.0"},
+        "storyboard_revision": {"$ref": "#/$defs/storyboard_revision"}, "step": {"const": "chat_teacher"},
+        "entry": {"type": "object", "additionalProperties": false, "required": ["chat_host", "host_ready_before_scene"], "properties": {"chat_host": {"const": "dock_right"}, "host_ready_before_scene": {"const": true}}},
+        "picker": {"type": "object", "additionalProperties": false, "required": ["target_token", "real_guide_selector", "opened"], "properties": {"target_token": {"const": "exact_teacher_picker"}, "real_guide_selector": {"const": true}, "opened": {"const": true}}},
+        "selection": {"type": "object", "additionalProperties": false, "required": ["guide", "real_mounted_control", "selected"], "properties": {"guide": {"const": "Teacher"}, "real_mounted_control": {"const": true}, "selected": {"const": true}}},
+        "composer": {
+          "type": "object", "additionalProperties": false,
+          "required": ["surface", "placeholder", "user_authored", "supported_message", "sent"],
+          "properties": {"surface": {"const": "real_assistant_chat_composer"}, "placeholder": {"const": "Ask Teacher anything about Puppet Master…"}, "user_authored": {"const": true}, "supported_message": {"$ref": "#/$defs/non_empty_string"}, "sent": {"const": true}}
+        },
+        "reply": {
+          "type": "object", "additionalProperties": false,
+          "required": ["execution_path", "local_deterministic", "same_chat", "answer_id", "copy_mode", "complete", "provider_use_count", "network_used", "model_id", "token_budget", "evidence_scope", "production_receipt_claim"],
+          "properties": {
+            "execution_path": {"const": "local_deterministic"}, "local_deterministic": {"const": true}, "same_chat": {"const": true},
+            "answer_id": {"$ref": "#/$defs/safe_ref"},
+            "copy_mode": {"enum": ["normal", "eli5"]}, "complete": {"const": true}, "provider_use_count": {"const": 0},
+            "network_used": {"const": false}, "model_id": {"type": "null"}, "token_budget": {"type": "null"},
+            "evidence_scope": {"const": "concept_fixture_only"}, "production_receipt_claim": {"const": false}
+          }
+        },
+        "finish": {"type": "object", "additionalProperties": false, "required": ["available", "control_id", "restore_or_keep_prompt_present", "chat_host_after"], "properties": {"available": {"const": true}, "control_id": {"const": "ui.guided_tour.finish"}, "restore_or_keep_prompt_present": {"const": false}, "chat_host_after": {"const": "dock_right"}}}
+      }
+    },
+    "guided_tour_teacher_copy_contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "topic_id", "same_facts", "materially_distinct", "normal", "eli5", "supported_topic_count", "supported_topics", "unsupported"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.teacher_copy.v2"}, "schema_version": {"const": "2.0.0"}, "topic_id": {"const": "project"},
+        "same_facts": {"const": true}, "materially_distinct": {"const": true},
+        "normal": {
+          "type": "object", "additionalProperties": false,
+          "required": ["text", "definition_present", "familiar_example_present", "safe_next_action_present"],
+          "properties": {
+            "text": {"const": "A project groups one goal, its working files, configuration, recoverable versions, and approved work. Storage location and online source control are separate choices. Start with one clearly named project and verify its folder."},
+            "definition_present": {"const": true}, "familiar_example_present": {"const": true}, "safe_next_action_present": {"const": true}
+          }
+        },
+        "eli5": {
+          "type": "object", "additionalProperties": false,
+          "required": ["text", "definition_present", "familiar_example_present", "safe_next_action_present"],
+          "properties": {
+            "text": {"const": "A project is one labeled box for an idea. Its pieces and save points stay together. Start with one box whose name you recognize."},
+            "definition_present": {"const": true}, "familiar_example_present": {"const": true}, "safe_next_action_present": {"const": true}
+          }
+        },
+        "supported_topic_count": {"const": 47},
+        "supported_topics": {"$ref": "#/$defs/teacher_topic_ids"},
+        "unsupported": {
+          "type": "object", "additionalProperties": false,
+          "required": ["answer_id", "bounded", "lists_supported_topics", "normal", "eli5"],
+          "properties": {
+            "answer_id": {"const": "supported_topics"}, "bounded": {"const": true}, "lists_supported_topics": {"const": true},
+            "normal": {"const": "This practice Teacher can answer more than forty Puppet Master topics across navigation, panels, projects, Planning, history, online copies, storage, Servers, connections, security, runs, and accessibility. Ask one specific product question, such as “How do I rearrange panels?” or “How does local discovery work?” Broader questions can go to the regular Assistant after the tour."},
+            "eli5": {"const": "This guidebook knows more than forty Puppet Master questions. Ask about moving around, projects, save points, connecting devices, safety, or getting unstuck. Try “How do I rearrange panels?”"}
+          }
+        }
+      }
+    },
+    "guided_tour_teacher_library_contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "primary_suggestions", "browse_label", "browse_question_count", "groups", "mounted_inside", "library_open", "callout", "close", "close_result"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.teacher_library.v2"}, "schema_version": {"const": "2.0.0"},
+        "primary_suggestions": {"type": "array", "prefixItems": [{"const": "What are the main parts of Puppet Master?"}, {"const": "How do I rearrange panels?"}, {"const": "What does Planning do?"}, {"const": "Can I use Safe History with GitHub?"}], "items": false, "minItems": 4, "maxItems": 4},
+        "browse_label": {"const": "Browse 26 more"}, "browse_question_count": {"const": 26},
+        "groups": {
+          "type": "array", "prefixItems": [
+            {"type": "object", "additionalProperties": false, "required": ["label", "question_count"], "properties": {"label": {"const": "Projects and safe history"}, "question_count": {"const": 6}}},
+            {"type": "object", "additionalProperties": false, "required": ["label", "question_count"], "properties": {"label": {"const": "Computers and connections"}, "question_count": {"const": 7}}},
+            {"type": "object", "additionalProperties": false, "required": ["label", "question_count"], "properties": {"label": {"const": "Planning and doing the work"}, "question_count": {"const": 6}}},
+            {"type": "object", "additionalProperties": false, "required": ["label", "question_count"], "properties": {"label": {"const": "Comfort and getting unstuck"}, "question_count": {"const": 7}}}
+          ], "items": false, "minItems": 4, "maxItems": 4
+        },
+        "mounted_inside": {"const": "#chatPanel"}, "library_open": {"const": true},
+        "callout": {"type": "object", "additionalProperties": false, "required": ["yields", "inert", "aria_hidden", "pointer_events"], "properties": {"yields": {"const": true}, "inert": {"const": true}, "aria_hidden": {"const": true}, "pointer_events": {"const": "none"}}},
+        "close": {"type": "object", "additionalProperties": false, "required": ["label", "topmost", "keyboard_reachable"], "properties": {"label": {"const": "Close"}, "topmost": {"const": true}, "keyboard_reachable": {"const": true}}},
+        "close_result": {"type": "object", "additionalProperties": false, "required": ["same_beat_restored", "callout_inert", "callout_aria_hidden"], "properties": {"same_beat_restored": {"const": true}, "callout_inert": {"const": false}, "callout_aria_hidden": {"const": false}}}
+      }
+    },
+    "guided_tour_presentation_contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "opening_scene", "top_action_ids", "eli5", "reduced_motion", "scene_entry", "navigation_recovery", "transition_continuity", "visible_copy_internal_terms_exposed"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.presentation.v2"}, "schema_version": {"const": "2.0.0"}, "opening_scene": {"const": "usage"},
+        "top_action_ids": {"type": "array", "prefixItems": [{"const": "ui.guided_tour.toggle_eli5"}, {"const": "ui.guided_tour.pause"}, {"const": "ui.guided_tour.skip"}], "items": false, "minItems": 3, "maxItems": 3},
+        "eli5": {
+          "type": "object", "additionalProperties": false,
+          "required": ["control_id", "placement", "persistent", "called_out_in_opening", "changes"],
+          "properties": {"control_id": {"const": "ui.guided_tour.toggle_eli5"}, "placement": {"const": "top_beside_pause_and_skip"}, "persistent": {"const": true}, "called_out_in_opening": {"const": true}, "changes": {"const": "tour_copy_and_next_teacher_reply"}}
+        },
+        "reduced_motion": {
+          "type": "object", "additionalProperties": false,
+          "required": ["introduced_in", "setting_id", "owner", "tour_write", "separate_scene", "effective", "travel_choreography_removed", "focus_preserved", "hierarchy_preserved", "announcements_preserved", "action_parity_preserved"],
+          "properties": {
+            "introduced_in": {"const": "usage_opening_eli5_moment"}, "setting_id": {"const": "general.visual.reduce-animations"},
+            "owner": {"const": "Settings"}, "tour_write": {"const": false}, "separate_scene": {"const": false}, "effective": {"type": "boolean"},
+            "travel_choreography_removed": {"const": true}, "focus_preserved": {"const": true}, "hierarchy_preserved": {"const": true},
+            "announcements_preserved": {"const": true}, "action_parity_preserved": {"const": true}
+          }
+        },
+        "scene_entry": {"$ref": "#/$defs/heading_focus"},
+        "navigation_recovery": {"type": "object", "additionalProperties": false, "required": ["back_operational", "forward_operational", "same_story_state_preserved", "required_practice_not_skipped"], "properties": {"back_operational": {"const": true}, "forward_operational": {"const": true}, "same_story_state_preserved": {"const": true}, "required_practice_not_skipped": {"const": true}}},
+        "transition_continuity": {"type": "object", "additionalProperties": false, "required": ["mounted_application_continuously_painted", "black_frame_allowed", "empty_frame_allowed"], "properties": {"mounted_application_continuously_painted": {"const": true}, "black_frame_allowed": {"const": false}, "empty_frame_allowed": {"const": false}}},
+        "visible_copy_internal_terms_exposed": {"const": false}
+      }
+    },
+    "guided_tour_terminal_result": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "action_id", "tour_session_id", "step", "status", "target_label", "layout_disposition", "captured_state", "restoration", "chat_host_after", "teacher_prerequisites", "restore_or_keep_prompt_present", "domain_mutation", "persistence_write", "evidence_scope", "production_receipt_claim", "result_revision"],
+      "properties": {
+        "schema_id": {"const": "pm.guided_tour.terminal_result.v2"}, "schema_version": {"const": "2.0.0"},
+        "action_id": {"enum": ["ui.guided_tour.skip", "ui.guided_tour.finish"]}, "tour_session_id": {"$ref": "#/$defs/safe_ref"},
+        "step": {"enum": ["usage", "planning_wizard", "chat_teacher"]}, "status": {"enum": ["skipped", "completed"]},
+        "target_label": {"enum": ["Skip Tour", "Finish tour"]}, "layout_disposition": {"enum": ["restore", "keep"]},
+        "captured_state": {"$ref": "#/$defs/captured_state"},
+        "restoration": {
+          "type": "object", "additionalProperties": false,
+          "required": ["layout_restored", "composer_placeholder_restored", "focus_restored", "returned_focus_id"],
+          "properties": {"layout_restored": {"type": "boolean"}, "composer_placeholder_restored": {"type": "boolean"}, "focus_restored": {"type": "boolean"}, "returned_focus_id": {"$ref": "#/$defs/nullable_safe_ref"}}
+        },
+        "chat_host_after": {"enum": ["captured_layout", "dock_right"]},
+        "teacher_prerequisites": {
+          "type": "object", "additionalProperties": false,
+          "required": ["picker_opened", "teacher_selected", "real_message_sent", "deterministic_same_chat_reply_complete"],
+          "properties": {"picker_opened": {"type": "boolean"}, "teacher_selected": {"type": "boolean"}, "real_message_sent": {"type": "boolean"}, "deterministic_same_chat_reply_complete": {"type": "boolean"}}
+        },
+        "restore_or_keep_prompt_present": {"const": false}, "domain_mutation": {"const": false}, "persistence_write": {"const": false},
+        "evidence_scope": {"const": "contract_fixture_only"}, "production_receipt_claim": {"const": false},
+        "result_revision": {"type": "integer", "minimum": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"action_id": {"const": "ui.guided_tour.skip"}}, "required": ["action_id"]},
+          "then": {"properties": {
+            "status": {"const": "skipped"}, "target_label": {"const": "Skip Tour"}, "layout_disposition": {"const": "restore"},
+            "restoration": {"properties": {"layout_restored": {"const": true}, "composer_placeholder_restored": {"const": true}, "focus_restored": {"const": true}, "returned_focus_id": {"$ref": "#/$defs/safe_ref"}}},
+            "chat_host_after": {"const": "captured_layout"}
+          }}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.guided_tour.finish"}}, "required": ["action_id"]},
+          "then": {"properties": {
+            "step": {"const": "chat_teacher"}, "status": {"const": "completed"}, "target_label": {"const": "Finish tour"}, "layout_disposition": {"const": "keep"},
+            "restoration": {"properties": {"layout_restored": {"const": false}, "composer_placeholder_restored": {"const": false}, "focus_restored": {"const": false}, "returned_focus_id": {"type": "null"}}},
+            "chat_host_after": {"const": "dock_right"},
+            "teacher_prerequisites": {"properties": {"picker_opened": {"const": true}, "teacher_selected": {"const": true}, "real_message_sent": {"const": true}, "deterministic_same_chat_reply_complete": {"const": true}}}
+          }}
+        }
+      ]
+    }
+  }
+}

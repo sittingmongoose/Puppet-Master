@@ -294,6 +294,50 @@ ok('a subcompacted region carries a rehydration handle', rehyd > 0, { rehydrateB
 await setMode('off');
 
 /* ----------------------------------------------------- negative controls */
+/* ------------------------------------------------ lens strip transcript pad */
+await page.evaluate(() => { window.PM56_LENS.reset(); PM56_DEMO.selectThread('plain'); });
+await page.waitForTimeout(200);
+const stripPad = await page.evaluate(async () => {
+  const stage = document.querySelector('.chat-stage');
+  const read = () => {
+    const strip = document.querySelector('.overlay-menu.lens-strip');
+    const pad = parseFloat(getComputedStyle(document.querySelector('.transcript')).paddingTop) || 0;
+    const varH = parseFloat(getComputedStyle(stage).getPropertyValue('--lens-strip-h')) || 0;
+    return { stripH: strip ? strip.offsetHeight : 0, pad, varH };
+  };
+  document.querySelector('[data-action="lens-open"]')?.click();
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const open1 = read();
+  document.querySelector('[data-action="lens-open"]')?.click();
+  await new Promise(r => setTimeout(r, 120));
+  document.querySelector('[data-action="lens-open"]')?.click();
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const reopen = read();
+  return { open1, reopen };
+});
+ok('opening the lens strip sets transcript padding from layout height',
+  stripPad.open1.stripH > 40 && stripPad.open1.varH >= stripPad.open1.stripH,
+  stripPad.open1);
+ok('reopening the lens strip restores transcript padding',
+  stripPad.reopen.stripH > 40 && stripPad.reopen.varH >= stripPad.reopen.stripH,
+  stripPad.reopen);
+
+await page.evaluate(() => { window.PM56_LENS.reset(); PM56_DEMO.selectThread('plain'); });
+await page.waitForTimeout(200);
+await page.evaluate(() => {
+  const btn = document.querySelector('.message-assistant [data-action="message-overflow"]');
+  if (btn) btn.click();
+});
+await page.waitForTimeout(200);
+await page.evaluate(() => document.querySelector('[data-action="lens-start-mute"]')?.click());
+await page.waitForTimeout(300);
+const overflowOpens = await page.evaluate(() => ({
+  strip: !!document.querySelector('.overlay-menu.lens-strip'),
+  varH: parseFloat(getComputedStyle(document.querySelector('.chat-stage')).getPropertyValue('--lens-strip-h')) || 0
+}));
+ok('overflow Mute in Context Lens opens the horizontal strip and pads the transcript',
+  overflowOpens.strip && overflowOpens.varH > 0, overflowOpens);
+
 if (SELFTEST) {
   /* Each of these makes a check above go red on purpose, and prints the number
      it produced, so nobody has to take "it can fail" on trust. */

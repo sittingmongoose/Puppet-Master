@@ -1,0 +1,1105 @@
+{
+  "schema_id": "pm.goal_handoff.contract_fixtures.v1",
+  "contract_schema_id": "pm.goal_handoff.contracts.v1",
+  "claim_boundary": "static schema and semantic fixtures only; no native/runtime/restart/security-attack proof",
+  "coverage": {
+    "command_rows": 6,
+    "local_action_rows": 1,
+    "positive_cases": 21,
+    "negative_cases": 9,
+    "exact_gui_consumers": [
+      "Doctor",
+      "Goal handoff modal",
+      "Goal/Assistant status",
+      "Project activity",
+      "status bar"
+    ]
+  },
+  "valid": [
+    {
+      "name": "positive.checkpoint.request",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.goal.checkpoint",
+        "operation": "checkpoint",
+        "command_instance_id": "command:goal_handoff:1",
+        "idempotency_key": "idempotency:goal_handoff:1",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:1",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "checkpoint-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.checkpoint",
+          "checkpoint_id": "checkpoint:goal:1",
+          "source_snapshot_ref": "source-snapshot:1",
+          "artifact_manifest_ref": "artifact-manifest:1",
+          "runtime_safe_point_ref": "safe-point:1",
+          "live_process_serialized": false
+        }
+      },
+      "row_index": 77
+    },
+    {
+      "name": "positive.checkpoint.result",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.checkpoint",
+        "operation": "checkpoint",
+        "command_instance_id": "command:goal_handoff:1",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:1",
+        "observable_work_ref": "work:goal_handoff:1",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "checkpoint-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.checkpoint",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:1",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 77
+    },
+    {
+      "name": "positive.checkpoint.handler_unavailable",
+      "definition": "GoalHandoffCommandAvailability",
+      "value": {
+        "schema_id": "pm.goal_handoff.availability.v1",
+        "record_kind": "GoalHandoffCommandAvailability",
+        "command_id": "cmd.goal.checkpoint",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.goal_handoff.disabled_reason.v1",
+          "record_kind": "GoalHandoffDisabledReason",
+          "command_id": "cmd.goal.checkpoint",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::goal_handoff::checkpoint"
+          ]
+        }
+      },
+      "row_index": 77
+    },
+    {
+      "name": "positive.continue_on_host.request",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.goal.continue_on_host",
+        "operation": "continue_on_host",
+        "command_instance_id": "command:goal_handoff:2",
+        "idempotency_key": "idempotency:goal_handoff:2",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:2",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "continue-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.continue_on_host",
+          "checkpoint_ref": "checkpoint:goal:1",
+          "target_host_id": "host:target",
+          "target_environment_id": "environment:target",
+          "compatibility_proof_ref": "compatibility:1",
+          "source_currentness_ref": "source-currentness:1"
+        }
+      },
+      "row_index": 78
+    },
+    {
+      "name": "positive.continue_on_host.result",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.continue_on_host",
+        "operation": "continue_on_host",
+        "command_instance_id": "command:goal_handoff:2",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:2",
+        "observable_work_ref": "work:goal_handoff:2",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "continue-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.continue_on_host",
+          "changed": true,
+          "state": "running",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:2",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 78
+    },
+    {
+      "name": "positive.continue_on_host.handler_unavailable",
+      "definition": "GoalHandoffCommandAvailability",
+      "value": {
+        "schema_id": "pm.goal_handoff.availability.v1",
+        "record_kind": "GoalHandoffCommandAvailability",
+        "command_id": "cmd.goal.continue_on_host",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.goal_handoff.disabled_reason.v1",
+          "record_kind": "GoalHandoffDisabledReason",
+          "command_id": "cmd.goal.continue_on_host",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::goal_handoff::continue_on_host"
+          ]
+        }
+      },
+      "row_index": 78
+    },
+    {
+      "name": "positive.handoff_cancel.request",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.goal.handoff.cancel",
+        "operation": "handoff_cancel",
+        "command_instance_id": "command:goal_handoff:3",
+        "idempotency_key": "idempotency:goal_handoff:3",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:3",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.handoff.cancel",
+          "handoff_operation_id": "handoff:goal:1",
+          "cancellable_proof_ref": "cancellable:1",
+          "confirmation": true
+        }
+      },
+      "row_index": 79
+    },
+    {
+      "name": "positive.handoff_cancel.result",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.handoff.cancel",
+        "operation": "handoff_cancel",
+        "command_instance_id": "command:goal_handoff:3",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:3",
+        "observable_work_ref": null,
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "cancel-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.handoff.cancel",
+          "changed": true,
+          "state": "cancelled",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:3",
+          "resulting_generation": 8,
+          "restart_disposition": "not_applicable",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 79
+    },
+    {
+      "name": "positive.handoff_cancel.handler_unavailable",
+      "definition": "GoalHandoffCommandAvailability",
+      "value": {
+        "schema_id": "pm.goal_handoff.availability.v1",
+        "record_kind": "GoalHandoffCommandAvailability",
+        "command_id": "cmd.goal.handoff.cancel",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.goal_handoff.disabled_reason.v1",
+          "record_kind": "GoalHandoffDisabledReason",
+          "command_id": "cmd.goal.handoff.cancel",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::goal_handoff::handoff_cancel"
+          ]
+        }
+      },
+      "row_index": 79
+    },
+    {
+      "name": "positive.handoff_retry.request",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.goal.handoff.retry",
+        "operation": "handoff_retry",
+        "command_instance_id": "command:goal_handoff:4",
+        "idempotency_key": "idempotency:goal_handoff:4",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:4",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "retry-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.handoff.retry",
+          "handoff_operation_id": "handoff:goal:1",
+          "failure_ref": "failure:1",
+          "retry_budget_ref": "retry-budget:1",
+          "original_idempotency_key": "idempotency:goal:original"
+        }
+      },
+      "row_index": 81
+    },
+    {
+      "name": "positive.handoff_retry.result",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.handoff.retry",
+        "operation": "handoff_retry",
+        "command_instance_id": "command:goal_handoff:4",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:4",
+        "observable_work_ref": "work:goal_handoff:4",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "retry-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.handoff.retry",
+          "changed": true,
+          "state": "running",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:4",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 81
+    },
+    {
+      "name": "positive.handoff_retry.handler_unavailable",
+      "definition": "GoalHandoffCommandAvailability",
+      "value": {
+        "schema_id": "pm.goal_handoff.availability.v1",
+        "record_kind": "GoalHandoffCommandAvailability",
+        "command_id": "cmd.goal.handoff.retry",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.goal_handoff.disabled_reason.v1",
+          "record_kind": "GoalHandoffDisabledReason",
+          "command_id": "cmd.goal.handoff.retry",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::goal_handoff::handoff_retry"
+          ]
+        }
+      },
+      "row_index": 81
+    },
+    {
+      "name": "positive.pause.request",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.goal.pause",
+        "operation": "pause",
+        "command_instance_id": "command:goal_handoff:5",
+        "idempotency_key": "idempotency:goal_handoff:5",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:5",
+        "return_context": {
+          "surface_id": "goal.status",
+          "route_id": "goal/status",
+          "focus_target": "pause-button",
+          "invocation_token": "return:goal.status:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.pause",
+          "safe_point_policy_ref": "safe-point-policy:1",
+          "pause_reason_ref": "pause-reason:user",
+          "live_process_frozen": false
+        }
+      },
+      "row_index": 82
+    },
+    {
+      "name": "positive.pause.result",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.pause",
+        "operation": "pause",
+        "command_instance_id": "command:goal_handoff:5",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:5",
+        "observable_work_ref": "work:goal_handoff:5",
+        "return_context": {
+          "surface_id": "goal.status",
+          "route_id": "goal/status",
+          "focus_target": "pause-button",
+          "invocation_token": "return:goal.status:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.pause",
+          "changed": true,
+          "state": "paused",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:5",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 82
+    },
+    {
+      "name": "positive.pause.handler_unavailable",
+      "definition": "GoalHandoffCommandAvailability",
+      "value": {
+        "schema_id": "pm.goal_handoff.availability.v1",
+        "record_kind": "GoalHandoffCommandAvailability",
+        "command_id": "cmd.goal.pause",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.goal_handoff.disabled_reason.v1",
+          "record_kind": "GoalHandoffDisabledReason",
+          "command_id": "cmd.goal.pause",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::goal_handoff::pause"
+          ]
+        }
+      },
+      "row_index": 82
+    },
+    {
+      "name": "positive.resume_here.request",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.goal.resume_here",
+        "operation": "resume_here",
+        "command_instance_id": "command:goal_handoff:6",
+        "idempotency_key": "idempotency:goal_handoff:6",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:6",
+        "return_context": {
+          "surface_id": "goal.status",
+          "route_id": "goal/status",
+          "focus_target": "resume-button",
+          "invocation_token": "return:goal.status:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.resume_here",
+          "checkpoint_ref": "checkpoint:goal:1",
+          "reconstruction_proof_ref": "reconstruction-proof:1",
+          "current_host_id": "host:current",
+          "worktree_currentness_ref": "worktree-currentness:1"
+        }
+      },
+      "row_index": 83
+    },
+    {
+      "name": "positive.resume_here.result",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.resume_here",
+        "operation": "resume_here",
+        "command_instance_id": "command:goal_handoff:6",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:6",
+        "observable_work_ref": "work:goal_handoff:6",
+        "return_context": {
+          "surface_id": "goal.status",
+          "route_id": "goal/status",
+          "focus_target": "resume-button",
+          "invocation_token": "return:goal.status:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.resume_here",
+          "changed": true,
+          "state": "running",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:6",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 83
+    },
+    {
+      "name": "positive.resume_here.handler_unavailable",
+      "definition": "GoalHandoffCommandAvailability",
+      "value": {
+        "schema_id": "pm.goal_handoff.availability.v1",
+        "record_kind": "GoalHandoffCommandAvailability",
+        "command_id": "cmd.goal.resume_here",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.goal_handoff.disabled_reason.v1",
+          "record_kind": "GoalHandoffDisabledReason",
+          "command_id": "cmd.goal.resume_here",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::goal_handoff::resume_here"
+          ]
+        }
+      },
+      "row_index": 83
+    },
+    {
+      "name": "positive.permission_deny_is_explicit",
+      "definition": "GoalHandoffPermissionDecision",
+      "value": {
+        "schema_id": "pm.goal_handoff.permission_decision.v1",
+        "record_kind": "GoalHandoffPermissionDecision",
+        "command_id": "cmd.goal.checkpoint",
+        "permission_snapshot_ref": "permission:goal_handoff:deny",
+        "permission_class": "goal.handoff",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied"
+      }
+    },
+    {
+      "name": "positive.local.1.request",
+      "definition": "GoalHandoffLocalActionRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.local_action_request.v1",
+        "record_kind": "GoalHandoffLocalActionRequest",
+        "local_action_id": "ui.goal.handoff.open_details",
+        "projection_ref": "projection:goal_handoff:1",
+        "expected_projection_generation": 4,
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "handoff-details",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 80
+    },
+    {
+      "name": "positive.local.1.result",
+      "definition": "GoalHandoffLocalActionResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.local_action_result.v1",
+        "record_kind": "GoalHandoffLocalActionResult",
+        "local_action_id": "ui.goal.handoff.open_details",
+        "projection_ref": "projection:goal_handoff:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "accessible_focus_target": "handoff-details",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "handoff-details",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        }
+      },
+      "row_index": 80
+    }
+  ],
+  "invalid": [
+    {
+      "name": "negative.unknown_command",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.unknown",
+        "operation": "checkpoint",
+        "command_instance_id": "command:goal_handoff:1",
+        "idempotency_key": "idempotency:goal_handoff:1",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:1",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "checkpoint-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.checkpoint",
+          "checkpoint_id": "checkpoint:goal:1",
+          "source_snapshot_ref": "source-snapshot:1",
+          "artifact_manifest_ref": "artifact-manifest:1",
+          "runtime_safe_point_ref": "safe-point:1",
+          "live_process_serialized": false
+        }
+      }
+    },
+    {
+      "name": "negative.raw_secret",
+      "definition": "GoalHandoffCommandRequest",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_request.v1",
+        "record_kind": "GoalHandoffCommandRequest",
+        "command_id": "cmd.goal.checkpoint",
+        "operation": "checkpoint",
+        "command_instance_id": "command:goal_handoff:1",
+        "idempotency_key": "idempotency:goal_handoff:1",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "permission_snapshot_ref": "permission:goal_handoff:1",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "checkpoint-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.goal.checkpoint",
+          "checkpoint_id": "checkpoint:goal:1",
+          "source_snapshot_ref": "source-snapshot:1",
+          "artifact_manifest_ref": "artifact-manifest:1",
+          "runtime_safe_point_ref": "safe-point:1",
+          "live_process_serialized": false,
+          "raw_secret": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "negative.available_without_handler",
+      "definition": "GoalHandoffCommandAvailability",
+      "value": {
+        "schema_id": "pm.goal_handoff.availability.v1",
+        "record_kind": "GoalHandoffCommandAvailability",
+        "command_id": "cmd.goal.checkpoint",
+        "available": true,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.goal_handoff.disabled_reason.v1",
+          "record_kind": "GoalHandoffDisabledReason",
+          "command_id": "cmd.goal.checkpoint",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::goal_handoff::checkpoint"
+          ]
+        }
+      }
+    },
+    {
+      "name": "negative.denied_without_reason",
+      "definition": "GoalHandoffPermissionDecision",
+      "value": {
+        "schema_id": "pm.goal_handoff.permission_decision.v1",
+        "record_kind": "GoalHandoffPermissionDecision",
+        "command_id": "cmd.goal.checkpoint",
+        "permission_snapshot_ref": "permission:goal_handoff:deny",
+        "permission_class": "goal.handoff",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "negative.secret_exposed",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.checkpoint",
+        "operation": "checkpoint",
+        "command_instance_id": "command:goal_handoff:1",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:1",
+        "observable_work_ref": "work:goal_handoff:1",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "checkpoint-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.checkpoint",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:1",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": true,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "negative.local_domain_event",
+      "definition": "GoalHandoffLocalActionResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.local_action_result.v1",
+        "record_kind": "GoalHandoffLocalActionResult",
+        "local_action_id": "ui.goal.handoff.open_details",
+        "projection_ref": "projection:goal_handoff:1",
+        "projection_generation": 4,
+        "redacted": true,
+        "lazy": true,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "accessible_focus_target": "handoff-details",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "handoff-details",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        }
+      }
+    },
+    {
+      "name": "negative.restart_false_success",
+      "definition": "GoalHandoffCommandResult",
+      "value": {
+        "schema_id": "pm.goal_handoff.command_result.v1",
+        "record_kind": "GoalHandoffCommandResult",
+        "command_id": "cmd.goal.checkpoint",
+        "operation": "checkpoint",
+        "command_instance_id": "command:goal_handoff:1",
+        "status": "succeeded",
+        "goal_id": "goal:1",
+        "goal_run_id": "goal-run:1",
+        "project_id": "project:1",
+        "source_location_id": "source-location:1",
+        "current_host_id": "host:current",
+        "expected_goal_generation": 7,
+        "expected_topology_generation": 5,
+        "expected_source_generation": 9,
+        "receipt_ref": "receipt:goal_handoff:1",
+        "observable_work_ref": "work:goal_handoff:1",
+        "return_context": {
+          "surface_id": "goal.handoff",
+          "route_id": "goal/handoff",
+          "focus_target": "checkpoint-button",
+          "invocation_token": "return:goal.handoff:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.goal.checkpoint",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:goal_handoff:1",
+          "resulting_generation": 8,
+          "restart_disposition": "claim_success",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "negative.exact_return_mismatch",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.checkpoint",
+          "operation": "checkpoint",
+          "command_instance_id": "command:goal_handoff:1",
+          "idempotency_key": "idempotency:goal_handoff:1",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:1",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "checkpoint-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.checkpoint",
+            "checkpoint_id": "checkpoint:goal:1",
+            "source_snapshot_ref": "source-snapshot:1",
+            "artifact_manifest_ref": "artifact-manifest:1",
+            "runtime_safe_point_ref": "safe-point:1",
+            "live_process_serialized": false
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.checkpoint",
+          "operation": "checkpoint",
+          "command_instance_id": "command:goal_handoff:1",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:1",
+          "observable_work_ref": "work:goal_handoff:1",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "different-control",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": -1
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.checkpoint",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:1",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "negative.race_generation_regression",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.checkpoint",
+          "operation": "checkpoint",
+          "command_instance_id": "command:goal_handoff:1",
+          "idempotency_key": "idempotency:goal_handoff:1",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:1",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "checkpoint-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.checkpoint",
+            "checkpoint_id": "checkpoint:goal:1",
+            "source_snapshot_ref": "source-snapshot:1",
+            "artifact_manifest_ref": "artifact-manifest:1",
+            "runtime_safe_point_ref": "safe-point:1",
+            "live_process_serialized": false
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.checkpoint",
+          "operation": "checkpoint",
+          "command_instance_id": "command:goal_handoff:1",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:1",
+          "observable_work_ref": "work:goal_handoff:1",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "checkpoint-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.checkpoint",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:1",
+            "resulting_generation": -1,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    }
+  ]
+}

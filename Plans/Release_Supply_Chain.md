@@ -946,3 +946,322 @@ owner_hints:
   - Plans/Permissions_System.md
   - Plans/FileSafe.md
 ```
+
+## Plugin Package And Full-Thread Artifact Addendum - 2026-08-31
+
+This addendum consumes the Plugins owner's portable/native manifest adjudication and the Full Thread Performance distribution requirements. Release Supply Chain owns package source, publisher, hash/signature/trust, license, SBOM, provenance, architecture/platform compatibility, known-bad quarantine, update-diff admission, rollback-artifact proof, and release acceptance. It does not parse or merge plugin component semantics, activate plugins, own `RuntimeResourceGovernor`/`ObservableWork`, register commands/events, or create a second installation/plugin runtime.
+
+### Plugin package supply-chain proof
+
+PM-internal interchange `plugin.json` and PM-native `pm-plugin.json` are separate signed subjects. The interchange name is not a claim that its path is directly loadable by OpenAI/Codex, Claude Code, or another external agent. A package with both binds both manifest hashes, package hash, exact shared `id`/`version`, archive-entry inventory hash, normalized final-tree hash, publisher/signing identity, trust root, license, SBOM, provenance, target platform/architecture, known-bad result, and containment proof. Release admission fails closed if either manifest changes after signing, the two identities disagree, an entry or resolved link escapes the package root, the final tree differs from the signed inventory, a privileged PM component is unsigned/untrusted, or a mandatory license/SBOM/provenance/rollback ref is missing.
+
+`PluginPackageSupplyChainProof` includes:
+
+```text
+proof_id, package_id, plugin_id, version, package_generation,
+portable_manifest_sha256?, pm_manifest_sha256?, package_sha256,
+archive_inventory_sha256, normalized_tree_sha256,
+publisher_ref, signature_algorithm, key_id, trust_root_ref,
+license_ref, sbom_ref, provenance_ref, known_bad_check_ref,
+target_platform, target_architecture, runtime_compatibility_ref,
+archive_containment_ref, symlink_policy, resolved_containment_verified,
+PortableConformanceReport_ref?, AgentPluginConformanceReport_ref?,
+permission_capability_diff_ref?, component_diff_ref?,
+rollback_package_proof_ref?, admission, failure_reason_code?, observed_at
+```
+
+`admission` is exactly `admitted | admitted_portable_only | blocked_mismatch | blocked_untrusted | blocked_containment | blocked_compatibility | blocked_known_bad | blocked_missing_evidence | quarantined`. `admitted_portable_only` authorizes only the portable Skills/MCP path and never PM-native activation. A cached artifact, catalog row, local directory, package-manager exit zero, or matching version string is not provenance or activation proof.
+
+An update diff binds old/new package and manifest generations and reports publisher/signature/trust-root, license, SBOM, provenance, component, permission, capability, sandbox, executable/argv, environment, network, and data-root changes before approval. The last verified generation remains available until replacement commit. Rollback requires the exact prior package proof, compatibility ref, activation receipt, and data-migration disposition; missing or mismatched rollback proof produces recovery-required/quarantine rather than a guessed success.
+
+Provider CLIs remain governed by `RSC-010`; plugin packaging cannot smuggle a provider CLI, Playwright runtime/facade, secret, mutable Tool Store payload, or unapproved executable into PM core/default images. Portable and PM-native plugin packages are counted separately from PM core, bundled CEF, on-demand capabilities, external provider/source-control tools, project toolchains, and separately published symbols.
+
+### Full-thread release and platform artifact gates
+
+Release artifacts preserve a portable compatibility baseline. The x86-64 compatibility build cannot globally require AVX2, AVX-512, `target-cpu=native`, or one vendor family. Proven hot kernels may select portable/SSE4.2/AVX/AVX2-BMI2-FMA/optional AVX-512 implementations once at runtime using capability detection and versioned representative profiles; every optimized path retains a portable reference and equivalence, fuzz, boundary, end-to-end, old-hardware, and unsupported-capability fallback evidence. Native arm64 helpers are native artifacts, not translated x86 assumptions.
+
+Release tuning may use optimized libraries, LTO, and PGO only with reproducible toolchain/config/profile identities and representative versioned scenarios. Handwritten assembly is admissible only after measurements show compiler/intrinsic output remains inadequate, with ABI/unwind/platform/feature/fallback evidence. An optimized artifact cannot silently replace the compatibility artifact on an unsupported host.
+
+Platform admission covers native Windows without WSL, optional WSL distributions as separate environments, native macOS arm64 plus optional supported Apple Linux environment, Linux X11/Wayland, standalone Server, Docker/TrueNAS/Unraid, and namespace-scoped Kubernetes artifacts where supported. Each artifact carries target OS/architecture, minimum compatibility, signing/notarization, renderer/backend selection, sandbox/provisioning prerequisites, and exact installer/update/rollback evidence. Missing runners remain `not_run` with residual risk, never pass.
+
+Installed-size budgets report PM core, bundled CEF, each renderer/backend, Safe UI/recovery artifacts, on-demand capabilities, provider/source-control tools, project toolchains, plugin packages/data, and debug symbols separately plus combined supported configurations. Symbols publish separately. Duplicate tool versions, unused Slint backends/renderers, provider CLI pre-seeds, and unreferenced package payloads fail size admission. Renderer order remains bakeoff-evidence-gated across themes/platforms, old GPU/CPU, VM/RDP, Wayland/X11, resize, effects, startup, frame, idle, memory, and package size; release prose cannot freeze an unmeasured winner.
+
+Release acceptance consumes runtime benchmark receipts for cold/warm launch, same-frame command acknowledgement, pause/stop latency under saturation, provider-fragment paint, 1/10/50/200 logical threads, many named Plans, queue/fairness, process-tree RSS, unified graphics/media memory, idle CPU/wakeups/network/disk, low-resource/thermal/battery behavior, failure recovery, and 24-hour soak. Static schemas, conformance reports, artifact hashes, or package retention alone are not empirical performance proof.
+
+### Commands, events, and reverse coverage
+
+Release introduces no new UI command or EventRecord family here. Plugin lifecycle candidate commands remain owned by `Plans/Plugins_System.md` and unavailable until central registration. Release supplies `PluginPackageSupplyChainProof` and update/rollback admission refs to the eventual typed command receipt. New package lifecycle effects remain receipt-only pending Event Authority; existing admitted release events are unaffected, while the historical `plugin.*` identifiers remain non-emitting individual candidates because the live registry contains no `plugin.*` row.
+
+| Release fact | Forward consumer | Reverse proof |
+|---|---|---|
+| PM-internal interchange plus PM-native dual-manifest admission | Plugins install/update/validate/review/rollback | both hashes, exact id/version, package/tree hashes, provenance/license/SBOM/known-bad/containment/conformance refs; no claim that the interchange paths are directly loadable by an external agent |
+| internal portable-only admission and explicit target adaptation | Skills/MCP import or named ecosystem adapter | `admitted_portable_only`, internal conformance, target-format inventory and hash when adapted, and no PM-native activation or authority widening |
+| update and rollback | Plugins lifecycle receipt | full old/new diff, last verified generation, exact rollback artifact/data disposition, recovery/quarantine on missing proof |
+| architecture fast path | release selector | capability detection, portable fallback, equivalence/fuzz/boundary/end-to-end, old-hardware evidence |
+| platform artifact | installer/update | target/minimum compatibility, signing/notarization, sandbox/renderer, exact install/update/rollback receipts |
+| size budget | release gate and Settings summary | separated PM core/CEF/renderer/on-demand/provider/plugin/toolchain/symbol bytes plus combined budget |
+| runtime performance | release candidate admission | benchmark scenario/profile/toolchain hashes and raw P50/P95/P99/worst/failure/soak receipts; no static substitution |
+
+ContractRef: SchemaID:pm.plugins.package_contracts.v1, SchemaID:pm.full_thread_runtime.contracts.v1, ContractName:Plans/Plugins_System.md, ContractName:Plans/Shared_Integration_Runtime.md
+
+### RSC-011 - Plugin Package Provenance, Diff, And Rollback Gate
+
+```yaml
+plan_unit_id: RSC-011
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  PM-internal interchange plugin.json and PM-native pm-plugin.json are separately hashed signed subjects inside
+  one bounded package proof; release admission requires exact identity alignment, provenance, license, SBOM,
+  known-bad, archive/final-tree containment, conformance, update diff, and exact rollback evidence without taking
+  over plugin lifecycle. Direct OpenAI/Codex or Claude Code compatibility requires a named adapter that emits and
+  separately hash-binds the current target metadata directory, plugin manifest, .mcp.json, and generated inventory.
+gui_related: true
+gui_classification_reason: Trust, permission/supply-chain change, blocked install, quarantine, and rollback evidence are visible Plugins management facts.
+depends_on: [PLUG-065, PLUG-066, PLUG-067, RSC-003, RSC-008]
+unblocks: []
+acceptance_criteria:
+  - Both manifests and the final package tree are hash-bound and dual-manifest id/version mismatch fails closed.
+  - Portable-only admission cannot activate PM-native components.
+  - PM-internal plugin.json plus mcp.json is not represented as a directly loadable external package; an OpenAI/Codex adapter emits `.codex-plugin/plugin.json` plus `.mcp.json`, and a Claude Code adapter emits `.claude-plugin/plugin.json` plus `.mcp.json`, with versioned schema, generated-file inventory, source/output hashes, conformance fixtures, and no authority widening.
+  - Missing signature/trust, license, SBOM, provenance, known-bad, containment, conformance, or mandatory rollback evidence blocks or quarantines admission.
+  - Update review exposes every authority/runtime/package diff and preserves the last verified generation until commit.
+  - Plugin packages cannot smuggle provider CLIs, Playwright, secrets, mutable Tool Store payloads, or unapproved executables into PM distributions.
+validation_surfaces: [Plans/plugin_package_contract_fixtures.json, future package provenance, hostile archive/link, update diff, known-bad, and rollback fixtures]
+risk_class: plugin_supply_chain_or_rollback_drift
+reasoning_tier: high
+context_scope: plugin_package_supply_chain
+implementation_surfaces: [Plans/Release_Supply_Chain.md, Plans/plugin_package_contracts.schema.json]
+node_compile_hint: {mode: plugin_package_supply_chain, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - register-egolite.md#PLG-02 (audited 2026-08-31)
+  - scratchpad/pm-integration-20260831/audits/official-capability-revalidation-20260831.md#5-plugins-acquisition-and-release-supply-chain (reviewed 2026-08-31)
+preserved_exact_tokens: [PluginPackageSupplyChainProof, PortableConformanceReport, AgentPluginConformanceReport, plugin.json, pm-plugin.json, .codex-plugin/plugin.json, .claude-plugin/plugin.json, .mcp.json]
+negative_constraints:
+  - Do not let a catalog row, cached artifact, local path, exit zero, version string, or plugin manifest self-authorize release admission.
+  - Do not call the PM-internal interchange directly portable to an external agent or let a target adapter widen PM-native execution, permissions, hooks, tools, commands, UI, or sandbox authority.
+  - Do not redefine plugin component semantics, activation, RuntimeResourceGovernor, ObservableWork, or rollback execution in Release.
+```
+
+### RSC-012 - Portable Artifact, Size, And Performance Evidence Gate
+
+```yaml
+plan_unit_id: RSC-012
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  Release candidates retain portable x86-64 and native arm64 compatibility, admit runtime-dispatched fast
+  paths only with portable equivalence evidence, separate installed-size families, and consume raw cross-platform,
+  low-resource, old-hardware, recovery, and soak benchmarks before any performance claim.
+gui_related: false
+depends_on: [SIR-017, RSC-006, RSC-008]
+unblocks: []
+acceptance_criteria:
+  - No artifact globally requires AVX2, AVX-512, target-cpu=native, WSL on Windows, or one CPU vendor.
+  - Every optimized path retains a portable fallback and equivalence/fuzz/boundary/end-to-end/old-hardware evidence.
+  - LTO/PGO and any assembly path bind reproducible toolchain/config/profile/ABI/fallback evidence.
+  - Installed size separates PM core, CEF, renderers, Safe UI, on-demand tools, provider tools, plugins/data, project toolchains, and symbols.
+  - Unsupported platform or benchmark lanes remain not_run with residual risk, and static artifact/schema proof cannot become runtime performance evidence.
+validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, renderer bakeoff, full-thread benchmark and 24-hour-soak receipts]
+risk_class: release_platform_or_performance_false_claim
+reasoning_tier: high
+context_scope: portable_release_artifact_performance_gate
+implementation_surfaces: [Plans/Release_Supply_Chain.md]
+node_compile_hint: {mode: portable_release_artifact_performance_gate, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/07_PERFORMANCE_PLATFORM_STORAGE_BENCHMARKS.md
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/08_ACCEPTANCE_TEST_AND_FAILURE_MATRIX.md
+negative_constraints:
+  - Do not infer platform, renderer, size, performance, or recovery acceptance from artifact retention or static schema checks.
+  - Do not bundle provider CLIs into core/default artifacts under the plugin or performance contract.
+```
+
+## Typed Command Supply-Chain Handoff Addendum
+
+Release consumes, but does not own, plugin lifecycle and installation-selection commands. `Plans/plugin_contracts.schema.json#/$defs/PluginCommandRequest` and `#/$defs/PluginCommandResult` carry the exact package, manifest-hash, package-proof, conformance, permission-diff, rollback, generation, and receipt references needed to apply RSC-011 without moving lifecycle behavior into Release. `Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandRequest` carries the exact already-verified installation, official provenance, compatibility, Host/Environment, inventory/installation/topology generations, permission snapshot, and continuation needed to select an admitted installation without acquiring or authenticating.
+
+For plugin install and update, `package_proof_ref` and the applicable interchange/native conformance refs are mandatory admission inputs. Validate and Review Changes preserve the exact manifest hashes, final-tree/package proof, conformance, permission diff, known-bad/signature/trust/license/SBOM/provenance state, and current generations without activating. Rollback requires a verified rollback ref bound to the target package generation and prior proof. A successful scan, catalog row, cached archive, filename, path, version string, exit zero, or manifest self-claim is never supply-chain admission.
+
+`plugin.json` and `pm-plugin.json` remain separately hashed subjects. A dual package requires exact shared identity and both signed hashes; PM-native fields cannot override interchange identity or remove an admission obligation. Legacy import requires an explicit source/output-hash migration receipt and review before either current manifest is admitted. A target adapter's generated external metadata remains a third separately inventoried/hash-bound output, not evidence that PM's internal `plugin.json` is directly portable to that external agent.
+
+`cmd.installation.select` is an official-installation handoff only after discovery, verification, provenance, compatibility, and topology evidence is current. Its typed request fixes `acquisition_allowed=false` and `authentication_allowed=false`. Missing official provenance, compatibility, exact Host/Environment binding, current generations, or permission blocks selection. First provider-CLI acquisition remains an explicit user setup action through the installation lifecycle and cannot be smuggled into selection.
+
+Release adds no command registration, handler, EventRecord producer, acquisition path, plugin lifecycle engine, or native-runtime proof. Static schema and fixture validation verifies only contract shape; artifact signing, trust, containment, known-bad, migration, update, rollback, installation activation, platform, and recovery claims require future raw receipts from the actual implementation and target runners.
+
+ContractRef: SchemaID:pm.plugin.command_contracts.v1, SchemaID:pm.shared_integration_runtime.command_contracts.v1, SchemaID:pm.plugins.package_contracts.v1
+
+### RSC-013 - Lifecycle Command Proof Consumption And Official Selection Handoff
+
+```yaml
+plan_unit_id: RSC-013
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  Release consumes exact plugin lifecycle package, manifest-hash, conformance, permission-diff, provenance,
+  rollback, generation, and receipt refs and exact verified-installation selection proofs without owning command
+  dispatch; installation selection forbids acquisition and authentication, and static contract evidence cannot
+  substitute for artifact or native runtime receipts.
+gui_related: true
+gui_classification_reason: Blocked plugin install/update/rollback and installation-selection proof failures are visible setup and Plugins management states.
+depends_on: [RSC-011, PLUG-069, SIR-020]
+unblocks: []
+acceptance_criteria:
+  - Plugin install/update require package proof and applicable conformance; validate/review preserve hashes, diffs, generations, and all admission state without activation.
+  - Rollback is bound to a verified target generation and rollback proof.
+  - Dual and legacy manifest paths preserve separate hashes, exact identity, explicit migration, and no silent authority change.
+  - Installation selection requires current provenance/compatibility/topology proof and cannot acquire or authenticate.
+validation_surfaces: [Plans/plugin_contract_fixtures.json, Plans/plugin_package_contract_fixtures.json, Plans/shared_integration_runtime_fixtures.json, future signed artifact, migration, update, rollback, installation activation, and target-platform receipts]
+risk_class: lifecycle_command_supply_chain_proof_bypass
+reasoning_tier: high
+context_scope: command_supply_chain_handoff
+implementation_surfaces: [Plans/Release_Supply_Chain.md, Plans/plugin_contracts.schema.json, Plans/shared_integration_runtime.schema.json]
+node_compile_hint: {mode: command_supply_chain_handoff, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:PLG-001, source_ref:egolite-requirement:PLG-004, source_ref:egolite-requirement:PLG-005, source_ref:egolite-requirement:PLG-006, source_ref:egolite-requirement:PLG-007, source_ref:egolite-requirement:IRT-003, source_ref:egolite-requirement:IRT-005, source_ref:egolite-requirement:IRT-007, source_ref:egolite-requirement:IRT-008, source_ref:egolite-requirement:IRT-009, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:361-438]
+negative_constraints:
+  - Do not treat a catalog row, manifest, version, path, cache hit, scan, exit zero, or schema pass as supply-chain admission.
+  - Do not move lifecycle dispatch into Release or infer command, handler, event, acquisition, activation, platform, or runtime success.
+```
+
+The lifecycle handoff is fail-closed at command granularity. Plugin install/update/enable/reload/remove/rollback cannot proceed with null package proof, an empty applicable-conformance set, a missing permission diff, or missing rollback evidence; reload also requires explicit authority-change revalidation and confirmation. Enable cannot load an interchange-only `plugin.json`. A successful installation selection result requires an activation-proof ref and exact continuation/return settlement. These are required references to independently produced evidence, never evidence production by Release and never proof that a native operation ran.
+
+The newer Server command-gap adjudication supersedes the earlier deferred-candidate
+disposition for these three spellings. `cmd.tool_package.approve_license` is the
+canonical command owned by Shared Integration Runtime's
+`InstallationLifecycleManager` under `SIR-027` and
+`Plans/shared_integration_runtime_expansion_contracts.schema.json`; its sole
+specified target is `handlers::installation::package_approve_license`, and it
+remains `handler_unavailable` until central and native integration are evidenced.
+The packet spellings `cmd.tool_package.open_provenance` and
+`cmd.tool_package.review_license` are not commands or aliases: their retained
+behaviors are the typed local actions `ui.tool_package.open_provenance` and
+`ui.tool_package.review_license`, with no semantic-domain handler or EventRecord.
+Release Supply Chain supplies the exact package/version/provenance/license/terms
+generation and admission evidence consumed by those actions and the canonical
+approval command; it does not own their dispatch, local presentation controller,
+or lifecycle state.
+
+## Server command-gap owner closure - application update lifecycle (2026-09-01)
+
+`ApplicationUpdateService` owns one DRY closed family in `Plans/release_update_contracts.schema.json` for `cmd.update.app.automatic.set_enabled`, `cmd.update.app.cancel_download`, `cmd.update.app.check`, `cmd.update.app.download`, `cmd.update.app.install_restart`, `cmd.update.app.remind_later`, and `cmd.update.app.rollback`. Their sole future handlers are `handlers::application_update::automatic_set_enabled`, `::cancel_download`, `::check`, `::download`, `::install_restart`, `::remind_later`, and `::rollback`. All remain `handler_unavailable` until full central registration, permission/FileSafe routing, named native handler evidence, production wiring, and receipt-or-admitted-event disposition exist.
+
+The exact consumers are Settings > Updates, the bottom Update Available item, Server permanent web UI, and Doctor. Source tokens `cmd.update.app.open_details`, `cmd.update.app.open_logs`, and `cmd.update.app.open_release_notes` are retained only as the adjudicated spellings for `ui.update.app.open_details`, `ui.update.app.open_logs`, and `ui.update.app.open_release_notes`; these are bounded, redacted, lazy local actions with no semantic-domain handler and no domain EventRecord. Automatic update is one simple enabled toggle with no user schedule and never disables manual checks. Check is coalesced, cached, and policy-bounded. Download verifies content, signing, channel, target, compatibility, and artifact hash before retention and cannot activate. Cancel affects only the exact in-progress unverified/verified download operation and never deletes the active generation. Install/restart requires verified artifact and provenance, safe quiescence, recovery boundary, migration preflight, exact install-source owner, restart journal, post-verification, and rollback target. Remind later only defers attention under a bounded policy. Rollback targets a verified retained compatible generation or reports `recovery_required`.
+
+Idempotency and operation/update/catalog generations prevent duplicate or racing check/download/install/rollback effects. Restart converges from the durable update journal; partial install, migration, restart, or verification never becomes success. Exact initiating surface/route/focus/generation is restored or `caller_unavailable` is reported. Requests, results, receipts, logs, notes, and projections contain hashes and non-secret refs only—never signing keys, update credentials, raw tokens, protected authentication state, or unrestricted filesystem paths.
+
+### RSC-014 - Application Update Command And Local-Projection Closure
+
+```yaml
+plan_unit_id: RSC-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  ApplicationUpdateService owns seven exact automatic-toggle, cancel, check, download, install/restart, remind-later,
+  and rollback commands through one closed family plus three presentation-only local actions. Every command remains
+  handler_unavailable until its named sole handler and complete integration exist; verified provenance, recovery,
+  generation, restart, rollback, exact-return, and secret-exclusion gates fail closed.
+gui_related: true
+gui_classification_reason: Update lifecycle and local details/logs/release-notes projections are visible in four named consumers.
+depends_on: [RSC-008, RSC-009, RSC-013]
+unblocks: []
+acceptance_criteria:
+  - The schema and fixtures cover exactly seven command IDs and three local actions with the named handlers and consumers.
+  - Local actions have no domain handler or EventRecord and expose bounded redacted content only.
+  - Fixtures cover coalescing, cache, download verification, cancel scope, safe install/restart, migration, post-verify, retained rollback, duplicate/race, restart recovery, permission, FileSafe, exact return, and secret negatives.
+  - Static validation never claims an update was downloaded, installed, restarted, verified, or rolled back.
+validation_surfaces: [Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json, focused Server owner-bundle-A validator]
+risk_class: application_update_unverified_activation_or_false_success
+reasoning_tier: high
+context_scope: server_command_gap_application_update
+implementation_surfaces: [Plans/Release_Supply_Chain.md, Plans/release_update_contracts.schema.json, future ApplicationUpdateService handler]
+node_compile_hint: {mode: application_update_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:server-command-gap-adjudication:rows-157-166]
+negative_constraints:
+  - Do not expose a user-defined schedule or disable manual checks through the automatic toggle.
+  - Do not activate an unverified download or treat partial restart/migration as success.
+  - Do not create domain handlers or EventRecords for local details, logs, or release-notes actions.
+```
+
+## Post-Integration Bundled Dependency And Provider-Registration Addendum - 2026-09-01
+
+The embedded `pm-tailnet-connector`, the version-pinned Backup engine, and any bounded Backup transport helper are PM release artifacts, not independently installed products. Release owns their acquisition and static admission references; Remote Access owns connector identity and lifecycle, while Backup owns capture, repository, transport-use, and restore semantics. The connector ships in the canonical PM release/image and has no vendor updater. Restic is the reference encrypted engine and rclone is permitted only as a bounded transport where the destination contract requires it; neither becomes a second product owner. Admission requires pinned source/dependency/license/SBOM/provenance/signing/hash/platform evidence plus compatibility with the exact PM protocol and state/schema migration boundaries. A missing build, platform, approval, or admission reference is `handler_unavailable`/blocked static truth, never proof that acquisition ran.
+
+Google Drive and Microsoft OneDrive production OAuth registration, callback, provider approval, and confidential-client placement are release prerequisites. Distributed PM binaries and images may carry only public registration identifiers explicitly permitted for that client type; confidential app credentials remain on an approved broker or deployment secret owner. An unregistered, approval-pending, callback-missing, or evidence-missing profile cannot be advertised as a working sign-in handler. User-managed registered apps remain an Advanced configuration path under the authentication owner. These static contracts do not claim that artifacts were built, fetched, signed, scanned, installed, logged in, approved, or exercised at runtime.
+
+### RSC-015 - Bundled Connector And Backup Artifact Admission
+
+```yaml
+plan_unit_id: RSC-015
+unit_type: supply_chain_contract
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  The PM release/image is the sole acquisition and update boundary for pm-tailnet-connector and version-pinned Backup engine/transport artifacts. Admission binds exact source, module/dependency graph, license, SBOM, provenance, signing, content hash, platform, PM protocol, and state/schema migration references; no artifact has an independent updater or acquires Remote Access or Backup semantic authority.
+gui_related: true
+gui_classification_reason: Settings, setup, Doctor, Updates, Backup, and Remote Access surface unavailable, incompatible, repair, and release-blocked states derived from this admission.
+depends_on: [RSC-008, RSC-009, RSC-014, SIR-032]
+unblocks: []
+acceptance_criteria:
+  - pm-tailnet-connector ships and rolls back only with the PM application/server/container generation, with pinned Go/tsnet/IPC versions and no full Tailscale package, independent installer, or updater.
+  - BackupEngineAdapter/restic and bounded BackupTransportAdapter/rclone artifacts use the same governed PM tool/release lifecycle without acquiring coordinator, destination, retention, encryption-policy, or restore ownership.
+  - Every admitted artifact binds source revision, dependency/module graph, license notices, SBOM, provenance, signature, SHA-256, build ID, target platform/architecture, compatible PM protocol, and applicable schema/state migration references.
+  - Missing or incompatible admission input remains blocked or handler_unavailable; static admission never claims an artifact was built, downloaded, installed, started, verified, or exercised.
+  - Connector identity/state is preserved or reauthenticated according to the Remote Access owner contract and is never packaged into a Project or treated as release-owned identity.
+validation_surfaces: [Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json, future signed-artifact and target-platform admission receipts]
+risk_class: bundled_dependency_supply_chain_or_independent_updater_drift
+reasoning_tier: high
+context_scope: post_integration_bundled_connector_and_backup_artifacts
+implementation_surfaces: [Plans/Release_Supply_Chain.md, Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json]
+node_compile_hint: {mode: static_release_admission_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/07_BACKUP_ARCHITECTURE_AND_CAPTURE.md:15-21
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/13_TSNET_INTEGRATION_AND_CROSS_DOMAIN_BOUNDARIES.md:7-45
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/tsnet/03_PLATFORM_PACKAGING_AND_LIFECYCLE.md:3-21
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/tsnet/07_SECURITY_BACKUP_UPDATE_BOUNDARIES.md:31-45
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
+preserved_exact_tokens: [pm-tailnet-connector, BackupEngineAdapter, restic, rclone, SBOM, provenance, handler_unavailable, Built into Puppet Master]
+negative_constraints:
+  - Do not add a full Tailscale package, vendor installer, sidecar/operator requirement, or independent connector updater.
+  - Do not make restic or rclone a second Backup owner or synchronize live canonical Project storage.
+  - Do not treat a manifest, pin, schema pass, or static fixture as runtime acquisition, verification, compatibility, identity preservation, or recovery evidence.
+```
+
+### RSC-016 - Backup OAuth Registration Release Gates
+
+```yaml
+plan_unit_id: RSC-016
+unit_type: supply_chain_contract
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  Production Google Drive and Microsoft OneDrive OAuth registrations, exact callbacks, provider approval, scope review, and confidential-client placement are release gates. Missing registration, approval, callback, or evidence keeps the destination sign-in handler unavailable; confidential application material is never embedded in distributed PM artifacts, and static rows never represent a successful provider login.
+gui_related: true
+gui_classification_reason: Backup destination setup and release readiness visibly distinguish available, approval-required, advanced user-managed, and handler-unavailable sign-in paths.
+depends_on: [RSC-015, GAAAF-015, SIR-032]
+unblocks: []
+acceptance_criteria:
+  - Google Drive and Microsoft OneDrive production registrations bind the exact supported redirect/callback, client type, scope profile, approval/verification state, and release evidence refs.
+  - Browser-only/headless deployment is admitted only through a provider-supported registered web callback, approved device flow where actually supported, or a narrowly scoped approved broker; no generic Google OOB/device-flow assumption is made.
+  - Confidential app credentials remain on the approved broker or deployment-secret owner and are absent from distributed binaries, images, fixtures, logs, receipts, and ordinary settings.
+  - Unregistered, approval_pending, callback_missing, or evidence_missing rows expose handler_unavailable/blocked static state and cannot start protected handoff.
+  - Provider registration fixtures remain NOT_RUN for real login, refresh, approval, callback, broker, and secret-isolation evidence until implementation proves those surfaces.
+validation_surfaces: [Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, future provider-registration and callback evidence]
+risk_class: fabricated_oauth_readiness_or_distributed_confidential_client_secret
+reasoning_tier: high
+context_scope: post_integration_backup_oauth_release_gate
+implementation_surfaces: [Plans/Release_Supply_Chain.md, Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json]
+node_compile_hint: {mode: static_oauth_registration_gate_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/08_CLOUD_DESTINATIONS_AND_SIGN_IN.md:31-61
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/17_INTEGRATION_SEQUENCE_AND_EVIDENCE.md:23-29
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_backup_reconciliation.md
+preserved_exact_tokens: [Google Drive, Microsoft OneDrive, handler_unavailable, approval_pending, confidential app credentials, NOT_RUN]
+negative_constraints:
+  - Do not publish fake working client IDs, assume unsupported device/OOB flow, or treat user-managed registration as the ordinary path.
+  - Do not embed confidential application credentials in distributed binaries or images.
+  - Do not claim provider approval, callback operation, token exchange, refresh, or login from static release fixtures.
+```

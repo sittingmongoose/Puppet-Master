@@ -243,6 +243,7 @@
     copy.worktree = null;          /* a copy does not inherit a worktree binding */
     copy.lineage = null;           /* stated absence: a duplicate has no lineage */
     ctx.state.threads.unshift(copy);
+    if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(copy.id, src.id, 'duplicate');
     ctx.switchThread(copy.id);
     receipt(ctx, copy, 'threadops-duplicate', 'Thread duplicated',
       'Copied ' + plural(copy.messages.length, 'turn', 'turns') + ' from “' + src.title +
@@ -316,6 +317,7 @@
       }
     };
     ctx.state.threads.unshift(nt);
+    if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch');
 
     var detail = 'A branch of ' + plural(at + 1, 'turn', 'turns') + ' was created from ' +
       (anchor ? turnLabel(src, anchor) : 'the latest turn') + '. The original thread is unchanged.';
@@ -410,6 +412,7 @@
       }
     };
     ctx.state.threads.unshift(nt);
+    if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch-from-restore');
     dispatch(CMD.branchFromRestore, src.id);
     receipt(ctx, src, 'threadops-branch', 'Branched from ' + rp.label,
       plural(rp.messageCount, 'turn', 'turns') + ' were restored into a sibling branch from the immutable snapshot taken at turn ' +
@@ -862,6 +865,7 @@
       }
     };
     ctx.state.threads.unshift(nt);
+    if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'spawn');
     dispatch(CMD.spawn, src.id);
     receipt(ctx, src, 'threadops-spawn', 'Spawned a related thread',
       '“' + nt.title + '” carries lineage back to ' + (last ? turnLabel(src, last) : 'this thread') +

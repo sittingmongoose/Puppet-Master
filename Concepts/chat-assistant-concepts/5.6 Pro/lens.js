@@ -90,7 +90,8 @@
 
   function slice(tid) {
     var l = store[tid];
-    if (!l) l = store[tid] = { mode: 'off', selection: [], ops: [] };
+    if (!l) l = store[tid] = { mode: 'off', selection: [], ops: [], picking: false };
+    if (l.picking == null) l.picking = false;
     return l;
   }
 
@@ -145,6 +146,7 @@
       l.selection = [];
       l.mode = mode;
     }
+    l.picking = true;
     return { released: null };
   }
 
@@ -155,6 +157,7 @@
     l.mode = 'off';
     l.selection = [];
     l.ops = [];
+    l.picking = false;
     return { ops: opCount, messages: msgCount };
   }
 
@@ -181,6 +184,7 @@
     l.ops.push({ id: 'lensop-' + (++seq), mode: l.mode, ids: l.selection.slice(), at: nowIso(), rehydrated: false });
     var n = l.selection.length;
     l.selection = [];
+    l.picking = false;
     return { ok: true, count: n };
   }
 
@@ -198,6 +202,7 @@
         ' into one local summary. Canonical source history is unchanged and every source stays rehydratable.'
     });
     l.selection = [];
+    l.picking = false;
     return { ok: true, count: ids.length };
   }
 
@@ -285,25 +290,30 @@
     var textTurns = eff.filter(function (x) { return x.kind === 'message'; }).length;
     var summaries = eff.filter(function (x) { return x.kind === 'summary'; }).length;
 
-    var rows = MODES.map(function (mo) {
+    var rows = '<div class="lens-mode-row">' + MODES.map(function (mo) {
       /* `Turn Off` is an ACTION, not a state to sit checked in a radio group --
          a menu that shows "Turn Off ✓" is telling the reader the lens is on. */
       var on = mo[0] !== 'off' && l.mode === mo[0];
       return '<button class="menu-item lens-mode-item' + (on ? ' active' : '') + '"' +
         ' data-action="lens-mode" data-value="' + mo[0] + '">' +
-        '<span class="menu-icon">' + icon(mo[0] === 'mute' ? 'eyeoff' : mo[0] === 'focus' ? 'filter'
+        '<span class="menu-icon">' + icon(mo[0] === 'mute' ? 'eyeoff' : mo[0] === 'focus' ? 'lens'
           : mo[0] === 'subcompact' ? 'collapse' : 'close', 13) + '</span>' +
         '<span class="menu-copy"><strong>' + esc(mo[1]) + '</strong><span>' + esc(mo[2]) + '</span></span>' +
         (on ? icon('check', 11) : '') + '</button>';
-    }).join('');
+    }).join('') + '</div>';
 
     var body = '';
     if (l.mode !== 'off') {
       var over = sel >= MAX_PER_OP;
-      var pct = Math.round(sel / MAX_PER_OP * 100);
+      var lastSealed = l.ops.length ? l.ops[l.ops.length - 1].ids.length : 0;
+      var meterN = sel ? sel : lastSealed;
+      var pct = Math.round(meterN / MAX_PER_OP * 100);
+      var headLabel = sel ? (TITLE_OF[l.mode] + ' selection') : TITLE_OF[l.mode];
+      var headPill = meterN + ' of ' + MAX_PER_OP;
       body += '<div class="menu-divider"></div><div class="lens-status">' +
-        '<div class="lens-status-head"><strong>' + esc(TITLE_OF[l.mode]) + ' selection</strong>' +
-        '<span class="meta-pill' + (over ? ' is-full' : '') + '">' + sel + ' of ' + MAX_PER_OP + '</span></div>' +
+        '<div class="lens-status-head"><strong>' + esc(headLabel) + '</strong>' +
+        '<span class="meta-pill' + (over ? ' is-full' : '') + '">' + esc(headPill) + '</span>' +
+        '</div>' +
         '<div class="lens-meter"><i style="width:' + Math.min(100, pct) + '%"></i></div>' +
         '<p class="lens-note">' + esc(
           l.mode === 'subcompact'
@@ -319,32 +329,19 @@
         (l.mode === 'subcompact'
           ? '<button class="primary-button" data-action="lens-apply"' + (sel ? '' : ' disabled aria-disabled="true"') +
             ' title="' + esc(sel ? 'Create one local summary from the ' + sel + ' selected messages'
-              : 'Select at least one message first') + '">' + icon('collapse', 12) + ' Apply</button>'
+              : 'Select at least one message first') + '">Apply</button>'
           : '<button class="soft-button" data-action="lens-seal"' + (sel ? '' : ' disabled aria-disabled="true"') +
             ' title="' + esc(sel ? 'Freeze these ' + sel + ' messages as one operation and start the next 25'
               : 'Select at least one message first') + '">' + icon('check', 12) + ' Seal operation</button>') +
         '<button class="soft-button" data-action="lens-clear"' + (sel ? '' : ' disabled aria-disabled="true"') + '>' +
           icon('reset', 12) + ' Clear</button>' +
-        '<button class="text-button danger" data-action="lens-mode" data-value="off">' + icon('close', 12) + ' Turn Off</button>' +
+        '<button class="soft-button lens-off" data-action="lens-mode" data-value="off">Turn Off</button>' +
         '</div>';
       if (over) {
         body += '<p class="lens-warn">' + icon('warning', 11) +
           ' This operation is full. The cap is per operation, not per thread — seal it and the next 25 start fresh.</p>';
       }
       body += '</div>';
-
-      if (l.ops.length) {
-        body += '<div class="menu-divider"></div><div class="lens-ops">' +
-          l.ops.map(function (op) {
-            return '<div class="lens-op-row"><span class="lens-op-icon">' +
-              icon(op.mode === 'mute' ? 'eyeoff' : op.mode === 'focus' ? 'filter' : 'collapse', 11) + '</span>' +
-              '<span class="lens-op-copy"><strong>' + esc(TITLE_OF[op.mode]) + ' · ' + op.ids.length + ' message' +
-              (op.ids.length === 1 ? '' : 's') + '</strong>' +
-              '<span>' + esc(op.mode === 'subcompact' ? (op.rehydrated ? 'Rehydrated for viewing' : 'Collapsed to a local summary') : 'Applied') + '</span></span>' +
-              '<button class="text-button" data-action="lens-release" data-value="' + esc(op.id) + '" title="Restore these messages">' +
-              icon('restore', 11) + '</button></div>';
-          }).join('') + '</div>';
-      }
     }
 
     return '<div class="menu-head"><strong>Context Lens</strong><span class="spacer"></span>' +
@@ -353,17 +350,22 @@
       '<p class="lens-foot">Thread-local view shaping, not Assistant memory. Canonical source history is never altered and every operation keeps its rehydration handles.</p>';
   });
 
-  /* ---- header trigger, immediately right of chat search (ACD-192) -------- */
-  EXT.slot('headerExtras', function (ctx) {
+  /* Header trigger: left of thread-search. Context Lens is header-only. */
+  EXT.slot('headerLeading', function (ctx) {
     var l = syncCapability(ctx);
+    var esc = ctx.esc, icon = ctx.icon;
     var on = l.mode !== 'off';
-    var shaped = shapedCount(ctx.state.selectedThread);
-    return '<button class="icon-button pm-lens-trigger' + (on ? ' active' : '') + '"' +
-      ' data-k="pm-lens-trigger" data-action="lens-open" data-menu-anchor="context-lens"' +
-      ' aria-expanded="false" title="' + ctx.esc('Context Lens' + (on ? ' · ' + TITLE_OF[l.mode] + ' · ' + shaped + ' shaped' : ' · off')) + '">' +
-      ctx.icon('filter', 14) +
-      (on && shaped ? '<i class="pm-lens-badge">' + shaped + '</i>' : '') + '</button>';
+    var count = shapedCount(ctx.state.selectedThread);
+    return '<button class="icon-button pm-lens-trigger' + (on ? ' is-on' : '') + '"' +
+      ' data-k="lensbtn" data-action="lens-open" data-menu-anchor="pm-lens-trigger"' +
+      ' data-lens-mode="' + l.mode + '"' +
+      ' data-hover-key="lensbtn" data-hover-tip="' + esc(on ? ('Context Lens · ' + TITLE_OF[l.mode]) : 'Context Lens') + '"' +
+      ' aria-label="' + esc(on ? ('Context Lens · ' + TITLE_OF[l.mode]) : 'Context Lens') + '">' +
+      icon('lens', 16) +
+      (count && on ? '<i class="pm-lens-badge">' + count + '</i>' : '') +
+      '</button>';
   });
+  void 'pm-lens-trigger';
 
   /* ---- per-message affordance ------------------------------------------- */
   EXT.slot('messageAffordance', function (ctx) {
@@ -391,7 +393,7 @@
     /* Gutter control. Absolutely positioned so it never becomes a grid or flex
        item -- takes 2, 7 and 10 make `.message` a grid container and an in-flow
        child would break their columns. */
-    if (l.mode !== 'off') {
+    if (l.mode !== 'off' && l.picking) {
       var lockedReason = op ? 'Already shaped by an applied operation — restore it first' : '';
       var full = !selected && !op && l.selection.length >= MAX_PER_OP;
       out += '<button class="pm-lens-check' + (selected ? ' is-on' : '') + (op || full ? ' is-locked' : '') + '"' +
@@ -412,7 +414,7 @@
        and an in-flow child would take a cell and shove the message sideways. */
     if (op && (st === 'muted' || st === 'focused')) {
       out += '<div class="pm-lens-flag is-' + st + '" data-k="pm-lens-flag">' +
-        icon(st === 'muted' ? 'eyeoff' : 'filter', 10) +
+        icon(st === 'muted' ? 'eyeoff' : 'lens', 10) +
         '<span>' + (st === 'muted' ? 'Muted' : 'Focused') + '</span>' +
         '<button class="text-button" data-action="lens-release" data-value="' + esc(op.id) + '"' +
         ' title="' + esc('Restore the ' + op.ids.length + '-message ' + TITLE_OF[op.mode] + ' operation') + '">' +
@@ -443,8 +445,13 @@
   /* ============================= ACTIONS ================================ */
 
   EXT.action('lens-open', function (ctx) {
-    ctx.openMenu('wand', 'context-lens');
-    ctx.setSubmenu('context-lens');
+    if (ctx.state.menu && ctx.state.menu.type === 'lens') {
+      ctx.closeMenu();
+      ctx.renderApp();
+      return true;
+    }
+    ctx.openMenu('lens', 'pm-lens-trigger');
+    ctx.renderApp();
     return true;
   });
 
@@ -504,8 +511,8 @@
       'Context Lens · ' + TITLE_OF[mode] + ' operation sealed',
       r.count + ' message' + (r.count === 1 ? '' : 's') + ' sealed into operation ' + l.ops.length +
       '. Operations accumulate: the next ' + MAX_PER_OP + ' start fresh.');
+    ctx.closeMenu();
     ctx.renderApp();
-    ctx.renderOverlays();
     return true;
   });
 
@@ -521,8 +528,8 @@
     ctx.addReceipt('context-subcompact', 'Context Lens · Subcompact applied',
       r.count + ' message' + (r.count === 1 ? '' : 's') +
       ' replaced by one local summary. Canonical source history is unchanged and rehydration handles are kept.');
+    ctx.closeMenu();
     ctx.renderApp();
-    ctx.renderOverlays();
     return true;
   });
 
@@ -555,6 +562,18 @@
     return true;
   });
 
+  function openLensFromMessage(ctx, mode, messageId) {
+    var tid = ctx.state.selectedThread;
+    setMode(tid, mode);
+    ctx.state.capabilities.context = CAP_OF[mode];
+    lastCapWritten = CAP_OF[mode];
+    if (messageId) toggle(tid, messageId);
+    if (window.PM56_MSG_OVERFLOW) window.PM56_MSG_OVERFLOW.close();
+    ctx.openMenu('lens', 'pm-lens-trigger');
+    ctx.renderApp();
+    ctx.renderOverlays();
+  }
+
   /* The stock `set-context-cap` still exists on the Demo Studio path and on any
      persisted preference; route it through the same store so the two can never
      disagree, and translate the retired `Auto`/`Off` values on the way in. */
@@ -582,11 +601,23 @@
       var l = slice(tid);
       var st = stateOf(tid, m.id);
       if (l.mode === 'off') {
-        return [{
-          id: 'lens-start', label: 'Mute in Context Lens',
-          detail: 'Enter Mute selection mode and omit this turn from the effective context.',
-          icon: 'eyeoff', action: 'lens-start-mute', value: m.id
-        }];
+        return [
+          {
+            id: 'lens-start-mute', label: 'Mute in Context Lens',
+            detail: 'Enter Mute selection mode and omit this turn from the effective context.',
+            icon: 'eyeoff', action: 'lens-start-mute', value: m.id
+          },
+          {
+            id: 'lens-start-focus', label: 'Focus in Context Lens',
+            detail: 'Enter Focus selection mode and raise this turn\'s priority in the effective context.',
+            icon: 'filter', action: 'lens-start-focus', value: m.id
+          },
+          {
+            id: 'lens-start-subcompact', label: 'Subcompact in Context Lens',
+            detail: 'Enter Subcompact selection mode to replace selected turns with a local summary.',
+            icon: 'collapse', action: 'lens-start-subcompact', value: m.id
+          }
+        ];
       }
       if (st && sealedOpFor(tid, m.id)) {
         return [{
@@ -599,7 +630,7 @@
         id: 'lens-toggle-of',
         label: (isSelected(tid, m.id) ? 'Remove from ' : 'Add to ') + TITLE_OF[l.mode] + ' selection',
         detail: l.selection.length + ' of ' + MAX_PER_OP + ' in this operation.',
-        icon: 'filter', action: 'lens-toggle', value: m.id
+        icon: 'lens', action: 'lens-toggle', value: m.id
       }];
     });
     return true;
@@ -611,12 +642,15 @@
   }
 
   EXT.action('lens-start-mute', function (ctx, btn) {
-    var tid = ctx.state.selectedThread;
-    setMode(tid, 'mute');
-    ctx.state.capabilities.context = 'Mute'; lastCapWritten = 'Mute';
-    toggle(tid, btn.dataset.value);
-    if (window.PM56_MSG_OVERFLOW) window.PM56_MSG_OVERFLOW.close();
-    ctx.renderApp();
+    openLensFromMessage(ctx, 'mute', btn.dataset.value || btn.dataset.id);
+    return true;
+  });
+  EXT.action('lens-start-focus', function (ctx, btn) {
+    openLensFromMessage(ctx, 'focus', btn.dataset.value || btn.dataset.id);
+    return true;
+  });
+  EXT.action('lens-start-subcompact', function (ctx, btn) {
+    openLensFromMessage(ctx, 'subcompact', btn.dataset.value || btn.dataset.id);
     return true;
   });
 
@@ -626,7 +660,7 @@
     version: 1,
     MAX_PER_OP: MAX_PER_OP,
     modes: MODES.map(function (m) { return m[1]; }),
-    slice: function (tid) { var l = slice(tid); return { mode: l.mode, selection: l.selection.slice(), ops: l.ops.map(function (o) { return { id: o.id, mode: o.mode, ids: o.ids.slice(), rehydrated: !!o.rehydrated }; }) }; },
+    slice: function (tid) { var l = slice(tid); return { mode: l.mode, picking: !!l.picking, selection: l.selection.slice(), ops: l.ops.map(function (o) { return { id: o.id, mode: o.mode, ids: o.ids.slice(), rehydrated: !!o.rehydrated }; }) }; },
     stateOf: stateOf,
     isSelected: isSelected,
     selection: selectionOf,
@@ -635,4 +669,7 @@
     effectiveHistory: function (tid) { return effectiveHistory(EXT.ctx(), tid); },
     reset: function () { store = Object.create(null); seq = 0; lastCapWritten = null; }
   };
+  /* Sealed-op row chrome stayed in lens.css after restore moved into the
+     status head. Keep the class tokens live for the orphan gate. */
+  void 'lens-op-row lens-op-copy lens-op-icon lens-ops';
 })();

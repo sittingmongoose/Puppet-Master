@@ -1,0 +1,717 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.test_capture_motion_evidence_contracts.schema.v1",
+  "title": "Puppet Master Test Capture And Motion Evidence Contracts",
+  "description": "Generic TestCaptureService contracts for exact targets, modes, requested/effective cadence and engines, atomic segments, clocks, privacy, recovery, immutable raw media, derivation, playback/comparison, provenance, and truthful ObservableWork. The aggregate $id identifies this union schema only; each payload carries its unique record-addressable schema_id. Static validity is not runtime proof.",
+  "x-pm-legacy-schema-id-migration": {
+    "legacy_payload_schema_id": "pm.test_capture_motion_evidence_contracts.schema.v1",
+    "direct_validation": "rejected",
+    "migration_rule": "An explicit pre-validation migrator must first validate an exact known record_kind and then replace the legacy aggregate payload ID with that record kind's unique schema_id. Unknown or missing record_kind fails closed. The aggregate ID is never stored as a record schema identity."
+  },
+  "oneOf": [
+    {"$ref": "#/$defs/test_capture_session"},
+    {"$ref": "#/$defs/capture_target_switch_receipt"},
+    {"$ref": "#/$defs/capture_segment_manifest"},
+    {"$ref": "#/$defs/capture_health_receipt"},
+    {"$ref": "#/$defs/capture_artifact"},
+    {"$ref": "#/$defs/raw_test_capture"},
+    {"$ref": "#/$defs/capture_derivation_manifest"},
+    {"$ref": "#/$defs/derived_demonstration_video"},
+    {"$ref": "#/$defs/capture_provenance_selection"},
+    {"$ref": "#/$defs/capture_playback_comparison_state"},
+    {"$ref": "#/$defs/capture_observable_work_projection"},
+    {"$ref": "#/$defs/capture_command_request"},
+    {"$ref": "#/$defs/capture_command_result"},
+    {"$ref": "#/$defs/capture_command_error"},
+    {"$ref": "#/$defs/capture_command_availability"}
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 192,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "not": {"pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"}
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+      "not": {"pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"}
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_id", "run_id", "home_server_id", "execution_host_id", "execution_environment_id", "source_location_id"],
+      "properties": {
+        "project_id": {"$ref": "#/$defs/id"},
+        "plan_id": {"$ref": "#/$defs/id"},
+        "goal_id": {"$ref": "#/$defs/id"},
+        "run_id": {"$ref": "#/$defs/id"},
+        "task_id": {"$ref": "#/$defs/id"},
+        "attempt_id": {"$ref": "#/$defs/id"},
+        "thread_id": {"$ref": "#/$defs/id"},
+        "agent_id": {"$ref": "#/$defs/id"},
+        "home_server_id": {"$ref": "#/$defs/id"},
+        "execution_host_id": {"$ref": "#/$defs/id"},
+        "execution_environment_id": {"$ref": "#/$defs/id"},
+        "source_location_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "capture_mode": {
+      "type": "string",
+      "enum": ["off", "manual", "continuous", "on_failure", "retain_on_failure", "rolling_buffer", "trace_only", "hybrid_video_trace", "recording_only"]
+    },
+    "capture_target_policy": {
+      "type": "string",
+      "enum": ["fixed_page", "follow_controller_page", "all_pages_parallel", "workspace_composite", "application_window", "explicit_region"]
+    },
+    "capture_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "target_family", "target_generation", "target_security_class"],
+      "properties": {
+        "target_id": {"$ref": "#/$defs/id"},
+        "target_family": {
+          "type": "string",
+          "enum": ["browser_page", "browser_workspace", "android_emulator", "android_device", "apple_simulator", "apple_device", "desktop_window", "desktop_region", "remote_stream", "frame_sequence", "external_adapter"]
+        },
+        "target_generation": {"type": "integer", "minimum": 0},
+        "target_security_class": {"type": "string", "enum": ["ordinary", "non_browser", "external_project"]},
+        "browser_session_id": {"$ref": "#/$defs/id"},
+        "browser_workspace_id": {"$ref": "#/$defs/id"},
+        "browser_page_id": {"$ref": "#/$defs/id"},
+        "page_generation": {"type": "integer", "minimum": 0},
+        "window_id": {"$ref": "#/$defs/id"},
+        "region_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "device_id": {"$ref": "#/$defs/id"},
+        "stream_id": {"$ref": "#/$defs/id"},
+        "external_project_process_id": {"$ref": "#/$defs/id"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"target_family": {"const": "browser_page"}}, "required": ["target_family"]},
+          "then": {"required": ["browser_session_id", "browser_workspace_id", "browser_page_id", "page_generation"]}
+        },
+        {
+          "if": {"properties": {"target_family": {"const": "browser_workspace"}}, "required": ["target_family"]},
+          "then": {"required": ["browser_session_id", "browser_workspace_id"]}
+        },
+        {
+          "if": {"properties": {"target_family": {"const": "desktop_window"}}, "required": ["target_family"]},
+          "then": {"required": ["window_id"]}
+        },
+        {
+          "if": {"properties": {"target_family": {"const": "desktop_region"}}, "required": ["target_family"]},
+          "then": {"required": ["region_ref"]}
+        },
+        {
+          "if": {"properties": {"target_family": {"enum": ["android_emulator", "android_device", "apple_simulator", "apple_device"]}}, "required": ["target_family"]},
+          "then": {"required": ["device_id"]}
+        },
+        {
+          "if": {"properties": {"target_family": {"enum": ["remote_stream", "frame_sequence"]}}, "required": ["target_family"]},
+          "then": {"required": ["stream_id"]}
+        },
+        {
+          "if": {"properties": {"target_family": {"const": "external_adapter"}}, "required": ["target_family"]},
+          "then": {"required": ["external_project_process_id"], "properties": {"target_security_class": {"const": "external_project"}}}
+        }
+      ]
+    },
+    "requested_effective_string": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested", "effective", "reason_code"],
+      "properties": {
+        "requested": {"$ref": "#/$defs/id"},
+        "effective": {"$ref": "#/$defs/id"},
+        "reason_code": {"$ref": "#/$defs/id"}
+      }
+    },
+    "requested_effective_number": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested", "effective", "reason_code"],
+      "properties": {
+        "requested": {"type": "number", "exclusiveMinimum": 0},
+        "effective": {"type": "number", "minimum": 0},
+        "reason_code": {"$ref": "#/$defs/id"}
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "device_pixel_ratio"],
+      "properties": {
+        "width": {"type": "integer", "minimum": 1, "maximum": 32768},
+        "height": {"type": "integer", "minimum": 1, "maximum": 32768},
+        "device_pixel_ratio": {"type": "number", "exclusiveMinimum": 0, "maximum": 16}
+      }
+    },
+    "audio_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested", "effective", "explicit_target_grant", "codec", "sample_rate_hz", "microphone_inferred", "system_audio_inferred"],
+      "properties": {
+        "requested": {"type": "string", "enum": ["off", "target_audio"]},
+        "effective": {"type": "string", "enum": ["off", "target_audio"]},
+        "explicit_target_grant": {"type": "boolean"},
+        "codec": {"type": "string", "enum": ["none", "opus", "aac_lc"]},
+        "sample_rate_hz": {"type": "integer", "enum": [0, 48000]},
+        "microphone_inferred": {"const": false},
+        "system_audio_inferred": {"const": false},
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"effective": {"const": "target_audio"}}, "required": ["effective"]},
+          "then": {
+            "properties": {"explicit_target_grant": {"const": true}, "sample_rate_hz": {"const": 48000}},
+            "required": ["permission_snapshot_ref"]
+          }
+        },
+        {
+          "if": {"properties": {"effective": {"const": "off"}}, "required": ["effective"]},
+          "then": {"properties": {"codec": {"const": "none"}, "sample_rate_hz": {"const": 0}}}
+        }
+      ]
+    },
+    "masking_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested_stage", "effective_stage", "policy_ref", "profile_ref", "display_only_counts_as_retained_redaction", "privacy_review_state"],
+      "properties": {
+        "requested_stage": {"type": "string", "enum": ["none", "source", "encoder", "display_only"]},
+        "effective_stage": {"type": "string", "enum": ["none", "source", "encoder", "display_only"]},
+        "policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "profile_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "display_only_counts_as_retained_redaction": {"const": false},
+        "privacy_review_state": {"type": "string", "enum": ["not_required", "pending", "approved", "rejected", "approved_with_gaps"]},
+        "masked_region_manifest_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "unmasked_interval_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}}
+      }
+    },
+    "clock_calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calibration_id", "source_clock_domain", "reference_clock_domain", "offset_ns", "drift_ppm", "uncertainty_ns", "method", "valid_from_monotonic_ns", "valid_to_monotonic_ns"],
+      "properties": {
+        "calibration_id": {"$ref": "#/$defs/id"},
+        "source_clock_domain": {"$ref": "#/$defs/id"},
+        "reference_clock_domain": {"$ref": "#/$defs/id"},
+        "offset_ns": {"type": "integer"},
+        "drift_ppm": {"type": "number"},
+        "uncertainty_ns": {"type": "integer", "minimum": 0},
+        "method": {"type": "string", "enum": ["local_monotonic_pair", "remote_round_trip", "device_bridge", "producer_timestamp_map", "manual_reference"]},
+        "valid_from_monotonic_ns": {"type": "integer", "minimum": 0},
+        "valid_to_monotonic_ns": {"type": "integer", "minimum": 0}
+      }
+    },
+    "frame_health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delivered_frames", "dropped_frames", "repeated_frames", "black_frames", "blank_frames", "frozen_frames", "stale_frames", "corrupt_frames", "misordered_frames", "cadence_collapse_intervals", "health_state"],
+      "properties": {
+        "delivered_frames": {"type": "integer", "minimum": 0},
+        "dropped_frames": {"type": "integer", "minimum": 0},
+        "repeated_frames": {"type": "integer", "minimum": 0},
+        "black_frames": {"type": "integer", "minimum": 0},
+        "blank_frames": {"type": "integer", "minimum": 0},
+        "frozen_frames": {"type": "integer", "minimum": 0},
+        "stale_frames": {"type": "integer", "minimum": 0},
+        "corrupt_frames": {"type": "integer", "minimum": 0},
+        "misordered_frames": {"type": "integer", "minimum": 0},
+        "cadence_collapse_intervals": {"type": "integer", "minimum": 0},
+        "health_state": {"type": "string", "enum": ["healthy", "degraded", "recovering", "failed"]},
+        "finding_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}}
+      }
+    },
+    "test_capture_session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "capture_session_id", "lineage", "mode", "target_policy", "requested_target", "effective_target", "engine", "visibility", "cadence_fps", "dimensions", "codec", "audio", "masking", "runtime_resource_governor_permit_ref", "viewer_count", "encoder_count", "focus_changes_target", "state", "created_at_utc", "updated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.session.v1"},
+        "record_kind": {"const": "test_capture_session"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "lineage": {"$ref": "#/$defs/lineage"},
+        "mode": {"$ref": "#/$defs/capture_mode"},
+        "target_policy": {"$ref": "#/$defs/capture_target_policy"},
+        "requested_target": {"$ref": "#/$defs/capture_target"},
+        "effective_target": {"$ref": "#/$defs/capture_target"},
+        "engine": {"$ref": "#/$defs/requested_effective_string"},
+        "visibility": {"$ref": "#/$defs/requested_effective_string"},
+        "cadence_fps": {"$ref": "#/$defs/requested_effective_number"},
+        "dimensions": {"$ref": "#/$defs/dimensions"},
+        "codec": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requested", "effective", "selection_rank", "container"],
+          "properties": {
+            "requested": {"type": "string", "enum": ["automatic", "h264_high", "vp9_profile_0", "vp8", "av1_certified_offline"]},
+            "effective": {"type": "string", "enum": ["h264_high", "vp9_profile_0", "vp8", "av1_certified_offline"]},
+            "selection_rank": {"type": "integer", "minimum": 1, "maximum": 4},
+            "container": {"const": "matroska"},
+            "fallback_reason_code": {"$ref": "#/$defs/id"}
+          }
+        },
+        "audio": {"$ref": "#/$defs/audio_policy"},
+        "masking": {"$ref": "#/$defs/masking_policy"},
+        "runtime_resource_governor_permit_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "viewer_count": {"type": "integer", "minimum": 0},
+        "encoder_count": {"type": "integer", "minimum": 0, "maximum": 1},
+        "focus_changes_target": {"const": false},
+        "state": {"type": "string", "enum": ["requested", "admitted", "recording", "paused", "degraded", "finalizing", "complete", "partial_with_gaps", "failed_no_media", "cancelled_with_evidence", "interrupted_recoverable"]},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "capture_target_switch_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "switch_id", "capture_session_id", "target_policy", "old_target", "new_target", "switch_requested_monotonic_ns", "switch_effective_monotonic_ns", "first_new_target_frame_monotonic_ns", "focus_triggered", "controller_generation_ref", "continuity_disposition", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.target_switch_receipt.v1"},
+        "record_kind": {"const": "capture_target_switch_receipt"},
+        "switch_id": {"$ref": "#/$defs/id"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "target_policy": {"$ref": "#/$defs/capture_target_policy"},
+        "old_target": {"$ref": "#/$defs/capture_target"},
+        "new_target": {"$ref": "#/$defs/capture_target"},
+        "switch_requested_monotonic_ns": {"type": "integer", "minimum": 0},
+        "switch_effective_monotonic_ns": {"type": "integer", "minimum": 0},
+        "first_new_target_frame_monotonic_ns": {"type": "integer", "minimum": 0},
+        "focus_triggered": {"const": false},
+        "controller_generation_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "continuity_disposition": {"type": "string", "enum": ["continuous", "gap_recorded", "parallel_stream_started", "composite_membership_changed"]},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "capture_segment_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "segment_id", "capture_session_id", "stream_id", "target", "sequence", "container", "nominal_duration_ms", "starts_with_keyframe", "codec", "dimensions", "cadence_fps", "audio", "masking", "wall_start_utc", "wall_end_utc", "monotonic_start_ns", "monotonic_end_ns", "clock_calibration", "frame_health", "popup_composition_ref", "content_hash", "byte_size", "previous_segment_hash", "finalization_state", "recovery_disposition", "immutable", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.segment_manifest.v1"},
+        "record_kind": {"const": "capture_segment_manifest"},
+        "segment_id": {"$ref": "#/$defs/id"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "stream_id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/capture_target"},
+        "sequence": {"type": "integer", "minimum": 0},
+        "container": {"const": "matroska"},
+        "nominal_duration_ms": {"type": "integer", "minimum": 1, "maximum": 2200},
+        "starts_with_keyframe": {"const": true},
+        "codec": {"type": "string", "enum": ["h264_high", "vp9_profile_0", "vp8", "av1_certified_offline"]},
+        "dimensions": {"$ref": "#/$defs/dimensions"},
+        "cadence_fps": {"$ref": "#/$defs/requested_effective_number"},
+        "audio": {"$ref": "#/$defs/audio_policy"},
+        "masking": {"$ref": "#/$defs/masking_policy"},
+        "wall_start_utc": {"$ref": "#/$defs/timestamp"},
+        "wall_end_utc": {"$ref": "#/$defs/timestamp"},
+        "monotonic_start_ns": {"type": "integer", "minimum": 0},
+        "monotonic_end_ns": {"type": "integer", "minimum": 0},
+        "clock_calibration": {"$ref": "#/$defs/clock_calibration"},
+        "frame_health": {"$ref": "#/$defs/frame_health"},
+        "popup_composition_ref": {"type": ["string", "null"], "maxLength": 512},
+        "action_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "bookmark_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "byte_size": {"type": "integer", "minimum": 1},
+        "previous_segment_hash": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "finalization_state": {"type": "string", "enum": ["finalized", "quarantined", "discarded"]},
+        "recovery_disposition": {"type": "string", "enum": ["finalized", "recovered_finalized", "quarantined_corrupt", "discarded_incomplete", "continuity_gap_recorded"]},
+        "immutable": {"const": true},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "capture_health_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "health_receipt_id", "capture_session_id", "stream_id", "interval_start_monotonic_ns", "interval_end_monotonic_ns", "previous_state", "current_state", "frame_health", "requested_cadence_fps", "effective_cadence_fps", "effective_quality_changed", "retained_evidence_degraded", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.health_receipt.v1"},
+        "record_kind": {"const": "capture_health_receipt"},
+        "health_receipt_id": {"$ref": "#/$defs/id"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "stream_id": {"$ref": "#/$defs/id"},
+        "interval_start_monotonic_ns": {"type": "integer", "minimum": 0},
+        "interval_end_monotonic_ns": {"type": "integer", "minimum": 0},
+        "previous_state": {"type": "string", "enum": ["healthy", "degraded", "recovering", "failed"]},
+        "current_state": {"type": "string", "enum": ["healthy", "degraded", "recovering", "failed"]},
+        "frame_health": {"$ref": "#/$defs/frame_health"},
+        "requested_cadence_fps": {"type": "number", "exclusiveMinimum": 0},
+        "effective_cadence_fps": {"type": "number", "minimum": 0},
+        "effective_quality_changed": {"type": "boolean"},
+        "adaptation_reason_code": {"$ref": "#/$defs/id"},
+        "runtime_resource_governor_permit_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "retained_evidence_degraded": {"const": false},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "capture_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "capture_artifact_id", "capture_session_id", "lineage", "producer_kind", "target", "requested_engine", "effective_engine", "requested_visibility", "effective_visibility", "dimensions", "requested_cadence_fps", "effective_cadence_fps", "media_kind", "codec", "segment_refs", "clock_calibration_refs", "health_receipt_refs", "masking", "size_bytes", "content_hash", "retention_policy_ref", "finalization_state", "recovery_state", "pm_browser_authority_conferred", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.artifact.v1"},
+        "record_kind": {"const": "capture_artifact"},
+        "capture_artifact_id": {"$ref": "#/$defs/id"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "lineage": {"$ref": "#/$defs/lineage"},
+        "producer_kind": {"type": "string", "enum": ["pm_native", "external_project"]},
+        "target": {"$ref": "#/$defs/capture_target"},
+        "requested_engine": {"$ref": "#/$defs/id"},
+        "effective_engine": {"$ref": "#/$defs/id"},
+        "requested_visibility": {"$ref": "#/$defs/id"},
+        "effective_visibility": {"$ref": "#/$defs/id"},
+        "dimensions": {"$ref": "#/$defs/dimensions"},
+        "requested_cadence_fps": {"type": "number", "exclusiveMinimum": 0},
+        "effective_cadence_fps": {"type": "number", "minimum": 0},
+        "media_kind": {"type": "string", "enum": ["video", "trace", "hybrid_video_trace", "frame_sequence", "audio_video"]},
+        "codec": {"type": "string", "enum": ["h264_high", "vp9_profile_0", "vp8", "av1_certified_offline", "none"]},
+        "segment_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "clock_calibration_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "health_receipt_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "masking": {"$ref": "#/$defs/masking_policy"},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "retention_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "finalization_state": {"type": "string", "enum": ["complete", "partial_with_gaps", "failed_no_media", "cancelled_with_evidence", "interrupted_recoverable"]},
+        "recovery_state": {"type": "string", "enum": ["not_needed", "recovered", "partially_recovered", "unrecoverable_with_gap"]},
+        "pm_browser_authority_conferred": {"const": false},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "raw_test_capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "raw_capture_id", "capture_artifact_ref", "capture_session_id", "target", "segment_refs", "continuity_state", "gap_refs", "immutable", "derived_identity", "reenactment", "content_hash", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.raw_capture.v1"},
+        "record_kind": {"const": "raw_test_capture"},
+        "raw_capture_id": {"$ref": "#/$defs/id"},
+        "capture_artifact_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/capture_target"},
+        "segment_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "continuity_state": {"type": "string", "enum": ["continuous", "partial_with_gaps", "original_missing"]},
+        "gap_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "immutable": {"const": true},
+        "derived_identity": {"const": false},
+        "reenactment": {"type": "boolean"},
+        "original_subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "raw_span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["raw_capture_id", "stream_id", "segment_id", "start_frame", "end_frame", "start_monotonic_ns", "end_monotonic_ns"],
+      "properties": {
+        "raw_capture_id": {"$ref": "#/$defs/id"},
+        "stream_id": {"$ref": "#/$defs/id"},
+        "segment_id": {"$ref": "#/$defs/id"},
+        "start_frame": {"type": "integer", "minimum": 0},
+        "end_frame": {"type": "integer", "minimum": 0},
+        "start_monotonic_ns": {"type": "integer", "minimum": 0},
+        "end_monotonic_ns": {"type": "integer", "minimum": 0}
+      }
+    },
+    "derivation_edit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edit_id", "edit_type", "input_span_refs", "parameters_hash"],
+      "properties": {
+        "edit_id": {"$ref": "#/$defs/id"},
+        "edit_type": {"type": "string", "enum": ["cut", "speed_change", "crop", "mask", "annotation", "caption", "narration", "audio_change", "transition"]},
+        "input_span_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "parameters_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "capture_derivation_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "derivation_manifest_id", "raw_capture_ids", "raw_spans", "edits", "action_refs", "privacy_review_ref", "privacy_review_state", "tool_id", "tool_version", "tool_config_hash", "output_hash", "uncaptured_state_introduced", "validation_receipt_ref", "overwrites_raw", "immutable", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.derivation_manifest.v1"},
+        "record_kind": {"const": "capture_derivation_manifest"},
+        "derivation_manifest_id": {"$ref": "#/$defs/id"},
+        "raw_capture_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "raw_spans": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/raw_span"}},
+        "edits": {"type": "array", "items": {"$ref": "#/$defs/derivation_edit"}},
+        "action_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "privacy_review_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "privacy_review_state": {"type": "string", "enum": ["approved", "approved_with_gaps"]},
+        "tool_id": {"$ref": "#/$defs/id"},
+        "tool_version": {"type": "string", "minLength": 1, "maxLength": 64},
+        "tool_config_hash": {"$ref": "#/$defs/sha256"},
+        "output_hash": {"$ref": "#/$defs/sha256"},
+        "uncaptured_state_introduced": {"const": false},
+        "validation_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "overwrites_raw": {"const": false},
+        "immutable": {"const": true},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "derived_demonstration_video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "demonstration_video_id", "derivation_manifest_ref", "source_raw_capture_ids", "container", "codec", "content_hash", "byte_size", "immutable", "raw_identity", "overwrites_raw", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.demonstration_video.v1"},
+        "record_kind": {"const": "derived_demonstration_video"},
+        "demonstration_video_id": {"$ref": "#/$defs/id"},
+        "derivation_manifest_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_raw_capture_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "container": {"type": "string", "enum": ["matroska", "mp4", "webm"]},
+        "codec": {"type": "string", "enum": ["h264_high", "vp9_profile_0", "vp8", "av1_certified_offline", "hevc_export_only"]},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "byte_size": {"type": "integer", "minimum": 1},
+        "immutable": {"const": true},
+        "raw_identity": {"const": false},
+        "overwrites_raw": {"const": false},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "capture_provenance_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "selection_id", "requested_relation", "subject_ref", "candidate_capture_ids", "selected_capture_id", "identity_verified", "continuity_verified", "original_available", "reenactment_substituted", "disposition", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.provenance_selection.v1"},
+        "record_kind": {"const": "capture_provenance_selection"},
+        "selection_id": {"$ref": "#/$defs/id"},
+        "requested_relation": {"type": "string", "enum": ["exact_capture", "source_capture", "latest_verified_continuous", "frame_at_action", "span_for_task"]},
+        "subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "candidate_capture_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "selected_capture_id": {"type": ["string", "null"], "maxLength": 192},
+        "identity_verified": {"type": "boolean"},
+        "continuity_verified": {"type": "boolean"},
+        "original_available": {"type": "boolean"},
+        "reenactment_substituted": {"const": false},
+        "disposition": {"type": "string", "enum": ["selected", "rejected_identity_mismatch", "rejected_continuity_unverified", "original_missing", "no_candidate"]},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"disposition": {"const": "selected"}}, "required": ["disposition"]},
+          "then": {"properties": {"identity_verified": {"const": true}, "continuity_verified": {"const": true}, "original_available": {"const": true}}, "required": ["selected_capture_id"]}
+        }
+      ]
+    },
+    "capture_playback_comparison_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "comparison_id", "left_artifact_ref", "left_artifact_class", "right_artifact_ref", "right_artifact_class", "alignment_method", "clock_calibration_refs", "frame_step_enabled", "bookmarks_enabled", "action_jumps_enabled", "slow_motion_rates", "synchronized_panes", "comparison_mode", "gap_refs", "masking_stages_disclosed", "screenshot_substitutes_for_motion", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.playback_comparison_state.v1"},
+        "record_kind": {"const": "capture_playback_comparison_state"},
+        "comparison_id": {"$ref": "#/$defs/id"},
+        "left_artifact_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "left_artifact_class": {"type": "string", "enum": ["raw_test_capture", "derived_demonstration_video", "reference_frame"]},
+        "right_artifact_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "right_artifact_class": {"type": "string", "enum": ["raw_test_capture", "derived_demonstration_video", "reference_frame"]},
+        "alignment_method": {"type": "string", "enum": ["calibrated_clock", "action_anchor", "bookmark_anchor", "manual_reviewed"]},
+        "clock_calibration_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "frame_step_enabled": {"const": true},
+        "bookmarks_enabled": {"const": true},
+        "action_jumps_enabled": {"const": true},
+        "slow_motion_rates": {"type": "array", "contains": {"const": 0.25}, "items": {"type": "number", "enum": [0.25, 0.5, 1, 2]}},
+        "synchronized_panes": {"const": true},
+        "comparison_mode": {"type": "string", "enum": ["before_after", "side_by_side", "overlay", "single_with_evidence_panes"]},
+        "gap_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "masking_stages_disclosed": {"const": true},
+        "screenshot_substitutes_for_motion": {"const": false},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "capture_observable_work_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "observable_work_id", "capture_session_id", "phase", "state", "requested_target", "effective_target", "requested_cadence_fps", "effective_cadence_fps", "segments_finalized", "frames_delivered", "health_state", "progress_is_test_verdict", "viewer_controls_lifecycle", "blocked_reason_code", "safe_next_actions", "updated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.observable_work_projection.v1"},
+        "record_kind": {"const": "capture_observable_work_projection"},
+        "observable_work_id": {"$ref": "#/$defs/id"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "phase": {"type": "string", "enum": ["queued", "admission", "target_preflight", "recording", "paused", "recovering", "finalizing", "deriving", "terminal"]},
+        "state": {"type": "string", "enum": ["queued", "running", "paused", "blocked", "degraded", "cancelling", "completed", "failed", "cancelled", "interrupted"]},
+        "requested_target": {"$ref": "#/$defs/capture_target"},
+        "effective_target": {"$ref": "#/$defs/capture_target"},
+        "requested_cadence_fps": {"type": "number", "exclusiveMinimum": 0},
+        "effective_cadence_fps": {"type": "number", "minimum": 0},
+        "segments_finalized": {"type": "integer", "minimum": 0},
+        "frames_delivered": {"type": "integer", "minimum": 0},
+        "health_state": {"type": "string", "enum": ["healthy", "degraded", "recovering", "failed"]},
+        "progress_is_test_verdict": {"const": false},
+        "viewer_controls_lifecycle": {"const": false},
+        "blocked_reason_code": {"type": ["string", "null"], "maxLength": 192},
+        "artifact_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "safe_next_actions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "enum": ["inspect_health", "pause", "resume", "bookmark", "save_clip", "update_target", "stop", "open", "watch", "background", "inspect_redaction", "inspect_provenance", "none"]}},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "capture_command_id": {
+      "enum": [
+        "cmd.testing.capture.start",
+        "cmd.testing.capture.pause",
+        "cmd.testing.capture.resume",
+        "cmd.testing.capture.bookmark",
+        "cmd.testing.capture.save_clip",
+        "cmd.testing.capture.target.update",
+        "cmd.testing.capture.stop",
+        "cmd.testing.capture.health.inspect",
+        "cmd.artifacts.create_demonstration_video",
+        "cmd.artifacts.inspect_capture_provenance"
+      ]
+    },
+    "capture_command_disabled_reason": {
+      "enum": [
+        "command_not_registered",
+        "native_handler_absent",
+        "production_wiring_absent",
+        "event_authority_absent",
+        "permission_denied",
+        "stale_currentness",
+        "target_unavailable",
+        "protected_auth_session_non_recordable",
+        "protected_auth_session_non_inspectable",
+        "capture_session_unavailable",
+        "source_capture_unavailable",
+        "privacy_review_required",
+        "runtime_resource_permit_unavailable",
+        "owner_unavailable"
+      ]
+    },
+    "capture_command_request": {
+      "title": "CaptureCommandRequest",
+      "$anchor": "CaptureCommandRequest",
+      "description": "Owner-DRY request envelope for the exact eight TestCaptureService commands and two artifact derivation/provenance commands assigned to this contract lane. Existing session/playback/export commands remain compatible consumers and are not duplicated here.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "command_instance_id", "lineage", "actor_ref", "permission_snapshot_ref", "idempotency_key", "expected_currentness_ref", "expected_currentness_sha256", "source_surface", "return_route_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.command_request.v1"},
+        "record_kind": {"const": "capture_command_request"},
+        "command_id": {"$ref": "#/$defs/capture_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/id"},
+        "lineage": {"$ref": "#/$defs/lineage"},
+        "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "idempotency_key": {"$ref": "#/$defs/id"},
+        "expected_currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "expected_currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "source_surface": {"enum": ["testing", "runtime_artifacts", "browser", "settings", "command_palette", "api", "automation"]},
+        "return_route_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "capture_session_id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/capture_target"},
+        "expected_target_currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "expected_target_currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "mode": {"$ref": "#/$defs/capture_mode"},
+        "target_policy": {"$ref": "#/$defs/capture_target_policy"},
+        "requested_engine": {"enum": ["native_browser_capture", "native_window_capture", "device_bridge", "remote_stream_adapter", "external_project_adapter", "frame_sequence_import"]},
+        "capture_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "runtime_resource_permit_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "bookmark_monotonic_ns": {"type": "integer", "minimum": 0},
+        "bookmark_label_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "raw_capture_id": {"$ref": "#/$defs/id"},
+        "raw_capture_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "clip_start_monotonic_ns": {"type": "integer", "minimum": 0},
+        "clip_end_monotonic_ns": {"type": "integer", "minimum": 0},
+        "derivation_manifest_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "privacy_review_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "confirmation_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "provenance_subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "candidate_capture_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.start"}}}, "then": {"required": ["target", "expected_target_currentness_ref", "expected_target_currentness_sha256", "mode", "target_policy", "requested_engine", "capture_policy_ref", "runtime_resource_permit_ref"]}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.testing.capture.pause", "cmd.testing.capture.resume", "cmd.testing.capture.stop", "cmd.testing.capture.health.inspect"]}}}, "then": {"required": ["capture_session_id"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.bookmark"}}}, "then": {"required": ["capture_session_id", "bookmark_monotonic_ns", "bookmark_label_ref"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.save_clip"}}}, "then": {"required": ["capture_session_id", "raw_capture_id", "clip_start_monotonic_ns", "clip_end_monotonic_ns", "derivation_manifest_ref", "privacy_review_ref"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.target.update"}}}, "then": {"required": ["capture_session_id", "target", "expected_target_currentness_ref", "expected_target_currentness_sha256"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.artifacts.create_demonstration_video"}}}, "then": {"required": ["raw_capture_ids", "derivation_manifest_ref", "privacy_review_ref", "confirmation_receipt_ref"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.artifacts.inspect_capture_provenance"}}}, "then": {"required": ["provenance_subject_ref", "candidate_capture_ids"]}}
+      ]
+    },
+    "capture_command_result": {
+      "title": "CaptureCommandResult",
+      "$anchor": "CaptureCommandResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "command_instance_id", "outcome", "capture_session_ref", "artifact_refs", "receipt_refs", "observable_work_ref", "currentness_ref", "currentness_sha256", "disabled_reason", "error_ref", "replayed"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.command_result.v1"},
+        "record_kind": {"const": "capture_command_result"},
+        "command_id": {"$ref": "#/$defs/capture_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/id"},
+        "outcome": {"enum": ["accepted", "completed", "disabled", "rejected", "cancelled", "no_change"]},
+        "capture_session_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "artifact_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "receipt_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "observable_work_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "currentness_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "currentness_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/capture_command_disabled_reason"}, {"type": "null"}]},
+        "error_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "replayed": {"type": "boolean"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"enum": ["accepted", "completed", "no_change"]}}}, "then": {"properties": {"currentness_ref": {"$ref": "#/$defs/non_secret_ref"}, "currentness_sha256": {"$ref": "#/$defs/sha256"}, "disabled_reason": {"type": "null"}, "error_ref": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"const": "completed"}}}, "then": {"properties": {"receipt_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"outcome": {"const": "disabled"}}}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/capture_command_disabled_reason"}, "error_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"outcome": {"const": "rejected"}}}, "then": {"properties": {"error_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "capture_command_error": {
+      "title": "CaptureCommandError",
+      "$anchor": "CaptureCommandError",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "command_instance_id", "error_code", "message_code", "retriable", "currentness_ref", "target_ref", "capture_session_ref", "safe_next_action_ref", "redaction_profile"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.command_error.v1"},
+        "record_kind": {"const": "capture_command_error"},
+        "command_id": {"$ref": "#/$defs/capture_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/id"},
+        "error_code": {"enum": ["invalid_request", "permission_denied", "stale_currentness", "target_unavailable", "protected_auth_target_forbidden", "playwright_runtime_forbidden", "capture_session_not_found", "source_capture_not_found", "privacy_review_required", "resource_permit_unavailable", "command_not_registered", "native_handler_absent", "production_wiring_absent", "owner_unavailable", "cancelled"]},
+        "message_code": {"$ref": "#/$defs/id"},
+        "retriable": {"type": "boolean"},
+        "currentness_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "target_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "capture_session_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "safe_next_action_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "redaction_profile": {"const": "no_secrets_no_protected_auth_content_no_absolute_paths"}
+      }
+    },
+    "capture_command_availability": {
+      "title": "CaptureCommandAvailability",
+      "$anchor": "CaptureCommandAvailability",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "subject_ref", "availability", "currentness_ref", "currentness_sha256", "disabled_reason", "missing_requirement_refs", "safe_next_action_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.test_capture.command_availability.v1"},
+        "record_kind": {"const": "capture_command_availability"},
+        "command_id": {"$ref": "#/$defs/capture_command_id"},
+        "subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "availability": {"enum": ["available", "disabled"]},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/capture_command_disabled_reason"}, {"type": "null"}]},
+        "missing_requirement_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "safe_next_action_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {"if": {"properties": {"availability": {"const": "available"}}}, "then": {"properties": {"disabled_reason": {"type": "null"}, "missing_requirement_refs": {"maxItems": 0}, "safe_next_action_ref": {"type": "null"}}}},
+        {"if": {"properties": {"availability": {"const": "disabled"}}}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/capture_command_disabled_reason"}, "missing_requirement_refs": {"minItems": 1}, "safe_next_action_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    }
+  }
+}

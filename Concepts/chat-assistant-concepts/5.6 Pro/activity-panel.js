@@ -34,36 +34,59 @@
   var EXT = window.PM56_EXT;
   if (!EXT || !EXT.slot) return;
 
-  var DOMAINS = ['goal', 'todo', 'subagents', 'changes', 'artifacts'];
-  var LABELS = { goal: 'Goal', todo: 'Todo', subagents: 'Subagents', changes: 'Changes', artifacts: 'Artifacts' };
-  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', changes: 'changes', artifacts: 'artifact' };
+  var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'changes', 'artifacts'];
+  var LABELS = { goal: 'Goal', todo: 'Todo', subagents: 'Subagents', crew: 'Crew', changes: 'Changes', artifacts: 'Artifacts' };
+  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', crew: 'users', changes: 'changes', artifacts: 'artifact' };
 
   /* ---------------------------------------------------------------- state
      Extra keys hang off state.activity.  globalReset() replaces `state`
      wholesale from DEFAULT, which does not carry them, so every accessor
      below has to tolerate `undefined` — that is the reset path, not a bug. */
   function act(ctx) { return ctx.state.activity || (ctx.state.activity = {}); }
-  /* Two controls, two jobs — which is why `focus-activity` reading as decorative
-     was a real defect and not a matter of taste:
-       the Chat Activity Bar's `open-activity` OPENS the whole detail with one
-       domain emphasised (scope 'all');
-       the panel's own filter row `focus-activity` NARROWS to one domain
-       (scope 'focus'), and re-clicking it widens back out. */
+  function coll(ctx) {
+    if (ctx.activityScope) return ctx.activityScope();
+    return {
+      todos: ctx.D.todos || [],
+      subagents: ctx.D.subagents || [],
+      crew: [],
+      changes: ctx.D.changes || [],
+      artifacts: ctx.D.artifacts || [],
+      hasGoal: !!(ctx.activityDefs() || {}).goal,
+      hasAttachedGoal: !!(ctx.activityDefs() || {}).goal && !!(ctx.activityDefs().goal.attached !== false),
+      hasSubagents: (ctx.D.subagents || []).length > 0,
+      hasCrew: false,
+      live: null
+    };
+  }
+  function liveDomains(ctx) {
+    var defs = ctx.activityDefs() || {};
+    return DOMAINS.filter(function (d) { return !!defs[d]; });
+  }
+  /* Two controls, two jobs:
+       the Chat Activity Bar's `open-activity` OPENS the detail focused on
+       that one domain (scope 'focus');
+       Show all / the filter row can widen back to every *live* domain. */
   function scopeOf(ctx) { return act(ctx).scope === 'focus' ? 'focus' : 'all'; }
   function focusOf(ctx) {
+    var live = liveDomains(ctx);
     var d = act(ctx).domain;
-    return DOMAINS.indexOf(d) >= 0 ? d : 'goal';
+    if (live.indexOf(d) >= 0) return d;
+    return live[0] || 'goal';
   }
   function visibleDomains(ctx) {
-    if (scopeOf(ctx) === 'focus') return [focusOf(ctx)];
-    return DOMAINS.slice();
+    var live = liveDomains(ctx);
+    if (scopeOf(ctx) === 'focus') {
+      var f = focusOf(ctx);
+      return live.indexOf(f) >= 0 ? [f] : live.slice(0, 1);
+    }
+    return live;
   }
   /* Focused-first ordering, for the concepts where movement reads as ranking
      rather than as the list jumping about (boards, feeds, ledgers). */
   function rankedDomains(ctx) {
-    var f = focusOf(ctx);
-    if (scopeOf(ctx) === 'focus') return [f];
-    return [f].concat(DOMAINS.filter(function (d) { return d !== f; }));
+    var live = liveDomains(ctx), f = focusOf(ctx);
+    if (scopeOf(ctx) === 'focus') return live.indexOf(f) >= 0 ? [f] : live.slice(0, 1);
+    return [f].concat(live.filter(function (d) { return d !== f; }));
   }
   function selected(ctx) { return act(ctx).selected || null; }
   function isSelected(ctx, domain, id) {
@@ -85,6 +108,23 @@
   function esc(ctx, v) { return ctx.esc(v == null ? '' : v); }
   function pct(n, d) { return d > 0 ? Math.max(0, Math.min(100, Math.round((n / d) * 100))) : 0; }
   function titleCase(s) { return String(s || '').replace(/_/g, ' ').replace(/^./, function (c) { return c.toUpperCase(); }); }
+  function statusMeta(status, fallbackTone) {
+    var shared = window.PM56_ACTIVITY_STATUS;
+    if (shared && typeof shared.get === 'function') return shared.get(status);
+    return { label: titleCase(status || 'queued'), tone: fallbackTone || 'idle', icon: 'todo' };
+  }
+  function toneLabel(tone) {
+    var shared = window.PM56_ACTIVITY_STATUS;
+    if (shared && typeof shared.toneLabel === 'function') return shared.toneLabel(tone);
+    return {
+      blocked: 'Blocked', attention: 'Needs attention', working: 'Working',
+      changed: 'Changed', done: 'Settled', idle: 'Queued', muted: 'Inactive'
+    }[tone] || titleCase(tone);
+  }
+  function splitPath(path) {
+    var value = String(path || ''), slash = value.lastIndexOf('/');
+    return { dir: slash < 0 ? '' : value.slice(0, slash + 1), file: slash < 0 ? value : value.slice(slash + 1) };
+  }
 
   /* Relative label from a fixed ISO string.  The fixtures are deterministic on
      purpose (a stable screenshot baseline is impossible otherwise), so "now" is
@@ -118,6 +158,12 @@
      preference; all three degrade to app.js's own derived summary. */
   function goalApi() { return window.PM56_GOAL || null; }
   function goalProgress(ctx) {
+    if (!coll(ctx).hasAttachedGoal) {
+      var stub = ctx.activityDefs().goal, m0 = /^(\d+)\/(\d+)$/.exec(String(stub && stub.count || ''));
+      return m0
+        ? { completed: Number(m0[1]), total: Number(m0[2]), open: Math.max(0, Number(m0[2]) - Number(m0[1])) }
+        : { completed: 0, total: 0, open: 0 };
+    }
     var api = goalApi(), p = api && api.progress && api.progress();
     if (p && typeof p.total === 'number') return p;
     var g = ctx.activityDefs().goal, m = /^(\d+)\/(\d+)$/.exec(String(g.count || ''));
@@ -126,6 +172,10 @@
       : { completed: 0, total: 0, open: 0 };
   }
   function goalSummaryLine(ctx) {
+    if (!coll(ctx).hasAttachedGoal) {
+      var stub = ctx.activityDefs().goal;
+      return (stub && (stub.detail || stub.summary)) || 'Goal Mode is on';
+    }
     var api = goalApi(), s = api && api.summary && api.summary();
     if (s) return [s.statusLabel, s.phaseLine, s.counter].filter(Boolean).join(' · ');
     var g = ctx.activityDefs().goal;
@@ -152,6 +202,13 @@
     } catch (e) { return html; }
   }
   function goalBody(ctx) {
+    if (!coll(ctx).hasAttachedGoal) {
+      var stub = ctx.activityDefs().goal || {};
+      return '<div class="activity-line" data-k="pmap-goal-cap"><span class="status-dot working"></span><div class="copy"><strong>' +
+        esc(ctx, stub.summary || 'Goal Mode is on') + '</strong><span>' +
+        esc(ctx, stub.detail || 'No durable goal on this thread yet.') +
+        '</span></div><span class="right">' + esc(ctx, stub.count || '—') + '</span></div>';
+    }
     var slot = ctx.extRender('goalSection', {});
     if (slot) return sealed(slot);
     var api = goalApi();
@@ -183,31 +240,21 @@
 
   /* ------------------------------------------------------- the item model
      ONE derived shape for every domain, so a concept never has to know which
-     collection it is drawing.  tone is the vocabulary the CSS understands:
-     working | blocked | waiting | done | pending | changed. */
+     collection it is drawing. The shared status vocabulary is exported by
+     activity-bar.js and used by both surfaces:
+     blocked | attention | working | changed | done | idle | muted. */
   var TODO_DONE = ['done', 'completed'];
   var TODO_RUN = ['doing', 'in_progress', 'running', 'working'];
   var TODO_OPEN = ['next', 'pending', 'queued'];
 
   function todoTone(s) {
-    if (TODO_DONE.indexOf(s) >= 0) return 'done';
-    if (TODO_RUN.indexOf(s) >= 0) return 'working';
-    if (s === 'blocked') return 'blocked';
-    if (s === 'skipped') return 'waiting';
-    return 'pending';
+    return statusMeta(s, TODO_DONE.indexOf(s) >= 0 ? 'done' : TODO_RUN.indexOf(s) >= 0 ? 'working' : 'idle').tone;
   }
   function agentTone(s) {
-    if (s === 'working') return 'working';
-    if (s === 'blocked' || s === 'failed') return 'blocked';
-    if (s === 'waiting') return 'waiting';
-    if (s === 'complete' || s === 'completed') return 'done';
-    return 'pending';
+    return statusMeta(s, s === 'working' ? 'working' : s === 'blocked' || s === 'failed' ? 'blocked' : 'idle').tone;
   }
   function artifactTone(s) {
-    if (s === 'error') return 'blocked';
-    if (s === 'loading') return 'working';
-    if (s === 'stale') return 'waiting';
-    return 'done';
+    return statusMeta(s, s === 'loading' ? 'working' : s === 'error' || s === 'stale' ? 'attention' : 'done').tone;
   }
 
   function phaseLabel(ctx, id) {
@@ -227,7 +274,7 @@
   }
 
   function sortedArtifacts(ctx) {
-    var list = (ctx.D.artifacts || []).slice();
+    var list = (coll(ctx).artifacts || []).slice();
     var dated = list.filter(function (a) { return a.updatedAt; });
     if (!dated.length) return list;              /* keep fixture order; never invent one */
     return list.sort(function (a, b) {
@@ -238,8 +285,9 @@
   }
 
   function items(ctx, domain) {
-    var D = ctx.D;
+    var sc = coll(ctx);
     if (domain === 'goal') {
+      if (!(ctx.activityDefs() || {}).goal) return [];
       var g = ctx.activityDefs().goal, gp = goalProgress(ctx);
       return [{
         domain: 'goal', id: 'goal', title: g.summary, sub: goalSummaryLine(ctx),
@@ -251,12 +299,12 @@
       }];
     }
     if (domain === 'todo') {
-      return (D.todos || []).map(function (t) {
-        var tone = todoTone(t.status);
+      return (sc.todos || []).map(function (t) {
+        var sm = statusMeta(t.status, todoTone(t.status)), tone = sm.tone;
         var ph = phaseLabel(ctx, t.goalPhaseId);
         return {
           domain: 'todo', id: t.id, title: t.label, sub: [t.source, ph, t.blocker].filter(Boolean).join(' · '),
-          right: titleCase(t.status), tone: tone,
+          right: sm.label, tone: tone,
           /* the ledger's Detail cell is ~90px: keep it to one short fact, the
              phase join is already on the row's sub-line and in the detail card */
           ledger: t.source || (ph ? ph : '—'),
@@ -264,54 +312,73 @@
              inventing 55% for "in progress" is the same class of fake as a
              hand-written count */
           progress: null,
-          state: titleCase(t.status), action: 'open-todo',
+          state: sm.label, action: 'open-todo',
           attrs: ' data-id="' + esc(ctx, t.id) + '"',
           stamp: t.updatedAt || null, raw: t
         };
       });
     }
     if (domain === 'subagents') {
-      return (D.subagents || []).map(function (a) {
+      return (sc.subagents || []).map(function (a) {
         var counts = a.counts && typeof a.counts === 'object'
           ? Object.keys(a.counts).map(function (k) { return a.counts[k] + ' ' + k; }).join(' · ') : '';
+        var sm = statusMeta(a.status, agentTone(a.status));
         return {
-          domain: 'subagents', id: a.id, title: a.name, sub: [a.current, a.blocker].filter(Boolean).join(' · '),
-          right: titleCase(a.status) + (a.elapsed ? ' · ' + a.elapsed : ''),
+          domain: 'subagents', id: a.id, title: a.name,
+          sub: [a.model, a.blocker || a.current].filter(Boolean).join(' · '),
+          right: sm.label + (a.elapsed ? ' · ' + a.elapsed : ''),
+          elapsed: a.elapsed || '',
           ledger: a.elapsed || '—',
-          tone: agentTone(a.status),
-          /* real fixture value or nothing -- a 0% bar on an agent that simply has
-             no progress field would read as "no progress made" */
+          tone: sm.tone,
           progress: a.progress == null ? null : Number(a.progress) || 0,
-          state: titleCase(a.status), action: 'open-agent',
+          state: sm.label, action: 'open-agent',
           attrs: ' data-id="' + esc(ctx, a.id) + '"',
           initials: String(a.name || '?').split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2),
           group: a.group || a.parent || 'Unassigned', meta: counts, raw: a
         };
       });
     }
+    if (domain === 'crew') {
+      return (sc.crew || []).map(function (a) {
+        var sm = statusMeta(a.status, agentTone(a.status));
+        return {
+          domain: 'crew', id: a.id, title: a.name, sub: a.current || '',
+          right: sm.label, ledger: sm.label,
+          tone: sm.tone, progress: null,
+          state: sm.label, action: 'open-crew',
+          attrs: ' data-id="' + esc(ctx, a.id) + '"',
+          initials: String(a.name || '?').split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2),
+          group: 'Crew', raw: a
+        };
+      });
+    }
     if (domain === 'changes') {
-      var list = D.changes || [];
+      var list = sc.changes || [];
       var maxChurn = list.reduce(function (m, c) { return Math.max(m, (Number(c.add) || 0) + (Number(c.del) || 0)); }, 0);
       return list.map(function (c) {
         var churn = (Number(c.add) || 0) + (Number(c.del) || 0);
+        var sp = splitPath(c.path), sm = statusMeta(c.status || 'modified', 'changed');
+        var addN = Number(c.add) || 0, delN = Number(c.del) || 0;
         return {
-          domain: 'changes', id: c.id || c.path, title: c.path, sub: c.summary,
-          right: '+' + (Number(c.add) || 0) + ' −' + (Number(c.del) || 0),
-          ledger: '+' + (Number(c.add) || 0) + ' −' + (Number(c.del) || 0),
-          tone: 'changed', progress: pct(churn, maxChurn),
-          state: titleCase(c.status || 'modified'), action: 'open-change',
+          domain: 'changes', id: c.id || c.path, title: sp.file, sub: [sp.dir, c.summary].filter(Boolean).join(' · '),
+          right: '+' + addN + ' −' + delN,
+          rightHtml: churnPair(addN, delN),
+          ledger: '+' + addN + ' −' + delN,
+          tone: sm.tone, progress: pct(churn, maxChurn),
+          state: sm.label, action: 'open-change',
           attrs: ' data-path="' + esc(ctx, c.path) + '" data-id="' + esc(ctx, c.id || c.path) + '"',
           line: c.line || 1, meta: (Array.isArray(c.hunks) ? c.hunks.length : 0) + ' hunks', raw: c
         };
       });
     }
     return sortedArtifacts(ctx).map(function (a) {
+      var sm = statusMeta(a.status, artifactTone(a.status));
       return {
         domain: 'artifacts', id: a.id, title: a.title, sub: a.summary,
-        right: titleCase(a.status), tone: artifactTone(a.status),
+        right: sm.label, tone: sm.tone,
         ledger: 'v' + (a.version == null ? '?' : a.version) + (a.updated ? ' · ' + a.updated : ''),
         progress: null,
-        state: titleCase(a.status), action: 'open-artifact',
+        state: sm.label, action: 'open-artifact',
         attrs: ' data-id="' + esc(ctx, a.id) + '" data-artifact-id="' + esc(ctx, a.id) + '"',
         kind: a.kind, version: a.version, stamp: a.updatedAt || null,
         display: a.updated || relTime(ctx, a.updatedAt, ''), raw: a
@@ -333,21 +400,26 @@
     return '<i class="pmap-dot pmap-tone-' + tone + '"' + (loop ? ' data-pmap-loop' : '') + '></i>';
   }
   function scopeStrip(ctx) {
+    var live = liveDomains(ctx);
+    if (live.length <= 1) return '';
     var all = scopeOf(ctx) === 'all', f = focusOf(ctx);
-    var hidden = DOMAINS.length - 1;
+    var hidden = live.length - 1;
     return '<div class="pmap-scope" data-k="pmap-scope">' +
       '<span class="pmap-scope-icon">' + ctx.icon('filter', 11) + '</span>' +
       '<span class="pmap-scope-text">' + (all
-        ? 'All ' + DOMAINS.length + ' domains'
+        ? 'All ' + live.length + ' domains'
         : 'Showing ' + esc(ctx, LABELS[f]) + ' only · ' + hidden + ' hidden') + '</span>' +
-      '<button class="pmap-scope-btn" data-action="activity-scope" data-value="' + (all ? 'focus' : 'all') + '">' +
+      '<button class="pmap-scope-btn" data-action="activity-scope" data-value="' + (all ? 'focus' : 'all') +
+      '" aria-label="' + (all ? 'Focus ' + esc(ctx, LABELS[f]) : 'Show all activity domains') + '">' +
       (all ? 'Focus ' + esc(ctx, LABELS[f]) : 'Show all') + '</button></div>';
   }
-  /* The five-way jump used by the concepts that hide the other domains. */
+  /* The jump used by the concepts that hide the other domains. */
   function domainChips(ctx, cls) {
     var f = focusOf(ctx);
-    return '<div class="pmap-chips ' + (cls || '') + '" data-k="pmap-chips">' + DOMAINS.map(function (id) {
-      return '<button class="pmap-chip' + (id === f ? ' is-on' : '') + '" data-action="focus-activity" data-domain="' + id + '" title="Focus ' + esc(ctx, LABELS[id]) + '">' +
+    return '<div class="pmap-chips ' + (cls || '') + '" data-k="pmap-chips">' + liveDomains(ctx).map(function (id) {
+      var on = scopeOf(ctx) === 'focus' && id === f;
+      return '<button class="pmap-chip' + (on ? ' is-on' : '') + '" data-action="focus-activity" data-domain="' + id +
+        '" aria-pressed="' + (on ? 'true' : 'false') + '" aria-label="Focus ' + esc(ctx, LABELS[id]) + '">' +
         ctx.icon(ICONS[id], 11) + '<span>' + esc(ctx, LABELS[id]) + '</span><b>' + esc(ctx, countOf(ctx, id)) + '</b></button>';
     }).join('') + '</div>';
   }
@@ -393,23 +465,28 @@
     if (!it) return '';
     var r = it.raw || {}, body = '';
     if (domain === 'todo') {
-      body = kv(ctx, 'Status', titleCase(r.status)) + kv(ctx, 'Source', r.source) +
+      body = kv(ctx, 'Status', statusMeta(r.status, todoTone(r.status)).label) + kv(ctx, 'Source', r.source) +
         kv(ctx, 'Goal phase', phaseLabel(ctx, r.goalPhaseId) || (r.goalPhaseId ? r.goalPhaseId : 'Not stamped')) +
         kv(ctx, 'Blocker', r.blocker) + kv(ctx, 'Updated', r.updatedAt ? relTime(ctx, r.updatedAt, '') + ' ago' : null);
     } else if (domain === 'subagents') {
-      body = kv(ctx, 'Status', titleCase(r.status)) + kv(ctx, 'Model', r.model) +
-        kv(ctx, 'Route', r.route) + kv(ctx, 'Parent', r.parent) +
+      var route = r.route && typeof r.route === 'object' ? (r.route.label || [r.route.provider, r.route.account, r.route.model].filter(Boolean).join(' · ')) : r.route;
+      body = kv(ctx, 'Status', statusMeta(r.status, agentTone(r.status)).label) + kv(ctx, 'Model', r.model) +
+        kv(ctx, 'Route', route) + kv(ctx, 'Parent', r.parent) +
         kv(ctx, 'Elapsed', r.elapsed) + kv(ctx, 'Progress', (Number(r.progress) || 0) + '%') +
         (it.meta ? kv(ctx, 'Work', it.meta) : '') + kv(ctx, 'Blocker', r.blocker);
+    } else if (domain === 'crew') {
+      body = kv(ctx, 'Role', r.name) + kv(ctx, 'Status', statusMeta(r.status, agentTone(r.status)).label) +
+        kv(ctx, 'Current', r.current);
     } else if (domain === 'changes') {
-      body = kv(ctx, 'Status', titleCase(r.status || 'modified')) +
+      body = kv(ctx, 'Status', statusMeta(r.status || 'modified', 'changed').label) +
+        kv(ctx, 'Path', r.path) +
         kv(ctx, 'Range', 'from line ' + (r.line || 1)) +
         kv(ctx, 'Delta', '+' + (Number(r.add) || 0) + ' −' + (Number(r.del) || 0)) +
         kv(ctx, 'Language', r.language) + kv(ctx, 'Renamed from', r.oldPath) +
         renderHunks(ctx, r);
     } else {
       body = kv(ctx, 'Kind', r.kind) + kv(ctx, 'Version', r.version) +
-        kv(ctx, 'Status', titleCase(r.status)) +
+        kv(ctx, 'Status', statusMeta(r.status, artifactTone(r.status)).label) +
         kv(ctx, 'Updated', r.updatedAt ? relTime(ctx, r.updatedAt, '') + ' ago' : r.updated) +
         kv(ctx, 'Thread', r.threadId) + kv(ctx, 'Error', r.error && (r.error.reason || r.error));
     }
@@ -438,6 +515,7 @@
     var exp = Array.isArray(act(ctx).expanded) ? act(ctx).expanded : DOMAINS;
     var out = vis.map(function (id) {
       var d = ctx.activityDefs()[id], focused = id === f;
+      if (!d) return '';
       /* the focused domain is always open — that is what "focus" has to mean
          visibly, and it is the pixel difference between two bar clicks */
       var open = focused || exp.indexOf(id) >= 0;
@@ -457,42 +535,54 @@
         '<span class="event-icon" style="width:24px;height:24px">' + ctx.icon(d.icon, 12) + '</span>' +
         '<strong>' + esc(ctx, d.label) + '</strong>' +
         '<span class="pmap-head-sub">' + esc(ctx, d.summary) + '</span><span class="spacer"></span>' +
-        (focused ? '<span class="meta-pill pmap-focus-pill">' + ctx.icon('filter', 9) + ' Focused</span>' : '') +
         '<span class="meta-pill">' + esc(ctx, d.count) + '</span>' + ctx.icon(open ? 'up' : 'down', 11) + '</button>' + body + '</section>';
     }).join('');
     return '<div class="pmap pmap-accordion" data-k="pmap:0">' + scopeStrip(ctx) + out +
-      (scopeOf(ctx) === 'focus' ? domainChips(ctx, 'pmap-chips-foot') : '') + '</div>';
+      '</div>';
   }
 
   /* A row shared by the concepts that want a list but not an accordion. */
   function compactRow(ctx, it, extraCls) {
     var on = isSelected(ctx, it.domain, it.id);
+    var right = it.rightHtml != null ? it.rightHtml : esc(ctx, it.right);
     return '<button class="pmap-row' + (on ? ' is-selected' : '') + (extraCls ? ' ' + extraCls : '') +
       '" data-k="pmap-r:' + esc(ctx, it.domain + ':' + it.id) + '" data-action="' + it.action +
       '" data-domain="' + it.domain + '"' + it.attrs + '>' +
       '<span class="pmap-row-mark">' + toneDot(it.tone, it.tone === 'working') + '</span>' +
       '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong><span>' + esc(ctx, it.sub) + '</span></span>' +
-      '<span class="right">' + esc(ctx, it.right) + '</span></button>' +
+      '<span class="right">' + right + '</span></button>' +
+      (on ? detailCard(ctx, it.domain, it.id) : '');
+  }
+  function agentRow(ctx, it) {
+    var on = isSelected(ctx, it.domain, it.id);
+    return '<button class="pmap-row pmap-agent-row' + (on ? ' is-selected' : '') +
+      '" data-k="pmap-r:' + esc(ctx, it.domain + ':' + it.id) + '" data-action="' + it.action +
+      '" data-domain="' + it.domain + '" data-state="' + it.tone + '"' + it.attrs + '>' +
+      '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong>' +
+      (it.sub ? '<span>' + esc(ctx, it.sub) + '</span>' : '') + '</span>' +
+      '<span class="right"><b>' + esc(ctx, it.state) + '</b>' +
+      (it.elapsed ? '<i>' + esc(ctx, it.elapsed) + '</i>' : '') + '</span></button>' +
       (on ? detailCard(ctx, it.domain, it.id) : '');
   }
   function domainList(ctx, id) {
     if (id === 'goal') return goalBody(ctx);
     var list = items(ctx, id);
     if (!list.length) return emptyNote(ctx, 'No ' + LABELS[id].toLowerCase() + ' records in this fixture.');
+    if (id === 'subagents') return list.map(function (it) { return agentRow(ctx, it); }).join('');
     return list.map(function (it) { return compactRow(ctx, it); }).join('');
   }
 
   /* =======================================================================
-     CONCEPT 1 — Status Board.  A tile grid over `.activity-concept-board`:
-     five status tiles, count-first, each with a settled-share meter, and one
-     detail strip underneath for whichever tile is focused.  No accordion, no
-     per-row disclosure — the tiles ARE the navigation.
+     CONCEPT 1 — Status Board. All scope is a bounded thread overview; focus
+     scope is one domain summary plus its real records. The two modes are
+     intentionally different structures so Show all cannot update copy while
+     leaving the same one-domain body behind.
      ===================================================================== */
   /* Every proportion drawn anywhere in this file states what it measures.  A
      bar or a ring with no caption is the same fake as a hand-written count. */
   var MEASURE_CAPTION = {
     goal: 'phases completed', todo: 'todos completed', subagents: 'agents finished',
-    changes: 'additions of churn', artifacts: 'artifacts ready'
+    crew: 'crew members ready', changes: 'additions of churn', artifacts: 'artifacts ready'
   };
   function settledShare(ctx, id) {
     if (id === 'goal') { var g = goalProgress(ctx); return pct(g.completed, g.total); }
@@ -503,35 +593,109 @@
     if (id === 'changes') {
       /* "settled" is meaningless for a changed file, so the changes measure is
          the additive share of total churn -- derived, never invented */
-      var list = ctx.D.changes || [];
+      var list = coll(ctx).changes || [];
       var add = list.reduce(function (a, c) { return a + (Number(c.add) || 0); }, 0);
       var del = list.reduce(function (a, c) { return a + (Number(c.del) || 0); }, 0);
       return pct(add, add + del);
     }
     return settledShare(ctx, id);
   }
-  function conceptStatusBoard(ctx) {
-    var f = focusOf(ctx), ranked = rankedDomains(ctx);
-    var tiles = ranked.map(function (id) {
-      var d = ctx.activityDefs()[id], tone = domainTone(ctx, id);
-      var t = tone === 'idle' ? 'pending' : tone;
-      return '<button class="pmap-tile' + (id === f ? ' is-focus' : '') + '" data-k="pmap-tile:' + id +
-        '" data-action="focus-activity" data-domain="' + id + '" title="Focus ' + esc(ctx, d.label) + '">' +
-        '<label>' + ctx.icon(d.icon, 10) + '<span>' + esc(ctx, d.label) + '</span></label>' +
-        '<strong>' + esc(ctx, d.count) + '</strong>' +
-        '<span class="pmap-tile-sum">' + esc(ctx, d.summary) + '</span>' +
-        '<i class="pmap-meter"><b style="width:' + measureValue(ctx, id) + '%"></b></i>' +
-        '<em class="pmap-tile-foot">' + toneDot(t, t === 'working') +
-        '<span>' + measureValue(ctx, id) + '% ' + esc(ctx, MEASURE_CAPTION[id]) + '</span></em>' +
-        '<em class="pmap-tile-foot pmap-tile-detail"><span>' + esc(ctx, d.detail) + '</span></em>' +
-        '</button>';
+  function toneCount(list, tones) {
+    return list.filter(function (it) { return tones.indexOf(it.tone) >= 0; }).length;
+  }
+  function fact(label, value, tone) { return { label: label, value: String(value), tone: tone || '' }; }
+  function churnPair(add, del) {
+    return '<span class="pmap-churn"><b>+' + add + '</b><i>−' + del + '</i></span>';
+  }
+  function factCells(ctx, facts) {
+    return facts.map(function (entry) {
+      var tone = entry.tone === 'add' || entry.tone === 'del' ? ' class="is-' + entry.tone + '"' : '';
+      return '<span><small>' + esc(ctx, entry.label) + '</small><b' + tone + '>' + esc(ctx, entry.value) + '</b></span>';
     }).join('');
-    return '<div class="pmap pmap-statusboard" data-k="pmap:1">' + scopeStrip(ctx) +
-      '<div class="activity-concept-board">' + tiles + '</div>' +
-      '<div class="pmap-board-detail" data-k="pmap-board-detail">' +
-      '<div class="pmap-sub-head">' + ctx.icon(ICONS[f], 11) + '<strong>' + esc(ctx, LABELS[f]) +
-      '</strong><span class="spacer"></span><span class="meta-pill">' + esc(ctx, countOf(ctx, f)) + '</span></div>' +
-      domainList(ctx, f) + '</div></div>';
+  }
+  function domainPresentation(ctx, id) {
+    var list = items(ctx, id), facts = [], meter = null;
+    if (id === 'goal' || id === 'subagents' || id === 'artifacts') {
+      return { list: list, facts: [], meter: null };
+    } else if (id === 'todo') {
+      facts = [fact('Active', toneCount(list, ['working'])), fact('Blocked', toneCount(list, ['blocked']))];
+      if (list.length) meter = { value: settledShare(ctx, id), label: 'Todos completed' };
+    } else if (id === 'crew') {
+      facts = [fact('Working', toneCount(list, ['working'])), fact('Waiting', toneCount(list, ['attention', 'idle']))];
+      if (list.length) meter = { value: settledShare(ctx, id), label: 'Crew members ready' };
+    } else if (id === 'changes') {
+      var changes = coll(ctx).changes || [];
+      var add = changes.reduce(function (sum, change) { return sum + (Number(change.add) || 0); }, 0);
+      var del = changes.reduce(function (sum, change) { return sum + (Number(change.del) || 0); }, 0);
+      facts = [fact('Added', '+' + add, 'add'), fact('Deleted', '−' + del, 'del')];
+      meter = { split: true, add: add, del: del, label: 'Change mix' };
+    }
+    return { list: list, facts: facts.slice(0, 2), meter: meter };
+  }
+  function meterMarkup(ctx, meter) {
+    if (!meter) return '';
+    if (meter.split) {
+      var total = meter.add + meter.del;
+      var addShare = total ? pct(meter.add, total) : 0;
+      return '<div class="pmap-measure" aria-label="' + esc(ctx, meter.label + ': +' + meter.add + ' additions and −' + meter.del + ' deletions') + '">' +
+        '<span class="pmap-measure-label"><span>' + esc(ctx, meter.label) + '</span>' + churnPair(meter.add, meter.del) + '</span>' +
+        '<span class="pmap-meter pmap-meter-split"><b class="is-add" style="width:' + addShare + '%"></b><b class="is-del" style="width:' + (100 - addShare) + '%"></b></span></div>';
+    }
+    return '<div class="pmap-measure" aria-label="' + esc(ctx, meter.label + ': ' + meter.value + ' percent') + '">' +
+      '<span class="pmap-measure-label"><span>' + esc(ctx, meter.label) + '</span><b>' + meter.value + '%</b></span>' +
+      '<span class="pmap-meter"><b style="width:' + meter.value + '%"></b></span></div>';
+  }
+  function domainState(ctx, id) {
+    var tone = domainTone(ctx, id);
+    return { tone: tone, label: toneLabel(tone) };
+  }
+  function boardTile(ctx, id) {
+    var d = ctx.activityDefs()[id], p = domainPresentation(ctx, id), state = domainState(ctx, id);
+    var slim = id === 'goal' || id === 'subagents' || id === 'artifacts';
+    var facts = (slim || !p.facts.length) ? '' : '<span class="pmap-tile-facts">' + factCells(ctx, p.facts) + '</span>';
+    var footStatus = slim ? '' : '<span>' + toneDot(state.tone, state.tone === 'working') + esc(ctx, state.label) + '</span>';
+    return '<button class="pmap-tile' + (slim ? ' is-slim' : '') + '" data-k="pmap-tile:' + id + '" data-action="focus-activity" data-domain="' + id +
+      '" data-tone="' + state.tone + '" aria-label="View ' + esc(ctx, d.label) + ' activity details">' +
+      '<span class="pmap-tile-head"><span class="pmap-tile-ident">' + ctx.icon(d.icon, 14) + '<span>' +
+      esc(ctx, d.label) + '</span></span><strong>' + esc(ctx, d.count) + '</strong></span>' +
+      '<span class="pmap-tile-sum">' + esc(ctx, d.summary) + '</span>' +
+      facts + meterMarkup(ctx, slim ? null : p.meter) +
+      '<span class="pmap-tile-foot">' + footStatus +
+      '<span>View details ' + ctx.icon('chevron', 11) + '</span></span></button>';
+  }
+  function conceptStatusBoard(ctx) {
+    var live = liveDomains(ctx), f = focusOf(ctx), d = ctx.activityDefs()[f] || {};
+    if (scopeOf(ctx) === 'all') {
+      return '<div class="pmap pmap-statusboard is-overview" data-k="pmap:1">' +
+        '<div class="pmap-overview-head" data-k="pmap-overview-head"><strong>Thread activity</strong></div>' +
+        '<div class="activity-concept-board" data-k="pmap-board">' + live.map(function (id) { return boardTile(ctx, id); }).join('') + '</div></div>';
+    }
+    var p = domainPresentation(ctx, f), state = domainState(ctx, f);
+    var records = f === 'goal'
+      ? (goalCompact(ctx) || emptyNote(ctx, goalSummaryLine(ctx)))
+      : domainList(ctx, f);
+    var summary = '';
+    if (f !== 'goal') {
+      var head = '<div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon(ICONS[f], 15) + '<strong>' +
+        esc(ctx, LABELS[f]) + '</strong></span><span class="pmap-focus-count">' + esc(ctx, d.count || countOf(ctx, f)) + '</span></div>';
+      if (f === 'artifacts') {
+        summary = '<section class="pmap-focus-summary" data-k="pmap-focus-summary:' + f + '" data-tone="' + state.tone + '">' +
+          head + '</section>';
+      } else if (f === 'subagents') {
+        summary = '<section class="pmap-focus-summary" data-k="pmap-focus-summary:' + f + '" data-tone="' + state.tone + '">' +
+          head + '<p>' + esc(ctx, d.summary || d.detail) + '</p></section>';
+      } else {
+        summary = '<section class="pmap-focus-summary" data-k="pmap-focus-summary:' + f + '" data-tone="' + state.tone + '">' +
+          head + '<p>' + esc(ctx, d.summary || d.detail) + '</p><div class="pmap-focus-facts">' + factCells(ctx, p.facts) + '</div>' + meterMarkup(ctx, p.meter) +
+          '<div class="pmap-focus-state">' + toneDot(state.tone, state.tone === 'working') + '<span>' + esc(ctx, state.label) + '</span></div></section>';
+      }
+    }
+    return '<div class="pmap pmap-statusboard is-focused" data-k="pmap:1">' + scopeStrip(ctx) + summary +
+      '<section class="pmap-records" data-k="pmap-records:' + f + '"><div class="pmap-records-head"><strong>' +
+      (f === 'goal' ? 'Goal progress' : 'Recent records') + '</strong><span>' +
+      (f === 'goal' ? esc(ctx, d.detail || '') : p.list.length + ' total') + '</span></div>' + records +
+      (f === 'goal' ? '<button class="pmap-route-action" data-action="open-goal"><span>View Goal</span>' + ctx.icon('chevron', 11) + '</button>' : '') +
+      '</section></div>';
   }
 
   /* =======================================================================
@@ -542,10 +706,14 @@
      ===================================================================== */
   function conceptGoalTree(ctx) {
     var f = focusOf(ctx), open = branches(ctx);
-    var branchIds = scopeOf(ctx) === 'focus' ? [f] : DOMAINS.slice();
-    var g = ctx.activityDefs().goal, gp = goalProgress(ctx);
+    var live = liveDomains(ctx);
+    var branchIds = scopeOf(ctx) === 'focus' ? (live.indexOf(f) >= 0 ? [f] : live.slice(0, 1)) : live.slice();
+    var defs = ctx.activityDefs() || {};
+    var g = defs.goal;
+    var gp = goalProgress(ctx);
     var body = branchIds.map(function (id) {
-      var d = ctx.activityDefs()[id], isOpen = open.indexOf(id) >= 0;
+      var d = defs[id], isOpen = open.indexOf(id) >= 0;
+      if (!d) return '';
       var head = '<button class="tree-child tree-branch' + (id === f ? ' is-focus' : '') +
         '" data-k="pmap-b:' + id + '" data-action="activity-branch" data-domain="' + id + '">' +
         '<span class="pmap-twisty">' + ctx.icon(isOpen ? 'down' : 'chevron', 10) + '</span>' +
@@ -567,11 +735,13 @@
       }).join('');
     }).join('');
     var sel = selected(ctx);
+    var root = g
+      ? '<button class="tree-root" data-action="open-goal" data-k="pmap-treeroot">' + ctx.icon('goal', 11) +
+        '<span class="pmap-tree-label">' + esc(ctx, g.summary) + '</span>' +
+        '<b>' + (gp.total ? gp.completed + '/' + gp.total : esc(ctx, g.count)) + '</b></button>'
+      : '';
     return '<div class="pmap pmap-treewrap" data-k="pmap:2">' + scopeStrip(ctx) +
-      '<div class="activity-goal-tree">' +
-      '<button class="tree-root" data-action="open-goal" data-k="pmap-treeroot">' + ctx.icon('goal', 11) +
-      '<span class="pmap-tree-label">' + esc(ctx, g.summary) + '</span>' +
-      '<b>' + (gp.total ? gp.completed + '/' + gp.total : esc(ctx, g.count)) + '</b></button>' +
+      '<div class="activity-goal-tree">' + root +
       body + '</div>' +
       (sel && sel.domain !== 'goal' ? detailCard(ctx, sel.domain, sel.id) : '') + '</div>';
   }
@@ -585,9 +755,12 @@
      ===================================================================== */
   function conceptMasterDetail(ctx) {
     var f = focusOf(ctx), all = scopeOf(ctx) === 'all';
-    var rail = '<button class="pmap-md-btn' + (all ? ' active' : '') + '" data-k="pmap-md:all" data-action="activity-scope" data-value="all" title="Show every domain">' +
-      ctx.icon('collapse', 11) + '<span>All</span></button>' +
-      DOMAINS.map(function (id) {
+    var live = liveDomains(ctx);
+    var rail = (live.length > 1
+      ? '<button class="pmap-md-btn' + (all ? ' active' : '') + '" data-k="pmap-md:all" data-action="activity-scope" data-value="all" title="Show every domain">' +
+        ctx.icon('collapse', 11) + '<span>All</span></button>'
+      : '') +
+      live.map(function (id) {
         var d = ctx.activityDefs()[id];
         return '<button class="pmap-md-btn' + (!all && id === f ? ' active' : '') + '" data-k="pmap-md:' + id +
           '" data-action="focus-activity" data-domain="' + id + '" title="' + esc(ctx, d.label) + ' · ' + esc(ctx, d.count) + '">' +
@@ -599,10 +772,10 @@
        panel is not a readable split. */
     var headTitle = all ? 'All domains' : LABELS[f];
     var headSub = all
-      ? DOMAINS.map(function (id) { return LABELS[id] + ' ' + countOf(ctx, id); }).join(' · ')
-      : ctx.activityDefs()[f].detail;
+      ? live.map(function (id) { return LABELS[id] + ' ' + countOf(ctx, id); }).join(' · ')
+      : (ctx.activityDefs()[f] && ctx.activityDefs()[f].detail) || '';
     var list = all
-      ? DOMAINS.map(function (id) {
+      ? live.map(function (id) {
         var d = ctx.activityDefs()[id];
         return '<div class="pmap-md-group" data-k="pmap-mdg:' + id + '">' +
           '<div class="pmap-sub-head">' + ctx.icon(d.icon, 11) + '<strong>' + esc(ctx, d.label) +
@@ -776,13 +949,15 @@
     var f = focusOf(ctx), ranked = rankedDomains(ctx);
     var cells = ranked.map(function (id) {
       var d = ctx.activityDefs()[id], tone = domainTone(ctx, id);
+      if (!d) return '';
       return '<button class="pmap-cell' + (id === f ? ' is-focus' : '') + '" data-k="pmap-cell:' + id +
         '" data-action="focus-activity" data-domain="' + id + '" title="Focus ' + esc(ctx, d.label) + '">' +
         ring(ctx, measureValue(ctx, id), tone === 'idle' ? 'pending' : tone) +
         '<b>' + esc(ctx, d.label) + '</b>' +
         '<em class="pmap-cell-cap">' + esc(ctx, d.count) + ' \u00b7 ' + esc(ctx, MEASURE_CAPTION[id]) + '</em></button>';
     }).join('');
-    var agents = ctx.D.subagents || [], changes = ctx.D.changes || [], todos = ctx.D.todos || [];
+    var sc = coll(ctx);
+    var agents = sc.subagents || [], changes = sc.changes || [], todos = sc.todos || [];
     var add = changes.reduce(function (s, c) { return s + (Number(c.add) || 0); }, 0);
     var del = changes.reduce(function (s, c) { return s + (Number(c.del) || 0); }, 0);
     var gp = goalProgress(ctx);
@@ -844,6 +1019,13 @@
     ctx.renderApp();
     return true;
   });
+  EXT.action('open-crew', function (ctx, btn) {
+    select(ctx, 'crew', btn.dataset.id);
+    var a = act(ctx);
+    if (Array.isArray(a.expanded) && a.expanded.indexOf('crew') < 0) a.expanded.push('crew');
+    ctx.renderApp();
+    return true;
+  });
 
   EXT.action('activity-deselect', function (ctx) { act(ctx).selected = null; ctx.renderApp(); return true; });
 
@@ -872,15 +1054,14 @@
     return true;
   });
 
-  /* Opening a domain from the Chat Activity Bar means "open the detail with this
-     domain in front" — the whole panel, one domain emphasised — rather than
-     landing in whatever scope the panel was last left in.  Narrowing is the
-     filter row's job (focus-activity).  Declines afterwards so app.js still
-     owns the open/expand/hover-clear part. */
+  /* Opening a domain from the Chat Activity Bar focuses that domain only.
+     Show all (or re-clicking the already-focused filter chip) widens back
+     out. Declines afterwards so app.js still owns open/expand/hover-clear. */
   EXT.action('open-activity', function (ctx, btn) {
-    if (!btn || DOMAINS.indexOf(btn.dataset.domain) < 0) return false;
+    if (!btn || liveDomains(ctx).indexOf(btn.dataset.domain) < 0) return false;
     var a = act(ctx);
-    a.scope = 'all';
+    a.scope = 'focus';
+    a.domain = btn.dataset.domain;
     if (a.selected && a.selected.domain !== btn.dataset.domain) a.selected = null;
     if (!Array.isArray(a.branches)) a.branches = [];
     if (a.branches.indexOf(btn.dataset.domain) < 0) a.branches.push(btn.dataset.domain);
@@ -898,8 +1079,8 @@
      re-clicking the focused domain widens back out to all five. */
   EXT.action('focus-activity', function (ctx, btn) {
     var a = act(ctx), d = btn && btn.dataset.domain;
-    if (!d || DOMAINS.indexOf(d) < 0) return false;
-    if (a.domain === d && scopeOf(ctx) === 'focus') { a.scope = 'all'; }
+    if (!d || liveDomains(ctx).indexOf(d) < 0) return false;
+    if (a.domain === d && scopeOf(ctx) === 'focus') { a.scope = liveDomains(ctx).length > 1 ? 'all' : 'focus'; }
     else { a.domain = d; a.scope = 'focus'; }
     if (Array.isArray(a.expanded) && a.expanded.indexOf(d) < 0) a.expanded.push(d);
     if (!Array.isArray(a.branches)) a.branches = [];
@@ -908,4 +1089,6 @@
     ctx.renderApp();
     return true;
   });
+
+  void 'activity-summary-card pmap-focus-pill pmap-chips-foot';
 })();

@@ -5632,3 +5632,46 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PRM-004
 negative_constraints: [Do not rebuild Goal execution as a staged giant prompt chain., Do not treat instruction-load metrics as Usage or authority., Do not inject durable breadth wholesale into one request.]
 ```
+
+### PP-083 - Capability-Specific API Digest And On-Demand Help Admission
+
+```yaml
+plan_unit_id: PP-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Browser Program uses one shipped/signed registry of pinned, versioned, capability-specific API digests. Each
+  registry entry is limited to one exact effective-capability profile and binds API version, API digest hash,
+  capability-profile hash, registry generation, compact digest ref, and a compact byte budget; the same signed
+  entry is stable across Hosts for the same inputs. The base prompt carries only the compact digest identity needed
+  for selection. Expanded help is absent until an explicit on-demand topic request through the capability owner,
+  remains within an independent byte/token budget, and produces a secret-free receipt binding capability, registry
+  generation, help topic/version/hash, emitted bytes, omissions, permission snapshot, and prompt/context epoch.
+gui_related: false
+gui_classification_reason: Capability-registry admission, prompt budgeting, hashes, and help receipts are prompt-compiler contracts rather than visible GUI work.
+depends_on: [PP-076]
+unblocks: [SMPFS-154]
+acceptance_criteria:
+  - HBU-005 retains one shipped/signed Browser Program digest-registry entry per effective-capability profile with pinned API version, API digest SHA-256, capability-profile SHA-256, registry generation, compact digest ref, compact byte budget, on-demand help-topic index/ref, and receipt SHA-256.
+  - A positive registry fixture proves that identical signed inputs resolve to the same entry across Hosts, the compact digest stays within its declared byte budget, and a selected help topic stays within its independent budget while recording exact emitted bytes and omissions.
+  - Help bodies and the full typed Browser Program step union are absent from the base prompt; only an explicit `explicit_on_demand` request for a topic admitted by the effective capability profile may materialize expanded help.
+  - Negative fixtures reject a duplicate capability/profile key, invalid signature or digest hash, host-divergent entry for identical signed inputs, compact or help budget overflow, unavailable capability/help topic, unsolicited help injection, stale registry/API/capability/help/permission/prompt-context epoch, and a receipt whose bytes/hash/omissions do not match materialized help.
+  - A stale API, capability, help, permission, registry, or prompt/context epoch invalidates the receipt and requires re-materialization with no inherited tool or effect authority.
+  - cmd.browser.program.inspect may expose the bounded read-only Browser Program help projection; this PlanUnit creates no new command ID.
+  - Static schema/fixture success does not prove prompt delivery, provider behavior, browser execution, native runtime, or token-efficiency improvement.
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, focused Egolite remediation validator, future capability digest registry hash/signature/host-stability/budget/help-receipt matrix]
+risk_class: capability_digest_drift_or_unbounded_help_injection
+reasoning_tier: high
+context_scope: capability_specific_digest_and_help
+implementation_surfaces: [Plans/Prompt_Pipeline.md, Plans/Section15_MVP_Promoted_Features_Spec.md, future prompt compiler and capability registry]
+node_compile_hint: {mode: capability_digest_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:HBU-005, source_ref:egolite-packet:01_IMPLEMENTATION_PACKET.md#compact-browser-script, source_ref:egolite-packet:07_VALIDATION_AND_ACCEPTANCE.md#compact-pm-browser-script-and-compiler]
+preserved_exact_tokens: [pinned, versioned, capability-specific API digest, shipped/signed with PM, stable across Hosts, effective capabilities, API digest hash, on-demand help, byte budget, receipt hash]
+negative_constraints:
+  - Do not inject complete capability help into every prompt.
+  - Do not select an API digest or help topic outside the effective-capability profile.
+  - Do not accept host-local digest drift, an invalid signature/hash, budget overflow, or an unreceipted help expansion.
+  - Do not treat a digest or help receipt as tool, permission, browser, or runtime authority.
+owner_hints: [Plans/Prompt_Pipeline.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
+```

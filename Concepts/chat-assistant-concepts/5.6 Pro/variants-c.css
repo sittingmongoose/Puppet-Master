@@ -7,7 +7,7 @@
 /* 16 — Loom ------------------------------------------------------------ */
 .working-variant-16 .loom-stage{display:flex;flex-direction:column;gap:7px}
 .working-variant-16 .loom-verb{font-weight:750;font-size:13px;letter-spacing:-.01em}
-.working-variant-16 .loom-detail{color:var(--muted);font-size:11px;line-height:1.5}
+.working-variant-16 .loom-detail{color:var(--muted);font-size:12px;line-height:1.5}
 .working-variant-16 .loom-bar{height:2px;background:var(--surface-4);border-radius:2px;overflow:hidden;margin-top:2px}
 .working-variant-16 .loom-bar i{display:block;height:100%;background:var(--pm-step,var(--accent));border-radius:inherit;transition:width var(--pm-t-panel) var(--pm-ease-out)}
 
@@ -21,11 +21,11 @@
 
 /* 18 — Ledger ------------------------------------------------------------ */
 .working-variant-18 .c18-sheet{position:relative;padding:5px 10px 7px;display:flex;flex-direction:column}
-.working-variant-18 .c18-row{display:flex;align-items:baseline;justify-content:space-between;height:22px;font-size:11px}
+.working-variant-18 .c18-row{display:flex;align-items:baseline;justify-content:space-between;height:22px;font-size:12px}
 .working-variant-18 .c18-name{color:var(--muted)}
 .working-variant-18 .c18-row.done .c18-name{color:var(--text)}
 .working-variant-18 .c18-row.current .c18-name{color:var(--pm-step,var(--accent));font-weight:600}
-.working-variant-18 .c18-val{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;display:inline-flex;align-items:baseline;gap:2px}
+.working-variant-18 .c18-val{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;display:inline-flex;align-items:baseline;gap:2px}
 .working-variant-18 .c18-val u{text-decoration:none;opacity:.6}
 .working-variant-18 .c18-bar{position:absolute;left:10px;right:10px;height:2px;border-radius:2px;background:var(--pm-step,var(--accent));transition:top var(--pm-t-panel) var(--pm-ease-out)}
 
@@ -49,7 +49,7 @@
 .working-variant-20 .c20-tick{width:10px;height:10px;border-radius:3px;background:var(--surface-4);border:1px solid var(--border)}
 .working-variant-20 .c20-tick.done{background:color-mix(in srgb,var(--pm-step,var(--accent)) 55%,var(--surface-3));border-color:color-mix(in srgb,var(--pm-step,var(--accent)) 55%,var(--border))}
 .working-variant-20 .c20-tick.current{background:var(--pm-step,var(--accent));border-color:var(--pm-step,var(--accent));animation:c20-glow 1.6s var(--pm-ease-out) infinite alternate}
-.working-variant-20 .c20-count{font-size:10px;color:var(--muted)}
+.working-variant-20 .c20-count{font-size:11px;color:var(--muted)}
 .working-variant-20 .c20-count u{text-decoration:none;opacity:.7}
 @keyframes c20-swing{from{transform:rotate(-12deg)}to{transform:rotate(12deg)}}
 @keyframes c20-glow{from{box-shadow:0 0 0 0 color-mix(in srgb,var(--pm-step,var(--accent)) 55%,transparent)}to{box-shadow:0 0 0 4px color-mix(in srgb,var(--pm-step,var(--accent)) 0%,transparent)}}
@@ -61,7 +61,7 @@
 .working-variant-21 .c21-strip::after{bottom:2px}
 .working-variant-21 .c21-reel{display:flex;gap:4px;height:100%;padding:12px 0;margin-left:50%;transition:transform var(--pm-t-panel) var(--pm-ease-out);will-change:transform}
 .working-variant-21 .c21-frame{flex:0 0 54px;height:54px;border-radius:5px;border:1px solid #23272f;background:#15181e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#3c424d}
-.working-variant-21 .c21-frame u{text-decoration:none;font-size:10px;letter-spacing:.04em}
+.working-variant-21 .c21-frame u{text-decoration:none;font-size:11px;letter-spacing:.04em}
 .working-variant-21 .c21-frame.done{color:#8a93a3;background:#1b1f27}
 .working-variant-21 .c21-frame.current{color:var(--pm-step,var(--accent));border-color:color-mix(in srgb,var(--pm-step,var(--accent)) 60%,#23272f);animation:c21-develop 600ms var(--pm-ease-out) both}
 @keyframes c21-develop{from{filter:blur(3px) saturate(.4)}to{filter:blur(0) saturate(1)}}
@@ -77,11 +77,11 @@
 .working-variant-22 .c22-blip{position:absolute;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:color-mix(in srgb,var(--pm-step,var(--accent)) 80%,var(--text))}
 .working-variant-22 .c22-blip.current{animation:c22-blip 1.2s var(--pm-ease-out) infinite}
 .working-variant-22 .c22-readout{min-width:0;flex:1}
-.working-variant-22 .c22-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:10.5px;color:var(--text);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.working-variant-22 .c22-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;color:var(--text);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @keyframes c22-ring{0%{transform:scale(.2);opacity:.9}100%{transform:scale(1);opacity:0}}
 @keyframes c22-sweep{to{transform:rotate(360deg)}}
 @keyframes c22-blip{0%,100%{opacity:1}50%{opacity:.35}}
-.working-variant-22 .c22-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:10.5px;color:var(--text);display:block;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
+.working-variant-22 .c22-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;color:var(--text);display:block;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
 /* 23 — Circuit --------------------------------------------------------------------------- */
 .working-variant-23 .c23-body{display:flex;flex-direction:column;gap:2px}
 .working-variant-23 .c23-base{stroke:var(--surface-4);stroke-width:2}
@@ -90,7 +90,7 @@
 .working-variant-23 .c23-pad.next{fill:var(--surface-3);stroke:var(--surface-4)}
 .working-variant-23 .c23-pad.done{fill:color-mix(in srgb,var(--pm-step,var(--accent)) 70%,var(--text));stroke:none}
 .working-variant-23 .c23-pad.current{fill:var(--pm-step,var(--accent));stroke:none;animation:c23-breathe 1.6s var(--pm-ease-out) infinite alternate}
-.working-variant-23 .c23-count{font-size:10px;color:var(--muted);text-align:right}
+.working-variant-23 .c23-count{font-size:11px;color:var(--muted);text-align:right}
 @keyframes c23-lit{from{opacity:0}to{opacity:1}}
 @keyframes c23-flow{to{stroke-dashoffset:-18}}
 @keyframes c23-breathe{from{opacity:1}to{opacity:.55}}

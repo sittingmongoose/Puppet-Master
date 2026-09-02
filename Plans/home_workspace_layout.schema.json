@@ -286,6 +286,7 @@
       "additionalProperties": false,
       "required": [
         "basis_px",
+        "cross_basis_px",
         "flex_weight",
         "min_width_px",
         "min_height_px"
@@ -293,21 +294,42 @@
       "properties": {
         "basis_px": {
           "type": "number",
-          "minimum": 0
+          "minimum": 0,
+          "description": "Committed main-axis basis for a docked Home surface, or the normalized basis used by the current host."
+        },
+        "cross_basis_px": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Committed cross-axis basis. For dock_top and dock_bottom this is the shared row-dock track thickness; pre-field records migrate it from basis_px before canonical validation."
+        },
+        "preset_id": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "standard",
+            "wide",
+            "tall",
+            "focus"
+          ],
+          "description": "Optional committed semantic size preset used to restore adaptive Home surface content. It is absent until a curated preset is selected and never contains preview state."
         },
         "flex_weight": {
           "type": "number",
-          "minimum": 0
+          "minimum": 0,
+          "description": "Committed proportional main-axis weight used when the host distributes remaining space."
         },
         "min_width_px": {
           "type": "number",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Committed minimum rendered width for the surface."
         },
         "min_height_px": {
           "type": "number",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Committed minimum rendered height for the surface."
         }
-      }
+      },
+      "description": "Settled Home surface sizing only. Pointer-preview dimensions, ghosts, placeholders, and animation state are not schema fields."
     },
     "bounds": {
       "type": "object",

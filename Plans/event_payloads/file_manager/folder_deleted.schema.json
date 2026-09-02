@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.file_manager_event.folder_deleted.schema.v1",
+  "$comment": "Static payload schema only. Runtime must prove source currentness, deletion-manifest integrity, settled FileSafe protection, and affected-ref consistency. No append or dispatch authority is granted.",
+  "title": "folder.deleted payload",
+  "description": "Closed project-scoped receipt payload for FileSafe-backed deletion of one folder tree without embedding paths or contents.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "project_id", "node_kind", "operation_id",
+    "source_path_ref", "affected_path_refs", "prior_folder_ref", "deletion_manifest_ref",
+    "descendant_count", "path_snapshot_revision", "deletion_mode", "operation_status",
+    "filesafe_receipt_ref", "origin", "handler_target", "command_id", "correlation_id",
+    "receipt_ref", "evidence_refs", "ts"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.file_manager_event.folder_deleted.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/safe_id"},
+    "node_kind": {"const": "folder"},
+    "operation_id": {"$ref": "#/$defs/safe_id"},
+    "source_path_ref": {"$ref": "#/$defs/path_ref"},
+    "destination_path_ref": {"$ref": "#/$defs/path_ref"},
+    "affected_path_refs": {"$ref": "#/$defs/path_ref_array"},
+    "prior_folder_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "deletion_manifest_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "descendant_count": {"$ref": "#/$defs/descendant_count"},
+    "path_snapshot_revision": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "deletion_mode": {"enum": ["filesafe_trash", "filesafe_quarantine"]},
+    "operation_status": {"const": "completed"},
+    "filesafe_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "origin": {"$ref": "#/$defs/origin"},
+    "handler_target": {"const": "handlers::file::delete"},
+    "command_id": {"const": "cmd.file.delete"},
+    "correlation_id": {"$ref": "#/$defs/safe_id"},
+    "receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "evidence_refs": {"$ref": "#/$defs/non_empty_ref_array"},
+    "ts": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "safe_id": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "path_ref": {"type": "string", "minLength": 20, "maxLength": 220, "pattern": "^pm-path-ref:v1:[a-z][a-z0-9_-]{0,31}:[A-Za-z0-9][A-Za-z0-9._-]*$", "not": {"pattern": "\\.\\."}},
+    "path_ref_array": {"type": "array", "items": {"$ref": "#/$defs/path_ref"}, "minItems": 1, "maxItems": 256, "uniqueItems": true},
+    "non_empty_ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "minItems": 1, "maxItems": 64, "uniqueItems": true},
+    "descendant_count": {"type": "integer", "minimum": 0, "maximum": 1000000},
+    "origin": {"enum": ["file_manager", "editor", "command_palette", "api"]}
+  }
+}

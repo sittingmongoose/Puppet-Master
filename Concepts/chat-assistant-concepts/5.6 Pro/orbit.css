@@ -118,11 +118,11 @@
    15px disc -> 10px icon at 3.2 = 1.333px; its .current svg scale(1.2)
    carries the growth. The narrow tier mirrors variants-a.css:47 so the
    icon keeps its proportion when the disc tightens to 13px. */
-.working-variant-8 .rail8-item { --rail-icon: 10px; --rail-stroke: 3.2; }
-.working-variant-8 .rail8-item.current { --rail-icon: 13px; --rail-stroke: 2.5; }
+.working-variant-8 .rail8-item { --rail-icon: 12px; --rail-stroke: 2.6; }
+.working-variant-8 .rail8-item.current { --rail-icon: 14px; --rail-stroke: 2.4; }
 @container (max-width: 430px) {
-  .working-variant-8 .rail8-item { --rail-icon: 9px; --rail-stroke: 3.6; }
-  .working-variant-8 .rail8-item.current { --rail-icon: 11px; --rail-stroke: 2.95; }
+  .working-variant-8 .rail8-item { --rail-icon: 10px; --rail-stroke: 3.2; }
+  .working-variant-8 .rail8-item.current { --rail-icon: 12px; --rail-stroke: 2.7; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -246,8 +246,10 @@
   transition: width 420ms var(--spring-soft-ease);
 }
 
-.orbit-track,
-.orbit-arc {
+/* The dashed track is DECORATIVE only. The old `.orbit-arc` percent ring is
+   gone with the percent model itself: subjects spawn as work happens, so
+   "percent of a known total" is a number nobody can honestly draw. */
+.orbit-track {
   position: absolute;
   left: 50%; top: 50%;
   width: calc(var(--orbit-r) * 2);
@@ -256,21 +258,8 @@
   margin-top: calc(var(--orbit-r) * -1);
   border-radius: 50%;
   pointer-events: none;
-}
-.orbit-track {
   border: 1px dashed color-mix(in srgb, var(--pm-step, var(--accent)) 22%, var(--border));
   animation: spin 24s linear infinite;
-}
-/* Progress, drawn ON the dashed track: solid arc = travelled, dashes = left.
-   The conic gradient is masked down to a 2.5px ring, so a browser without
-   mask support shows nothing rather than a filled disc. */
-.orbit-arc {
-  background: conic-gradient(from -90deg,
-    color-mix(in srgb, var(--pm-step, var(--accent)) 88%, transparent) calc(var(--orbit-pct, 0) * 1%),
-    transparent 0);
-  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
-  mask: radial-gradient(closest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
-  transition: background 620ms var(--ease);
 }
 
 /* The ring is a full-bleed overlay that also covers the core, so it MUST stay
@@ -311,6 +300,49 @@
     border-color 300ms var(--ease),
     color 300ms var(--ease),
     box-shadow 300ms var(--ease);
+  /* Spawn entrance. Nodes are keyed by instance uid, so each mounts exactly
+     once — when its subject starts — and flies out from the core along its
+     own spoke. The keyframes restate the FULL positioning chain (the
+     orbit-sat-in lesson: a scale-only keyframe would replace the transform
+     and animate the node from the dial centre of nowhere); the vars resolve
+     live per frame, so a ring that re-spaces mid-entrance still lands every
+     node on its final spoke. `backwards`, NOT `both`: a finished fill-both
+     animation would keep applying its `to` frame forever and freeze the
+     620ms re-space transition out of existence. */
+  animation: orbit-node-in 360ms var(--spring-soft-ease) backwards;
+  animation-delay: calc(var(--node-i, 0) * 40ms);
+}
+@keyframes orbit-node-in {
+  from { opacity: 0; transform: rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(.4); }
+  to   { opacity: 1; transform: rotate(var(--a)) translateX(var(--orbit-r)) rotate(calc(-1 * var(--a))) scale(var(--pop)); }
+}
+
+/* ---- two-beat choreography ------------------------------------------
+   Expand: the dial DROPS from the strip line into the centre pose (beat 1,
+   `data-orbit-anim="drop"`), then the ordinary is-open transition slides it
+   left and unfolds the panel (beat 2). Collapse is the exact reverse: the
+   grid closes first, then the dial LIFTS back up into the strip line
+   (`data-orbit-anim="lift"`) before the strip markup mounts. The dial's own
+   `transition: width` is transform-free, so these animations compose with
+   the grid motion instead of fighting it. */
+.orbit-stage[data-orbit-anim="drop"] .orbit-dial {
+  animation: orbit-dial-drop 400ms var(--spring-soft-ease) both;
+}
+/* Visible from the FIRST frame (no fade-in) and the travel starts at the
+   strip line: the previous 240ms opacity-0 version spent its whole journey
+   invisible while the card was still FLIP-growing, which read as the dial
+   simply appearing at the centre. translateY(-50%) parks the dial's centre
+   on its own top edge — i.e. where the strip discs sat. */
+@keyframes orbit-dial-drop {
+  from { opacity: .95; transform: translateY(calc(-50% + 20px)) scale(.3); }
+  to   { opacity: 1;   transform: none; }
+}
+.orbit-stage[data-orbit-anim="lift"] .orbit-dial {
+  animation: orbit-dial-lift 240ms var(--pm-ease-out) both;
+}
+@keyframes orbit-dial-lift {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(-44px) scale(.45); }
 }
 /* 14px in a 22-28px node: 2.3 user units on a 0 0 24 24 viewBox paints
    2.3 * 14/24 = 1.342px. The stock take drew icon(...,13) at 1.8 -> 0.975px. */
@@ -366,7 +398,7 @@
   border-radius: 50%;
   display: grid; place-items: center;
   padding: 0; appearance: none; -webkit-appearance: none;
-  font-size: 8px; font-weight: 700; letter-spacing: .02em;
+  font-size: 9px; font-weight: 700; letter-spacing: .02em;
   background: var(--surface-4); color: var(--muted);
   border: 1px solid var(--border);
   pointer-events: auto; cursor: pointer;
@@ -430,7 +462,7 @@
      once, on the first paint of the card. Kept off so a phase handover never
      blanks the word. */
   animation: none;
-  font-size: 10.5px; display: block; margin-top: 2px; line-height: 1.15;
+  font-size: 11.5px; display: block; margin-top: 2px; line-height: 1.15;
   max-width: 100%; overflow: hidden;
   /* WRAP, do not ellipsise. A circle has room for two short lines and none for
      a truncation mark, and the longest labels here are two words ("Browser
@@ -452,15 +484,13 @@
   from { opacity: .35; transform: scale(.78); }
   to   { opacity: 1;   transform: scale(1); }
 }
-.orbit-core-pct { font-size: 10px; margin-top: 1px; }
 .orbit-core.done { border-color: color-mix(in srgb, var(--positive) 42%, var(--border)); }
 .orbit-core.done .orbit-core-icon { color: var(--positive); }
 @container orbitdial (max-width: 190px) {
-  .orbit-core strong { font-size: 9px; }
+  .orbit-core strong { font-size: 10px; }
   .orbit-core { padding: 3px; }
 }
 @container orbitdial (max-width: 150px) {
-  .orbit-core-pct { display: none; }
   .orbit-core-icon svg { width: 18px; height: 18px; }
 }
 
@@ -501,9 +531,9 @@
 }
 .orbit-stage.is-open .orbit-panel-in { opacity: 1; }
 .orbit-panel-head { display: flex; align-items: center; gap: 7px; }
-.orbit-step-no { font-size: 10px; color: var(--muted); white-space: nowrap; }
+.orbit-step-no { font-size: 11px; color: var(--muted); white-space: nowrap; }
 .orbit-chip {
-  font-size: 9.5px; font-weight: 650; letter-spacing: .02em;
+  font-size: 10.5px; font-weight: 650; letter-spacing: .02em;
   padding: 2px 7px; border-radius: 999px;
   border: 1px solid var(--border); color: var(--muted); background: var(--surface-3);
   white-space: nowrap;
@@ -518,16 +548,16 @@
 }
 .orbit-close:hover { background: var(--surface-3); color: var(--text); }
 .orbit-panel-title { font-size: 12.5px; line-height: 1.3; }
-.orbit-panel-detail { margin: 0; font-size: 11px; line-height: 1.45; color: var(--muted); }
+.orbit-panel-detail { margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
 .orbit-rows { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
 .orbit-agents { margin-top: 4px; display: flex; flex-direction: column; gap: 3px; }
 .orbit-agents-head {
   display: flex; align-items: center; gap: 6px;
-  font-size: 9.5px; text-transform: uppercase; letter-spacing: .07em;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em;
   color: var(--subtle); padding-bottom: 2px;
 }
 .orbit-agents-head .count {
-  font-size: 9.5px; color: var(--muted);
+  font-size: 10.5px; color: var(--muted);
   background: var(--surface-3); border-radius: 999px; padding: 0 6px;
 }
 .orbit-agent {
@@ -541,27 +571,124 @@
 .orbit-agent-avatar {
   width: 21px; height: 21px; flex: 0 0 auto; border-radius: 7px;
   display: grid; place-items: center;
-  font-size: 8.5px; font-weight: 700;
+  font-size: 9.5px; font-weight: 700;
   background: color-mix(in srgb, var(--accent) 16%, var(--surface-4)); color: var(--text);
 }
 .orbit-agent-copy { min-width: 0; display: flex; flex-direction: column; }
-.orbit-agent-copy strong { font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.orbit-agent-copy strong { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .orbit-agent-copy span {
-  font-size: 10px; color: var(--muted);
+  font-size: 11px; color: var(--muted);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .orbit-agent-state {
   margin-left: auto; flex: 0 0 auto;
-  font-size: 9px; font-weight: 650; padding: 2px 6px; border-radius: 999px;
+  font-size: 10px; font-weight: 650; padding: 2px 6px; border-radius: 999px;
   background: var(--surface-4); color: var(--muted); white-space: nowrap;
 }
 .orbit-agent-state.ok   { color: var(--positive); }
 .orbit-agent-state.run  { color: var(--accent); }
 .orbit-agent-state.bad  { color: var(--danger); }
 .orbit-agent-state.warn { color: var(--warning); }
-.orbit-empty { margin: 0; font-size: 11px; color: var(--muted); }
-.orbit-jump { align-self: flex-start; margin-top: 5px; min-height: 26px; font-size: 10.5px; }
+.orbit-jump { align-self: flex-start; margin-top: 5px; min-height: 26px; font-size: 11.5px; }
 .orbit-caption { text-align: center; margin-top: 7px; }
+
+/* ---- head caption ----------------------------------------------------
+   The live subject's label + prose lives in the CARD HEAD now (left of the
+   elapsed time), not under the dial — an always-open stage has no collapsed
+   state for the old under-dial caption to serve. It keeps the pm-materialize
+   entrance from styles.css and replays it per handover via its uid key. */
+.working-head .orbit-caption {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0 0 0 8px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.working-head .sub { flex: 0 0 auto; }
+/* "Completed work" must never wrap into a two-line head next to the strip. */
+.working-head strong { white-space: nowrap; }
+
+/* ---- node-count density tiers ---------------------------------------
+   The default geometry seats ~12 nodes before edges meet at the small end
+   (--orbit-node-sz clamp floor 23px on a 126px dial). Subjects spawn without
+   a known total, so orbit.js stamps data-orbit-tier when the ring grows:
+   lg >= 13 spawned, xl >= 22. The dial gets a little wider and the nodes
+   smaller; stroke-width rises as the icon shrinks so the painted stroke
+   stays near the 1.3px crispness target (PART 1 doctrine above). */
+.orbit-stage[data-orbit-tier] { --orbit-dial-w: clamp(150px, 52cqi, 232px); }
+.orbit-stage[data-orbit-tier] .orbit-dial { --orbit-node-sz: clamp(15px, 9.5cqi, 21px); }
+.orbit-stage[data-orbit-tier] .orbit-node { border-radius: 7px; }
+.orbit-stage[data-orbit-tier] .orbit-node svg { width: 11px; height: 11px; stroke-width: 2.9; }
+.orbit-stage[data-orbit-tier] .orbit-node.live .orbit-node-pip { inset: -4px; border-radius: 10px; }
+.orbit-stage[data-orbit-tier="xl"] { --orbit-dial-w: clamp(160px, 56cqi, 248px); }
+.orbit-stage[data-orbit-tier="xl"] .orbit-dial { --orbit-node-sz: clamp(13px, 8cqi, 17px); }
+.orbit-stage[data-orbit-tier="xl"] .orbit-node { border-radius: 6px; }
+.orbit-stage[data-orbit-tier="xl"] .orbit-node svg { width: 9px; height: 9px; stroke-width: 3.4; }
+
+/* ---- compact strip (a superseded card) -------------------------------
+   The density of the shared chrome's shut state: one row of subject discs
+   plus an "N subjects" roll. Discs reuse .pm-rail-item/.wa-disc chrome but
+   WRAP instead of scrolling — a 22-subject run should read at a glance, not
+   hide behind a scroller. */
+.orbit-strip { display: flex; align-items: flex-start; gap: 10px; min-height: 26px; }
+.orbit-strip-rail {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  overflow: visible;
+  padding: 2px;
+}
+/* Kind-tinted at rest (double class beats the shared done/current colour
+   halves in motion.css), so a 22-subject strip reads as the run's real phase
+   spectrum at a glance rather than a row of identical gray discs. Discs are
+   uid-keyed, so each mounts exactly once — the entrance rides that. */
+.pm-rail-item.orbit-strip-item, .wa-disc.orbit-strip-item.done {
+  cursor: pointer;
+  color: var(--pm-step, var(--accent));
+  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 34%, var(--border));
+  background: color-mix(in srgb, var(--pm-step, var(--accent)) 9%, var(--surface-3));
+  animation: orbit-disc-in var(--pm-t-icon) var(--pm-ease-pop) backwards;
+}
+/* A LIVE strip's current subject pulses so a collapsed card still reads as
+   working (the rails reference look, icons only). */
+.pm-rail-item.orbit-strip-item.current {
+  cursor: pointer;
+  color: var(--pm-step, var(--accent));
+  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 62%, var(--border));
+  background: color-mix(in srgb, var(--pm-step, var(--accent)) 18%, var(--surface-3));
+  --rail-pop: 1.25;
+  transform: scale(var(--rail-pop));
+  animation: orbit-disc-in var(--pm-t-icon) var(--pm-ease-pop) backwards,
+             orbit-strip-pulse 1900ms var(--ease) 400ms infinite;
+}
+@keyframes orbit-strip-pulse {
+  0%        { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pm-step, var(--accent)) 45%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 7px transparent; }
+}
+/* The completed strip's receipt row (the elapsed chip is omitted — the card
+   head already prints the time). */
+.orbit-strip-receipt .work-receipt { margin-top: 6px; }
+/* The strip's expand chevron (rails parity): reopen following the live/last
+   subject without picking one. */
+.orbit-strip-chev {
+  width: 22px; height: 22px; flex: 0 0 auto; margin: 2px 0 0 2px;
+  border-radius: 7px; padding: 0; display: grid; place-items: center;
+  background: transparent; border: 1px solid transparent; color: var(--subtle); cursor: pointer;
+  transition: color var(--pm-t-icon) var(--pm-ease-out), border-color var(--pm-t-icon) var(--pm-ease-out);
+}
+.orbit-strip-chev:hover { color: var(--text); border-color: var(--border); }
+/* A live collapsed card is just a head plus one disc row — the 122px body
+   floor (styles.css) left a slab of empty card under it. */
+.working-card:not(.is-done) .working-body:has(.orbit-strip) { min-height: 0; }
+.orbit-strip-item:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pm-step, var(--accent)) 55%, transparent);
+  --rail-pop: 1.16;
+  transform: scale(var(--rail-pop));
+}
+.orbit-strip .wa-label { flex: 0 0 auto; margin-top: 3px; }
 
 /* ---- narrow layout: circle on TOP, detail underneath ----------------
    Same 0fr -> 1fr idiom on the row axis, so both directions animate through
@@ -583,6 +710,11 @@
      text stops wrapping at 190px. */
   .orbit-panel { width: 100%; }
   .orbit-panel-in { width: 100%; min-width: 0; max-height: 260px; }
+  /* A LIVE panel keeps a floor near its steady-state height: without it the
+     content-sized panel collapsed to ~111px on every subject handover and
+     refilled over ~2s, walking the whole bottom-pinned transcript up and
+     down 40-76px twice per subject (measured, repro R3). */
+  .working-card:not(.is-done) .orbit-panel-in { min-height: 190px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -595,11 +727,66 @@
      wrapper when the container/queried-element split was introduced, and this
      list did not follow it. Caught by orbit-verify, which measured the collapse
      still travelling 420ms under reduced motion. */
-  .orbit-stage, .orbit-layout, .orbit-dial, .orbit-core, .orbit-node, .orbit-arc,
-  .orbit-panel, .orbit-panel-in, .orbit-agent, .orbit-sat, .orbit-close {
+  .orbit-stage, .orbit-layout, .orbit-dial, .orbit-core, .orbit-node,
+  .orbit-panel, .orbit-panel-in, .orbit-agent, .orbit-sat, .orbit-close,
+  .orbit-strip-item {
     transition-duration: 1ms !important;
   }
-  .orbit-node-pip, .orbit-track { animation: none !important; }
-  .orbit-sat, .orbit-core-icon { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .orbit-node-pip, .orbit-track, .orbit-strip-item { animation: none !important; }
+  .orbit-sat, .orbit-core-icon, .orbit-node, .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
 }
 .orbit-caption-label { color: var(--text); font-weight: 640; }
+
+/* ---- clickable working-activity rows + inline Shell box -------------- */
+button.wa-row {
+  font: inherit; color: inherit; background: transparent; border: 0; padding: 0;
+  width: 100%; text-align: left; cursor: pointer;
+}
+.wa-row.is-click:hover .wa-rowtext,
+.wa-row.is-shell:hover .wa-rowtext { color: var(--accent); }
+.work-terminal { margin: 4px 12px 12px; }
+.work-terminal-head {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--muted); font-size: 12px; margin-bottom: 6px;
+}
+.work-terminal-head svg { flex: 0 0 auto; }
+.work-terminal-box {
+  position: relative;
+  background: var(--code, var(--surface-2));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+.work-terminal-label {
+  display: block;
+  color: var(--subtle);
+  font-size: 10.5px;
+  margin-bottom: 6px;
+  padding-right: 28px;
+}
+.work-terminal-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+.work-terminal-cmd {
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.work-terminal-prompt { color: var(--subtle); margin-right: 6px; }
+.work-terminal-out {
+  color: var(--muted);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 4px;
+}
+.work-terminal-exit {
+  margin-top: 8px;
+  text-align: right;
+  color: var(--subtle);
+  font-size: 10.5px;
+}

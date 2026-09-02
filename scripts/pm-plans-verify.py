@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from collections import Counter
 from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -29,6 +30,16 @@ PATH_REFERENCE_REGISTRY = PLANS / "path_reference_registry.json"
 PATH_REFERENCE_REGISTRY_SCHEMA = PLANS / "path_reference_registry.schema.json"
 PLAN_UNITS_INDEX = PLANS / ".plan_index/plan_units.jsonl"
 DEFAULT_PLAN_MIGRATION_RUN = PLANS / ".plan_migration/pds-20260611-002-atomize-planunits"
+RAW_EVIDENCE_CAPTURE_MANIFEST = ROOT / "tests/fixtures/governance/raw_evidence_capture_modes.json"
+RAW_EVIDENCE_CAPTURE_MANIFEST_SCHEMA = ROOT / "tests/fixtures/governance/raw_evidence_capture_modes.schema.json"
+RAW_EVIDENCE_CAPTURE_ROOT = "tests/agent_packet_restrictions/"
+EVIDENCE_ARTIFACT_BINDING_MANIFEST = PLANS / "evidence_artifact_binding_modes.json"
+EVIDENCE_ARTIFACT_BINDING_MANIFEST_SCHEMA = PLANS / "evidence_artifact_binding_modes.schema.json"
+FORBIDDEN_LIVE_CURRENT_EVIDENCE_TOKENS = (
+    "node_readiness_status=ready_for_node_compile",
+    "ready_for_node_compile after executable PNC-019 certification",
+    "final FABLE convergence now records",
+)
 
 
 def utc_now() -> str:
@@ -543,9 +554,13 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_goal_runtime_event_fixtures": "validate-goal-runtime-event-fixtures",
     "validate_project_output_fixtures": "validate-project-output-fixtures",
     "validate_usage_gui_fixtures": "validate-usage-gui-fixtures",
+    "validate_pm7_gui_fixtures": "validate-pm7-gui-fixtures",
     "validate_usage_contract_drift": "validate-usage-contract-drift",
     "validate_gui_asset_policy": "validate-gui-asset-policy",
     "validate_web_capability_contracts": "validate-web-capability-contracts",
+    "validate_new_contracts": "validate-new-contracts",
+    "validate_server_command_gap": "validate-server-command-gap",
+    "validate_touch_closure": "validate-touch-closure",
     "validate_filesafe_security_policy": "validate-filesafe-security-policy",
     "validate_wiring_matrix": "validate-wiring-matrix",
     "validate_audit_closure": "validate-audit-closure",
@@ -568,9 +583,12 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "goal_runtime_event_fixtures": "validate-goal-runtime-event-fixtures",
     "project_output_fixtures": "validate-project-output-fixtures",
     "usage_gui_fixtures": "validate-usage-gui-fixtures",
+    "pm7_gui_fixtures": "validate-pm7-gui-fixtures",
     "usage_contract_drift": "validate-usage-contract-drift",
     "gui_asset_policy": "validate-gui-asset-policy",
     "web_capability_contracts": "validate-web-capability-contracts",
+    "server_command_gap": "validate-server-command-gap",
+    "touch_closure": "validate-touch-closure",
     "filesafe_security_policy": "validate-filesafe-security-policy",
     "wiring_matrix": "validate-wiring-matrix",
     "audit_closure": "validate-audit-closure",
@@ -588,6 +606,11 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "shards",
     "validate_prd_planning_runtime_contracts",
     "prd_planning_runtime_contracts",
+    "validate_new_contracts",
+    "validate_server_command_gap",
+    "server_command_gap",
+    "validate_touch_closure",
+    "touch_closure",
     "validate_case_l_non_event_materialization",
     "case_l_non_event_materialization",
     "validate_implementation_readiness",
@@ -800,30 +823,175 @@ def iter_repo_files() -> list[Path]:
     return files
 
 
+def parse_json_or_jsonl(path: Path) -> int:
+    """Parse one JSON artifact and return the number of nonblank JSONL rows read."""
+    if path.suffix == ".json":
+        load_json(path)
+        return 0
+    jsonl_lines = 0
+    # JSON Lines records are delimited by LF bytes.  ``str.splitlines()`` is
+    # intentionally not used here because it also treats Unicode separators
+    # such as U+2028 inside otherwise-valid JSON strings as record boundaries.
+    with path.open("r", encoding="utf-8", newline="\n") as stream:
+        for line in stream:
+            if not line.strip():
+                continue
+            json.loads(line)
+            jsonl_lines += 1
+    return jsonl_lines
+
+
+def json_parse_error_class(exc: Exception) -> str:
+    if isinstance(exc, json.JSONDecodeError):
+        return "json_decode_error"
+    if isinstance(exc, UnicodeDecodeError):
+        return "unicode_decode_error"
+    return type(exc).__name__
+
+
+def load_raw_evidence_capture_modes() -> tuple[dict[str, dict[str, Any]], list[dict[str, Any]]]:
+    """Load exact raw-capture modes; invalid manifests authorize no exceptions."""
+    failures: list[dict[str, Any]] = []
+    try:
+        schema = load_json(RAW_EVIDENCE_CAPTURE_MANIFEST_SCHEMA)
+    except Exception as exc:  # noqa: BLE001
+        return {}, [{"path": rel(RAW_EVIDENCE_CAPTURE_MANIFEST_SCHEMA), "error": "raw_capture_manifest_schema_unavailable", "detail": str(exc)}]
+    try:
+        manifest = load_json(RAW_EVIDENCE_CAPTURE_MANIFEST)
+    except Exception as exc:  # noqa: BLE001
+        return {}, [{"path": rel(RAW_EVIDENCE_CAPTURE_MANIFEST), "error": "raw_capture_manifest_unavailable", "detail": str(exc)}]
+
+    for error in validate_schema(manifest, schema, schema):
+        failures.append({"path": rel(RAW_EVIDENCE_CAPTURE_MANIFEST), "error": "raw_capture_manifest_schema_invalid", "detail": error})
+    if failures:
+        return {}, failures
+
+    entries: dict[str, dict[str, Any]] = {}
+    for index, entry in enumerate(manifest.get("entries", [])):
+        path_ref = entry.get("path", "")
+        entry_failure: dict[str, Any] = {
+            "path": rel(RAW_EVIDENCE_CAPTURE_MANIFEST),
+            "entry_index": index,
+            "capture_path": path_ref,
+        }
+        if path_ref in entries:
+            failures.append({**entry_failure, "error": "raw_capture_manifest_duplicate_path"})
+            continue
+        if not path_ref.startswith(RAW_EVIDENCE_CAPTURE_ROOT):
+            failures.append({**entry_failure, "error": "raw_capture_manifest_path_outside_authorized_root"})
+            continue
+        if any(token in path_ref for token in "*?[]") or PurePosixPath(path_ref).is_absolute() or ".." in PurePosixPath(path_ref).parts:
+            failures.append({**entry_failure, "error": "raw_capture_manifest_path_not_exact"})
+            continue
+        if PurePosixPath(path_ref).suffix not in {".json", ".jsonl"}:
+            failures.append({**entry_failure, "error": "raw_capture_manifest_path_not_json"})
+            continue
+        resolved, path_error = exact_path(path_ref)
+        if path_error:
+            failures.append({**entry_failure, "error": "raw_capture_manifest_path_unresolved", "detail": path_error})
+            continue
+        assert resolved is not None
+        if not resolved.is_file():
+            failures.append({**entry_failure, "error": "raw_capture_manifest_path_not_file"})
+            continue
+        entries[path_ref] = entry
+    if failures:
+        return {}, failures
+    return entries, []
+
+
 def cmd_json_syntax(args: argparse.Namespace) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     files_checked = 0
     jsonl_lines_checked = 0
+    capture_modes, manifest_failures = load_raw_evidence_capture_modes()
+    failures.extend(manifest_failures)
+    consumed_capture_paths: set[str] = set()
+    historical_snapshot_count = 0
+    live_current_count = 0
     for path in iter_repo_files():
         if path.suffix not in {".json", ".jsonl"}:
             continue
         files_checked += 1
+        path_ref = rel(path)
+        capture = capture_modes.get(path_ref)
+        if capture is not None:
+            consumed_capture_paths.add(path_ref)
+            actual_hash = sha256_file(path)
+            if actual_hash != capture["sha256"]:
+                failures.append(
+                    {
+                        "path": path_ref,
+                        "error": "raw_capture_hash_mismatch",
+                        "mode": capture["mode"],
+                        "expected": capture["sha256"],
+                        "actual": actual_hash,
+                    }
+                )
+                continue
+            if capture["mode"] == "historical_snapshot":
+                historical_snapshot_count += 1
+                try:
+                    parse_json_or_jsonl(path)
+                except Exception as exc:  # noqa: BLE001 - the exact malformed capture is the evidence.
+                    actual_error_class = json_parse_error_class(exc)
+                    if actual_error_class != capture["parse_error_class"]:
+                        failures.append(
+                            {
+                                "path": path_ref,
+                                "error": "raw_capture_parse_error_class_mismatch",
+                                "expected": capture["parse_error_class"],
+                                "actual": actual_error_class,
+                            }
+                        )
+                else:
+                    failures.append({"path": path_ref, "error": "historical_snapshot_unexpectedly_parseable"})
+                continue
+            live_current_count += 1
         try:
-            if path.suffix == ".json":
-                load_json(path)
-            else:
-                for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
-                    if not line.strip():
-                        continue
-                    json.loads(line)
-                    jsonl_lines_checked += 1
+            jsonl_lines_checked += parse_json_or_jsonl(path)
         except Exception as exc:  # noqa: BLE001 - verifier records the exact parse failure.
-            failures.append({"path": rel(path), "error": str(exc)})
+            failure = {"path": path_ref, "error": str(exc)}
+            if capture is not None:
+                failure["mode"] = "live_current"
+                failure["error_class"] = json_parse_error_class(exc)
+            failures.append(failure)
+    for path_ref in sorted(set(capture_modes) - consumed_capture_paths):
+        failures.append(
+            {
+                "path": path_ref,
+                "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+                "mode": capture_modes[path_ref]["mode"],
+            }
+        )
+    expected_capture_census = {
+        "manifest_entries": 16,
+        "historical_snapshot": 14,
+        "live_current": 2,
+    }
+    actual_capture_census = {
+        "manifest_entries": len(capture_modes),
+        "historical_snapshot": historical_snapshot_count,
+        "live_current": live_current_count,
+    }
+    if not manifest_failures and actual_capture_census != expected_capture_census:
+        failures.append(
+            {
+                "path": rel(RAW_EVIDENCE_CAPTURE_MANIFEST),
+                "error": "raw_capture_mode_census_mismatch",
+                "expected": expected_capture_census,
+                "actual": actual_capture_census,
+            }
+        )
     return report_status(
         "json-syntax",
         failures,
         files_checked=files_checked,
         jsonl_lines_checked=jsonl_lines_checked,
+        raw_capture_manifest=rel(RAW_EVIDENCE_CAPTURE_MANIFEST),
+        raw_capture_manifest_entry_count=len(capture_modes),
+        historical_snapshot_count=historical_snapshot_count,
+        live_current_count=live_current_count,
     )
 
 
@@ -1063,6 +1231,95 @@ def evidence_paths(explicit_paths: list[str]) -> list[Path]:
     return sorted((PLANS / ".evidence").glob("**/evidence.json"))
 
 
+def load_evidence_artifact_binding_modes() -> tuple[dict[str, dict[str, Any]], list[dict[str, Any]], dict[str, int]]:
+    """Load the fail-closed historical-snapshot versus live-current evidence map."""
+    failures: list[dict[str, Any]] = []
+    try:
+        schema = load_json(EVIDENCE_ARTIFACT_BINDING_MANIFEST_SCHEMA)
+        manifest = load_json(EVIDENCE_ARTIFACT_BINDING_MANIFEST)
+    except Exception as exc:  # noqa: BLE001
+        return {}, [{"path": rel(EVIDENCE_ARTIFACT_BINDING_MANIFEST), "error": "evidence_binding_manifest_unavailable", "detail": str(exc)}], {}
+
+    for error in validate_schema(manifest, schema, schema):
+        failures.append({"path": rel(EVIDENCE_ARTIFACT_BINDING_MANIFEST), "error": "evidence_binding_manifest_schema_invalid", "detail": error})
+    forbidden_live_current_tokens = [
+        str(token)
+        for token in manifest.get("forbidden_live_current_tokens", [])
+        if isinstance(token, str) and token
+    ]
+    if tuple(forbidden_live_current_tokens) != FORBIDDEN_LIVE_CURRENT_EVIDENCE_TOKENS:
+        failures.append({
+            "path": rel(EVIDENCE_ARTIFACT_BINDING_MANIFEST),
+            "error": "forbidden_live_current_tokens_mismatch",
+            "expected": list(FORBIDDEN_LIVE_CURRENT_EVIDENCE_TOKENS),
+            "actual": forbidden_live_current_tokens,
+        })
+    entries: dict[str, dict[str, Any]] = {}
+    census = Counter()
+    for index, entry in enumerate(manifest.get("entries", [])):
+        path_ref = str(entry.get("path", ""))
+        mode = str(entry.get("mode", ""))
+        label = f"{rel(EVIDENCE_ARTIFACT_BINDING_MANIFEST)}#/entries/{index}"
+        if path_ref in entries:
+            failures.append({"path": label, "error": "duplicate_evidence_binding_path", "evidence": path_ref})
+            continue
+        resolved, path_error = exact_path(path_ref)
+        if path_error:
+            failures.append({"path": label, "error": "evidence_binding_path_unresolved", "evidence": path_ref, "detail": path_error})
+            continue
+        if resolved is None or not resolved.is_file():
+            failures.append({"path": label, "error": "evidence_binding_path_not_file", "evidence": path_ref})
+            continue
+        try:
+            evidence_bundle = load_json(resolved)
+        except Exception as exc:  # noqa: BLE001
+            failures.append({"path": path_ref, "error": "evidence_binding_bundle_unreadable", "detail": str(exc)})
+            continue
+        expected_node_id = entry.get("node_id")
+        actual_node_id = evidence_bundle.get("node", {}).get("node_id")
+        if expected_node_id != actual_node_id:
+            failures.append({
+                "path": path_ref,
+                "error": "evidence_binding_node_id_mismatch",
+                "expected_node_id": expected_node_id,
+                "actual_node_id": actual_node_id,
+            })
+        if mode == "historical_snapshot":
+            expected_hash = entry.get("bundle_sha256")
+            actual_hash = sha256_file(resolved)
+            if expected_hash != actual_hash:
+                failures.append({
+                    "path": path_ref,
+                    "error": "historical_evidence_bundle_hash_mismatch",
+                    "expected": expected_hash,
+                    "actual": actual_hash,
+                })
+        elif mode == "live_current" and "bundle_sha256" in entry:
+            failures.append({"path": label, "error": "live_current_bundle_must_not_pin_its_own_mutable_hash"})
+        entries[path_ref] = entry
+        census[mode] += 1
+
+    discovered = {rel(path) for path in evidence_paths([])}
+    declared = set(entries)
+    for path_ref in sorted(discovered - declared):
+        failures.append({"path": path_ref, "error": "evidence_binding_mode_missing"})
+    for path_ref in sorted(declared - discovered):
+        failures.append({"path": path_ref, "error": "evidence_binding_mode_orphaned"})
+    expected_census = {
+        "historical_snapshot": manifest.get("expected_historical_snapshot_count"),
+        "live_current": manifest.get("expected_live_current_count"),
+    }
+    actual_census = {key: census.get(key, 0) for key in expected_census}
+    if actual_census != expected_census:
+        failures.append({
+            "path": rel(EVIDENCE_ARTIFACT_BINDING_MANIFEST),
+            "error": "evidence_binding_mode_census_mismatch",
+            "expected": expected_census,
+            "actual": actual_census,
+        })
+    return entries, failures, actual_census
+
+
 def plan_graph_node_ids() -> tuple[set[str], list[dict[str, Any]]]:
     graph_path = PLANS / "plan_graph.json"
     try:
@@ -1083,6 +1340,8 @@ def validate_evidence_file(
     *,
     known_node_ids: set[str] | None = None,
     expected_node_id: str | None = None,
+    artifact_binding_mode: str = "live_current",
+    forbidden_live_current_tokens: list[str] | None = None,
 ) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     try:
@@ -1091,6 +1350,15 @@ def validate_evidence_file(
         return [{"path": rel(path), "error": str(exc)}]
     for error in validate_schema(data, schema, schema):
         failures.append({"path": rel(path), "error": error})
+    if artifact_binding_mode == "live_current":
+        serialized = json.dumps(data, sort_keys=True, ensure_ascii=False).casefold()
+        for token in forbidden_live_current_tokens or FORBIDDEN_LIVE_CURRENT_EVIDENCE_TOKENS:
+            if token.casefold() in serialized:
+                failures.append({
+                    "path": rel(path),
+                    "error": "forbidden_live_current_evidence_claim",
+                    "token": token,
+                })
     actual_node_id = data.get("node", {}).get("node_id")
     if expected_node_id is not None and actual_node_id != expected_node_id:
         failures.append(
@@ -1114,6 +1382,14 @@ def validate_evidence_file(
         artifact_ref = artifact.get("path")
         expected_hash = artifact.get("sha256")
         if not artifact_ref or not expected_hash:
+            continue
+        if artifact_binding_mode == "historical_snapshot":
+            if not re.fullmatch(r"[0-9a-f]{64}", str(expected_hash)):
+                failures.append({
+                    "path": rel(path),
+                    "artifact": artifact_ref,
+                    "error": "historical_artifact_hash_not_sha256",
+                })
             continue
         artifact_path, path_error = exact_path(artifact_ref)
         if path_error:
@@ -1143,6 +1419,8 @@ def cmd_validate_evidence(args: argparse.Namespace) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     known_node_ids, graph_failures = plan_graph_node_ids()
     failures.extend(graph_failures)
+    binding_modes, binding_failures, binding_census = load_evidence_artifact_binding_modes()
+    failures.extend(binding_failures)
     checked = []
     for path in paths:
         path_ref = path.relative_to(ROOT).as_posix() if path.is_absolute() and path.is_relative_to(ROOT) else str(path)
@@ -1155,8 +1433,24 @@ def cmd_validate_evidence(args: argparse.Namespace) -> dict[str, Any]:
             failures.append({"path": rel(path) if path.is_absolute() else str(path), "error": "missing_evidence"})
             continue
         checked.append(rel(path))
-        failures.extend(validate_evidence_file(path, schema, known_node_ids=known_node_ids))
-    return report_status("validate-evidence", failures, evidence_files_checked=len(checked), evidence_files=checked)
+        path_key = rel(path)
+        binding = binding_modes.get(path_key, {})
+        mode = str(binding.get("mode", "live_current"))
+        failures.extend(validate_evidence_file(
+            path,
+            schema,
+            known_node_ids=known_node_ids,
+            expected_node_id=str(binding.get("node_id")) if binding.get("node_id") else None,
+            artifact_binding_mode=mode,
+        ))
+    return report_status(
+        "validate-evidence",
+        failures,
+        evidence_files_checked=len(checked),
+        evidence_files=checked,
+        evidence_binding_manifest=rel(EVIDENCE_ARTIFACT_BINDING_MANIFEST),
+        evidence_binding_mode_counts=binding_census,
+    )
 
 
 def cmd_validate_plan_graph(args: argparse.Namespace) -> dict[str, Any]:
@@ -1164,6 +1458,8 @@ def cmd_validate_plan_graph(args: argparse.Namespace) -> dict[str, Any]:
     schema_path = PLANS / "plan_graph.schema.json"
     evidence_schema = load_json(PLANS / "evidence.schema.json")
     failures: list[dict[str, Any]] = []
+    binding_modes, binding_failures, _ = load_evidence_artifact_binding_modes()
+    failures.extend(binding_failures)
     try:
         graph = load_json(graph_path)
         schema = load_json(schema_path)
@@ -1218,6 +1514,7 @@ def cmd_validate_plan_graph(args: argparse.Namespace) -> dict[str, Any]:
                         evidence_schema,
                         known_node_ids=known_node_ids,
                         expected_node_id=str(node_id) if isinstance(node_id, str) else None,
+                        artifact_binding_mode=str(binding_modes.get(evidence_ref, {}).get("mode", "live_current")),
                     )
                 )
         for output in node.get("outputs", []):
@@ -2850,9 +3147,62 @@ USAGE_GUI_REQUIRED_FIXTURE_TOKENS = {
     "GUI-USG-008": ["settlement_status:streaming_partial_or_failed", "stream_state:partial_or_aborted", "dedupe_key", "duplicate_partial_rollup"],
     "GUI-CBP-001": ["/stats", "/usage", "/quota", "/credits", "usage:unknown", "quota:not_exposed"],
     "GUI-CBP-002": ["provider_id:antigravity_cli", "route:agy", "G1 credits", "UseG1Credits", "provider_total_from_credits"],
-    "GUI-ROUTE-001": ["route_target.object_kind:usage_event", "object_id:usage_event_ref", "usage_record_id", "source_class", "source_confidence", "source_authority", "settlement_status", "projection_freshness", "projection_health", "timestamp_primary_route"],
+    "GUI-ROUTE-001": [
+        "route_target.object_kind:usage_attempt",
+        "object_id:attempt_id",
+        "route_target.object_id_equals_attempt_id",
+        "ledger_attempt_id_primary_route",
+        "usage_attempt_primary_route",
+        "ledger_usage_event_ref_correlation_passthrough",
+        "usage_event_ref",
+        "usage_record_id",
+        "provider_attempt_ref",
+        "attempt_id",
+        "source_class",
+        "source_confidence",
+        "source_authority",
+        "settlement_status",
+        "projection_freshness",
+        "projection_health",
+        "non_ledger_panel_details_are_local",
+        "local_provider_detail_uses_stable_provider_id",
+        "local_account_detail_uses_stable_account_id",
+        "local_detail.route_dispatch:false",
+        "timestamp_primary_route",
+        "attempt_id_copied_to_usage_event_ref",
+        "usage_event_ref_copied_to_attempt_id",
+        "opaque_card_id_as_usage_provider",
+        "non_ledger_panel_dispatches_open_usage_subject",
+    ],
     "GUI-RAW-001": ["Curated normalized fields", "source_class", "source_confidence", "source_authority", "Raw redacted refs", "provider_payload_hash", "raw_provider_secrets"],
     "GUI-RAP-001": ["cost_usage", "tool_llm_trace", "envelope_plus_per_type", "envelope_only_valid", "arbitrary_non_empty_type_payload_valid"],
+}
+
+USAGE_GUI_ROUTE_REQUIRED_MUST = {
+    "route_target.object_kind:usage_attempt",
+    "object_id:attempt_id",
+    "route_target.object_id_equals_attempt_id",
+    "ledger_attempt_id_primary_route",
+    "usage_attempt_primary_route",
+    "ledger_usage_event_ref_correlation_passthrough",
+    "usage_event_ref",
+    "usage_record_id",
+    "provider_attempt_ref",
+    "attempt_id",
+    "non_ledger_panel_details_are_local",
+    "local_provider_detail_uses_stable_provider_id",
+    "local_account_detail_uses_stable_account_id",
+    "local_detail.route_dispatch:false",
+}
+USAGE_GUI_ROUTE_REQUIRED_MUST_NOT = {
+    "timestamp_primary_route",
+    "run_only_primary_route",
+    "thread_only_primary_route",
+    "tier_only_primary_route",
+    "attempt_id_copied_to_usage_event_ref",
+    "usage_event_ref_copied_to_attempt_id",
+    "opaque_card_id_as_usage_provider",
+    "non_ledger_panel_dispatches_open_usage_subject",
 }
 
 
@@ -3266,6 +3616,34 @@ def cmd_validate_usage_gui_fixtures(args: argparse.Namespace) -> dict[str, Any]:
             if token not in fixture_text:
                 failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "token": token, "error": "missing_required_fixture_assertion_token"})
 
+        if fixture_id == "GUI-ROUTE-001":
+            must = set(fixture.get("must", []))
+            must_not = set(fixture.get("must_not", []))
+            for token in sorted(USAGE_GUI_ROUTE_REQUIRED_MUST - must):
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "token": token, "error": "missing_required_route_must_token"})
+            for token in sorted(USAGE_GUI_ROUTE_REQUIRED_MUST_NOT - must_not):
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "token": token, "error": "missing_required_route_must_not_token"})
+
+            projection = fixture.get("expected_projection", {})
+            ledger = projection.get("ledger", {}) if isinstance(projection, dict) else {}
+            route_target = ledger.get("route_target", {}) if isinstance(ledger, dict) else {}
+            identity = ledger.get("identity_contract", {}) if isinstance(ledger, dict) else {}
+            if route_target != {"object_kind": "usage_attempt", "object_id_source": "attempt_id"}:
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "error": "invalid_ledger_usage_attempt_route_projection"})
+            if identity.get("attempt_id_distinct_from_usage_event_ref") is not True:
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "error": "usage_event_attempt_identity_not_distinct"})
+            if identity.get("correlation_passthrough") != ["usage_event_ref", "usage_record_id", "provider_attempt_ref"]:
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "error": "invalid_ledger_correlation_passthrough_projection"})
+
+            local_details = projection.get("non_ledger_details", []) if isinstance(projection, dict) else []
+            expected_local_details = [
+                {"detail_kind": "provider", "identity_field": "provider_id", "route_dispatch": False},
+                {"detail_kind": "account", "identity_field": "account_id", "route_dispatch": False},
+                {"detail_kind": "presentation_panel", "identity_field": "stable_panel_id", "route_dispatch": False},
+            ]
+            if local_details != expected_local_details:
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "error": "invalid_non_ledger_local_detail_projection"})
+
     expected = set(USAGE_GUI_REQUIRED_FIXTURE_IDS)
     actual = set(by_id)
     for fixture_id in sorted(expected - actual):
@@ -3278,6 +3656,37 @@ def cmd_validate_usage_gui_fixtures(args: argparse.Namespace) -> dict[str, Any]:
         failures,
         required_fixture_count=len(USAGE_GUI_REQUIRED_FIXTURE_IDS),
         fixture_count=len(fixtures),
+    )
+
+
+
+def cmd_validate_pm7_gui_fixtures(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts/pm-validate-pm7-gui-fixtures.py"
+    if not validator.exists():
+        return report_status("validate-pm7-gui-fixtures", [{"path": rel(validator), "error": "missing_pm7_gui_fixture_validator"}])
+    proc = subprocess.run(
+        [sys.executable, str(validator.relative_to(ROOT)), "validate"],
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        timeout=300,
+    )
+    try:
+        raw = json.loads(proc.stdout)
+    except Exception:
+        raw = {"status": "fail", "failures": [{"error": "invalid_validator_output", "output": proc.stdout[-4000:]}]}
+    failures = list(raw.get("failures", []))
+    if proc.returncode != 0 and not failures:
+        failures.append({"error": "pm7_gui_fixture_validator_nonzero", "exit_code": proc.returncode, "output": proc.stdout[-4000:]})
+    return report_status(
+        "validate-pm7-gui-fixtures",
+        failures,
+        usage_fixture_file_count=raw.get("usage_fixture_file_count"),
+        usage_fixture_count=raw.get("usage_fixture_count"),
+        shared_fixture_file_count=raw.get("shared_fixture_file_count"),
+        workspace_event_valid_count=raw.get("workspace_event_valid_count"),
+        context_compaction_event_family_count=raw.get("context_compaction_event_family_count"),
     )
 
 
@@ -3294,6 +3703,8 @@ USAGE_ROUTE_COMMAND_IDS = {
     "cmd.artifacts.show_in_usage",
     "cmd.artifacts.show_in_ledger",
 }
+REJECTED_USAGE_PROVIDER_MANAGEMENT_COMMAND_ID = "cmd.provider.usage.open_management"
+USAGE_PROVIDER_SETTINGS_COMMAND_ID = "cmd.settings.open"
 BROWSER_COMMAND_EXPECTED_EVENTS = {
     "cmd.browser.open_workspace_preview": ["workspace.layout_changed", "browser.session.created", "browser.session.state_changed"],
     "cmd.browser.open_detached_preview": ["browser.session.created", "browser.session.state_changed"],
@@ -3323,6 +3734,22 @@ BROWSER_LAYOUT_ONLY_COMMAND_IDS = {
 BROWSER_FORBIDDEN_PRODUCTION_COMMAND_IDS = {
     "cmd.browser.run_code",
     "cmd.browser.evaluate",
+}
+RETIRED_LOCAL_UI_COMMAND_IDS = {
+    "cmd.onboarding.first_run.open",
+    "cmd.onboarding.free_models.defer",
+    "cmd.onboarding.free_models.refresh",
+    "cmd.onboarding.free_models.retry",
+    "cmd.onboarding.free_models.review",
+    "cmd.onboarding.free_models.setup",
+    "cmd.onboarding.open_planning_wizard",
+    "cmd.onboarding.provider_setup.open",
+    "cmd.onboarding.provider_setup.use_provider",
+    "cmd.onboarding.review_setup",
+    "cmd.onboarding.skip_to_planning_wizard",
+    "cmd.settings.category.reset",
+    "cmd.settings.open_notifications",
+    "cmd.settings.suggestion.dismiss",
 }
 USAGE_ROUTE_PASSTHROUGH_FIELDS = {
     "usage_event_ref",
@@ -3387,6 +3814,22 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         excluded_tokens = []
 
     catalog_text = catalog_path.read_text(encoding="utf-8")
+    usage_provider_disposition_tokens = [
+        "cmd.provider.usage.open_management receives no primary catalog row and no alias",
+        "Provider/account/presentation-panel aggregate details remain local and dispatch no UICommand",
+        "cmd.settings.open",
+        "target_type=setting",
+        "setting_id=ai.accounts.provider-connections",
+    ]
+    for token in usage_provider_disposition_tokens:
+        if token not in catalog_text:
+            failures.append(
+                {
+                    "path": rel(catalog_path),
+                    "token": token,
+                    "error": "missing_usage_provider_local_or_settings_disposition",
+                }
+            )
     catalog_commands = set(COMMAND_TOKEN_RE.findall(catalog_text))
     production_commands: set[str] = set()
     event_rows = 0
@@ -3405,6 +3848,8 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
             failures.append({"path": row_path, "command_id": command_id, "error": "retired_web_command_alias_in_production_wiring"})
         if command_id in BROWSER_FORBIDDEN_PRODUCTION_COMMAND_IDS:
             failures.append({"path": row_path, "command_id": command_id, "error": "browser_page_evaluation_command_in_production_wiring"})
+        if command_id in RETIRED_LOCAL_UI_COMMAND_IDS:
+            failures.append({"path": row_path, "command_id": command_id, "error": "retired_local_ui_action_command_in_production_wiring"})
         if row.get("ui_element_id") != key:
             failures.append({"path": row_path, "error": "ui_element_id_key_mismatch", "ui_element_id": row.get("ui_element_id")})
         if row.get("example") is True:
@@ -3536,16 +3981,54 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
             else:
                 if route_contract.get("route_target_required") is not True:
                     failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_target_not_required"})
-                if route_contract.get("open_subject_required") is not True:
-                    failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_open_subject_not_required"})
                 if route_contract.get("route_target_object_kind_when_usage_event_ref") != "usage_event":
                     failures.append(
                         {
                             "path": row_path,
                             "command_id": command_id,
-                            "error": "usage_route_wrong_object_kind_for_usage_event_ref",
+                            "error": "usage_event_primary_route_wrong_object_kind",
                         }
                     )
+                if command_id == "cmd.nav.open_usage_subject":
+                    if route_contract.get("open_subject_required") is not False:
+                        failures.append({"path": row_path, "command_id": command_id, "error": "pm7_usage_object_route_open_subject_must_be_false"})
+                    if route_contract.get("route_target_object_id_source_when_usage_event_ref") != "usage_event_ref":
+                        failures.append(
+                            {
+                                "path": row_path,
+                                "command_id": command_id,
+                                "error": "usage_event_primary_route_wrong_object_id_source",
+                            }
+                        )
+                    if route_contract.get("route_target_object_kind_when_attempt_id") != "usage_attempt":
+                        failures.append(
+                            {
+                                "path": row_path,
+                                "command_id": command_id,
+                                "error": "usage_attempt_primary_route_wrong_object_kind",
+                            }
+                        )
+                    if route_contract.get("route_target_object_id_source_when_attempt_id") != "attempt_id":
+                        failures.append(
+                            {
+                                "path": row_path,
+                                "command_id": command_id,
+                                "error": "usage_attempt_primary_route_wrong_object_id_source",
+                            }
+                        )
+                else:
+                    if route_contract.get("open_subject_required") is not True:
+                        failures.append({"path": row_path, "command_id": command_id, "error": "artifact_usage_route_open_subject_bridge_missing"})
+                    if "route_target_object_id_source_when_usage_event_ref" in route_contract:
+                        failures.append({"path": row_path, "command_id": command_id, "error": "artifact_usage_route_unapproved_object_id_contract_enrichment"})
+                    if "route_target_object_kind_when_attempt_id" in route_contract or "route_target_object_id_source_when_attempt_id" in route_contract:
+                        failures.append(
+                            {
+                                "path": row_path,
+                                "command_id": command_id,
+                                "error": "artifact_usage_route_must_remain_event_primary",
+                            }
+                        )
                 passthrough = route_contract.get("correlation_passthrough", [])
                 if not isinstance(passthrough, list):
                     failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_invalid_correlation_passthrough"})
@@ -3562,6 +4045,58 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
                             "error": "usage_route_missing_correlation_passthrough_field",
                         }
                     )
+            if command_id == "cmd.nav.open_usage_subject":
+                row_text = json.dumps(row, sort_keys=True)
+                for token in [
+                    "provider/account/presentation-panel aggregate details remain local",
+                    "dispatch no UICommand",
+                    "usage_attempt",
+                    "attempt_id",
+                    "usage_event_ref as correlation",
+                ]:
+                    if token not in row_text:
+                        failures.append(
+                            {
+                                "path": row_path,
+                                "command_id": command_id,
+                                "token": token,
+                                "error": "usage_local_aggregate_no_dispatch_disposition_missing",
+                            }
+                        )
+
+    if REJECTED_USAGE_PROVIDER_MANAGEMENT_COMMAND_ID in production_commands:
+        failures.append(
+            {
+                "path": rel(matrix_path),
+                "command_id": REJECTED_USAGE_PROVIDER_MANAGEMENT_COMMAND_ID,
+                "error": "rejected_usage_provider_management_command_in_production_wiring",
+            }
+        )
+    if REJECTED_USAGE_PROVIDER_MANAGEMENT_COMMAND_ID not in excluded_tokens:
+        failures.append(
+            {
+                "path": rel(exclusions_path),
+                "command_id": REJECTED_USAGE_PROVIDER_MANAGEMENT_COMMAND_ID,
+                "error": "rejected_usage_provider_management_command_missing_exact_exclusion",
+            }
+        )
+    missing_retired_local_exclusions = sorted(RETIRED_LOCAL_UI_COMMAND_IDS.difference(excluded_tokens))
+    for command_id in missing_retired_local_exclusions:
+        failures.append(
+            {
+                "path": rel(exclusions_path),
+                "command_id": command_id,
+                "error": "retired_local_ui_action_command_missing_exact_exclusion",
+            }
+        )
+    if USAGE_PROVIDER_SETTINGS_COMMAND_ID not in production_commands:
+        failures.append(
+            {
+                "path": rel(matrix_path),
+                "command_id": USAGE_PROVIDER_SETTINGS_COMMAND_ID,
+                "error": "usage_provider_settings_command_missing_production_wiring",
+            }
+        )
 
     missing_commands = sorted(
         command_id
@@ -5818,6 +6353,164 @@ def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dic
     )
 
 
+def cmd_validate_new_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts" / "pm-new-contracts-verify.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-new-contracts",
+        [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-new-contracts",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
+def cmd_validate_server_command_gap(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate the frozen 171-row server adjudication and every materialized schema ref."""
+
+    validator = ROOT / "scripts" / "pm-server-command-gap-verify.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-server-command-gap",
+        [sys.executable, str(validator), "--json"],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    report = parse_validator_json(
+        "validate-server-command-gap",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    expected_counts = {
+        "rows": 171,
+        "schema_bearing_rows_resolved": 168,
+        "rejected_rows_resolved": 3,
+        "adjudication_rows_resolved": 171,
+        "unresolved_local_action_schema_refs": 0,
+        "unresolved_other_proposed_schema_refs": 0,
+        "negative_self_tests": 11,
+    }
+    expected_partition = {
+        "new_canonical_required": 86,
+        "approved_alias_to_exact": 43,
+        "typed_local_ui_action": 39,
+        "rejected_with_reason": 3,
+    }
+    success_candidate = proc.returncode == 0 and report.get("status") == "pass"
+    contract_violations: list[str] = []
+    if success_candidate:
+        if report.get("check") != "server-command-gap-adjudication":
+            contract_violations.append("check")
+        if report.get("failures") != []:
+            contract_violations.append("failures")
+        if report.get("counts") != expected_counts:
+            contract_violations.append("counts")
+        if report.get("partition") != expected_partition:
+            contract_violations.append("partition")
+        hashes = report.get("hashes")
+        if not isinstance(hashes, dict) or not {
+            "registry",
+            "registry_schema",
+            "source_gap_register",
+            "source_packet_census",
+            "materialized_schemas",
+        }.issubset(hashes):
+            contract_violations.append("hashes")
+        reports = report.get("reports")
+        if not isinstance(reports, dict) or any(
+            reports.get(key) != []
+            for key in (
+                "unresolved_local_action_schema_refs",
+                "unresolved_other_proposed_schema_refs",
+            )
+        ):
+            contract_violations.append("reports")
+        if contract_violations:
+            report["status"] = "fail"
+            report["failures"] = [
+                {
+                    "path": rel(validator),
+                    "error": "validator_output_contract_invalid",
+                    "violations": contract_violations,
+                    "returncode": proc.returncode,
+                }
+            ]
+    else:
+        validator_status = report.get("status")
+        report["status"] = "fail"
+        if not report.get("failures"):
+            report["failures"] = [
+                {
+                    "path": rel(validator),
+                    "error": "validator_failed_without_reported_failures",
+                    "returncode": proc.returncode,
+                    "validator_status": validator_status,
+                }
+            ]
+    report["check"] = "validate-server-command-gap"
+    return report
+
+
+def cmd_validate_touch_closure(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate Touch Closure and normalize its ``valid`` result for aggregate gates."""
+
+    validator = ROOT / "scripts" / "pm-touch-closure-verify.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-touch-closure",
+        [sys.executable, str(validator), "--json"],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    early_failure = classify_validator_result(
+        "validate-touch-closure",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if early_failure is not None:
+        return early_failure
+    try:
+        report = json.loads(proc.stdout)
+    except Exception as exc:  # noqa: BLE001 - preserve fail-closed validator behavior.
+        return report_status(
+            "validate-touch-closure",
+            [
+                {
+                    "path": rel(validator),
+                    "error": "validator_output_not_json",
+                    "detail": str(exc),
+                    "returncode": proc.returncode,
+                    "stdout_excerpt": (proc.stdout or "")[-_EXCERPT_LIMIT:],
+                    "stderr_excerpt": (proc.stderr or "")[-_EXCERPT_LIMIT:],
+                }
+            ],
+        )
+    report["check"] = "validate-touch-closure"
+    report["status"] = "pass" if report.get("valid") is True and proc.returncode == 0 else "fail"
+    if report["status"] == "fail" and not report.get("failures"):
+        report["failures"] = [
+            {
+                "path": rel(validator),
+                "error": "validator_failed_without_reported_failures",
+                "returncode": proc.returncode,
+                "valid": report.get("valid"),
+            }
+        ]
+    if proc.stderr:
+        report["stderr"] = proc.stderr[-_EXCERPT_LIMIT:]
+    return report
+
+
 def cmd_validate_implementation_readiness(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-implementation-readiness.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
@@ -6006,6 +6699,8 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("check_project_artifact_requirements", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("validate_new_contracts", cmd_validate_new_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("validate_implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
         ("validate_plan_migration", cmd_validate_plan_migration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -6013,11 +6708,13 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("validate_usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
+        ("validate_pm7_gui_fixtures", cmd_validate_pm7_gui_fixtures, argparse.Namespace()),
         ("validate_usage_contract_drift", cmd_validate_usage_contract_drift, argparse.Namespace()),
         ("validate_gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("validate_web_capability_contracts", cmd_validate_web_capability_contracts, argparse.Namespace()),
         ("validate_filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
+        ("validate_touch_closure", cmd_validate_touch_closure, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
@@ -6053,6 +6750,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("project_artifacts", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
         ("plan_migration", cmd_validate_plan_migration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -6060,11 +6758,13 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
+        ("pm7_gui_fixtures", cmd_validate_pm7_gui_fixtures, argparse.Namespace()),
         ("usage_contract_drift", cmd_validate_usage_contract_drift, argparse.Namespace()),
         ("gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("web_capability_contracts", cmd_validate_web_capability_contracts, argparse.Namespace()),
         ("filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
+        ("touch_closure", cmd_validate_touch_closure, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
     ]
@@ -6097,11 +6797,14 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
         usage_gui_fixtures=compact_gate_report(check_map["usage_gui_fixtures"]),
+        pm7_gui_fixtures=compact_gate_report(check_map["pm7_gui_fixtures"]),
         usage_contract_drift=compact_gate_report(check_map["usage_contract_drift"]),
         gui_asset_policy=compact_gate_report(check_map["gui_asset_policy"]),
         web_capability_contracts=compact_gate_report(check_map["web_capability_contracts"]),
         filesafe_security_policy=compact_gate_report(check_map["filesafe_security_policy"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
+        server_command_gap=compact_gate_report(check_map["server_command_gap"]),
+        touch_closure=compact_gate_report(check_map["touch_closure"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
         audit_status_index=compact_gate_report(check_map["audit_status_index"]),
         subcheck_timeout_seconds=timeout_seconds,
@@ -6121,6 +6824,9 @@ COMMANDS = {
     "check-project-artifacts": cmd_check_project_artifact_requirements,
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
+    "validate-new-contracts": cmd_validate_new_contracts,
+    "validate-server-command-gap": cmd_validate_server_command_gap,
+    "validate-touch-closure": cmd_validate_touch_closure,
     "validate-case-l-non-event-materialization": cmd_validate_case_l_non_event_materialization,
     "validate-implementation-readiness": cmd_validate_implementation_readiness,
     "validate-plan-migration": cmd_validate_plan_migration,
@@ -6128,6 +6834,7 @@ COMMANDS = {
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
     "validate-usage-gui-fixtures": cmd_validate_usage_gui_fixtures,
+    "validate-pm7-gui-fixtures": cmd_validate_pm7_gui_fixtures,
     "validate-usage-contract-drift": cmd_validate_usage_contract_drift,
     "validate-gui-asset-policy": cmd_validate_gui_asset_policy,
     "validate-web-capability-contracts": cmd_validate_web_capability_contracts,
@@ -6151,6 +6858,9 @@ def main() -> int:
     _SUBPROCESS_VALIDATORS = {
         "check-shards",
         "validate-prd-planning-runtime-contracts",
+        "validate-new-contracts",
+        "validate-server-command-gap",
+        "validate-touch-closure",
         "validate-case-l-non-event-materialization",
         "validate-implementation-readiness",
         "validate-plan-migration",

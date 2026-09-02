@@ -1,0 +1,73 @@
+{
+  "schema_id": "pm.azure_devops.integration_fixtures.v1",
+  "owner_schema": "Plans/forge_integration_contracts.schema.json",
+  "valid": [
+    {
+      "name": "azure_devops_services_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "azure_devops",
+        "provider_variant": "azure_devops_services",
+        "host_class": "cloud",
+        "account_container_kind": "organization",
+        "repository_container_kind": "project_repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "build",
+        "auth_methods": ["entra", "pat_ref", "ssh_ref"],
+        "required_capabilities": ["repository", "review", "checks", "transport"],
+        "optional_capabilities": ["review_threads", "pipelines", "automation", "issues", "webhooks"],
+        "version_or_tier_gate": "azure_devops_services_capability_probe",
+        "official_page_route_ref": "official-page:azure-devops:connect",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": ["organization_access_denied", "project_access_denied", "policy_scope_missing"]
+      }
+    },
+    {
+      "name": "azure_devops_server_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "azure_devops",
+        "provider_variant": "azure_devops_server",
+        "host_class": "server",
+        "account_container_kind": "collection",
+        "repository_container_kind": "project_repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "build",
+        "auth_methods": ["pat_ref", "ssh_ref"],
+        "required_capabilities": ["repository", "review", "transport"],
+        "optional_capabilities": ["review_threads", "checks", "pipelines", "issues", "webhooks"],
+        "version_or_tier_gate": "signed_azure_devops_server_support_entry",
+        "official_page_route_ref": "official-page:azure-devops-server:connect",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": "catalog:azure-devops-server:generation-2",
+        "unsupported_reason_codes": ["server_not_in_signed_catalog", "server_version_unsupported", "collection_access_denied"]
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "azure_devops_repository_cannot_drop_project_identity",
+      "definition": "repository_binding",
+      "expected_error": "project is required by provider-specific fixture validation",
+      "value": {
+        "schema_id": "pm.forge.repository_binding.v1",
+        "binding_id": "forge-binding:azure:bad",
+        "provider": "azure_devops",
+        "provider_variant": "azure_devops_services",
+        "normalized_host": "dev.azure.com",
+        "account_id": "account:azure:1",
+        "repo_id": "repo:alpha",
+        "provider_repository_id": "azure-repo:1",
+        "repository_locator": {"organization_or_workspace": "org-alpha", "repository_slug": "service-one"},
+        "authority": {"storage": "authority", "review": "authority", "checks": "authority", "automation": "authority", "issues": "authority", "transport": "authority", "mirror": "not_applicable"},
+        "credential_ref": "credential:azure:1",
+        "adapter_ref": "adapter:azure:1",
+        "capability_catalog_ref": "catalog:azure:generation-1",
+        "binding_generation": 1
+      }
+    }
+  ]
+}

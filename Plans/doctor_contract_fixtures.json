@@ -1,0 +1,2449 @@
+{
+  "schema_id": "pm.doctor.contract_fixtures.v1",
+  "owner_schema": "Plans/doctor_contracts.schema.json",
+  "valid": [
+    {
+      "name": "bounded_read_only_provider_check",
+      "definition": "doctor_check_descriptor",
+      "value": {
+        "schema_id": "pm.doctor.check_descriptor.v1",
+        "schema_version": "1.0.0",
+        "check_id": "doctor.provider.openai.readiness",
+        "descriptor_revision": 1,
+        "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+        "target_kinds": [
+          "provider_installation",
+          "provider_authentication",
+          "model_readiness"
+        ],
+        "request_schema_ref": "schema:provider_readiness_request:v1",
+        "result_schema_ref": "schema:provider_readiness_result:v1",
+        "applicability_selector_ref": "selector:configured_provider:openai",
+        "cost_class": "light_local",
+        "cache_ttl_seconds": 60,
+        "timeout_ms": 5000,
+        "side_effect_policy": "read_only",
+        "permission_class": "project_read",
+        "redaction_profile_ref": "redaction:doctor:provider",
+        "remediation_action_ids": [
+          "cmd.authentication.start"
+        ],
+        "support_state": "active"
+      }
+    },
+    {
+      "name": "optional_off_is_healthy",
+      "definition": "doctor_finding_projection",
+      "value": {
+        "schema_id": "pm.doctor.finding_projection.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "finding:gpu:off",
+        "check_id": "doctor.runtime.gpu.optional",
+        "descriptor_revision": 2,
+        "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+        "project_id": "project:1",
+        "target_kind": "runtime_resource",
+        "target_id": "gpu:host:1",
+        "status": "healthy",
+        "severity": "info",
+        "task_impact": "none",
+        "applicability": "optional_off",
+        "reason": "GPU acceleration is off and no current work requires it.",
+        "observed_at_utc": "2026-08-31T00:00:00Z",
+        "freshness_state": "fresh",
+        "age_ms": 0,
+        "confidence": "high",
+        "owner_generation": 4,
+        "cache_generation": 8,
+        "last_known_result_ref": "result:gpu:off",
+        "details_ref": null,
+        "logs_ref": null,
+        "receipt_refs": [],
+        "evidence_refs": [],
+        "remediation": null,
+        "check_cost_class": "instant_cached",
+        "redaction_state": "not_required"
+      }
+    },
+    {
+      "name": "fresh_high_confidence_required_is_healthy",
+      "definition": "doctor_finding_projection",
+      "value": {
+        "schema_id": "pm.doctor.finding_projection.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "finding:server:reachable",
+        "check_id": "doctor.server.reachability",
+        "descriptor_revision": 3,
+        "owner_doc_ref": "Plans/Server_System.md",
+        "project_id": "project:1",
+        "target_kind": "server",
+        "target_id": "server:1",
+        "status": "healthy",
+        "severity": "info",
+        "task_impact": "none",
+        "applicability": "required",
+        "reason": "The required Server is reachable from a fresh owner result.",
+        "observed_at_utc": "2026-08-31T00:00:00Z",
+        "freshness_state": "fresh",
+        "age_ms": 0,
+        "confidence": "high",
+        "owner_generation": 12,
+        "cache_generation": 18,
+        "last_known_result_ref": "result:server:reachable",
+        "details_ref": null,
+        "logs_ref": null,
+        "receipt_refs": [],
+        "evidence_refs": [
+          "evidence:server:reachable"
+        ],
+        "remediation": null,
+        "check_cost_class": "network_bounded",
+        "redaction_state": "not_required"
+      }
+    },
+    {
+      "name": "optional_wsl_plugin_gpu_off_unused_are_healthy",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:optional-off-unused",
+        "scenario_kind": "optional_capability_unused",
+        "requirement_refs": [
+          "DOC-005"
+        ],
+        "title": "Unused optional capabilities remain healthy while Off",
+        "source_refs": [
+          "Plans/newtools.md#N2-153"
+        ],
+        "coverage_tags": [
+          "optional_off_unused_healthy"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:optional:wsl",
+            "label": "WSL",
+            "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+            "subject_kind": "capability",
+            "subject_ref": "capability:wsl",
+            "requested_state": "Off unless selected work requires WSL",
+            "effective_state": "Off and unused",
+            "configured": false,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_off",
+            "support_state": "not_applicable",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 7,
+            "cache_generation": 11,
+            "security_critical": false,
+            "reason_code": "optional_off_unused"
+          },
+          {
+            "row_id": "row:optional:plugin",
+            "label": "Optional plugin",
+            "owner_doc_ref": "Plans/Plugins_System.md",
+            "subject_kind": "capability",
+            "subject_ref": "capability:plugin:example",
+            "requested_state": "Off unless selected work requires the plugin",
+            "effective_state": "Off and unused",
+            "configured": false,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_off",
+            "support_state": "not_applicable",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 8,
+            "cache_generation": 12,
+            "security_critical": false,
+            "reason_code": "optional_off_unused"
+          },
+          {
+            "row_id": "row:optional:gpu",
+            "label": "GPU acceleration",
+            "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+            "subject_kind": "capability",
+            "subject_ref": "capability:gpu",
+            "requested_state": "Off unless selected work requires GPU acceleration",
+            "effective_state": "Off and unused",
+            "configured": false,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_off",
+            "support_state": "not_applicable",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 9,
+            "cache_generation": 13,
+            "security_critical": false,
+            "reason_code": "optional_off_unused"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [],
+        "overall_status": "healthy",
+        "overall_task_impact": "none",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "optional_gpu_off_blocks_when_selected_task_requires_it",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:optional-off-required",
+        "scenario_kind": "optional_capability_required",
+        "requirement_refs": [
+          "DOC-005"
+        ],
+        "title": "An Off capability becomes blocked when selected work requires it",
+        "source_refs": [
+          "Plans/newtools.md#N2-153"
+        ],
+        "coverage_tags": [
+          "selected_task_requirement_blocks"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:required:gpu",
+            "label": "GPU acceleration required by selected task",
+            "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+            "subject_kind": "capability",
+            "subject_ref": "capability:gpu",
+            "requested_state": "Required by selected task",
+            "effective_state": "Off and unavailable to selected task",
+            "configured": false,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required_missing",
+            "support_state": "unavailable",
+            "status": "blocked",
+            "severity": "blocked",
+            "task_impact": "blocks_selected_action",
+            "freshness_state": "fresh",
+            "owner_generation": 9,
+            "cache_generation": 14,
+            "security_critical": false,
+            "reason_code": "selected_task_capability_missing"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [],
+        "overall_status": "blocked",
+        "overall_task_impact": "blocks_selected_action",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "remediation_preserves_exact_return_focus_and_currentness",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:remediation-return",
+        "scenario_kind": "remediation_return",
+        "requirement_refs": [
+          "DOC-008"
+        ],
+        "title": "Owner remediation round trip restores exact Doctor context",
+        "source_refs": [
+          "Plans/newtools.md#N2-153"
+        ],
+        "coverage_tags": [
+          "exact_return_route",
+          "exact_focus_restore",
+          "currentness_fence",
+          "fresh_owner_result_required"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:remediation:source-control",
+            "label": "Source Control owner remediation",
+            "owner_doc_ref": "Plans/Source_Control_System.md",
+            "subject_kind": "remediation_return",
+            "subject_ref": "finding:source-control:fixture",
+            "requested_state": "Open the exact owner row and return to this finding",
+            "effective_state": "Route-only concept with currentness-fenced return",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "needs_attention",
+            "severity": "warning",
+            "task_impact": "blocks_selected_action",
+            "freshness_state": "fresh",
+            "owner_generation": 14,
+            "cache_generation": 27,
+            "security_critical": false,
+            "reason_code": "owner_remediation_required"
+          }
+        ],
+        "remediation_return_context": {
+          "check_id": "doctor.source-control.readiness",
+          "finding_id": "finding:source-control:fixture",
+          "finding_revision": 3,
+          "target_id": "host-environment:current",
+          "remediation_action_id": "cmd.source_control.status.refresh",
+          "owner_route_ref": "settings:source:browser-scm",
+          "return_route_ref": "settings:system:doctor",
+          "return_scope": "project",
+          "return_focus_id": "doctor-remediation-source-control",
+          "expected_owner_generation": 14,
+          "expected_cache_generation": 27,
+          "owner_result_required": true,
+          "fresh_owner_result_required": true,
+          "restore_only_on_currentness_match": true
+        },
+        "redaction_rows": [],
+        "overall_status": "needs_attention",
+        "overall_task_impact": "blocks_selected_action",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "sqlite_detected_is_blocked_and_never_available",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:sqlite-detected",
+        "scenario_kind": "storage_backend",
+        "requirement_refs": [
+          "DOC-013"
+        ],
+        "title": "SQLite detection blocks storage readiness",
+        "source_refs": [
+          "Plans/newtools.md#doctor-registry-router-and-projection-contract-addendum-2026-08-31",
+          "Plans/storage-plan.md"
+        ],
+        "coverage_tags": [
+          "sqlite_detected_blocked",
+          "sqlite_never_available"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:storage:sqlite",
+            "label": "SQLite detected",
+            "owner_doc_ref": "Plans/storage-plan.md",
+            "subject_kind": "storage_backend",
+            "subject_ref": "storage-backend:sqlite",
+            "requested_state": "Canonical seglog redb and Tantivy storage",
+            "effective_state": "SQLite detected and unsupported",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required_missing",
+            "support_state": "unsupported",
+            "status": "blocked",
+            "severity": "blocked",
+            "task_impact": "blocks_project_work",
+            "freshness_state": "fresh",
+            "owner_generation": 22,
+            "cache_generation": 31,
+            "security_critical": false,
+            "reason_code": "sqlite_backend_forbidden"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [],
+        "overall_status": "blocked",
+        "overall_task_impact": "blocks_project_work",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "server_discovery_identity_pairing_trust_and_currentness",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:server-discovery",
+        "scenario_kind": "server_discovery",
+        "requirement_refs": [
+          "DOC-020"
+        ],
+        "title": "Server discovery and trust remain separate current projections",
+        "source_refs": [
+          "Plans/Server_System.md#SRV-002",
+          "Plans/Server_System.md#SRV-003",
+          "Plans/Server_System.md#SRV-004"
+        ],
+        "coverage_tags": [
+          "server_discovery",
+          "identity_dedupe",
+          "claim_pairing",
+          "trusted_client",
+          "endpoint_currentness"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:server:discovery",
+            "label": "Nearby discovery observation",
+            "owner_doc_ref": "Plans/Server_System.md",
+            "subject_kind": "server_discovery",
+            "subject_ref": "discovery:nearby:fixture",
+            "requested_state": "Minimal current observation",
+            "effective_state": "Current observation without trust",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_on",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 40,
+            "cache_generation": 51,
+            "security_critical": false,
+            "reason_code": "discovery_is_not_trust"
+          },
+          {
+            "row_id": "row:server:dedupe",
+            "label": "Verified identity dedupe",
+            "owner_doc_ref": "Plans/Server_System.md",
+            "subject_kind": "server_identity",
+            "subject_ref": "server:example-home",
+            "requested_state": "One cryptographic Server identity",
+            "effective_state": "Endpoint joined only after identity and certificate continuity",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 41,
+            "cache_generation": 52,
+            "security_critical": false,
+            "reason_code": "verified_identity_dedupe"
+          },
+          {
+            "row_id": "row:server:pairing",
+            "label": "Claim and pairing",
+            "owner_doc_ref": "Plans/Server_System.md",
+            "subject_kind": "server_claim_pairing",
+            "subject_ref": "pairing-session:fixture",
+            "requested_state": "Explicit identity-confirmed approval",
+            "effective_state": "Waiting for trusted Client approval",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "needs_attention",
+            "severity": "warning",
+            "task_impact": "blocks_selected_action",
+            "freshness_state": "fresh",
+            "owner_generation": 42,
+            "cache_generation": 53,
+            "security_critical": false,
+            "reason_code": "pairing_approval_pending"
+          },
+          {
+            "row_id": "row:server:trusted-client",
+            "label": "Trusted Client",
+            "owner_doc_ref": "Plans/Server_System.md",
+            "subject_kind": "trusted_client",
+            "subject_ref": "client:fixture-trusted",
+            "requested_state": "Current least-privilege trust",
+            "effective_state": "Trusted and not revoked",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 43,
+            "cache_generation": 54,
+            "security_critical": false,
+            "reason_code": "trusted_client_current"
+          },
+          {
+            "row_id": "row:server:endpoint",
+            "label": "Endpoint currentness",
+            "owner_doc_ref": "Plans/Server_System.md",
+            "subject_kind": "server_endpoint",
+            "subject_ref": "server-endpoint:fixture-lan",
+            "requested_state": "Current verified endpoint",
+            "effective_state": "Stale observation retained without false green",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "degraded",
+            "status": "stale",
+            "severity": "blocked",
+            "task_impact": "blocks_selected_action",
+            "freshness_state": "stale",
+            "owner_generation": 44,
+            "cache_generation": 55,
+            "security_critical": false,
+            "reason_code": "endpoint_observation_stale"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [],
+        "overall_status": "blocked",
+        "overall_task_impact": "blocks_selected_action",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "remote_access_control_planes_routes_and_resumption",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:remote-access-coverage",
+        "scenario_kind": "remote_access_coverage",
+        "requirement_refs": [
+          "DOC-021"
+        ],
+        "title": "Remote Access routes retain control-plane capability and currentness",
+        "source_refs": [
+          "Plans/Remote_Access_System.md#RAS-003",
+          "Plans/Remote_Access_System.md#RAS-005",
+          "Plans/Remote_Access_System.md#RAS-006",
+          "scratchpad/pm-integration-20260831/audits/official-capability-revalidation-20260831.md#Headscale"
+        ],
+        "coverage_tags": [
+          "tailscale",
+          "headscale",
+          "serve",
+          "funnel",
+          "nginx",
+          "traefik",
+          "remote_link_direct",
+          "remote_link_relay",
+          "remote_link_e2e",
+          "remote_link_pairing",
+          "manual_endpoint",
+          "route_failover",
+          "route_resumption"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:remote:tailscale-serve",
+            "label": "Hosted Tailscale private Serve",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:tailscale-serve",
+            "requested_state": "Private hosted-Tailscale Serve",
+            "effective_state": "Available in hosted-Tailscale fixture profile",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 60,
+            "cache_generation": 70,
+            "security_critical": false,
+            "reason_code": "hosted_tailscale_serve_available"
+          },
+          {
+            "row_id": "row:remote:tailscale-funnel",
+            "label": "Hosted Tailscale Funnel",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:tailscale-funnel",
+            "requested_state": "Off unless explicit public ingress is approved",
+            "effective_state": "Off and unused",
+            "configured": false,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_off",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 61,
+            "cache_generation": 71,
+            "security_critical": false,
+            "reason_code": "funnel_off_unused"
+          },
+          {
+            "row_id": "row:remote:headscale-serve",
+            "label": "Headscale Serve",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:headscale-serve",
+            "requested_state": "Serve requested for Headscale 0.29.3",
+            "effective_state": "Unsupported; effective capability false",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required_missing",
+            "support_state": "unsupported",
+            "status": "blocked",
+            "severity": "blocked",
+            "task_impact": "blocks_selected_action",
+            "freshness_state": "fresh",
+            "owner_generation": 62,
+            "cache_generation": 72,
+            "security_critical": false,
+            "reason_code": "headscale_serve_unsupported_current"
+          },
+          {
+            "row_id": "row:remote:headscale-funnel",
+            "label": "Headscale Funnel",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:headscale-funnel",
+            "requested_state": "Funnel requested for Headscale 0.29.3",
+            "effective_state": "Unsupported; effective capability false",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required_missing",
+            "support_state": "unsupported",
+            "status": "blocked",
+            "severity": "blocked",
+            "task_impact": "blocks_selected_action",
+            "freshness_state": "fresh",
+            "owner_generation": 63,
+            "cache_generation": 73,
+            "security_critical": false,
+            "reason_code": "headscale_funnel_unsupported_current"
+          },
+          {
+            "row_id": "row:remote:nginx",
+            "label": "NGINX reverse proxy",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:nginx",
+            "requested_state": "Dedicated HTTPS and WSS hostname",
+            "effective_state": "Configured with explicit trusted proxy ranges",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_on",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 64,
+            "cache_generation": 74,
+            "security_critical": false,
+            "reason_code": "nginx_proxy_current"
+          },
+          {
+            "row_id": "row:remote:traefik",
+            "label": "Traefik reverse proxy",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:traefik",
+            "requested_state": "Off unless selected deployment uses Traefik",
+            "effective_state": "Off and unused",
+            "configured": false,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_off",
+            "support_state": "not_applicable",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 65,
+            "cache_generation": 75,
+            "security_critical": false,
+            "reason_code": "traefik_off_unused"
+          },
+          {
+            "row_id": "row:remote:link-direct",
+            "label": "Remote Link direct",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:link-direct",
+            "requested_state": "Direct E2E route",
+            "effective_state": "Degraded; relay failover selected",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "optional_on",
+            "support_state": "degraded",
+            "status": "needs_attention",
+            "severity": "warning",
+            "task_impact": "degraded_optional",
+            "freshness_state": "fresh",
+            "owner_generation": 66,
+            "cache_generation": 76,
+            "security_critical": false,
+            "reason_code": "direct_route_degraded"
+          },
+          {
+            "row_id": "row:remote:link-relay",
+            "label": "Remote Link relay",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:link-relay",
+            "requested_state": "Relay fallback with E2E application encryption",
+            "effective_state": "Active relay fallback",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 67,
+            "cache_generation": 77,
+            "security_critical": false,
+            "reason_code": "relay_fallback_active"
+          },
+          {
+            "row_id": "row:remote:link-e2e",
+            "label": "Remote Link E2E and pairing",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:link-e2e",
+            "requested_state": "Paired E2E application channel",
+            "effective_state": "Identity and pairing current",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 68,
+            "cache_generation": 78,
+            "security_critical": false,
+            "reason_code": "remote_link_e2e_pairing_current"
+          },
+          {
+            "row_id": "row:remote:manual",
+            "label": "Manual HTTPS and WSS endpoint",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:manual",
+            "requested_state": "Verified manual endpoint",
+            "effective_state": "Configured and current",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_on",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 69,
+            "cache_generation": 79,
+            "security_critical": false,
+            "reason_code": "manual_endpoint_current"
+          },
+          {
+            "row_id": "row:remote:continuity",
+            "label": "Route failover and resumption",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:continuity",
+            "requested_state": "Preserve Server command cursor and operation identity",
+            "effective_state": "Direct-to-relay fixture preserves continuity",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 70,
+            "cache_generation": 80,
+            "security_critical": false,
+            "reason_code": "failover_resumption_identity_preserved"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [],
+        "overall_status": "blocked",
+        "overall_task_impact": "blocks_selected_action",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "unused_optional_route_does_not_degrade_server_health",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:route-health-independent",
+        "scenario_kind": "route_health_independence",
+        "requirement_refs": [
+          "DOC-022"
+        ],
+        "title": "Configured routes are evaluated independently",
+        "source_refs": [
+          "Plans/Remote_Access_System.md#RAS-002"
+        ],
+        "coverage_tags": [
+          "route_health_independent",
+          "unused_optional_route_non_degrading"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:route:primary",
+            "label": "Selected primary private route",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:primary-private",
+            "requested_state": "Healthy selected route",
+            "effective_state": "Healthy and in use",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 81,
+            "cache_generation": 91,
+            "security_critical": false,
+            "reason_code": "selected_route_healthy"
+          },
+          {
+            "row_id": "row:route:optional-unused",
+            "label": "Broken unused optional route",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:optional-unused",
+            "requested_state": "Configured fallback not selected by current task",
+            "effective_state": "Unavailable but unused",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "optional_on",
+            "support_state": "unavailable",
+            "status": "needs_attention",
+            "severity": "warning",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 82,
+            "cache_generation": 92,
+            "security_critical": false,
+            "reason_code": "unused_optional_route_unavailable"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [],
+        "overall_status": "healthy",
+        "overall_task_impact": "none",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "security_critical_routes_cannot_be_masked",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:security-masking",
+        "scenario_kind": "security_masking",
+        "requirement_refs": [
+          "DOC-023"
+        ],
+        "title": "A healthy route cannot mask a security-critical finding",
+        "source_refs": [
+          "Plans/Server_System.md#SRV-002",
+          "Plans/Remote_Access_System.md#RAS-004",
+          "Plans/Remote_Access_System.md#RAS-007"
+        ],
+        "coverage_tags": [
+          "identity_mismatch_security",
+          "public_unclaimed_security",
+          "unsafe_public_surface_security",
+          "untrusted_proxy_headers_security"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:security:healthy-route",
+            "label": "Healthy private route",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_route",
+            "subject_ref": "remote-route:healthy-private",
+            "requested_state": "Healthy private route",
+            "effective_state": "Healthy",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 101,
+            "cache_generation": 111,
+            "security_critical": false,
+            "reason_code": "private_route_healthy"
+          },
+          {
+            "row_id": "row:security:identity-mismatch",
+            "label": "Server identity mismatch",
+            "owner_doc_ref": "Plans/Server_System.md",
+            "subject_kind": "server_identity",
+            "subject_ref": "server-observation:identity-mismatch",
+            "requested_state": "Verified matching Server identity",
+            "effective_state": "Identity mismatch",
+            "configured": true,
+            "selected_task_required": true,
+            "used_by_selected_task": true,
+            "applicability": "required",
+            "support_state": "unavailable",
+            "status": "blocked",
+            "severity": "critical",
+            "task_impact": "security_critical",
+            "freshness_state": "fresh",
+            "owner_generation": 102,
+            "cache_generation": 112,
+            "security_critical": true,
+            "reason_code": "server_identity_mismatch"
+          },
+          {
+            "row_id": "row:security:public-unclaimed",
+            "label": "Public unclaimed setup exposure",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_security",
+            "subject_ref": "remote-security:public-unclaimed",
+            "requested_state": "Unclaimed setup local and private",
+            "effective_state": "Public unclaimed surface detected",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "required",
+            "support_state": "unavailable",
+            "status": "blocked",
+            "severity": "critical",
+            "task_impact": "security_critical",
+            "freshness_state": "fresh",
+            "owner_generation": 103,
+            "cache_generation": 113,
+            "security_critical": true,
+            "reason_code": "public_unclaimed_exposure"
+          },
+          {
+            "row_id": "row:security:unsafe-public",
+            "label": "Unsafe public product surface",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_security",
+            "subject_ref": "remote-security:unsafe-public",
+            "requested_state": "Authenticated metadata-minimal public surface",
+            "effective_state": "Unsafe public surface detected",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "required",
+            "support_state": "unavailable",
+            "status": "blocked",
+            "severity": "critical",
+            "task_impact": "security_critical",
+            "freshness_state": "fresh",
+            "owner_generation": 104,
+            "cache_generation": 114,
+            "security_critical": true,
+            "reason_code": "unsafe_public_surface"
+          },
+          {
+            "row_id": "row:security:proxy-headers",
+            "label": "Untrusted proxy headers",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "remote_security",
+            "subject_ref": "remote-security:proxy-headers",
+            "requested_state": "Headers accepted only from trusted proxy ranges",
+            "effective_state": "Untrusted proxy headers detected",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "required",
+            "support_state": "unavailable",
+            "status": "blocked",
+            "severity": "critical",
+            "task_impact": "security_critical",
+            "freshness_state": "fresh",
+            "owner_generation": 105,
+            "cache_generation": 115,
+            "security_critical": true,
+            "reason_code": "untrusted_proxy_headers"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [],
+        "overall_status": "blocked",
+        "overall_task_impact": "security_critical",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "remote_diagnostics_redact_all_sensitive_classes",
+      "definition": "doctor_scenario_projection",
+      "value": {
+        "schema_id": "pm.doctor.scenario_projection.v1",
+        "schema_version": "1.0.0",
+        "scenario_id": "doctor-scenario:remote-redaction",
+        "scenario_kind": "diagnostic_redaction",
+        "requirement_refs": [
+          "DOC-024"
+        ],
+        "title": "Remote diagnostics retain only redacted display values and safe references",
+        "source_refs": [
+          "Plans/newtools.md#N2-153",
+          "Plans/Remote_Access_System.md#RAS-007"
+        ],
+        "coverage_tags": [
+          "auth_url_redaction",
+          "auth_code_redaction",
+          "pairing_credential_redaction",
+          "recovery_credential_redaction",
+          "pre_auth_credential_redaction",
+          "relay_credential_redaction",
+          "private_key_redaction",
+          "access_key_redaction",
+          "sensitive_project_path_redaction"
+        ],
+        "model_rows": [
+          {
+            "row_id": "row:redaction:remote-diagnostics",
+            "label": "Remote diagnostic projection",
+            "owner_doc_ref": "Plans/Remote_Access_System.md",
+            "subject_kind": "diagnostic_redaction",
+            "subject_ref": "diagnostic:remote:redacted",
+            "requested_state": "Bounded diagnostic with no reusable secret or sensitive Project path",
+            "effective_state": "All sensitive classes redacted or withheld",
+            "configured": true,
+            "selected_task_required": false,
+            "used_by_selected_task": false,
+            "applicability": "required",
+            "support_state": "available",
+            "status": "healthy",
+            "severity": "info",
+            "task_impact": "none",
+            "freshness_state": "fresh",
+            "owner_generation": 120,
+            "cache_generation": 130,
+            "security_critical": false,
+            "reason_code": "diagnostic_redaction_complete"
+          }
+        ],
+        "remediation_return_context": null,
+        "redaction_rows": [
+          {
+            "redaction_id": "redaction:remote:001",
+            "secret_class": "auth_url",
+            "output_state": "withheld",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:002",
+            "secret_class": "auth_code",
+            "output_state": "redacted",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:003",
+            "secret_class": "pairing_credential",
+            "output_state": "redacted",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:004",
+            "secret_class": "recovery_credential",
+            "output_state": "redacted",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:005",
+            "secret_class": "pre_auth_credential",
+            "output_state": "withheld",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:006",
+            "secret_class": "relay_credential",
+            "output_state": "redacted",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:007",
+            "secret_class": "private_key",
+            "output_state": "withheld",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:008",
+            "secret_class": "access_key",
+            "output_state": "withheld",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": null
+          },
+          {
+            "redaction_id": "redaction:remote:009",
+            "secret_class": "sensitive_project_path",
+            "output_state": "redacted",
+            "display_value": "[REDACTED]",
+            "source_value_persisted": false,
+            "diagnostic_safe_ref": "project:current"
+          }
+        ],
+        "overall_status": "healthy",
+        "overall_task_impact": "none",
+        "browser_projection_only": true,
+        "production_runtime_state": "unavailable",
+        "production_owner_feed_attached": false
+      }
+    },
+    {
+      "name": "doctor_cache_migration_preserves_currentness",
+      "definition": "doctor_cache_migration_receipt",
+      "value": {
+        "schema_id": "pm.doctor.cache_migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "migration_receipt_id": "receipt:doctor:migration:1",
+        "storage_migration_receipt_schema_id": "pm.storage_value.migration_receipt.v1",
+        "storage_migration_receipt_ref": "receipt:storage:migration:doctor:1",
+        "migration_kind": "legacy_registry_and_finding_cache_to_v1",
+        "migration_generation": 1,
+        "source_schema_version": "legacy",
+        "target_schema_version": "1.0.0",
+        "source_record_count": 5,
+        "accepted_record_count": 2,
+        "stale_record_count": 1,
+        "dropped_record_count": 1,
+        "quarantined_record_count": 1,
+        "accepted_descriptor_rows": [
+          {
+            "source_row_ref": "legacy:doctor:descriptor:dockerhub",
+            "check_id": "doctor.dockerhub.auth.capability",
+            "descriptor_revision": 3,
+            "owner_doc_ref": "Plans/Containers_Registry_and_Unraid.md",
+            "support_state": "active"
+          }
+        ],
+        "accepted_finding_rows": [
+          {
+            "source_row_ref": "legacy:doctor:finding:dockerhub",
+            "finding_id": "finding:dockerhub:1",
+            "check_id": "doctor.dockerhub.auth.capability",
+            "descriptor_revision": 3,
+            "owner_generation": 8,
+            "cache_generation": 12,
+            "freshness_state": "aging",
+            "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "stale_descriptor_rows": [],
+        "stale_finding_rows": [
+          {
+            "source_row_ref": "legacy:doctor:finding:server",
+            "finding_id": "finding:server:legacy",
+            "check_id": "doctor.server.reachability",
+            "descriptor_revision": 1,
+            "owner_generation": 2,
+            "cache_generation": 4,
+            "freshness_state": "stale",
+            "currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "dropped_rows": [
+          {
+            "row_ref": "legacy:doctor:descriptor:duplicate",
+            "record_kind": "descriptor",
+            "reason_code": "duplicate_deprecated_alias"
+          }
+        ],
+        "quarantined_rows": [
+          {
+            "row_ref": "legacy:doctor:finding:unsafe",
+            "record_kind": "finding",
+            "reason_code": "secret_bearing_legacy_payload"
+          }
+        ],
+        "alias_resolutions": [
+          {
+            "legacy_check_id": "doctor.registry.auth",
+            "active_check_id": "doctor.dockerhub.auth.capability"
+          }
+        ],
+        "owner_work_replayed": false,
+        "private_repair_performed": false,
+        "migrated_cache_is_fresh_execution_evidence": false,
+        "secret_handling": "redact_and_quarantine",
+        "terminal_status": "committed_with_quarantine",
+        "completed_at_utc": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.positive.export_report.request",
+      "definition": "DoctorReportExportRequest",
+      "value": {
+        "schema_id": "pm.doctor_report_export.command_request.v1",
+        "record_kind": "DoctorReportExportCommandRequest",
+        "command_id": "cmd.doctor.export_report",
+        "operation": "export_report",
+        "command_instance_id": "command:doctor_report_export:1",
+        "idempotency_key": "idempotency:doctor_report_export:1",
+        "doctor_report_id": "doctor-report:1",
+        "project_id": "project:1",
+        "expected_registry_generation": 3,
+        "expected_projection_generation": 4,
+        "permission_snapshot_ref": "permission:doctor_report_export:1",
+        "return_context": {
+          "surface_id": "settings.doctor",
+          "route_id": "settings/doctor",
+          "focus_target": "export-report",
+          "invocation_token": "return:settings.doctor:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.doctor.export_report",
+          "report_projection_ref": "doctor-report-projection:1",
+          "report_projection_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "redaction_profile_ref": "redaction-profile:doctor-report",
+          "bounded_selection_ref": "bounded-selection:doctor-report:1",
+          "export_destination_ref": "export-destination:doctor-report:1",
+          "project_filemanager_copy_out": false
+        }
+      },
+      "row_index": 44
+    },
+    {
+      "name": "server_gap_b.positive.export_report.result",
+      "definition": "DoctorReportExportResult",
+      "value": {
+        "schema_id": "pm.doctor_report_export.command_result.v1",
+        "record_kind": "DoctorReportExportCommandResult",
+        "command_id": "cmd.doctor.export_report",
+        "operation": "export_report",
+        "command_instance_id": "command:doctor_report_export:1",
+        "status": "succeeded",
+        "doctor_report_id": "doctor-report:1",
+        "project_id": "project:1",
+        "expected_registry_generation": 3,
+        "expected_projection_generation": 4,
+        "receipt_ref": "receipt:doctor_report_export:1",
+        "observable_work_ref": "work:doctor_report_export:1",
+        "return_context": {
+          "surface_id": "settings.doctor",
+          "route_id": "settings/doctor",
+          "focus_target": "export-report",
+          "invocation_token": "return:settings.doctor:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.doctor.export_report",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:doctor_report_export:1",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      },
+      "row_index": 44
+    },
+    {
+      "name": "server_gap_b.positive.export_report.handler_unavailable",
+      "definition": "DoctorReportExportCommandAvailability",
+      "value": {
+        "schema_id": "pm.doctor_report_export.availability.v1",
+        "record_kind": "DoctorReportExportCommandAvailability",
+        "command_id": "cmd.doctor.export_report",
+        "available": false,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.doctor_report_export.disabled_reason.v1",
+          "record_kind": "DoctorReportExportDisabledReason",
+          "command_id": "cmd.doctor.export_report",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::doctor_report::export_report"
+          ]
+        }
+      },
+      "row_index": 44
+    },
+    {
+      "name": "server_gap_b.positive.permission_deny_is_explicit",
+      "definition": "DoctorReportExportPermissionDecision",
+      "value": {
+        "schema_id": "pm.doctor_report_export.permission_decision.v1",
+        "record_kind": "DoctorReportExportPermissionDecision",
+        "command_id": "cmd.doctor.export_report",
+        "permission_snapshot_ref": "permission:doctor_report_export:deny",
+        "permission_class": "doctor.report.export",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied"
+      }
+    },
+    {
+      "name": "server_gap_b.local.1.request",
+      "definition": "doctor_action_request",
+      "value": {
+        "schema_id": "pm.doctor.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.copy_diagnostics",
+        "doctor_request_id": "doctor-request:server-gap:1",
+        "project_id": "project:1",
+        "check_id": null,
+        "target_kind": null,
+        "target_id": null,
+        "expected_descriptor_revision": null,
+        "expected_owner_generation": null,
+        "expected_cache_generation": 5,
+        "deadline_utc": "2026-09-01T05:30:00Z",
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:doctor:1",
+        "redaction_profile_ref": "redaction-profile:doctor",
+        "idempotency_key": "idempotency:doctor-local:1",
+        "remediation": null,
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 43
+    },
+    {
+      "name": "server_gap_b.local.1.result",
+      "definition": "doctor_action_result",
+      "value": {
+        "schema_id": "pm.doctor.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.copy_diagnostics",
+        "doctor_request_id": "doctor-request:server-gap:1",
+        "projection_ref": "doctor-projection:server-gap:1",
+        "projection_generation": 6,
+        "currentness": "current",
+        "redacted": true,
+        "mutated_doctor_domain_state": false,
+        "doctor_domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "semantic_owner_result_ref": null,
+        "accessible_focus_target": "focus:doctor:result",
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 43
+    },
+    {
+      "name": "server_gap_b.local.2.request",
+      "definition": "doctor_action_request",
+      "value": {
+        "schema_id": "pm.doctor.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.open",
+        "doctor_request_id": "doctor-request:server-gap:2",
+        "project_id": "project:1",
+        "check_id": null,
+        "target_kind": null,
+        "target_id": null,
+        "expected_descriptor_revision": null,
+        "expected_owner_generation": null,
+        "expected_cache_generation": 5,
+        "deadline_utc": "2026-09-01T05:30:00Z",
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:doctor:1",
+        "redaction_profile_ref": "redaction-profile:doctor",
+        "idempotency_key": "idempotency:doctor-local:2",
+        "remediation": null,
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 45
+    },
+    {
+      "name": "server_gap_b.local.2.result",
+      "definition": "doctor_action_result",
+      "value": {
+        "schema_id": "pm.doctor.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.open",
+        "doctor_request_id": "doctor-request:server-gap:2",
+        "projection_ref": "doctor-projection:server-gap:2",
+        "projection_generation": 6,
+        "currentness": "current",
+        "redacted": true,
+        "mutated_doctor_domain_state": false,
+        "doctor_domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "semantic_owner_result_ref": null,
+        "accessible_focus_target": "focus:doctor:result",
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 45
+    },
+    {
+      "name": "server_gap_b.local.3.request",
+      "definition": "doctor_action_request",
+      "value": {
+        "schema_id": "pm.doctor.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.open_details",
+        "doctor_request_id": "doctor-request:server-gap:3",
+        "project_id": "project:1",
+        "check_id": null,
+        "target_kind": null,
+        "target_id": null,
+        "expected_descriptor_revision": null,
+        "expected_owner_generation": null,
+        "expected_cache_generation": 5,
+        "deadline_utc": "2026-09-01T05:30:00Z",
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:doctor:1",
+        "redaction_profile_ref": "redaction-profile:doctor",
+        "idempotency_key": "idempotency:doctor-local:3",
+        "remediation": null,
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 46
+    },
+    {
+      "name": "server_gap_b.local.3.result",
+      "definition": "doctor_action_result",
+      "value": {
+        "schema_id": "pm.doctor.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.open_details",
+        "doctor_request_id": "doctor-request:server-gap:3",
+        "projection_ref": "doctor-projection:server-gap:3",
+        "projection_generation": 6,
+        "currentness": "current",
+        "redacted": true,
+        "mutated_doctor_domain_state": false,
+        "doctor_domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "semantic_owner_result_ref": null,
+        "accessible_focus_target": "focus:doctor:result",
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 46
+    },
+    {
+      "name": "server_gap_b.local.4.request",
+      "definition": "doctor_action_request",
+      "value": {
+        "schema_id": "pm.doctor.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.open_remediation",
+        "doctor_request_id": "doctor-request:server-gap:4",
+        "project_id": "project:1",
+        "check_id": null,
+        "target_kind": null,
+        "target_id": null,
+        "expected_descriptor_revision": null,
+        "expected_owner_generation": 4,
+        "expected_cache_generation": 5,
+        "deadline_utc": "2026-09-01T05:30:00Z",
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:doctor:1",
+        "redaction_profile_ref": "redaction-profile:doctor",
+        "idempotency_key": "idempotency:doctor-local:4",
+        "remediation": {
+          "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+          "remediation_action_id": "cmd.integration.connection.test",
+          "route_ref": "route:settings:integrations",
+          "return_focus_id": "focus:doctor:finding:1",
+          "expected_owner_generation": 4
+        },
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 47
+    },
+    {
+      "name": "server_gap_b.local.4.result",
+      "definition": "doctor_action_result",
+      "value": {
+        "schema_id": "pm.doctor.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.open_remediation",
+        "doctor_request_id": "doctor-request:server-gap:4",
+        "projection_ref": "doctor-projection:server-gap:4",
+        "projection_generation": 6,
+        "currentness": "owner_result_applied",
+        "redacted": true,
+        "mutated_doctor_domain_state": false,
+        "doctor_domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "semantic_owner_result_ref": "owner-result:doctor:1",
+        "accessible_focus_target": "focus:doctor:result",
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 47
+    },
+    {
+      "name": "server_gap_b.local.5.request",
+      "definition": "doctor_action_request",
+      "value": {
+        "schema_id": "pm.doctor.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.refresh_visible",
+        "doctor_request_id": "doctor-request:server-gap:5",
+        "project_id": "project:1",
+        "check_id": null,
+        "target_kind": null,
+        "target_id": null,
+        "expected_descriptor_revision": null,
+        "expected_owner_generation": null,
+        "expected_cache_generation": 5,
+        "deadline_utc": "2026-09-01T05:30:00Z",
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:doctor:1",
+        "redaction_profile_ref": "redaction-profile:doctor",
+        "idempotency_key": "idempotency:doctor-local:5",
+        "remediation": null,
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 48
+    },
+    {
+      "name": "server_gap_b.local.5.result",
+      "definition": "doctor_action_result",
+      "value": {
+        "schema_id": "pm.doctor.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.refresh_visible",
+        "doctor_request_id": "doctor-request:server-gap:5",
+        "projection_ref": "doctor-projection:server-gap:5",
+        "projection_generation": 6,
+        "currentness": "current",
+        "redacted": true,
+        "mutated_doctor_domain_state": false,
+        "doctor_domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "semantic_owner_result_ref": null,
+        "accessible_focus_target": "focus:doctor:result",
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 48
+    },
+    {
+      "name": "server_gap_b.local.6.request",
+      "definition": "doctor_action_request",
+      "value": {
+        "schema_id": "pm.doctor.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.run_check",
+        "doctor_request_id": "doctor-request:server-gap:6",
+        "project_id": "project:1",
+        "check_id": "doctor.integration.health",
+        "target_kind": "project",
+        "target_id": "project:1",
+        "expected_descriptor_revision": 2,
+        "expected_owner_generation": 4,
+        "expected_cache_generation": 5,
+        "deadline_utc": "2026-09-01T05:30:00Z",
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:doctor:1",
+        "redaction_profile_ref": "redaction-profile:doctor",
+        "idempotency_key": "idempotency:doctor-local:6",
+        "remediation": null,
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 50
+    },
+    {
+      "name": "server_gap_b.local.6.result",
+      "definition": "doctor_action_result",
+      "value": {
+        "schema_id": "pm.doctor.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.run_check",
+        "doctor_request_id": "doctor-request:server-gap:6",
+        "projection_ref": "doctor-projection:server-gap:6",
+        "projection_generation": 6,
+        "currentness": "owner_result_applied",
+        "redacted": true,
+        "mutated_doctor_domain_state": false,
+        "doctor_domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "semantic_owner_result_ref": "owner-result:doctor:1",
+        "accessible_focus_target": "focus:doctor:result",
+        "return_route_ref": "route:settings:doctor"
+      },
+      "row_index": 50
+    },
+    {
+      "name": "backup_connector_consumer_projection_is_read_only_protected_and_event_silent",
+      "definition": "doctor_backup_connector_consumer_projection",
+      "value": {
+        "schema_id": "pm.doctor.backup_connector_consumer_projection.v1",
+        "schema_version": "1.0.0",
+        "plan_unit_ref": "N2-156",
+        "target_kinds": [
+          "backup_destination",
+          "backup_repository",
+          "backup_snapshot",
+          "backup_recovery_set",
+          "backup_policy",
+          "backup_source_coverage",
+          "backup_restore_target",
+          "remote_access_connector"
+        ],
+        "query_policy": "bounded_read_only_owner_query",
+        "owner_truth_only": true,
+        "independent_finding_axes": [
+          "destination_access_auth_tls_path_quota_throttle",
+          "repository_unlock_writer_lock_last_complete",
+          "snapshot_capture_integrity_read_verification_drill_archive",
+          "recovery_set_public_identity_attachment_kit_confirmation",
+          "policy_schedule_retention_hold_prune_preview_currentness",
+          "source_git_jj_closure",
+          "restore_target_preview_recovery_receipt_currentness",
+          "connector_binary_protocol_process_state_control_endpoint_product_dedupe_backup_classification"
+        ],
+        "protected_projection": {
+          "public_recovery_set_status_only": true,
+          "masked_non_secret_state_only": true,
+          "recovery_key_or_kit_bytes_exposed": false,
+          "protected_submission_contents_exposed": false,
+          "connector_secret_or_raw_state_exposed": false,
+          "browser_auth_content_exposed": false,
+          "reusable_authorization_url_exposed": false,
+          "raw_private_path_exposed": false
+        },
+        "optional_non_degradation": {
+          "optional_off_is_healthy": true,
+          "headscale_funnel_is_inapplicable": true,
+          "unrelated_health_unchanged": true
+        },
+        "remediation_policy": {
+          "exact_owner_route_only": true,
+          "route_completion_is_owner_success": false,
+          "doctor_mutation_allowed": false,
+          "protected_unlock_or_key_action_allowed": false,
+          "identity_reset_requires_owner_preview_confirmation_generation_fence": true
+        },
+        "consumer_surfaces": [
+          "Settings > Doctor",
+          "Doctor finding/detail/return surfaces",
+          "Final GUI Doctor workspace"
+        ],
+        "runtime_evidence_claimed": false,
+        "event_policy": "event_silent_pending_event_authority",
+        "expected_event_types": []
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "secret_bearing_result_schema_is_rejected",
+      "definition": "doctor_check_descriptor",
+      "expected_error": "result_schema_ref must not identify a secret-bearing payload",
+      "value": {
+        "schema_id": "pm.doctor.check_descriptor.v1",
+        "schema_version": "1.0.0",
+        "check_id": "doctor.provider.unsafe",
+        "descriptor_revision": 1,
+        "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+        "target_kinds": [
+          "provider_authentication"
+        ],
+        "request_schema_ref": "schema:provider_readiness_request:v1",
+        "result_schema_ref": "schema:secret_bearing_result:v1",
+        "applicability_selector_ref": "selector:configured_provider",
+        "cost_class": "light_local",
+        "cache_ttl_seconds": 0,
+        "timeout_ms": 5000,
+        "side_effect_policy": "read_only",
+        "permission_class": "sensitive_metadata_read",
+        "redaction_profile_ref": "redaction:doctor:provider",
+        "remediation_action_ids": [],
+        "support_state": "active"
+      }
+    },
+    {
+      "name": "mutating_probe_is_rejected",
+      "definition": "doctor_check_descriptor",
+      "expected_error": "side_effect_policy must be read_only",
+      "value": {
+        "schema_id": "pm.doctor.check_descriptor.v1",
+        "schema_version": "1.0.0",
+        "check_id": "doctor.provider.repair",
+        "descriptor_revision": 1,
+        "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+        "target_kinds": [
+          "provider_installation"
+        ],
+        "request_schema_ref": "schema:repair_request:v1",
+        "result_schema_ref": "schema:repair_result:v1",
+        "applicability_selector_ref": "selector:provider",
+        "cost_class": "expensive_explicit",
+        "cache_ttl_seconds": 0,
+        "timeout_ms": 30000,
+        "side_effect_policy": "mutating",
+        "permission_class": "host_read",
+        "redaction_profile_ref": "redaction:doctor:provider",
+        "remediation_action_ids": [
+          "cmd.installation.repair"
+        ],
+        "support_state": "active"
+      }
+    },
+    {
+      "name": "stale_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "expected_error": "stale finding cannot be healthy",
+      "value": {
+        "schema_id": "pm.doctor.finding_projection.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "finding:bad",
+        "check_id": "doctor.server.reachability",
+        "descriptor_revision": 1,
+        "owner_doc_ref": "Plans/Shared_Integration_Runtime.md",
+        "project_id": "project:1",
+        "target_kind": "server",
+        "target_id": "server:1",
+        "status": "healthy",
+        "severity": "info",
+        "task_impact": "none",
+        "applicability": "required",
+        "reason": "Old reachability result",
+        "observed_at_utc": "2026-08-01T00:00:00Z",
+        "freshness_state": "stale",
+        "age_ms": 2592000000,
+        "confidence": "low",
+        "owner_generation": 1,
+        "cache_generation": 1,
+        "last_known_result_ref": "result:old",
+        "details_ref": null,
+        "logs_ref": null,
+        "receipt_refs": [],
+        "evidence_refs": [],
+        "remediation": null,
+        "check_cost_class": "network_bounded",
+        "redaction_state": "not_required"
+      }
+    },
+    {
+      "name": "unknown_freshness_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "freshness_state": "unknown"
+      },
+      "expected_error": "unknown freshness cannot be healthy"
+    },
+    {
+      "name": "unknown_confidence_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "confidence": "unknown"
+      },
+      "expected_error": "unknown confidence cannot be healthy"
+    },
+    {
+      "name": "required_missing_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "applicability": "required_missing",
+        "task_impact": "blocks_selected_action"
+      },
+      "expected_error": "a missing required capability cannot be healthy"
+    },
+    {
+      "name": "selected_action_blocking_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "task_impact": "blocks_selected_action"
+      },
+      "expected_error": "a selected-action blocker cannot be healthy"
+    },
+    {
+      "name": "project_work_blocking_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "task_impact": "blocks_project_work"
+      },
+      "expected_error": "a project-work blocker cannot be healthy"
+    },
+    {
+      "name": "security_critical_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "task_impact": "security_critical",
+        "severity": "critical"
+      },
+      "expected_error": "security-critical task impact cannot be healthy"
+    },
+    {
+      "name": "blocked_severity_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "severity": "blocked"
+      },
+      "expected_error": "blocked severity cannot be healthy"
+    },
+    {
+      "name": "critical_severity_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "severity": "critical"
+      },
+      "expected_error": "critical severity cannot be healthy"
+    },
+    {
+      "name": "required_missing_status_must_be_blocked",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "status": "needs_attention",
+        "severity": "warning",
+        "task_impact": "blocks_selected_action",
+        "applicability": "required_missing"
+      },
+      "expected_error": "required_missing must use blocked status"
+    },
+    {
+      "name": "required_missing_task_impact_must_block",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "status": "blocked",
+        "severity": "blocked",
+        "task_impact": "none",
+        "applicability": "required_missing"
+      },
+      "expected_error": "required_missing must block selected action or project work"
+    },
+    {
+      "name": "security_critical_status_must_be_blocked",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "status": "needs_attention",
+        "severity": "critical",
+        "task_impact": "security_critical"
+      },
+      "expected_error": "security-critical task impact must use blocked status"
+    },
+    {
+      "name": "security_critical_severity_must_be_critical",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "status": "blocked",
+        "severity": "warning",
+        "task_impact": "security_critical"
+      },
+      "expected_error": "security-critical task impact must use critical severity"
+    },
+    {
+      "name": "material_combined_false_green_is_rejected",
+      "definition": "doctor_finding_projection",
+      "base_valid": "fresh_high_confidence_required_is_healthy",
+      "patch": {
+        "freshness_state": "unknown",
+        "confidence": "unknown",
+        "applicability": "required_missing",
+        "task_impact": "security_critical",
+        "severity": "critical"
+      },
+      "expected_error": "material unknown required security-critical finding cannot be healthy"
+    },
+    {
+      "name": "scenario_cannot_claim_production_runtime",
+      "definition": "doctor_scenario_projection",
+      "base_valid": "remote_access_control_planes_routes_and_resumption",
+      "patch": {
+        "production_runtime_state": "available"
+      },
+      "expected_error": "static Doctor scenario must keep production runtime unavailable"
+    },
+    {
+      "name": "security_critical_scenario_cannot_be_false_green",
+      "definition": "doctor_scenario_projection",
+      "base_valid": "security_critical_routes_cannot_be_masked",
+      "patch": {
+        "overall_status": "healthy"
+      },
+      "expected_error": "security-critical finding must dominate overall health"
+    },
+    {
+      "name": "redaction_scenario_rejects_clear_display_value",
+      "definition": "doctor_scenario_projection",
+      "base_valid": "remote_diagnostics_redact_all_sensitive_classes",
+      "patch": {
+        "redaction_rows.0.display_value": "visible-sensitive-value"
+      },
+      "expected_error": "sensitive diagnostic display must be redacted"
+    },
+    {
+      "name": "optional_off_cannot_be_required_by_selected_task",
+      "definition": "doctor_scenario_projection",
+      "base_valid": "optional_wsl_plugin_gpu_off_unused_are_healthy",
+      "patch": {
+        "model_rows.0.selected_task_required": true
+      },
+      "expected_error": "optional_off row must be unused by selected work"
+    },
+    {
+      "name": "remediation_return_requires_exact_context",
+      "definition": "doctor_scenario_projection",
+      "base_valid": "remediation_preserves_exact_return_focus_and_currentness",
+      "patch": {
+        "remediation_return_context": null
+      },
+      "expected_error": "remediation return scenario must carry exact context"
+    },
+    {
+      "name": "doctor_migration_private_repair_is_forbidden",
+      "definition": "doctor_cache_migration_receipt",
+      "expected_error": "private_repair_performed must be false",
+      "value": {
+        "schema_id": "pm.doctor.cache_migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "migration_receipt_id": "receipt:doctor:migration:bad",
+        "storage_migration_receipt_schema_id": "pm.storage_value.migration_receipt.v1",
+        "storage_migration_receipt_ref": "receipt:storage:migration:doctor:bad",
+        "migration_kind": "legacy_registry_and_finding_cache_to_v1",
+        "migration_generation": 1,
+        "source_schema_version": "legacy",
+        "target_schema_version": "1.0.0",
+        "source_record_count": 0,
+        "accepted_record_count": 0,
+        "stale_record_count": 0,
+        "dropped_record_count": 0,
+        "quarantined_record_count": 0,
+        "accepted_descriptor_rows": [],
+        "accepted_finding_rows": [],
+        "stale_descriptor_rows": [],
+        "stale_finding_rows": [],
+        "dropped_rows": [],
+        "quarantined_rows": [],
+        "alias_resolutions": [],
+        "owner_work_replayed": false,
+        "private_repair_performed": true,
+        "migrated_cache_is_fresh_execution_evidence": false,
+        "secret_handling": "redact_and_quarantine",
+        "terminal_status": "committed",
+        "completed_at_utc": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "doctor_migration_absolute_storage_receipt_path_is_forbidden",
+      "definition": "doctor_cache_migration_receipt",
+      "expected_error": "storage migration receipt must be a stable ref, not an absolute path",
+      "value": {
+        "schema_id": "pm.doctor.cache_migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "migration_receipt_id": "receipt:doctor:migration:path:bad",
+        "storage_migration_receipt_schema_id": "pm.storage_value.migration_receipt.v1",
+        "storage_migration_receipt_ref": "/tmp/storage-migration-receipt.json",
+        "migration_kind": "legacy_registry_and_finding_cache_to_v1",
+        "migration_generation": 1,
+        "source_schema_version": "legacy",
+        "target_schema_version": "1.0.0",
+        "source_record_count": 0,
+        "accepted_record_count": 0,
+        "stale_record_count": 0,
+        "dropped_record_count": 0,
+        "quarantined_record_count": 0,
+        "accepted_descriptor_rows": [],
+        "accepted_finding_rows": [],
+        "stale_descriptor_rows": [],
+        "stale_finding_rows": [],
+        "dropped_rows": [],
+        "quarantined_rows": [],
+        "alias_resolutions": [],
+        "owner_work_replayed": false,
+        "private_repair_performed": false,
+        "migrated_cache_is_fresh_execution_evidence": false,
+        "secret_handling": "redact_and_quarantine",
+        "terminal_status": "committed",
+        "completed_at_utc": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.negative.unknown_command",
+      "definition": "DoctorReportExportRequest",
+      "value": {
+        "schema_id": "pm.doctor_report_export.command_request.v1",
+        "record_kind": "DoctorReportExportCommandRequest",
+        "command_id": "cmd.unknown",
+        "operation": "export_report",
+        "command_instance_id": "command:doctor_report_export:1",
+        "idempotency_key": "idempotency:doctor_report_export:1",
+        "doctor_report_id": "doctor-report:1",
+        "project_id": "project:1",
+        "expected_registry_generation": 3,
+        "expected_projection_generation": 4,
+        "permission_snapshot_ref": "permission:doctor_report_export:1",
+        "return_context": {
+          "surface_id": "settings.doctor",
+          "route_id": "settings/doctor",
+          "focus_target": "export-report",
+          "invocation_token": "return:settings.doctor:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.doctor.export_report",
+          "report_projection_ref": "doctor-report-projection:1",
+          "report_projection_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "redaction_profile_ref": "redaction-profile:doctor-report",
+          "bounded_selection_ref": "bounded-selection:doctor-report:1",
+          "export_destination_ref": "export-destination:doctor-report:1",
+          "project_filemanager_copy_out": false
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.raw_secret",
+      "definition": "DoctorReportExportRequest",
+      "value": {
+        "schema_id": "pm.doctor_report_export.command_request.v1",
+        "record_kind": "DoctorReportExportCommandRequest",
+        "command_id": "cmd.doctor.export_report",
+        "operation": "export_report",
+        "command_instance_id": "command:doctor_report_export:1",
+        "idempotency_key": "idempotency:doctor_report_export:1",
+        "doctor_report_id": "doctor-report:1",
+        "project_id": "project:1",
+        "expected_registry_generation": 3,
+        "expected_projection_generation": 4,
+        "permission_snapshot_ref": "permission:doctor_report_export:1",
+        "return_context": {
+          "surface_id": "settings.doctor",
+          "route_id": "settings/doctor",
+          "focus_target": "export-report",
+          "invocation_token": "return:settings.doctor:1",
+          "return_generation": 3
+        },
+        "payload": {
+          "action": "cmd.doctor.export_report",
+          "report_projection_ref": "doctor-report-projection:1",
+          "report_projection_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "redaction_profile_ref": "redaction-profile:doctor-report",
+          "bounded_selection_ref": "bounded-selection:doctor-report:1",
+          "export_destination_ref": "export-destination:doctor-report:1",
+          "project_filemanager_copy_out": false,
+          "raw_secret": "forbidden"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.available_without_handler",
+      "definition": "DoctorReportExportCommandAvailability",
+      "value": {
+        "schema_id": "pm.doctor_report_export.availability.v1",
+        "record_kind": "DoctorReportExportCommandAvailability",
+        "command_id": "cmd.doctor.export_report",
+        "available": true,
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "schema_id": "pm.doctor_report_export.disabled_reason.v1",
+          "record_kind": "DoctorReportExportDisabledReason",
+          "command_id": "cmd.doctor.export_report",
+          "code": "handler_unavailable",
+          "safe_message": "The sole native handler is unavailable.",
+          "blocking_refs": [
+            "handlers::doctor_report::export_report"
+          ]
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.denied_without_reason",
+      "definition": "DoctorReportExportPermissionDecision",
+      "value": {
+        "schema_id": "pm.doctor_report_export.permission_decision.v1",
+        "record_kind": "DoctorReportExportPermissionDecision",
+        "command_id": "cmd.doctor.export_report",
+        "permission_snapshot_ref": "permission:doctor_report_export:deny",
+        "permission_class": "doctor.report.export",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "server_gap_b.negative.secret_exposed",
+      "definition": "DoctorReportExportResult",
+      "value": {
+        "schema_id": "pm.doctor_report_export.command_result.v1",
+        "record_kind": "DoctorReportExportCommandResult",
+        "command_id": "cmd.doctor.export_report",
+        "operation": "export_report",
+        "command_instance_id": "command:doctor_report_export:1",
+        "status": "succeeded",
+        "doctor_report_id": "doctor-report:1",
+        "project_id": "project:1",
+        "expected_registry_generation": 3,
+        "expected_projection_generation": 4,
+        "receipt_ref": "receipt:doctor_report_export:1",
+        "observable_work_ref": "work:doctor_report_export:1",
+        "return_context": {
+          "surface_id": "settings.doctor",
+          "route_id": "settings/doctor",
+          "focus_target": "export-report",
+          "invocation_token": "return:settings.doctor:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.doctor.export_report",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:doctor_report_export:1",
+          "resulting_generation": 8,
+          "restart_disposition": "resume",
+          "secret_material_exposed": true,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.negative.local_domain_event",
+      "definition": "DoctorReportExportLocalActionResult",
+      "value": {
+        "schema_id": "pm.doctor_report_export.permission_decision.v1",
+        "record_kind": "DoctorReportExportPermissionDecision",
+        "command_id": "cmd.doctor.export_report",
+        "permission_snapshot_ref": "permission:doctor_report_export:deny",
+        "permission_class": "doctor.report.export",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "policy:denied",
+        "domain_event_emitted": true
+      }
+    },
+    {
+      "name": "server_gap_b.negative.restart_false_success",
+      "definition": "DoctorReportExportResult",
+      "value": {
+        "schema_id": "pm.doctor_report_export.command_result.v1",
+        "record_kind": "DoctorReportExportCommandResult",
+        "command_id": "cmd.doctor.export_report",
+        "operation": "export_report",
+        "command_instance_id": "command:doctor_report_export:1",
+        "status": "succeeded",
+        "doctor_report_id": "doctor-report:1",
+        "project_id": "project:1",
+        "expected_registry_generation": 3,
+        "expected_projection_generation": 4,
+        "receipt_ref": "receipt:doctor_report_export:1",
+        "observable_work_ref": "work:doctor_report_export:1",
+        "return_context": {
+          "surface_id": "settings.doctor",
+          "route_id": "settings/doctor",
+          "focus_target": "export-report",
+          "invocation_token": "return:settings.doctor:1",
+          "return_generation": 3
+        },
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "output": {
+          "action": "cmd.doctor.export_report",
+          "changed": true,
+          "state": "completed",
+          "currentness": "current",
+          "operation_receipt_ref": "receipt:doctor_report_export:1",
+          "resulting_generation": 8,
+          "restart_disposition": "claim_success",
+          "secret_material_exposed": false,
+          "protected_auth_content_exposed": false
+        },
+        "completed_at_utc": "2026-09-01T04:00:00Z"
+      }
+    },
+    {
+      "name": "server_gap_b.negative.exact_return_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.doctor_report_export.command_request.v1",
+          "record_kind": "DoctorReportExportCommandRequest",
+          "command_id": "cmd.doctor.export_report",
+          "operation": "export_report",
+          "command_instance_id": "command:doctor_report_export:1",
+          "idempotency_key": "idempotency:doctor_report_export:1",
+          "doctor_report_id": "doctor-report:1",
+          "project_id": "project:1",
+          "expected_registry_generation": 3,
+          "expected_projection_generation": 4,
+          "permission_snapshot_ref": "permission:doctor_report_export:1",
+          "return_context": {
+            "surface_id": "settings.doctor",
+            "route_id": "settings/doctor",
+            "focus_target": "export-report",
+            "invocation_token": "return:settings.doctor:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.doctor.export_report",
+            "report_projection_ref": "doctor-report-projection:1",
+            "report_projection_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "redaction_profile_ref": "redaction-profile:doctor-report",
+            "bounded_selection_ref": "bounded-selection:doctor-report:1",
+            "export_destination_ref": "export-destination:doctor-report:1",
+            "project_filemanager_copy_out": false
+          }
+        },
+        "result": {
+          "schema_id": "pm.doctor_report_export.command_result.v1",
+          "record_kind": "DoctorReportExportCommandResult",
+          "command_id": "cmd.doctor.export_report",
+          "operation": "export_report",
+          "command_instance_id": "command:doctor_report_export:1",
+          "status": "succeeded",
+          "doctor_report_id": "doctor-report:1",
+          "project_id": "project:1",
+          "expected_registry_generation": 3,
+          "expected_projection_generation": 4,
+          "receipt_ref": "receipt:doctor_report_export:1",
+          "observable_work_ref": "work:doctor_report_export:1",
+          "return_context": {
+            "surface_id": "settings.doctor",
+            "route_id": "settings/doctor",
+            "focus_target": "different-control",
+            "invocation_token": "return:settings.doctor:1",
+            "return_generation": -1
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.doctor.export_report",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:doctor_report_export:1",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.negative.race_generation_regression",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.doctor_report_export.command_request.v1",
+          "record_kind": "DoctorReportExportCommandRequest",
+          "command_id": "cmd.doctor.export_report",
+          "operation": "export_report",
+          "command_instance_id": "command:doctor_report_export:1",
+          "idempotency_key": "idempotency:doctor_report_export:1",
+          "doctor_report_id": "doctor-report:1",
+          "project_id": "project:1",
+          "expected_registry_generation": 3,
+          "expected_projection_generation": 4,
+          "permission_snapshot_ref": "permission:doctor_report_export:1",
+          "return_context": {
+            "surface_id": "settings.doctor",
+            "route_id": "settings/doctor",
+            "focus_target": "export-report",
+            "invocation_token": "return:settings.doctor:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.doctor.export_report",
+            "report_projection_ref": "doctor-report-projection:1",
+            "report_projection_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "redaction_profile_ref": "redaction-profile:doctor-report",
+            "bounded_selection_ref": "bounded-selection:doctor-report:1",
+            "export_destination_ref": "export-destination:doctor-report:1",
+            "project_filemanager_copy_out": false
+          }
+        },
+        "result": {
+          "schema_id": "pm.doctor_report_export.command_result.v1",
+          "record_kind": "DoctorReportExportCommandResult",
+          "command_id": "cmd.doctor.export_report",
+          "operation": "export_report",
+          "command_instance_id": "command:doctor_report_export:1",
+          "status": "succeeded",
+          "doctor_report_id": "doctor-report:1",
+          "project_id": "project:1",
+          "expected_registry_generation": 3,
+          "expected_projection_generation": 4,
+          "receipt_ref": "receipt:doctor_report_export:1",
+          "observable_work_ref": "work:doctor_report_export:1",
+          "return_context": {
+            "surface_id": "settings.doctor",
+            "route_id": "settings/doctor",
+            "focus_target": "export-report",
+            "invocation_token": "return:settings.doctor:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.doctor.export_report",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:doctor_report_export:1",
+            "resulting_generation": -1,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "server_gap_b.local_domain_event",
+      "definition": "doctor_action_result",
+      "value": {
+        "schema_id": "pm.doctor.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.doctor.run_check",
+        "doctor_request_id": "doctor-request:server-gap:6",
+        "projection_ref": "doctor-projection:server-gap:6",
+        "projection_generation": 6,
+        "currentness": "owner_result_applied",
+        "redacted": true,
+        "mutated_doctor_domain_state": false,
+        "doctor_domain_handler_invoked": false,
+        "domain_event_emitted": true,
+        "semantic_owner_result_ref": "owner-result:doctor:1",
+        "accessible_focus_target": "focus:doctor:result",
+        "return_route_ref": "route:settings:doctor"
+      }
+    },
+    {
+      "name": "backup_connector_query_cannot_mutate",
+      "definition": "doctor_backup_connector_consumer_projection",
+      "base_valid": "backup_connector_consumer_projection_is_read_only_protected_and_event_silent",
+      "patch": {
+        "query_policy": "owner_mutation"
+      },
+      "expected_error": "Doctor Backup and connector queries must remain bounded and read-only"
+    },
+    {
+      "name": "backup_connector_cannot_expose_recovery_kit_bytes",
+      "definition": "doctor_backup_connector_consumer_projection",
+      "base_valid": "backup_connector_consumer_projection_is_read_only_protected_and_event_silent",
+      "patch": {
+        "protected_projection.recovery_key_or_kit_bytes_exposed": true
+      },
+      "expected_error": "Doctor may project only public RecoverySet and masked Recovery Kit status"
+    },
+    {
+      "name": "backup_connector_cannot_promote_route_completion_to_owner_success",
+      "definition": "doctor_backup_connector_consumer_projection",
+      "base_valid": "backup_connector_consumer_projection_is_read_only_protected_and_event_silent",
+      "patch": {
+        "remediation_policy.route_completion_is_owner_success": true
+      },
+      "expected_error": "navigation completion is not fresh owner success"
+    },
+    {
+      "name": "backup_connector_cannot_claim_runtime_evidence",
+      "definition": "doctor_backup_connector_consumer_projection",
+      "base_valid": "backup_connector_consumer_projection_is_read_only_protected_and_event_silent",
+      "patch": {
+        "runtime_evidence_claimed": true
+      },
+      "expected_error": "static Doctor fixtures are not runtime evidence"
+    },
+    {
+      "name": "backup_connector_cannot_invent_event_family",
+      "definition": "doctor_backup_connector_consumer_projection",
+      "base_valid": "backup_connector_consumer_projection_is_read_only_protected_and_event_silent",
+      "patch": {
+        "expected_event_types": [
+          "backup.completed"
+        ]
+      },
+      "expected_error": "N2-156 remains event-silent pending Event Authority admission"
+    }
+  ],
+  "server_gap_b_coverage": {
+    "rows": 9,
+    "commands": 1,
+    "local_actions": 6,
+    "rejections": 2,
+    "command_positive_cases": 4,
+    "command_negative_cases": 9,
+    "local_positive_cases": 12,
+    "local_negative_cases": 1
+  }
+}

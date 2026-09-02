@@ -4040,7 +4040,7 @@ This addendum adjudicates the corrected remaining-runtime packet's 34 candidate 
 | `cmd.debug.session.action` | rejected generic dispatcher | the exact concrete `cmd.run_debug.*` verb |
 | `cmd.worktree.provision` | compatibility spelling, not registered | `cmd.git.worktree.create` |
 | `cmd.worktree.release` | compatibility spelling, not registered | `cmd.git.worktree.release` |
-| `cmd.context.receipt.open` | compatibility intent, not registered | `cmd.nav.open_subject`, or `cmd.nav.open_usage_subject` for Usage identity |
+| `cmd.context.receipt.open` | compatibility intent, not registered | `cmd.nav.open_subject` for a document/artifact subject, or `cmd.nav.open_usage_subject` only for event-backed Usage/Ledger identity carrying stable `usage_event_ref`; current PMConcept7 aggregate provider/account/panel cards stay local |
 | `cmd.remote.reconnect` | retained existing remote-surface wrapper | normalizes to `cmd.environment.reconnect` only after resolving an exact `ExecutionEnvironmentId`; it is not the generalized command |
 
 The remaining 26 IDs below are the only new canonical IDs from the 34-row candidate register. Chat, Settings, Onboarding, Doctor, provider, and panel surfaces reuse these IDs rather than minting local peers.
@@ -4751,9 +4751,12 @@ canonical_text: >-
   command: disclosure level, page scope, date range, and per-widget filters are view state and dispatch no
   command; a page-scope pick is never an account switch and must not dispatch the account profile selection
   command; every persisted widget layout mutation dispatches the existing widget command family rather than
-  writing layout storage directly; a usage-subject open dispatches the existing usage-subject navigation
-  command; and a Settings change dispatches cmd.settings.bloom.open against the canonical Settings
-  destination identity.
+  writing layout storage directly; only object-backed Usage/Ledger drill-through carrying its stable selector
+  dispatches the existing usage-subject navigation command. Event-primary callers use usage_event/usage_event_ref;
+  a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains the event, provider, account,
+  and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
+  dispatch no command; and a Settings change dispatches cmd.settings.open with the Settings-owned
+  `pm.settings_route_request.v1` target and exact-return identity.
 gui_related: true
 gui_classification_reason: The family decides which Usage affordances dispatch a command, what their disabled and busy announcements say, and which affordances are view-local.
 depends_on: [CS-066, UF-092]
@@ -4762,7 +4765,7 @@ acceptance_criteria:
   - cmd.usage.forecast.request carries a typed request and result reference, a state selector, a closed disabled-reason set, one sole handler, CAS and idempotency, and restart-safe replay under the CS-066 envelope.
   - Its effect is receipt or projection only and carries the missing-event-registration disposition; it names no event family while the Event Authority denominator remains UNKNOWN_OPEN.
   - A forecast result is a labelled projection and is never presented as a quota run-out date or a countdown.
-  - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command.
+  - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command; event-primary Usage callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate provider/account/panel cards stay local with no command, receipt, or event.
   - A persisted Usage widget layout mutation dispatches the existing widget command family with a layout revision expectation and an idempotency key rather than writing layout storage directly.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -4786,7 +4789,8 @@ source_lineage:
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/HANDOFF_CORRECTIONS.md
 preserved_exact_tokens:
   - cmd.usage.forecast.request
-  - cmd.settings.bloom.open
+  - cmd.settings.open
+  - pm.settings_route_request.v1
   - none_pending_event_authority
   - missing_event_registration
   - UNKNOWN_OPEN
@@ -4795,8 +4799,906 @@ negative_constraints:
   - Do not present a forecast as a quota run-out date or a countdown.
   - Do not promote a view-local disclosure, scope, range, or filter selection into a command.
   - Do not dispatch the account profile selection command for a read-only view-scope change.
+  - Do not dispatch cmd.nav.open_usage_subject without the stable selector required by its event-primary or attempt-primary branch, attach OpenSubject to either cmd.nav selector branch, or promote a current PMConcept7 aggregate card presentation id into route identity; the pre-existing artifact route/open bridge remains separately owned.
 owner_hints:
   - Plans/Commands_System.md
   - Plans/UI_Command_Catalog.md
   - Plans/usage-feature.md
+```
+
+## PMConcept7 settled-interaction command reuse addendum - 2026-08-27
+
+The recovered PMConcept7 surfaces consume the existing command registry; they do not create a
+concept-specific command language. Pointer motion, drag/resize previews, hover summaries, popup
+open/close state, Usage room/scope/range/disclosure/filter selection, and Context-ring menu disclosure
+are local projections. A changed semantic release dispatches one existing command, a no-change release
+returns without dispatch, and Escape or `pointercancel` restores the original projection without a
+command, receipt, persisted event, or storage write.
+
+The canonical dispositions are:
+
+| Interaction family | Canonical command or disposition | Commit/effect boundary |
+|---|---|---|
+| Usage/Dashboard widget add, remove, configure, resize, move, reset | `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.configure`, `cmd.widget.resize`, `cmd.widget.move`, `cmd.widget.reset_layout` | One settled command updates the owner widget-layout store and records its command receipt; no pointer-preview frame is a domain event. |
+| Home shell surface move, resize, collapse, reset | `cmd.workspace_layout.move_surface`, `cmd.workspace_layout.resize_surface`, `cmd.workspace_layout.set_collapsed`, `cmd.workspace_layout.reset` | One changed release/activation commits `pm.home_workspace_layout.v1`; only that commit may produce the existing `workspace.layout_changed` effect. |
+| PM7 semantic Home size preset | Normalize the concept token `cmd.workspace_layout.size_surface` to `cmd.workspace_layout.resize_surface` after resolving `preset_id` to committed dimensions | `cmd.workspace_layout.size_surface` is concept/compatibility lineage only and is not a new primary registry row or handler. |
+| Usage refresh and object-backed Usage/Ledger drill-through | `cmd.usage.refresh`, `cmd.nav.open_usage_subject` | Refresh records a no-persist dispatch receipt. Event-primary callers use `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, repeats `attempt_id` at top level, retains `usage_event_ref` plus provider/account/runtime refs as correlation, and carries no `OpenSubject`. |
+| Aggregate provider/account/panel details | local inspector (`view_only`) | Current aggregate cards open their local inspector only; no command, command receipt, domain event, or invented route kind is admitted. |
+| Usage room, scope, range, disclosure, More-menu state, and per-widget filters | local projection (`view_only`) | No command, command receipt, persisted event, or storage mutation is emitted merely for local projection changes. Settled saved preferences remain storage-owned. |
+| Context-ring popup/hover summary | local projection (`view_only`) | Opening or hovering the menu does not compact context or open a detail surface. |
+| `Compact Now` | `cmd.chat.compact_context` | Dispatches only after explicit selection. While no `context.compaction.*` Event Authority registration exists, production wiring records the command result/receipt and visible projection state rather than fabricating an event family. |
+| `More Details`, focus, and close | `cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, `cmd.chat.close_thread_context_details` | Reuses the shared thread Context Detail Pane; it does not create a Usage route or a second chat-local details store. |
+| Shell/Chat panel visibility | `cmd.panel.switch` | Changes visibility/seat state for the existing shared Assistant node; it does not instantiate another Assistant. |
+
+`cmd.provider.usage.open_management` remains rejected and exclusions-only. This addendum does not
+register that token, does not register `cmd.workspace_layout.size_surface`, and does not alter any
+provider-management command disposition.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Widget_System.md, ContractName:Plans/storage-plan.md
+
+### CS-068 - PMConcept7 Settled Interaction Command Reuse And Local Preview Boundary
+
+```yaml
+plan_unit_id: CS-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  PMConcept7 uses the existing cmd.widget.*, cmd.workspace_layout.*, cmd.usage.refresh,
+  object-backed cmd.nav.open_usage_subject, cmd.chat.compact_context, thread Context Detail
+  Pane, and cmd.panel.switch authorities. Event-primary Usage callers use usage_event/usage_event_ref;
+  a PMConcept7 Ledger attempt row dispatches the navigation command with usage_attempt/attempt_id and
+  retains usage_event_ref as correlation. Current PMConcept7 aggregate provider/account/panel details remain
+  local inspectors. Pointer, hover, popup, room, scope, range, disclosure, filter, ghost,
+  placeholder, and animation previews are local projection state; exactly one changed semantic
+  release or explicit action dispatches the existing command, while no-change and cancel paths
+  dispatch nothing and write nothing. The concept-only
+  cmd.workspace_layout.size_surface token normalizes to cmd.workspace_layout.resize_surface
+  after preset resolution and never becomes a primary command. No pointer-preview event,
+  PM7 command family, second Assistant command path, or rejected provider-management
+  command is admitted.
+gui_related: true
+gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
+split_recommended: false
+depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250]
+unblocks: [UCC-147, WM-045, UIW-012, DR-039, ACD-448]
+acceptance_criteria:
+  - Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed settled action creates one command receipt and no pointer-preview domain event.
+  - Home move, resize, collapse, and reset reuse cmd.workspace_layout.move_surface, resize_surface, set_collapsed, and reset; cmd.workspace_layout.size_surface is compatibility-only and normalizes to resize_surface.
+  - Usage room, scope, range, disclosure, More-menu state, per-widget filters, and current PMConcept7 aggregate provider/account/panel inspectors remain local projection state and do not mint commands, receipts, events, or route identity; event-primary callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation.
+  - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
+  - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
+  - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: pm7_parallel_command_or_preview_event_drift
+reasoning_tier: high
+context_scope: pm7_commands_wiring_dry_assistant
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: pm7_settled_interaction_command_reuse
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+preserved_exact_tokens:
+  - cmd.widget.resize
+  - cmd.widget.move
+  - cmd.workspace_layout.move_surface
+  - cmd.workspace_layout.resize_surface
+  - cmd.workspace_layout.size_surface
+  - cmd.usage.refresh
+  - cmd.nav.open_usage_subject
+  - cmd.chat.compact_context
+  - cmd.chat.open_thread_context_details
+  - cmd.panel.switch
+negative_constraints:
+  - Do not register a PM7-only command family or a primary cmd.workspace_layout.size_surface row.
+  - Do not dispatch commands or persist events for pointer-preview frames, hover, popup disclosure, or cancellation.
+  - Do not revive cmd.provider.usage.open_management.
+  - Do not create a second Assistant command path or store.
+  - Do not route aggregate provider/account/panel cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt selector.
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+```
+
+## Settings Command Family Addendum - 2026-08-31
+
+The Settings family contains exactly five canonical command IDs. `Plans/Settings_System.md` owns their semantics and `Plans/settings_system_contracts.schema.json` owns their machine request/result shapes; this document owns central family registration. A registered contract is not evidence that a native handler, dispatcher, persistence path, production GUI, or runtime result exists. Until the sole handler and dispatcher are observed, availability resolves through the Settings projection and may remain disabled with `handler_unavailable` or another exact Settings-owned reason.
+
+| command_id | request_schema_ref | result_schema_ref | effect and owner boundary | executable status |
+|---|---|---|---|---|
+| `cmd.settings.open` | `Plans/settings_system_contracts.schema.json#/$defs/settings_route_request` (`pm.settings_route_request.v1`) | `Plans/settings_system_contracts.schema.json#/$defs/settings_route_return` (`pm.settings_route_return.v1`) | Opens exactly one stable setting or manager/detail target and preserves the Settings-owned exact return; writes no setting value. | Canonical command contract registered; `handlers::settings::open_route` is the sole declared destination, not a handler-existence claim. |
+| `cmd.settings.transaction.preview` | `Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request` (`pm.settings_transaction_preview_request.v1`) | `Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview` (`pm.settings_transaction_preview.v1`) | Resolves one immutable exact-ID proposal under owner/currentness/permission checks and writes nothing. | Canonical command contract registered; `handlers::settings::transaction_preview` remains unproven until executable evidence exists. |
+| `cmd.settings.transaction.apply` | `Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request` (`pm.settings_transaction_apply_request.v1`) | `Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result` (`pm.settings_transaction_result.v1`) | Applies only the matching current preview under CAS/idempotency, owner readback, and rollback/recovery rules. | Canonical command contract registered; `handlers::settings::transaction_apply` remains unproven until executable evidence exists. |
+| `cmd.settings.transaction.rollback` | `Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request` (`pm.settings_transaction_rollback_request.v1`) | `Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result` (`pm.settings_transaction_result.v1`) | Targets one eligible transaction/rollback token and reports recovery truth without fabricating restoration. | Canonical command contract registered; `handlers::settings::transaction_rollback` remains unproven until executable evidence exists. |
+| `cmd.settings.export` | `Plans/settings_system_contracts.schema.json#/$defs/settings_export_request` (`pm.settings_export_request.v1`) | `Plans/settings_system_contracts.schema.json#/$defs/settings_export_manifest` (`pm.settings_export_manifest.v1`) | Produces a detached exact-ID non-secret export manifest; changes no Settings value and includes no credential material. | Canonical command contract registered; `handlers::settings::export` remains unproven until executable evidence exists. |
+
+All five commands use the shared command identity, actor/permission, exact Project/topology context, expected revision or generation, idempotency, availability, disabled-reason, acknowledgement, and result boundaries required by their Settings schemas. `accepted` or `acknowledged` is not transaction completion. Settings registers no EventRecord family here; current wiring uses a bounded receipt/route/result disposition and must reject unexpected persisted events until Event Authority independently admits an owner family.
+
+The route-only UI actions `settings.onboarding.open`, `settings.onboarding.run_again`, `settings.guided_tour.replay`, `settings.doctor.open`, and `settings.doctor.remediation.open` are not additional commands or aliases. They dispatch `cmd.settings.open` with the exact target frozen by Settings and cannot start Onboarding, replay a tour, run a Doctor probe, or perform remediation.
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-019, ContractName:Plans/settings_system_contracts.schema.json, ContractName:Plans/settings_system_contract_fixtures.json, ContractName:Plans/UI_Wiring_Rules.md
+
+### CS-069 - Settings Command Family Registration
+
+```yaml
+plan_unit_id: CS-069
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
+  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The five
+  Onboarding, Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler
+  destinations are contract targets and do not prove that a dispatcher or runtime handler exists.
+gui_related: true
+gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
+depends_on: [CS-066, SSYS-018, SSYS-019]
+unblocks: [UIW-014]
+acceptance_criteria:
+  - The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export.
+  - Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json; cmd.settings.open returns pm.settings_route_return.v1.
+  - Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with owner readback; export returns a non-secret pm.settings_export_manifest.v1.
+  - The five route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or remediation operation.
+  - Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler evidence; handler_unavailable remains truthful until executable proof exists.
+  - No unregistered EventRecord is emitted or inferred.
+validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
+risk_class: settings_command_family_or_handler_claim_drift
+reasoning_tier: high
+context_scope: settings_command_family
+implementation_surfaces: [Plans/Commands_System.md, Plans/Settings_System.md, Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: settings_command_family_registration, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Settings_System.md#SSYS-018
+  - Plans/Settings_System.md#SSYS-019
+  - source_ref:chat:settings-reference-review-canon-closure-2026-08-31
+preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, pm.settings_route_return.v1, handler_unavailable]
+negative_constraints:
+  - Do not resurrect cmd.settings.bloom.open or mint route-only UI action commands.
+  - Do not treat registration, a handler-location string, static wiring, or concept behavior as an executable handler claim.
+  - Do not infer transaction completion from acceptance or acknowledgement.
+  - Do not invent an EventRecord family.
+owner_hints: [Plans/Commands_System.md, Plans/Settings_System.md, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
+```
+
+## Project, clone, restore, Server, pairing, and protected-auth central registration addendum - 2026-09-01
+
+The packet-owner contracts remain the sole semantic owners. This addendum centrally registers only the
+ten owner commands that were missing from the command catalog boundary and strengthens the six existing
+Project and Authentication registrations. A handler path below is a required dispatch target, not proof
+that Rust code, a native dispatcher, persistence, or a production runtime exists. Until that evidence
+exists, consumers must surface `handler_unavailable` or the exact owner-disabled reason.
+
+| Command ID | Request -> result | Sole specified target | Boundary |
+|---|---|---|---|
+| `cmd.source_control.repository.clone` | `source_control_command_request` -> `source_control_command_result` | `handlers::source_control::repository_clone` | Ordinary Git only; never aliases Jujutsu clone. |
+| `cmd.jujutsu.git.clone` | `command_request` -> `command_result` | `handlers::jujutsu::git_clone` | Jujutsu-native operation and snapshot fence. |
+| `cmd.restore.preview` | `backup_restore_command_request` -> `backup_restore_command_result` | `handlers::backup_restore::preview_restore` | Validates and previews without activation. |
+| `cmd.server.connect` | `command_payload` -> `command_result` | `handlers::server::connect` | One id carries `connect`, `reconnect`, and `resume`; no duplicate reconnect/resume commands. |
+| `cmd.server.bootstrap.start` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::server::bootstrap_start` | Post-claim standalone/container bootstrap only. |
+| `cmd.client.pair.start` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::start` | Starts one generation-fenced pairing run; grants no trust. |
+| `cmd.client.pair.approve` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::approve` | Explicit current identity approval before trust issuance. |
+| `cmd.client.pair.reject` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::reject` | Trusted approver's terminal refusal. |
+| `cmd.client.pair.cancel` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::cancel` | Requesting Client's terminal abort; distinct from rejection. |
+| `cmd.client.revoke` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_trust::revoke` | Revokes the whole Client trust record and every active session. |
+
+`cmd.project.new_local`, `cmd.project.add_existing`, and `cmd.project.open` retain their existing IDs and
+sole Project targets, but their central contracts now reference `project_action_request` and
+`project_action_result`. They preserve the stable Project, home Server, Source Location, repository,
+revision/generation/hash, receipt, and exact caller surface/route/focus/invocation/continuation context.
+Closing or navigating away from a caller does not cancel owner work.
+
+`cmd.authentication.start`, `cmd.authentication.cancel`, and `cmd.authentication.resume` retain the
+Shared Integration Runtime `AuthenticationBroker` lifecycle. Their exact initiating Client and Client
+session generation, authentication operation/revision, protected-session reference, return target,
+continuation, timeout/cancel disposition, and redacted return fence travel through the shared request and
+result. Remote Access adapter commands may route into that same operation, but they do not create a
+Remote- or Browser-owned authentication lifecycle.
+
+No EventRecord family is admitted by this registration. Dispatch remains receipt/projection-only until
+Event Authority admits a named family. `cmd.server.reconnect`, `cmd.server.resume`, `cmd.git.clone`,
+`cmd.scm.clone`, `cmd.project.clone`, `cmd.project.jj_clone`, `cmd.client.pair.qr.import`, and
+`cmd.server.peer_candidate.select` remain rejected primary spellings.
+
+ContractRef: ContractName:Plans/Project_System.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Shared_Integration_Runtime.md
+
+### CS-070 - Cross-owner command registration and exact-return fences
+
+```yaml
+plan_unit_id: CS-070
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The central command system registers the ten missing Project-adjacent clone, restore-preview, Server,
+  pairing, and Client-trust command identities without stealing their owner semantics, and strengthens the
+  three existing Project plus three existing Authentication rows with their exact owner schemas and
+  caller/Client return fences. Each ID has one specified handler target and remains unavailable when that
+  native handler is absent; a catalog or wiring string is never implementation evidence.
+gui_related: true
+gui_classification_reason: These commands back Product Onboarding, Settings, Doctor, Server, restore, SCM, and project controls and their accessible disabled states.
+depends_on: [CS-069, PJCT-002, SCS-006, JJI-005, BRS-006, SRV-006, SIR-020]
+unblocks: [UCC-148, WM-047]
+acceptance_criteria:
+  - Exactly the ten commands listed in this addendum receive new central registrations; the six strengthened commands retain their existing identities and do not duplicate rows.
+  - Every request and result reference resolves to its packet-owner schema and every visible consumer has an exact return route and disabled reason.
+  - Ordinary Git and Jujutsu clone remain distinct; reconnect/resume are modes of cmd.server.connect; QR and peer selection are typed inputs to cmd.client.pair.start.
+  - Protected authentication returns only to the exact initiating active Client/session and same operation/revision without exposing, capturing, recording, or persisting protected content.
+  - A specified target path, static schema, fixture, PMConcept7 simulation, or browser pass does not prove a native handler or production runtime.
+  - No new EventRecord family or rejected alias is admitted.
+validation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/shared_runtime_command_contract_fixtures.json, python3 scripts/pm-touch-closure-verify.py]
+risk_class: cross_owner_command_duplication_or_false_handler_claim
+reasoning_tier: high
+context_scope: packet_owner_central_command_closure
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: cross_owner_command_registration, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - scratchpad/pm-integration-20260831/authority-repairs/central-owner-merge/merged-central-owner-delta-manifest.json
+  - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+preserved_exact_tokens: [cmd.source_control.repository.clone, cmd.jujutsu.git.clone, cmd.restore.preview, cmd.server.connect, cmd.server.bootstrap.start, cmd.client.pair.start, cmd.client.pair.approve, cmd.client.pair.reject, cmd.client.pair.cancel, cmd.client.revoke, handler_unavailable]
+negative_constraints:
+  - Do not interpret a handler target string as executable or native-runtime evidence.
+  - Do not create generic clone, Server reconnect/resume, QR-import, peer-selection, or owner-local authentication-lifecycle commands.
+  - Do not let caller close cancel owner work or let protected authentication return to a fallback Client.
+  - Do not invent an EventRecord family.
+owner_hints: [Plans/Commands_System.md, Plans/Project_System.md, Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]
+```
+
+## Agent plugin lifecycle central registration addendum - 2026-09-01
+
+The Plugins System remains the sole semantic lifecycle owner. This addendum registers the exact twelve
+owner-backed command identities centrally so Plugins, Settings, Doctor, and the palette share one command
+language. Registration changes their truthful unavailable state from `command_not_registered` to
+`handler_unavailable`; it does not create Rust code, a dispatcher, package execution, persistence, or runtime
+evidence. The sole specified targets below are future dispatch destinations and are not handler-existence claims.
+
+All rows use `Plans/plugin_contracts.schema.json#/$defs/PluginCommandRequest` and
+`#/$defs/PluginCommandResult`, including the owner availability, permission, disabled-reason, error,
+idempotency/currentness, exact-return, receipt, and bounded-projection contracts. Package, manifest,
+conformance, migration, containment, adapter, component-isolation, update-diff, rollback, and supply-chain
+records remain owned by `Plans/plugin_package_contracts.schema.json`.
+
+| Command ID | Sole specified target | Action boundary |
+|---|---|---|
+| `cmd.agent_plugin.scan` | `handlers::plugins::scan` | Bounded owner reconciliation; no silent install, activation, permission grant, or mutation. |
+| `cmd.agent_plugin.install` | `handlers::plugins::install` | Confirmed admitted-package installation with conformance, provenance, containment, permission, and rollback gates. |
+| `cmd.agent_plugin.update` | `handlers::plugins::update` | Confirmed generation-fenced replacement bound to the complete typed update diff and retained prior generation. |
+| `cmd.agent_plugin.enable` | `handlers::plugins::enable` | Confirmed PM-native or dual-manifest activation only after all owner gates pass. |
+| `cmd.agent_plugin.disable` | `handlers::plugins::disable` | Generation-fenced deactivation that preserves truthful component and owned-data state. |
+| `cmd.agent_plugin.reload` | `handlers::plugins::reload` | Confirmed revalidation/reapproval path bound to the exact update diff and rollback proof. |
+| `cmd.agent_plugin.remove` | `handlers::plugins::remove` | Confirmed removal with explicit retain/remove/migrate/recovery owned-data disposition. |
+| `cmd.agent_plugin.validate` | `handlers::plugins::validate` | Read-only owner validation and bounded result projection. |
+| `cmd.agent_plugin.review_changes` | `handlers::plugins::review_changes` | Read-only bounded review of the exact typed update diff and authority changes. |
+| `cmd.agent_plugin.rollback` | `handlers::plugins::rollback` | Confirmed rollback to the retained verified generation with exact recovery truth. |
+| `cmd.agent_plugin.open_details` | `handlers::plugins::open_details` | Bounded redacted read-only details projection. |
+| `cmd.agent_plugin.open_logs` | `handlers::plugins::open_logs` | Bounded redacted read-only logs projection; no unbounded stream or private path. |
+
+Every effect is `receipt_only_no_eventrecord_pending_event_authority`. The retained `agent_plugin.*` and
+`plugin.*` names remain non-emitting candidates, not EventRecord registrations. No alias or second handler is
+admitted. Missing native implementation, stale generations, unavailable conformance/provenance/containment/
+rollback evidence, approval or permission, quarantine, policy, or recovery state remains a typed disabled result.
+
+ContractRef: ContractName:Plans/Plugins_System.md#PLUG-069, ContractName:Plans/Plugins_System.md#PLUG-070, ContractName:Plans/plugin_contracts.schema.json, ContractName:Plans/plugin_package_contracts.schema.json
+
+### CS-071 - Agent plugin lifecycle central registration
+
+```yaml
+plan_unit_id: CS-071
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Exactly twelve agent-plugin lifecycle, review, details, and logs commands are centrally registered
+  against the Plugins-owned typed contracts and one specified Plugins target each. Registration advances
+  their fail-closed state to handler_unavailable but proves no native handler, package operation, persistence,
+  runtime result, security behavior, or EventRecord; effects remain receipt-only.
+gui_related: true
+gui_classification_reason: The commands back visible Plugins, Settings, Doctor, update-review, rollback, details, logs, and palette controls.
+depends_on: [CS-070, PLUG-069, PLUG-070]
+unblocks: [UCC-149, WM-048]
+acceptance_criteria:
+  - The registered set is exactly scan, install, update, enable, disable, reload, remove, validate, review_changes, rollback, open_details, and open_logs under cmd.agent_plugin.
+  - Every command uses the one Plugins-owned request/result/availability/permission/error family and the package owner records without duplicating schemas or lifecycle ownership.
+  - Every row has one specified future target, exact return settlement, and handler_unavailable until source-hashed native dispatcher and handler evidence exists.
+  - Mutating commands retain confirmation, generation, conformance, provenance, containment, permission, update-diff, rollback, and recovery gates; details/logs remain bounded and redacted.
+  - All effects remain receipt-only and no plugin.* or agent_plugin.* EventRecord family, compatibility alias, or second handler is admitted.
+validation_surfaces: [Plans/plugin_contract_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, python3 scripts/pm-new-contracts-verify.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+risk_class: plugin_command_registration_or_false_handler_claim
+reasoning_tier: high
+context_scope: agent_plugin_central_registration
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: agent_plugin_central_registration, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Plugins_System.md#PLUG-069
+  - Plans/Plugins_System.md#PLUG-070
+  - scratchpad/pm-integration-20260831/authority-repairs/plugin-contract-closure/central-settings-doctor-delta-proposal.md
+preserved_exact_tokens: [cmd.agent_plugin.scan, cmd.agent_plugin.install, cmd.agent_plugin.update, cmd.agent_plugin.enable, cmd.agent_plugin.disable, cmd.agent_plugin.reload, cmd.agent_plugin.remove, cmd.agent_plugin.validate, cmd.agent_plugin.review_changes, cmd.agent_plugin.rollback, cmd.agent_plugin.open_details, cmd.agent_plugin.open_logs, handler_unavailable, receipt_only_no_eventrecord_pending_event_authority]
+negative_constraints:
+  - Do not interpret registration or a handler target string as native implementation, runtime success, security certification, or readiness.
+  - Do not create a second plugin lifecycle owner, handler, schema family, command alias, or EventRecord family.
+  - Do not enable a control or simulate success before native handler, production route, and fresh runtime receipt closure.
+owner_hints: [Plans/Commands_System.md, Plans/Plugins_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+```
+
+## Guided Tour local focus-route command disposition - 2026-09-01
+
+`ui.guided_tour.focus_route` is a typed presentation action, not a semantic
+command. It carries `route_target.page_id`, requires the currently mounted
+shell router, changes only the visible page and focus, and emits a bounded
+local result with `domain_mutation=false` and `persistence_write=false`.
+`cmd.nav.focus_route` remains an unadopted migration candidate found in older
+route vocabulary. It has no central registration, dispatcher row, handler,
+event, receipt family, persistence authority, alias target, or production
+wiring row. Guided Tour must not manufacture those surfaces to satisfy a
+command census.
+
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-023, SchemaID:pm.guided_tour.contracts.v1, ContractName:Plans/UI_Command_Catalog.md#UCC-150, ContractName:Plans/Wiring_Matrix.md#WM-049
+
+### CS-072 - Guided Tour focus route stays a typed local action
+
+```yaml
+plan_unit_id: CS-072
+unit_type: command_disposition
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Guided Tour page/focus presentation uses ui.guided_tour.focus_route with a
+  typed route_target.page_id and a closed pm.guided_tour.focus_route_result.v1
+  no-domain/no-persistence result.
+  cmd.nav.focus_route remains unadopted source-lineage and receives no command
+  registration, alias, dispatcher, handler, EventRecord, receipt family, or
+  production wiring row.
+gui_related: true
+gui_classification_reason: Governs the visible Guided Tour shell-route control, its unavailable state, and focus behavior.
+depends_on: [PWIZ-023, CS-068]
+unblocks: [UCC-150, WM-049]
+acceptance_criteria:
+  - The local action carries route_target.page_id and uses only the mounted shell presentation controller.
+  - The action reports unavailable with a keyboard-reachable disabled reason when the shell router is absent.
+  - No cmd.nav.focus_route registration, alias, handler, event, persistence write, or production wiring row exists.
+  - Static or browser concept evidence is never promoted into native Slint or runtime-handler evidence.
+validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.exclusions.json, Concepts/pm7-tools/verify/guided_tour.mjs]
+risk_class: local_presentation_promoted_to_false_domain_command
+reasoning_tier: high
+context_scope: guided_tour_shell_focus_route
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json]
+node_compile_hint: {mode: guided_tour_local_action_disposition, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+  - Plans/Planning_Wizard.md#PWIZ-023
+preserved_exact_tokens: [ui.guided_tour.focus_route, route_target.page_id, pm.guided_tour.focus_route_result.v1, cmd.nav.focus_route, domain_mutation=false, persistence_write=false]
+negative_constraints:
+  - Do not invent a domain command merely to model local page or focus presentation.
+  - Do not claim a native controller or runtime result from the PMConcept7 simulation.
+owner_hints: [Plans/Commands_System.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+```
+## Server/Egolite Command-Gap Central Registration Addendum - 2026-09-01
+
+
+The exact machine partition is 171 packet rows: 86 new canonical commands, 43 pre-policy aliases, 39 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 103 obligation references collapse to **102 unique primary command/catalog/production-intent rows**; the packet primary denominator remains 92 (`86 + 6`). Denominators must never be silently substituted for one another.
+
+Every primary row below is static central intent. A named `handler_location` is the sole future dispatch target, not evidence that Rust code, registration, provider execution, persistence, native Slint wiring, security behavior, or runtime success exists. Initial availability remains `handler_unavailable`; the exact disabled reason is projected accessibly. All rows use receipt/projection-only effects and `expected_event_types=[]` until Event Authority separately admits an exact family. `ObservableWork` applies only where the owner contract declares asynchronous work. Exact owner permissions, generations, currentness, idempotency, cancellation, reconciliation, and exact-return rules remain intact.
+
+
+### Exact 102 primary registrations
+
+| Exact primary command | Canonical owner / PlanUnit | Sole future handler target | Exact request -> result contract |
+|---|---|---|---|
+| `cmd.auth_profile.rename` | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::rename` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` |
+| `cmd.auth_profile.revoke` | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::revoke` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` |
+| `cmd.auth_profile.transfer.apply` | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::transfer_apply` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` |
+| `cmd.auth_profile.transfer.preview` | `Plans/Multi-Account.md` / `MA-071` | `handlers::multi_account::transfer_preview` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` |
+| `cmd.browser.program.inspect` | `Plans/Section15_MVP_Promoted_Features_Spec.md` / `SMPFS-156` | `handlers::browser_program::inspect` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` |
+| `cmd.client.access.update` | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::access_update` | `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandRequest` -> `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandResult` |
+| `cmd.client.remove` | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::remove` | `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandRequest` -> `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandResult` |
+| `cmd.client.rename` | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::rename` | `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandRequest` -> `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandResult` |
+| `cmd.client.session.revoke` | `Plans/Server_System.md` / `SRV-011` | `handlers::client_trust::session_revoke` | `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandRequest` -> `Plans/server_system_contracts.schema.json#/$defs/ClientTrustCommandResult` |
+| `cmd.credential_attachment.revoke` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_revoke` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_attachment.revoke_active` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_revoke_active` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_attachment.test` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_test` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_attachment.transfer.apply` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_transfer_apply` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_attachment.transfer.preview` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_transfer_preview` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_source.add` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_add` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_source.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_source.test` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_test` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.doctor.export_report` | `Plans/newtools.md` / `N2-155` | `handlers::doctor_report::export_report` | `Plans/doctor_contracts.schema.json#/$defs/DoctorReportExportRequest` -> `Plans/doctor_contracts.schema.json#/$defs/DoctorReportExportResult` |
+| `cmd.execution_environment.attach` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_attach` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.discover` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_discover` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.provision` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_provision` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.repair` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_repair` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.resource_policy.apply` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_resource_policy_apply` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.resource_policy.preview` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_resource_policy_preview` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.restart` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_restart` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.rollback` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_rollback` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.select` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_select` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.start` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_start` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.stop` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_stop` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.update` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_update` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_environment.verify` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::environment_verify` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.capabilities.refresh` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_capabilities_refresh` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.disable` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_disable` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.drain` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_drain` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.enable` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_enable` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.register` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_register` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.set_default` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_set_default` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.execution_host.test` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_test` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
+| `cmd.forge.repository.create` | `Plans/Forge_Integrations.md` / `FGI-008` | `handlers::forge::repository_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` |
+| `cmd.goal.checkpoint` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::checkpoint` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
+| `cmd.goal.continue_on_host` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::continue_on_host` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
+| `cmd.goal.handoff.cancel` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::handoff_cancel` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
+| `cmd.goal.handoff.retry` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::handoff_retry` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
+| `cmd.goal.pause` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::pause` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
+| `cmd.goal.resume_here` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::resume_here` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
+| `cmd.installation.attach_external` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::attach_external` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
+| `cmd.installation.detach_external` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::detach_external` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
+| `cmd.installation.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
+| `cmd.project.duplicate_configuration` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_configuration` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
+| `cmd.project.duplicate_with_history` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_with_history` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
+| `cmd.project.execution_host.select` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_host_select` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project.execution_policy.set` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_policy_set` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project.home_server.set` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::home_server_set` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project.move.cancel` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::cancel` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandResult` |
+| `cmd.project.move.pause` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::pause` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandResult` |
+| `cmd.project.move.preflight` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::preflight` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandResult` |
+| `cmd.project.move.resume` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::resume` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandResult` |
+| `cmd.project.move.retry` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::retry` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandResult` |
+| `cmd.project.move.rollback` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::rollback` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandResult` |
+| `cmd.project.move.start` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::project_move::start` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ProjectMoveCommandResult` |
+| `cmd.project.source_location.add` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_add` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project.source_location.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project.source_location.set_primary` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_set_primary` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project.source_location.test` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_test` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project.source_location.update` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::source_location_update` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
+| `cmd.project_template.create_project` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_create_project` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
+| `cmd.project_template.delete` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_delete` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
+| `cmd.project_template.rename` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_rename` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
+| `cmd.project_template.save` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::template_save` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
+| `cmd.provider_binding.copy` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::binding_copy` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.provider_binding.resolve_on_destination` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::binding_resolve_on_destination` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.source_control.backend.detect` | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::backend_detect` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.source_control.backend.select` | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::backend_select` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.source_control.checkpoint.create` | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_create` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.source_control.checkpoint.inspect` | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_inspect` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.source_control.checkpoint.restore` | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_restore` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.source_control.workspace.create` | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::workspace_create` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.source_control.workspace.switch` | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::workspace_switch` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.tool_package.approve_license` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::package_approve_license` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
+| `cmd.update.app.automatic.set_enabled` | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::automatic_set_enabled` | `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandRequest` -> `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandResult` |
+| `cmd.update.app.cancel_download` | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::cancel_download` | `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandRequest` -> `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandResult` |
+| `cmd.update.app.check` | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::check` | `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandRequest` -> `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandResult` |
+| `cmd.update.app.download` | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::download` | `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandRequest` -> `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandResult` |
+| `cmd.update.app.install_restart` | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::install_restart` | `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandRequest` -> `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandResult` |
+| `cmd.update.app.remind_later` | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::remind_later` | `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandRequest` -> `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandResult` |
+| `cmd.update.app.rollback` | `Plans/Release_Supply_Chain.md` / `RSC-014` | `handlers::application_update::rollback` | `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandRequest` -> `Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandResult` |
+| `cmd.update.content.activate` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::activate` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandResult` |
+| `cmd.update.content.check` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::check` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandResult` |
+| `cmd.update.content.download` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::download` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandResult` |
+| `cmd.update.content.rollback` | `Plans/Project_Sync_and_Backbone.md` / `PSB-005` | `handlers::content_update::rollback` | `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandRequest` -> `Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandResult` |
+
+### Exact 43 normalization-only aliases
+
+| Packet/source spelling | Exact target | Target handler | Rule |
+|---|---|---|---|
+| `cmd.auth_session.cancel` | `cmd.authentication.cancel` | `handlers::authentication::cancel` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.open_official_page` | `cmd.auth_profile.open_official_page` | `handlers::multi_account::open_official_page` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.open_secure_browser` | `cmd.authentication.start` | `handlers::authentication::start` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.open_secure_cli` | `cmd.authentication.start` | `handlers::authentication::start` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.resume_callback` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.retry` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.start` | `cmd.authentication.start` | `handlers::authentication::start` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.submit_redirect` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.auth_session.submit_returned_code` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.add` | `cmd.integration.connection.add` | `handlers::integration_connection::add` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.disable` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.edit` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.open_details` | `cmd.integration.connection.open_details` | `handlers::integration_connection::open_details` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.refresh_capabilities` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.remove` | `cmd.integration.connection.remove` | `handlers::integration_connection::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.select` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.cluster_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.git_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.installation.rescan` | `cmd.tool.discover` | `handlers::tool::discover` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.add_worktree` | `cmd.source_control.workspace.create` | `handlers::source_control::workspace_create` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.connect_existing` | `cmd.source_control.repository.bind` | `handlers::source_control::repository_bind` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.create` | `cmd.source_control.workspace.create` | `handlers::source_control::workspace_create` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.remove` | `cmd.source_control.workspace.remove` | `handlers::source_control::workspace_remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.checkout.verify` | `cmd.source_control.status.refresh` | `handlers::source_control::status_refresh` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.remove_registration` | `cmd.project.remove` | `handlers::project::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.settings_copy.apply` | `cmd.settings.transaction.apply` | `handlers::settings::transaction_apply` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.settings_copy.preview` | `cmd.settings.transaction.preview` | `handlers::settings::transaction_preview` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.project.settings_copy.rollback` | `cmd.settings.transaction.rollback` | `handlers::settings::transaction_rollback` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.add` | `cmd.integration.connection.add` | `handlers::integration_connection::add` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.edit` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.open_details` | `cmd.integration.connection.open_details` | `handlers::integration_connection::open_details` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.remove` | `cmd.integration.connection.remove` | `handlers::integration_connection::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.registry_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.remote_access.remote_link.test` | `cmd.remote_access.route.test` | `handlers::remote_access::route_test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.add` | `cmd.integration.connection.add` | `handlers::integration_connection::add` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.disable` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.edit` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.open_details` | `cmd.integration.connection.open_details` | `handlers::integration_connection::open_details` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.remove` | `cmd.integration.connection.remove` | `handlers::integration_connection::remove` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.select` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.runtime_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+| `cmd.ssh_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
+
+### Exact 39 typed local UI dispositions
+
+| Command-shaped packet spelling | Exact typed local UI action | Complete intended GUI consumers |
+|---|---|---|
+| `cmd.auth_profile.open_details` | `ui.auth_profile.open_details` | Settings > Integrations > Profiles; Product Onboarding owner handoff; Doctor remediation; authentication handoff surface; palette/API |
+| `cmd.auth_session.close_secure_browser` | `ui.auth_session.close_secure_browser` | authentication handoff surface; Product Onboarding owner handoff; Settings > Integrations; Doctor remediation |
+| `cmd.auth_session.copy_device_code` | `ui.auth_session.copy_device_code` | authentication handoff surface; Product Onboarding owner handoff; Settings > Integrations; Doctor remediation |
+| `cmd.auth_session.open_details` | `ui.auth_session.open_details` | authentication handoff surface; Product Onboarding owner handoff; Settings > Integrations; Doctor remediation |
+| `cmd.client.open_details` | `ui.client.open_details` | Settings > Servers > Clients; pairing/trust surface; Server permanent web UI; Doctor |
+| `cmd.credential_attachment.open_consumers` | `ui.credential_attachment.open_consumers` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_attachment.open_details` | `ui.credential_attachment.open_details` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.credential_source.open_details` | `ui.credential_source.open_details` | Settings > Integrations/Credentials; Project copy/move readiness; Doctor remediation; connection managers |
+| `cmd.doctor.copy_diagnostics` | `ui.doctor.copy_diagnostics` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.open` | `ui.doctor.open` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.open_finding` | `ui.doctor.open_details` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.open_owner` | `ui.doctor.open_remediation` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.refresh` | `ui.doctor.refresh_visible` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.doctor.run_check` | `ui.doctor.run_check` | Settings > Doctor; Doctor finding/detail/return surfaces |
+| `cmd.execution_environment.open_details` | `ui.execution_environment.open_details` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_environment.open_logs` | `ui.execution_environment.open_logs` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.execution_host.open_details` | `ui.execution_host.open_details` | Settings > Hosting & Files; Server/Execution manager; Add Project; Goal handoff; Doctor; palette/API |
+| `cmd.goal.handoff.open_details` | `ui.goal.handoff.open_details` | Goal/Assistant status; Project activity; Goal handoff modal; status bar; Doctor |
+| `cmd.installation.open_details` | `ui.installation.open_details` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.installation.open_logs` | `ui.installation.open_logs` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.onboarding.back` | `ui.onboarding.back` | Product Onboarding modal |
+| `cmd.onboarding.cancel` | `ui.onboarding.close` | Product Onboarding modal |
+| `cmd.onboarding.continue` | `ui.onboarding.next` | Product Onboarding modal |
+| `cmd.onboarding.defer` | `ui.onboarding.defer` | Product Onboarding modal |
+| `cmd.onboarding.finish` | `ui.onboarding.finish` | Product Onboarding modal |
+| `cmd.onboarding.open_details` | `ui.onboarding.open_details` | Product Onboarding modal |
+| `cmd.onboarding.resume` | `ui.onboarding.start` | Product Onboarding modal |
+| `cmd.onboarding.skip` | `ui.onboarding.skip` | Product Onboarding modal |
+| `cmd.project.move.open_details` | `ui.project.move.open_details` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
+| `cmd.project.open_details` | `ui.project.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project.source_location.open_details` | `ui.project.source_location.open_details` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
+| `cmd.project.unarchive` | `ui.project.restore_archived` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.project_template.open_details` | `ui.project_template.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
+| `cmd.tool_package.open_provenance` | `ui.tool_package.open_provenance` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.tool_package.review_license` | `ui.tool_package.review_license` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.update.app.open_details` | `ui.update.app.open_details` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.open_logs` | `ui.update.app.open_logs` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.app.open_release_notes` | `ui.update.app.open_release_notes` | Settings > Updates; bottom Update Available item; Server permanent web UI; Doctor |
+| `cmd.update.content.open_details` | `ui.update.content.open_details` | Settings > Updates > Content; content attention/status; Doctor |
+
+Typed local UI actions retain typed request/result/currentness, accessibility, focus, and return-state contracts, but receive no semantic-domain UICommand registration, production UICommand row, persistence mutation, or EventRecord. Their command-shaped packet spellings are production exclusions.
+
+### Exact three rejections
+
+| Rejected spelling | Reason | Replacement guidance |
+|---|---|---|
+| `cmd.doctor.cancel` | Doctor is a viewer/router; closing detaches the viewer and must not cancel owner ObservableWork. Cancellation remains an exact domain-owner action when that owner exposes it. | owner-specific cancellable command from remediation result; closing Doctor only detaches the viewer |
+| `cmd.doctor.run_all` | An unbounded full sweep conflicts with cached-first, relevance-scoped, resource-governed Doctor scheduling. Use ui.doctor.refresh_visible or exact ui.doctor.run_check actions. | ui.doctor.refresh_visible \| ui.doctor.run_check |
+| `cmd.project.create` | A generic create command would erase the current required split among new-local, forge-created, existing, Git, Jujutsu, SSH, restore, and migration registrations. Call the exact owner path instead. | cmd.project.new_local \| cmd.project.new_github_repo \| cmd.project.add_existing \| exact Source Control/Jujutsu/Restore owner command followed by cmd.project.add_existing |
+
+### CS-073 - Server And Egolite Central Command Registration
+
+```yaml
+plan_unit_id: CS-073
+unit_type: command_registration
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 102 unique exact primary command registrations, 43 pre-policy aliases, 39 typed local UI actions, and three non-dispatchable rejections, with one sole planned target per primary and no fabricated native or event proof.
+gui_related: true
+gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser, Forge, Source Control, and palette consumers with exact availability and disabled reasons.
+depends_on: [CS-070, CS-071, CS-072]
+unblocks: [UCC-151, WM-050, UIW-016]
+acceptance_criteria:
+  - Exact denominators remain 171 = 86 + 43 + 39 + 3, packet primaries remain 92 = 86 + 6, and 103 obligation references collapse to 102 unique central rows through the one workspace-create overlap.
+  - Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable state, receipt/projection-only effect, and complete reverse consumers.
+  - Every alias normalizes before permission and dispatch with no source registration or peer route; every local predecessor and rejection has no production row.
+  - Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security, visual, performance, or runtime proof.
+validation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-touch-closure-verify.py, scripts/pm-plans-verify.py]
+risk_class: central_command_denominator_or_phantom_handler_drift
+reasoning_tier: high
+context_scope: server_egolite_central_command_closure
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: central_command_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
+negative_constraints:
+  - Do not register an alias, typed local predecessor, or rejected spelling as a primary command.
+  - Do not treat a sole future handler path or production-intent row as native implementation proof.
+  - Do not emit an unadmitted EventRecord family.
+```
+
+## Central Touch Production Closure Addendum - 2026-09-01
+
+The following exact 227 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
+
+| Command | Canonical owner binding | Sole future handler | Request -> result | Initial availability / effect |
+|---|---|---|---|---|
+| `cmd.artifacts.create_demonstration_video` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::artifacts_create_demonstration_video` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.artifacts.inspect_capture_provenance` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::artifacts_inspect_capture_provenance` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.auth_profile.cancel` | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::cancel` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.auth_profile.retry` | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::retry` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.auth_profile.select` | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::select` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.auth_profile.sign_in` | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_in` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.auth_profile.sign_out` | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_out` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.auth_profile.submit_code` | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::submit_code` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.auth_profile.verify` | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::verify` | `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest` -> `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.browse` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_browse` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.cancel` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_cancel` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.delete` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_delete` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.destination.add` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_add` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.destination.remove` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_remove` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.destination.test` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_test` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.destination.update` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_update` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.open_details` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_open_details` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.open_history` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_open_history` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.policy.update` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_policy_update` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.project.create` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_project_create` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.protect` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_protect` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.retry` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_retry` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.server.create` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_server_create` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.test_restore` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_test_restore` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.verify` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_verify` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.page.activate` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_activate` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.page.close` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_close` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.page.create` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_create` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.page.evaluate` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_evaluate` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.page.representation.capture` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_representation_capture` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.page.representation.delta` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_representation_delta` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.page.representation.query` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::page_representation_query` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.program.cancel` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_cancel` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.program.pause` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_pause` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.program.resume` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_resume` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.program.run` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::program_run` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.workspace.close` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_close` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.workspace.create` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_create` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.browser.workspace.reset` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_reset` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.connection.reauthorize` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::connection_reauthorize` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.mirror.connect` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_connect` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.mirror.detach` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_detach` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.mirror.inspect` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_inspect` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.mirror.sync` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_sync` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.cancel` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_cancel` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.list` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_list` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.open_in_browser` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_in_browser` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.open_job` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_job` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.open_logs` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_logs` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.refresh` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_refresh` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.retry` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_retry` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.run` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_run` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.repository.list` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_list` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.repository.open_in_browser` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_open_in_browser` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.repository.refresh` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_refresh` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.approve` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_approve` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.checkout` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.close` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.comment` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.mark_ready` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.open` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.open_in_browser` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.refresh` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.reopen` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_reopen` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.request_changes` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_request_changes` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.thread.list` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_list` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.thread.reopen` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reopen` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.thread.reply` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reply` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.thread.resolve` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_resolve` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.version.compare` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_compare` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.version.open` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_open` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.webhook.delivery.list` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_delivery_list` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.webhook.redeliver` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_redeliver` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.installation.select` | `Plans/Shared_Integration_Runtime.md#SIR-030` | `handlers::installation::select` | `Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandRequest` -> `Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandResult` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.bookmark.create` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_create` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.bookmark.delete` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_delete` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.bookmark.move` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_move` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.bookmark.rename` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_rename` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.bookmark.track` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_track` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.bookmark.untrack` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_untrack` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.abandon` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_abandon` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.describe` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_describe` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.edit` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_edit` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.new` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_new` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.rebase` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_rebase` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.restore` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_restore` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.split` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_split` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.change.squash` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::change_squash` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.diff.open` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::diff_open` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.git.export` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_export` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.git.fetch` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_fetch` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.git.import` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_import` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.git.push` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_push` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.history.open` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::history_open` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.operation.log` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_log` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.operation.restore` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_restore` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.operation.show` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_show` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.operation.undo` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_undo` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.status.refresh` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::status_refresh` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.workspace.create` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_create` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.workspace.list` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_list` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.workspace.open` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_open` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.workspace.remove` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_remove` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.workspace.switch` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_switch` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.named_plan.archive` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::archive` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.named_plan.create` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::create` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.named_plan.open` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::open` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.named_plan.rename` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::rename` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.named_plan.restore` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::restore` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.named_plan.set_priority` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::set_priority` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.funnel.disable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_disable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.funnel.enable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_enable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.funnel.preflight` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_preflight` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.funnel.restore` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_restore` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.funnel.test` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_test` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.open` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::open` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.open_logs` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::open_logs` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.private_endpoint.add` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_add` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.private_endpoint.remove` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_remove` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.private_endpoint.test` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_test` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.private_endpoint.update` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::private_endpoint_update` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.disable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_disable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.export` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_export` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.generate` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_generate` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.open_details` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_open_details` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.preview` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_preview` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.set_external_origin` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_set_external_origin` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.set_trusted_proxies` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_set_trusted_proxies` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.proxy.test` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::proxy_test` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.configure_gateway` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_configure_gateway` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.copy_address` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_copy_address` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.disable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_disable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.enable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_enable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.open` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_open` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.open_details` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_open_details` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.retry` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_retry` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.rotate_recovery_key` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_rotate_recovery_key` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.remote_link.setup` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::remote_link_setup` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.route.open_details` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::route_open_details` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.route.retry` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::route_retry` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.route.set_policy` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::route_set_policy` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.set_enabled` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::set_enabled` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.disable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_disable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.headscale.start` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_headscale_start` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.headscale.submit_registration` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_headscale_submit_registration` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.login.resume` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_login_resume` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.login.start` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_login_start` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.setup.start` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_setup_start` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.sign_out` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_sign_out` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.test` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::tailscale_test` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.cancel` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_cancel` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.open_details` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_open_details` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.project_as_new` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_project_as_new` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.project_in_place` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_project_in_place` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.retry` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_retry` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.rollback` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_rollback` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.selective` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_selective` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.restore.server_full` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::restore_server_full` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.add` | `Plans/Server_System.md#SRV-012` | `handlers::server::add` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.capabilities.refresh` | `Plans/Server_System.md#SRV-012` | `handlers::server::capabilities_refresh` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.claim` | `Plans/Server_System.md#SRV-012` | `handlers::server::claim` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.discovery.open_nearby` | `Plans/Server_System.md#SRV-012` | `handlers::server::discovery_open_nearby` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.discovery.refresh` | `Plans/Server_System.md#SRV-012` | `handlers::server::discovery_refresh` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.discovery.set_enabled` | `Plans/Server_System.md#SRV-012` | `handlers::server::discovery_set_enabled` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.add_manual` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_add_manual` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.copy` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_copy` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.open` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_open` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.open_details` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_open_details` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.remove` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_remove` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.set_preferred` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_set_preferred` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.test` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_test` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.endpoint.update` | `Plans/Server_System.md#SRV-012` | `handlers::server::endpoint_update` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.open_details` | `Plans/Server_System.md#SRV-012` | `handlers::server::open_details` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.open_logs` | `Plans/Server_System.md#SRV-012` | `handlers::server::open_logs` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.open_web` | `Plans/Server_System.md#SRV-012` | `handlers::server::open_web` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.processing.set_enabled` | `Plans/Server_System.md#SRV-012` | `handlers::server::processing_set_enabled` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.remove` | `Plans/Server_System.md#SRV-012` | `handlers::server::remove` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.rename` | `Plans/Server_System.md#SRV-012` | `handlers::server::rename` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.restart` | `Plans/Server_System.md#SRV-012` | `handlers::server::restart` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.select` | `Plans/Server_System.md#SRV-012` | `handlers::server::select` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.stop` | `Plans/Server_System.md#SRV-012` | `handlers::server::stop` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.test_connection` | `Plans/Server_System.md#SRV-012` | `handlers::server::test_connection` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.server.update_policy` | `Plans/Server_System.md#SRV-012` | `handlers::server::update_policy` | `Plans/server_system_contracts.schema.json#/$defs/command_payload` -> `Plans/server_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.diff.open` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::diff_open` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.history.open` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::history_open` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.remote.fetch` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::remote_fetch` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.remote.publish` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::remote_publish` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.remote.sync` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::remote_sync` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.repository.unbind` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::repository_unbind` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.workspace.list` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::workspace_list` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.workspace.open` | `Plans/Source_Control_System.md#SCS-010` | `handlers::source_control::workspace_open` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.bookmark` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_bookmark` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.health.inspect` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_health_inspect` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.pause` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_pause` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.resume` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_resume` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.save_clip` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_save_clip` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.start` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_start` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.stop` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_stop` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.testing.capture.target.update` | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::testing_capture_target_update` | `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_request` -> `Plans/test_capture_motion_evidence_contracts.schema.json#/$defs/capture_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.repository.fork` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::repository_fork` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.repository.policy.preview` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::repository_policy_preview` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.repository.policy.apply` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::repository_policy_apply` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.checks` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::review_checks` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.approve` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::pipeline_approve` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.runner.registration.apply` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::runner_registration_apply` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.runner.remove` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::runner_remove` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.release.list` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::release_list` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.release.asset.download` | `Plans/Forge_Integrations.md#FGI-013` | `handlers::forge::release_asset_download` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.destination.discover` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_destination_discover` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.retention.preview` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_retention_preview` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.prune` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_prune` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.unlock` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_unlock` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.file.download` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_file_download` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.extract` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_extract` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.file.compare` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_file_compare` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.export` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_export` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.archive.retrieve` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_archive_retrieve` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.export` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_export` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.copy` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_copy` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.print` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_print` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.test` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_test` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.acknowledge_saved` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_acknowledge_saved` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.rotate` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_rotate` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.reencrypt` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_reencrypt` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.connector.check` | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_connector_check` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.connector.restart` | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_connector_restart` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.remote_access.tailscale.identity.reset` | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_identity_reset` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+
+### September 1 Remote Access compatibility demotions
+
+These four historical component/Serve spellings are normalization-only inputs. They are not catalog primaries, have no state selector, handler, production row, persistence, or EventRecord of their own, and preserve only invoked compatibility/source receipt identity.
+
+| Compatibility input | Canonical target | Target handler |
+|---|---|---|
+| `cmd.remote_access.tailscale.component.check` | `cmd.remote_access.tailscale.connector.check` | `handlers::remote_access::tailscale_connector_check` |
+| `cmd.remote_access.tailscale.serve.enable` | `cmd.remote_access.tailscale.setup.start` with fixed `operation_scope=ensure_private_endpoint` | `handlers::remote_access::tailscale_setup_start` |
+| `cmd.remote_access.tailscale.serve.test` | `cmd.remote_access.tailscale.test` | `handlers::remote_access::tailscale_test` |
+| `cmd.remote_access.tailscale.serve.disable` | `cmd.remote_access.tailscale.disable` with fixed `disable_scope=private_connector_route` and connector identity preservation | `handlers::remote_access::tailscale_disable` |
+
+### CS-074 - Remaining Touch Primary Command Closure
+
+```yaml
+plan_unit_id: CS-074
+unit_type: command_catalog
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: Exactly 227 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+gui_related: true
+gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
+depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
+unblocks: []
+acceptance_criteria:
+- The exact table contains 227 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
+- Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
+- Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
+validation_surfaces:
+- python3 scripts/pm-touch-closure-verify.py --json
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: central_command_route_closure
+reasoning_tier: high
+context_scope: remaining_touch_primary_commands
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: touch_primary_command_closure, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- Plans/touch_closure.json
+- Plans/Wiring_Matrix.production.json
+- user-approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+negative_constraints:
+- Do not treat a planned target or production-intent row as native implementation proof.
+- Do not mint peer alias handlers or events.
+compile_disposition: extend_existing_owner
 ```

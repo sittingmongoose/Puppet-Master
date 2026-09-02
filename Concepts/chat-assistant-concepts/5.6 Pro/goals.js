@@ -1073,8 +1073,6 @@
   var EXT=window.PM56_EXT;
   EXT.slot('goalSection', renderSection);
   EXT.slot('goalEditor',  renderEditor);
-  EXT.slot('headerExtras',headerChip);
-  EXT.slot('historyChrome',sidebarSummary);
   Object.keys(ACTIONS).forEach(function(name){
     EXT.action(name, function(ctx,btn,ev){ ACTIONS[name](ctx,btn,ev); return true; });
   });

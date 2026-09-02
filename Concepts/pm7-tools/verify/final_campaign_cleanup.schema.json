@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/pm.pmconcept7.final_campaign_cleanup.v1.json",
+  "title": "PMConcept7 approval-gated final campaign cleanup records",
+  "oneOf": [
+    {"$ref":"#/$defs/userApproval"},
+    {"$ref":"#/$defs/executionApproval"},
+    {"$ref":"#/$defs/cleanupPlan"},
+    {"$ref":"#/$defs/cleanupReceipt"},
+    {"$ref":"#/$defs/postCleanupVerification"},
+    {"$ref":"#/$defs/postCleanupRequestIndex"}
+  ],
+  "$defs": {
+    "sha256": {"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "nonEmpty": {"type":"string","minLength":1},
+    "pathList": {"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","pattern":"^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"}},
+    "fileRef": {
+      "type":"object","additionalProperties":false,"required":["path","sha256"],
+      "properties":{"path":{"$ref":"#/$defs/nonEmpty"},"sha256":{"$ref":"#/$defs/sha256"}}
+    },
+    "fileCensusRow": {
+      "type":"object","additionalProperties":false,"required":["path","sha256","bytes"],
+      "properties":{"path":{"$ref":"#/$defs/nonEmpty"},"sha256":{"$ref":"#/$defs/sha256"},"bytes":{"type":"integer","minimum":0}}
+    },
+    "passReceipt": {
+      "type":"object","additionalProperties":false,"required":["id","status","cleanup_receipt_sha256","input","executions","verified_result"],
+      "properties":{"id":{"enum":["post_cleanup_gate","reproducible_build","governance_gates"]},"status":{"const":"pass"},"cleanup_receipt_sha256":{"$ref":"#/$defs/sha256"},"input":{"type":"object"},"executions":{"type":"array","minItems":1,"maxItems":2,"items":{"$ref":"#/$defs/authenticatedExecution"}},"verified_result":{"type":"object"}}
+    },
+    "exactIdentity": {
+      "type":"object","additionalProperties":false,"required":["path","sha256","bytes","device","inode","mtime_ns"],
+      "properties":{"path":{"$ref":"#/$defs/nonEmpty"},"sha256":{"$ref":"#/$defs/sha256"},"bytes":{"type":"integer","minimum":0},"device":{"type":"integer","minimum":0},"inode":{"type":"integer","minimum":0},"mtime_ns":{"type":"integer","minimum":0}}
+    },
+    "executionOutput": {
+      "type":"object","additionalProperties":false,"required":["id","path","sha256","bytes","device","inode","mtime_ns"],
+      "properties":{"id":{"$ref":"#/$defs/nonEmpty"},"path":{"$ref":"#/$defs/nonEmpty"},"sha256":{"$ref":"#/$defs/sha256"},"bytes":{"type":"integer","minimum":0},"device":{"type":"integer","minimum":0},"inode":{"type":"integer","minimum":0},"mtime_ns":{"type":"integer","minimum":0}}
+    },
+    "authenticatedExecution": {
+      "type":"object","additionalProperties":false,"required":["producer","interpreter","argv","cwd","exit_code","stdout","stderr","outputs"],
+      "properties":{"producer":{"$ref":"#/$defs/exactIdentity"},"interpreter":{"$ref":"#/$defs/exactIdentity"},"argv":{"type":"array","minItems":3,"items":{"$ref":"#/$defs/nonEmpty"}},"cwd":{"$ref":"#/$defs/nonEmpty"},"exit_code":{"const":0},"stdout":{"$ref":"#/$defs/exactIdentity"},"stderr":{"$ref":"#/$defs/exactIdentity"},"outputs":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/executionOutput"}}}
+    },
+    "postCleanupRequestIndex": {
+      "$comment":"Typed inputs only. Receipt-supplied producers, argv, cwd, status, results, and pre-authored execution claims are forbidden; verify-post-cleanup constructs and authenticates all invocations itself.",
+      "type":"array","minItems":3,"maxItems":3,
+      "prefixItems":[
+        {"type":"object","additionalProperties":false,"required":["id","manifest"],"properties":{"id":{"const":"post_cleanup_gate"},"manifest":{"$ref":"#/$defs/fileRef"}}},
+        {"type":"object","additionalProperties":false,"required":["id","base","approved_candidate"],"properties":{"id":{"const":"reproducible_build"},"base":{"$ref":"#/$defs/fileRef"},"approved_candidate":{"$ref":"#/$defs/fileRef"}}},
+        {"type":"object","additionalProperties":false,"required":["id"],"properties":{"id":{"const":"governance_gates"}}}
+      ],
+      "items":false
+    },
+    "command": {
+      "type":"object","additionalProperties":false,"required":["argv","cwd"],
+      "properties":{"argv":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/nonEmpty"}},"cwd":{"$ref":"#/$defs/nonEmpty"}}
+    },
+    "postGateReceiptSchema": {"enum":["pm.pmconcept7.post_cleanup_gate_receipt.v1","pm.pmconcept7.post_cleanup_reproducible_build_receipt.v1","pm.pmconcept7.post_cleanup_governance_gates_receipt.v1"]},
+    "postGateResultSchema": {"enum":["pm.pmconcept7.post_cleanup_gate_result.v1","pm.pmconcept7.post_cleanup_reproducible_build_result.v1","pm.pmconcept7.post_cleanup_governance_gates_result.v1"]},
+    "postGateReceipt": {
+      "type":"object","additionalProperties":false,"required":["schema_id","status","cleanup_receipt_sha256","producer","command","result"],
+      "properties":{"schema_id":{"$ref":"#/$defs/postGateReceiptSchema"},"status":{"const":"pass"},"cleanup_receipt_sha256":{"$ref":"#/$defs/sha256"},"producer":{"$ref":"#/$defs/fileRef"},"command":{"$ref":"#/$defs/command"},"result":{"$ref":"#/$defs/fileRef"}}
+    },
+    "postGateResult": {
+      "type":"object","additionalProperties":false,"required":["schema_id","status","cleanup_receipt_sha256","checks"],
+      "properties":{"schema_id":{"$ref":"#/$defs/postGateResultSchema"},"status":{"const":"pass"},"cleanup_receipt_sha256":{"$ref":"#/$defs/sha256"},"checks":{"type":"array","minItems":1,"items":{"type":"object","additionalProperties":false,"required":["id","pass"],"properties":{"id":{"$ref":"#/$defs/nonEmpty"},"pass":{"const":true}}}}}
+    },
+    "userApproval": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_id","approval_id","approved_at_utc","explicit_user_approval","precleanup_root_manifest_sha256","approved_paths","recovery_disposition"],
+      "properties": {
+        "schema_id":{"const":"pm.pmconcept7.final_campaign_cleanup_user_approval.v1"},
+        "approval_id":{"$ref":"#/$defs/nonEmpty"},"approved_at_utc":{"$ref":"#/$defs/nonEmpty"},
+        "explicit_user_approval":{"const":true},"precleanup_root_manifest_sha256":{"$ref":"#/$defs/sha256"},
+        "approved_paths":{"$ref":"#/$defs/pathList"},"recovery_disposition":{"enum":["recoverable_backup_verified","permanent_deletion_explicitly_approved"]}
+      }
+    },
+    "executionApproval": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_id","approval_id","approved_at_utc","explicit_user_approval","cleanup_plan_sha256","approved_paths"],
+      "properties": {
+        "schema_id":{"const":"pm.pmconcept7.final_campaign_cleanup_execution_approval.v1"},
+        "approval_id":{"$ref":"#/$defs/nonEmpty"},"approved_at_utc":{"$ref":"#/$defs/nonEmpty"},
+        "explicit_user_approval":{"const":true},"cleanup_plan_sha256":{"$ref":"#/$defs/sha256"},
+        "approved_paths":{"$ref":"#/$defs/pathList"}
+      }
+    },
+    "cleanupPlan": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_id","created_at_utc","status","execution_authorized","evidence_root","approval","precleanup_root_manifest","targets","preserved","recovery_disposition"],
+      "properties": {
+        "schema_id":{"const":"pm.pmconcept7.final_campaign_cleanup_plan.v1"},"created_at_utc":{"$ref":"#/$defs/nonEmpty"},
+        "status":{"const":"dry_run_ready"},"execution_authorized":{"const":false},"evidence_root":{"$ref":"#/$defs/nonEmpty"},
+        "approval":{"$ref":"#/$defs/fileRef"},"precleanup_root_manifest":{"$ref":"#/$defs/fileRef"},
+        "targets":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/fileCensusRow"}},
+        "preserved":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/fileCensusRow"}},
+        "recovery_disposition":{"enum":["recoverable_backup_verified","permanent_deletion_explicitly_approved"]}
+      }
+    },
+    "cleanupReceipt": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_id","executed_at_utc","status","evidence_root","cleanup_plan","execution_approval","removed","preserved_precleanup","recovery_disposition"],
+      "properties": {
+        "schema_id":{"const":"pm.pmconcept7.final_campaign_cleanup_receipt.v1"},"executed_at_utc":{"$ref":"#/$defs/nonEmpty"},
+        "status":{"const":"enumerated_cleanup_complete"},"evidence_root":{"$ref":"#/$defs/nonEmpty"},
+        "cleanup_plan":{"$ref":"#/$defs/fileRef"},"execution_approval":{"$ref":"#/$defs/fileRef"},
+        "removed":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/fileCensusRow"}},
+        "preserved_precleanup":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/fileCensusRow"}},
+        "recovery_disposition":{"enum":["recoverable_backup_verified","permanent_deletion_explicitly_approved"]}
+      }
+    },
+    "postCleanupVerification": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_id","verified_at_utc","status","cleanup_receipt","removed_absent","preserved_current","postcleanup_census","required_receipts"],
+      "properties": {
+        "schema_id":{"const":"pm.pmconcept7.final_campaign_post_cleanup_verification.v1"},"verified_at_utc":{"$ref":"#/$defs/nonEmpty"},
+        "status":{"const":"pass"},"cleanup_receipt":{"$ref":"#/$defs/fileRef"},
+        "removed_absent":{"$ref":"#/$defs/pathList"},"preserved_current":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/fileCensusRow"}},
+        "postcleanup_census":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/fileCensusRow"}},
+        "required_receipts":{"type":"array","minItems":3,"items":{"$ref":"#/$defs/passReceipt"}}
+      }
+    }
+  }
+}

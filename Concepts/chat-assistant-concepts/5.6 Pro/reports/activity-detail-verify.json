@@ -1,0 +1,289 @@
+{
+  "overall": "PASS",
+  "passed": 30,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Status Board is the boot default",
+      "pass": true,
+      "detail": {
+        "variant": 1
+      }
+    },
+    {
+      "name": "Reset restores Status Board",
+      "pass": true,
+      "detail": {
+        "variant": 1
+      }
+    },
+    {
+      "name": "Activity Bar opens focused Changes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Focused scope has one selected domain",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Focused scope has no overview cards",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Show all renders one card per live domain",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "transient": false,
+        "scope": "all",
+        "width": 240,
+        "rect": {
+          "left": 982.59375,
+          "top": 42,
+          "right": 1222.59375,
+          "bottom": 876
+        },
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "tiles": 5,
+        "domains": 5,
+        "selectedDomains": 0,
+        "unlabeled": 0,
+        "resizeHandles": 1
+      }
+    },
+    {
+      "name": "All scope has no false selected domain",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "transient": false,
+        "scope": "all",
+        "width": 240,
+        "rect": {
+          "left": 982.59375,
+          "top": 42,
+          "right": 1222.59375,
+          "bottom": 876
+        },
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "tiles": 5,
+        "domains": 5,
+        "selectedDomains": 0,
+        "unlabeled": 0,
+        "resizeHandles": 1
+      }
+    },
+    {
+      "name": "Overview card drills into its domain",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Filter control hides the domain rail",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Filter control restores the domain rail",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Pointer dwell opens an interactive preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Preview has one canonical footer action",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Pointer bridge keeps the preview open",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Preview footer opens its focused Activity Detail",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Pointer leave dismisses the preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Keyboard focus opens the same preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Escape dismisses the preview and preserves trigger focus",
+      "pass": true,
+      "detail": {
+        "previews": 0,
+        "triggerFocused": true,
+        "hover": null
+      }
+    },
+    {
+      "name": "A focused change row opens its real destination",
+      "pass": true,
+      "detail": {
+        "activeEditor": "file:migrations/0043_tenant_created_index.sql"
+      }
+    },
+    {
+      "name": "Unpin remounts transient and restores focus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Pin remounts docked and restores focus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Close returns focus to the originating domain",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Pin at 590px never makes the open panel disappear",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "transient": true,
+        "scope": "focus",
+        "width": 390,
+        "rect": {
+          "left": 190,
+          "top": 96,
+          "right": 580,
+          "bottom": 541.15625
+        },
+        "viewport": {
+          "width": 590,
+          "height": 760
+        },
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "tiles": 0,
+        "domains": 5,
+        "selectedDomains": 1,
+        "unlabeled": 0,
+        "resizeHandles": 0
+      }
+    },
+    {
+      "name": "Pinned preference docks at 591px",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "transient": false,
+        "scope": "focus",
+        "width": 280,
+        "rect": {
+          "left": 0,
+          "top": 46,
+          "right": 280,
+          "bottom": 740
+        },
+        "viewport": {
+          "width": 591,
+          "height": 760
+        },
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "tiles": 0,
+        "domains": 5,
+        "selectedDomains": 1,
+        "unlabeled": 0,
+        "resizeHandles": 1
+      }
+    },
+    {
+      "name": "Desktop-to-phone transition keeps the panel visible",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "transient": true,
+        "scope": "focus",
+        "width": 390,
+        "rect": {
+          "left": 190,
+          "top": 100,
+          "right": 580,
+          "bottom": 545.15625
+        },
+        "viewport": {
+          "width": 590,
+          "height": 760
+        },
+        "panelOverflow": 0,
+        "pageOverflow": 0,
+        "tiles": 0,
+        "domains": 5,
+        "selectedDomains": 1,
+        "unlabeled": 0,
+        "resizeHandles": 0
+      }
+    },
+    {
+      "name": "Escape closes only the transient panel",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Eight themes and required widths preserve geometry and semantics",
+      "pass": true,
+      "detail": {
+        "cases": 64,
+        "failures": []
+      }
+    },
+    {
+      "name": "Activity Detail owns an independent working scroll surface",
+      "pass": true,
+      "detail": {
+        "room": 0,
+        "top": 0,
+        "transcriptTop": 2474
+      }
+    },
+    {
+      "name": "Reduced motion removes decorative Status Board entrances",
+      "pass": true,
+      "detail": {
+        "durations": []
+      }
+    },
+    {
+      "name": "No console errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "No page errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "generatedAt": "2026-08-31T20:43:39.997Z"
+}

@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/egolite_retained_requirement_contracts.schema.json",
+  "title": "Egolite retained requirement contract closure",
+  "description": "Fail-closed static contract for exactly fifteen owner-routed Egolite requirements. Semantic authority remains in each exact owner_doc and PlanUnit. Validation creates no command, handler, EventRecord, runtime, browser, native, security-attack, benchmark, readiness, or implementation proof.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "contracts"],
+  "properties": {
+    "schema_id": {"const": "pm.egolite.retained_requirement_contracts.v1"},
+    "contracts": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 15,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/hbu_005"},
+          {"$ref": "#/$defs/hbu_013"},
+          {"$ref": "#/$defs/brw_010"},
+          {"$ref": "#/$defs/brw_011"},
+          {"$ref": "#/$defs/scm_005"},
+          {"$ref": "#/$defs/scm_019"},
+          {"$ref": "#/$defs/ori_002"},
+          {"$ref": "#/$defs/ori_020"},
+          {"$ref": "#/$defs/irt_008"},
+          {"$ref": "#/$defs/irt_009"},
+          {"$ref": "#/$defs/irt_010"},
+          {"$ref": "#/$defs/irt_011"},
+          {"$ref": "#/$defs/sec_003"},
+          {"$ref": "#/$defs/sec_007"},
+          {"$ref": "#/$defs/sec_008"}
+        ]
+      }
+    }
+  },
+  "allOf": [
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/hbu_005"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/hbu_013"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/brw_010"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/brw_011"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/scm_005"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/scm_019"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/ori_002"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/ori_020"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/irt_008"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/irt_009"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/irt_010"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/irt_011"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/sec_003"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/sec_007"}, "minContains": 1, "maxContains": 1}}},
+    {"properties": {"contracts": {"contains": {"$ref": "#/$defs/sec_008"}, "minContains": 1, "maxContains": 1}}}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "positive_generation": {"type": "integer", "minimum": 1},
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "not": {"pattern": "(?i)(password|passwd|secret|token=|authorization:|proxy-authorization:|cookie:|set-cookie:|bearer\\s)"}
+    },
+    "non_secret_ref_list": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/non_secret_ref"}
+    },
+    "safe_human_text": {
+      "type": "string",
+      "minLength": 1,
+      "not": {"pattern": "(?i)(password|passwd|secret|token|authorization|proxy-authorization|cookie|set-cookie|bearer\\s|[a-z]:\\\\|/(home|users|etc|var|tmp)/|[a-f0-9]{40,})"},
+      "$comment": "This pattern rejects common secret/path/raw-hash forms only. The owner-required human-copy scanner must additionally reject context-specific raw IDs, code, paths, and secrets; schema success is not content-safety proof."
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_static_closed", "browser_execution_proven", "native_execution_proven", "runtime_execution_proven", "security_attack_proven", "benchmark_execution_proven"],
+      "properties": {
+        "source_static_closed": {"const": true},
+        "browser_execution_proven": {"const": false},
+        "native_execution_proven": {"const": false},
+        "runtime_execution_proven": {"const": false},
+        "security_attack_proven": {"const": false},
+        "benchmark_execution_proven": {"const": false}
+      }
+    },
+    "contract_identity": {
+      "type": "object",
+      "required": ["requirement_id", "owner_doc", "plan_unit_id", "record_kind", "proof_boundary"],
+      "properties": {
+        "requirement_id": {"enum": ["HBU-005", "HBU-013", "BRW-010", "BRW-011", "SCM-005", "SCM-019", "ORI-002", "ORI-020", "IRT-008", "IRT-009", "IRT-010", "IRT-011", "SEC-003", "SEC-007", "SEC-008"]},
+        "owner_doc": {"enum": ["Plans/Prompt_Pipeline.md", "Plans/Section15_MVP_Promoted_Features_Spec.md", "Plans/Source_Control_System.md", "Plans/Cursor_Origin_Integration.md", "Plans/Shared_Integration_Runtime.md", "Plans/Permissions_System.md"]},
+        "plan_unit_id": {"enum": ["PP-083", "SMPFS-154", "SMPFS-155", "SCS-007", "ORI-009", "SIR-021", "PS-135", "PS-136", "PS-137"]},
+        "record_kind": {"enum": ["capability_api_digest", "human_step_projection", "browser_focus_continuation", "browser_fidelity_profile", "managed_scm_baseline", "workspace_conflict_plan", "origin_create_eligibility", "origin_api_fallback", "external_install_maintenance_policy", "coalesced_installation_operation", "persistent_tool_profile", "credential_attachment", "browser_state_export_policy", "public_ingress_endpoint_policy", "network_effect_authorization"]},
+        "proof_boundary": {"$ref": "#/$defs/proof_boundary"}
+      }
+    },
+    "hbu_005": {
+      "title": "HBU-005 capability-specific Browser Program digest registry",
+      "type": "object",
+      "allOf": [
+        {"$ref": "#/$defs/contract_identity"},
+        {"properties": {
+          "requirement_id": {"const": "HBU-005"}, "owner_doc": {"const": "Plans/Prompt_Pipeline.md"}, "plan_unit_id": {"const": "PP-083"}, "record_kind": {"const": "capability_api_digest"},
+          "pinned": {"const": true}, "api_version": {"type": "string", "minLength": 1, "maxLength": 128}, "api_digest_sha256": {"$ref": "#/$defs/sha256"}, "capability_profile_sha256": {"$ref": "#/$defs/sha256"},
+          "effective_capability_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "capability_ref": {"$ref": "#/$defs/non_secret_ref"}, "registry_generation": {"$ref": "#/$defs/positive_generation"}, "compact_digest_ref": {"$ref": "#/$defs/non_secret_ref"}, "byte_budget": {"type": "integer", "minimum": 1, "maximum": 65536}, "compact_digest_bytes": {"type": "integer", "minimum": 1, "maximum": 65536}, "compact_token_budget": {"type": "integer", "minimum": 1, "maximum": 32768}, "compact_digest_tokens": {"type": "integer", "minimum": 1, "maximum": 32768},
+          "registry_signature_sha256": {"$ref": "#/$defs/sha256"}, "registry_signature_verified": {"const": true}, "stable_across_hosts": {"const": true}, "effective_capabilities_only": {"const": true},
+          "help_topic_index_ref": {"$ref": "#/$defs/non_secret_ref"}, "help_ref": {"$ref": "#/$defs/non_secret_ref"}, "help_topic": {"type": "string", "minLength": 1, "maxLength": 128}, "help_version": {"type": "string", "minLength": 1, "maxLength": 128}, "help_sha256": {"$ref": "#/$defs/sha256"}, "help_load_policy": {"const": "explicit_on_demand"},
+          "help_byte_budget": {"type": "integer", "minimum": 1, "maximum": 65536}, "help_emitted_bytes": {"type": "integer", "minimum": 0, "maximum": 65536}, "help_token_budget": {"type": "integer", "minimum": 1, "maximum": 32768}, "help_emitted_tokens": {"type": "integer", "minimum": 0, "maximum": 32768}, "help_omissions": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+          "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"}, "prompt_context_epoch": {"$ref": "#/$defs/non_secret_ref"}, "receipt_sha256": {"$ref": "#/$defs/sha256"}, "help_receipt_binding_fields": {"const": ["capability", "registry_generation", "help_topic", "help_version", "help_sha256", "emitted_bytes", "emitted_tokens", "omissions", "permission_snapshot", "prompt_context_epoch"]},
+          "api_current": {"const": true}, "capability_profile_current": {"const": true}, "registry_current": {"const": true}, "help_current": {"const": true}, "permission_snapshot_current": {"const": true}, "prompt_context_current": {"const": true}, "base_prompt_contains_expanded_help": {"const": false}, "full_step_union_injected": {"const": false}, "help_grants_authority": {"const": false}
+        }, "required": ["pinned", "api_version", "api_digest_sha256", "capability_profile_sha256", "effective_capability_profile_ref", "capability_ref", "registry_generation", "compact_digest_ref", "byte_budget", "compact_digest_bytes", "compact_token_budget", "compact_digest_tokens", "registry_signature_sha256", "registry_signature_verified", "stable_across_hosts", "effective_capabilities_only", "help_topic_index_ref", "help_ref", "help_topic", "help_version", "help_sha256", "help_load_policy", "help_byte_budget", "help_emitted_bytes", "help_token_budget", "help_emitted_tokens", "help_omissions", "permission_snapshot_ref", "prompt_context_epoch", "receipt_sha256", "help_receipt_binding_fields", "api_current", "capability_profile_current", "registry_current", "help_current", "permission_snapshot_current", "prompt_context_current", "base_prompt_contains_expanded_help", "full_step_union_injected", "help_grants_authority"]}
+      ],
+      "unevaluatedProperties": false,
+      "$comment": "JSON Schema cannot compare compact_digest_bytes to byte_budget or help_emitted_bytes to help_byte_budget, recompute hashes/signatures, prove same-input Host stability, prove help omission from a compiled prompt, or validate stale epochs. The prompt compiler/registry validator must enforce those invariants."
+    },
+    "hbu_013": {
+      "title": "HBU-013 exact shared human-step projection", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "HBU-013"}, "owner_doc": {"const": "Plans/Section15_MVP_Promoted_Features_Spec.md"}, "plan_unit_id": {"const": "SMPFS-154"}, "record_kind": {"const": "human_step_projection"},
+        "projections": {"const": ["chat", "testing", "watch", "observable_work", "timeline"]}, "step_id": {"$ref": "#/$defs/non_secret_ref"}, "step_revision": {"$ref": "#/$defs/positive_generation"}, "projection_generation": {"$ref": "#/$defs/positive_generation"}, "canonical_projection_sha256": {"$ref": "#/$defs/sha256"},
+        "user_step_label": {"allOf": [{"$ref": "#/$defs/safe_human_text"}, {"maxLength": 160}]}, "human_detail": {"allOf": [{"$ref": "#/$defs/safe_human_text"}, {"maxLength": 512}]},
+        "state": {"type": "string", "minLength": 1, "maxLength": 64}, "requested_state": {"type": "string", "minLength": 1, "maxLength": 64}, "effective_state": {"type": "string", "minLength": 1, "maxLength": 64}, "owner_receipt_refs": {"$ref": "#/$defs/non_secret_ref_list"}, "capability_digest_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "step_current": {"const": true}, "projection_current": {"const": true}, "owner_receipts_current": {"const": true}, "capability_digest_current": {"const": true}, "underlying_projection_byte_identical": {"const": true}, "label_safe": {"const": true}, "authority_grant": {"const": false}, "surface_overrides_allowed": {"const": false}, "visual_truncation_mutates_value": {"const": false}, "full_value_affordance_required": {"const": true}, "replay_regenerates_label": {"const": false}, "success_requires_owner_receipt": {"const": true}
+      }, "required": ["projections", "step_id", "step_revision", "projection_generation", "canonical_projection_sha256", "user_step_label", "human_detail", "state", "requested_state", "effective_state", "owner_receipt_refs", "capability_digest_ref", "step_current", "projection_current", "owner_receipts_current", "capability_digest_current", "underlying_projection_byte_identical", "label_safe", "authority_grant", "surface_overrides_allowed", "visual_truncation_mutates_value", "full_value_affordance_required", "replay_regenerates_label", "success_requires_owner_receipt"]}],
+      "unevaluatedProperties": false,
+      "$comment": "The closed record structurally provides one canonical value for all five exact surfaces and forbids per-surface override fields. A projection join validator must still prove live consumers use it byte-for-byte, visual truncation exposes the full value, replay does not regenerate copy, and success is backed by an owner receipt."
+    },
+    "brw_010": {
+      "title": "BRW-010 focus-independent Browser continuation", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "BRW-010"}, "owner_doc": {"const": "Plans/Section15_MVP_Promoted_Features_Spec.md"}, "plan_unit_id": {"const": "SMPFS-155"}, "record_kind": {"const": "browser_focus_continuation"},
+        "browser_workspace_ref": {"$ref": "#/$defs/non_secret_ref"}, "page_generation": {"$ref": "#/$defs/positive_generation"}, "program_ref": {"$ref": "#/$defs/non_secret_ref"}, "controller_lease_ref": {"$ref": "#/$defs/non_secret_ref"}, "budget_ref": {"$ref": "#/$defs/non_secret_ref"}, "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"}, "execution_owner": {"const": "server"}, "program_admitted": {"const": true},
+        "focus_states": {"const": ["pm_background", "other_app", "other_tab", "other_panel"]}, "non_authority_signals": {"const": ["focus", "visibility", "selection", "viewer_attachment"]}, "continues_independently": {"const": true}, "focus_is_authority": {"const": false}, "controller_generation_fenced": {"const": true}, "foreground_input_dependency": {"const": false}, "focus_loss_effect": {"const": "none"}, "focus_change_requires_synthetic_input": {"const": false}, "focus_change_pause_allowed": {"const": false}, "focus_change_cancel_allowed": {"const": false}, "focus_change_transfer_allowed": {"const": false}, "focus_change_stop_allowed": {"const": false},
+        "stop_causes": {"const": ["owner_command", "lease_loss", "budget_or_policy_denial", "timeout", "terminal_result"]}
+      }, "required": ["browser_workspace_ref", "page_generation", "program_ref", "controller_lease_ref", "budget_ref", "permission_snapshot_ref", "execution_owner", "program_admitted", "focus_states", "non_authority_signals", "continues_independently", "focus_is_authority", "controller_generation_fenced", "foreground_input_dependency", "focus_loss_effect", "focus_change_requires_synthetic_input", "focus_change_pause_allowed", "focus_change_cancel_allowed", "focus_change_transfer_allowed", "focus_change_stop_allowed", "stop_causes"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Static identity and policy fields cannot prove a live server-owned Browser Program continues through OS/app/tab/panel focus transitions; the four-state runtime focus matrix remains required."
+    },
+    "foreground_equivalent_profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile_id", "visibility_semantics", "timer_throttle_policy", "network_priority_policy", "render_cadence_policy", "actively_composited", "steals_os_focus", "budget_ref", "declared_tolerance_ref", "platform_timing_profile_ref", "cef_timing_profile_ref", "timing_evidence_ref", "throttle_evidence_ref", "network_evidence_ref", "render_evidence_ref", "measured_evidence_ref", "degradation_is_explicit"],
+      "properties": {"profile_id": {"const": "foreground_equivalent"}, "visibility_semantics": {"const": "visible_equivalent"}, "timer_throttle_policy": {"const": "unthrottled_within_budget"}, "network_priority_policy": {"const": "foreground_equivalent"}, "render_cadence_policy": {"const": "foreground_equivalent"}, "actively_composited": {"const": true}, "steals_os_focus": {"const": false}, "budget_ref": {"$ref": "#/$defs/non_secret_ref"}, "declared_tolerance_ref": {"$ref": "#/$defs/non_secret_ref"}, "platform_timing_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "cef_timing_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "timing_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "throttle_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "network_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "render_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "measured_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "degradation_is_explicit": {"const": true}}
+    },
+    "real_background_profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile_id", "visibility_semantics", "timer_throttle_policy", "network_priority_policy", "render_cadence_policy", "preserves_actual_timing", "preserves_actual_throttling", "throttling_labeled", "platform_timing_profile_ref", "cef_timing_profile_ref", "timing_evidence_ref", "throttle_evidence_ref", "network_evidence_ref", "render_evidence_ref", "measured_evidence_ref", "degradation_is_explicit"],
+      "properties": {"profile_id": {"const": "real_background"}, "visibility_semantics": {"const": "actual_background"}, "timer_throttle_policy": {"const": "actual_background_policy"}, "network_priority_policy": {"const": "actual_background_policy"}, "render_cadence_policy": {"const": "actual_background_policy"}, "preserves_actual_timing": {"const": true}, "preserves_actual_throttling": {"const": true}, "throttling_labeled": {"const": true}, "platform_timing_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "cef_timing_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "timing_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "throttle_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "network_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "render_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "measured_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "degradation_is_explicit": {"const": true}}
+    },
+    "brw_011": {
+      "title": "BRW-011 truthful Browser fidelity profiles", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "BRW-011"}, "owner_doc": {"const": "Plans/Section15_MVP_Promoted_Features_Spec.md"}, "plan_unit_id": {"const": "SMPFS-155"}, "record_kind": {"const": "browser_fidelity_profile"},
+        "requested_profile": {"enum": ["foreground_equivalent", "real_background"]}, "effective_profile": {"enum": ["foreground_equivalent", "real_background", "blocked"]}, "profile_selection_explicit": {"const": true}, "foreground_equivalent": {"$ref": "#/$defs/foreground_equivalent_profile"}, "real_background": {"$ref": "#/$defs/real_background_profile"},
+        "interruption_causes": {"const": ["os_suspend", "lock_screen_restriction", "process_termination", "device_disconnection"]}, "interruption_record_required": {"const": true}, "foreground_label_requires_measured_tolerance": {"const": true}, "background_may_relabel_foreground": {"const": false}
+      }, "required": ["requested_profile", "effective_profile", "profile_selection_explicit", "foreground_equivalent", "real_background", "interruption_causes", "interruption_record_required", "foreground_label_requires_measured_tolerance", "background_may_relabel_foreground"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Profile identities and static semantics are non-swappable. Runtime timing, composition, throttling, platform/CEF behavior, declared-tolerance measurement, focus theft, degradation, and interruption evidence require empirical execution."
+    },
+    "scm_baseline": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scm_backend", "distribution_owner", "included_baseline", "exact_host_ref", "exact_environment_ref", "source_pinned", "provenance_ref", "lifecycle_ref", "compatibility_ref", "verification_ref", "activation_generation_ref", "current_generation_ref", "update_ref", "rollback_ref", "ownership_evidence_ref", "verified_activation_required", "global_path_mutation_allowed", "global_scm_config_mutation_allowed", "readiness_from_path_discovery_allowed"],
+      "properties": {"scm_backend": {"enum": ["git", "jujutsu"]}, "distribution_owner": {"const": "pm_tool_store"}, "included_baseline": {"const": true}, "exact_host_ref": {"$ref": "#/$defs/non_secret_ref"}, "exact_environment_ref": {"$ref": "#/$defs/non_secret_ref"}, "source_pinned": {"const": true}, "provenance_ref": {"$ref": "#/$defs/non_secret_ref"}, "lifecycle_ref": {"$ref": "#/$defs/non_secret_ref"}, "compatibility_ref": {"$ref": "#/$defs/non_secret_ref"}, "verification_ref": {"$ref": "#/$defs/non_secret_ref"}, "activation_generation_ref": {"$ref": "#/$defs/non_secret_ref"}, "current_generation_ref": {"$ref": "#/$defs/non_secret_ref"}, "update_ref": {"$ref": "#/$defs/non_secret_ref"}, "rollback_ref": {"$ref": "#/$defs/non_secret_ref"}, "ownership_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "verified_activation_required": {"const": true}, "global_path_mutation_allowed": {"const": false}, "global_scm_config_mutation_allowed": {"const": false}, "readiness_from_path_discovery_allowed": {"const": false}}
+    },
+    "scm_git_baseline": {"allOf": [{"$ref": "#/$defs/scm_baseline"}, {"properties": {"scm_backend": {"const": "git"}}}]},
+    "scm_jujutsu_baseline": {"allOf": [{"$ref": "#/$defs/scm_baseline"}, {"properties": {"scm_backend": {"const": "jujutsu"}}}]},
+    "scm_005": {
+      "title": "SCM-005 included Git and Jujutsu baselines", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "SCM-005"}, "owner_doc": {"const": "Plans/Source_Control_System.md"}, "plan_unit_id": {"const": "SCS-007"}, "record_kind": {"const": "managed_scm_baseline"},
+        "managed_baselines": {"type": "array", "prefixItems": [{"$ref": "#/$defs/scm_git_baseline"}, {"$ref": "#/$defs/scm_jujutsu_baseline"}], "items": false, "minItems": 2, "maxItems": 2},
+        "supported_target_classes": {"const": ["native_app", "server", "container", "managed_wsl", "managed_execution_host"]}, "baseline_separate_from_external_selection": {"const": true}, "external_selection_replaces_baseline": {"const": false}, "silent_external_preference_allowed": {"const": false}, "global_path_mutation": {"const": false}, "global_config_mutation": {"const": false}
+      }, "required": ["managed_baselines", "supported_target_classes", "baseline_separate_from_external_selection", "external_selection_replaces_baseline", "silent_external_preference_allowed", "global_path_mutation", "global_config_mutation"]}],
+      "unevaluatedProperties": false,
+      "$comment": "The schema requires separate ordered Git and Jujutsu baseline rows and all target classes. It cannot probe PATH, install or activate a tool, validate Host/Environment existence, or prove provenance/current generation at runtime."
+    },
+    "file_claim": {"type": "object", "additionalProperties": false, "required": ["kind", "source_workspace_ref", "canonical_file_identity_ref", "path_only_identity"], "properties": {"kind": {"const": "file"}, "source_workspace_ref": {"$ref": "#/$defs/non_secret_ref"}, "canonical_file_identity_ref": {"$ref": "#/$defs/non_secret_ref"}, "path_only_identity": {"const": false}}},
+    "migration_claim": {"type": "object", "additionalProperties": false, "required": ["kind", "target_ref", "migration_schema_generation_ref"], "properties": {"kind": {"const": "migration"}, "target_ref": {"$ref": "#/$defs/non_secret_ref"}, "migration_schema_generation_ref": {"$ref": "#/$defs/non_secret_ref"}}},
+    "port_claim": {"type": "object", "additionalProperties": false, "required": ["kind", "host_ref", "environment_ref", "address", "protocol", "port", "exclusive"], "properties": {"kind": {"const": "port"}, "host_ref": {"$ref": "#/$defs/non_secret_ref"}, "environment_ref": {"$ref": "#/$defs/non_secret_ref"}, "address": {"type": "string", "minLength": 1, "maxLength": 255}, "protocol": {"enum": ["tcp", "udp"]}, "port": {"type": "integer", "minimum": 1, "maximum": 65535}, "exclusive": {"const": true}}},
+    "device_claim": {"type": "object", "additionalProperties": false, "required": ["kind", "provider_stable_device_ref", "exclusive"], "properties": {"kind": {"const": "device"}, "provider_stable_device_ref": {"$ref": "#/$defs/non_secret_ref"}, "exclusive": {"const": true}}},
+    "deployment_claim": {"type": "object", "additionalProperties": false, "required": ["kind", "target_ref", "release_generation_ref", "environment_generation_ref"], "properties": {"kind": {"const": "deployment"}, "target_ref": {"$ref": "#/$defs/non_secret_ref"}, "release_generation_ref": {"$ref": "#/$defs/non_secret_ref"}, "environment_generation_ref": {"$ref": "#/$defs/non_secret_ref"}}},
+    "scm_019": {
+      "title": "SCM-019 five-domain workspace conflict plan", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "SCM-019"}, "owner_doc": {"const": "Plans/Source_Control_System.md"}, "plan_unit_id": {"const": "SCS-007"}, "record_kind": {"const": "workspace_conflict_plan"},
+        "resource_kinds": {"const": ["file", "migration", "port", "device", "deployment"]},
+        "resource_claims": {"type": "object", "additionalProperties": false, "required": ["file", "migration", "port", "device", "deployment"], "properties": {"file": {"$ref": "#/$defs/file_claim"}, "migration": {"$ref": "#/$defs/migration_claim"}, "port": {"$ref": "#/$defs/port_claim"}, "device": {"$ref": "#/$defs/device_claim"}, "deployment": {"$ref": "#/$defs/deployment_claim"}}},
+        "collision_decisions": {"type": "object", "additionalProperties": false, "required": ["file", "migration", "port", "device", "deployment", "unknown"], "properties": {"file": {"enum": ["admit", "serialize", "isolate", "block", "manual_resolution"]}, "migration": {"enum": ["serialize", "isolate", "block", "manual_resolution"]}, "port": {"enum": ["serialize", "isolate", "block", "manual_resolution"]}, "device": {"enum": ["serialize", "isolate", "block", "manual_resolution"]}, "deployment": {"enum": ["serialize", "isolate", "block", "manual_resolution"]}, "unknown": {"const": "block"}}},
+        "conflict_decision": {"enum": ["admit", "serialize", "isolate", "block", "manual_resolution"]}, "resource_identity_required": {"const": true}, "lease_refs": {"$ref": "#/$defs/non_secret_ref_list"}, "currentness_refs": {"$ref": "#/$defs/non_secret_ref_list"}, "isolation_proof_ref": {"$ref": "#/$defs/non_secret_ref"}, "conflict_plan_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "receipt_required": {"const": true}, "pre_admission_required": {"const": true}, "exclusive_port_device_double_lease_allowed": {"const": false}, "path_focus_or_repository_proximity_is_authority": {"const": false}, "unknown_collision_silently_admitted": {"const": false}
+      }, "required": ["resource_kinds", "resource_claims", "collision_decisions", "conflict_decision", "resource_identity_required", "lease_refs", "currentness_refs", "isolation_proof_ref", "conflict_plan_receipt_ref", "receipt_required", "pre_admission_required", "exclusive_port_device_double_lease_allowed", "path_focus_or_repository_proximity_is_authority", "unknown_collision_silently_admitted"]}],
+      "unevaluatedProperties": false,
+      "$comment": "The schema requires every claim domain, stable identity ingredients, decision, lease/currentness refs, isolation proof, and receipt. Live collision detection, lease freshness, double-lease exclusion, deterministic adjudication, and proof applicability require runtime validation."
+    },
+    "origin_visibility_choice": {"type": "object", "additionalProperties": false, "required": ["requested", "effective", "enabled", "dispatchable", "capability_required", "optimistic_without_capability"], "properties": {"requested": {"type": "boolean"}, "effective": {"enum": ["available", "degraded_unavailable", "unavailable_until_capability_proven"]}, "enabled": {"type": "boolean"}, "dispatchable": {"type": "boolean"}, "capability_required": {"const": true}, "optimistic_without_capability": {"const": false}}},
+    "origin_internal_private_choice": {"allOf": [{"$ref": "#/$defs/origin_visibility_choice"}, {"properties": {"effective": {"enum": ["available", "degraded_unavailable"]}}}]},
+    "origin_public_choice": {"allOf": [{"$ref": "#/$defs/origin_visibility_choice"}, {"properties": {"effective": {"const": "unavailable_until_capability_proven"}, "enabled": {"const": false}, "dispatchable": {"const": false}}}]},
+    "ori_002": {
+      "title": "ORI-002 capability-gated Origin create visibility", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "ORI-002"}, "owner_doc": {"const": "Plans/Cursor_Origin_Integration.md"}, "plan_unit_id": {"const": "ORI-009"}, "record_kind": {"const": "origin_create_eligibility"},
+        "advertised_as_self_hosted": {"const": false}, "advertised_as_open_source": {"const": false}, "advertised_as_feature_equivalent": {"const": false}, "signed_capability_envelope_ref": {"$ref": "#/$defs/non_secret_ref"}, "capability_generation": {"$ref": "#/$defs/positive_generation"}, "capability_fresh": {"const": true}, "capability_signature_verified": {"const": true},
+        "requested_visibility": {"enum": ["internal", "private", "public"]}, "effective_visibility": {"enum": ["internal", "private", "degraded_unavailable", "unavailable_until_capability_proven"]}, "retained_current_baseline": {"const": ["internal", "private"]},
+        "create_visibility": {"type": "object", "additionalProperties": false, "required": ["internal", "private", "public"], "properties": {"internal": {"$ref": "#/$defs/origin_internal_private_choice"}, "private": {"$ref": "#/$defs/origin_internal_private_choice"}, "public": {"$ref": "#/$defs/origin_public_choice"}}},
+        "public_no_dispatch_without_capability": {"const": true}, "public_inferred_from_internal_private_success": {"const": false}, "public_inferred_from_label_repo_mode_or_generic_endpoint": {"const": false}
+      }, "required": ["advertised_as_self_hosted", "advertised_as_open_source", "advertised_as_feature_equivalent", "signed_capability_envelope_ref", "capability_generation", "capability_fresh", "capability_signature_verified", "requested_visibility", "effective_visibility", "retained_current_baseline", "create_visibility", "public_no_dispatch_without_capability", "public_inferred_from_internal_private_success", "public_inferred_from_label_repo_mode_or_generic_endpoint"]}],
+      "unevaluatedProperties": false,
+      "$comment": "The schema fixes marketing negatives, signed/current capability evidence fields, retained baseline, and no-Public-dispatch semantics. It cannot verify provider capability freshness/signature or prove a GUI/adapter does not optimistically enable or dispatch."
+    },
+    "origin_fallback_case": {"type": "object", "required": ["route", "outcome", "complete_claim_requires_typed_proof", "typed_proof_ref"], "properties": {"route": {"enum": ["git_data", "git_transport", "typed_cli_gap_adapter", "none"]}, "outcome": {"enum": ["complete", "partial", "unavailable", "open_in_origin"]}, "complete_claim_requires_typed_proof": {"const": true}, "typed_proof_ref": {"$ref": "#/$defs/non_secret_ref"}}, "allOf": [{"if": {"properties": {"route": {"const": "none"}}}, "then": {"properties": {"outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}]},
+    "ori_020": {
+      "title": "ORI-020 complete typed API fallback", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "ORI-020"}, "owner_doc": {"const": "Plans/Cursor_Origin_Integration.md"}, "plan_unit_id": {"const": "ORI-009"}, "record_kind": {"const": "origin_api_fallback"},
+        "fallback_operations": {"const": ["content", "compare", "push", "thread", "reviewer"]}, "fallback_routes": {"const": ["git_data", "git_transport", "typed_cli_gap_adapter"]}, "large_content_threshold_bytes": {"const": 1048576}, "large_content_boundary_rule": {"const": "greater_than"}, "complete_commit_preserved": {"const": true}, "partial_api_never_claims_complete": {"const": true},
+        "fallback_cases": {"type": "object", "additionalProperties": false, "required": ["content", "compare", "push", "thread", "reviewer"], "properties": {
+          "content": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"decoded_byte_count": {"type": "integer", "minimum": 0}, "exact_boundary_decoded_byte_count": {"const": 1048576}, "over_boundary_decoded_byte_count": {"type": "integer", "minimum": 1048577}, "oversized_batch_member_disposition": {"enum": ["individual_fallback", "partial", "unavailable", "open_in_origin"]}, "batch_member_truth_preserved": {"const": true}, "truncation_claimed_complete": {"const": false}}, "required": ["decoded_byte_count", "exact_boundary_decoded_byte_count", "over_boundary_decoded_byte_count", "oversized_batch_member_disposition", "batch_member_truth_preserved", "truncation_claimed_complete"]}], "unevaluatedProperties": false},
+          "compare": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"comparison_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "summary_only_claimed_complete": {"const": false}}, "required": ["comparison_evidence_ref", "summary_only_claimed_complete"]}], "unevaluatedProperties": false},
+          "push": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"before_revision_ref": {"$ref": "#/$defs/non_secret_ref"}, "after_revision_ref": {"$ref": "#/$defs/non_secret_ref"}, "enumerated_commit_proof_ref": {"$ref": "#/$defs/non_secret_ref"}, "webhook_count_is_completeness_proof": {"const": false}}, "required": ["before_revision_ref", "after_revision_ref", "enumerated_commit_proof_ref", "webhook_count_is_completeness_proof"]}], "unevaluatedProperties": false},
+          "thread": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"thread_resolution_support_proven": {"type": "boolean"}, "unsupported_success_allowed": {"const": false}}, "required": ["thread_resolution_support_proven", "unsupported_success_allowed"]}, {"if": {"properties": {"thread_resolution_support_proven": {"const": false}}}, "then": {"properties": {"outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}], "unevaluatedProperties": false},
+          "reviewer": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"reviewer_mutations": {"const": ["add", "remove", "rerequest"]}, "reviewer_mutation_support_proven": {"type": "boolean"}, "unsupported_success_allowed": {"const": false}}, "required": ["reviewer_mutations", "reviewer_mutation_support_proven", "unsupported_success_allowed"]}, {"if": {"properties": {"reviewer_mutation_support_proven": {"const": false}}}, "then": {"properties": {"outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}], "unevaluatedProperties": false}
+        }},
+        "typed_cli_contract": {"type": "object", "additionalProperties": false, "required": ["version_ref", "schema_ref", "version_gated", "structured_json_only", "prose_parsing_allowed", "optional"], "properties": {"version_ref": {"$ref": "#/$defs/non_secret_ref"}, "schema_ref": {"$ref": "#/$defs/non_secret_ref"}, "version_gated": {"const": true}, "structured_json_only": {"const": true}, "prose_parsing_allowed": {"const": false}, "optional": {"const": true}}},
+        "no_complete_route_outcomes": {"const": ["partial", "unavailable", "open_in_origin"]}, "success_without_complete_route_allowed": {"const": false}
+      }, "required": ["fallback_operations", "fallback_routes", "large_content_threshold_bytes", "large_content_boundary_rule", "complete_commit_preserved", "partial_api_never_claims_complete", "fallback_cases", "typed_cli_contract", "no_complete_route_outcomes", "success_without_complete_route_allowed"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Structural fields require all five cases and complete-proof ingredients. Custom validation must compare decoded bytes to the threshold, prove route completeness, enumerate exact commits, validate CLI version/schema output, and ensure unsupported operations cannot report success."
+    },
+    "maintenance_effect_policy": {"type": "object", "additionalProperties": false, "required": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"], "properties": {"download": {"const": "explicit_action_or_current_delegation"}, "package_invoke": {"const": "explicit_action_or_current_delegation"}, "replace": {"const": "explicit_action_or_current_delegation"}, "activate": {"const": "explicit_action_or_current_delegation"}, "repair": {"const": "explicit_action_or_current_delegation"}, "rollback": {"const": "explicit_action_or_current_delegation"}, "configure": {"const": "explicit_action_or_current_delegation"}, "remove": {"const": "explicit_action_or_current_delegation"}}},
+    "maintenance_default_deny_policy": {"type": "object", "additionalProperties": false, "required": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"], "properties": {"download": {"const": "deny"}, "package_invoke": {"const": "deny"}, "replace": {"const": "deny"}, "activate": {"const": "deny"}, "repair": {"const": "deny"}, "rollback": {"const": "deny"}, "configure": {"const": "deny"}, "remove": {"const": "deny"}}},
+    "irt_008": {
+      "title": "IRT-008 external installation maintenance ownership", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "IRT-008"}, "owner_doc": {"const": "Plans/Shared_Integration_Runtime.md"}, "plan_unit_id": {"const": "SIR-021"}, "record_kind": {"const": "external_install_maintenance_policy"},
+        "management_sources": {"const": ["external", "package_manager"]}, "default_maintenance": {"const": "check_and_notify"}, "mutation_requires_explicit_user_action": {"const": true}, "ownership_proof_ref": {"$ref": "#/$defs/non_secret_ref"}, "ownership_confidence": {"const": "proven"}, "effect_kinds": {"const": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"]}, "default_effect_policy": {"$ref": "#/$defs/maintenance_default_deny_policy"}, "effect_policy": {"$ref": "#/$defs/maintenance_effect_policy"},
+        "one_operation_consent_ref": {"$ref": "#/$defs/non_secret_ref"}, "durable_delegation_ref": {"$ref": "#/$defs/non_secret_ref"}, "delegation_scope_ref": {"$ref": "#/$defs/non_secret_ref"}, "delegation_generation": {"$ref": "#/$defs/positive_generation"}, "delegation_current": {"const": true}, "delegation_revoked": {"const": false}, "unknown_owner_policy": {"const": "manual_only"}, "mode_discovery_update_or_baseline_grants_mutation": {"const": false}, "unrelated_consent_reuse_allowed": {"const": false}
+      }, "required": ["management_sources", "default_maintenance", "mutation_requires_explicit_user_action", "ownership_proof_ref", "ownership_confidence", "effect_kinds", "default_effect_policy", "effect_policy", "one_operation_consent_ref", "durable_delegation_ref", "delegation_scope_ref", "delegation_generation", "delegation_current", "delegation_revoked", "unknown_owner_policy", "mode_discovery_update_or_baseline_grants_mutation", "unrelated_consent_reuse_allowed"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Schema consts cannot prove real ownership, delegation currency/scope/revocation, one-operation consent identity, or absence of package-manager effects. Runtime ownership and mutation admission remain mandatory."
+    },
+    "installation_waiter": {"type": "object", "additionalProperties": false, "required": ["waiter_ref", "project_ref", "client_ref", "permission_ref", "approval_ref", "continuation_ref", "cancellation_ref", "currentness_ref", "result_ref", "cancellation_detaches_only"], "properties": {"waiter_ref": {"$ref": "#/$defs/non_secret_ref"}, "project_ref": {"$ref": "#/$defs/non_secret_ref"}, "client_ref": {"$ref": "#/$defs/non_secret_ref"}, "permission_ref": {"$ref": "#/$defs/non_secret_ref"}, "approval_ref": {"$ref": "#/$defs/non_secret_ref"}, "continuation_ref": {"$ref": "#/$defs/non_secret_ref"}, "cancellation_ref": {"$ref": "#/$defs/non_secret_ref"}, "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}, "result_ref": {"$ref": "#/$defs/non_secret_ref"}, "cancellation_detaches_only": {"const": true}}},
+    "irt_009": {
+      "title": "IRT-009 identical installation-operation coalescing", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "IRT-009"}, "owner_doc": {"const": "Plans/Shared_Integration_Runtime.md"}, "plan_unit_id": {"const": "SIR-021"}, "record_kind": {"const": "coalesced_installation_operation"},
+        "operation_kinds": {"const": ["provisioning", "update"]}, "coalesce_identical": {"const": true}, "fingerprint_fields": {"const": ["operation_kind", "desired_effect", "product", "package", "version", "channel", "source", "provenance", "artifact_hash", "host", "environment", "ownership_generation", "delegation_generation", "policy_generation"]}, "shared_logical_operation_ref": {"$ref": "#/$defs/non_secret_ref"}, "observable_work_ref": {"$ref": "#/$defs/non_secret_ref"}, "waiters": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/installation_waiter"}},
+        "shared_attempt_count": {"const": 1}, "per_waiter_authority_required": {"const": true}, "fanout_waiters": {"const": true}, "conflicting_operations_coalesce": {"const": false}, "conflicting_operation_kinds": {"const": ["install", "update", "remove"]}, "cancellation_fanout_allowed": {"const": false}, "package_manager_root_serialization_required": {"const": true}, "stream_coalescer_is_authority": {"const": false}, "display_or_partial_fingerprint_is_authority": {"const": false}, "incompatible_permission_license_or_cost_coalesce": {"const": false}
+      }, "required": ["operation_kinds", "coalesce_identical", "fingerprint_fields", "shared_logical_operation_ref", "observable_work_ref", "waiters", "shared_attempt_count", "per_waiter_authority_required", "fanout_waiters", "conflicting_operations_coalesce", "conflicting_operation_kinds", "cancellation_fanout_allowed", "package_manager_root_serialization_required", "stream_coalescer_is_authority", "display_or_partial_fingerprint_is_authority", "incompatible_permission_license_or_cost_coalesce"]}],
+      "unevaluatedProperties": false,
+      "$comment": "JSON Schema fixes the complete fingerprint vocabulary and per-waiter fields but cannot compare operation fingerprints, validate waiter freshness/authority, prove cancellation detachment, or enforce package-manager-root serialization."
+    },
+    "persistent_root_binding": {"type": "object", "additionalProperties": false, "required": ["server_ref", "host_ref", "environment_ref", "root_ref", "root_generation", "mount_currentness_ref", "mount_current", "mount_state", "integrity_verification_ref", "content_complete"], "properties": {"server_ref": {"$ref": "#/$defs/non_secret_ref"}, "host_ref": {"$ref": "#/$defs/non_secret_ref"}, "environment_ref": {"$ref": "#/$defs/non_secret_ref"}, "root_ref": {"$ref": "#/$defs/non_secret_ref"}, "root_generation": {"$ref": "#/$defs/positive_generation"}, "mount_currentness_ref": {"$ref": "#/$defs/non_secret_ref"}, "mount_current": {"const": true}, "mount_state": {"const": "mounted"}, "integrity_verification_ref": {"$ref": "#/$defs/non_secret_ref"}, "content_complete": {"const": true}}},
+    "irt_010": {
+      "title": "IRT-010 durable Tool Store and isolated profiles", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "IRT-010"}, "owner_doc": {"const": "Plans/Shared_Integration_Runtime.md"}, "plan_unit_id": {"const": "SIR-021"}, "record_kind": {"const": "persistent_tool_profile"},
+        "persistent_roots": {"const": ["tool_store", "isolated_profiles"]}, "survives_replacement": {"const": ["image", "pod"]}, "durable_volume_required": {"const": true}, "root_bindings": {"type": "object", "additionalProperties": false, "required": ["tool_store", "isolated_profiles"], "properties": {"tool_store": {"$ref": "#/$defs/persistent_root_binding"}, "isolated_profiles": {"$ref": "#/$defs/persistent_root_binding"}}}, "isolation_dimensions": {"const": ["product", "profile", "account"]},
+        "post_replacement_reconciliation_state": {"const": "required_before_readiness"}, "post_replacement_reconciliation_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "schema_version_ref": {"$ref": "#/$defs/non_secret_ref"}, "migration_ref": {"$ref": "#/$defs/non_secret_ref"}, "package_provenance_ref": {"$ref": "#/$defs/non_secret_ref"}, "package_sha256": {"$ref": "#/$defs/sha256"}, "active_generation_ref": {"$ref": "#/$defs/non_secret_ref"}, "previous_generation_ref": {"$ref": "#/$defs/non_secret_ref"}, "ownership_ref": {"$ref": "#/$defs/non_secret_ref"}, "permission_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "broker_ref_verification_required": {"const": true}, "secret_bytes_excluded": {"const": true}, "raw_secret_material": {"const": false}, "cross_profile_root_reuse_allowed": {"const": false}, "silent_reacquire_allowed": {"const": false}, "fresh_empty_root_is_success": {"const": false}, "readiness_before_reconciliation_receipt": {"const": false}, "independent_image_and_pod_retention_required": {"const": true}
+      }, "required": ["persistent_roots", "survives_replacement", "durable_volume_required", "root_bindings", "isolation_dimensions", "post_replacement_reconciliation_state", "post_replacement_reconciliation_receipt_ref", "schema_version_ref", "migration_ref", "package_provenance_ref", "package_sha256", "active_generation_ref", "previous_generation_ref", "ownership_ref", "permission_ref", "broker_ref_verification_required", "secret_bytes_excluded", "raw_secret_material", "cross_profile_root_reuse_allowed", "silent_reacquire_allowed", "fresh_empty_root_is_success", "readiness_before_reconciliation_receipt", "independent_image_and_pod_retention_required"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Static refs cannot prove mount presence/currentness, data survival across image/pod replacement, corruption/partial-root handling, isolation, migration, provenance, broker verification, no-secret storage, or successful reconciliation."
+    },
+    "irt_011": {
+      "title": "IRT-011 attenuated credential attachment", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "IRT-011"}, "owner_doc": {"const": "Plans/Shared_Integration_Runtime.md"}, "plan_unit_id": {"const": "SIR-021"}, "record_kind": {"const": "credential_attachment"},
+        "auth_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "credential_ref": {"$ref": "#/$defs/non_secret_ref"}, "credential_source_ref": {"$ref": "#/$defs/non_secret_ref"}, "provider_ref": {"$ref": "#/$defs/non_secret_ref"}, "host_ref": {"$ref": "#/$defs/non_secret_ref"}, "environment_ref": {"$ref": "#/$defs/non_secret_ref"}, "repository_ref": {"$ref": "#/$defs/non_secret_ref"}, "operation_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "attachment_scopes": {"const": ["provider", "host", "environment", "repository", "operation", "capability", "action"]}, "capability_refs": {"$ref": "#/$defs/non_secret_ref_list"}, "action_refs": {"$ref": "#/$defs/non_secret_ref_list"}, "owner_generation": {"$ref": "#/$defs/positive_generation"}, "profile_generation": {"$ref": "#/$defs/positive_generation"}, "issued_at": {"type": "string", "format": "date-time"}, "expires_at": {"type": "string", "format": "date-time"}, "expires_at_required": {"const": true}, "revocation_state": {"const": "active"}, "revocation_generation": {"$ref": "#/$defs/positive_generation"}, "broker_lease_ref": {"$ref": "#/$defs/non_secret_ref"}, "attachment_current": {"const": true}, "profile_current": {"const": true}, "revocation_current": {"const": true}, "broker_lease_current": {"const": true}, "credential_ref_is_broker_ref": {"const": true}, "broker_enforced": {"const": true}, "scope_widening_allowed": {"const": false}, "raw_secret_material": {"const": false}, "copied_secret_material": {"const": false}, "authentication_proven": {"const": false}, "readiness_proven": {"const": false}
+      }, "required": ["auth_profile_ref", "credential_ref", "credential_source_ref", "provider_ref", "host_ref", "environment_ref", "repository_ref", "operation_ref", "attachment_scopes", "capability_refs", "action_refs", "owner_generation", "profile_generation", "issued_at", "expires_at", "expires_at_required", "revocation_state", "revocation_generation", "broker_lease_ref", "attachment_current", "profile_current", "revocation_current", "broker_lease_current", "credential_ref_is_broker_ref", "broker_enforced", "scope_widening_allowed", "raw_secret_material", "copied_secret_material", "authentication_proven", "readiness_proven"]}],
+      "unevaluatedProperties": false,
+      "$comment": "The schema prohibits raw/copied secret fields and requires exact scope/generation/revocation/broker refs. Broker/runtime validation must prove expiry ordering, current revocation, ref authenticity, exact scope matches, lease enforcement, secret isolation, authentication, and readiness."
+    },
+    "sec_003": {
+      "title": "SEC-003 minimum Browser-state export", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "SEC-003"}, "owner_doc": {"const": "Plans/Permissions_System.md"}, "plan_unit_id": {"const": "PS-135"}, "record_kind": {"const": "browser_state_export_policy"},
+        "subject_class": {"const": "ordinary_browser"}, "state_classes": {"const": ["cookies", "storage", "auth_headers"]}, "storage_classes": {"const": ["origin_storage", "local_storage", "session_storage"]}, "export_default": {"const": "off"}, "export_mode": {"const": "minimum_allowlisted_fields_only"}, "allowlist_granularity": {"const": "field"}, "wholesale_export_allowed": {"const": false}, "wildcard_origin_profile_or_state_class_grant_allowed": {"const": false}, "protected_auth_subject_exportable": {"const": false}, "redaction_before_persistence_display_export": {"const": true}, "receipt_required": {"const": true}, "receipt_contains_raw_secret_bytes": {"const": false}, "raw_secret_bytes_present": {"const": false},
+        "permission_ref": {"$ref": "#/$defs/non_secret_ref"}, "redaction_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "allowed_field_names": {"$ref": "#/$defs/non_secret_ref_list"}, "allowed_field_hashes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/sha256"}}, "purpose_ref": {"$ref": "#/$defs/non_secret_ref"}, "destination_ref": {"$ref": "#/$defs/non_secret_ref"}, "expiry_ref": {"$ref": "#/$defs/non_secret_ref"}, "omission_refs": {"$ref": "#/$defs/non_secret_ref_list"}, "receipt_identity_ref": {"$ref": "#/$defs/non_secret_ref"}, "receipt_decision": {"const": "allow_minimum_fields"}, "receipt_sha256": {"$ref": "#/$defs/sha256"},
+        "forbidden_raw_value_classes": {"const": ["set_cookie", "cookie", "authorization", "proxy_authorization", "bearer_token", "credential_store_material", "complete_cookie_jar", "profile_bundle", "storage_database"]}, "raw_secret_absence_surfaces": {"const": ["export", "receipt", "artifact", "log", "model_context", "normal_display"]}
+      }, "required": ["subject_class", "state_classes", "storage_classes", "export_default", "export_mode", "allowlist_granularity", "wholesale_export_allowed", "wildcard_origin_profile_or_state_class_grant_allowed", "protected_auth_subject_exportable", "redaction_before_persistence_display_export", "receipt_required", "receipt_contains_raw_secret_bytes", "raw_secret_bytes_present", "permission_ref", "redaction_profile_ref", "allowed_field_names", "allowed_field_hashes", "purpose_ref", "destination_ref", "expiry_ref", "omission_refs", "receipt_identity_ref", "receipt_decision", "receipt_sha256", "forbidden_raw_value_classes", "raw_secret_absence_surfaces"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Closed fields and non-secret ref patterns cannot prove redaction effectiveness or absence of cookie/storage/auth secret bytes from exports, receipts, artifacts, logs, model context, persistence, or display. Secret-exfiltration and process-isolation tests remain required."
+    },
+    "sec_007": {
+      "title": "SEC-007 public ingress PM API only", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "SEC-007"}, "owner_doc": {"const": "Plans/Permissions_System.md"}, "plan_unit_id": {"const": "PS-136"}, "record_kind": {"const": "public_ingress_endpoint_policy"},
+        "endpoint_class": {"const": "pm_api"}, "pm_api_transports": {"const": ["https", "api", "websocket"]}, "public_exposure_default": {"const": "off"}, "explicit_exposure_ref": {"$ref": "#/$defs/non_secret_ref"}, "endpoint_registration_ref": {"$ref": "#/$defs/non_secret_ref"}, "endpoint_generation": {"$ref": "#/$defs/positive_generation"}, "endpoint_generation_current": {"const": true}, "authentication_decision_ref": {"$ref": "#/$defs/non_secret_ref"}, "rate_decision_ref": {"$ref": "#/$defs/non_secret_ref"}, "body_bound_decision_ref": {"$ref": "#/$defs/non_secret_ref"}, "policy_decision_ref": {"$ref": "#/$defs/non_secret_ref"}, "authentication_required": {"const": true}, "rate_gate_required": {"const": true}, "generation_fenced": {"const": true}, "body_bounded": {"const": true}, "policy_admission_required": {"const": true}, "pre_hydration_admission_required": {"const": true}, "admission_precedes": {"const": ["domain_hydration", "body_processing", "browser_creation", "model_dispatch", "expensive_routing", "durable_mutation"]},
+        "forbidden_endpoint_classes": {"const": ["internal_automation_control", "credential_broker_ssh_ipc", "cef_cdp_browser_debug", "terminal_pty", "container_engine", "device_bridge", "recorder", "local_daemon_control", "plugin_mcp_private"]}, "internal_control_socket_exposed": {"const": false}, "browser_debug_socket_exposed": {"const": false}, "forbidden_endpoint_exposure_allowed": {"const": false}, "transport_or_proxy_reachability_reclassifies_endpoint": {"const": false}
+      }, "required": ["endpoint_class", "pm_api_transports", "public_exposure_default", "explicit_exposure_ref", "endpoint_registration_ref", "endpoint_generation", "endpoint_generation_current", "authentication_decision_ref", "rate_decision_ref", "body_bound_decision_ref", "policy_decision_ref", "authentication_required", "rate_gate_required", "generation_fenced", "body_bounded", "policy_admission_required", "pre_hydration_admission_required", "admission_precedes", "forbidden_endpoint_classes", "internal_control_socket_exposed", "browser_debug_socket_exposed", "forbidden_endpoint_exposure_allowed", "transport_or_proxy_reachability_reclassifies_endpoint"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Endpoint-class policy cannot prove live bind/port/firewall/Funnel/reverse-proxy topology, authentication, rate limiting, body bounds, generation fencing, pre-hydration ordering, or attack resistance."
+    },
+    "sec_008": {
+      "title": "SEC-008 actual network-effect authorization", "type": "object",
+      "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
+        "requirement_id": {"const": "SEC-008"}, "owner_doc": {"const": "Plans/Permissions_System.md"}, "plan_unit_id": {"const": "PS-137"}, "record_kind": {"const": "network_effect_authorization"},
+        "effect_kinds": {"const": ["navigation", "request", "redirect", "websocket", "form_submission", "upload", "download", "low_level_network_effect"]}, "pre_effect_authorization_required": {"const": true}, "effective_web_egress_policy_required": {"const": true}, "permit_binding_fields": {"const": ["permission_snapshot", "policy_generation", "normalized_destination", "dns_ip_result", "method", "headers_class", "body_class_hash", "effect_kind", "redirect_hop", "proxy_trust_policy", "expiry"]},
+        "redirect_reauthorization_required": {"const": true}, "dns_and_destination_rechecked": {"const": true}, "dynamic_url_rechecked": {"const": true}, "websocket_handshake_reauthorization_required": {"const": true}, "websocket_reconnect_reauthorization_required": {"const": true}, "navigation_followup_reauthorization_required": {"const": true}, "form_followup_reauthorization_required": {"const": true}, "upload_followup_reauthorization_required": {"const": true}, "download_followup_reauthorization_required": {"const": true}, "upload_filesafe_required": {"const": true}, "download_filesafe_required": {"const": true}, "filesafe_staging_destination_transfer_required": {"const": true}, "low_level_effect_gate_required": {"const": true}, "changed_binding_requires_fresh_permit": {"const": true}, "rechecked_policy_classes": {"const": ["ssrf", "private_host", "link_local", "localhost", "file_url", "internal_metadata", "dns_rebinding", "permission", "proxy_trust", "web_egress_policy"]}, "private_link_local_localhost_file_metadata_rechecked": {"const": true}, "url_source_scanning_is_authority": {"const": false}, "bypass_path_allowed": {"const": false}
+      }, "required": ["effect_kinds", "pre_effect_authorization_required", "effective_web_egress_policy_required", "permit_binding_fields", "redirect_reauthorization_required", "dns_and_destination_rechecked", "dynamic_url_rechecked", "websocket_handshake_reauthorization_required", "websocket_reconnect_reauthorization_required", "navigation_followup_reauthorization_required", "form_followup_reauthorization_required", "upload_followup_reauthorization_required", "download_followup_reauthorization_required", "upload_filesafe_required", "download_filesafe_required", "filesafe_staging_destination_transfer_required", "low_level_effect_gate_required", "changed_binding_requires_fresh_permit", "rechecked_policy_classes", "private_link_local_localhost_file_metadata_rechecked", "url_source_scanning_is_authority", "bypass_path_allowed"]}],
+      "unevaluatedProperties": false,
+      "$comment": "Schema consts cannot intercept actual network effects, compare a permit to a request, resolve DNS, detect rebinding/SSRF, reauthorize redirects/reconnects/follow-ups, run FileSafe, or prove no bypass. Dynamic network and attack tests remain required."
+    }
+  }
+}

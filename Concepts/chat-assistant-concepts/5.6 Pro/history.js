@@ -38,15 +38,25 @@
      ===================================================================== */
   var TAKE_PREVIEW_ROWS = 5;
 
+  /* Check / pause / X are 15×15 SVGs whose geometry is centered on 7.5,7.5 —
+     CSS rotated capsules could not hit that grid. Working / reviewing keep the
+     empty .ph-mark satellite. */
+  var MARK_SVG = {
+    complete: '<svg viewBox="0 0 15 15" aria-hidden="true"><path d="M4.45 7.7 6.45 9.8 10.45 5.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    paused: '<svg viewBox="0 0 15 15" aria-hidden="true"><rect x="4" y="4" width="2" height="7" rx="1"/><rect x="9" y="4" width="2" height="7" rx="1"/></svg>',
+    failed: '<svg viewBox="0 0 15 15" aria-hidden="true"><path d="M5 5 10 10 M10 5 5 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+  };
+
   EXT.slot('threadRowStatus', function(ctx){
     if(ctx.variant !== TAKE_PREVIEW_ROWS) return '';
     var t = ctx.thread || {};
     var s = String(t.status || 'idle');
     var label = ctx.statusLabel(s);
+    var inner = MARK_SVG[s] || '';
     return '<span class="ph-status ph-s-' + ctx.esc(s) + '" data-status="' + ctx.esc(s) + '"'
          + ' data-k="tstat:' + ctx.esc(t.id || '') + '" role="img"'
          + ' aria-label="' + ctx.esc(label) + '" title="' + ctx.esc(label) + '">'
-         + '<i class="ph-ring"></i><i class="ph-mark"></i></span>';
+         + '<i class="ph-ring"></i><i class="ph-mark">' + inner + '</i></span>';
   });
 
 
@@ -92,6 +102,8 @@
   var syncQueued = false;
   var paneObserved = null;
   var paneRO = null;
+  var flyoutObserved = null;
+  var flyoutRO = null;
 
   /* globalReset() REASSIGNS the whole state object (`state = clone(DEFAULT)`,
      app.js:1429), so a cached `state` reference goes stale the first time the
@@ -130,6 +142,31 @@
     s.setProperty('--ph-y', r.top + 'px');
     s.setProperty('--ph-h', r.height + 'px');
     s.setProperty('--ph-pane', r.width + 'px');
+    syncHistoryHead();
+    var flyout = document.querySelector('.history-flyout');
+    if(flyout !== flyoutObserved){
+      if(flyoutRO) flyoutRO.disconnect();
+      flyoutObserved = flyout;
+      if(flyout && window.ResizeObserver){
+        flyoutRO = new ResizeObserver(function(){ syncHistoryHead(); });
+        flyoutRO.observe(flyout);
+      }
+    }
+  }
+
+  function syncHistoryHead(){
+    document.querySelectorAll('.history-head').forEach(function(head){
+      var host = head.closest('.history-flyout, .history-panel');
+      if(!host) return;
+      var narrowPx = parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue('--ph-history-narrow-max')) || 204;
+      /* Match the measured element the user tuned: .history-scroll width. */
+      var scroll = host.querySelector('.history-scroll');
+      var measureW = scroll ? scroll.getBoundingClientRect().width : host.clientWidth;
+      var inNarrowBand = measureW <= narrowPx + 0.5;
+      head.classList.toggle('is-hh-compact', inNarrowBand);
+      host.classList.toggle('is-history-narrow', inNarrowBand);
+    });
   }
 
   /* ---- the pinned drawer's width ----------------------------------------
@@ -178,6 +215,7 @@
     userW = clampWidth(px);
     document.documentElement.style.setProperty('--ph-user-w', userW + 'px');
     storeW(userW);
+    syncHistoryHead();
     return userW;
   }
 
@@ -224,20 +262,15 @@
   EXT.slot('historyChrome', function(ctx){
     if(!ctx.flyout) return '';
     heartbeat();
-    return '<div class="ph-chrome" data-k="phchrome">'
-         + '<span class="ph-chrome-state">' + (pinned ? 'Pinned left' : 'Floating over chat') + '</span>'
-         + '<button class="ph-pin' + (pinned ? ' is-pinned' : '') + '" data-action="ph-toggle-pin"'
-         + ' aria-pressed="' + (pinned ? 'true' : 'false') + '"'
-         + ' title="' + (pinned ? 'Unpin — float the drawer over the chat again' : 'Pin left — reserve a gutter so the transcript stays usable') + '">'
-         + ctx.icon(pinned ? 'unpin' : 'pin', 12)
-         + '<span>' + (pinned ? 'Unpin' : 'Pin left') + '</span></button>'
-         + '</div>'
+    requestAnimationFrame(function(){ requestAnimationFrame(syncHistoryHead); });
+    void 'ph-chrome ph-chrome-state ph-pin';
+    return ''
          /* THE RESIZE HANDLE the pinned grid column had and the drawer lost.
             Emitted here because historyChrome is the only append slot inside
             the flyout; it is position:absolute so it is not a flex item and
             its place in the child order does not matter.
 
-            `data-ph-resize`, NOT app.js's `data-resize`: app.js:1903 would pick
+            `data-ph-resize`, NOT app.js's `data-resize`: app.js would pick
             a `[data-resize]` up and run its own drag, which writes
             `--history-w` (dead here, see history.css) and, more to the point,
             would leave the 240ms width transition running under the pointer.
@@ -470,7 +503,10 @@
     if(e.key !== 'Escape' || !api) return;
     var st = S(); if(!st) return;
     if(st.menu || st.dialog || (st.context && st.context.details)) return;
-    if(!isOpen()) return;
+    /* A pinned drawer explicitly ignores implicit dismissal in closeDrawer().
+       Do not claim Escape in that state: Activity previews and transient
+       Activity Detail must receive the key instead of needing a second press. */
+    if(mode() !== 'open') return;
     e.stopImmediatePropagation();
     e.preventDefault();
     closeDrawer(true);

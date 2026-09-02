@@ -42,7 +42,7 @@
   flex:none; min-width:17px; height:15px; padding:0 5px; border-radius:8px;
   display:grid; place-items:center;
   background:var(--surface-4); color:var(--muted);
-  font-size:8px; font-weight:800; letter-spacing:.02em;
+  font-size:9px; font-weight:800; letter-spacing:.02em;
 }
 .pm-tops-row.is-danger .menu-icon { color:var(--danger); background:color-mix(in srgb,var(--danger) 13%,var(--surface-3)); }
 .pm-tops-row.is-danger:hover { background:color-mix(in srgb,var(--danger) 11%,var(--surface-3)); }
@@ -89,13 +89,13 @@
 .pm-tops-dialog.is-danger { border-color:color-mix(in srgb,var(--danger) 46%,var(--border-strong)); }
 .pm-tops-dialog .pm-tops-danger-icon { color:var(--danger); background:color-mix(in srgb,var(--danger) 14%,var(--surface-3)); }
 .pm-tops-dialog .dialog-body { display:grid; gap:9px; align-content:start; }
-.pm-tops-lead { margin:0; font-size:10px; color:var(--muted); line-height:1.45; }
-.pm-tops-note { margin:0; font-size:9px; color:var(--warning); line-height:1.45; }
+.pm-tops-lead { margin:0; font-size:11px; color:var(--muted); line-height:1.45; }
+.pm-tops-note { margin:0; font-size:10px; color:var(--warning); line-height:1.45; }
 
 .pm-tops-facts { margin:0; display:grid; gap:3px; }
 .pm-tops-facts > div { display:grid; grid-template-columns:104px minmax(0,1fr); gap:8px; align-items:baseline; }
-.pm-tops-facts dt { color:var(--subtle); font-size:9px; text-transform:uppercase; letter-spacing:.07em; font-weight:800; }
-.pm-tops-facts dd { margin:0; color:var(--text); font-size:10px; overflow-wrap:anywhere; }
+.pm-tops-facts dt { color:var(--subtle); font-size:10px; text-transform:uppercase; letter-spacing:.07em; font-weight:800; }
+.pm-tops-facts dd { margin:0; color:var(--text); font-size:11px; overflow-wrap:anywhere; }
 
 .pm-tops-wt {
   border:1px solid var(--border); border-radius:11px; padding:9px;
@@ -103,9 +103,9 @@
 }
 .pm-tops-wt.is-dirty { border-color:color-mix(in srgb,var(--warning) 40%,var(--border)); }
 .pm-tops-wt.is-none { color:var(--muted); }
-.pm-tops-wt.is-none p { margin:0; font-size:10px; color:var(--muted); line-height:1.45; }
+.pm-tops-wt.is-none p { margin:0; font-size:11px; color:var(--muted); line-height:1.45; }
 .pm-tops-wt-head { display:flex; align-items:center; gap:7px; color:var(--muted); }
-.pm-tops-wt-head strong { font-size:11px; color:var(--text); }
+.pm-tops-wt-head strong { font-size:12px; color:var(--text); }
 .pm-tops-wt-head .meta-pill { margin-left:auto; }
 
 .pm-tops-del-actions { gap:6px; }
@@ -137,18 +137,18 @@
 .pm-tops-item.is-button:hover { background:var(--surface-3); border-color:var(--border-strong); color:var(--text); }
 .pm-tops-item.is-disabled { opacity:.6; pointer-events:none; }
 .pm-tops-item-copy { min-width:0; flex:1; display:grid; gap:2px; }
-.pm-tops-item-copy strong { font-size:10px; color:var(--text); }
-.pm-tops-item-copy span { font-size:9px; color:var(--subtle); line-height:1.4; overflow-wrap:anywhere; }
+.pm-tops-item-copy strong { font-size:11px; color:var(--text); }
+.pm-tops-item-copy span { font-size:10px; color:var(--subtle); line-height:1.4; overflow-wrap:anywhere; }
 .pm-tops-item-actions { flex:none; display:flex; align-items:center; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
 .pm-tops-item-actions .soft-button,
-.pm-tops-item-actions .text-button { height:26px; font-size:9px; }
+.pm-tops-item-actions .text-button { height:26px; font-size:10px; }
 
 .pm-tops-empty {
   display:grid; gap:3px; padding:14px 11px; border:1px dashed var(--border-strong);
   border-radius:11px; background:var(--surface-2); text-align:center;
 }
-.pm-tops-empty strong { font-size:11px; color:var(--text); }
-.pm-tops-empty span { font-size:9px; color:var(--subtle); }
+.pm-tops-empty strong { font-size:12px; color:var(--text); }
+.pm-tops-empty span { font-size:10px; color:var(--subtle); }
 
 /* ---------------------------------------------------------------------------
    5. Thread search: scope selector and result rows
@@ -164,7 +164,7 @@
 .pm-tops-scope-btn {
   flex:1 1 0; min-width:0; height:25px; padding:0 8px; border-radius:8px;
   border:1px solid var(--border); background:var(--surface-2); color:var(--muted);
-  font-size:9px; font-weight:700; cursor:pointer;
+  font-size:10px; font-weight:700; cursor:pointer;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   transition:background 130ms, color 130ms, border-color 130ms;
 }
@@ -174,7 +174,7 @@
   background:color-mix(in srgb,var(--accent) 14%,var(--surface-2));
 }
 .pm-tops-results { max-height:min(46vh,330px); overflow:auto; }
-.pm-tops-hint { padding:11px 9px; font-size:9px; color:var(--subtle); line-height:1.45; }
+.pm-tops-hint { padding:11px 9px; font-size:10px; color:var(--subtle); line-height:1.45; }
 .pm-tops-result { display:flex; align-items:center; gap:2px; }
 .pm-tops-result > .menu-item { flex:1 1 auto; min-width:0; }
 .pm-tops-result-op { flex:0 0 auto; width:26px; height:26px; color:var(--subtle); }
@@ -201,7 +201,7 @@
 .pm-tops-card { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
 .pm-tops-card-note {
   display:inline-block; padding:3px 7px; border-radius:8px;
-  background:var(--surface-3); color:var(--subtle); font-size:9px;
+  background:var(--surface-3); color:var(--subtle); font-size:10px;
 }
 .pm-tops-fold {
   list-style:none; margin:0 0 7px; padding:7px 8px; width:100%;
@@ -210,14 +210,14 @@
 }
 .pm-tops-fold li { display:flex; gap:7px; align-items:baseline; min-width:0; }
 .pm-tops-fold-role {
-  flex:none; width:56px; color:var(--subtle); font-size:8px; font-weight:800;
+  flex:none; width:56px; color:var(--subtle); font-size:9px; font-weight:800;
   text-transform:uppercase; letter-spacing:.06em;
 }
 .pm-tops-fold-text {
-  min-width:0; flex:1; color:var(--muted); font-size:9px; line-height:1.4;
+  min-width:0; flex:1; color:var(--muted); font-size:10px; line-height:1.4;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.pm-tops-fold-more { color:var(--subtle); font-size:9px; font-style:italic; }
+.pm-tops-fold-more { color:var(--subtle); font-size:10px; font-style:italic; }
 
 /* Tint this module's own receipt cards so a thread-operation record reads as
    a different kind of thing from a provider event. Reached through :has(),
@@ -240,7 +240,7 @@
   position:absolute; right:8px; bottom:-7px; z-index:2;
   padding:1px 6px; border-radius:7px;
   background:color-mix(in srgb,var(--accent) 20%,var(--surface-3));
-  color:var(--accent); font-size:8px; font-weight:800;
+  color:var(--accent); font-size:9px; font-weight:800;
   letter-spacing:.05em; text-transform:uppercase; pointer-events:none;
 }
 .message.pm-tops-jumped .message-surface {

@@ -1,0 +1,1254 @@
+{
+  "schema_id": "pm.shared_integration_runtime.command_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "contract_schema": "Plans/shared_integration_runtime.schema.json",
+  "claim_boundary": "Static schema fixtures only; no central registration, native handler, production wiring, EventRecord, provider call, installation activation, or runtime proof.",
+  "request_cases": [
+    {
+      "name": "add_cursor_origin_connection_without_raw_credentials",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_request",
+        "command_id": "cmd.integration.connection.add",
+        "action": "add",
+        "command_instance_id": "cmdinst-connection-add-1",
+        "idempotency_key": "idem-connection-add-1",
+        "origin": "forge_gui",
+        "connection_kind": "forge",
+        "provider_id": "cursor_origin",
+        "provider_variant": "preview",
+        "connection_id": null,
+        "project_id": "project-1",
+        "route_id": "origin_app_install",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "expected_connection_generation": 0,
+        "topology_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-1",
+        "observable_work_ref": "work-connection-add-1",
+        "return_context_ref": "return-origin-settings",
+        "mutation": {
+          "setup_route": "origin-app-install-route",
+          "profile_ref": null,
+          "account_id": null,
+          "credential_ref": null,
+          "patch_ref": null,
+          "probe_policy_ref": null,
+          "confirmation_ref": null,
+          "credential_disposition": "not_applicable",
+          "remote_data_disposition": "not_applicable",
+          "details_projection_ref": null
+        }
+      }
+    },
+    {
+      "name": "update_exact_connection_generation",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_request",
+        "command_id": "cmd.integration.connection.update",
+        "action": "update",
+        "command_instance_id": "cmdinst-connection-update-1",
+        "idempotency_key": "idem-connection-update-1",
+        "origin": "settings_gui",
+        "connection_kind": "forge",
+        "provider_id": "gitlab",
+        "provider_variant": "cloud",
+        "connection_id": "connection-1",
+        "project_id": "project-1",
+        "route_id": "gitlab-cloud-api",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "expected_connection_generation": 7,
+        "topology_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-2",
+        "observable_work_ref": "work-connection-update-1",
+        "return_context_ref": "return-gitlab-details",
+        "mutation": {
+          "setup_route": "gitlab-cloud-setup",
+          "profile_ref": "profile-ref-1",
+          "account_id": "account-1",
+          "credential_ref": "credential-broker-ref-1",
+          "patch_ref": "connection-patch-1",
+          "probe_policy_ref": null,
+          "confirmation_ref": null,
+          "credential_disposition": "not_applicable",
+          "remote_data_disposition": "not_applicable",
+          "details_projection_ref": null
+        }
+      }
+    },
+    {
+      "name": "test_connection_separates_reachability_from_readiness",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_request",
+        "command_id": "cmd.integration.connection.test",
+        "action": "test",
+        "command_instance_id": "cmdinst-connection-test-1",
+        "idempotency_key": "idem-connection-test-1",
+        "origin": "forge_gui",
+        "connection_kind": "forge",
+        "provider_id": "azure_devops",
+        "provider_variant": "cloud",
+        "connection_id": "connection-2",
+        "project_id": "project-1",
+        "route_id": "azure-cloud-api",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "expected_connection_generation": 3,
+        "topology_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-3",
+        "observable_work_ref": "work-connection-test-1",
+        "return_context_ref": "return-azure-details",
+        "mutation": {
+          "setup_route": "azure-cloud-setup",
+          "profile_ref": "profile-ref-2",
+          "account_id": "account-2",
+          "credential_ref": "credential-broker-ref-2",
+          "patch_ref": null,
+          "probe_policy_ref": "probe-policy-auth-capability-currentness",
+          "confirmation_ref": null,
+          "credential_disposition": "not_applicable",
+          "remote_data_disposition": "not_applicable",
+          "details_projection_ref": null
+        }
+      }
+    },
+    {
+      "name": "remove_exact_binding_retains_provider_data",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_request",
+        "command_id": "cmd.integration.connection.remove",
+        "action": "remove",
+        "command_instance_id": "cmdinst-connection-remove-1",
+        "idempotency_key": "idem-connection-remove-1",
+        "origin": "settings_gui",
+        "connection_kind": "forge",
+        "provider_id": "bitbucket",
+        "provider_variant": "cloud",
+        "connection_id": "connection-3",
+        "project_id": "project-1",
+        "route_id": "bitbucket-cloud-api",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "expected_connection_generation": 5,
+        "topology_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-4",
+        "observable_work_ref": "work-connection-remove-1",
+        "return_context_ref": "return-bitbucket-list",
+        "mutation": {
+          "setup_route": "bitbucket-cloud-setup",
+          "profile_ref": "profile-ref-3",
+          "account_id": "account-3",
+          "credential_ref": "credential-broker-ref-3",
+          "patch_ref": null,
+          "probe_policy_ref": null,
+          "confirmation_ref": "confirmation-remove-connection-3",
+          "credential_disposition": "revoke_broker_ref",
+          "remote_data_disposition": "retain_provider_data",
+          "details_projection_ref": null
+        }
+      }
+    },
+    {
+      "name": "open_redacted_connection_details_without_work",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_request",
+        "command_id": "cmd.integration.connection.open_details",
+        "action": "open_details",
+        "command_instance_id": "cmdinst-connection-details-1",
+        "idempotency_key": "idem-connection-details-1",
+        "origin": "forge_gui",
+        "connection_kind": "forge",
+        "provider_id": "gitlab",
+        "provider_variant": "self_managed",
+        "connection_id": "connection-4",
+        "project_id": "project-1",
+        "route_id": "gitlab-self-managed-api",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "expected_connection_generation": 2,
+        "topology_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-5",
+        "observable_work_ref": null,
+        "return_context_ref": "return-gitlab-list",
+        "mutation": {
+          "setup_route": "gitlab-self-managed-setup",
+          "profile_ref": "profile-ref-4",
+          "account_id": "account-4",
+          "credential_ref": null,
+          "patch_ref": null,
+          "probe_policy_ref": null,
+          "confirmation_ref": null,
+          "credential_disposition": "not_applicable",
+          "remote_data_disposition": "not_applicable",
+          "details_projection_ref": null
+        }
+      }
+    },
+    {
+      "name": "select_verified_origin_installation_without_acquisition_or_auth",
+      "target_def": "InstallationSelectCommandRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "installation_select_command_request",
+        "command_id": "cmd.installation.select",
+        "command_instance_id": "cmdinst-installation-select-1",
+        "idempotency_key": "idem-installation-select-1",
+        "origin": "cursor_origin_gui",
+        "product_id": "cursor_origin_cli",
+        "installation_id": "installation-origin-cli-wsl-ubuntu",
+        "project_id": "project-1",
+        "route_id": "origin_cli",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-wsl-1",
+        "execution_environment_id": "env-wsl-ubuntu",
+        "expected_inventory_generation": 9,
+        "expected_installation_generation": 3,
+        "topology_generation": 4,
+        "verification_proof_ref": "installation-verification-proof-3",
+        "provenance_ref": "official-source-provenance-3",
+        "compatibility_ref": "runtime-compatibility-3",
+        "permission_snapshot_ref": "permission-snapshot-6",
+        "observable_work_ref": "work-installation-select-1",
+        "continuation_ref": "continue-origin-sign-in",
+        "acquisition_allowed": false,
+        "authentication_allowed": false,
+        "return_context_ref": "return-origin-installations"
+      }
+    }
+  ],
+  "other_positive_cases": [
+    {
+      "name": "forgejo_handler_unavailable_preserves_git_transport",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "shared_integration_consumer_projection",
+        "consumer_binding_id": "consumer-forgejo-1",
+        "consumer_kind": "forgejo_instance",
+        "semantic_owner_ref": "Plans/Forge_Integrations.md#FGI-forgejo",
+        "owner_record_ref": "forge-instance:forgejo:1",
+        "home_server_id": "server-1",
+        "project_id": "project-1",
+        "provider_id": "forgejo",
+        "provider_instance_ref": "provider-instance:forgejo:1",
+        "forge_binding_ref": "forge-binding:1",
+        "automation_binding_ref": null,
+        "backup_destination_ref": null,
+        "connector_identity_ref": null,
+        "connection_profile_ref": "auth-profile:forgejo:1",
+        "auth_continuation_ref": null,
+        "expected_owner_generation": 4,
+        "observed_owner_generation": 4,
+        "availability_state": "handler_unavailable",
+        "read_operations_allowed": false,
+        "mutation_dispatch_allowed": false,
+        "protected_handoff_required": false,
+        "human_only_protected_content": true,
+        "agent_access_to_protected_content": false,
+        "adapter_access_to_protected_content": false,
+        "automation_binding_inferred_from_forge_binding": false,
+        "connector_identity_scope": "not_applicable",
+        "shared_runtime_primitives": [
+          "durable_command_outbox",
+          "runtime_resource_governor",
+          "observable_work",
+          "lease_coordinator",
+          "authentication_profile_and_credential_attachment",
+          "exact_return_continuation"
+        ],
+        "unaffected_capability_refs": ["capability:git-transport:ready"],
+        "event_effect_policy": "receipt_projection_only_no_unregistered_eventrecord",
+        "runtime_evidence_claimed": false,
+        "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "gitea_read_only_api_does_not_disable_git_transport",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "shared_integration_consumer_projection",
+        "consumer_binding_id": "consumer-gitea-1",
+        "consumer_kind": "gitea_instance",
+        "semantic_owner_ref": "Plans/Forge_Integrations.md#FGI-gitea",
+        "owner_record_ref": "forge-instance:gitea:1",
+        "home_server_id": "server-1",
+        "project_id": "project-1",
+        "provider_id": "gitea",
+        "provider_instance_ref": "provider-instance:gitea:1",
+        "forge_binding_ref": "forge-binding:2",
+        "automation_binding_ref": null,
+        "backup_destination_ref": null,
+        "connector_identity_ref": null,
+        "connection_profile_ref": "auth-profile:gitea:readonly",
+        "auth_continuation_ref": null,
+        "expected_owner_generation": 7,
+        "observed_owner_generation": 7,
+        "availability_state": "read_only",
+        "read_operations_allowed": true,
+        "mutation_dispatch_allowed": false,
+        "protected_handoff_required": false,
+        "human_only_protected_content": true,
+        "agent_access_to_protected_content": false,
+        "adapter_access_to_protected_content": false,
+        "automation_binding_inferred_from_forge_binding": false,
+        "connector_identity_scope": "not_applicable",
+        "shared_runtime_primitives": [
+          "durable_command_outbox",
+          "runtime_resource_governor",
+          "observable_work",
+          "lease_coordinator",
+          "authentication_profile_and_credential_attachment"
+        ],
+        "unaffected_capability_refs": ["capability:git-fetch:ready", "capability:git-push:policy-gated"],
+        "event_effect_policy": "receipt_projection_only_no_unregistered_eventrecord",
+        "runtime_evidence_claimed": false,
+        "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "repository_automation_uses_independent_binding_and_unavailable_handler",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "shared_integration_consumer_projection",
+        "consumer_binding_id": "consumer-repository-automation-1",
+        "consumer_kind": "repository_automation",
+        "semantic_owner_ref": "Plans/Forge_Integrations.md#repository_automation",
+        "owner_record_ref": "automation-service-binding:1",
+        "home_server_id": "server-1",
+        "project_id": "project-1",
+        "provider_id": null,
+        "provider_instance_ref": null,
+        "forge_binding_ref": "forge-binding:github-mirror:1",
+        "automation_binding_ref": "automation-binding:github-actions:1",
+        "backup_destination_ref": null,
+        "connector_identity_ref": null,
+        "connection_profile_ref": "auth-profile:github-api:1",
+        "auth_continuation_ref": null,
+        "expected_owner_generation": 3,
+        "observed_owner_generation": 3,
+        "availability_state": "handler_unavailable",
+        "read_operations_allowed": false,
+        "mutation_dispatch_allowed": false,
+        "protected_handoff_required": false,
+        "human_only_protected_content": true,
+        "agent_access_to_protected_content": false,
+        "adapter_access_to_protected_content": false,
+        "automation_binding_inferred_from_forge_binding": false,
+        "connector_identity_scope": "not_applicable",
+        "shared_runtime_primitives": [
+          "durable_command_outbox",
+          "runtime_resource_governor",
+          "observable_work",
+          "lease_coordinator",
+          "authentication_profile_and_credential_attachment",
+          "exact_return_continuation"
+        ],
+        "unaffected_capability_refs": ["capability:source-control:ready"],
+        "event_effect_policy": "receipt_projection_only_no_unregistered_eventrecord",
+        "runtime_evidence_claimed": false,
+        "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "backup_destination_protected_auth_continuation_is_reference_only",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "shared_integration_consumer_projection",
+        "consumer_binding_id": "consumer-backup-destination-1",
+        "consumer_kind": "backup_destination",
+        "semantic_owner_ref": "Plans/Backup_Restore_System.md#backup-destination",
+        "owner_record_ref": "backup-destination:google-drive:1",
+        "home_server_id": "server-1",
+        "project_id": "project-1",
+        "provider_id": null,
+        "provider_instance_ref": null,
+        "forge_binding_ref": null,
+        "automation_binding_ref": null,
+        "backup_destination_ref": "backup-destination:google-drive:1",
+        "connector_identity_ref": null,
+        "connection_profile_ref": "auth-profile:google-drive:1",
+        "auth_continuation_ref": "auth-continuation:backup-destination:1",
+        "expected_owner_generation": 9,
+        "observed_owner_generation": 9,
+        "availability_state": "protected",
+        "read_operations_allowed": false,
+        "mutation_dispatch_allowed": false,
+        "protected_handoff_required": true,
+        "human_only_protected_content": true,
+        "agent_access_to_protected_content": false,
+        "adapter_access_to_protected_content": false,
+        "automation_binding_inferred_from_forge_binding": false,
+        "connector_identity_scope": "not_applicable",
+        "shared_runtime_primitives": [
+          "durable_command_outbox",
+          "runtime_resource_governor",
+          "observable_work",
+          "lease_coordinator",
+          "authentication_profile_and_credential_attachment",
+          "exact_return_continuation"
+        ],
+        "unaffected_capability_refs": [],
+        "event_effect_policy": "receipt_projection_only_no_unregistered_eventrecord",
+        "runtime_evidence_claimed": false,
+        "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "embedded_tsnet_connector_identity_remains_server_owned",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "shared_integration_consumer_projection",
+        "consumer_binding_id": "consumer-embedded-tsnet-1",
+        "consumer_kind": "embedded_tsnet_connector",
+        "semantic_owner_ref": "Plans/Remote_Access_System.md#tailscale-connector",
+        "owner_record_ref": "tailscale-connector-record:1",
+        "home_server_id": "server-1",
+        "project_id": null,
+        "provider_id": null,
+        "provider_instance_ref": null,
+        "forge_binding_ref": null,
+        "automation_binding_ref": null,
+        "backup_destination_ref": null,
+        "connector_identity_ref": "connector-identity:server-1",
+        "connection_profile_ref": null,
+        "auth_continuation_ref": null,
+        "expected_owner_generation": 2,
+        "observed_owner_generation": 2,
+        "availability_state": "handler_unavailable",
+        "read_operations_allowed": false,
+        "mutation_dispatch_allowed": false,
+        "protected_handoff_required": false,
+        "human_only_protected_content": true,
+        "agent_access_to_protected_content": false,
+        "adapter_access_to_protected_content": false,
+        "automation_binding_inferred_from_forge_binding": false,
+        "connector_identity_scope": "one_connector_identity_per_pm_server",
+        "shared_runtime_primitives": [
+          "durable_command_outbox",
+          "runtime_resource_governor",
+          "observable_work",
+          "lease_coordinator",
+          "authentication_profile_and_credential_attachment"
+        ],
+        "unaffected_capability_refs": ["capability:lan-route:ready"],
+        "event_effect_policy": "receipt_projection_only_no_unregistered_eventrecord",
+        "runtime_evidence_claimed": false,
+        "evaluated_at_utc": "2026-09-01T00:00:00Z"
+      }
+    },
+    {
+      "name": "unregistered_connection_add_is_unavailable",
+      "target_def": "IntegrationConnectionAvailability",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_availability",
+        "command_id": "cmd.integration.connection.add",
+        "provider_id": "cursor_origin",
+        "connection_id": null,
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "connection_generation": 0,
+        "topology_generation": 4,
+        "state": "unavailable",
+        "disabled_reason": "command_not_registered",
+        "currentness": "current",
+        "evaluated_at_utc": "2026-08-31T23:35:00Z"
+      }
+    },
+    {
+      "name": "installation_select_permission_never_exposes_credentials",
+      "target_def": "SharedIntegrationPermissionDecision",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "shared_integration_permission_decision",
+        "decision_id": "permission-install-select-1",
+        "command_id": "cmd.installation.select",
+        "permission_snapshot_ref": "permission-snapshot-6",
+        "required_scopes": [
+          "installation_select"
+        ],
+        "decision": "admitted",
+        "confirmation_ref": null,
+        "credential_material_exposed": false,
+        "authority_widening": false,
+        "decided_at_utc": "2026-08-31T23:35:00Z"
+      }
+    },
+    {
+      "name": "result_connection_add_settles_return_context",
+      "target_def": "IntegrationConnectionCommandResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_result",
+        "result_id": "result-connection-add-1",
+        "command_id": "cmd.integration.connection.add",
+        "command_instance_id": "cmdinst-connection-add-1",
+        "provider_id": "cursor_origin",
+        "connection_id": "connection-created-1",
+        "project_id": "project-1",
+        "prior_connection_generation": 0,
+        "result_connection_generation": 1,
+        "outcome": "succeeded",
+        "connection_state": "ready",
+        "availability": {
+          "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+          "record_kind": "integration_connection_availability",
+          "command_id": "cmd.integration.connection.add",
+          "provider_id": "cursor_origin",
+          "connection_id": "connection-created-1",
+          "project_id": "project-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "connection_generation": 1,
+          "topology_generation": 4,
+          "state": "available",
+          "disabled_reason": null,
+          "currentness": "current",
+          "evaluated_at_utc": "2026-09-01T00:15:00Z"
+        },
+        "permission_decision_ref": "permission-result-add",
+        "non_secret_connection_ref": "connection-projection-add",
+        "capability_snapshot_ref": "capability-snapshot-add",
+        "probe_evidence_ref": null,
+        "details_projection_ref": null,
+        "observable_work_ref": "work-connection-add-1",
+        "return_settlement": {
+          "return_context_ref": "return-origin-settings",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": null,
+        "receipt_ref": "receipt-connection-add",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:15:00Z"
+      }
+    },
+    {
+      "name": "result_connection_update_settles_return_context",
+      "target_def": "IntegrationConnectionCommandResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_result",
+        "result_id": "result-connection-update-1",
+        "command_id": "cmd.integration.connection.update",
+        "command_instance_id": "cmdinst-connection-update-1",
+        "provider_id": "gitlab",
+        "connection_id": "connection-1",
+        "project_id": "project-1",
+        "prior_connection_generation": 7,
+        "result_connection_generation": 8,
+        "outcome": "succeeded",
+        "connection_state": "ready",
+        "availability": {
+          "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+          "record_kind": "integration_connection_availability",
+          "command_id": "cmd.integration.connection.update",
+          "provider_id": "gitlab",
+          "connection_id": "connection-1",
+          "project_id": "project-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "connection_generation": 8,
+          "topology_generation": 4,
+          "state": "available",
+          "disabled_reason": null,
+          "currentness": "current",
+          "evaluated_at_utc": "2026-09-01T00:15:00Z"
+        },
+        "permission_decision_ref": "permission-result-update",
+        "non_secret_connection_ref": "connection-projection-update",
+        "capability_snapshot_ref": "capability-snapshot-update",
+        "probe_evidence_ref": null,
+        "details_projection_ref": null,
+        "observable_work_ref": "work-connection-update-1",
+        "return_settlement": {
+          "return_context_ref": "return-gitlab-details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": null,
+        "receipt_ref": "receipt-connection-update",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:15:00Z"
+      }
+    },
+    {
+      "name": "result_connection_test_settles_return_context",
+      "target_def": "IntegrationConnectionCommandResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_result",
+        "result_id": "result-connection-test-1",
+        "command_id": "cmd.integration.connection.test",
+        "command_instance_id": "cmdinst-connection-test-1",
+        "provider_id": "azure_devops",
+        "connection_id": "connection-2",
+        "project_id": "project-1",
+        "prior_connection_generation": 3,
+        "result_connection_generation": 3,
+        "outcome": "succeeded",
+        "connection_state": "ready",
+        "availability": {
+          "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+          "record_kind": "integration_connection_availability",
+          "command_id": "cmd.integration.connection.test",
+          "provider_id": "azure_devops",
+          "connection_id": "connection-2",
+          "project_id": "project-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "connection_generation": 3,
+          "topology_generation": 4,
+          "state": "available",
+          "disabled_reason": null,
+          "currentness": "current",
+          "evaluated_at_utc": "2026-09-01T00:15:00Z"
+        },
+        "permission_decision_ref": "permission-result-test",
+        "non_secret_connection_ref": "connection-projection-test",
+        "capability_snapshot_ref": "capability-snapshot-test",
+        "probe_evidence_ref": "probe-evidence-current-1",
+        "details_projection_ref": null,
+        "observable_work_ref": "work-connection-test-1",
+        "return_settlement": {
+          "return_context_ref": "return-azure-details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": null,
+        "receipt_ref": "receipt-connection-test",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:15:00Z"
+      }
+    },
+    {
+      "name": "result_connection_remove_settles_return_context",
+      "target_def": "IntegrationConnectionCommandResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_result",
+        "result_id": "result-connection-remove-1",
+        "command_id": "cmd.integration.connection.remove",
+        "command_instance_id": "cmdinst-connection-remove-1",
+        "provider_id": "bitbucket",
+        "connection_id": "connection-3",
+        "project_id": "project-1",
+        "prior_connection_generation": 5,
+        "result_connection_generation": 6,
+        "outcome": "succeeded",
+        "connection_state": "removed",
+        "availability": {
+          "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+          "record_kind": "integration_connection_availability",
+          "command_id": "cmd.integration.connection.remove",
+          "provider_id": "bitbucket",
+          "connection_id": "connection-3",
+          "project_id": "project-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "connection_generation": 6,
+          "topology_generation": 4,
+          "state": "available",
+          "disabled_reason": null,
+          "currentness": "current",
+          "evaluated_at_utc": "2026-09-01T00:15:00Z"
+        },
+        "permission_decision_ref": "permission-result-remove",
+        "non_secret_connection_ref": "connection-projection-remove",
+        "capability_snapshot_ref": "capability-snapshot-remove",
+        "probe_evidence_ref": null,
+        "details_projection_ref": null,
+        "observable_work_ref": "work-connection-remove-1",
+        "return_settlement": {
+          "return_context_ref": "return-bitbucket-list",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": null,
+        "receipt_ref": "receipt-connection-remove",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:15:00Z"
+      }
+    },
+    {
+      "name": "result_connection_open_details_settles_return_context",
+      "target_def": "IntegrationConnectionCommandResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_result",
+        "result_id": "result-connection-open_details-1",
+        "command_id": "cmd.integration.connection.open_details",
+        "command_instance_id": "cmdinst-connection-details-1",
+        "provider_id": "gitlab",
+        "connection_id": "connection-4",
+        "project_id": "project-1",
+        "prior_connection_generation": 2,
+        "result_connection_generation": 2,
+        "outcome": "no_effect",
+        "connection_state": "ready",
+        "availability": {
+          "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+          "record_kind": "integration_connection_availability",
+          "command_id": "cmd.integration.connection.open_details",
+          "provider_id": "gitlab",
+          "connection_id": "connection-4",
+          "project_id": "project-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "connection_generation": 2,
+          "topology_generation": 4,
+          "state": "available",
+          "disabled_reason": null,
+          "currentness": "current",
+          "evaluated_at_utc": "2026-09-01T00:15:00Z"
+        },
+        "permission_decision_ref": "permission-result-open_details",
+        "non_secret_connection_ref": "connection-projection-open_details",
+        "capability_snapshot_ref": "capability-snapshot-open_details",
+        "probe_evidence_ref": null,
+        "details_projection_ref": "connection-details-redacted-1",
+        "observable_work_ref": null,
+        "return_settlement": {
+          "return_context_ref": "return-gitlab-list",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": null,
+        "receipt_ref": "receipt-connection-open_details",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:15:00Z"
+      }
+    },
+    {
+      "name": "result_installation_select_requires_activation_and_return_settlement",
+      "target_def": "InstallationSelectCommandResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "installation_select_command_result",
+        "result_id": "result-installation-select-1",
+        "command_id": "cmd.installation.select",
+        "command_instance_id": "cmdinst-installation-select-1",
+        "product_id": "cursor_origin_cli",
+        "installation_id": "installation-origin-cli-wsl-ubuntu",
+        "project_id": "project-1",
+        "execution_host_id": "host-wsl-1",
+        "execution_environment_id": "env-wsl-ubuntu",
+        "prior_selected_installation_id": null,
+        "result_inventory_generation": 9,
+        "result_installation_generation": 4,
+        "outcome": "succeeded",
+        "selection_state": "selected",
+        "availability": {
+          "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+          "record_kind": "installation_select_availability",
+          "command_id": "cmd.installation.select",
+          "product_id": "cursor_origin_cli",
+          "installation_id": "installation-origin-cli-wsl-ubuntu",
+          "execution_host_id": "host-wsl-1",
+          "execution_environment_id": "env-wsl-ubuntu",
+          "inventory_generation": 9,
+          "installation_generation": 4,
+          "topology_generation": 4,
+          "state": "available",
+          "disabled_reason": null,
+          "evaluated_at_utc": "2026-09-01T00:15:00Z"
+        },
+        "permission_decision_ref": "permission-install-select-result-1",
+        "activation_proof_ref": "activation-proof-install-select-1",
+        "observable_work_ref": "work-installation-select-1",
+        "continuation_ref": "continue-origin-sign-in",
+        "return_settlement": {
+          "return_context_ref": "return-origin-installations",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": null,
+        "receipt_ref": "receipt-installation-select-1",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:15:00Z"
+      }
+    },
+    {
+      "name": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.credential_attachment.open_consumers",
+        "packet_token": "cmd.credential_attachment.open_consumers",
+        "request_id": "local:credential_attachment-open_consumers",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:credential_attachment-open_consumers",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:credential_attachment-open_consumers",
+        "accessibility_description_ref": "a11y:credential_attachment-open_consumers",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "integration_credential_local_result.ui.credential_attachment.open_consumers",
+      "target_def": "IntegrationCredentialLocalActionResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.credential_attachment.open_consumers",
+        "packet_token": "cmd.credential_attachment.open_consumers",
+        "request_id": "local:credential_attachment-open_consumers",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:credential_attachment-open_consumers",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "integration_credential_local_request.ui.credential_attachment.open_details",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.credential_attachment.open_details",
+        "packet_token": "cmd.credential_attachment.open_details",
+        "request_id": "local:credential_attachment-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:credential_attachment-open_details",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:credential_attachment-open_details",
+        "accessibility_description_ref": "a11y:credential_attachment-open_details",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "integration_credential_local_result.ui.credential_attachment.open_details",
+      "target_def": "IntegrationCredentialLocalActionResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.credential_attachment.open_details",
+        "packet_token": "cmd.credential_attachment.open_details",
+        "request_id": "local:credential_attachment-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:credential_attachment-open_details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "integration_credential_local_request.ui.credential_source.open_details",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.credential_source.open_details",
+        "packet_token": "cmd.credential_source.open_details",
+        "request_id": "local:credential_source-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:credential_source-open_details",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:credential_source-open_details",
+        "accessibility_description_ref": "a11y:credential_source-open_details",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "integration_credential_local_result.ui.credential_source.open_details",
+      "target_def": "IntegrationCredentialLocalActionResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.credential_source.open_details",
+        "packet_token": "cmd.credential_source.open_details",
+        "request_id": "local:credential_source-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:credential_source-open_details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    }
+  ],
+  "negative_cases": [
+    {
+      "name": "connection_action_must_match_command",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "update_exact_connection_generation",
+      "patch": {
+        "action": "test"
+      },
+      "expected_failure": "command/action discriminator"
+    },
+    {
+      "name": "update_requires_patch_ref",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "update_exact_connection_generation",
+      "patch": {
+        "mutation.patch_ref": null
+      },
+      "expected_failure": "typed update patch"
+    },
+    {
+      "name": "test_requires_probe_policy",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "test_connection_separates_reachability_from_readiness",
+      "patch": {
+        "mutation.probe_policy_ref": null
+      },
+      "expected_failure": "typed probe policy"
+    },
+    {
+      "name": "remove_requires_confirmation",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "remove_exact_binding_retains_provider_data",
+      "patch": {
+        "mutation.confirmation_ref": null
+      },
+      "expected_failure": "destructive confirmation"
+    },
+    {
+      "name": "credential_ref_cannot_embed_token_material",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "update_exact_connection_generation",
+      "patch": {
+        "mutation.credential_ref": "token=raw-value"
+      },
+      "expected_failure": "non-secret broker reference"
+    },
+    {
+      "name": "details_route_cannot_claim_observable_work",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "open_redacted_connection_details_without_work",
+      "patch": {
+        "observable_work_ref": "work-not-allowed"
+      },
+      "expected_failure": "read-only route"
+    },
+    {
+      "name": "installation_select_cannot_acquire",
+      "target_def": "InstallationSelectCommandRequest",
+      "base_positive_case": "select_verified_origin_installation_without_acquisition_or_auth",
+      "patch": {
+        "acquisition_allowed": true
+      },
+      "expected_failure": "selection is not acquisition"
+    },
+    {
+      "name": "installation_select_cannot_begin_authentication",
+      "target_def": "InstallationSelectCommandRequest",
+      "base_positive_case": "select_verified_origin_installation_without_acquisition_or_auth",
+      "patch": {
+        "authentication_allowed": true
+      },
+      "expected_failure": "selection is not authentication"
+    },
+    {
+      "name": "permission_cannot_expose_credentials",
+      "target_def": "SharedIntegrationPermissionDecision",
+      "base_positive_case": "installation_select_permission_never_exposes_credentials",
+      "patch": {
+        "credential_material_exposed": true
+      },
+      "expected_failure": "credential non-observation"
+    },
+    {
+      "name": "permission_cannot_widen_authority",
+      "target_def": "SharedIntegrationPermissionDecision",
+      "base_positive_case": "installation_select_permission_never_exposes_credentials",
+      "patch": {
+        "authority_widening": true
+      },
+      "expected_failure": "authority_widening false"
+    },
+    {
+      "name": "successful_connection_test_requires_probe_evidence",
+      "target_def": "IntegrationConnectionCommandResult",
+      "base_positive_case": "result_connection_test_settles_return_context",
+      "patch": {
+        "probe_evidence_ref": null
+      },
+      "expected_failure": "successful connection probe evidence"
+    },
+    {
+      "name": "installation_select_requires_return_context",
+      "target_def": "InstallationSelectCommandRequest",
+      "base_positive_case": "select_verified_origin_installation_without_acquisition_or_auth",
+      "patch": {
+        "return_context_ref": null
+      },
+      "expected_failure": "caller return context"
+    },
+    {
+      "name": "successful_installation_selection_requires_activation_proof",
+      "target_def": "InstallationSelectCommandResult",
+      "base_positive_case": "result_installation_select_requires_activation_and_return_settlement",
+      "patch": {
+        "activation_proof_ref": null
+      },
+      "expected_failure": "activation proof"
+    },
+    {
+      "name": "connection_return_restoration_must_be_consistent",
+      "target_def": "IntegrationConnectionCommandResult",
+      "base_positive_case": "result_connection_add_settles_return_context",
+      "patch": {
+        "return_settlement.initiating_surface_restored": false
+      },
+      "expected_failure": "return settlement consistency"
+    },
+    {
+      "name": "successful_installation_selection_cannot_be_unchanged",
+      "target_def": "InstallationSelectCommandResult",
+      "base_positive_case": "result_installation_select_requires_activation_and_return_settlement",
+      "patch": {
+        "selection_state": "unchanged"
+      },
+      "expected_failure": "successful selection activation"
+    },
+    {
+      "name": "credential_local_action_is_presentation_only",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "presentation_only": false
+      },
+      "expected_failure": "presentation-only const"
+    },
+    {
+      "name": "credential_local_action_is_non_persistent",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "persistent_state_mutation": true
+      },
+      "expected_failure": "non-persistent const"
+    },
+    {
+      "name": "credential_local_action_return_is_deterministic",
+      "target_def": "IntegrationCredentialLocalActionResult",
+      "base_positive_case": "integration_credential_local_result.ui.credential_attachment.open_consumers",
+      "patch": {
+        "return_behavior": "ambient_navigation"
+      },
+      "expected_failure": "deterministic return const"
+    },
+    {
+      "name": "credential_local_action_grants_no_installation_authority",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "installation_authority_granted": true
+      },
+      "expected_failure": "no installation authority"
+    },
+    {
+      "name": "credential_local_action_grants_no_authentication_authority",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "authentication_authority_granted": true
+      },
+      "expected_failure": "no authentication authority"
+    },
+    {
+      "name": "credential_local_action_grants_no_filesystem_authority",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "filesystem_authority_granted": true
+      },
+      "expected_failure": "no filesystem authority"
+    },
+    {
+      "name": "credential_local_action_grants_no_browser_authority",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "browser_authority_granted": true
+      },
+      "expected_failure": "no browser authority"
+    },
+    {
+      "name": "credential_local_action_grants_no_provider_authority",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "provider_authority_granted": true
+      },
+      "expected_failure": "no provider authority"
+    },
+    {
+      "name": "credential_local_action_rejects_foreign_family",
+      "target_def": "IntegrationCredentialLocalActionRequest",
+      "base_positive_case": "integration_credential_local_request.ui.credential_attachment.open_consumers",
+      "patch": {
+        "action_id": "ui.execution_environment.open_details",
+        "packet_token": "cmd.execution_environment.open_details"
+      },
+      "expected_failure": "owner family restriction"
+    },
+    {
+      "name": "handler_unavailable_consumer_cannot_dispatch_mutation",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "base_positive_case": "forgejo_handler_unavailable_preserves_git_transport",
+      "patch": {"mutation_dispatch_allowed": true},
+      "expected_failure": "handler unavailable blocks dispatch"
+    },
+    {
+      "name": "read_only_consumer_cannot_dispatch_mutation",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "base_positive_case": "gitea_read_only_api_does_not_disable_git_transport",
+      "patch": {"mutation_dispatch_allowed": true},
+      "expected_failure": "read-only blocks dispatch"
+    },
+    {
+      "name": "repository_automation_requires_independent_binding",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "base_positive_case": "repository_automation_uses_independent_binding_and_unavailable_handler",
+      "patch": {"automation_binding_ref": null},
+      "expected_failure": "automation binding required"
+    },
+    {
+      "name": "protected_backup_handoff_cannot_become_agent_visible",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "base_positive_case": "backup_destination_protected_auth_continuation_is_reference_only",
+      "patch": {"agent_access_to_protected_content": true},
+      "expected_failure": "protected content unavailable to agents"
+    },
+    {
+      "name": "embedded_connector_identity_cannot_be_project_scoped",
+      "target_def": "SharedIntegrationConsumerProjection",
+      "base_positive_case": "embedded_tsnet_connector_identity_remains_server_owned",
+      "patch": {"project_id": "project-1"},
+      "expected_failure": "one connector identity per Server"
+    }
+  ],
+  "coverage": {
+    "exact_command_ids": [
+      "cmd.integration.connection.add",
+      "cmd.integration.connection.update",
+      "cmd.integration.connection.test",
+      "cmd.integration.connection.remove",
+      "cmd.integration.connection.open_details",
+      "cmd.installation.select"
+    ],
+    "request_case_count": 6,
+    "negative_case_count": 29,
+    "connection_provider_payload_discriminator_covered": true,
+    "installation_select_separated_from_acquisition_and_authentication": true,
+    "native_runtime_claimed": false,
+    "event_registration_claimed": false,
+    "positive_result_case_count": 6,
+    "all_commands_have_positive_request_and_result": true,
+    "connection_probe_evidence_machine_closed": true,
+    "installation_activation_proof_machine_closed": true,
+    "return_settlement_covered": true,
+    "integration_credential_local_action_count": 3,
+    "local_action_positive_request_and_result_count": 6,
+    "local_action_authority_negative_count": 9,
+    "local_actions_non_domain_non_persistent_deterministic_return": true,
+    "post_integration_consumer_projection_count": 5,
+    "forgejo_gitea_distinct_consumers": true,
+    "repository_automation_binding_not_inferred": true,
+    "backup_protected_auth_reference_only": true,
+    "embedded_tsnet_identity_server_scoped": true,
+    "handler_unavailable_read_only_and_protected_states_covered": true
+  }
+}

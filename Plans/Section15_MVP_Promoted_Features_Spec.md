@@ -1,7 +1,7 @@
 # Section 15 Promoted Features Spec
 
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Test_Capture_and_Motion_Evidence.md
 
 ## 0. Scope and SSOT status
 
@@ -698,6 +698,8 @@ Core rules:
 - PM's browser control-plane backlog MUST remain named-action based. Borrow-worthy action families include tab lifecycle (`list`, `create`, `select`, `close`), richer interactions (`hover`, `drag`, `select option`, `fill form`, `press key`, `navigate back`, resize), wait primitives (`wait for time`, `wait for text`, `wait for text disappearance`), dialog handling, file upload handling, storage inspection/control for cookies, `localStorage`, `sessionStorage`, and `storage-state` import/export, network state and request routing/mocking, trace/video capture for agent runs, page/PDF export, test-oriented verification actions, and locator generation.
 - Browser Program and Expert Browser Program are PM-native named-action contracts over BrowserRuntimeService. Arbitrary page-code execution and raw browser-protocol scripting are not the core contract.
 - Expert Browser Program is the explicit advanced testing/diagnostic surface. It remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
+- Concept consumers, including PMConcept7, may project `BrowserAction`, Browser Program, or Expert Browser Program controls only for an ordinary `BrowserSession` and only as explicit user-triggered entry points after current session policy, permission, and requested/effective capability checks pass. They reject protected `AuthBrowserSession`; a concept control never grants automation, capture, inspection, raw-protocol, or arbitrary page-code authority.
+- PMConcept7 browser presentation is simulated/source-lineage projection only. Until fresh native BrowserRuntimeService and CEF build, launch, binding, and action-execution evidence exists for the claimed platform and slice, the production consumer state is `runtime_unavailable` or explicitly simulated; PMConcept7 HTML behavior, fixtures, screenshots, or browser runs are not evidence of native CEF availability or production BrowserAction/Browser Program execution.
 - DevTools model: embedded vs detached DevTools; who can open it, when, and agent/browser introspection flows are explicit. User-opened DevTools and agent introspection use Browser Program or Expert Browser Program named actions; raw browser-protocol scripting is not a PM browser contract.
 - screenshot-related labels and evidence/artifact actions remain user-facing named actions: browser screenshots, traces, and combined selection+screenshot captures use the same artifact pipeline as GUI automation, including naming, retention, manifest shape, chat rendering, privacy redaction rules, and runtime-artifact references. `/screenshot/devtools/automation` capabilities stay governed by named actions, artifact routing, permission disclosure, and requested/effective capability state.
 - Persistence + isolation: browser history, cookies, storage, per-project isolation, restore eligibility, and crash recovery are explicit ordinary browser-session state. Normal BrowserSessions are project-scoped and `automation_session` is isolated by default. Protected AuthBrowserSession uses only transient in-session state needed for the allowed human flow; it cannot be promoted, copied, captured, exported, restored, or treated as an ordinary persistent profile.
@@ -744,6 +746,117 @@ Rules:
 - reject non-HTTP(S) schemes
 - default to `https://` if bare domain
 - reject malformed URLs
+
+### 3.18A PM Browser Script, BrowserProgram, and local execution
+
+`PM Browser Script` is the compact declarative source language for PM-native named browser actions and bounded local data operators. It compiles to a typed, versioned `BrowserProgram` and `BrowserProgramAST`. It is not Python, JavaScript, a host interpreter, arbitrary page code, terminal code, a raw browser-protocol program, or an external-framework compatibility language.
+
+The machine owner is `Plans/section15_browser_program_contracts.schema.json`; examples and security negatives are in `Plans/section15_browser_program_contract_fixtures.json`. `Plans/protected_auth_browser_contracts.schema.json` remains the protected-session owner. The Browser Program contract references and enforces that boundary rather than duplicating or weakening it.
+
+#### Compiler and source contract
+
+A compile request carries:
+
+- `PMBrowserScriptSource` with grammar version and bounded UTF-8 source;
+- exact Project, Plan, Goal, run, attempt, thread, agent, Home Server, Execution Host, Environment, Source Location, BrowserSession, BrowserWorkspace, and ProgramWorkspace lineage where applicable;
+- requested capability profile and permission/FileSafe preflight refs;
+- independent action, representation, local-compute, output, artifact, time, memory, and segment limits;
+- source hash, compiler identity/hash, Browser Program API digest, capability-profile hash, and expected AST hash when reproducibility is required.
+
+The compiler performs parse, type, name, effect, limit, capability, permission, target, and FileSafe preflight before any effect. Compiler diagnostics use stable codes and exact source spans. Failure is typed and carries `no_effect: true`; a compile/preflight failure cannot create a page, mutate a page, access a file, start capture, launch a process, acquire a lease, or change ProgramWorkspace.
+
+The AST admits only named BrowserAction nodes, bounded representation queries, bounded pure local operators, declared capture/bookmark requests, explicit checkpoints, and typed control flow over finite/limited collections. There is no ambient filesystem, process, environment, keychain, socket, package, terminal, dynamic code-loading, host-path, arbitrary URL-scheme, raw protocol, or hidden network authority.
+
+`BrowserProgram` records source form, source/compiler/API/capability/AST hashes, AST version, requested/effective execution strategy, required capabilities, action/segment plan, ProgramWorkspace identity and expected revision, result mode, retry/idempotency policy, and ordinary-session security class. `session_security_class` is structurally `ordinary`; protected `AuthBrowserSession` cannot be compiled, targeted, inspected, adapted, or captured.
+
+One program may execute many local named actions without a model round trip for every action. Model-facing results remain compact, bounded, typed, and provenance-bearing. Continuous human progress is a separate `ObservableWork` projection and never bloats or substitutes for the program result.
+
+#### ProgramWorkspace and segments
+
+`ProgramWorkspace` is revisioned typed durable local state, not a host directory and not a general database. It may contain bounded variables, tables, datasets, artifact refs, routine refs, checkpoint refs, schema refs, and spill refs. Allowed local operators are `append`, `select`, `filter`, `map`, `reduce`, `group`, `sort`, `dedupe`, `count`, `join`, `schema`, `preview`, and `spill`; operators remain deterministic and bounded.
+
+Every mutation supplies the expected workspace revision and produces a new revision receipt. Large values spill to typed artifacts through owned artifact/storage paths; stdout text, log paths, terminal output, and host paths never become artifact authority. Checkpoints reference durable ProgramWorkspace state, finalized capture/artifacts, completed effects, pending segments, and retry barriers.
+
+Programs run as bounded medium segments. Each segment declares dependencies, expected ProgramWorkspace revision, output schema, action/effect range, human `user_step_label`, independent budgets, retry policy, and idempotency key. `user_step_label` is secret/path/raw-ID/code-free human summary text and grants no authority.
+
+Terminal states are `completed`, `failed_no_effect`, `failed_effects_reconciled`, `cancelled_confirmed`, `timed_out_stopped`, `timed_out_effects_reconciled`, and `timed_out_effect_state_unknown`. Unknown effect state sets `retry_allowed: false` until explicit reconciliation. Cancellation/timeout receipts retain completed actions, rejected/unknown effects, capture/artifact refs, workspace revision, and safe next action.
+
+#### PageRepresentation and RepresentationQuery
+
+Browser Program owns its action-oriented `PageRepresentation` and `RepresentationQuery` over the exact BrowserPage `PageGeneration`. This contract is distinct from the Site Reader representation in `Plans/Tools.md`; shared field names do not make Site Reader the full browser owner.
+
+Representation modes are `minimal`, `standard`, `full`, `scoped`, and `delta`. A request declares exact page/generation, base representation when applicable, scope roots, detail classes, node/frame/shadow/listener/style/layout/time/byte budgets, action refs, and continuation. Queries permit only bounded local `filter`, `project`, `group`, `sort`, `dedupe`, `limit`, `count`, and `preview` operators.
+
+One base index is built per PageGeneration and may serve concurrent bounded queries. Frames may be collected concurrently, but result ordering and coverage are deterministic. Results disclose complete, partial, root-only, cross-origin/frame/shadow/virtualized/listener/style/layout omissions, invalidation reason, continuation, and budget consumption. Stale generations are rejected as current; delta requires an admitted base; synthetic action/node IDs are generation-scoped and collision-detected.
+
+Navigation, redirect, reload, document replacement, crash/restore, and controller handoff advance or revalidate PageGeneration and invalidate incompatible representations. A stale representation can remain historical evidence but cannot authorize a current mutation.
+
+#### Workspace isolation, leases, takeover, and handoff
+
+`BrowserWorkspace` is the independently mutable unit. It isolates profile/storage, pages, dialogs, permissions, uploads/downloads, viewport, locale, proxy/network, device/extension state, evidence, ProgramWorkspace, capture, artifacts, and cleanup as policy requires.
+
+Compatible workspaces may share CEF processes only when the compatibility key truthfully matches trust, profile, proxy, device, locale, extension, GPU, codec, crash-blast-radius, reproduction, and recording constraints. Incompatible workspaces isolate. Process sharing never merges workspace identity, storage, controllers, ProgramWorkspace, evidence, or failure disposition.
+
+Exactly one mutating controller lease is valid per BrowserPage PageGeneration. Lease grant, renewal, expiry, loss, takeover, delegation, and handoff are fenced by LeaseId, generation, epoch, holder, PageGeneration, and action sequence. Read-only viewers coexist; focus, visibility, client attachment, tab selection, and viewer attachment never confer or revoke mutation authority.
+
+Takeover/delegation is scoped, explicit, timed, and receipted. Pending late actions from the old holder are rejected deterministically. FileSafe mediates upload/download and records the exact transferred artifact, target, permission, and disposition.
+
+Host handoff is reconstructive, not live process/stack migration. The source checkpoints durable ProgramWorkspace state and finalized capture/artifacts, fences the old page/workspace/controller generations, closes or interrupts source runtime truthfully, recreates the destination on the exact Home Server/Execution Host/Environment, restores only eligible state, revalidates page generation and capabilities, and emits a source/destination handoff receipt. Unknown effects or an unfenced source block retry.
+
+#### Routing, screenshot policy, routines, and adapters
+
+Routing dimensions are orthogonal and each carries requested/effective values plus reason:
+
+- strategy: direct named actions, compiled Browser Program, routine, or external adapter;
+- runtime: PM-native local, PM-native remote, or isolated external process;
+- source: public Site Reader/Search/Fetch, authorized private/LAN/localhost browser, or explicit external input;
+- visibility: visible/watchable, detached, headless/background;
+- capture: the generic TestCaptureService policy from `Plans/Test_Capture_and_Motion_Evidence.md`.
+
+Public static content routes to Search/Fetch/Site Reader before browser escalation when capability and policy allow. Private, LAN, and localhost sources remain explicit authorized-private routes and never inherit public-cache assumptions. Runtime fallback never changes source authority, capture target, permission, or visibility silently.
+
+Screenshot model attachment is `auto`, `always`, or `never` and is independent of screenshot artifact identity. `auto` may attach bounded visual evidence only when policy, capability, result needs, and budget permit. `never` does not disable capture artifacts requested for human/test evidence; `always` does not bypass permission, redaction, or output budgets.
+
+Routines are typed, versioned, hashed, scoped, provenance-bearing, reversible, and validated against declared fixtures and capability/API digests. Generated experience may be proposed only after a validated task result; promotion is explicit. Capability/API/fixture/policy drift invalidates or disables the routine. Experience distillation never changes permissions or becomes empirical efficiency proof.
+
+Optional external adapters, including an Ego-style adapter, are isolated strategies rather than Browser Program owners. They receive a minimal allowlisted environment, scoped credentials, private runtime directory, bounded/versioned typed IPC, independent input/output/artifact budgets, and process-tree cancellation. They never return stdout paths as artifact authority. Billable external sessions close explicitly and emit a cost/session-close receipt.
+
+Controlled efficiency claims require a preregistered four-arm, multi-tier benchmark under held conditions and must measure success, turns/calls, tokens, bytes, time, resources, intervention, evidence, and recording overhead. Packet or external savings are hypotheses until fresh empirical proof exists.
+
+#### Receipts, events, ObservableWork, commands, and projections
+
+Browser compile/execution receipts preserve exact lineage, hashes, requested/effective strategy/capability, permission/FileSafe preflight, workspace revision, segment/effect state, representation generation/coverage, controller lease, artifacts/capture refs, terminal state, and safe next action. A receipt is not a test verdict.
+
+Browser `ObservableWork` exposes queue/admission, compile, preflight, lease wait, representation, segment/action progress, checkpoint, cancellation, handoff, finalization, blocked/degraded state, and safe next action. Queued, admitted, lease-held, visible, capture-present, completed-actions-present, or awareness-current never means the program/test passed.
+
+Required browser event registrations are:
+
+`browser.workspace.created`, `browser.workspace.reset`, `browser.workspace.closed`, `browser.page.created`, `browser.page.activated`, `browser.page.closed`, `browser.controller_lease.granted`, `browser.controller_lease.renewed`, `browser.controller_lease.lost`, `browser.controller_lease.takeover_requested`, `browser.controller_lease.takeover_completed`, `browser.navigation.generation_changed`, `browser.document.generation_changed`, `browser.representation.captured`, `browser.representation.delta_created`, `browser.representation.queried`, `browser.representation.invalidated`, `browser.script.compile_started`, `browser.script.compiled`, `browser.script.compile_failed`, `browser.execution_strategy.selected`, `browser.execution_strategy.fallback_selected`, `browser.program.started`, `browser.program.checkpointed`, `browser.program.paused`, `browser.program.resumed`, `browser.program.completed`, `browser.program.failed`, `browser.program.cancelled`, `browser.program.segment.started`, `browser.program.segment.checkpointed`, `browser.program.segment.completed`, `browser.program.segment.failed`, `browser.program.segment.timed_out`, `browser.program.timeout.stopped`, `browser.program.timeout.effects_reconciled`, `browser.program.timeout.effect_state_unknown`, `browser.program_workspace.created`, `browser.program_workspace.updated`, `browser.program_workspace.checkpointed`, `browser.program_workspace.spilled`, `browser.program_workspace.closed`, `browser.screenshot.model_attachment_selected`, `browser.screenshot.skipped`, `browser.route.fetch_selected`, `browser.route.browser_escalated`, `browser.routine.generated`, `browser.routine.validated`, `browser.routine.promoted`, `browser.routine.invalidated`, `browser.routine.disabled`, `browser.session.reconstructed_on_host`, and `browser.session.interrupted`.
+
+Required command-catalog rows are:
+
+`cmd.browser.workspace.create`, `cmd.browser.workspace.close`, `cmd.browser.workspace.reset`, `cmd.browser.page.create`, `cmd.browser.page.close`, `cmd.browser.page.activate`, `cmd.browser.page.evaluate`, `cmd.browser.page.representation.capture`, `cmd.browser.page.representation.delta`, `cmd.browser.page.representation.query`, `cmd.browser.program.run`, `cmd.browser.program.pause`, `cmd.browser.program.resume`, `cmd.browser.program.cancel`, and `cmd.browser.program.inspect`.
+
+`cmd.browser.program.inspect` is read-only/no-effect. Compatibility inputs `cmd.browser.run_code|browser_run_code` may normalize only to `cmd.browser.program.run {source_form: pm_browser_script, capability_profile: advanced}` and `cmd.browser.evaluate|browser_evaluate` only to `cmd.browser.page.evaluate`. They do not preserve arbitrary-code meaning. `cmd.playwright.*` is forbidden.
+
+Protected-auth UI handoff reuses the existing authentication-owner commands `cmd.authentication.start`, `cmd.authentication.cancel`, and `cmd.authentication.resume`. Start carries `auth_surface=protected_auth_browser` plus the exact provider, route, account, Home Server, Execution Host, Environment, and initiating active Client binding. When the authentication owner runs on a remote Host, the human-only surface opens and returns only on that exact initiating active Client; missing, inactive, disconnected, or mismatched Client identity blocks or interrupts the handoff and never falls back to an arbitrary connected Client. Status is the redacted protected-auth lifecycle projection, not a browser-content projection. No `cmd.browser.auth.*`, inspect, watch, capture, share, takeover, program, page-evaluate, or representation command is minted or applicable to `AuthBrowserSession`.
+
+Command and event lists here are requirements for the command/event/wiring owners; they are not registrations or handler proof. GUI projections show human strategy, Host/Environment, requested/effective visibility and capability, current step, coverage/degradation, controller/takeover state, and safe actions. Raw generation, lease, hash, AST, budget, checkpoint, and reconciliation data belongs in Technical Details.
+
+Settings may expose automatic strategy, requested/effective fallback, capability `Auto|On|Off`, benchmark-only Diagnostics override, and resource/remote limits. Capability policy never replaces access permission. There is no global Expert Mode, Python/Browser Use/Playwright jargon, or protected-auth inspect/watch/capture control.
+
+#### Migration and negative security rules
+
+- Legacy arbitrary-code browser inputs either compile losslessly to admitted named actions or fail typed/no-effect; they never run through a hidden interpreter.
+- `browser_run_code` and `browser_evaluate` are compatibility inputs only and cannot mint parallel command families.
+- Old single/global/newest/focused-tab browser ownership migrates to exact BrowserWorkspace/BrowserPage/PageGeneration/controller identity.
+- Browser state and ProgramWorkspace state migrate independently; ProgramWorkspace is never materialized as a host directory.
+- Site Reader representations do not silently become browser action representations.
+- Protected `AuthBrowserSession` is never converted to an ordinary session, BrowserProgram target, routine input, adapter input, capture target, artifact source, or handoff subject.
+- User Project Playwright remains an external test harness/generic Project process only. PM exposes no Playwright runtime, backend, facade, compatibility vocabulary, namespace, package, port, MCP route, command/alias, Settings/Doctor/support capability, capture engine, or Browser Program conformance bridge.
+- Schemas, fixtures, PlanUnits, text scans, catalogs, future matrix names, and validator passes are static closure only; they are not runtime, security, race, performance, visual, migration, or empirical proof.
+
+ContractRef: ContractName:Plans/Test_Capture_and_Motion_Evidence.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/DRY_Rules.md
 
 ### 3.19 Typed DebugSession And EvalSession Boundaries
 
@@ -8496,6 +8609,376 @@ proposal_or_recommendation: Add PlanUnits under Section15 or a new Built_In_Term
 compile_disposition: create_new_planunit
 ```
 
+## Browser Program Central-Route Binding Addendum - 2026-09-01
+
+The central command/wiring closure now assigns the read-only `cmd.browser.program.inspect` request to exactly one future handler target: `handlers::browser_program::inspect`. This target belongs to `BrowserRuntimeService` and consumes the existing `browser_command_request|browser_command_result|browser_command_error|browser_command_availability|browser_command_disabled_reason` family from `Plans/section15_browser_program_contracts.schema.json`. It is a planned dispatch identity only: the command remains `handler_unavailable`, emits no new EventRecord, and receives no runtime, security, visual, performance, or native-Slint credit until an executable Rust handler and dispatcher evidence prove the route. No `AuthBrowserSession`, protected content, capture authority, page-evaluate authority, or mutation authority is added by inspection.
+
+### SMPFS-156 - Browser Program Inspect Sole Future Handler
+
+```yaml
+plan_unit_id: SMPFS-156
+unit_type: command_binding
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: cmd.browser.program.inspect has exactly one planned BrowserRuntimeService route, handlers::browser_program::inspect, over the existing owner-DRY Browser command contracts; the target is not native-handler proof and availability remains handler_unavailable until executable dispatcher evidence exists.
+gui_related: true
+gui_classification_reason: Browser program status and Technical Details can expose the bounded read-only inspection action and its exact disabled reason.
+depends_on: [SMPFS-147, SMPFS-155]
+unblocks: []
+acceptance_criteria:
+  - The central catalog and production-intent row name exactly handlers::browser_program::inspect and the existing exact request/result schema pointers.
+  - Inspect is read-only, receipt/projection-only, and admits no Browser Program mutation or EventRecord.
+  - Missing executable Rust dispatch keeps availability false with handler_unavailable and cannot be promoted by static or browser-concept evidence.
+validation_surfaces: [Plans/section15_browser_program_contracts.schema.json, Plans/section15_browser_program_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+risk_class: browser_inspect_phantom_handler_or_authority_widening
+reasoning_tier: high
+context_scope: browser_program_inspect_central_binding
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: command_binding_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:23-36, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#retained_egolite_canonical:cmd.browser.program.inspect]
+negative_constraints:
+  - Do not treat the handler target string as executable-handler, runtime, security, visual, or performance proof.
+  - Do not expose protected authentication, capture, page evaluation, or mutation authority through inspect.
+```
+
+### SMPFS-154 - Browser Capability Digest And Human Step Projection Closure
+
+```yaml
+plan_unit_id: SMPFS-154
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: >-
+  Browser Program publishes one pinned versioned capability-specific API digest and bounded on-demand help
+  projection, while every executable segment emits one typed HumanStepProjection with a secret/path/raw-ID/code-free
+  user_step_label and bounded human detail. One stable step identity and revision projects the exact same underlying
+  user_step_label, detail, state, requested/effective state, and owner-receipt refs into Chat, Testing, Watch,
+  ObservableWork, and the shared timeline. A surface may visually truncate with the full canonical value accessible,
+  but it cannot rewrite, regenerate, relabel, or independently infer the projection. Human copy is never payload or
+  authorization.
+gui_related: true
+gui_classification_reason: The shared human step label/detail is visible across five user surfaces.
+depends_on: [SMPFS-147, SMPFS-148, PP-083]
+unblocks: [SIR-023]
+acceptance_criteria:
+  - HBU-005 binds API version/hash, capability-profile hash, registry generation, compact byte budget, help ref, explicit on-demand load policy, and receipt hash.
+  - HBU-013 projects one stable step ID/revision and byte-for-byte identical underlying user_step_label, detail, state, requested/effective state, and owner receipt refs across Chat, Testing, Watch, ObservableWork, and the shared timeline.
+  - Labels and details are bounded, secret/path/raw-ID/code-free, and `authority_grant=false`.
+  - A positive shared-projection fixture joins all five surfaces to one canonical HumanStepProjection and proves that visual truncation does not mutate the stored/projected value or detach its full-value affordance.
+  - Negative fixtures reject any missing or duplicate surface, per-surface label/detail/state/receipt override, regenerated wording, stale or mismatched step ID/revision, missing owner receipt, unsafe copy, authority grant, or success wording unsupported by the owner receipt.
+  - Missing or stale step identity, owner receipt, capability digest, or projection generation fails closed rather than inventing success text; reconnect/replay must re-project the owner record rather than synthesize a new label.
+  - Schema/fixture and PM7 projection evidence remains static; browser/native/runtime behavior and visual fidelity require later execution.
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, authored T48 PM7 source, focused Egolite remediation validator, future five-surface exact-value/replay/human-copy projection matrix]
+risk_class: capability_digest_or_human_step_projection_drift
+reasoning_tier: high
+context_scope: browser_digest_and_human_step_projection
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Prompt_Pipeline.md, Plans/Shared_Integration_Runtime.md, future Browser Runtime]
+node_compile_hint: {mode: browser_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:HBU-005, source_ref:egolite-requirement:HBU-013]
+preserved_exact_tokens: [capability-specific API digest, on-demand help, user_step_label, Chat, Testing, Watch, ObservableWork, timeline]
+negative_constraints:
+  - Do not let human copy carry code, secrets, raw IDs, paths, payload, or authority.
+  - Do not shorten, paraphrase, regenerate, or infer a distinct underlying user_step_label on any consumer surface.
+  - Do not claim cross-surface runtime projection from static source alone.
+owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/assistant-chat-design.md, Plans/Automated_Testing_System.md]
+```
+
+### SMPFS-155 - Focus-Independent Continuation And Truthful Browser Fidelity Profiles
+
+```yaml
+plan_unit_id: SMPFS-155
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: >-
+  A server-owned admitted Browser Program continues under the same fenced BrowserWorkspace, PageGeneration,
+  controller lease, budgets, and permissions when Puppet Master is backgrounded or focus moves to another app,
+  browser tab, or Puppet Master panel; protocol-driven input never depends on foreground OS mouse/keyboard focus.
+  Focus, visibility, selection, and viewer attachment never confer, revoke, pause, cancel, or transfer mutation
+  authority. Execution selects an explicit requested/effective fidelity profile: foreground_equivalent keeps the
+  target actively composited without stealing focus and preserves visible-equivalent timing, timer, network-priority,
+  and render-cadence behavior within declared budgets; real_background uses actual background visibility and
+  intentionally preserves and labels platform/CEF timing and throttling. Each profile records measured evidence and
+  exposes degradation or fallback truthfully. OS suspend, lock-screen restrictions, process termination, and device
+  disconnection produce explicit interruption/recovery boundaries rather than invented continuation.
+gui_related: true
+gui_classification_reason: Continuation, requested/effective fidelity, and degradation are visible Browser/Testing state.
+depends_on: [SMPFS-150, SMPFS-152, SIR-015]
+unblocks: []
+acceptance_criteria:
+  - BRW-010 covers PM background, another app, another tab, and another panel with `continues_independently=true`, while controller generation fencing remains mandatory.
+  - BRW-010 also proves `foreground_input_dependency=false`: protocol-driven work does not pause, cancel, transfer, or require synthetic input merely because foreground OS mouse/keyboard focus changed.
+  - BRW-011 defines distinct, non-swappable foreground_equivalent and real_background profiles with exact profile identity plus explicit composition/visibility, timer-throttle, network-priority, render-cadence, measured-evidence, and degradation fields.
+  - Focus loss never means cancellation or controller transfer; explicit owner command, lease loss, budget/policy denial, timeout, or terminal result is required.
+  - A positive focus matrix moves focus through PM background, another app, another browser tab, and another PM panel while the same generation-fenced program continues; a separate timing fixture proves foreground_equivalent within its declared tolerance without stealing focus and records actual real_background throttling.
+  - Negative fixtures reject focus-driven pause/cancel/lease transfer, foreground-input dependency, swapped profile identity/semantics, missing timing/throttle/render/network evidence, silent throttling, or foreground_equivalent labeling outside measured tolerance.
+  - Unsupported foreground-equivalent behavior degrades explicitly or blocks; it is never inferred from foreground UI focus, and real_background evidence is never relabeled foreground_equivalent.
+  - OS suspend, lock-screen restriction, process termination, or device disconnection emits an explicit interruption/recovery boundary and is not misreported as focus-independent continuity.
+  - Static contracts do not prove background execution, timing fidelity, throttling behavior, CEF/platform behavior, or performance.
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, authored T48 PM7 source, future four-state focus-independence and foreground-equivalent/real-background timing-throttle evidence matrix]
+risk_class: focus_cancellation_or_fidelity_misrepresentation
+reasoning_tier: high
+context_scope: browser_focus_and_fidelity_profiles
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, future Browser Runtime, future Testing evidence harness]
+node_compile_hint: {mode: browser_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:BRW-010, source_ref:egolite-requirement:BRW-011]
+preserved_exact_tokens: [foreground_equivalent, real_background, PM background, other app, other tab, other panel]
+negative_constraints:
+  - Do not use UI focus as execution ownership or mutation authority.
+  - Do not depend on foreground OS mouse/keyboard focus or steal focus to claim continuation or fidelity.
+  - Do not label a throttled or degraded run foreground-equivalent without measured evidence.
+  - Do not claim continuity across an unrecorded suspend, lock, process-loss, or device-disconnection interval.
+owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
+```
+
+## Browser Program contract closure addendum — 2026-08-31
+
+This addendum closes the static owner/schema gap identified for PM Browser Script, typed BrowserProgram execution, ProgramWorkspace, representation/query, controller and handoff receipts, adaptive routing, routines/adapters, and truthful progress. It extends SMPFS-142 through SMPFS-145 without weakening their PM-native, protected-auth, lease-fencing, or no-Playwright boundaries. Runtime implementation and proof remain open.
+
+### Browser Program machine schema identity
+
+`Plans/section15_browser_program_contracts.schema.json` is the Draft 2020-12 union-schema document. Its aggregate `$id`, `pm.section15_browser_program_contracts.schema.v1`, identifies only that schema document and is not a payload schema identity. Every record is addressed by exactly one stable `(schema_id, record_kind)` pair:
+
+| `record_kind` | canonical payload `schema_id` |
+|---|---|
+| `browser_program_compile_request` | `pm.browser_program.compile_request.v1` |
+| `browser_program_compile_result` | `pm.browser_program.compile_result.v1` |
+| `browser_program_compile_error` | `pm.browser_program.compile_error.v1` |
+| `browser_program` | `pm.browser_program.program.v1` |
+| `program_workspace_revision` | `pm.browser_program.workspace_revision.v1` |
+| `representation_query` | `pm.browser_program.representation_query.v1` |
+| `representation_query_result` | `pm.browser_program.representation_query_result.v1` |
+| `browser_controller_lease_receipt` | `pm.browser_program.controller_lease_receipt.v1` |
+| `browser_program_segment_receipt` | `pm.browser_program.segment_receipt.v1` |
+| `browser_handoff_receipt` | `pm.browser_program.handoff_receipt.v1` |
+| `browser_transfer_receipt` | `pm.browser_program.transfer_receipt.v1` |
+| `browser_routing_decision` | `pm.browser_program.routing_decision.v1` |
+| `browser_routine_record` | `pm.browser_program.routine_record.v1` |
+| `external_browser_adapter_receipt` | `pm.browser_program.external_adapter_receipt.v1` |
+| `browser_program_result` | `pm.browser_program.result.v1` |
+| `browser_command_request` | `pm.browser_program.command_request.v1` |
+| `browser_command_result` | `pm.browser_program.command_result.v1` |
+| `browser_command_error` | `pm.browser_program.command_error.v1` |
+| `browser_command_availability` | `pm.browser_program.command_availability.v1` |
+| `browser_command_disabled_reason` | `pm.browser_program.command_disabled_reason.v1` |
+| `browser_observable_work_projection` | `pm.browser_program.observable_work_projection.v1` |
+
+Validators and storage routing fail closed when either member is missing, unknown, or mismatched. The former aggregate payload ID is migration input only: an explicit pre-validation migrator must first identify one exact known `record_kind`, rewrite to its canonical ID above, and retain migration provenance; unknown or missing kinds are rejected. The aggregate ID is never persisted as record identity and is not accepted as a compatibility alias during normal validation. No Browser Program record admits `AuthBrowserSession`, protected-auth content, credentials, cookie/storage state, capture, or automation authority; only `ordinary` browser subjects validate.
+
+The existing fifteen canonical `cmd.browser.workspace.*`, `cmd.browser.page.*`, and `cmd.browser.program.*` identities in §15.11 use one owner-DRY `browser_command_scope` discriminator and five generic request/result/error/availability/disabled-reason record shapes. Each command ID has command-specific required workspace, page, PageGeneration, controller, representation, program, ProgramWorkspace revision, checkpoint/effect, policy, or capability fields as applicable. Fields for arbitrary JavaScript, raw browser protocol, hidden interpreters, `AuthBrowserSession`, protected-auth state, and `cmd.playwright.*` do not exist in the closed scope. These are static owner contracts only: the central command catalog, native BrowserRuntimeService handlers, production wiring, Event Authority admission, and runtime/security/visual proof remain absent.
+
+### SMPFS-147 - PM Browser Script Compiler And Typed BrowserProgram
+
+```yaml
+plan_unit_id: SMPFS-147
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: PM Browser Script is a compact declarative named-action language compiled through parser, type/name/effect/limit/capability/permission/FileSafe preflight into versioned BrowserProgram and BrowserProgramAST; failures are source-spanned and no-effect, and every program carries source/compiler/API/capability/AST hashes, bounded result policy, ordinary-session security class, and no arbitrary code or ambient host authority.
+gui_related: false
+gui_classification_reason: This unit owns compiler, AST, hashing, preflight, authority, and result contracts rather than visible presentation.
+depends_on: [SMPFS-142, SMPFS-143, SMPFS-145]
+unblocks: [SMPFS-148, SMPFS-149, SMPFS-151, SMPFS-152]
+acceptance_criteria:
+  - Compact source and validated AST compile to the same reproducible typed program when hashes/digests match.
+  - Parse/type/name/effect/limit/capability/permission/FileSafe failure returns exact spans and no_effect true before any mutation.
+  - AST admits only named actions, bounded queries/local operators, checkpoints, and declared capture/bookmark requests.
+  - Protected-auth, Python/host code, arbitrary page code, raw protocol, filesystem/process/environment/keychain/socket, and Playwright-shaped authority are structurally absent.
+validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future compiler no-effect and hash-reproducibility matrix]
+risk_class: browser_script_compiler_or_authority_escape
+reasoning_tier: high
+context_scope: pm_browser_script_compiler
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/section15_browser_program_contracts.schema.json]
+node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
+preserved_exact_tokens: [PM Browser Script, BrowserProgram, BrowserProgramAST, no_effect, source_hash, compiler_hash, api_digest, capability_profile_hash, ast_hash]
+source_lineage: [source_ref:egolite-requirement:EGO-001, source_ref:egolite-requirement:HBU-001, source_ref:egolite-requirement:HBU-002, source_ref:egolite-requirement:HBU-003, source_ref:egolite-requirement:HBU-025, source_ref:egolite-requirement:BRW-003, source_ref:egolite-requirement:BRW-004, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:181-257]
+negative_constraints:
+  - Do not add a hidden interpreter or arbitrary-code compatibility path.
+  - Do not treat successful compilation as execution or test proof.
+```
+
+### SMPFS-148 - ProgramWorkspace Segments Effects And Reconstructive Handoff
+
+```yaml
+plan_unit_id: SMPFS-148
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: ProgramWorkspace is revisioned typed durable local state with bounded data/reference classes and pure local operators, not a host directory. Programs execute in dependency-ordered bounded segments with expected revision, output/effect ranges, user_step_label, retry/idempotency, exact cancellation/timeout terminals, effect reconciliation, durable checkpoints/spills, and reconstructive host handoff that fences the source and never claims live process migration.
+gui_related: true
+gui_classification_reason: Technical Details exposes workspace revision, checkpoint, segment, timeout/effect reconciliation, and destination Host/Environment.
+depends_on: [SMPFS-147, SMPFS-144]
+unblocks: [SMPFS-152]
+acceptance_criteria:
+  - Workspace changes require expected revision and emit a new revision receipt; large values spill only to typed artifacts.
+  - Unknown effect state blocks retry until explicit reconciliation.
+  - Cancellation and timeout preserve completed, rejected, unknown, artifact/capture, and safe-next-action truth.
+  - Handoff checkpoints eligible durable state, finalizes evidence, fences the source, reconstructs exact destination topology, and rejects unfenced/unknown-effect retry.
+validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future cancellation timeout duplicate-effect and handoff reconstruction matrix]
+risk_class: program_workspace_effect_or_handoff_drift
+reasoning_tier: high
+context_scope: program_workspace_and_handoff
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/FileSafe.md]
+node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
+preserved_exact_tokens: [ProgramWorkspace, cancelled_confirmed, timed_out_stopped, timed_out_effects_reconciled, timed_out_effect_state_unknown, user_step_label]
+source_lineage: [source_ref:egolite-requirement:HBU-006, source_ref:egolite-requirement:HBU-007, source_ref:egolite-requirement:HBU-008, source_ref:egolite-requirement:HBU-009, source_ref:egolite-requirement:BRW-012, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:259-309, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:388, source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:44-51]
+negative_constraints:
+  - Do not materialize ProgramWorkspace as a host directory or accept stdout/log paths as artifact authority.
+  - Do not claim live stack/process migration during handoff.
+```
+
+### SMPFS-149 - Exact-Generation PageRepresentation And RepresentationQuery
+
+```yaml
+plan_unit_id: SMPFS-149
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Browser Program PageRepresentation and RepresentationQuery are exact-PageGeneration, budgeted, scoped, coverage-bearing and invalidation-aware with minimal/standard/full/scoped/delta modes, bounded local query operators, deterministic continuation, one base index per generation, concurrent bounded frame collection, truthful partial/root-only results, stale rejection, and generation-scoped collision-detected action/node IDs.
+gui_related: true
+gui_classification_reason: Browser and Technical Details expose human coverage, degradation, continuation, and stale/partial status.
+depends_on: [SMPFS-147, SMPFS-144]
+unblocks: [SMPFS-152]
+acceptance_criteria:
+  - Query and mutation authority always name exact BrowserPage and PageGeneration.
+  - Coverage identifies frame/shadow/cross-origin/virtualized/listener/style/layout omissions and budget exhaustion.
+  - Delta requires an admitted base and stale generations cannot be presented as current.
+  - Site Reader and Browser Program representations remain explicitly distinct owners.
+validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future large-page budget partial stale and synthetic-ID collision matrix]
+risk_class: representation_generation_coverage_or_owner_drift
+reasoning_tier: high
+context_scope: browser_program_representation_query
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Tools.md]
+node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:EGO-003, source_ref:egolite-requirement:HBU-010, source_ref:egolite-requirement:HBU-011, source_ref:egolite-requirement:BRW-014, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:309-356, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:109-139]
+negative_constraints:
+  - Do not cite Site Reader representation as the full Browser Program action representation.
+  - Do not accept stale or partial data as complete/current.
+```
+
+### SMPFS-150 - BrowserWorkspace Isolation Controller Takeover And Transfer
+
+```yaml
+plan_unit_id: SMPFS-150
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: BrowserWorkspace is the independently mutable isolation unit; compatible CEF process sharing is allowed only under a truthful compatibility key, while incompatible trust/profile/proxy/device/locale/extension/GPU/codec/crash/reproduction/recording state isolates. Exactly one fenced mutating controller lease exists per page generation; read-only viewers coexist; takeover/delegation and FileSafe transfers are explicit, scoped, timed, and receipted; focus/viewer/client changes confer no authority.
+gui_related: true
+gui_classification_reason: Testing and Browser cards show actual Host/Environment, controller/takeover state, requested/effective visibility, transfer state, and disabled reasons.
+depends_on: [SMPFS-144, SMPFS-148]
+unblocks: [SMPFS-152]
+acceptance_criteria:
+  - Shared-process compatibility never merges workspace identity/storage/controller/evidence/failure state.
+  - One controller wins same-generation mutation; every stale/losing action is rejected without mutation.
+  - Takeover/delegation fences late old-holder actions and emits scoped source/destination receipts.
+  - FileSafe alone mediates upload/download with exact artifact/target/permission/disposition.
+validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future 1 4 10 governor race isolation transfer and crash-blast-radius matrix]
+risk_class: browser_workspace_isolation_or_controller_escape
+reasoning_tier: high
+context_scope: browser_workspace_controller_and_transfer
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/FileSafe.md]
+node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:BRW-005, source_ref:egolite-requirement:BRW-006, source_ref:egolite-requirement:BRW-007, source_ref:egolite-requirement:BRW-008, source_ref:egolite-requirement:BRW-012, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:94-102, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:388]
+negative_constraints:
+  - Do not infer mutation authority from focus, visibility, client, viewer, or tab selection.
+  - Do not retain incompatible workspaces in one crash/security domain.
+```
+
+### SMPFS-151 - Browser Routing Routines Screenshot Policy And External Adapters
+
+```yaml
+plan_unit_id: SMPFS-151
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Browser routing preserves orthogonal requested/effective strategy, runtime, source, visibility, and capture dimensions; public static content prefers Search/Fetch/Site Reader before browser escalation while private/LAN/localhost remains authorized private. Screenshot model attachment is auto/always/never and independent of artifact identity. Routines are typed/versioned/hashed/scoped/fixture-validated/provenance-bearing/reversible. Optional adapters are isolated typed bounded processes and close billable sessions explicitly.
+gui_related: true
+gui_classification_reason: Settings and Technical Details expose automatic strategy, effective fallback, screenshot policy, routine state, external cost/session state, and resource/remote limits.
+depends_on: [SMPFS-147, SMPFS-149, SMPFS-150, TCME-001]
+unblocks: [SMPFS-152]
+acceptance_criteria:
+  - Changing one routing dimension never silently changes source authority, permission, visibility, runtime, or capture target.
+  - Screenshot attachment policy cannot bypass capture identity, permission, redaction, or budgets.
+  - Routine promotion is explicit and later capability/API/fixture/policy drift invalidates or disables it.
+  - External adapters use allowlisted env, scoped credentials, private runtime, typed IPC/artifacts, independent budgets, process-tree cancellation, and explicit billable close.
+  - The controlled benchmark runner requires all four exact arms and the current preregistered `4 arms × 2 tiers × 1 task × 1 trial = 8 cells` denominator, every held-condition pin, and all `36 leaves/cell = 288` success/call/token/byte/time/resource/intervention/evidence/recording-overhead observations; unavailable arms remain explicit and make the result not comparable rather than silently disappearing.
+  - Current static PM7 evidence may retain an `open_not_comparable` receipt, but no savings, winner, ordering, runtime, provider, network, or readiness claim exists until every cell executes under held conditions.
+validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/runner.py, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/self_test.py, controlled production benchmark evidence]
+risk_class: browser_routing_routine_or_adapter_authority_drift
+reasoning_tier: high
+context_scope: browser_routing_routines_adapters
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Test_Capture_and_Motion_Evidence.md, Plans/Tools.md, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current]
+node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:HBU-012, source_ref:egolite-requirement:HBU-014, source_ref:egolite-requirement:HBU-016, source_ref:egolite-requirement:HBU-019, source_ref:egolite-requirement:HBU-020, source_ref:egolite-requirement:HBU-024, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:140-219]
+negative_constraints:
+  - Do not treat an optional adapter or benchmark hypothesis as Browser Program ownership or empirical proof.
+  - Do not expose global Expert Mode or Python/Browser Use/Playwright product jargon.
+```
+
+### SMPFS-152 - Browser Receipts ObservableWork Command GUI And Migration Projection
+
+```yaml
+plan_unit_id: SMPFS-152
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Browser compile/execution, workspace revision, segment/effect, representation, lease/takeover, routing, routine, adapter, handoff, and owner-DRY command request/result/error/availability/disabled-reason records preserve exact lineage and truthful effect state. The fifteen canonical cmd.browser.workspace/page/program identities have discriminated static schemas, while central catalog registration, native BrowserRuntimeService handlers, production wiring, Event Authority admission, and runtime proof remain absent. GUI/Settings/Technical Details show human requested/effective, Host/Environment, progress, coverage, degradation, controller, reconciliation, and safe actions without treating static contracts or progress as success.
+gui_related: true
+gui_classification_reason: This unit owns the visible Browser/Testing/Settings/Technical Details projections and safe action states.
+depends_on: [SMPFS-147, SMPFS-148, SMPFS-149, SMPFS-150, SMPFS-151]
+unblocks: []
+acceptance_criteria:
+  - Every long browser operation exposes ObservableWork without converting queued/admitted/lease-held/visible/artifact-present into a verdict.
+  - The generic command scope admits exactly the fifteen canonical command IDs and discriminates their required workspace/page/generation/program/controller/representation fields; protected AuthBrowserSession and arbitrary-code/protocol fields are structurally untargetable.
+  - Future dispatch must target exact workspace/page/generation/program/lease identities through one registered native handler; this static contract does not claim that handler, catalog row, or production wiring exists.
+  - GUI shows human state first and confines raw hashes/AST/generation/lease/budgets/checkpoints to Technical Details.
+  - Migration either losslessly normalizes legacy code/evaluate/global/focus inputs or fails typed/no-effect without inventing runtime proof.
+validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future command reverse-coverage GUI disabled-state migration and protected-boundary matrix]
+risk_class: browser_receipt_progress_wiring_or_migration_drift
+reasoning_tier: high
+context_scope: browser_observable_work_and_projection
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:EGO-002, source_ref:egolite-requirement:HBU-013, source_ref:egolite-requirement:HBU-017, source_ref:egolite-requirement:HBU-021, source_ref:egolite-requirement:HBU-023, source_ref:egolite-requirement:GUI-011, source_ref:egolite-requirement:GUI-013, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:257, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:798]
+negative_constraints:
+  - Do not infer central catalog registration, native handlers, production wiring, admitted events, or dispatch availability from the owner schema.
+  - Do not convert static schema/fixture/catalog validation into runtime, security, visual, performance, migration, or empirical proof.
+```
+
+### SMPFS-153 - Browser Program Record-Addressable Schema Identity
+
+```yaml
+plan_unit_id: SMPFS-153
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Every Browser Program payload uses one stable unique schema_id paired with one exact record_kind; the union schema aggregate ID identifies only the schema document, legacy aggregate payload IDs require explicit fail-closed pre-validation migration, and ordinary Browser records structurally exclude AuthBrowserSession and protected-auth state.
+gui_related: false
+gui_classification_reason: This unit owns record identity, migration, storage addressing, and protected-auth structural exclusion rather than visible presentation.
+depends_on: [SMPFS-143, SMPFS-147, SMPFS-152]
+unblocks: []
+acceptance_criteria:
+  - All twenty-one top-level record branches have unique schema_id constants and unique record_kind constants.
+  - A schema_id and record_kind mismatch, missing member, unknown member, or legacy aggregate payload ID fails ordinary validation.
+  - Legacy migration resolves one exact known record_kind before rewriting the payload ID and preserves migration provenance; it never guesses.
+  - AuthBrowserSession and protected-auth subjects, content, credentials, cookie/storage state, capture, and automation authority remain structurally absent from ordinary Browser Program records.
+validation_surfaces: [Plans/section15_browser_program_contracts.schema.json, Plans/section15_browser_program_contract_fixtures.json, future storage registry and migration fixture matrix]
+risk_class: browser_record_schema_identity_ambiguity_or_protected_auth_escape
+reasoning_tier: high
+context_scope: browser_program_record_identity
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/section15_browser_program_contracts.schema.json]
+node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:144-161, source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:44-78]
+negative_constraints:
+  - Do not persist or route the aggregate union-schema ID as a record schema identity.
+  - Do not accept a legacy ID, unknown record kind, mismatched pair, or protected-auth payload by inference.
+```
+
+### Browser Program migration coverage
+
+This addendum writes product canon, PlanUnits, and machine contract/fixture owners only. The fifteen Browser command request/result/error/availability/disabled-reason shapes are now statically specified and fixture-covered, but this creates no WorkNodes, NodeSeeds, executable queues, BrowserRuntimeService implementation, compiler, CEF process, adapter, GUI, native command handler, production wiring, Event Authority admission, generated governance artifact, benchmark result, or runtime-certification claim. Central command catalog, event, wiring, index registration, and consumer-doc reconciliation remain root-owned follow-on work.
+
 ## Remaining Runtime Onboarding Ownership Addendum (2026-08-14)
 
 ### SMPFS-146 - Three Flow Onboarding And Doctor Handoff
@@ -8683,7 +9166,11 @@ canonical_text: >-
   effective capability disclosure, visible/watchable or headless/background operation, bounded generic Test
   Capture, redaction, artifacts, crash recovery, and cleanup. Expert Browser Program is the advanced
   policy/capability-gated named-action surface and never an arbitrary page-code or raw external-protocol escape
-  hatch.
+  hatch. Concept consumers, including PMConcept7, expose BrowserAction, Browser Program, and Expert Browser
+  Program controls only for ordinary BrowserSessions, only through explicit user action after current policy,
+  permission, and requested/effective capability checks, and never for AuthBrowserSession. PMConcept7 remains a
+  simulated/source-lineage projection that shows runtime_unavailable or an explicit simulated state until fresh
+  native BrowserRuntimeService and CEF runtime evidence exists for the claimed platform and slice.
 gui_related: true
 gui_classification_reason: This unit defines the visible/watchable Browser Program and its advanced user-facing testing/diagnostic behavior.
 depends_on: [SIR-007, ATS-033]
@@ -8693,6 +9180,8 @@ acceptance_criteria:
   - Visible, detached, headless, background, crash, reconnect, artifact, redaction, and cleanup paths retain exact session/topology/operation lineage.
   - Arbitrary page-code and raw external-protocol execution are absent from the product contract.
   - Ordinary BrowserSession automation never weakens protected AuthBrowserSession controls.
+  - Every PMConcept7 or other concept-consumer dispatch targets an exact ordinary BrowserSession and remains disabled until current policy, permission, requested/effective capability, and explicit-user-action gates pass; AuthBrowserSession is rejected without protected-content access.
+  - PMConcept7 HTML behavior, fixtures, screenshots, and browser runs remain simulated/source-lineage evidence and cannot prove native CEF availability, production wiring, or BrowserAction/Browser Program execution; absent fresh native runtime evidence, the consumer renders runtime_unavailable or an explicit simulated state.
 validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-033 future executable matrix]
 risk_class: pm_native_browser_contract_drift
 reasoning_tier: high
@@ -8707,6 +9196,7 @@ negative_constraints:
   - Do not describe PM browser architecture or APIs through external-framework similarity or compatibility.
   - Do not expose arbitrary page-code or a raw external control protocol as Browser Program.
   - Do not treat ordinary BrowserSession capture policy as applicable to protected AuthBrowserSession.
+  - Do not let a concept control, rendered enabled state, fixture, screenshot, or browser run bypass policy/capability/user-action gates or count as native CEF/runtime evidence.
 owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Tools.md]
 ```
 
@@ -9926,3 +10416,79 @@ negative_constraints:
 - Do not mint pseudo-terminals outside terminal_session_id ownership.
 compile_disposition: create_new_planunit
 ```
+
+## Central Sole Future Handler Binding Addendum - 2026-09-01
+
+This owner adjudicates exactly 14 previously unbound primary commands. The table is the sole future-route authority; it does not prove a dispatcher, executable handler, durable effect, provider capability, native Slint surface, security result, or runtime certification. Every command remains `handler_unavailable` until source-hashed native evidence closes its typed availability, permission, receipt/ObservableWork, failure, currentness, idempotency, restart, race, accessibility, and reverse-GUI obligations.
+
+| Command | Sole future handler | Request -> result | Error / permission |
+|---|---|---|---|
+| `cmd.browser.page.activate` | `handlers::browser_program::page_activate` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.page.close` | `handlers::browser_program::page_close` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.page.create` | `handlers::browser_program::page_create` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.page.evaluate` | `handlers::browser_program::page_evaluate` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.page.representation.capture` | `handlers::browser_program::page_representation_capture` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.page.representation.delta` | `handlers::browser_program::page_representation_delta` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.page.representation.query` | `handlers::browser_program::page_representation_query` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.program.cancel` | `handlers::browser_program::program_cancel` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.program.pause` | `handlers::browser_program::program_pause` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.program.resume` | `handlers::browser_program::program_resume` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.program.run` | `handlers::browser_program::program_run` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.workspace.close` | `handlers::browser_program::workspace_close` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.workspace.create` | `handlers::browser_program::workspace_create` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+| `cmd.browser.workspace.reset` | `handlers::browser_program::workspace_reset` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result` | `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error` / `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request/properties/permission_snapshot_ref` |
+
+The central closure emits no new EventRecord type. `expected_event_types=[]` is mandatory until Event Authority registers an owner event and payload. Owner-typed result/receipt/projection records remain required, and asynchronous work must correlate through the owner ObservableWork contract where applicable. Protected authentication, secret bytes, browser content, provider credentials, filesystem authority, trust, readiness, success, and completion are never inferred from dispatch acceptance.
+
+Exact command set: `cmd.browser.page.activate`, `cmd.browser.page.close`, `cmd.browser.page.create`, `cmd.browser.page.evaluate`, `cmd.browser.page.representation.capture`, `cmd.browser.page.representation.delta`, `cmd.browser.page.representation.query`, `cmd.browser.program.cancel`, `cmd.browser.program.pause`, `cmd.browser.program.resume`, `cmd.browser.program.run`, `cmd.browser.workspace.close`, `cmd.browser.workspace.create`, `cmd.browser.workspace.reset`.
+
+Exact sole future handler set: `handlers::browser_program::page_activate`, `handlers::browser_program::page_close`, `handlers::browser_program::page_create`, `handlers::browser_program::page_evaluate`, `handlers::browser_program::page_representation_capture`, `handlers::browser_program::page_representation_delta`, `handlers::browser_program::page_representation_query`, `handlers::browser_program::program_cancel`, `handlers::browser_program::program_pause`, `handlers::browser_program::program_resume`, `handlers::browser_program::program_run`, `handlers::browser_program::workspace_close`, `handlers::browser_program::workspace_create`, `handlers::browser_program::workspace_reset`.
+
+### SMPFS-157 - Central Sole Future Handler Bindings
+
+```yaml
+plan_unit_id: SMPFS-157
+unit_type: command_binding
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: >-
+  Browser Program owns exactly 14 additional central command routes. Each command maps to the sole future handler shown in this addendum, consumes the existing owner-DRY request/result/error/availability/permission family, starts handler_unavailable, and earns no native implementation credit from a target string or production-intent row.
+gui_related: true
+gui_classification_reason: Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named consumers expose some or all of these 14 commands and their exact disabled reasons.
+depends_on: [SMPFS-147, SMPFS-156]
+unblocks: []
+acceptance_criteria:
+- Every exact command ID in this 14-commands set maps one-to-one to the table's sole future handler target and no competing handler path exists.
+- Every request, result, error, availability, permission, disabled-reason, receipt, ObservableWork, return-route, persistence, migration, and negative-security obligation remains owner-DRY.
+- Every central production-intent row starts handler_unavailable, expected_event_types is empty, and static wiring is never represented as native implementation evidence.
+- Commands System, UI Command Catalog, production wiring, Touch Closure, and every intended GUI consumer preserve exact reverse coverage without synthetic controls.
+- Static schema, fixture, command/handler/GUI/reverse-wiring, accessibility, restart/race/currentness, and no-unregistered-event gates pass.
+validation_surfaces:
+- python3 scripts/pm-touch-closure-verify.py --json
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-new-contracts-verify.py
+risk_class: command_route_authority_and_runtime_claim_boundary
+reasoning_tier: high
+context_scope: canonical_owner_command_binding
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: owner_adjudicated_future_handler_bindings
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/touch_closure.json
+- Plans/Wiring_Matrix.production.json
+- user-approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+negative_constraints:
+- Do not claim a native handler, runtime dispatch, durable effect, registered event, security result, readiness, or certification from this Plans-only binding.
+- Do not duplicate owner schemas, state machines, repair logic, credentials, or provider operations in Settings, Onboarding, Doctor, or PMConcept7.
+- Do not expose protected-auth content, secret bytes, private browser state, or provider credentials to agents, adapters, logs, receipts, capture, or ordinary GUI projections.
+compile_disposition: extend_existing_owner
+```
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/touch_closure.json

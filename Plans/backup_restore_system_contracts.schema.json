@@ -1,0 +1,1502 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json",
+  "x-schema-id": "pm.backup_restore_system.contracts.v2",
+  "title": "Puppet Master Backup and Restore System contracts",
+  "description": "Plans-only discriminated v2 contracts for independently recoverable Project and Catalog repositories, multi-destination encrypted backup, eleven destination families, RecoverySet/Recovery Kit custody, scheduling/retention, browse/retrieve, four mutating restore modes, migrations, health projections, and truthful evidence. These shapes are not runtime backup or recovery proof.",
+  "oneOf": [
+    {"$ref": "#/$defs/backup_destination"},
+    {"$ref": "#/$defs/backup_policy"},
+    {"$ref": "#/$defs/backup_run"},
+    {"$ref": "#/$defs/backup_manifest"},
+    {"$ref": "#/$defs/backup_retention_decision"},
+    {"$ref": "#/$defs/destination_family_profile"},
+    {"$ref": "#/$defs/destination_family_registry"},
+    {"$ref": "#/$defs/backup_repository_binding"},
+    {"$ref": "#/$defs/recovery_set_public_record"},
+    {"$ref": "#/$defs/recovery_kit_delivery_session"},
+    {"$ref": "#/$defs/backup_schedule_occurrence"},
+    {"$ref": "#/$defs/retention_preview"},
+    {"$ref": "#/$defs/backup_browse_operation"},
+    {"$ref": "#/$defs/backup_health_projection"},
+    {"$ref": "#/$defs/backup_contract_migration_record"},
+    {"$ref": "#/$defs/portable_secret_envelope"},
+    {"$ref": "#/$defs/recovery_key_record"},
+    {"$ref": "#/$defs/restore_run"},
+    {"$ref": "#/$defs/restore_preview"},
+    {"$ref": "#/$defs/backup_receipt"},
+    {"$ref": "#/$defs/backup_verification_receipt"},
+    {"$ref": "#/$defs/restore_preview_receipt"},
+    {"$ref": "#/$defs/restore_receipt"},
+    {"$ref": "#/$defs/recovery_point_receipt"},
+    {"$ref": "#/$defs/backup_restore_command_request"},
+    {"$ref": "#/$defs/backup_restore_command_result"},
+    {"$ref": "#/$defs/backup_restore_command_error"},
+    {"$ref": "#/$defs/backup_restore_command_availability"},
+    {"$ref": "#/$defs/backup_architecture_admission_record"},
+    {"$ref": "#/$defs/backup_destination_recovery_admission_record"},
+    {"$ref": "#/$defs/restore_operational_safety_record"}
+  ],
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 512},
+    "nullable_non_empty_string": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "nullable_timestamp": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+    "stable_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*:[A-Za-z0-9][A-Za-z0-9._:-]*$", "maxLength": 256},
+    "nullable_stable_id": {"oneOf": [{"$ref": "#/$defs/stable_id"}, {"type": "null"}]},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_non_secret_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+    "ref_list": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+    "id_list": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+    "backup_type": {"enum": ["project_backup", "full_server_backup"]},
+    "backup_state": {"enum": ["planned", "waiting_for_source", "waiting_for_unlock", "acquiring_capture_barrier", "capturing", "staged", "encrypting_uploading", "committing_remote_snapshot", "verifying_structure", "verifying_data", "completed", "partial", "failed", "cancelled"]},
+    "restore_mode": {"enum": ["as_new", "in_place", "selective", "server_full"]},
+    "restore_state": {"enum": ["selecting_backup", "reading_manifest", "compatibility_check", "previewing", "waiting_for_approval", "pre_restore_backup", "staging", "verifying_staged_data", "resolving_identity", "resolving_credentials", "resolving_source_locations", "quiescing", "activating", "rebuilding_derived_state", "post_restore_verifying", "complete", "rollback_available", "rolling_back", "blocked"]},
+    "readiness_classification": {"enum": ["Ready", "Download/Verify Required", "External Reattachment Required", "Sign-in Required"]},
+    "family_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$", "maxLength": 160},
+    "backup_destination": {
+      "title": "BackupDestination",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "backup_destination_id", "display_name", "destination_family", "destination_adapter_id", "location_ref", "owning_server_id", "auth_profile_ref", "credential_ref", "oauth_registration_ref", "destination_generation", "state", "capabilities", "existing_repository_disposition", "repository_refs", "capacity_observation_ref", "last_test_receipt_ref", "failure_ref", "runtime_evidence_status", "created_at_utc", "updated_at_utc", "currentness_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_destination.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "display_name": {"$ref": "#/$defs/non_empty_string"},
+        "destination_family": {"enum": ["aws_s3", "s3_compatible", "backblaze_b2", "azure_blob", "gcs", "google_drive", "onedrive", "local_nas", "sftp", "webdav", "rest_server"]},
+        "destination_adapter_id": {"$ref": "#/$defs/non_empty_string"},
+        "location_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "owning_server_id": {"$ref": "#/$defs/stable_id"},
+        "auth_profile_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "credential_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "oauth_registration_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "destination_generation": {"type": "integer", "minimum": 0},
+        "state": {"enum": ["configured", "testing", "ready", "needs_sign_in", "waiting", "offline", "degraded", "quota_full", "read_only", "unauthorized", "quarantined", "disabled", "blocked", "unknown"]},
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["list", "read", "write", "commit", "lock", "delete", "version", "object_lock", "archive_retrieval", "stream_read", "resume"],
+          "properties": {
+            "list": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "read": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "write": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "commit": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "lock": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "delete": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "version": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "object_lock": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "archive_retrieval": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "stream_read": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+            "resume": {"enum": ["supported", "conditional", "unsupported", "not_run"]}
+          }
+        },
+        "existing_repository_disposition": {"enum": ["not_checked", "none_found", "use_existing_offered", "use_existing_selected", "collision_blocked"]},
+        "repository_refs": {"$ref": "#/$defs/ref_list"},
+        "capacity_observation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "last_test_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "failure_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "runtime_evidence_status": {"enum": ["NOT_RUN", "fixture_only", "mock_only", "runtime_failed", "runtime_passed"]},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "ready"}}, "required": ["state"]}, "then": {"properties": {"last_test_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "failure_ref": {"type": "null"}}}},
+        {"if": {"properties": {"state": {"enum": ["offline", "degraded", "quota_full", "unauthorized", "quarantined", "blocked"]}}, "required": ["state"]}, "then": {"properties": {"failure_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"runtime_evidence_status": {"const": "runtime_passed"}}, "required": ["runtime_evidence_status"]}, "then": {"properties": {"last_test_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "retention_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule_id", "rule_kind", "count", "minimum_age_seconds"],
+      "properties": {
+        "rule_id": {"$ref": "#/$defs/stable_id"},
+        "rule_kind": {"enum": ["keep_last", "keep_daily", "keep_weekly", "keep_monthly"]},
+        "count": {"type": "integer", "minimum": 1},
+        "minimum_age_seconds": {"type": "integer", "minimum": 0}
+      }
+    },
+    "schedule_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timezone", "daily_local_time", "dst_policy", "catch_up_policy", "permitted_hours_ref", "minimum_spacing_seconds"],
+      "properties": {
+        "timezone": {"type": "string", "minLength": 1, "maxLength": 128},
+        "daily_local_time": {"type": "string", "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$"},
+        "dst_policy": {"enum": ["first_valid_occurrence", "coalesce_repeated_hour", "next_valid_time_after_gap"]},
+        "catch_up_policy": {"enum": ["coalesce_one_missed", "skip_missed"]},
+        "permitted_hours_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "minimum_spacing_seconds": {"type": "integer", "minimum": 3600}
+      }
+    },
+    "backup_policy": {
+      "title": "BackupPolicy",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "backup_policy_id", "policy_revision", "policy_origin", "initial_policy_seed_id", "scope_review_status", "scope_review_receipt_ref", "scope", "server_id", "project_ids", "repository_binding_ids", "destination_binding_ids", "mode", "schedule_ref", "schedule_policy", "included_family_ids", "excluded_family_ids", "source_code_inclusion_mode", "portable_secret_envelope", "verification_policy", "test_restore_policy", "retention_rules", "protection_policy_ref", "created_at_utc", "updated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_policy.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "backup_policy_id": {"$ref": "#/$defs/stable_id"},
+        "policy_revision": {"type": "integer", "minimum": 0},
+        "policy_origin": {"enum": ["new_v2_default", "new_advanced", "existing_unreviewed", "existing_reviewed"]},
+        "initial_policy_seed_id": {"oneOf": [{"const": "backup-policy-seed:2026-09-01-7-4-6"}, {"type": "null"}]},
+        "scope_review_status": {"enum": ["not_required", "review_required", "accepted", "declined"]},
+        "scope_review_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "scope": {"$ref": "#/$defs/backup_type"},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_ids": {"$ref": "#/$defs/id_list"},
+        "repository_binding_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "destination_binding_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "mode": {"enum": ["manual", "automatic"]},
+        "schedule_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "schedule_policy": {"oneOf": [{"$ref": "#/$defs/schedule_policy"}, {"type": "null"}]},
+        "included_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+        "excluded_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+        "source_code_inclusion_mode": {"enum": ["pm_data_only", "selected_source", "complete_project_source_git_jj"]},
+        "portable_secret_envelope": {"enum": ["excluded", "explicit_opt_in"]},
+        "verification_policy": {"enum": ["required", "best_effort_with_unverified_terminal"]},
+        "test_restore_policy": {"enum": ["manual", "required_before_protected", "scheduled_by_ref"]},
+        "retention_rules": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/retention_rule"}},
+        "protection_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"mode": {"const": "automatic"}}, "required": ["mode"]}, "then": {"properties": {"schedule_ref": {"$ref": "#/$defs/non_secret_ref"}, "schedule_policy": {"$ref": "#/$defs/schedule_policy"}}}},
+        {"if": {"properties": {"mode": {"const": "manual"}}, "required": ["mode"]}, "then": {"properties": {"schedule_ref": {"type": "null"}, "schedule_policy": {"type": "null"}}}},
+        {"if": {"properties": {"scope": {"const": "project_backup"}}, "required": ["scope"]}, "then": {"properties": {"project_ids": {"minItems": 1, "maxItems": 1}}}},
+        {"if": {"properties": {"portable_secret_envelope": {"const": "explicit_opt_in"}}, "required": ["portable_secret_envelope"]}, "then": {"properties": {"scope": {"const": "full_server_backup"}}}},
+        {"if": {"properties": {"policy_origin": {"const": "new_v2_default"}}, "required": ["policy_origin"]}, "then": {"properties": {"scope": {"const": "project_backup"}, "initial_policy_seed_id": {"const": "backup-policy-seed:2026-09-01-7-4-6"}, "scope_review_status": {"const": "not_required"}, "scope_review_receipt_ref": {"type": "null"}, "source_code_inclusion_mode": {"const": "complete_project_source_git_jj"}, "included_family_ids": {"allOf": [{"contains": {"const": "project.files"}}, {"contains": {"const": "project.source_git_jj_closure"}}]}, "retention_rules": {"allOf": [{"contains": {"type": "object", "properties": {"rule_kind": {"const": "keep_daily"}, "count": {"const": 7}}, "required": ["rule_kind", "count"]}}, {"contains": {"type": "object", "properties": {"rule_kind": {"const": "keep_weekly"}, "count": {"const": 4}}, "required": ["rule_kind", "count"]}}, {"contains": {"type": "object", "properties": {"rule_kind": {"const": "keep_monthly"}, "count": {"const": 6}}, "required": ["rule_kind", "count"]}}]}}}},
+        {"if": {"properties": {"policy_origin": {"const": "existing_unreviewed"}}, "required": ["policy_origin"]}, "then": {"properties": {"initial_policy_seed_id": {"type": "null"}, "scope_review_status": {"const": "review_required"}, "scope_review_receipt_ref": {"type": "null"}}}},
+        {"if": {"properties": {"policy_origin": {"const": "existing_reviewed"}}, "required": ["policy_origin"]}, "then": {"properties": {"scope_review_status": {"enum": ["accepted", "declined"]}, "scope_review_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "phase_journal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["journal_ref", "phase_sequence", "phase_revision", "resume_ref", "commit_marker_ref", "rollback_marker_ref", "quarantine_ref", "last_reconciled_at_utc"],
+      "properties": {
+        "journal_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "phase_sequence": {"type": "integer", "minimum": 0},
+        "phase_revision": {"type": "integer", "minimum": 0},
+        "resume_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "commit_marker_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "rollback_marker_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "quarantine_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "last_reconciled_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "backup_destination_attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt_id", "backup_destination_id", "repository_id", "upload_state", "remote_snapshot_id", "commit_receipt_ref", "failure_ref", "started_at_utc", "updated_at_utc", "terminal_at_utc"],
+      "properties": {
+        "attempt_id": {"$ref": "#/$defs/stable_id"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "repository_id": {"$ref": "#/$defs/stable_id"},
+        "upload_state": {"enum": ["planned", "uploading", "committing", "committed", "partial", "failed", "cancelled", "outcome_unknown"]},
+        "remote_snapshot_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "commit_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "failure_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "started_at_utc": {"$ref": "#/$defs/timestamp"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
+        "terminal_at_utc": {"$ref": "#/$defs/nullable_timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"upload_state": {"const": "committed"}}, "required": ["upload_state"]}, "then": {"properties": {"remote_snapshot_id": {"$ref": "#/$defs/stable_id"}, "commit_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "failure_ref": {"type": "null"}, "terminal_at_utc": {"$ref": "#/$defs/timestamp"}}}},
+        {"if": {"properties": {"upload_state": {"enum": ["partial", "failed", "outcome_unknown"]}}, "required": ["upload_state"]}, "then": {"properties": {"failure_ref": {"$ref": "#/$defs/non_secret_ref"}, "terminal_at_utc": {"$ref": "#/$defs/timestamp"}}}}
+      ]
+    },
+    "backup_run": {
+      "title": "BackupRun",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "backup_run_id", "backup_id", "capture_set_id", "backup_type", "server_id", "project_ids", "project_vault_ids", "repository_binding_ids", "repository_snapshot_refs", "recovery_set_id", "backup_policy_id", "expected_policy_revision", "state", "capture_completeness", "destination_attempts", "integrity_verification_level", "restore_test_status", "catalog_revision", "vault_generation_refs", "recovery_point_receipt_ref", "manifest_ref", "portable_secret_envelope_id", "verification_receipt_ref", "observable_work_ref", "phase_journal", "idempotency_key", "failure_ref", "started_at_utc", "updated_at_utc", "terminal_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_run.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "backup_run_id": {"$ref": "#/$defs/stable_id"},
+        "backup_id": {"$ref": "#/$defs/stable_id"},
+        "capture_set_id": {"$ref": "#/$defs/stable_id"},
+        "backup_type": {"$ref": "#/$defs/backup_type"},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_ids": {"$ref": "#/$defs/id_list"},
+        "project_vault_ids": {"$ref": "#/$defs/id_list"},
+        "repository_binding_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "repository_snapshot_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "recovery_set_id": {"$ref": "#/$defs/stable_id"},
+        "backup_policy_id": {"$ref": "#/$defs/stable_id"},
+        "expected_policy_revision": {"type": "integer", "minimum": 0},
+        "state": {"$ref": "#/$defs/backup_state"},
+        "capture_completeness": {"enum": ["not_started", "waiting_required_source", "complete", "partial"]},
+        "destination_attempts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/backup_destination_attempt"}},
+        "integrity_verification_level": {"enum": ["not_run", "structure_passed", "sampled_data_passed", "full_data_read_passed", "failed"]},
+        "restore_test_status": {"enum": ["not_run", "scheduled", "running", "passed", "failed", "stale"]},
+        "catalog_revision": {"type": ["integer", "null"], "minimum": 0},
+        "vault_generation_refs": {"$ref": "#/$defs/ref_list"},
+        "recovery_point_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "manifest_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "portable_secret_envelope_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "verification_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "observable_work_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "phase_journal": {"$ref": "#/$defs/phase_journal"},
+        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
+        "failure_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "started_at_utc": {"$ref": "#/$defs/timestamp"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
+        "terminal_at_utc": {"$ref": "#/$defs/nullable_timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"backup_type": {"const": "project_backup"}}, "required": ["backup_type"]}, "then": {"properties": {"project_ids": {"minItems": 1, "maxItems": 1}, "project_vault_ids": {"minItems": 1, "maxItems": 1}}}},
+        {"if": {"properties": {"backup_type": {"const": "full_server_backup"}}, "required": ["backup_type"]}, "then": {"properties": {"catalog_revision": {"type": "integer", "minimum": 0}}}},
+        {"if": {"properties": {"state": {"const": "completed"}}, "required": ["state"]}, "then": {"properties": {"capture_completeness": {"const": "complete"}, "manifest_ref": {"$ref": "#/$defs/non_secret_ref"}, "destination_attempts": {"items": {"allOf": [{"$ref": "#/$defs/backup_destination_attempt"}, {"properties": {"upload_state": {"const": "committed"}}}]}}, "failure_ref": {"type": "null"}, "terminal_at_utc": {"$ref": "#/$defs/timestamp"}}}},
+        {"if": {"properties": {"state": {"const": "partial"}}, "required": ["state"]}, "then": {"properties": {"capture_completeness": {"enum": ["complete", "partial"]}, "failure_ref": {"$ref": "#/$defs/non_secret_ref"}, "terminal_at_utc": {"$ref": "#/$defs/timestamp"}}}},
+        {"if": {"properties": {"state": {"enum": ["failed", "cancelled"]}}, "required": ["state"]}, "then": {"properties": {"failure_ref": {"$ref": "#/$defs/non_secret_ref"}, "terminal_at_utc": {"$ref": "#/$defs/timestamp"}}}}
+      ]
+    },
+    "consistency_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consistency_boundary_id", "boundary_kind", "server_id", "project_id", "project_vault_id", "catalog_revision", "vault_generation_ref", "fence_receipt_ref"],
+      "properties": {
+        "consistency_boundary_id": {"$ref": "#/$defs/stable_id"},
+        "boundary_kind": {"enum": ["server_catalog", "project_vault", "server_global_state"]},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "project_vault_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "catalog_revision": {"type": ["integer", "null"], "minimum": 0},
+        "vault_generation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "fence_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"boundary_kind": {"const": "project_vault"}}, "required": ["boundary_kind"]}, "then": {"properties": {"project_id": {"$ref": "#/$defs/stable_id"}, "project_vault_id": {"$ref": "#/$defs/stable_id"}, "vault_generation_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"boundary_kind": {"const": "server_catalog"}}, "required": ["boundary_kind"]}, "then": {"properties": {"catalog_revision": {"type": "integer", "minimum": 0}}}}
+      ]
+    },
+    "manifest_family_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family_id", "disposition", "reason_code", "consistency_boundary_id"],
+      "properties": {
+        "family_id": {"$ref": "#/$defs/family_id"},
+        "disposition": {"enum": ["included", "excluded", "external_reference", "portable_secret_envelope"]},
+        "reason_code": {"$ref": "#/$defs/non_empty_string"},
+        "consistency_boundary_id": {"$ref": "#/$defs/nullable_stable_id"}
+      }
+    },
+    "manifest_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_id", "family_id", "consistency_boundary_id", "relative_path", "byte_size", "sha256", "storage_encoding", "encryption_metadata_ref"],
+      "properties": {
+        "object_id": {"$ref": "#/$defs/stable_id"},
+        "family_id": {"$ref": "#/$defs/family_id"},
+        "consistency_boundary_id": {"$ref": "#/$defs/stable_id"},
+        "relative_path": {"type": "string", "minLength": 1, "maxLength": 1024, "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "byte_size": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "storage_encoding": {"enum": ["raw", "compressed", "encrypted", "compressed_encrypted"]},
+        "encryption_metadata_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"storage_encoding": {"enum": ["encrypted", "compressed_encrypted"]}}, "required": ["storage_encoding"]}, "then": {"properties": {"encryption_metadata_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"storage_encoding": {"enum": ["raw", "compressed"]}}, "required": ["storage_encoding"]}, "then": {"properties": {"encryption_metadata_ref": {"type": "null"}}}}
+      ]
+    },
+    "backup_manifest": {
+      "title": "BackupManifest",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "manifest_id", "manifest_version", "backup_id", "capture_set_id", "recovery_set_id", "repository_snapshot_refs", "backup_type", "created_at_utc", "server_id", "project_ids", "project_vault_ids", "app_version", "storage_version", "protocol_version", "compatible_app_range", "compatible_storage_range", "consistency_boundaries", "family_dispositions", "objects", "source_host_id", "source_environment_id", "source_code_inclusion_mode", "source_capture_completeness", "portable_secret_envelope_id", "parent_backup_id", "incremental", "verification_status", "verification_receipt_ref", "manifest_sha256", "redaction_profile"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_manifest.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "manifest_id": {"$ref": "#/$defs/stable_id"},
+        "manifest_version": {"const": "2.0.0"},
+        "backup_id": {"$ref": "#/$defs/stable_id"},
+        "capture_set_id": {"$ref": "#/$defs/stable_id"},
+        "recovery_set_id": {"$ref": "#/$defs/stable_id"},
+        "repository_snapshot_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "backup_type": {"$ref": "#/$defs/backup_type"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_ids": {"$ref": "#/$defs/id_list"},
+        "project_vault_ids": {"$ref": "#/$defs/id_list"},
+        "app_version": {"$ref": "#/$defs/non_empty_string"},
+        "storage_version": {"$ref": "#/$defs/non_empty_string"},
+        "protocol_version": {"type": "integer", "minimum": 1},
+        "compatible_app_range": {"$ref": "#/$defs/non_empty_string"},
+        "compatible_storage_range": {"$ref": "#/$defs/non_empty_string"},
+        "consistency_boundaries": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/consistency_boundary"}},
+        "family_dispositions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/manifest_family_disposition"}},
+        "objects": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/manifest_object"}},
+        "source_host_id": {"$ref": "#/$defs/stable_id"},
+        "source_environment_id": {"$ref": "#/$defs/stable_id"},
+        "source_code_inclusion_mode": {"enum": ["pm_data_only", "selected_source", "complete_project_source_git_jj"]},
+        "source_capture_completeness": {"enum": ["complete", "partial", "waiting_required_source"]},
+        "portable_secret_envelope_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "parent_backup_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "incremental": {"type": "boolean"},
+        "verification_status": {"enum": ["passed", "failed", "not_run"]},
+        "verification_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "redaction_profile": {"const": "no_secret_values"}
+      },
+      "allOf": [
+        {"if": {"properties": {"backup_type": {"const": "project_backup"}}, "required": ["backup_type"]}, "then": {"properties": {"project_ids": {"minItems": 1, "maxItems": 1}, "project_vault_ids": {"minItems": 1, "maxItems": 1}, "portable_secret_envelope_id": {"type": "null"}}}},
+        {"if": {"properties": {"incremental": {"const": true}}, "required": ["incremental"]}, "then": {"properties": {"parent_backup_id": {"$ref": "#/$defs/stable_id"}}}},
+        {"if": {"properties": {"incremental": {"const": false}}, "required": ["incremental"]}, "then": {"properties": {"parent_backup_id": {"type": "null"}}}},
+        {"if": {"properties": {"verification_status": {"enum": ["passed", "failed"]}}, "required": ["verification_status"]}, "then": {"properties": {"verification_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_retention_decision": {
+      "title": "BackupRetentionDecision",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "decision_id", "backup_policy_id", "policy_revision", "evaluated_backup_id", "decision", "reason_codes", "protected", "held", "active_parent", "last_known_good", "recovery_required", "delete_after_utc", "evidence_refs", "decided_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_retention_decision.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "decision_id": {"$ref": "#/$defs/stable_id"},
+        "backup_policy_id": {"$ref": "#/$defs/stable_id"},
+        "policy_revision": {"type": "integer", "minimum": 0},
+        "evaluated_backup_id": {"$ref": "#/$defs/stable_id"},
+        "decision": {"enum": ["retain", "delete_eligible", "protected", "held", "blocked"]},
+        "reason_codes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_empty_string"}},
+        "protected": {"type": "boolean"},
+        "held": {"type": "boolean"},
+        "active_parent": {"type": "boolean"},
+        "last_known_good": {"type": "boolean"},
+        "recovery_required": {"type": "boolean"},
+        "delete_after_utc": {"$ref": "#/$defs/nullable_timestamp"},
+        "evidence_refs": {"$ref": "#/$defs/ref_list"},
+        "decided_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {"if": {"anyOf": [{"properties": {"protected": {"const": true}}, "required": ["protected"]}, {"properties": {"held": {"const": true}}, "required": ["held"]}, {"properties": {"active_parent": {"const": true}}, "required": ["active_parent"]}, {"properties": {"last_known_good": {"const": true}}, "required": ["last_known_good"]}, {"properties": {"recovery_required": {"const": true}}, "required": ["recovery_required"]}]}, "then": {"properties": {"decision": {"not": {"const": "delete_eligible"}}, "delete_after_utc": {"type": "null"}}}},
+        {"if": {"properties": {"decision": {"const": "delete_eligible"}}, "required": ["decision"]}, "then": {"properties": {"delete_after_utc": {"$ref": "#/$defs/timestamp"}}}}
+      ]
+    },
+    "portable_secret_envelope": {
+      "title": "PortableSecretEnvelope",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "portable_secret_envelope_id", "backup_id", "server_id", "recovery_key_record_id", "security_profile_ref", "kdf_metadata_ref", "aead_metadata_ref", "selected_subject_refs", "adapter_portability_evidence_refs", "authorization_receipt_ref", "ciphertext_ref", "ciphertext_byte_size", "ciphertext_sha256", "external_secret_refs", "excluded_subject_refs", "created_at_utc", "redaction_profile"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.portable_secret_envelope.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "portable_secret_envelope_id": {"$ref": "#/$defs/stable_id"},
+        "backup_id": {"$ref": "#/$defs/stable_id"},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "recovery_key_record_id": {"$ref": "#/$defs/stable_id"},
+        "security_profile_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "kdf_metadata_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "aead_metadata_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "selected_subject_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "adapter_portability_evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "authorization_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "ciphertext_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "ciphertext_byte_size": {"type": "integer", "minimum": 1},
+        "ciphertext_sha256": {"$ref": "#/$defs/sha256"},
+        "external_secret_refs": {"$ref": "#/$defs/ref_list"},
+        "excluded_subject_refs": {"$ref": "#/$defs/ref_list"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "redaction_profile": {"const": "ciphertext_and_non_secret_metadata_only"}
+      }
+    },
+    "recovery_key_record": {
+      "title": "RecoveryKeyRecord",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "recovery_key_record_id", "server_id", "custody_policy_ref", "security_profile_ref", "key_generation", "state", "recovery_credential_fingerprint", "created_at_utc", "rotated_at_utc", "revoked_at_utc", "currentness_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.recovery_key_record.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "recovery_key_record_id": {"$ref": "#/$defs/stable_id"},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "custody_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "security_profile_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "key_generation": {"type": "integer", "minimum": 1},
+        "state": {"enum": ["active", "rotation_required", "rotated", "revoked", "recovery_required"]},
+        "recovery_credential_fingerprint": {"$ref": "#/$defs/sha256"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "rotated_at_utc": {"$ref": "#/$defs/nullable_timestamp"},
+        "revoked_at_utc": {"$ref": "#/$defs/nullable_timestamp"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "rotated"}}, "required": ["state"]}, "then": {"properties": {"rotated_at_utc": {"$ref": "#/$defs/timestamp"}}}},
+        {"if": {"properties": {"state": {"const": "revoked"}}, "required": ["state"]}, "then": {"properties": {"revoked_at_utc": {"$ref": "#/$defs/timestamp"}}}}
+      ]
+    },
+    "restore_run": {
+      "title": "RestoreRun",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "restore_run_id", "backup_id", "manifest_id", "snapshot_ids", "mode", "state", "source_server_id", "target_server_id", "source_project_ids", "target_project_ids", "selected_family_ids", "settings_strategy", "identity_policy", "recovery_safe_mode", "recovery_coordinator_ref", "preview_receipt_ref", "approval_receipt_ref", "recovery_point_receipt_ref", "staged_verification_receipt_ref", "identity_resolution_ref", "credential_resolution_ref", "source_location_resolution_ref", "derived_rebuild_ref", "post_restore_verification_ref", "rollback_ref", "observable_work_ref", "phase_journal", "idempotency_key", "failure_ref", "started_at_utc", "updated_at_utc", "terminal_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.restore_run.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "restore_run_id": {"$ref": "#/$defs/stable_id"},
+        "backup_id": {"$ref": "#/$defs/stable_id"},
+        "manifest_id": {"$ref": "#/$defs/stable_id"},
+        "snapshot_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "mode": {"$ref": "#/$defs/restore_mode"},
+        "state": {"$ref": "#/$defs/restore_state"},
+        "source_server_id": {"$ref": "#/$defs/stable_id"},
+        "target_server_id": {"$ref": "#/$defs/stable_id"},
+        "source_project_ids": {"$ref": "#/$defs/id_list"},
+        "target_project_ids": {"$ref": "#/$defs/id_list"},
+        "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+        "settings_strategy": {"enum": ["not_applicable", "merge", "replace"]},
+        "identity_policy": {"enum": ["new_identity", "same_project_new_recovery_epoch", "explicit_fenced_takeover"]},
+        "recovery_safe_mode": {"type": "boolean"},
+        "recovery_coordinator_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "preview_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "approval_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "recovery_point_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "staged_verification_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "identity_resolution_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "credential_resolution_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "source_location_resolution_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "derived_rebuild_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "post_restore_verification_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "rollback_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "observable_work_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "phase_journal": {"$ref": "#/$defs/phase_journal"},
+        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
+        "failure_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "started_at_utc": {"$ref": "#/$defs/timestamp"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
+        "terminal_at_utc": {"$ref": "#/$defs/nullable_timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"mode": {"enum": ["as_new", "in_place", "selective", "server_full"]}}, "required": ["mode"]}, "then": {"properties": {"preview_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "approval_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "recovery_point_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"mode": {"const": "as_new"}}, "required": ["mode"]}, "then": {"properties": {"identity_policy": {"const": "new_identity"}}}},
+        {"if": {"properties": {"mode": {"const": "in_place"}}, "required": ["mode"]}, "then": {"properties": {"identity_policy": {"const": "same_project_new_recovery_epoch"}}}},
+        {"if": {"properties": {"mode": {"const": "server_full"}}, "required": ["mode"]}, "then": {"properties": {"recovery_safe_mode": {"const": true}}}},
+        {"if": {"properties": {"state": {"const": "complete"}}, "required": ["state"]}, "then": {"properties": {"staged_verification_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "post_restore_verification_ref": {"$ref": "#/$defs/non_secret_ref"}, "failure_ref": {"type": "null"}, "terminal_at_utc": {"$ref": "#/$defs/timestamp"}}}}
+      ]
+    },
+    "preview_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family_id", "action", "source_identity_ref", "target_identity_ref", "conflict", "resolution_required", "readiness_classification"],
+      "properties": {
+        "family_id": {"$ref": "#/$defs/family_id"},
+        "action": {"enum": ["verify_only", "create", "replace", "merge", "skip", "rebuild_derived"]},
+        "source_identity_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "target_identity_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "conflict": {"type": "boolean"},
+        "resolution_required": {"type": "boolean"},
+        "readiness_classification": {"$ref": "#/$defs/readiness_classification"}
+      }
+    },
+    "restore_preview": {
+      "title": "RestorePreview",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "restore_preview_id", "preview_sha256", "backup_id", "manifest_id", "snapshot_ids", "mode", "settings_strategy", "identity_policy", "target_server_id", "target_project_ids", "selected_family_ids", "compatibility_result", "manifest_verification_result", "mutation_planned", "recovery_point_required", "identity_rewrite_required", "changes", "blocking_reason_refs", "warning_refs", "created_at_utc", "expires_at_utc", "currentness_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.restore_preview.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "restore_preview_id": {"$ref": "#/$defs/stable_id"},
+        "preview_sha256": {"$ref": "#/$defs/sha256"},
+        "backup_id": {"$ref": "#/$defs/stable_id"},
+        "manifest_id": {"$ref": "#/$defs/stable_id"},
+        "snapshot_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "mode": {"$ref": "#/$defs/restore_mode"},
+        "settings_strategy": {"enum": ["not_applicable", "merge", "replace"]},
+        "identity_policy": {"enum": ["new_identity", "same_project_new_recovery_epoch", "explicit_fenced_takeover"]},
+        "target_server_id": {"$ref": "#/$defs/stable_id"},
+        "target_project_ids": {"$ref": "#/$defs/id_list"},
+        "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+        "compatibility_result": {"enum": ["compatible", "migration_required", "incompatible", "unknown"]},
+        "manifest_verification_result": {"enum": ["passed", "failed", "not_run"]},
+        "mutation_planned": {"type": "boolean"},
+        "recovery_point_required": {"type": "boolean"},
+        "identity_rewrite_required": {"type": "boolean"},
+        "changes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/preview_change"}},
+        "blocking_reason_refs": {"$ref": "#/$defs/ref_list"},
+        "warning_refs": {"$ref": "#/$defs/ref_list"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "expires_at_utc": {"$ref": "#/$defs/timestamp"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"mode": {"enum": ["as_new", "in_place", "selective", "server_full"]}}, "required": ["mode"]}, "then": {"properties": {"mutation_planned": {"const": true}, "recovery_point_required": {"const": true}}}},
+        {"if": {"properties": {"mode": {"const": "as_new"}}, "required": ["mode"]}, "then": {"properties": {"identity_rewrite_required": {"const": true}, "identity_policy": {"const": "new_identity"}}}}
+      ]
+    },
+    "receipt_common": {
+      "type": "object",
+      "required": ["schema_version", "receipt_id", "operation_id", "command_id", "idempotency_key", "correlation_id", "server_id", "project_ids", "started_at_utc", "completed_at_utc", "evidence_refs", "failure_refs", "redaction_profile"],
+      "properties": {
+        "schema_version": {"enum": ["1.0.0", "2.0.0"]},
+        "receipt_id": {"$ref": "#/$defs/stable_id"},
+        "operation_id": {"$ref": "#/$defs/stable_id"},
+        "command_id": {"type": "string", "pattern": "^cmd\\.(?:backup|restore)\\."},
+        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
+        "correlation_id": {"$ref": "#/$defs/stable_id"},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_ids": {"$ref": "#/$defs/id_list"},
+        "started_at_utc": {"$ref": "#/$defs/timestamp"},
+        "completed_at_utc": {"$ref": "#/$defs/timestamp"},
+        "evidence_refs": {"$ref": "#/$defs/ref_list"},
+        "failure_refs": {"$ref": "#/$defs/ref_list"},
+        "redaction_profile": {"const": "no_secret_values_no_absolute_paths"}
+      }
+    },
+    "backup_receipt": {
+      "title": "BackupReceipt",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {"$ref": "#/$defs/receipt_common"},
+        {"type": "object", "required": ["schema_id", "backup_run_id", "backup_id", "capture_set_id", "backup_type", "repository_snapshot_refs", "destination_attempts", "backup_policy_id", "policy_revision", "manifest_id", "project_vault_ids", "catalog_revision", "terminal_status", "capture_completeness", "integrity_verification_level", "restore_test_status", "included_family_ids", "excluded_family_ids", "verification_receipt_ref", "recovery_point_receipt_ref", "portable_secret_envelope_id", "rollback_or_cleanup_ref"], "properties": {
+          "schema_id": {"const": "pm.backup_restore_system.backup_receipt.v2"}, "schema_version": {"const": "2.0.0"}, "backup_run_id": {"$ref": "#/$defs/stable_id"}, "backup_id": {"$ref": "#/$defs/stable_id"}, "capture_set_id": {"$ref": "#/$defs/stable_id"}, "backup_type": {"$ref": "#/$defs/backup_type"}, "repository_snapshot_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}}, "destination_attempts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/backup_destination_attempt"}}, "backup_policy_id": {"$ref": "#/$defs/stable_id"}, "policy_revision": {"type": "integer", "minimum": 0}, "manifest_id": {"$ref": "#/$defs/nullable_stable_id"}, "project_vault_ids": {"$ref": "#/$defs/id_list"}, "catalog_revision": {"type": ["integer", "null"], "minimum": 0}, "terminal_status": {"enum": ["completed", "partial", "failed", "cancelled", "blocked", "recovery_required"]}, "capture_completeness": {"enum": ["complete", "partial", "waiting_required_source"]}, "integrity_verification_level": {"enum": ["not_run", "structure_passed", "sampled_data_passed", "full_data_read_passed", "failed"]}, "restore_test_status": {"enum": ["not_run", "scheduled", "running", "passed", "failed", "stale"]}, "included_family_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}}, "excluded_family_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}}, "verification_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}, "recovery_point_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}, "portable_secret_envelope_id": {"$ref": "#/$defs/nullable_stable_id"}, "rollback_or_cleanup_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+        }},
+        {"if": {"properties": {"terminal_status": {"const": "completed"}}, "required": ["terminal_status"]}, "then": {"properties": {"manifest_id": {"$ref": "#/$defs/stable_id"}, "capture_completeness": {"const": "complete"}, "destination_attempts": {"items": {"allOf": [{"$ref": "#/$defs/backup_destination_attempt"}, {"properties": {"upload_state": {"const": "committed"}}}]}}, "failure_refs": {"maxItems": 0}}}},
+        {"if": {"properties": {"terminal_status": {"const": "partial"}}, "required": ["terminal_status"]}, "then": {"properties": {"manifest_id": {"$ref": "#/$defs/stable_id"}, "failure_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"integrity_verification_level": {"enum": ["structure_passed", "sampled_data_passed", "full_data_read_passed", "failed"]}}, "required": ["integrity_verification_level"]}, "then": {"properties": {"verification_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"terminal_status": {"enum": ["failed", "blocked", "recovery_required"]}}, "required": ["terminal_status"]}, "then": {"properties": {"failure_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"backup_type": {"const": "project_backup"}}, "required": ["backup_type"]}, "then": {"properties": {"project_ids": {"minItems": 1, "maxItems": 1}, "project_vault_ids": {"minItems": 1, "maxItems": 1}, "portable_secret_envelope_id": {"type": "null"}}}},
+        {"if": {"properties": {"backup_type": {"const": "full_server_backup"}}, "required": ["backup_type"]}, "then": {"properties": {"catalog_revision": {"type": "integer", "minimum": 0}}}}
+      ]
+    },
+    "verification_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "check_kind", "status", "evidence_ref", "failure_ref"],
+      "properties": {
+        "check_id": {"$ref": "#/$defs/stable_id"},
+        "check_kind": {"enum": ["manifest_schema", "manifest_digest", "object_presence", "object_size", "object_digest", "consistency_boundary", "compatibility", "decrypt_auth", "test_restore", "derived_rebuild"]},
+        "status": {"enum": ["passed", "failed", "not_run"]},
+        "evidence_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "failure_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "passed"}}, "required": ["status"]}, "then": {"properties": {"evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "failure_ref": {"type": "null"}}}},
+        {"if": {"properties": {"status": {"const": "failed"}}, "required": ["status"]}, "then": {"properties": {"failure_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_verification_receipt": {
+      "title": "BackupVerificationReceipt",
+      "allOf": [
+        {"$ref": "#/$defs/receipt_common"},
+        {"type": "object", "required": ["schema_id", "backup_id", "manifest_id", "backup_destination_id", "verification_run_id", "verification_scope", "status", "checks", "test_restore_receipt_ref", "verified_object_count", "verified_byte_count", "quarantine_ref"], "properties": {
+          "schema_id": {"const": "pm.backup_restore_system.backup_verification_receipt.v1"},
+          "backup_id": {"$ref": "#/$defs/stable_id"},
+          "manifest_id": {"$ref": "#/$defs/stable_id"},
+          "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+          "verification_run_id": {"$ref": "#/$defs/stable_id"},
+          "verification_scope": {"enum": ["structural", "sampled_data_read", "full_data_read", "isolated_restore_drill"]},
+          "status": {"enum": ["passed", "failed", "not_run"]},
+          "checks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/verification_check"}},
+          "test_restore_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "verified_object_count": {"type": "integer", "minimum": 0},
+          "verified_byte_count": {"type": "integer", "minimum": 0},
+          "quarantine_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+        }},
+        {"if": {"properties": {"status": {"const": "passed"}}, "required": ["status"]}, "then": {"properties": {"failure_refs": {"maxItems": 0}, "quarantine_ref": {"type": "null"}}}},
+        {"if": {"properties": {"status": {"const": "failed"}}, "required": ["status"]}, "then": {"properties": {"failure_refs": {"minItems": 1}, "quarantine_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"verification_scope": {"const": "isolated_restore_drill"}}, "required": ["verification_scope"]}, "then": {"properties": {"test_restore_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "restore_preview_receipt": {
+      "title": "RestorePreviewReceipt",
+      "allOf": [
+        {"$ref": "#/$defs/receipt_common"},
+        {"type": "object", "required": ["schema_id", "restore_preview_id", "backup_id", "manifest_id", "mode", "target_server_id", "target_project_ids", "selected_family_ids", "compatibility_result", "manifest_verification_result", "mutation_planned", "recovery_point_required", "identity_rewrite_required", "blocking_reason_refs", "warning_refs", "terminal_status", "expires_at_utc", "currentness_ref"], "properties": {
+          "schema_id": {"const": "pm.backup_restore_system.restore_preview_receipt.v1"},
+          "restore_preview_id": {"$ref": "#/$defs/stable_id"},
+          "backup_id": {"$ref": "#/$defs/stable_id"},
+          "manifest_id": {"$ref": "#/$defs/stable_id"},
+          "mode": {"$ref": "#/$defs/restore_mode"},
+          "target_server_id": {"$ref": "#/$defs/stable_id"},
+          "target_project_ids": {"$ref": "#/$defs/id_list"},
+          "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+          "compatibility_result": {"enum": ["compatible", "migration_required", "incompatible", "unknown"]},
+          "manifest_verification_result": {"enum": ["passed", "failed", "not_run"]},
+          "mutation_planned": {"type": "boolean"},
+          "recovery_point_required": {"type": "boolean"},
+          "identity_rewrite_required": {"type": "boolean"},
+          "blocking_reason_refs": {"$ref": "#/$defs/ref_list"},
+          "warning_refs": {"$ref": "#/$defs/ref_list"},
+          "terminal_status": {"enum": ["ready_for_approval", "blocked", "failed"]},
+          "expires_at_utc": {"$ref": "#/$defs/timestamp"},
+          "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+        }},
+        {"if": {"properties": {"mode": {"enum": ["as_new", "in_place", "selective", "server_full"]}}, "required": ["mode"]}, "then": {"properties": {"mutation_planned": {"const": true}, "recovery_point_required": {"const": true}}}},
+        {"if": {"properties": {"terminal_status": {"const": "ready_for_approval"}}, "required": ["terminal_status"]}, "then": {"properties": {"compatibility_result": {"enum": ["compatible", "migration_required"]}, "manifest_verification_result": {"const": "passed"}, "blocking_reason_refs": {"maxItems": 0}, "failure_refs": {"maxItems": 0}}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "integration_readiness_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_ref", "subject_kind", "classification", "evidence_refs", "reason_code", "next_action_ref"],
+      "properties": {
+        "subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "subject_kind": {"enum": ["installation", "auth_profile", "cli_profile", "runtime_connection", "cluster_connection", "registry_connection", "credential_attachment", "source_location"]},
+        "classification": {"$ref": "#/$defs/readiness_classification"},
+        "evidence_refs": {"$ref": "#/$defs/ref_list"},
+        "reason_code": {"$ref": "#/$defs/non_empty_string"},
+        "next_action_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"classification": {"const": "Ready"}}, "required": ["classification"]}, "then": {"properties": {"evidence_refs": {"minItems": 1}, "next_action_ref": {"type": "null"}}}},
+        {"if": {"properties": {"classification": {"enum": ["Download/Verify Required", "External Reattachment Required", "Sign-in Required"]}}, "required": ["classification"]}, "then": {"properties": {"next_action_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "restore_receipt": {
+      "title": "RestoreReceipt",
+      "allOf": [
+        {"$ref": "#/$defs/receipt_common"},
+        {"type": "object", "required": ["schema_id", "restore_run_id", "backup_id", "manifest_id", "mode", "source_server_id", "target_server_id", "source_project_ids", "target_project_ids", "selected_family_ids", "terminal_status", "preview_receipt_ref", "approval_receipt_ref", "recovery_point_receipt_ref", "staged_verification_receipt_ref", "post_restore_verification_ref", "identity_resolution_ref", "source_location_resolution_ref", "derived_rebuild_ref", "integration_readiness", "mutation_applied", "rollback_available", "rollback_ref", "quarantine_ref", "client_cache_invalidation_ref"], "properties": {
+          "schema_id": {"const": "pm.backup_restore_system.restore_receipt.v1"},
+          "restore_run_id": {"$ref": "#/$defs/stable_id"},
+          "backup_id": {"$ref": "#/$defs/stable_id"},
+          "manifest_id": {"$ref": "#/$defs/stable_id"},
+          "mode": {"$ref": "#/$defs/restore_mode"},
+          "source_server_id": {"$ref": "#/$defs/stable_id"},
+          "target_server_id": {"$ref": "#/$defs/stable_id"},
+          "source_project_ids": {"$ref": "#/$defs/id_list"},
+          "target_project_ids": {"$ref": "#/$defs/id_list"},
+          "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+          "terminal_status": {"enum": ["complete", "verified_browse_only", "rolled_back", "blocked", "failed", "recovery_required"]},
+          "preview_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+          "approval_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "recovery_point_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "staged_verification_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+          "post_restore_verification_ref": {"$ref": "#/$defs/non_secret_ref"},
+          "identity_resolution_ref": {"$ref": "#/$defs/non_secret_ref"},
+          "source_location_resolution_ref": {"$ref": "#/$defs/non_secret_ref"},
+          "derived_rebuild_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "integration_readiness": {"type": "array", "items": {"$ref": "#/$defs/integration_readiness_item"}},
+          "mutation_applied": {"type": "boolean"},
+          "rollback_available": {"type": "boolean"},
+          "rollback_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "quarantine_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "client_cache_invalidation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+        }},
+        {"if": {"properties": {"mode": {"enum": ["as_new", "in_place", "selective", "server_full"]}}, "required": ["mode"]}, "then": {"properties": {"approval_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "recovery_point_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"terminal_status": {"const": "complete"}}, "required": ["terminal_status"]}, "then": {"properties": {"mutation_applied": {"const": true}, "derived_rebuild_ref": {"$ref": "#/$defs/non_secret_ref"}, "client_cache_invalidation_ref": {"$ref": "#/$defs/non_secret_ref"}, "failure_refs": {"maxItems": 0}}}},
+        {"if": {"properties": {"terminal_status": {"enum": ["blocked", "failed", "recovery_required"]}}, "required": ["terminal_status"]}, "then": {"properties": {"failure_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"terminal_status": {"const": "rolled_back"}}, "required": ["terminal_status"]}, "then": {"properties": {"rollback_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "recovery_point_receipt": {
+      "title": "RecoveryPointReceipt",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "receipt_id", "recovery_point_id", "purpose", "server_id", "project_ids", "project_vault_ids", "catalog_revision", "vault_generation_refs", "consistency_boundary_refs", "manifest_ref", "verification_receipt_ref", "terminal_status", "rollback_generation_ref", "retention_ref", "failure_refs", "created_at_utc", "verified_at_utc", "redaction_profile"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.recovery_point_receipt.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "receipt_id": {"$ref": "#/$defs/stable_id"},
+        "recovery_point_id": {"$ref": "#/$defs/stable_id"},
+        "purpose": {"enum": ["crash_safety", "pre_migration", "pre_settings_copy", "pre_update", "pre_restore", "pre_project_move", "manual"]},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_ids": {"$ref": "#/$defs/id_list"},
+        "project_vault_ids": {"$ref": "#/$defs/id_list"},
+        "catalog_revision": {"type": ["integer", "null"], "minimum": 0},
+        "vault_generation_refs": {"$ref": "#/$defs/ref_list"},
+        "consistency_boundary_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "manifest_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "verification_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "terminal_status": {"enum": ["verified", "failed", "blocked"]},
+        "rollback_generation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "retention_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "failure_refs": {"$ref": "#/$defs/ref_list"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "verified_at_utc": {"$ref": "#/$defs/nullable_timestamp"},
+        "redaction_profile": {"const": "no_secret_values_no_absolute_paths"}
+      },
+      "allOf": [
+        {"if": {"properties": {"terminal_status": {"const": "verified"}}, "required": ["terminal_status"]}, "then": {"properties": {"verification_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "rollback_generation_ref": {"$ref": "#/$defs/non_secret_ref"}, "verified_at_utc": {"$ref": "#/$defs/timestamp"}, "failure_refs": {"maxItems": 0}}}},
+        {"if": {"properties": {"terminal_status": {"enum": ["failed", "blocked"]}}, "required": ["terminal_status"]}, "then": {"properties": {"failure_refs": {"minItems": 1}}}}
+      ]
+    },
+    "destination_capability_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["list", "read", "write", "commit", "lock", "delete", "version", "object_lock", "archive_retrieval", "stream_read", "resume"],
+      "properties": {
+        "list": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "read": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "write": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "commit": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "lock": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "delete": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "version": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "object_lock": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "archive_retrieval": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "stream_read": {"enum": ["supported", "conditional", "unsupported", "not_run"]},
+        "resume": {"enum": ["supported", "conditional", "unsupported", "not_run"]}
+      }
+    },
+    "destination_family_profile": {
+      "title": "DestinationFamilyProfile",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "destination_family", "label", "engine_transport_ref", "auth_owner_ref", "auth_method_refs", "non_secret_locator_field_ids", "capabilities", "limitation_codes", "safe_canary_policy", "oauth_release_gate_ref", "runtime_evidence_status"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.destination_family_profile.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "destination_family": {"enum": ["aws_s3", "s3_compatible", "backblaze_b2", "azure_blob", "gcs", "google_drive", "onedrive", "local_nas", "sftp", "webdav", "rest_server"]},
+        "label": {"enum": ["Amazon S3", "S3-compatible storage", "Backblaze B2", "Azure Blob Storage", "Google Cloud Storage", "Google Drive", "Microsoft OneDrive", "Folder / NAS share", "SFTP server", "WebDAV / Nextcloud", "Self-hosted backup server"]},
+        "engine_transport_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "auth_owner_ref": {"enum": ["owner:authentication_broker", "owner:credential_broker", "owner:os_protected_storage"]},
+        "auth_method_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "non_secret_locator_field_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+        "capabilities": {"$ref": "#/$defs/destination_capability_matrix"},
+        "limitation_codes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_empty_string"}},
+        "safe_canary_policy": {"const": "approved_random_canary_in_pm_scratch_prefix_only"},
+        "oauth_release_gate_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "runtime_evidence_status": {"enum": ["NOT_RUN", "fixture_only", "mock_only", "runtime_failed", "runtime_passed"]}
+      },
+      "allOf": [
+        {"if": {"properties": {"destination_family": {"enum": ["google_drive", "onedrive"]}}, "required": ["destination_family"]}, "then": {"properties": {"auth_owner_ref": {"const": "owner:authentication_broker"}, "oauth_release_gate_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"runtime_evidence_status": {"enum": ["NOT_RUN", "fixture_only", "mock_only"]}}, "required": ["runtime_evidence_status"]}, "then": {"properties": {"capabilities": {"properties": {"object_lock": {"not": {"const": "supported"}}}}}}}
+      ]
+    },
+    "destination_family_registry": {
+      "title": "DestinationFamilyRegistry",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "profiles", "runtime_acceptance_status"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.destination_family_registry.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "profiles": {"type": "array", "minItems": 11, "maxItems": 11, "items": {"$ref": "#/$defs/destination_family_profile"}},
+        "runtime_acceptance_status": {"const": "NOT_RUN"}
+      },
+      "allOf": [
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "aws_s3"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "s3_compatible"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "backblaze_b2"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "azure_blob"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "gcs"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "google_drive"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "onedrive"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "local_nas"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "sftp"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "webdav"}}, "required": ["destination_family"]}}}},
+        {"properties": {"profiles": {"contains": {"type": "object", "properties": {"destination_family": {"const": "rest_server"}}, "required": ["destination_family"]}}}}
+      ]
+    },
+    "backup_repository_binding": {
+      "title": "BackupRepositoryBinding",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "repository_binding_id", "repository_id", "boundary_kind", "server_id", "project_id", "project_vault_id", "recovery_set_id", "destination_binding_ids", "writer_server_id", "maintenance_authority_ref", "source_location_refs", "state", "retention_policy_ref", "last_complete_snapshot_ref", "quarantine_ref", "currentness_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_repository_binding.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "repository_binding_id": {"$ref": "#/$defs/stable_id"},
+        "repository_id": {"$ref": "#/$defs/stable_id"},
+        "boundary_kind": {"enum": ["project", "server_catalog"]},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "project_vault_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "recovery_set_id": {"$ref": "#/$defs/stable_id"},
+        "destination_binding_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "writer_server_id": {"$ref": "#/$defs/stable_id"},
+        "maintenance_authority_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_location_refs": {"$ref": "#/$defs/ref_list"},
+        "state": {"enum": ["ready", "waiting_for_source", "waiting_for_unlock", "degraded", "quarantined", "blocked"]},
+        "retention_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "last_complete_snapshot_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "quarantine_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"boundary_kind": {"const": "project"}}, "required": ["boundary_kind"]}, "then": {"properties": {"project_id": {"$ref": "#/$defs/stable_id"}, "project_vault_id": {"$ref": "#/$defs/stable_id"}}}},
+        {"if": {"properties": {"boundary_kind": {"const": "server_catalog"}}, "required": ["boundary_kind"]}, "then": {"properties": {"project_id": {"type": "null"}, "project_vault_id": {"type": "null"}}}},
+        {"if": {"properties": {"state": {"const": "quarantined"}}, "required": ["state"]}, "then": {"properties": {"quarantine_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "recovery_key_slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_slot_id", "generation", "state", "added_at_utc", "verified_at_utc", "retired_at_utc"],
+      "properties": {
+        "key_slot_id": {"$ref": "#/$defs/stable_id"},
+        "generation": {"type": "integer", "minimum": 1},
+        "state": {"enum": ["active", "pending_verification", "retired", "compromised"]},
+        "added_at_utc": {"$ref": "#/$defs/timestamp"},
+        "verified_at_utc": {"$ref": "#/$defs/nullable_timestamp"},
+        "retired_at_utc": {"$ref": "#/$defs/nullable_timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "active"}}, "required": ["state"]}, "then": {"properties": {"verified_at_utc": {"$ref": "#/$defs/timestamp"}, "retired_at_utc": {"type": "null"}}}},
+        {"if": {"properties": {"state": {"const": "retired"}}, "required": ["state"]}, "then": {"properties": {"retired_at_utc": {"$ref": "#/$defs/timestamp"}}}}
+      ]
+    },
+    "recovery_set_public_record": {
+      "title": "RecoverySetPublicRecord",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "recovery_set_id", "recovery_set_generation", "engine_format_ref", "repository_ids", "protected_scheduler_attachment_ref", "key_slots", "kit_confirmation", "last_kit_delivery_receipt_ref", "pm_escrow", "raw_recovery_credential_present", "tsnet_identity_included", "currentness_ref", "updated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.recovery_set_public.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "recovery_set_id": {"$ref": "#/$defs/stable_id"},
+        "recovery_set_generation": {"type": "integer", "minimum": 1},
+        "engine_format_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "repository_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "protected_scheduler_attachment_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "key_slots": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/recovery_key_slot"}},
+        "kit_confirmation": {"enum": ["not_saved", "human_acknowledged", "unlock_tested", "needs_updated_kit"]},
+        "last_kit_delivery_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "pm_escrow": {"const": false},
+        "raw_recovery_credential_present": {"const": false},
+        "tsnet_identity_included": {"const": false},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "recovery_kit_delivery_session": {
+      "title": "RecoveryKitDeliverySession",
+      "description": "Public control-plane record for a protected human-only no-store session. Recovery credential bytes are deliberately not representable here.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "delivery_session_id", "recovery_set_id", "recovery_set_generation", "action", "audience_client_id", "human_step_up_receipt_ref", "protected_channel_ref", "no_store", "recording_allowed", "model_tool_access", "result_receipt_ref", "created_at_utc", "expires_at_utc", "terminal_status"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.recovery_kit_delivery_session.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "delivery_session_id": {"$ref": "#/$defs/stable_id"},
+        "recovery_set_id": {"$ref": "#/$defs/stable_id"},
+        "recovery_set_generation": {"type": "integer", "minimum": 1},
+        "action": {"enum": ["export", "copy", "print", "test_saved", "acknowledge_saved", "rotate", "reencrypt"]},
+        "audience_client_id": {"$ref": "#/$defs/stable_id"},
+        "human_step_up_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "protected_channel_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "no_store": {"const": true},
+        "recording_allowed": {"const": false},
+        "model_tool_access": {"const": false},
+        "result_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "expires_at_utc": {"$ref": "#/$defs/timestamp"},
+        "terminal_status": {"enum": ["created", "delivered", "tested", "acknowledged", "cancelled", "expired", "failed"]}
+      }
+    },
+    "backup_schedule_occurrence": {
+      "title": "BackupScheduleOccurrence",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "occurrence_id", "backup_policy_id", "policy_revision", "owning_server_id", "timezone", "scheduled_local_time", "scheduled_at_utc", "dst_disposition", "catch_up_disposition", "state", "writer_lease_ref", "outbox_ref", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_schedule_occurrence.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "occurrence_id": {"$ref": "#/$defs/stable_id"},
+        "backup_policy_id": {"$ref": "#/$defs/stable_id"},
+        "policy_revision": {"type": "integer", "minimum": 0},
+        "owning_server_id": {"$ref": "#/$defs/stable_id"},
+        "timezone": {"$ref": "#/$defs/non_empty_string"},
+        "scheduled_local_time": {"$ref": "#/$defs/non_empty_string"},
+        "scheduled_at_utc": {"$ref": "#/$defs/timestamp"},
+        "dst_disposition": {"enum": ["ordinary", "repeated_hour_coalesced", "gap_advanced_to_next_valid"]},
+        "catch_up_disposition": {"enum": ["not_needed", "coalesced_one_missed", "skipped_by_policy"]},
+        "state": {"enum": ["planned", "deferred", "admitted", "running", "completed", "partial", "failed", "cancelled"]},
+        "writer_lease_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "outbox_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "retention_preview": {
+      "title": "RetentionPreview",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "retention_preview_id", "repository_id", "repository_revision", "backup_policy_id", "policy_revision", "candidate_snapshot_refs", "candidate_set_sha256", "held_snapshot_refs", "last_known_good_snapshot_ref", "eligible_prune_bytes", "estimate_confidence", "mutation_lease_ref", "confirmation_receipt_ref", "created_at_utc", "expires_at_utc", "currentness_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.retention_preview.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "retention_preview_id": {"$ref": "#/$defs/stable_id"},
+        "repository_id": {"$ref": "#/$defs/stable_id"},
+        "repository_revision": {"type": "integer", "minimum": 0},
+        "backup_policy_id": {"$ref": "#/$defs/stable_id"},
+        "policy_revision": {"type": "integer", "minimum": 0},
+        "candidate_snapshot_refs": {"$ref": "#/$defs/ref_list"},
+        "candidate_set_sha256": {"$ref": "#/$defs/sha256"},
+        "held_snapshot_refs": {"$ref": "#/$defs/ref_list"},
+        "last_known_good_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "eligible_prune_bytes": {"type": "integer", "minimum": 0},
+        "estimate_confidence": {"enum": ["exact_snapshot_set_estimated_bytes", "unknown"]},
+        "mutation_lease_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "confirmation_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "expires_at_utc": {"$ref": "#/$defs/timestamp"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "backup_browse_operation": {
+      "title": "BackupBrowseOperation",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "browse_operation_id", "operation", "repository_id", "snapshot_id", "capture_set_id", "backup_destination_id", "server_id", "project_id", "source_host_id", "source_environment_id", "initiating_client_id", "selected_path_refs", "target_host_id", "target_path_authorization_ref", "filesafe_decision_ref", "archive_consent_receipt_ref", "retrieval_cost_note_ref", "activation_planned", "executes_content", "observable_work_ref", "result_receipt_ref", "currentness_ref", "return_route_ref", "focus_ref", "state"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_browse_operation.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "browse_operation_id": {"$ref": "#/$defs/stable_id"},
+        "operation": {"enum": ["browse", "download", "extract", "compare", "export", "archive_retrieve"]},
+        "repository_id": {"$ref": "#/$defs/stable_id"},
+        "snapshot_id": {"$ref": "#/$defs/stable_id"},
+        "capture_set_id": {"$ref": "#/$defs/stable_id"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "server_id": {"$ref": "#/$defs/stable_id"},
+        "project_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "source_host_id": {"$ref": "#/$defs/stable_id"},
+        "source_environment_id": {"$ref": "#/$defs/stable_id"},
+        "initiating_client_id": {"$ref": "#/$defs/stable_id"},
+        "selected_path_refs": {"$ref": "#/$defs/ref_list"},
+        "target_host_id": {"$ref": "#/$defs/nullable_stable_id"},
+        "target_path_authorization_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "filesafe_decision_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "archive_consent_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "retrieval_cost_note_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "activation_planned": {"const": false},
+        "executes_content": {"const": false},
+        "observable_work_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "result_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "return_route_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "focus_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "state": {"enum": ["planned", "waiting_retrieval", "running", "completed", "partial", "failed", "cancelled"]}
+      },
+      "allOf": [
+        {"if": {"properties": {"operation": {"const": "extract"}}, "required": ["operation"]}, "then": {"properties": {"target_host_id": {"$ref": "#/$defs/stable_id"}, "target_path_authorization_ref": {"$ref": "#/$defs/non_secret_ref"}, "filesafe_decision_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"operation": {"const": "archive_retrieve"}}, "required": ["operation"]}, "then": {"properties": {"archive_consent_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "retrieval_cost_note_ref": {"$ref": "#/$defs/non_secret_ref"}, "observable_work_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_health_projection": {
+      "title": "BackupHealthProjection",
+      "description": "Cached, read-only Doctor/Settings projection; never a mutation or recovery-key surface.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "projection_id", "target_kind", "target_ref", "scope_ref", "severity", "freshness", "finding_codes", "owner_route_ref", "owner_command_id", "optional_not_required", "raw_key_material_present", "can_mutate", "observed_at_utc", "currentness_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_health_projection.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "projection_id": {"$ref": "#/$defs/stable_id"},
+        "target_kind": {"enum": ["backup_destination", "backup_repository", "backup_snapshot", "backup_recovery_set", "backup_policy", "backup_source_coverage", "restore_run"]},
+        "target_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "severity": {"enum": ["healthy", "info", "attention", "degraded", "blocked"]},
+        "freshness": {"enum": ["fresh", "stale", "unknown"]},
+        "finding_codes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_empty_string"}},
+        "owner_route_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "owner_command_id": {"oneOf": [{"$ref": "#/$defs/backup_restore_command_id"}, {"type": "null"}]},
+        "optional_not_required": {"type": "boolean"},
+        "raw_key_material_present": {"const": false},
+        "can_mutate": {"const": false},
+        "observed_at_utc": {"$ref": "#/$defs/timestamp"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"optional_not_required": {"const": true}}, "required": ["optional_not_required"]}, "then": {"properties": {"severity": {"enum": ["healthy", "info"]}}}}
+      ]
+    },
+    "backup_contract_migration_record": {
+      "title": "BackupContractMigrationRecord",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "migration_record_id", "source_contract_schema_id", "target_contract_schema_id", "migration_ids", "legacy_policy_scope_disposition", "legacy_destination_disposition", "legacy_state_disposition", "legacy_restore_mode_disposition", "legacy_key_disposition", "tsnet_identity_disposition", "evidence_level", "runtime_executed", "fabricated_claims", "receipt_ref", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.contract_migration_record.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "migration_record_id": {"$ref": "#/$defs/stable_id"},
+        "source_contract_schema_id": {"const": "pm.backup_restore_system.contracts.v1"},
+        "target_contract_schema_id": {"const": "pm.backup_restore_system.contracts.v2"},
+        "migration_ids": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"enum": ["MIG-007", "MIG-008", "MIG-009", "MIG-010", "MIG-011", "MIG-012", "MIG-013", "MIG-014", "MIG-BRS-SCALAR-DESTINATION", "MIG-BRS-RUN-AXES", "MIG-BRS-RESTORE-MODES", "MIG-BRS-SETTINGS-ROUTES", "MIG-BRS-DOCTOR-CACHE", "MIG-BRS-COMMAND-DENOMINATOR", "MIG-BRS-EVIDENCE-LEVEL"]}},
+        "legacy_policy_scope_disposition": {"const": "preserved_until_human_scope_review"},
+        "legacy_destination_disposition": {"const": "ordered_singleton_binding"},
+        "legacy_state_disposition": {"enum": ["mapped_to_phase_and_axes", "blocked_unknown_state", "quarantined_unknown_state"]},
+        "legacy_restore_mode_disposition": {"const": "four_mutating_modes_settings_strategy_and_read_only_operation"},
+        "legacy_key_disposition": {"const": "verify_repository_and_engine_key_slots_before_public_record"},
+        "tsnet_identity_disposition": {"const": "excluded_new_identity_unless_explicit_fenced_takeover"},
+        "evidence_level": {"enum": ["schema_fixture_only", "migration_dry_run", "runtime_receipt"]},
+        "runtime_executed": {"type": "boolean"},
+        "fabricated_claims": {"type": "array", "maxItems": 0},
+        "receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"evidence_level": {"const": "schema_fixture_only"}}, "required": ["evidence_level"]}, "then": {"properties": {"runtime_executed": {"const": false}, "receipt_ref": {"type": "null"}}}},
+        {"if": {"properties": {"evidence_level": {"const": "runtime_receipt"}}, "required": ["evidence_level"]}, "then": {"properties": {"runtime_executed": {"const": true}, "receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_restore_command_id": {
+      "enum": [
+        "cmd.backup.destination.add",
+        "cmd.backup.destination.update",
+        "cmd.backup.destination.test",
+        "cmd.backup.destination.remove",
+        "cmd.backup.destination.discover",
+        "cmd.backup.policy.update",
+        "cmd.backup.project.create",
+        "cmd.backup.server.create",
+        "cmd.backup.cancel",
+        "cmd.backup.retry",
+        "cmd.backup.verify",
+        "cmd.backup.test_restore",
+        "cmd.backup.browse",
+        "cmd.backup.delete",
+        "cmd.backup.protect",
+        "cmd.backup.open_history",
+        "cmd.backup.open_details",
+        "cmd.backup.retention.preview",
+        "cmd.backup.prune",
+        "cmd.backup.unlock",
+        "cmd.backup.file.download",
+        "cmd.backup.extract",
+        "cmd.backup.file.compare",
+        "cmd.backup.export",
+        "cmd.backup.archive.retrieve",
+        "cmd.backup.recovery_key.export",
+        "cmd.backup.recovery_key.copy",
+        "cmd.backup.recovery_key.print",
+        "cmd.backup.recovery_key.test",
+        "cmd.backup.recovery_key.acknowledge_saved",
+        "cmd.backup.recovery_key.rotate",
+        "cmd.backup.recovery_key.reencrypt",
+        "cmd.restore.preview",
+        "cmd.restore.project_in_place",
+        "cmd.restore.project_as_new",
+        "cmd.restore.selective",
+        "cmd.restore.server_full",
+        "cmd.restore.cancel",
+        "cmd.restore.retry",
+        "cmd.restore.rollback",
+        "cmd.restore.open_details"
+      ]
+    },
+    "backup_restore_disabled_reason": {
+      "enum": [
+        "command_not_registered",
+        "native_handler_absent",
+        "production_wiring_absent",
+        "event_authority_absent",
+        "permission_denied",
+        "confirmation_required",
+        "stale_currentness",
+        "stale_preview",
+        "recovery_point_required",
+        "destination_unavailable",
+        "backup_unavailable",
+        "restore_in_progress",
+        "incompatible_backup",
+        "manifest_unverified",
+        "quarantine_required",
+        "owner_unavailable"
+        ,"handler_unavailable"
+        ,"repository_locked"
+        ,"human_step_up_required"
+        ,"protected_channel_required"
+        ,"retention_preview_required"
+        ,"maintenance_lease_required"
+        ,"archive_consent_required"
+        ,"recovery_set_unavailable"
+      ]
+    },
+    "backup_restore_command_request": {
+      "title": "BackupRestoreCommandRequest",
+      "$anchor": "BackupRestoreCommandRequest",
+      "description": "One owner-DRY request envelope for the exact 41 canonical backup/restore commands. Conditional branches add action-specific repository, destination, snapshot, RecoverySet, currentness, preview, protected-channel, lease, confirmation, and target requirements.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "actor_ref", "permission_snapshot_ref", "idempotency_key", "expected_currentness_ref", "expected_currentness_sha256", "source_surface", "return_route_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.command_request.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/backup_restore_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/stable_id"},
+        "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
+        "expected_currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "expected_currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "source_surface": {"enum": ["settings", "bootstrap", "server_card", "project_card", "files", "source_control", "jujutsu_history", "onboarding", "doctor", "command_palette", "api", "automation"]},
+        "return_route_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "destination_config_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "expected_destination_generation": {"type": "integer", "minimum": 0},
+        "backup_policy_id": {"$ref": "#/$defs/stable_id"},
+        "policy_patch_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "expected_policy_revision": {"type": "integer", "minimum": 0},
+        "backup_id": {"$ref": "#/$defs/stable_id"},
+        "backup_type": {"$ref": "#/$defs/backup_type"},
+        "backup_run_id": {"$ref": "#/$defs/stable_id"},
+        "restore_run_id": {"$ref": "#/$defs/stable_id"},
+        "restore_mode": {"$ref": "#/$defs/restore_mode"},
+        "restore_preview_id": {"$ref": "#/$defs/stable_id"},
+        "preview_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "preview_currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "recovery_point_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "approval_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "confirmation_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "target_server_id": {"$ref": "#/$defs/stable_id"},
+        "target_project_ids": {"$ref": "#/$defs/id_list"},
+        "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+        "new_project_name": {"type": "string", "minLength": 1, "maxLength": 160},
+        "protection_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "portable_secret_envelope_ref": {"$ref": "#/$defs/stable_id"},
+        "recovery_key_record_ref": {"$ref": "#/$defs/stable_id"}
+        ,"destination_family": {"enum": ["aws_s3", "s3_compatible", "backblaze_b2", "azure_blob", "gcs", "google_drive", "onedrive", "local_nas", "sftp", "webdav", "rest_server"]}
+        ,"repository_id": {"$ref": "#/$defs/stable_id"}
+        ,"repository_revision": {"type": "integer", "minimum": 0}
+        ,"snapshot_id": {"$ref": "#/$defs/stable_id"}
+        ,"capture_set_id": {"$ref": "#/$defs/stable_id"}
+        ,"recovery_set_id": {"$ref": "#/$defs/stable_id"}
+        ,"recovery_set_generation": {"type": "integer", "minimum": 1}
+        ,"initiating_client_id": {"$ref": "#/$defs/stable_id"}
+        ,"source_host_id": {"$ref": "#/$defs/stable_id"}
+        ,"source_environment_id": {"$ref": "#/$defs/stable_id"}
+        ,"selected_path_refs": {"$ref": "#/$defs/ref_list"}
+        ,"target_host_id": {"$ref": "#/$defs/stable_id"}
+        ,"target_path_authorization_ref": {"$ref": "#/$defs/non_secret_ref"}
+        ,"filesafe_decision_ref": {"$ref": "#/$defs/non_secret_ref"}
+        ,"protected_submission_ref": {"$ref": "#/$defs/non_secret_ref"}
+        ,"human_step_up_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}
+        ,"retention_preview_id": {"$ref": "#/$defs/stable_id"}
+        ,"candidate_set_sha256": {"$ref": "#/$defs/sha256"}
+        ,"maintenance_lease_ref": {"$ref": "#/$defs/non_secret_ref"}
+        ,"archive_consent_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}
+        ,"new_recovery_set_id": {"$ref": "#/$defs/stable_id"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.destination.add"}}}, "then": {"required": ["target_server_id", "destination_config_ref"]}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.backup.destination.update", "cmd.backup.destination.test"]}}}, "then": {"required": ["target_server_id", "backup_destination_id", "expected_destination_generation"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.destination.remove"}}}, "then": {"required": ["target_server_id", "backup_destination_id", "expected_destination_generation", "confirmation_receipt_ref"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.policy.update"}}}, "then": {"required": ["target_server_id", "backup_policy_id", "policy_patch_ref", "expected_policy_revision"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.project.create"}}}, "then": {"required": ["target_server_id", "target_project_ids", "backup_destination_id", "backup_policy_id", "expected_policy_revision", "backup_type"], "properties": {"backup_type": {"const": "project_backup"}, "target_project_ids": {"minItems": 1, "maxItems": 1}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.server.create"}}}, "then": {"required": ["target_server_id", "backup_destination_id", "backup_policy_id", "expected_policy_revision", "backup_type"], "properties": {"backup_type": {"const": "full_server_backup"}}}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.backup.cancel", "cmd.backup.retry"]}}}, "then": {"required": ["backup_run_id"]}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.backup.verify", "cmd.backup.test_restore", "cmd.backup.browse", "cmd.backup.open_details"]}}}, "then": {"required": ["backup_id"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.delete"}}}, "then": {"required": ["backup_id", "confirmation_receipt_ref"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.protect"}}}, "then": {"required": ["backup_id", "protection_policy_ref"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.open_history"}}}, "then": {"required": ["target_server_id"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.restore.preview"}}}, "then": {"required": ["backup_id", "restore_mode", "target_server_id", "selected_family_ids"]}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.restore.project_in_place", "cmd.restore.project_as_new", "cmd.restore.selective"]}}}, "then": {"required": ["backup_id", "restore_preview_id", "preview_receipt_ref", "preview_currentness_sha256", "recovery_point_receipt_ref", "approval_receipt_ref", "confirmation_receipt_ref", "target_server_id", "target_project_ids", "selected_family_ids"], "properties": {"target_project_ids": {"minItems": 1}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.restore.project_in_place"}}}, "then": {"required": ["restore_mode"], "properties": {"restore_mode": {"const": "in_place"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.restore.project_as_new"}}}, "then": {"required": ["restore_mode", "new_project_name"], "properties": {"restore_mode": {"const": "as_new"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.restore.selective"}}}, "then": {"required": ["restore_mode"], "properties": {"restore_mode": {"const": "selective"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.restore.server_full"}}}, "then": {"required": ["backup_id", "restore_mode", "restore_preview_id", "preview_receipt_ref", "preview_currentness_sha256", "recovery_point_receipt_ref", "approval_receipt_ref", "confirmation_receipt_ref", "target_server_id"], "properties": {"restore_mode": {"const": "server_full"}}}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.restore.cancel", "cmd.restore.retry", "cmd.restore.open_details"]}}}, "then": {"required": ["restore_run_id"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.restore.rollback"}}}, "then": {"required": ["restore_run_id", "recovery_point_receipt_ref", "confirmation_receipt_ref", "target_server_id"]}}
+        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.destination.discover"}}}, "then": {"required": ["target_server_id", "destination_family"]}}
+        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.retention.preview"}}}, "then": {"required": ["repository_id", "repository_revision", "backup_policy_id", "expected_policy_revision"]}}
+        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.prune"}}}, "then": {"required": ["repository_id", "repository_revision", "backup_policy_id", "expected_policy_revision", "retention_preview_id", "candidate_set_sha256", "maintenance_lease_ref", "confirmation_receipt_ref"]}}
+        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.unlock"}}}, "then": {"required": ["repository_id", "recovery_set_id", "recovery_set_generation", "initiating_client_id", "human_step_up_receipt_ref", "protected_submission_ref"]}}
+        ,{"if": {"properties": {"command_id": {"enum": ["cmd.backup.file.download", "cmd.backup.extract", "cmd.backup.file.compare", "cmd.backup.export"]}}}, "then": {"required": ["repository_id", "snapshot_id", "capture_set_id", "backup_destination_id", "target_server_id", "initiating_client_id", "source_host_id", "source_environment_id", "selected_path_refs", "filesafe_decision_ref"]}}
+        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.extract"}}}, "then": {"required": ["target_host_id", "target_path_authorization_ref"]}}
+        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.archive.retrieve"}}}, "then": {"required": ["repository_id", "snapshot_id", "backup_destination_id", "initiating_client_id", "archive_consent_receipt_ref"]}}
+        ,{"if": {"properties": {"command_id": {"enum": ["cmd.backup.recovery_key.export", "cmd.backup.recovery_key.copy", "cmd.backup.recovery_key.print", "cmd.backup.recovery_key.test", "cmd.backup.recovery_key.acknowledge_saved", "cmd.backup.recovery_key.rotate"]}}}, "then": {"required": ["recovery_set_id", "recovery_set_generation", "initiating_client_id", "human_step_up_receipt_ref", "protected_submission_ref"]}}
+        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.recovery_key.reencrypt"}}}, "then": {"required": ["recovery_set_id", "recovery_set_generation", "new_recovery_set_id", "repository_id", "repository_revision", "initiating_client_id", "human_step_up_receipt_ref", "protected_submission_ref", "maintenance_lease_ref", "confirmation_receipt_ref"]}}
+      ]
+    },
+    "backup_restore_command_result": {
+      "title": "BackupRestoreCommandResult",
+      "$anchor": "BackupRestoreCommandResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "outcome", "operation_ref", "projection_ref", "receipt_refs", "currentness_ref", "currentness_sha256", "disabled_reason", "error_ref", "recovery_state", "replayed"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.command_result.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/backup_restore_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/stable_id"},
+        "outcome": {"enum": ["accepted", "completed", "disabled", "rejected", "cancelled", "no_change"]},
+        "operation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "projection_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "receipt_refs": {"$ref": "#/$defs/ref_list"},
+        "currentness_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "currentness_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/backup_restore_disabled_reason"}, {"type": "null"}]},
+        "error_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "recovery_state": {"enum": ["not_applicable", "not_started", "recovery_point_verified", "rollback_available", "rolled_back", "quarantined", "recovery_required"]},
+        "replayed": {"type": "boolean"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"enum": ["accepted", "completed", "no_change"]}}}, "then": {"properties": {"currentness_ref": {"$ref": "#/$defs/non_secret_ref"}, "currentness_sha256": {"$ref": "#/$defs/sha256"}, "disabled_reason": {"type": "null"}, "error_ref": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"const": "completed"}}}, "then": {"properties": {"receipt_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"outcome": {"const": "disabled"}}}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/backup_restore_disabled_reason"}, "error_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"outcome": {"const": "rejected"}}}, "then": {"properties": {"error_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_restore_command_error": {
+      "title": "BackupRestoreCommandError",
+      "$anchor": "BackupRestoreCommandError",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "error_code", "message_code", "retriable", "currentness_ref", "preview_ref", "recovery_ref", "quarantine_ref", "safe_next_action_ref", "redaction_profile"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.command_error.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/backup_restore_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/stable_id"},
+        "error_code": {"enum": ["invalid_request", "permission_denied", "human_step_up_required", "protected_channel_required", "stale_currentness", "stale_preview", "confirmation_required", "recovery_point_required", "destination_unavailable", "repository_locked", "recovery_set_unavailable", "retention_preview_required", "maintenance_lease_required", "archive_consent_required", "archive_external_restore_required", "backup_not_found", "snapshot_not_found", "restore_not_found", "manifest_unverified", "incompatible_backup", "operation_conflict", "corruption_detected", "quarantine_required", "command_not_registered", "native_handler_absent", "production_wiring_absent", "handler_unavailable", "owner_unavailable", "cancelled"]},
+        "message_code": {"$ref": "#/$defs/non_empty_string"},
+        "retriable": {"type": "boolean"},
+        "currentness_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "preview_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "recovery_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "quarantine_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "safe_next_action_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "redaction_profile": {"const": "no_secret_values_no_absolute_paths"}
+      },
+      "allOf": [
+        {"if": {"properties": {"error_code": {"const": "stale_preview"}}}, "then": {"properties": {"preview_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"error_code": {"enum": ["recovery_point_required", "quarantine_required"]}}}, "then": {"properties": {"recovery_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"error_code": {"const": "quarantine_required"}}}, "then": {"properties": {"quarantine_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_restore_command_availability": {
+      "title": "BackupRestoreCommandAvailability",
+      "$anchor": "BackupRestoreCommandAvailability",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "subject_ref", "availability", "currentness_ref", "currentness_sha256", "disabled_reason", "missing_requirement_refs", "safe_next_action_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.command_availability.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/backup_restore_command_id"},
+        "subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "availability": {"enum": ["available", "disabled"]},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/backup_restore_disabled_reason"}, {"type": "null"}]},
+        "missing_requirement_refs": {"$ref": "#/$defs/ref_list"},
+        "safe_next_action_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"availability": {"const": "available"}}}, "then": {"properties": {"disabled_reason": {"type": "null"}, "missing_requirement_refs": {"maxItems": 0}, "safe_next_action_ref": {"type": "null"}}}},
+        {"if": {"properties": {"availability": {"const": "disabled"}}}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/backup_restore_disabled_reason"}, "missing_requirement_refs": {"minItems": 1}, "safe_next_action_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_architecture_admission_record": {
+      "title": "BackupArchitectureAdmissionRecord",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "coordinator_component", "engine_adapter_ref", "engine_reference", "engine_admission", "independent_repository_boundary", "catalog_repository_separate", "shared_recovery_set_merges_authority", "remote_repository_is_canonical_state", "bespoke_crypto_allowed", "live_vault_sync_allowed", "capture_barrier", "staging", "source_capture", "server_owned_operations", "dirty_state", "expected_event_types", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_architecture_admission.v1"},
+        "coordinator_component": {"const": "BackupCoordinator"},
+        "engine_adapter_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "engine_reference": {"enum": ["restic", "evidenced_equivalent"]},
+        "engine_admission": {"const": "version_pinned_release_evidence_required"},
+        "independent_repository_boundary": {"const": "per_project_plus_separate_server_catalog"},
+        "catalog_repository_separate": {"const": true},
+        "shared_recovery_set_merges_authority": {"const": false},
+        "remote_repository_is_canonical_state": {"const": false},
+        "bespoke_crypto_allowed": {"const": false},
+        "live_vault_sync_allowed": {"const": false},
+        "capture_barrier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["component", "seglog_boundary_flushed", "non_rebuildable_redb_consistent", "replay_watermarks_recorded", "cas_manifest_frozen", "tantivy_rebuildable", "open_store_copy_allowed"],
+          "properties": {
+            "component": {"const": "CaptureBarrierService"},
+            "seglog_boundary_flushed": {"const": true},
+            "non_rebuildable_redb_consistent": {"const": true},
+            "replay_watermarks_recorded": {"const": true},
+            "cas_manifest_frozen": {"const": true},
+            "tantivy_rebuildable": {"const": true},
+            "open_store_copy_allowed": {"const": false}
+          }
+        },
+        "staging": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["immutable_generation", "barrier_released_before_upload", "capacity_failure_bounded", "project_move_races_recorded"],
+          "properties": {
+            "immutable_generation": {"const": true},
+            "barrier_released_before_upload": {"const": true},
+            "capacity_failure_bounded": {"const": true},
+            "project_move_races_recorded": {"const": true}
+          }
+        },
+        "source_capture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["component", "owner_host_environment_preserved", "source_location_mapping_preserved", "offline_required_source", "previous_complete_replaced_by_partial"],
+          "properties": {
+            "component": {"const": "SourceSnapshotAdapter"},
+            "owner_host_environment_preserved": {"const": true},
+            "source_location_mapping_preserved": {"const": true},
+            "offline_required_source": {"enum": ["waiting_for_source", "partial"]},
+            "previous_complete_replaced_by_partial": {"const": false}
+          }
+        },
+        "server_owned_operations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scheduler", "writer_lease", "credential_refs", "durable_outbox", "survives_client_loss", "one_prune_authority"],
+          "properties": {
+            "scheduler": {"const": true},
+            "writer_lease": {"const": true},
+            "credential_refs": {"const": true},
+            "durable_outbox": {"const": true},
+            "survives_client_loss": {"const": true},
+            "one_prune_authority": {"const": true}
+          }
+        },
+        "dirty_state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["filesystem_and_repository_operation_distinct", "manufactured_commit_or_operation", "durable_buffer_owner_preserved", "transient_process_memory_claimed"],
+          "properties": {
+            "filesystem_and_repository_operation_distinct": {"const": true},
+            "manufactured_commit_or_operation": {"const": false},
+            "durable_buffer_owner_preserved": {"const": true},
+            "transient_process_memory_claimed": {"const": false}
+          }
+        },
+        "expected_event_types": {"type": "array", "maxItems": 0},
+        "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "backup_destination_recovery_admission_record": {
+      "title": "BackupDestinationRecoveryAdmissionRecord",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "setup_sequence", "safe_test", "existing_repository_disposition", "provider_auth", "headless_auth", "self_hosted_validation", "connection_error_truth", "recovery_key", "kit_delivery", "credential_domains_separate", "expected_event_types", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.destination_recovery_admission.v1"},
+        "setup_sequence": {
+          "type": "array", "minItems": 7, "maxItems": 7,
+          "prefixItems": [
+            {"const": "choose_service"}, {"const": "authenticate_or_select_profile"}, {"const": "choose_target"}, {"const": "choose_region_or_endpoint_when_required"}, {"const": "safe_test"}, {"const": "review_encryption_scope_schedule_cost"}, {"const": "save"}
+          ],
+          "items": false
+        },
+        "safe_test": {
+          "type": "object", "additionalProperties": false,
+          "required": ["canary_scope", "approval_required", "read_only_mutates", "changes_acl_or_public_access", "creates_billable_resource", "cleanup_receipt_required"],
+          "properties": {
+            "canary_scope": {"const": "named_random_canary_in_approved_pm_scratch_prefix"},
+            "approval_required": {"const": true},
+            "read_only_mutates": {"const": false},
+            "changes_acl_or_public_access": {"const": false},
+            "creates_billable_resource": {"const": false},
+            "cleanup_receipt_required": {"const": true}
+          }
+        },
+        "existing_repository_disposition": {"const": "Use existing"},
+        "provider_auth": {
+          "type": "object", "additionalProperties": false,
+          "required": ["credentials_by_reference", "engine_method_qualified", "endpoint_tls_trust_validated", "google_drive_scope", "onedrive_account_types_distinguished", "restored_missing_credential_state"],
+          "properties": {
+            "credentials_by_reference": {"const": true},
+            "engine_method_qualified": {"const": true},
+            "endpoint_tls_trust_validated": {"const": true},
+            "google_drive_scope": {"const": "drive.file"},
+            "onedrive_account_types_distinguished": {"const": true},
+            "restored_missing_credential_state": {"const": "Reconnect destination"}
+          }
+        },
+        "headless_auth": {
+          "type": "object", "additionalProperties": false,
+          "required": ["pkce_state_exact_return", "pm_owned_production_registration", "supported_web_callback_or_device_flow", "generic_google_device_or_oob_allowed", "fake_client_ids_allowed"],
+          "properties": {
+            "pkce_state_exact_return": {"const": true},
+            "pm_owned_production_registration": {"const": true},
+            "supported_web_callback_or_device_flow": {"const": true},
+            "generic_google_device_or_oob_allowed": {"const": false},
+            "fake_client_ids_allowed": {"const": false}
+          }
+        },
+        "self_hosted_validation": {
+          "type": "object", "additionalProperties": false,
+          "required": ["sftp_fingerprint_and_path", "webdav_tls_auth_path_protocol", "missing_nas_mount_is_empty", "rest_protocol_tested", "synced_folder_requires_one_writer"],
+          "properties": {
+            "sftp_fingerprint_and_path": {"const": true},
+            "webdav_tls_auth_path_protocol": {"const": true},
+            "missing_nas_mount_is_empty": {"const": false},
+            "rest_protocol_tested": {"const": true},
+            "synced_folder_requires_one_writer": {"const": true}
+          }
+        },
+        "connection_error_truth": {
+          "type": "array", "uniqueItems": true, "minItems": 7,
+          "items": {"enum": ["quota_full", "throttled_retry_after", "unavailable", "reauth_required", "tenant_restricted", "cold_retrieval_wait_fee", "external_archive_recovery_required"]},
+          "allOf": [{"contains": {"const": "quota_full"}}, {"contains": {"const": "throttled_retry_after"}}, {"contains": {"const": "unavailable"}}, {"contains": {"const": "reauth_required"}}, {"contains": {"const": "tenant_restricted"}}, {"contains": {"const": "cold_retrieval_wait_fee"}}, {"contains": {"const": "external_archive_recovery_required"}}]
+        },
+        "recovery_key": {
+          "type": "object", "additionalProperties": false,
+          "required": ["label", "minimum_entropy_bits", "generator", "engine_key_slots", "cloud_escrow", "shared_set_merges_repository_master_keys"],
+          "properties": {
+            "label": {"const": "Backup Recovery Key"},
+            "minimum_entropy_bits": {"type": "integer", "minimum": 256},
+            "generator": {"const": "server_platform_csprng"},
+            "engine_key_slots": {"const": true},
+            "cloud_escrow": {"const": false},
+            "shared_set_merges_repository_master_keys": {"const": false}
+          }
+        },
+        "kit_delivery": {
+          "type": "object", "additionalProperties": false,
+          "required": ["actions", "authenticated_no_store", "initiating_client_target", "browse_authority_implies_export", "normal_logs_or_agent_context", "test_saved_kit_read_only", "acknowledgement_separate"],
+          "properties": {
+            "actions": {"type": "array", "uniqueItems": true, "minItems": 4, "items": {"enum": ["Save Recovery Kit", "Copy Recovery Key", "Print Recovery Kit", "Test Saved Kit"]}, "allOf": [{"contains": {"const": "Save Recovery Kit"}}, {"contains": {"const": "Copy Recovery Key"}}, {"contains": {"const": "Print Recovery Kit"}}, {"contains": {"const": "Test Saved Kit"}}]},
+            "authenticated_no_store": {"const": true},
+            "initiating_client_target": {"const": true},
+            "browse_authority_implies_export": {"const": false},
+            "normal_logs_or_agent_context": {"const": false},
+            "test_saved_kit_read_only": {"const": true},
+            "acknowledgement_separate": {"const": true}
+          }
+        },
+        "credential_domains_separate": {"const": true},
+        "expected_event_types": {"type": "array", "maxItems": 0},
+        "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "restore_operational_safety_record": {
+      "title": "RestoreOperationalSafetyRecord",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "recovery_sequence", "immutable_snapshot_selection", "preview_is_untrusted", "restore_modes", "selective_dependency_closure", "pre_restore_recovery_required", "target_lease_required", "filesafe_required", "cross_filesystem_activation", "durable_restore_run", "resource_governor_ref", "external_effect_states", "object_lock_requires_tested_profile", "shared_components", "handler_availability", "expected_event_types", "proc_execution_evidence", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.restore_operational_safety.v1"},
+        "recovery_sequence": {
+          "type": "array", "minItems": 8, "maxItems": 8,
+          "prefixItems": [{"const": "validate_destination_or_kit"}, {"const": "authenticate_storage"}, {"const": "select_existing_repository"}, {"const": "protected_unlock"}, {"const": "load_encrypted_manifests"}, {"const": "select_immutable_snapshot"}, {"const": "inspect_coverage_compatibility"}, {"const": "preview_before_restore"}],
+          "items": false
+        },
+        "immutable_snapshot_selection": {"const": true},
+        "preview_is_untrusted": {"const": true},
+        "restore_modes": {"type": "array", "uniqueItems": true, "minItems": 4, "maxItems": 4, "items": {"enum": ["as_new", "in_place", "selective", "server_full"]}},
+        "selective_dependency_closure": {"const": true},
+        "pre_restore_recovery_required": {"const": true},
+        "target_lease_required": {"const": true},
+        "filesafe_required": {"const": true},
+        "cross_filesystem_activation": {"const": "journaled_recoverable_boundary_not_false_atomic"},
+        "durable_restore_run": {"const": true},
+        "resource_governor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "external_effect_states": {"type": "array", "uniqueItems": true, "minItems": 7, "maxItems": 7, "items": {"enum": ["accepted", "running", "outcome_unknown", "observed_complete", "failed", "partial", "cancelled"]}},
+        "object_lock_requires_tested_profile": {"const": true},
+        "shared_components": {
+          "type": "array", "uniqueItems": true, "minItems": 8,
+          "items": {"enum": ["DestinationCard", "ScopeCoverageSummary", "SnapshotBrowser", "RestorePreview", "RecoveryKitHandoff", "VerificationBadge", "RetentionPreview", "ObservableWorkProgress"]},
+          "allOf": [{"contains": {"const": "DestinationCard"}}, {"contains": {"const": "ScopeCoverageSummary"}}, {"contains": {"const": "SnapshotBrowser"}}, {"contains": {"const": "RestorePreview"}}, {"contains": {"const": "RecoveryKitHandoff"}}, {"contains": {"const": "VerificationBadge"}}, {"contains": {"const": "RetentionPreview"}}, {"contains": {"const": "ObservableWorkProgress"}}]
+        },
+        "handler_availability": {"const": "handler_unavailable"},
+        "expected_event_types": {"type": "array", "maxItems": 0},
+        "proc_execution_evidence": {"const": "partial_not_implemented"},
+        "runtime_evidence_claimed": {"const": false}
+      }
+    }
+  }
+}

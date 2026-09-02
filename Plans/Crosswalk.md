@@ -38,6 +38,13 @@ When two plan documents disagree, resolve conflicts deterministically with this 
 4. `Plans/Glossary.md`
 5. `Plans/Decision_Policy.md`
 
+Crosswalk precedence chooses the sole owner and compatibility route; it does not
+replace that owner's accepted semantic contract with copied Crosswalk prose. Once
+an owner is selected here, the newest accepted PlanUnit in that owner document
+controls its domain fields, state machine, commands, receipts, availability, and
+negative requirements. Older Crosswalk examples remain compatibility lineage when
+a later accepted owner PlanUnit explicitly supersedes their surface identity.
+
 ContractRef: PolicyRule:Decision_Policy.md§2, SchemaID:Spec_Lock.json
 
 ---
@@ -108,7 +115,7 @@ Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
 | Binding data model (1:1, thread↔worktree) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md |
 | Seglog events (`chat.thread_worktree_*`) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |
 | Commands (`cmd.chat.worktree.*`) | assistant-chat-design.md | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |
-| Settings (10 keys) | assistant-chat-design.md | storage-plan.md, FinalGUISpec.md |
+| Settings (10 keys) | assistant-chat-design.md | Settings_System.md, storage-plan.md, FinalGUISpec.md |
 | Merge-back flow | assistant-chat-design.md | GitHub_Integration.md, Executor_Protocol.md |
 | Pre-merge test gate | assistant-chat-design.md | storage-plan.md, Executor_Protocol.md |
 | SC accordion & filter | GitHub_Integration.md | storage-plan.md, FinalGUISpec.md, Wiring_Matrix.md |
@@ -128,10 +135,74 @@ Projection freshness/health vocabulary is owned centrally so consumer docs do no
 Canonical ownership is:
 - `storage-plan.md` owns the projection-state axes and persisted freshness/health semantics
 - `Decision_Policy.md` owns behavior when stale, degraded, or unavailable state affects execution or mutation gating
-- `FinalGUISpec.md` owns how freshness/health are disclosed in UI surfaces
+- `FinalGUISpec.md` owns shared GUI disclosure grammar; `Settings_System.md` owns its Settings-surface realization
 - feature/surface docs may consume these states but MUST NOT redefine the axes or collapse them into one field
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Settings_System.md
+
+### 3.6A Settings system ownership
+
+`Plans/Settings_System.md` is the sole owner for the Settings shell and information architecture, all persisted ordinary setting values' Project binding, fresh/no-Project defaults, All Settings search/facets/variable-height virtualization, atomic mutation and Restore Defaults, detached exact-ID Project transfer, manager grammar, and Settings-to-domain routing.
+
+`Plans/settings_inventory.json` remains the 828-ID ordinary-setting machine inventory. Its scope metadata routes applicability and domain ownership but does not authorize non-Project persistence. `Plans/FinalGUISpec.md` retains shared application-shell and theme-token ownership; Storage retains physical persistence; Permissions/FileSafe/Multi-Account retain authority and credential custody; Shared Integration Runtime plus Commands/Catalog/Wiring retain lifecycle commands; provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain runtime truth. Settings consumes those owners and must not implement peer operations.
+
+K3 Tome Tabs and generated PMConcept7 T44 are geometry/concept lineage, not runtime authority or certification. Later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions supersede K3 content and behavior through SSYS-001..SSYS-017.
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Shared_Integration_Runtime.md
+
+### 3.6B Packet-authoritative system ownership
+
+The 2026-08-31 owner wave is a DRY routing split, not a new umbrella runtime:
+
+| Primitive or behavior | Sole semantic owner | Primary consumers and exclusions |
+|---|---|---|
+| Project identity and lifecycle | `Plans/Project_System.md` | Settings, Onboarding, Planning Wizard, File Manager; excludes SCM engines, Vault movement, and backup. |
+| Named Plan identity and lifecycle | `Plans/Named_Plan_System.md` | Planning Wizard, Goals, Settings; excludes plan interview/compile ownership. |
+| Server catalog, identity, trust, pairing, endpoints, discovery, clients, lifecycle | `Plans/Server_System.md` | Settings, Onboarding, Doctor; visibility never equals consent or trust. |
+| Remote route policy, migration, exposure, and continuity | `Plans/Remote_Access_System.md` | Server, Settings, Doctor; owns the PM-managed connector and route provenance but excludes Server identity, generic transport ownership, and the user's external host-Tailscale installation. |
+| Project and Full Server backup/recovery | `Plans/Backup_Restore_System.md` | Settings, Bootstrap/Product Onboarding restore paths, Files, Projects, Source Control/JJ, and Doctor; RecoverySet/Kit, destination, snapshot, retention, browse, and restore semantics remain owner-only, and ordinary secret bytes stay excluded unless separately recovery-enveloped. |
+| Explicit test capture and motion evidence | `Plans/Test_Capture_and_Motion_Evidence.md` | Final GUI, Automated Testing, Runtime Artifacts; protected AuthBrowserSession and native-certification promotion are forbidden. |
+| Common source-control repository/workspace operations | `Plans/Source_Control_System.md` | Project System, File Manager, Settings, Guided Tour, and Backup source-closure consumption; excludes forge, Backup byte/restore, and JJ-specific semantics. |
+| JJ-specific operations | `Plans/Jujutsu_Integration.md` | Source Control and Project consumers; canonical namespace is `cmd.jujutsu.*`, with `cmd.jj.*` compatibility only. |
+| Hosted-forge reviews, pipelines, repositories, webhooks, mirrors, and automation binding | `Plans/Forge_Integrations.md` | GitHub/GitLab/Azure DevOps/Bitbucket/Cursor Origin plus distinct Forgejo and Gitea consumers; RepositoryForgeBinding and AutomationBinding remain independent, and provider-specific primary command namespaces are forbidden. |
+| Cursor Origin Preview | `Plans/Cursor_Origin_Integration.md` | Common forge/SCM flow only; no SCM backend, dedicated rail/panel, Onboarding subsystem, or `cmd.origin.*`. |
+| GitLab, Azure DevOps, Bitbucket provider projections | Their eponymous integration docs | Consume common forge/auth/install/connection contracts; do not fork common state machines. |
+| PM-native Browser and protected AuthBrowserSession | `Plans/Section15_MVP_Promoted_Features_Spec.md` | AuthBrowserSession remains human-only, ephemeral, non-recordable, non-inspectable, non-exportable, and unavailable to agents/adapters. |
+| Product Onboarding and Guided Tour orchestration | `Plans/Planning_Wizard.md` | Bounded nine-stage modal Onboarding, six-stage connect-existing shortcut, review-before-apply setup plan, and directed live-workspace Tour in Usage -> Planning Wizard -> Assistant Chat/Teacher order; local Safe History backend and optional online forge copy remain independent selections, and every mutation routes to the named system owner. |
+| Doctor registry and remediation routing | `Plans/newtools.md` N2-151 | Domain owners retain probe truth and repair; Doctor performs no private mutation. |
+
+Settings and Final GUI are projections/interaction consumers of these owners. Static schemas, fixtures, PMConcept7 simulations, browser tests, and packet audits do not prove native handlers, runtime readiness, WAN operation, recovery execution, or Slint certification.
+
+ContractRef: ContractName:Plans/Project_System.md, ContractName:Plans/Named_Plan_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Remote_Access_System.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Test_Capture_and_Motion_Evidence.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Cursor_Origin_Integration.md, ContractName:Plans/GitLab_Integration.md, ContractName:Plans/Azure_DevOps_Integration.md, ContractName:Plans/Bitbucket_Integration.md
+
+### 3.6C Forge, Backup, And PM Connector Routing
+
+The 2026-09-01 post-integration packet changes specific cross-owner seams without
+creating an umbrella owner:
+
+| Routed concern | Semantic owner | Crosswalk rule |
+|---|---|---|
+| Repository host, account, review, release, pipeline, runner, and automation-service identity | `Plans/Forge_Integrations.md` | Forgejo and Gitea are distinct. `RepositoryForgeBinding` does not imply `AutomationBinding`; the canonical occupant is `repository_automation` / **Actions & Pipelines**. `github_actions` is migration input that restores a GitHub automation binding, not a peer panel or provider-neutral dispatch authority. |
+| Local Git/JJ repository and workspace truth | `Plans/Source_Control_System.md` plus `Plans/Jujutsu_Integration.md` for JJ-specific semantics | Source Control supplies exact native revision, closure, barrier/fence, merge/rebind, and remote-validation truth. It never owns Backup bytes/RestoreRun or Forge automation authority. |
+| Backup destinations, repositories, RecoverySet/Kit, immutable snapshots/capture sets, retention, browse, retrieve, and restore | `Plans/Backup_Restore_System.md` | Files, Projects, SCM/JJ, Settings, Onboarding, Doctor, and GUI are consumers. Reverse routes retain the exact repository/snapshot/capture-set/filter/focus and never select latest after refresh. |
+| Server identity, trust, pairing, catalog, and endpoint association | `Plans/Server_System.md` | Route visibility or connector membership never proves identity, trust, pairing, or deduplication. |
+| PM-managed connector, private ingress/egress, Headscale, hosted Funnel, route policy, and route provenance | `Plans/Remote_Access_System.md` | One connector identity belongs to one stable PM Server. Connector-private, hosted Funnel, and external host-managed routes stay distinct; the connector does not adopt or manage the user's host Tailscale installation. |
+| Shared auth/profile, protected browser, governor, ObservableWork, lease, and outbox primitives | Their existing Multi-Account, protected-browser, Permissions, and `Plans/Shared_Integration_Runtime.md` owners | Forge, Backup, and Remote Access consume exact refs and continuations. None gains a peer auth broker, scheduler, secret store, supervisor, or EventRecord authority. |
+| Persistence, redaction, and migration custody | `Plans/storage-plan.md` and its registries | Domain records are registered by reference to owner schemas; storage does not become the domain owner and raw keys, tokens, connector state, protected browser content, and foreign absolute paths remain excluded. |
+
+All affected navigation consumes `Contracts_V0.md` CV-327. A route has exactly one
+primary selector; repository, binding, snapshot, capture-set, Server, endpoint,
+provenance, generation, filter, focus, and return refs are bounded context only.
+Fresh Full Server recovery uses Bootstrap scope before a Project exists rather
+than fabricating a Project identity. Protected continuations return through an
+immutable normalized route ref after owner currentness validation and carry no
+protected content.
+
+This routing closure is static canon only. It admits no handler, provider,
+connector, restore engine, EventRecord, native Slint surface, or runtime/security/
+visual/readiness evidence.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-327, ContractName:Plans/Forge_Integrations.md#FGI-012, ContractName:Plans/Backup_Restore_System.md#BRS-014, ContractName:Plans/Remote_Access_System.md#RAS-015, ContractName:Plans/Source_Control_System.md#SCS-014, ContractName:Plans/Server_System.md#SRV-013
 
 ### 3.7 Subagent, crew, and context-shaping ownership
 
@@ -237,10 +308,10 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 - Blocking rewrite owners route through existing docs: `Plans/orchestrator-subagent-integration.md` owns the core execution model, `Plans/FinalGUISpec.md` must retire Tiers/linear navigation assumptions, and `Plans/FileSafe.md` must not let a strict Phase/Task/Subtask hierarchy block package-based planning or `/Task/Subtask` compatibility mapping.
 - Formal field precedence for Orchestrator surfaces routes `Plans/Orchestrator_Page.md` and `/Orchestrator_Page.md` through `Plans/Contracts_V0.md`; Crosswalk records the owner boundary and does not make Orchestrator pages the field-schema owner.
 - Storage/project-state support routes through `storage-plan.md`: `orchestrator.project_state.{project_id}`, `/project-state`, focused and `/selected` run state, `attempt_record`, `provider_attempt_ref?`, `orchestrator.receipt.{run_id}.{attempt_id}`, `orchestrator.receipt`, `usage_record`, `run_id`, `attempt_id`, `thread_id`, and effective account/model/auth fields including `/model/auth`.
-- Surface-specific state remains owner-handled: Source Control `active_subview`, selected repo/worktree, compare target, and graph filters; GitHub Actions `active_subview`, current branch, pinned workflows, and last opened run `/job`; Docker Manager `active_subview` plus runtime `/context/registry/namespace` focus; Document pane selected document/view/history/approval state; `/selection` and `/worktree` focus are routing identities, not consumer-owned local state.
+- Surface-specific state remains owner-handled: Source Control `active_subview`, selected repo/worktree, compare target, and graph filters; Actions & Pipelines `active_subview`, independent `automation_binding_id`, current branch, pinned definitions, and last opened run `/job`; Docker Manager `active_subview` plus runtime `/context/registry/namespace` focus; Document pane selected document/view/history/approval state; `/selection` and `/worktree` focus are routing identities, not consumer-owned local state. Legacy GitHub Actions state is accepted only as migration input for a GitHub automation binding.
 - Multi-account switch/pressure behavior routes to `Plans/Multi-Account.md`; durable switch-history storage and `/pressure` joins must align with scheduler dispatch plus usage/storage identity fields rather than remaining account-only notes. `Plans/Provider_OpenCode.md` owns provider-specific transport-vs-upstream identity and full auth/account runtime disclosure, while Crosswalk only routes the `/account` boundary.
 - Cross-owner seam routing may name future Projects `/attention-center` docs, `Plans/Runtime_Artifacts_Panel.md`, and `/Runtime_Artifacts_Panel.md` alongside `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Contracts_V0.md`, `Plans/UI_Command_Catalog.md`, and `Plans/assistant-chat-design.md`; these names mark implicated owner surfaces, not a license for consumer-only navigation or artifact state.
-- Existing navigation mechanisms such as the command palette, `preview_subject_id`, `resume_url` deep links for wizard `/interview` recovery, `Show in Ledger`, `Show in Usage`, Orchestrator pivots into Source Control/GitHub Actions/Docker Manager, chat and thread navigation, open-file contracts, and local tab search/filter normalize to route-target/OpenSubject recipes rather than letting any consumer make `resume_url` or open-file behavior the owner.
+- Existing navigation mechanisms such as the command palette, `preview_subject_id`, `resume_url` deep links for wizard `/interview` recovery, `Show in Ledger`, `Show in Usage`, Orchestrator pivots into Source Control/Actions & Pipelines/Docker Manager, chat and thread navigation, open-file contracts, and local tab search/filter normalize to route-target/OpenSubject recipes rather than letting any consumer make `resume_url` or open-file behavior the owner.
 - `FileManager.md` stays the path-based editor realization owner: `OpenFile` handles workspace paths, line/range selection, and editor chrome, while `route-target` / `OpenSubject` own cross-surface identity navigation and `/open-by-identity` compatibility transport.
 - Worktree selection, `open-in-SCM`, and Source Control pivots are object navigation, not pure layout state. SCM lineage for node/package execution preserves `/package`, `/worktree`, package-level rollback/retry context, and cross-surface routing to the canonical worktree object.
 - Source Control remains Git `worktree-first`, while Orchestrator remains lane/package/seam `/package/seam/node-first`; routes that cross the seam carry `/worktree`, `/node/attempt`, lane, package, and seam context instead of becoming panel-only state.
@@ -414,7 +485,12 @@ Precedence rules:
 - stale canonical text must be replaced or retired, not preserved by later additive notes alone
 - Scheduler truth must not split among lexicographic, scored, and UI-derived recovery models across `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, and `Plans/Run_Graph_View.md`; Crosswalk routes that contradiction to owner docs and requires one scheduler truth.
 
-## Source Control, GitHub Actions, and Docker Manager Ownership Addendum (2026-03-12)
+## Source Control, Actions & Pipelines, and Docker Manager Ownership Addendum (2026-03-12; scoped supersession 2026-09-01)
+
+The 2026-09-01 FGI-012/F3-528 owner transaction supersedes this addendum's
+generic GitHub-Actions occupant wording. GitHub-specific behavior remains valid
+inside an explicit GitHub `AutomationBinding`; the canonical provider-neutral
+occupant and route are `repository_automation` / **Actions & Pipelines**.
 
 ### SourceControlSurface
 
@@ -430,23 +506,25 @@ Rules:
 - `Plans/WorktreeGitImprovement.md` owns `worktree_id`, base-branch, and worktree lifecycle semantics; canonical blocked-emitter behavior routes through Contracts and runtime owner docs instead of being inferred from Source Control rows.
 - Source Control reconciles the legacy split across `FinalGUISpec`, `GitHub_Integration`, and `WorktreeGitImprovement`; `Git (GitHub)` is a migration alias only, and live `/surfaces` route through Source Control plus WorktreeGitImprovement rather than preserving a combined Git/GitHub panel.
 - Direct git/diff command anchors are owned by `GitHub_Integration.md`: `cmd.git.stage`, `cmd.git.unstage`, `cmd.git.discard`, `cmd.git.diff_open`, and `cmd.git.diff_toggle_mode`. Chat rollback/recovery anchors such as `cmd.chat.rewind` and `cmd.chat.revert` remain owned by `UI_Command_Catalog.md`; Crosswalk only routes the boundary between git-native Source Control actions and chat-owned recovery commands.
-- Per-project Source Control panel state, GitHub Actions panel state, richer Docker Manager state, and run receipts spanning SCM/Actions/Docker/Kubernetes are not underdefined local UI extras. They route through this Crosswalk as `/Actions/Docker/Kubernetes` ownership boundaries, then to the feature owners listed in this addendum.
-- Orchestrator, Dashboard, history, and graph cards may expose cross-surface actions named exactly `Open in Source Control`, `Open in GitHub Actions`, and `Open in Docker Manager` when canonical context exists. The same actions are used by blocked cards and destination panels so requested action and effective outcome remain explainable.
-- The canonical `panel-switch` navigation contract uses a shared `panel-context` envelope instead of panel-local ad hoc arguments. Every cross-surface deep link carries `project_id`; Source Control adds `repo_id`, `worktree_id`, optional `branch`, optional `commit`, optional `compare_target`, and optional `conflict_file`; GitHub Actions adds `repo_remote`, optional `workflow_id`, optional `run_id`, optional `job_id`, optional `step_id`, and optional `branch`; Docker Manager adds `runtime`, optional `context_name`, optional `compose_project`, optional `container_id`, optional `image_ref`, optional `registry_host`, optional `publish_result_id`, and optional Kubernetes context fields.
+- Per-project Source Control panel state, Actions & Pipelines state, richer Docker Manager state, and run receipts spanning SCM/automation/Docker/Kubernetes are not underdefined local UI extras. They route through this Crosswalk as `/Actions/Docker/Kubernetes` ownership boundaries, then to the feature owners listed in this addendum.
+- Orchestrator, Dashboard, history, and graph cards may expose cross-surface actions named exactly `Open in Source Control`, `Open in Actions & Pipelines`, and `Open in Docker Manager` when canonical context exists. `Open in GitHub Actions` is a migration-read label that normalizes to the same automation occupant with a GitHub binding. The same actions are used by blocked cards and destination panels so requested action and effective outcome remain explainable.
+- The canonical `panel-switch` navigation contract consumes `route_target` instead of panel-local ad hoc arguments. Every cross-surface deep link carries explicit scope and one primary selector; Source Control adds exact repository/worktree context, Actions & Pipelines binds `automation_binding_id`, `binding_generation`, `currentness_ref`, and provider-native definition/run/job/step identity, and Docker Manager adds its owner-defined runtime/context/resource refs. These are validated context refinements, not peer selectors or copied domain records.
 - `receipt-extension` payloads for SCM, Actions, Docker, Kubernetes, `/registry/Kubernetes/SSH`, and `/index/reference` flows extend the shared runtime `receipt` and blocked-payload packet with domain `capability` and identity refs; they do not create a second receipt, navigation, or index owner.
 - Compatibility shorthands such as `/local-git` and `/worktree/push` route through `Primitive:PatchPipeline` and the Source Control owner docs. `conflict-precedence` follows this Crosswalk precedence plus the feature owner docs rather than consumer help text.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md
 
-### GitHubActionsSurface
+### GitHubActionsSurface (GitHub-binding compatibility name)
 
-Owner: `Plans/GitHub_Integration.md` with auth/runtime constraints from `Plans/GitHub_API_Auth_and_Flows.md`.
+Owner split: `Plans/Forge_Integrations.md` owns `AutomationBinding` and the
+provider-neutral occupant; `Plans/GitHub_Integration.md` owns GitHub-specific
+behavior with auth/runtime constraints from `Plans/GitHub_API_Auth_and_Flows.md`.
 
 Rules:
-- GitHub Actions uses GitHub API identity and capability, not Git transport state, for hosted workflow/admin behavior.
+- A GitHub automation binding uses GitHub API identity and capability, not Git transport state, for hosted workflow/admin behavior; other bindings use their own provider adapter and capability profile.
 - Current Branch / Workflows / Settings are separate subviews of one Actions surface.
-- `GitHub API` remains hidden plumbing used by GitHub-hosted features; GitHub Actions owns hosted workflow runs, dispatch, run triage, Actions admin/settings, readiness constraints inherited from `newtools.md`, and reusable doctor IDs/result payloads rather than exposing API plumbing as a user panel.
-- Final GUI migration labels such as `Git (GitHub)` and separate activity-bar entries for Docker or Source Control are routing aliases, not owner changes; Crosswalk resolves them to Source Control, GitHub Actions, and Docker Manager owners before wiring commands or state.
+- `GitHub API` remains hidden plumbing used by GitHub-hosted features; Forge Integrations owns the provider-neutral automation binding and the GitHub adapter retains GitHub-specific workflow runs, dispatch, triage, Actions admin/settings, readiness constraints, and reusable Doctor payloads without exposing API plumbing as a user panel.
+- Final GUI migration labels such as `Git (GitHub)` or `github_actions` and separate activity-bar entries for Docker or Source Control are routing aliases, not owner changes; Crosswalk resolves them to Source Control, Actions & Pipelines, and Docker Manager owners before wiring commands or state.
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
 
@@ -2662,20 +2740,22 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
 canonical_text: >-
-  Cross-surface actions Open in Source Control, Open in GitHub Actions, and
-  Open in Docker Manager use canonical context, shared panel-context envelopes,
-  and receipt-extension payloads that extend shared runtime receipts and blocked
-  packets with domain capability and identity refs without creating a second
-  receipt, navigation, or index owner.
+  Cross-surface actions Open in Source Control, Open in Actions & Pipelines, and
+  Open in Docker Manager use canonical route_target context and receipt-extension
+  payloads that extend shared runtime receipts and blocked packets with domain
+  capability and identity refs without creating a second receipt, navigation, or
+  index owner. Open in GitHub Actions is migration input for the canonical
+  automation occupant with an explicit GitHub AutomationBinding.
 gui_related: true
 gui_classification_reason: This unit governs cross-surface panel actions, blocked cards, destination panels, and deep links.
 split_recommended: true
 split_recommendation_reason: Crosswalk-S0031 is split across Source Control operation, identity, command, and cross-surface panel concerns.
-depends_on: [C-039, C-040, C-041]
+depends_on: [C-039, C-040, C-041, FGI-012, CV-327]
 unblocks: [C-043, C-044]
 acceptance_criteria:
-  - "Cross-surface actions use exactly Open in Source Control, Open in GitHub Actions, and Open in Docker Manager when canonical context exists."
-  - "panel-switch navigation uses a shared panel-context envelope instead of panel-local ad hoc arguments."
+  - "Cross-surface actions use exactly Open in Source Control, Open in Actions & Pipelines, and Open in Docker Manager when canonical context exists."
+  - "Open in GitHub Actions normalizes to repository_automation with an explicit GitHub AutomationBinding and has no peer occupant or handler."
+  - "panel-switch navigation consumes route_target instead of panel-local ad hoc arguments."
   - "receipt-extension payloads extend shared runtime receipt and blocked-payload packets without creating second owners."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2697,6 +2777,7 @@ source_lineage:
 preserved_exact_tokens:
   - "`Open in Source Control`"
   - "`Open in GitHub Actions`"
+  - "`Open in Actions & Pipelines`"
   - "`Open in Docker Manager`"
   - "`panel-switch`"
   - "`panel-context`"
@@ -2728,39 +2809,47 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
 canonical_text: >-
-  GitHubActionsSurface uses GitHub API identity and capability, not Git
-  transport state, for hosted workflow/admin behavior; Current Branch,
-  Workflows, and Settings are subviews of one Actions surface, GitHub API
-  remains hidden plumbing, and migration labels such as Git (GitHub) are aliases
-  rather than owner changes.
+  GitHub-specific workflow and administration behavior uses GitHub API identity
+  and capability, not Git transport state, inside an explicit GitHub
+  AutomationBinding selected by the canonical repository_automation / Actions &
+  Pipelines occupant. Current Branch, Workflows, and Settings remain GitHub-native
+  subviews; GitHub API remains hidden plumbing, and GitHubActionsSurface,
+  github_actions, and Git (GitHub) are migration inputs rather than owner or
+  occupant changes.
 gui_related: true
-gui_classification_reason: This unit governs GitHub Actions surface subviews and migration labels visible in the UI.
+gui_classification_reason: This unit governs GitHub-native automation subviews inside the provider-neutral Actions & Pipelines occupant and its visible migration labels.
 split_recommended: false
-depends_on: [C-042]
+depends_on: [C-042, FGI-012]
 unblocks: [C-046]
 acceptance_criteria:
-  - "GitHub Actions uses GitHub API identity and capability rather than Git transport state."
-  - "Current Branch, Workflows, and Settings are subviews of one Actions surface."
+  - "A GitHub AutomationBinding uses GitHub API identity and capability rather than Git transport state."
+  - "Current Branch, Workflows, and Settings are GitHub-native subviews inside the one Actions & Pipelines occupant."
   - "GitHub API remains hidden plumbing, not a user panel."
-  - "Final GUI migration labels are routing aliases, not owner changes."
+  - "GitHubActionsSurface, github_actions, and Git (GitHub) are migration inputs that do not create another occupant, handler, or owner."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: github_actions_identity_boundary_drift
+risk_class: github_automation_binding_or_occupant_identity_drift
 reasoning_tier: high
-context_scope: github_actions_surface_identity_boundary
+context_scope: github_automation_binding_surface_identity_boundary
 implementation_surfaces:
   - Plans/Crosswalk.md
+  - Plans/Forge_Integrations.md
+  - Plans/FinalGUISpec.md
   - Plans/GitHub_Integration.md
   - Plans/GitHub_API_Auth_and_Flows.md
   - Plans/newtools.md
 node_compile_hint:
-  mode: github_actions_surface_identity_boundary
+  mode: github_automation_binding_surface_identity_boundary
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0032
 preserved_exact_tokens:
   - "`GitHubActionsSurface`"
+  - "`repository_automation`"
+  - "`Actions & Pipelines`"
+  - "`AutomationBinding`"
+  - "`github_actions`"
   - "`GitHub API`"
   - "`Current Branch`"
   - "`Workflows`"
@@ -2772,6 +2861,8 @@ negative_constraints:
   - "Final GUI migration labels such as Git (GitHub) are routing aliases, not owner changes."
 owner_hints:
   - Plans/Crosswalk.md
+  - Plans/Forge_Integrations.md
+  - Plans/FinalGUISpec.md
   - Plans/GitHub_Integration.md
   - Plans/GitHub_API_Auth_and_Flows.md
   - Plans/newtools.md
@@ -3269,3 +3360,150 @@ owner_hints:
 This addendum repairs non-runtime Crosswalk pointer rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-276a3e41fd08d5c4adaff514` and `sfk-973c4b99a2e3f9e5ad705e53`: `max_subagents_spawn` is owned by `Plans/interview-subagent-integration.md` as `interview.max_subagents_spawn`. Crosswalk may route to that owner but must not invent a separate field.
+
+## Touch Closure Authority Addendum - 2026-09-01
+
+### C-051 - Touch Closure Authority And Consumer Routing
+
+```yaml
+plan_unit_id: C-051
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  The Touch Closure Matrix is a machine crosswalk across existing owners, not a
+  new runtime owner. Commands System owns command identities and sole future-handler
+  bindings; UI Command Catalog owns GUI consumers and reverse reachability; Wiring
+  Matrix owns static production-intent rows; UI Wiring Rules owns dispatch and return
+  invariants; and each named domain owner owns its typed request, result, error,
+  availability, permission, persistence, receipt, event, and projection contracts.
+  Plans/touch_closure.json joins those authorities by exact keys and records their
+  dispositions. A closed row proves canonical static coverage only; it does not prove
+  a native handler, running service, browser behavior, visual quality, evidence
+  freshness, implementation readiness, or Slint certification.
+gui_related: true
+gui_classification_reason: Reverse reachability maps commands and local UI actions to every intended visible PMConcept7 consumer.
+split_recommended: false
+depends_on: [C-050, CS-074, UCC-152, WM-051, UIW-017]
+unblocks: [DR-041, CV-326, 0PI-068]
+acceptance_criteria:
+  - "Every actionable command row points to Commands System, exactly one owner handler identity, one typed owner contract, and every intended GUI consumer."
+  - "Every typed local UI action remains owner-local and is not promoted into a domain command or production handler."
+  - "Aliases normalize to exact canonical targets without peer production rows or peer handlers."
+  - "The matrix preserves the exact resolved denominator of 560 rows: 401 primary commands, 51 aliases, 101 typed local UI actions, and 7 presentation behaviors; 400 primary commands are actionable and one is explicitly blocked."
+  - "Static crosswalk closure is never reported as native runtime, visual, motion, accessibility, performance, recovery, security, readiness, or Slint evidence."
+validation_surfaces:
+  - python3 scripts/pm-touch-closure-verify.py --json
+  - python3 scripts/pm-server-command-gap-verify.py --json
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crosswalk_runtime_authority_or_reverse_wiring_drift
+reasoning_tier: high
+context_scope: touch_closure_owner_consumer_routing
+implementation_surfaces:
+  - Plans/Crosswalk.md
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+  - Plans/touch_closure.json
+  - Plans/touch_closure.schema.json
+node_compile_hint: {mode: machine_crosswalk_static_coverage_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Commands_System.md#cs-074---remaining-packet-command-production-intent-and-sole-future-handler-closure
+  - Plans/UI_Command_Catalog.md#ucc-152---remaining-packet-command-reverse-gui-coverage
+  - Plans/Wiring_Matrix.md#wm-051---remaining-packet-command-production-intent-wiring
+  - Plans/UI_Wiring_Rules.md#uiw-017---remaining-packet-command-dispatch-return-and-disabled-state-closure
+preserved_exact_tokens: [touch_closure.json, command_id, sole_handler, schema_ref, reverse_consumers, production-intent, typed local UI action]
+negative_constraints:
+  - "Do not make Touch Closure a runtime owner, schema owner, event authority, or evidence authority."
+  - "Do not infer a native handler or production implementation from a future-handler or production-intent row."
+  - "Do not invent a GUI control merely to make reverse coverage appear complete."
+owner_hints: [Plans/Crosswalk.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/UI_Wiring_Rules.md]
+```
+
+## Forge/Backup/tsnet Owner And Route Reconciliation Addendum - 2026-09-01
+
+The following AUTH preservation matrix is part of the accepted `C-052` boundary. It is a lossless owner/evidence route, not an umbrella implementation claim:
+
+| Packet row | Preserved substance and semantic owners | Current evidence boundary |
+|---|---|---|
+| `AUTH-001` | Packet decisions govern affected scope; newer live canon governs untouched behavior; preserved tsnet detail and older sources remain lineage. `Contracts_V0` and Crosswalk select current owners and require an actual baseline revision, protected dirty-tree receipt, owner/action/route map, and hash/evidence for reused or reopened closure. | Owner selection and lineage are static; the actual baseline revision, dirty-tree receipt, accepted execution plan, and diff/release proof remain partial and must come from the later execution transaction. |
+| `AUTH-002` | `Server_System`, `storage-plan`, `Project_System`, and Project Sync preserve seglog/redb/Tantivy/CAS, absolute no-SQLite, small Server Catalog plus physical Project Vaults, one Home Server/writer, distinct Home Server/Execution Host/Source Location/environment/Client/Move, and typed permissioned cross-Project operations. Backup is recovery, never writable replica, multi-master sync, public-plane storage, or canonical remote state. | Static owner/schema references only; no storage migration, writer-fence, backup barrier, or runtime restore evidence. |
+| `AUTH-003` | Platform/deployment/release owners retain full native Windows/macOS/Linux and standalone Server execution; Docker Hub is wrapped by TrueNAS Apps and Unraid Community Applications; Kubernetes stays a deployment target; TrueNAS modular Compose and Unraid XML obligations remain; WSL2 is optional/non-degrading; Apple Linux and native/virtualized/compatibility/cross-target proof remain truthful. Origin CLI availability cannot make Windows WSL mandatory. | Package/platform requirements are preserved; supported-version, artifact, native execution, package-install, and release evidence remain partial. |
+| `AUTH-004` | `Project_System`, Settings, Project Sync/Backbone, Shared Runtime, and Backup retain concrete independent Project settings, roughly ten selectable copy categories, same-Server profile references, optional preview, pre-copy recovery, atomic apply/rollback, distinct template/configuration/history duplication, device-local window realization, Client-independent Goals/chats, and checkpoint/fence/source-reconciled handoff/Move. | Static consumer and copy/move contracts only; no executable copy, rollback, handoff, continuity, or native GUI proof. |
+| `AUTH-005` | Application update/release owners retain Automatic Updates On/Off, Check for Updates, bottom-status Update Available, internal cadence/asynchronous checks, signature/provenance, drain/checkpoint, pre-update recovery, install-source authority, migration/rollback, and separation among app, content/catalog, external tool/source-control, connector, and Backup updates. Backup daily/weekly/monthly retention never becomes an app-update schedule picker. | Separation is canonical; updater, connector artifact, rollback, and release evidence remain partial. |
+| `AUTH-006` | Server/Remote Access/Final GUI owners retain LAN discovery and stable `server_id` deduplication; Tailscale/Headscale private access, hosted Funnel, NGINX/Traefik, existing VPN/manual routes, and approved Cloudflare-reference accountless Remote Link; no Tailcat without pricing approval, Tor, or Rust Tailscale backend. The source token `Built into PuppetMaster` is preserved while visible brand copy normalizes spacing to `Built into Puppet Master`; permanent web, future Swift/Kotlin, Slint/theme/motion/accessibility contracts remain, with no Backup Activity Bar occupant or redundant Assistant Chat host banner. | Route/UI obligations are static; WAN reachability, connector, native/web GUI, accessibility, theme/width/motion, and visual proof remain partial. |
+| `AUTH-007` | Authentication Broker, scoped Credential Broker, Shared Integration Runtime, FileSafe, RuntimeResourceGovernor, ObservableWork, release tool lifecycle, and human-only protected sessions remain single shared owners. No PM Playwright backend/facade, agent/recording access to auth/key sessions, project-triggered provider installation, offline-tool product, or model-token classification for maintenance. | Owner references and secret-negative schemas are static; provider acquisition, protected-session isolation, resource behavior, and security proof remain partial. |
+| `AUTH-008` | Forge owns the explicit GitHub-to-provider-neutral `repository_automation`/Actions & Pipelines migration while preserving GitHub compatibility. Backup owns explicit reviewed expansion of new-Project scope to PM data plus source and Git/JJ history; existing users are not silently opted into larger uploads. Restic/rclone is a reference design, not permission to displace an evidenced equivalent. New billing, exposure, destructive deletion, secret export, scope expansion, or account switch requires explicit consent and migration receipt. | Scope/migration/consent contracts are static; user migration, consent, provider billing/exposure, executable conversion, and release proof remain partial. |
+
+### C-052 - Forge/Backup/tsnet Owner Precedence And Exact Route Context
+
+```yaml
+plan_unit_id: C-052
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  The post-integration Forge, Backup, and PM-managed connector transaction routes
+  every semantic field to its existing domain owner and every cross-surface open,
+  continuation, and reverse-navigation flow through CV-327. Forge Integrations
+  owns distinct Forgejo/Gitea profiles, RepositoryForgeBinding, independent
+  AutomationBinding, and the sole repository_automation / Actions & Pipelines
+  occupant. Backup Restore owns destinations, repositories, RecoverySet/Kit,
+  immutable snapshots/capture sets, retention, browse/retrieve, and RestoreRun.
+  Source Control/JJ supply native closure and reconciliation only. Server owns
+  server_id/trust/pairing; Remote Access owns the PM connector and route provenance;
+  shared auth/runtime/storage owners retain their existing primitives and custody.
+  Crosswalk selects and orders these owners without copying their schemas, commands,
+  handlers, state machines, events, or runtime claims.
+gui_related: true
+gui_classification_reason: This boundary controls the visible Actions & Pipelines migration, exact snapshot/filter/focus return, Bootstrap recovery scope, endpoint provenance, and all consumer handoffs.
+split_recommended: false
+depends_on: [C-007, C-024, C-039, C-042, C-043, C-051, CV-327, FGI-012, BRS-014, BRS-016, RAS-015, SCS-013, SCS-014, JJI-008, SRV-013, SIR-032, SP-254, F3-528]
+unblocks: []
+acceptance_criteria:
+  - "Crosswalk precedence chooses the owner; the newest accepted owner PlanUnit supplies domain semantics and later scoped supersession makes contradictory older examples compatibility lineage."
+  - "Forgejo and Gitea remain distinct provider identities, RepositoryForgeBinding and AutomationBinding remain independent, and repository_automation / Actions & Pipelines is the sole automation occupant."
+  - "github_actions and Open in GitHub Actions are migration inputs that normalize to the canonical occupant with an explicit GitHub binding; neither has a peer handler, panel, command family, or provider-neutral authority."
+  - "Backup reverse navigation binds immutable repository/snapshot/capture-set, Project/Server scope, filter, focus, currentness generation, and return route; refresh never substitutes latest or another object."
+  - "Fresh Full Server recovery uses explicit Bootstrap scope before a Project exists; Files, Projects, SCM/JJ, Settings, Onboarding, Doctor, and Final GUI remain consumers of Backup-owned behavior."
+  - "Server identity/trust/pairing remains distinct from Remote-Access connector identity and route provenance; connector-private, hosted Funnel, and external host-managed routes do not imply trust or equivalence."
+  - "Auth/profile, protected browser, Permissions, governor, ObservableWork, lease, outbox, persistence, and redaction remain with their existing owners; no domain obtains a peer shared runtime or secret store."
+  - "All new commands remain owner-routed, event-silent where expected_event_types=[], and handler_unavailable until independent native evidence exists; this Crosswalk adds no command, handler, EventRecord, or runtime proof."
+  - "The AUTH-001..AUTH-008 matrix above preserves authority/baseline and dirty-tree receipt, no-SQLite/Home-writer architecture, platform/package obligations, Project settings/continuity, app-update separation, WAN/UI and spaced-brand normalization, shared safety/resource owners, and explicit scope/migration/consent through real semantic owners without re-owning them."
+  - "CMDX-001/CMDX-002 keep one semantic owner command/handler and the common non-secret operation envelope; external-effect states are accepted, running, outcome_unknown, observed_complete, failed, partial, and cancelled, and protected material uses separate channels."
+  - "Executable/native/provider/security/visual/accessibility/performance evidence, baseline and dirty-tree receipts, actual diff/release artifacts, and PROC-001/PROC-002 execution remain partial; C-052 does not mark them implemented."
+validation_surfaces:
+  - Plans/Contracts_V0.md#cv-327---cross-owner-route-scope-immutable-selection-and-provenance-binding
+  - Plans/Forge_Integrations.md#fgi-012---distinct-self-hosted-providers-and-independent-automation-authority
+  - Plans/Backup_Restore_System.md#brs-014---snapshot-browse-retrieve-compare-export-and-archive-delivery
+  - Plans/Remote_Access_System.md#ras-015---pm-owned-go-tsnet-connector-durable-authorization-and-private-route-replacement
+  - Plans/Shared_Integration_Runtime.md#sir-034---backup-shared-primitives-and-common-external-effect-envelope
+  - Plans/Project_System.md#pjct-005---project-backup-preference-copy-move-and-recovery-consumption
+  - Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: cross_owner_duplication_or_exact_return_loss
+reasoning_tier: high
+context_scope: forge_backup_tsnet_owner_and_route_precedence
+implementation_surfaces: [Plans/Crosswalk.md, Plans/Contracts_V0.md]
+node_compile_hint: {mode: crosswalk_owner_routing_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:2026-09-01:AUTH-001-AUTH-008
+  - source_ref:packet:2026-09-01:OWN-001-OWN-006
+  - source_ref:packet:2026-09-01:CMDX-001-CMDX-004
+  - source_ref:packet:2026-09-01:PROC-001-PROC-003
+  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
+preserved_exact_tokens: [Forgejo, Gitea, RepositoryForgeBinding, AutomationBinding, repository_automation, "Actions & Pipelines", github_actions, RecoverySet, Recovery Kit, snapshot_id, capture_set_id, server_id, server_endpoint_id, remote_route_id, connector_id, pm-tailnet-connector, route_provenance_ref, seglog, redb, Tantivy, CAS, no-SQLite, "Built into PuppetMaster", "Built into Puppet Master", RuntimeResourceGovernor, ObservableWork, outcome_unknown, observed_complete, handler_unavailable, "expected_event_types=[]"]
+negative_constraints:
+  - "Do not create an umbrella Forge/Backup/connector runtime, copied schema, peer command family, peer handler, peer auth broker, peer scheduler, or peer secret store in Crosswalk."
+  - "Do not infer automation from repository hosting, Backup access from tailnet login, Server trust from reachability, or successful restore from browse/static schema evidence."
+  - "Do not retarget stale routes, select latest, fabricate Project/Server identity, or place protected material in route context."
+  - "Do not claim native handler, runtime, provider, connector, restore, security, visual, accessibility, readiness, or Slint proof from this owner map."
+  - "Do not treat the AUTH matrix or preserved PROC references as an accepted execution plan, baseline/dirty-tree receipt, executable diff, release proof, runtime implementation, or completed PROC-001/PROC-002 evidence."
+owner_hints: [Plans/Crosswalk.md, Plans/Contracts_V0.md, Plans/Forge_Integrations.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md]
+```

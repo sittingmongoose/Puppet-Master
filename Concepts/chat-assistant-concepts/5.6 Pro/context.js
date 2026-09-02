@@ -95,6 +95,10 @@
     var r = dp ? Math.round(n * 10) / 10 : Math.round(n);
     return r + '%';
   }
+  function pct2(n) {
+    if (n == null || isNaN(n)) return 'not reported';
+    return (Math.round(n * 100) / 100).toFixed(2) + '%';
+  }
   function usd(n) { return n == null || isNaN(n) ? 'not reported' : '$' + n.toFixed(3); }
   function hhmm(iso) {
     var t = Date.parse(iso);
@@ -118,6 +122,7 @@
     var delta = t - FIXTURE_NOW;
     return delta >= 0 ? 'resets in ' + dhm(delta) : 'reset ' + dhm(delta) + ' ago';
   }
+  function clone(v) { return v == null ? v : JSON.parse(JSON.stringify(v)); }
 
   /* =====================================================================
      Source-family colour.  Keyed on the family NAME.  The eight themes
@@ -146,8 +151,20 @@
     run: Object.create(null),      /* threadId -> {phase:'working'|'done', outcome} */
     cursor: Object.create(null),   /* threadId -> how many times Compact now has run */
     moreLimits: false,             /* the "More limits (N)" disclosure           */
-    timers: Object.create(null)
+    timers: Object.create(null),
+    forcedOutcomes: [],            /* deterministic concept-harness queue          */
+    focusOrigin: Object.create(null)
   };
+
+  function resetModuleState() {
+    Object.keys(CS.timers).forEach(function (k) { if (CS.timers[k]) clearTimeout(CS.timers[k]); });
+    CS.run = Object.create(null);
+    CS.cursor = Object.create(null);
+    CS.moreLimits = false;
+    CS.timers = Object.create(null);
+    CS.forcedOutcomes = [];
+    CS.focusOrigin = Object.create(null);
+  }
 
   /* =====================================================================
      Fixture access.  Every renderer goes through here, and every field is
@@ -155,18 +172,81 @@
      active-thread view and then to an empty record, so the concept still
      boots if data.js is ever trimmed.
      ===================================================================== */
+  function normalizeRecord(r, id) {
+    if (!r) return null;
+    r.schemaVersion = r.schemaVersion || 1;
+    r.contextEpoch = r.contextEpoch || ('context:' + (id || 'unknown') + ':fixture-epoch-1');
+    r.compaction = r.compaction || { schemaVersion: 1, revision: 0, state: 'idle', history: [] };
+    r.compaction.history = r.compaction.history || [];
+    r.commandResults = r.commandResults || [];
+    r.dispatchReceipts = r.dispatchReceipts || [];
+    r.eventRecords = r.eventRecords || [];
+    return r;
+  }
+  function freshProjection(state, id) {
+    var model = (D.models || []).find(function (m) { return m.id === state.model; }) || {};
+    var template = clone((((D.contextByThread || {})['no-models'] || {}).sources) || D.contextSources || []);
+    var sources = template.map(function (s) {
+      var keep = s.id === 'system' ? (s.tokens || 6068) : 0;
+      s.tokens = keep; s.pct = 0; s.supersededTokens = 0;
+      s.detail = s.id === 'system' ? 'System prompt, tool definitions, and provider policy for a new thread.' : 'No ' + s.family.toLowerCase() + ' is loaded yet.';
+      return s;
+    });
+    var used = sources.reduce(function (n, s) { return n + (s.tokens || 0); }, 0);
+    sources.forEach(function (s) { s.pct = used ? Math.round(s.tokens / used * 1000) / 10 : 0; });
+    var limit = model.context || 128000;
+    var connection = model.accountId || 'none';
+    var route = { provider:model.provider || 'unavailable', product:'Puppet Master Pro', connection:connection,
+      model:model.name || 'No configured model', account:model.account || 'not reported' };
+    return normalizeRecord({
+      schemaVersion:1, threadId:id, contextEpoch:'context:' + id + ':session-epoch-1', sources:sources,
+      window:{ limit:limit, used:used, cached:null, cacheHitPct:null, available:limit-used, pct:Math.round(used/limit*1000)/10,
+        inputThisTurn:0, outputThisTurn:0, product:'Puppet Master Pro', connection:connection,
+        model:route.model, account:route.account, costApiUsd:0, costPlanUsd:0,
+        growth:[{at:new Date(FIXTURE_NOW).toISOString(),tokens:used}] },
+      compactionPreview:{ wouldRemove:0, wouldRetain:used, retains:['System and provider instructions'], drops:[],
+        estimatedSeconds:0, reversible:true, note:'Nothing to compact: this new thread has no superseded or duplicated sources.' },
+      route:{ requested:clone(route), effective:clone(route), fallback:{used:false,identity:'none',reason:'Requested and effective routes match.',history:[]} },
+      compaction:{schemaVersion:1,revision:0,state:'idle',history:[]}, commandResults:[], dispatchReceipts:[], eventRecords:[],
+      historicalUsageTotals:{fixtureOnly:true,usageRecords:0,inputTokens:0,outputTokens:0,settledCostUsd:0},
+      rawProjection:{rawPayloadRef:'raw-context:' + id + ':redacted',redactionStatus:'redacted',providerPayloadHash:'not_reported',
+        omittedEvidenceCounts:{secrets:0,credentials:0,accountIdentifiers:1,localPaths:0},permissionState:'redacted_view_allowed'},
+      limits:[]
+    }, id);
+  }
+  function seedProjection(state, id, sourceId, lineageKind) {
+    if (!state || !state.context || !id) return null;
+    state.context.projections = state.context.projections || {};
+    if (state.context.projections[id]) return normalizeRecord(state.context.projections[id], id);
+    var source = sourceId && (state.context.projections[sourceId] || (D.contextByThread || {})[sourceId]);
+    /* Related-thread Spawn carries lineage but intentionally starts with no
+       copied turns, so its context projection must be fresh rather than a
+       byte-for-byte clone of the source thread. */
+    var cloneSource = source && lineageKind !== 'spawn';
+    var r = cloneSource ? clone(source) : clone((D.contextByThread || {})[id]);
+    if (!r) r = freshProjection(state, id);
+    if (cloneSource) {
+      r.threadId = id;
+      r.contextEpoch = 'context:' + id + ':session-epoch-1';
+      r.compaction = {schemaVersion:1,revision:0,state:'idle',history:[]};
+      r.commandResults = []; r.dispatchReceipts = []; r.eventRecords = [];
+      r.rawProjection = {rawPayloadRef:'raw-context:' + id + ':redacted',redactionStatus:'redacted',providerPayloadHash:'not_reported',
+        omittedEvidenceCounts:{secrets:0,credentials:0,accountIdentifiers:1,localPaths:0},permissionState:'redacted_view_allowed'};
+      if (lineageKind === 'duplicate') delete r.lineage;
+      else r.lineage = {kind:lineageKind || 'branch',sourceThreadId:sourceId};
+    } else if (source && lineageKind === 'spawn') {
+      r.lineage = {kind:'spawn',sourceThreadId:sourceId};
+    }
+    state.context.projections[id] = normalizeRecord(r, id);
+    return state.context.projections[id];
+  }
   function record(state) {
     var id = state && state.selectedThread;
-    var by = D.contextByThread || {};
-    var r = (id && by[id]) || null;
-    if (r) return r;
-    return {
-      threadId: id || null,
-      sources: D.contextSources || [],
-      window: D.contextWindow || {},
-      compactionPreview: D.contextCompaction || null,
-      limits: []
-    };
+    if (state && state.context) return seedProjection(state, id, null);
+    return normalizeRecord(clone((D.contextByThread || {})[id]) || {
+      threadId:id || null, sources:clone(D.contextSources || []), window:clone(D.contextWindow || {}),
+      compactionPreview:clone(D.contextCompaction || null), limits:[]
+    }, id);
   }
   function windowPct(w) {
     if (!w || !w.limit) return null;
@@ -186,12 +266,38 @@
        variable, so a captured reference would silently go stale after Reset. */
     ringPct: function () {
       try {
-        var snap = window.PM56_DEMO && window.PM56_DEMO.snapshot ? window.PM56_DEMO.snapshot() : null;
-        var p = windowPct(record(snap ? { selectedThread: snap.thread } : null).window);
+        var live = EXT.ctx && EXT.ctx();
+        var snap = !live && window.PM56_DEMO && window.PM56_DEMO.snapshot ? window.PM56_DEMO.snapshot() : null;
+        var p = windowPct(record(live ? live.state : (snap ? { selectedThread: snap.thread } : null)).window);
         return p == null ? 64 : Math.round(p);
       } catch (e) { return 64; }
     },
     ringTitle: function () { return 'Context ' + window.PM56_CTX.ringPct() + '% used'; },
+    reset: resetModuleState,
+    seedThread: function (threadId, sourceThreadId, lineageKind) {
+      try {
+        var ctx = EXT.ctx && EXT.ctx();
+        return clone(ctx ? seedProjection(ctx.state, threadId, sourceThreadId || null, lineageKind || null) : null);
+      } catch (e) { return null; }
+    },
+    snapshot: function (threadId) {
+      try {
+        var ctx = EXT.ctx && EXT.ctx();
+        if (!ctx) return null;
+        var rec = threadId && ctx.state.context && ctx.state.context.projections
+          ? ctx.state.context.projections[threadId] : record(ctx.state);
+        if (!rec && threadId && (ctx.state.threads || []).some(function (t) { return t.id === threadId; })) rec = seedProjection(ctx.state, threadId, null);
+        return clone(rec || null);
+      } catch (e) { return null; }
+    },
+    /* Deterministic prototype test seam. It selects fixture outcomes only; it
+       cannot bypass dispatch, mutate evidence, or invent an EventRecord. */
+    _testQueueOutcomes: function (ids) { CS.forcedOutcomes = (ids || []).slice(); },
+    cancelPreview: function (dialog, reason) {
+      if (!dialog || dialog.type !== 'context-compact') return false;
+      try { cancelPreview(EXT.ctx(), reason || 'cancel'); } catch (e) {}
+      return true;
+    },
     _fixtureNow: FIXTURE_NOW,
     _segClass: segClass
   };
@@ -200,19 +306,25 @@
      A. THE COMPACT MENU
      ===================================================================== */
 
-  /* Segmented bar + legend.  The legend names the top three families and
-     rolls the rest into "N smaller sources P%"; the roll-up swatch is a
-     neutral outline that belongs to no family, so it can never be mistaken
-     for one. */
+  /* Stylized hover tip attrs (same contract as app.js hoverAttrs). */
+  function tipAttrs(esc, key, text) {
+    return ' data-hover-key="' + esc(key) + '" data-hover-tip="' + esc(text) + '" aria-label="' + esc(text) + '"';
+  }
+
+  /* Segmented bar + legend.  Widths are shares of the WINDOW LIMIT so unused
+     remainder stays empty on the right. The legend names the top three
+     families and rolls the rest into "N smaller sources"; that roll-up
+     swatch matches the attachments family colour. */
   function segBar(esc, sources, used, limit, withLegend, extraClass) {
     var vis = [];
     sources.forEach(function (s, i) { if (s.tokens > 0) vis.push({ s: s, i: i }); });
     var html = '<div class="ctx-segbar' + (extraClass ? ' ' + extraClass : '') + '" role="img" aria-label="Source composition: ' +
-      esc(vis.map(function (x) { return x.s.family + ' ' + pct(x.s.pct, true); }).join(', ')) + '">';
+      esc(vis.map(function (x) { return x.s.family + ' ' + pct(limit ? x.s.tokens / limit * 100 : 0, true); }).join(', ')) + '">';
     vis.forEach(function (x) {
-      var w = used ? (x.s.tokens / used * 100) : 0;
-      html += '<i class="' + segClass(x.s.family, x.i) + '" style="width:' + w.toFixed(2) + '%" title="' +
-        esc(x.s.family + ' · ' + num(x.s.tokens) + ' tokens · ' + pct(x.s.pct, true) + ' of the ' + ktok(used) + ' now in context') + '"></i>';
+      var w = limit ? (x.s.tokens / limit * 100) : 0;
+      html += '<i class="' + segClass(x.s.family, x.i) + '" style="width:' + w.toFixed(2) + '%"' +
+        tipAttrs(esc, 'ctx-seg-' + x.s.family,
+          x.s.family + ' · ' + num(x.s.tokens) + ' tokens · ' + pct(limit ? x.s.tokens / limit * 100 : 0, true) + ' of the ' + ktok(limit) + ' window') + '></i>';
     });
     html += '</div>';
     if (!withLegend) return html;
@@ -220,16 +332,15 @@
     html += '<div class="ctx-legend">';
     vis.slice(0, 3).forEach(function (x) {
       html += '<span class="ctx-leg"><i class="' + segClass(x.s.family, x.i) + '"></i>' +
-        esc(x.s.family) + ' ' + pct(x.s.pct) + '</span>';
+        esc(x.s.family) + ' ' + pct(limit ? x.s.tokens / limit * 100 : 0) + '</span>';
     });
     var rest = vis.slice(3), restPct = 0, restTok = 0;
-    rest.forEach(function (x) { restPct += x.s.tokens / used * 100; restTok += x.s.tokens; });
+    rest.forEach(function (x) { restPct += limit ? x.s.tokens / limit * 100 : 0; restTok += x.s.tokens; });
     if (rest.length) {
-      html += '<span class="ctx-leg dim" title="' + esc(rest.map(function (x) { return x.s.family + ' ' + num(x.s.tokens); }).join(' · ')) + '">' +
+      html += '<span class="ctx-leg dim"' + tipAttrs(esc, 'ctx-leg-rest', rest.map(function (x) { return x.s.family + ' ' + num(x.s.tokens); }).join(' · ')) + '>' +
         '<i class="ctx-seg-rest"></i>' + rest.length + ' smaller sources ' + Math.round(restPct) + '%</span>';
     }
     html += '</div>';
-    html += '<div class="ctx-segbase">Shares of the ' + ktok(used) + ' now in context, not of the ' + ktok(limit) + ' window.</div>';
     return html;
   }
 
@@ -238,19 +349,21 @@
     var tone = meterTone(m.used);
     var rst = m.resetAt ? resetText(m.resetAt) : '';
     return '<div class="ctx-limrow">' +
-      '<span class="ctx-limlab" title="' + esc(m.note || m.label) + '">' + esc(m.label) + '</span>' +
+      '<span class="ctx-limlab"' + tipAttrs(esc, 'ctx-lim-' + m.label, m.note || m.label) + '>' + esc(m.label) + '</span>' +
       (m.used != null
         ? '<span class="ctx-meter ' + tone + '"><i style="width:' + Math.max(0, Math.min(100, m.used)) + '%"></i></span>'
         : '<span class="ctx-limunk">limit not exposed</span>') +
       '<span class="ctx-limval">' + pct(m.used) + '</span>' +
-      (rst ? '<span class="ctx-limrst" title="' + esc(m.resetAt) + '">' + esc(rst) + '</span>' : '') +
+      (rst ? '<span class="ctx-limrst"' + tipAttrs(esc, 'ctx-limrst-' + m.label, m.resetAt) + '>' + esc(rst) + '</span>' : '') +
       '</div>';
   }
 
   function limitsBlock(esc, icon, rec) {
     var w = rec.window || {}, lims = rec.limits || [];
+    var nick = (window.PM56_DATA && window.PM56_DATA.accountNick)
+      ? window.PM56_DATA.accountNick(w.connection, w.account) : (w.account || '—');
     var note = '<div class="ctx-threadnote" data-k="ctxnote">' + esc(w.model || 'No configured model') + ' · ' +
-      esc(w.account || '—') + '</div>';
+      esc(nick || '—') + '</div>';
     var head = '<div class="ctx-limhead">' + esc(w.product || 'Current plan') +
       (w.connection && w.connection !== 'none' ? ' · ' + esc(w.connection) : ' · no connection') + '</div>';
     if (!lims.length) {
@@ -279,16 +392,16 @@
     return html + '</div>';
   }
 
-  /* ---- the seven-outcome Compact Now machine -------------------------
+  /* ---- the canonical Compact Now result machine ----------------------
      u11's point, kept: a Compact Now that always succeeds is a placeholder.
      The FIRST run on a thread reports the outcome the thread's own fixture
      supports — a thread with nothing to reclaim reports no gain, an
      under-filled thread reports "not recommended" — and every run after
-     that walks the full seven so a reviewer can see all of them. */
+     that walks the fixture results so a reviewer can see all of them. */
   function outcomeById(id) {
     var list = D.compactionOutcomes || [];
-    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
-    return list[0] || { id: 'completed', tone: 'ok', title: 'Context compacted', detail: '' };
+    for (var i = 0; i < list.length; i++) if (list[i].id === id || list[i].status === id) return list[i];
+    return list[0] || { id: 'completed', status: 'completed', tone: 'ok', title: 'Context compacted', detail: '' };
   }
   function firstOutcomeFor(rec) {
     var p = rec.compactionPreview || {}, w = rec.window || {};
@@ -298,6 +411,7 @@
     return outcomeById('completed');
   }
   function nextOutcome(rec, tid) {
+    if (CS.forcedOutcomes.length) return outcomeById(CS.forcedOutcomes.shift());
     var n = CS.cursor[tid] || 0;
     CS.cursor[tid] = n + 1;
     if (n === 0) return firstOutcomeFor(rec);
@@ -334,14 +448,147 @@
     if (!run) return '';
     if (run.phase === 'working') {
       return '<div class="ctx-status working" data-k="ctxstatus" role="status">' +
-        '<span class="ctx-spin" aria-hidden="true"></span><span>Compacting thread context…</span></div>';
+        '<span class="ctx-spin" aria-hidden="true"></span><span>Compacting thread context…</span>' +
+        (run.notice ? '<span class="ctx-hist">' + esc(run.notice) + '</span>' : '') + '</div>';
     }
     var o = run.outcome || {};
     var tone = o.tone === 'ok' ? 'ok' : o.tone === 'warn' ? 'warn' : 'info';
-    return '<div class="ctx-status ' + tone + '" data-k="ctxstatus" role="status" data-outcome="' + esc(o.id || '') + '">' +
+    return '<div class="ctx-status ' + tone + '" data-k="ctxstatus" role="status" tabindex="-1" data-outcome="' + esc(o.id || '') + '" data-result-status="' + esc(o.status || '') + '">' +
       '<b>' + esc(o.title || '') + '</b>' +
-      '<span>' + esc(outcomeDetail(rec, o)) + '</span>' +
+      '<span>' + esc(run.detail || outcomeDetail(rec, o)) + '</span>' +
       '<span class="ctx-hist">Historical usage totals unchanged.</span></div>';
+  }
+
+  function focusAfter(origin, force) {
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      var active = document.activeElement;
+      var canMove = force || !active || active === document.body ||
+        !!active.closest('.ctx-pop,.ctx-drawer,.ctx-compact-dialog');
+      if (!canMove) return;
+      var sel = origin === 'drawer'
+        ? '.ctx-drawer [data-action="compact-now"]'
+        : '.ctx-pop [data-action="ctx-compact-now"]';
+      var target = document.querySelector(sel) || document.querySelector('.ctx-status');
+      if (target && target.focus) target.focus({ preventScroll: true });
+    }); });
+  }
+
+  function applyCompletedProjection(rec) {
+    var w = rec.window || {}, prev = clone(rec.compactionPreview || {});
+    var before = Number(w.used) || 0;
+    var target = Math.max(0, Math.min(before, Number(prev.wouldRetain)));
+    if (!isFinite(target)) target = before;
+    var remaining = before - target;
+    var sources = rec.sources || [];
+
+    sources.slice().sort(function (a, b) { return (b.supersededTokens || 0) - (a.supersededTokens || 0); }).forEach(function (s) {
+      if (remaining <= 0) return;
+      var cut = Math.min(remaining, s.tokens || 0, s.supersededTokens || 0);
+      s.tokens -= cut; s.supersededTokens = Math.max(0, (s.supersededTokens || 0) - cut); remaining -= cut;
+    });
+    ['tools', 'plans', 'attachments', 'files', 'conversation', 'system'].forEach(function (id) {
+      if (remaining <= 0) return;
+      var s = sources.find(function (x) { return x.id === id; });
+      if (!s) return;
+      var keep = id === 'system' ? Math.min(s.tokens || 0, 1024) : 0;
+      var cut = Math.min(remaining, Math.max(0, (s.tokens || 0) - keep));
+      s.tokens -= cut; remaining -= cut;
+    });
+    if (remaining > 0 && sources.length) {
+      var last = sources.find(function (s) { return (s.tokens || 0) >= remaining; }) || sources[0];
+      last.tokens = Math.max(0, (last.tokens || 0) - remaining); remaining = 0;
+    }
+
+    var used = sources.reduce(function (sum, s) { return sum + (Number(s.tokens) || 0); }, 0);
+    sources.forEach(function (s) { s.pct = used ? Math.round(s.tokens / used * 1000) / 10 : 0; });
+    w.used = used;
+    w.available = Math.max(0, (w.limit || 0) - used);
+    w.pct = w.limit ? Math.round(used / w.limit * 1000) / 10 : null;
+    w.cached = w.cacheHitPct == null ? null : Math.min(used, Math.round(used * w.cacheHitPct / 100));
+    rec.compaction.revision = (rec.compaction.revision || 0) + 1;
+    w.growth = w.growth || [];
+    w.growth.push({ at: new Date(FIXTURE_NOW + rec.compaction.revision * 60000).toISOString(), tokens: used });
+    rec.compactionPreview = {
+      wouldRemove:0, wouldRetain:used,
+      retains:(prev.retains || []).slice(), drops:[], estimatedSeconds:0, reversible:true,
+      note:'No additional reclaimable context is currently projected. The completed pass preserved the context epoch and every rehydration handle.'
+    };
+    return { before: before, after: used, removed: before - used, preview: prev };
+  }
+
+  function newInvocation(ctx, tid, origin) {
+    var seq = (ctx.state.context.dispatchSeq || 0) + 1;
+    ctx.state.context.dispatchSeq = seq;
+    var safeThread = String(tid || 'thread').replace(/[^a-z0-9_-]/gi, '-');
+    return {
+      seq:seq, safeThread:safeThread, origin:origin,
+      dispatchId:'ctx-dispatch-' + safeThread + '-' + seq,
+      terminalAt:new Date(FIXTURE_NOW + seq * 1000).toISOString()
+    };
+  }
+
+  function recordTerminal(ctx, rec, outcome, origin, preserveWorking, invocation) {
+    var tid = rec.threadId || ctx.state.selectedThread;
+    var detail = outcomeDetail(rec, outcome);
+    var before = Number((rec.window || {}).used) || 0;
+    var change = { before: before, after: before, removed: 0 };
+    var changed = outcome.status === 'completed' && !!((rec.compactionPreview || {}).wouldRemove);
+    if (changed) change = applyCompletedProjection(rec);
+    var status = outcome.status || outcome.id;
+    if (!preserveWorking) rec.compaction.state = status;
+    var call = invocation || newInvocation(ctx, tid, origin);
+    var seq = call.seq, safeThread = call.safeThread, dispatchId = call.dispatchId, at = call.terminalAt;
+    var base = {
+      dispatch_id:dispatchId, command_id:'cmd.chat.compact_context', thread_id:tid,
+      status:status, origin:origin, terminal_at:at, changed:changed,
+      context_epoch:rec.contextEpoch, committed_revision:rec.compaction.revision || 0,
+      tokens_before:change.before, tokens_after:change.after, removed_tokens:change.removed
+    };
+    var result = Object.assign({ schema_id:'pm.command_result.v1', result_id:'ctx-result-' + safeThread + '-' + seq }, base);
+    var receipt = Object.assign({
+      schema_id:'pm.command_dispatch_receipt.v1', receipt_id:'ctx-receipt-' + safeThread + '-' + seq,
+      persisted:false, expected_event_types:[]
+    }, base);
+    var history = Object.assign({ schema_id:'pm.chat.context_compaction_history.v1', history_id:'ctx-history-' + safeThread + '-' + seq }, base);
+    rec.commandResults.push(result);
+    rec.dispatchReceipts.push(receipt);
+    rec.compaction.history.push(history);
+    if (changed) ctx.state.context.compacted = true;
+
+    var target = (ctx.state.threads || []).find(function (t) { return t.id === tid; });
+    ctx.appendMessage({
+      id:receipt.receipt_id, role:'system', type:'context-compaction-receipt',
+      title:outcome.title, detail:detail + ' Result ' + status + ' · revision ' + (rec.compaction.revision || 0) + '.',
+      commandId:base.command_id, dispatchId:dispatchId, resultStatus:status, time:at
+    }, target || ctx.activeThread());
+    return { detail: detail, changed: changed, status: status };
+  }
+
+  function dispatchCompaction(ctx, origin) {
+    var tid = ctx.state.selectedThread, rec = record(ctx.state);
+    var invocation = newInvocation(ctx, tid, origin);
+    CS.focusOrigin[tid] = origin;
+    if (CS.run[tid] && CS.run[tid].phase === 'working') {
+      var already = outcomeById('already-running');
+      var seen = recordTerminal(ctx, rec, already, origin, true, invocation);
+      CS.run[tid].notice = already.title + ': ' + seen.detail;
+      ctx.renderOverlays();
+      focusAfter(origin, true);
+      return;
+    }
+    var outcome = nextOutcome(rec, tid);
+    CS.run[tid] = { phase:'working', outcome:outcome, invocation:invocation };
+    rec.compaction.state = 'working';
+    ctx.renderOverlays();
+    focusAfter(origin, true);
+    if (CS.timers[tid]) clearTimeout(CS.timers[tid]);
+    CS.timers[tid] = setTimeout(function () {
+      CS.timers[tid] = null;
+      var terminal = recordTerminal(ctx, rec, outcome, origin, false, invocation);
+      CS.run[tid] = { phase:'done', outcome:outcome, detail:terminal.detail };
+      ctx.renderOverlays();
+      focusAfter(origin, false);
+    }, 900);
   }
 
   function compactMenu(ctx) {
@@ -375,14 +622,15 @@
       /* The label drops the word "Context" in the unknown case purely so the
          longer value still fits the one dense row -- an ellipsised
          "Context cache hit not..." would be worse than a shorter label. */
-      '<span class="ctx-cache"' + (noRoute ? ' title="No turn ever ran on this thread, so there are no cache statistics to report — unknown, not zero."' : '') + '>' +
-      (noRoute ? 'Cache hit <b>not reported</b>' : 'Context cache hit <b>' + pct(w.cacheHitPct) + '</b>') + '</span>' +
-      /* While a pass is in flight the button says so and refuses a second one.
-         The guard is in the handler either way; this is the affordance. */
-      '<button class="ctx-minibtn' + (busy ? ' busy' : '') + '" data-action="ctx-compact-now"' + (busy ? ' aria-busy="true"' : '') +
-      ' title="Run a source-aware compaction on this thread">' +
+      '<span class="ctx-cache"' + (noRoute ? tipAttrs(esc, 'ctx-cache', 'No turn ever ran on this thread, so there are no cache statistics to report — unknown, not zero.') : '') + '>' +
+      (noRoute ? 'Cache hit <b>not reported</b>' : 'Cache hit: <b>' + pct2(w.cacheHitPct) + '</b>') + '</span>' +
+      /* A second explicit choice is admitted as an already_running result; it
+         never starts a second pass and still receives one bound receipt. */
+      '<button class="ctx-minibtn' + (busy ? ' busy' : '') + '" data-k="ctxcompactbutton" data-action="ctx-compact-now"' + (busy ? ' aria-busy="true"' : '') +
+      tipAttrs(esc, 'ctx-compact', 'Run a source-aware compaction on this thread') + '>' +
       ctx.icon('collapse', 10) + '<span>' + (busy ? 'Compacting…' : 'Compact now') + '</span></button>' +
-      '<button class="ctx-minibtn" data-action="context-details" title="Window, tokens, cache, composition, cost, and raw projection">' +
+      '<button class="ctx-minibtn" data-k="ctxdetailsbutton" data-action="context-details"' +
+      tipAttrs(esc, 'ctx-details', 'Window, tokens, cache, composition, cost, and raw projection') + '>' +
       ctx.icon('expand', 10) + '<span>More details</span></button>' +
       '</div>';
 
@@ -398,14 +646,16 @@
   /* Source composition rows: [dot] [family] [pct%] [tokens], tabular-nums,
      copied from u11 exactly.  Today the drawer shows percentages and no
      token counts at all. */
-  function compositionKey(esc, sources, used) {
+  function compositionKey(esc, sources, used, limit) {
     return '<div class="composition-key ctx-key4">' + sources.map(function (s, i) {
       var zero = !s.tokens;
-      return '<div class="ctx-srcrow' + (zero ? ' zero' : '') + '" title="' +
-        esc((s.detail || s.family) + (s.supersededTokens ? ' — ' + num(s.supersededTokens) + ' tokens of it superseded and still loaded.' : '')) + '">' +
+      var share = limit ? s.tokens / limit * 100 : 0;
+      return '<div class="ctx-srcrow' + (zero ? ' zero' : '') + '"' +
+        tipAttrs(esc, 'ctx-src-' + s.family,
+          (s.detail || s.family) + (s.supersededTokens ? ' — ' + num(s.supersededTokens) + ' tokens of it superseded and still loaded.' : '')) + '>' +
         '<i class="' + segClass(s.family, i) + '"></i>' +
         '<span class="ctx-srclab">' + esc(s.family) + '</span>' +
-        '<b class="ctx-srcpct">' + (zero ? '0%' : pct(s.pct, true)) + '</b>' +
+        '<b class="ctx-srcpct">' + (zero ? '0%' : pct(share, true)) + '</b>' +
         '<b class="ctx-srctok">' + num(s.tokens) + '</b>' +
         '</div>';
     }).join('') + '</div>';
@@ -487,15 +737,16 @@
     series.forEach(function (g, i) {
       var x = X(i);
       if (g.tokens == null || isNaN(g.tokens)) {
-        dots += '<circle class="ctx-dot unknown" cx="' + x.toFixed(1) + '" cy="' + ((GY0 + GY1) / 2).toFixed(1) + '" r="3">' +
-          '<title>' + esc(hhmm(g.at) + ' UTC · not reported — unknown, not zero') + '</title></circle>';
+        var unkTip = hhmm(g.at) + ' UTC · not reported — unknown, not zero';
+        dots += '<circle class="ctx-dot unknown" cx="' + x.toFixed(1) + '" cy="' + ((GY0 + GY1) / 2).toFixed(1) + '" r="3"' +
+          tipAttrs(esc, 'ctx-grow-' + i, unkTip) + '></circle>';
         return;
       }
       var y = Y(g.tokens);
       var share = limit ? Math.round(g.tokens / limit * 100) : 0;
-      dots += '<g class="ctx-pt"><circle class="ctx-hit" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="11"/>' +
-        '<circle class="ctx-dot" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="2.6"/>' +
-        '<title>' + esc(hhmm(g.at) + ' UTC · ' + num(g.tokens) + ' tokens · ' + share + '% of the ' + ktok(limit) + ' window') + '</title></g>';
+      var tip = hhmm(g.at) + ' UTC · ' + num(g.tokens) + ' tokens · ' + share + '% of the ' + ktok(limit) + ' window';
+      dots += '<g class="ctx-pt"' + tipAttrs(esc, 'ctx-grow-' + i, tip) + '><circle class="ctx-hit" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="11"/>' +
+        '<circle class="ctx-dot" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="2.6"/></g>';
     });
 
     /* At most five x ticks, always including the first and the last. */
@@ -536,7 +787,7 @@
       '</div>' +
       '<div class="ctx-growth-read">Latest ' + hhmm(series[series.length - 1].at) + ' UTC · <b>' +
       num(last ? last.tokens : null) + '</b> tokens · ' + pct(limit ? (last ? last.tokens : 0) / limit * 100 : null) +
-      ' of the ' + ktok(limit) + ' window · peak ' + num(peak) + ' · ' + series.length + ' samples. Hover a point for its value.</div>';
+      ' of the ' + ktok(limit) + ' window · peak ' + num(peak) + ' · ' + series.length + ' samples.</div>';
   }
 
   /* Capabilities — `state.capabilities` is never surfaced in the drawer
@@ -552,7 +803,7 @@
       ['Thought Stream', c.thought || 'Off', c.thought && c.thought !== 'Off', 'Streamed reasoning summary while a turn runs.']
     ];
     return '<div class="ctx-caps">' + rows.map(function (r) {
-      return '<div class="ctx-cap' + (r[2] ? ' on' : '') + '" title="' + esc(r[3]) + '">' +
+      return '<div class="ctx-cap' + (r[2] ? ' on' : '') + '"' + tipAttrs(esc, 'ctx-cap-' + r[0], r[3]) + '>' +
         '<span class="ctx-capdot"></span><span class="ctx-caplab">' + esc(r[0]) + '</span>' +
         '<b class="ctx-capval">' + esc(String(r[1])) + '</b></div>';
     }).join('') + '</div>';
@@ -561,105 +812,177 @@
   function drawer(ctx) {
     var esc = ctx.esc, state = ctx.state, icon = ctx.icon;
     var rec = record(state), w = rec.window || {}, sources = rec.sources || [];
-    var p = windowPct(w);
-    var sel = ctx.selectedModel ? ctx.selectedModel() : null;
+    var view = state.context.drawerView === 'raw' ? 'raw' : 'curated';
+    var p = windowPct(w), sel = ctx.selectedModel ? ctx.selectedModel() : null;
     var prev = rec.compactionPreview || {};
     var combined = (w.costApiUsd == null || w.costPlanUsd == null) ? null : w.costApiUsd + w.costPlanUsd;
     var superseded = sources.reduce(function (s, x) { return s + (x.supersededTokens || 0); }, 0);
     var noRoute = !w.connection || w.connection === 'none';
+    var route = rec.route || {}, requested = route.requested || {}, effective = route.effective || {};
+    var fallback = route.fallback || { used:false, identity:'none', reason:'not reported', history:[] };
 
-    var html = '<aside class="drawer ctx-drawer">' +
+    var html = '<aside class="drawer ctx-drawer" aria-labelledby="ctx-drawer-title">' +
       '<div class="drawer-head"><span class="event-icon">' + icon('info', 13) + '</span>' +
-      '<strong>Context More Details</strong><span class="meta-pill">Curated</span><span class="spacer"></span>' +
-      '<button class="icon-button" data-action="close-context-details" title="Close">' + icon('close', 13) + '</button></div>' +
-      '<div class="drawer-scroll" data-scroll-key="context-drawer">';
+      '<strong id="ctx-drawer-title">Context More Details</strong>' +
+      '<div class="ctx-view-tabs" role="tablist" aria-label="Context detail representation">' +
+      viewTab('curated', 'Curated') + viewTab('raw', 'Raw') + '</div><span class="spacer"></span>' +
+      '<button class="icon-button" data-action="close-context-details"' + tipAttrs(esc, 'ctx-close', 'Close') + '>' + icon('close', 13) + '</button></div>' +
+      '<div class="drawer-scroll" data-scroll-key="context-drawer" id="ctx-panel-' + view + '" role="tabpanel" aria-labelledby="ctx-tab-' + view + '" tabindex="0">';
 
-    /* hero — the one place the 64% literal used to live */
-    html += '<div class="context-hero"><div class="context-big"><strong>' + pct(p) + '</strong>' +
-      '<span>current window used · ' + num(w.used) + ' / ' + num(w.limit) + ' tokens</span></div>' +
+    if (view === 'raw') return html + rawBody() + '</div></aside>';
+
+    html += '<div class="context-hero" data-context-revision="' + (rec.compaction.revision || 0) + '"><div class="context-big"><strong>' + pct(p) + '</strong>' +
+      '<span>current window used · ' + num(w.used) + ' / ' + num(w.limit) + ' tokens · revision ' + (rec.compaction.revision || 0) + '</span></div>' +
       '<div class="context-bar"><i style="width:' + (p == null ? 0 : Math.max(0, Math.min(100, p))) + '%"></i></div></div>';
 
-    html += '<div class="metric-grid">' +
-      card('Tokens loaded', ktok(w.used)) +
-      card('Cache hit', noRoute ? 'not reported' : pct(w.cacheHitPct)) +
-      card('Cached tokens', ktok(w.cached)) +
+    html += '<div class="metric-grid">' + card('Tokens loaded', ktok(w.used)) +
+      card('Cache hit', noRoute ? 'not reported' : pct2(w.cacheHitPct)) + card('Cached tokens', ktok(w.cached)) +
       card('Available', ktok(w.available != null ? w.available : (w.limit - w.used))) +
-      card('Input this turn', ktok(w.inputThisTurn)) +
-      card('Output this turn', ktok(w.outputThisTurn)) +
-      '</div>';
+      card('Input this turn', ktok(w.inputThisTurn)) + card('Output this turn', ktok(w.outputThisTurn)) + '</div>';
 
-    /* --- Source composition: percentages AND token counts --- */
-    html += section('Source composition',
-      segBar(esc, sources, w.used, w.limit, false, 'composition-bar') +
-      compositionKey(esc, sources, w.used) +
+    html += section('Source composition', segBar(esc, sources, w.used, w.limit, false, 'composition-bar') +
+      compositionKey(esc, sources, w.used, w.limit) +
       '<p class="ctx-note">' + sources.length + ' source families · ' + num(w.used) + ' tokens in context' +
       (superseded ? ' · ' + num(superseded) + ' of them superseded and still loaded' : '') + '.</p>');
-
-    /* --- Context growth: legible --- */
     html += section('Context growth', growthChart(esc, w));
 
-    /* --- Product, connection, model, route --- */
     var mismatch = sel && w.model && sel.name !== w.model;
     html += section('Product, connection and route',
-      '<div class="metric-grid ctx-grid2">' +
-      card('Product', esc(w.product || 'not reported')) +
+      '<div class="metric-grid ctx-grid2">' + card('Product', esc(w.product || 'not reported')) +
       card('Connection used', esc(w.connection && w.connection !== 'none' ? w.connection : 'none — this thread never got a route')) +
-      card('Model', esc(w.model || 'not reported')) +
-      card('Account', esc(w.account || 'not reported')) +
-      '</div>' +
+      card('Model', esc(w.model || 'not reported')) + card('Account', esc(w.account || 'not reported')) + '</div>' +
+      routeLine('Requested route', requested) + routeLine('Effective route', effective) +
+      '<div class="ctx-fallback' + (fallback.used ? ' used' : '') + '"><strong>Fallback ' + esc(fallback.used ? fallback.identity : 'not used') + '</strong>' +
+      '<span>' + esc(fallback.reason || 'not reported') + '</span>' +
+      ((fallback.history || []).length ? '<ol>' + fallback.history.map(function (h) {
+        return '<li>Attempt ' + esc(h.attempt) + ' · ' + esc(h.requestedProvider) + ' → ' + esc(h.effectiveProvider) + ' · ' + esc(h.reason) + '</li>';
+      }).join('') + '</ol>' : '') + '</div>' +
       '<div class="activity-line"><div class="copy"><strong>' + esc(state.mode) + ' · ' + esc(state.persona) + '</strong>' +
       '<span>Worker route: ' + esc(state.worktree) + ' · local execution server · ' + esc(state.effort) + ' effort · ' +
       (state.fast ? 'Fast eligible route' : 'Standard route') + '</span></div></div>' +
-      (mismatch
-        ? '<p class="ctx-note warn">Currently selected model is ' + esc(sel.name) +
-          '. This thread’s context was built with ' + esc(w.model) + ', so the numbers above describe that route, not the selection.</p>'
-        : ''));
+      (mismatch ? '<p class="ctx-note warn">Currently selected model is ' + esc(sel.name) +
+        '. This thread’s context was built with ' + esc(w.model) + ', so the numbers above describe that effective route, not the selection.</p>' : ''));
 
-    /* --- Capabilities: never surfaced here before --- */
+    html += section('Plan limits', drawerLimits());
     html += section('Capabilities in this thread', capabilityRows(esc, state) +
       '<p class="ctx-note">A capability that is On contributes its own instructions and tool definitions to the System and provider family above.</p>');
+    html += section('Cost and cache', '<div class="metric-grid">' + card('API billed', usd(w.costApiUsd)) +
+      card('Plan estimated', usd(w.costPlanUsd)) + card('Combined est.', usd(combined)) + '</div>' +
+      (noRoute ? '<p class="ctx-note">No turn ever ran on this thread, so there is no cache statistic to report — unknown, not zero.</p>' :
+        '<p class="ctx-note">' + ktok(w.cached) + ' cached tokens avoided repeat input billing at a ' + pct2(w.cacheHitPct) + ' hit rate.</p>'));
 
-    html += section('Cost and cache',
-      '<div class="metric-grid">' +
-      card('API billed', usd(w.costApiUsd)) +
-      card('Plan estimated', usd(w.costPlanUsd)) +
-      card('Combined est.', usd(combined)) +
-      '</div>' +
-      (noRoute
-        ? '<p class="ctx-note">No turn ever ran on this thread, so there is no cache statistic to report — unknown, not zero.</p>'
-        : '<p class="ctx-note">' + ktok(w.cached) + ' cached tokens avoided repeat input billing at a ' + pct(w.cacheHitPct) + ' hit rate.</p>'));
-
-    /* --- Compaction preview, from the thread's own record --- */
-    html += section('Compaction preview',
-      (prev.wouldRemove != null
-        ? '<p class="ctx-note">' + esc(prev.note || '') + '</p>' +
-          '<div class="metric-grid">' +
-          card('Would remove', ktok(prev.wouldRemove)) +
-          card('Would retain', ktok(prev.wouldRetain)) +
-          card('Estimated', prev.estimatedSeconds != null ? prev.estimatedSeconds + 's' : 'not reported') +
-          '</div>' +
-          '<div class="ctx-prevcols">' +
-          '<div><h4>Retains</h4>' + (prev.retains || []).map(function (x) { return '<div class="ctx-prevrow keep">' + icon('check', 10) + '<span>' + esc(x) + '</span></div>'; }).join('') + '</div>' +
-          '<div><h4>Drops</h4>' + ((prev.drops || []).length ? (prev.drops || []).map(function (x) { return '<div class="ctx-prevrow drop">' + icon('minus', 10) + '<span>' + esc(x) + '</span></div>'; }).join('') : '<div class="ctx-prevrow"><span>Nothing would be dropped.</span></div>') + '</div>' +
-          '</div>' +
-          (prev.reversible === false
-            ? '<p class="ctx-note warn">' + icon('warning', 10) + ' Not reversible: this pass drops sources that are currently muted-but-resident, so their rehydration handles go with them.</p>'
-            : '<p class="ctx-note">Reversible: every dropped source keeps a rehydration handle.</p>')
-        : '<p class="ctx-note">No compaction preview is reported for this thread.</p>') +
-      '<div class="context-actions">' +
-      '<button class="soft-button" data-action="compact-now">' + icon('collapse', 12) + ' Preview Compact</button>' +
-      '<button class="soft-button" data-action="export-context">' + icon('download', 12) + ' Redacted JSON</button>' +
-      '<button class="soft-button" data-action="raw-context">' + icon('code', 12) + ' Raw projection</button>' +
-      '</div>');
+    html += section('Compaction preview and history',
+      '<div class="metric-grid">' + card('State', esc(rec.compaction.state || 'idle')) + card('Revision', String(rec.compaction.revision || 0)) +
+      card('Would remove', ktok(prev.wouldRemove)) + card('Would retain', ktok(prev.wouldRetain)) + '</div>' +
+      (prev.wouldRemove != null ? '<p class="ctx-note">' + esc(prev.note || '') + '</p>' +
+        '<div class="ctx-prevcols"><div><h4>Retains</h4>' + (prev.retains || []).map(function (x) { return '<div class="ctx-prevrow keep">' + icon('check', 10) + '<span>' + esc(x) + '</span></div>'; }).join('') + '</div>' +
+        '<div><h4>Drops</h4>' + ((prev.drops || []).length ? (prev.drops || []).map(function (x) { return '<div class="ctx-prevrow drop">' + icon('minus', 10) + '<span>' + esc(x) + '</span></div>'; }).join('') : '<div class="ctx-prevrow"><span>Nothing would be dropped.</span></div>') + '</div></div>' :
+        '<p class="ctx-note">No compaction preview is reported for this thread.</p>') +
+      (prev.reversible === false ? '<p class="ctx-note warn">' + icon('warning', 10) + ' Not reversible: this pass drops muted-but-resident sources and their handles.</p>' :
+        '<p class="ctx-note">Reversible: every dropped source keeps a rehydration handle.</p>') +
+      statusLine(esc, rec, state.selectedThread) + compactionHistory() +
+      '<div class="context-actions"><button class="soft-button" data-k="ctxdrawercompact" data-action="compact-now"' + tipAttrs(esc, 'ctx-act-compact', 'Preview a source-aware compaction for this thread') + '>' + icon('collapse', 12) + ' Preview Compact</button>' +
+      '<button class="soft-button" data-action="export-context"' + tipAttrs(esc, 'ctx-act-export', 'Download a redacted JSON snapshot of this thread context') + '>' + icon('download', 12) + ' Redacted JSON</button>' +
+      '<button class="soft-button" data-action="raw-context"' + tipAttrs(esc, 'ctx-act-raw', 'Switch to the redacted Raw projection tab') + '>' + icon('code', 12) + ' Raw projection</button></div>');
 
     return html + '</div></aside>';
 
+    function viewTab(id, label) {
+      var on = view === id;
+      return '<button id="ctx-tab-' + id + '" class="ctx-view-tab' + (on ? ' active' : '') + '" role="tab" aria-selected="' + on +
+        '" aria-controls="ctx-panel-' + id + '" tabindex="' + (on ? '0' : '-1') + '" data-action="ctx-set-view" data-view="' + id + '"' +
+        tipAttrs(esc, 'ctx-tab-' + id, id === 'curated' ? 'Curated detail view' : 'Raw redacted projection') + '>' + label + '</button>';
+    }
     function card(label, value) {
-      return '<div class="metric-card"><label>' + label + '</label><strong>' + value + '</strong></div>';
+      return '<div class="metric-card"' + tipAttrs(esc, 'ctx-metric-' + label, label + ' · ' + String(value).replace(/<[^>]+>/g, '')) + '><label>' + label + '</label><strong>' + value + '</strong></div>';
     }
-    function section(title, body) {
-      return '<section class="context-section"><h3>' + title + '</h3><div class="context-section-body">' + body + '</div></section>';
+    function section(title, body) { return '<section class="context-section"><h3>' + title + '</h3><div class="context-section-body">' + body + '</div></section>'; }
+    function routeLine(label, r) {
+      return '<div class="activity-line ctx-route-line"><div class="copy"><strong>' + label + ' · ' + esc(r.provider || 'not reported') + '</strong>' +
+        '<span>' + esc(r.product || 'not reported') + ' · ' + esc(r.model || 'not reported') + ' · ' + esc(r.connection || 'no connection') +
+        ' · ' + esc(r.account || 'account not reported') + '</span></div></div>';
     }
+    function drawerLimits() {
+      var lims = rec.limits || [];
+      if (!lims.length) return '<div class="ctx-limnone">No plan limits are exposed for this connection.</div>';
+      return '<div class="ctx-drawer-limits">' + lims.map(function (m) { return limitRow(esc, m); }).join('') + '</div>';
+    }
+    function compactionHistory() {
+      var rows = (rec.compaction.history || []).slice(-6).reverse();
+      if (!rows.length) return '<p class="ctx-note ctx-history-empty">No compaction command has been dispatched for this thread.</p>';
+      return '<div class="ctx-history-list" aria-label="Compaction history">' + rows.map(function (h) {
+        var tip = h.status + ' · revision ' + h.committed_revision + ' · ' + num(h.tokens_before) + ' → ' + num(h.tokens_after) + ' tokens';
+        return '<div class="ctx-history-row" data-status="' + esc(h.status) + '"' + tipAttrs(esc, 'ctx-hist-' + (h.dispatch_id || h.committed_revision), tip) + '><b>' + esc(h.status) + '</b><span>revision ' + h.committed_revision +
+          ' · ' + num(h.tokens_before) + ' → ' + num(h.tokens_after) + ' tokens</span><small>' + esc(h.dispatch_id) + '</small></div>';
+      }).join('') + '</div>';
+    }
+    function rawBody() {
+      var raw = rec.rawProjection || {};
+      var payload = {
+        schema_id:'pm.chat.context.raw_projection.v1', redacted:true,
+        raw_payload_ref:raw.rawPayloadRef || 'not_reported',
+        redaction_status:raw.redactionStatus || 'redacted',
+        provider_payload_hash:raw.providerPayloadHash || 'not_reported',
+        omitted_evidence_counts:raw.omittedEvidenceCounts || {},
+        permission_state:raw.permissionState || 'not_reported',
+        context:{ epoch:rec.contextEpoch, revision:rec.compaction.revision || 0, tokens_loaded:w.used, token_limit:w.limit,
+          source_families:sources.map(function (s) { return { family:s.family, tokens:s.tokens }; }), compaction_state:rec.compaction.state },
+        route:{ requested:{provider:requested.provider,product:requested.product,model:requested.model},
+          effective:{provider:effective.provider,product:effective.product,model:effective.model},
+          fallback:{used:!!fallback.used,reason:fallback.reason,history:(fallback.history || []).map(function (h) {
+            return {attempt:h.attempt,requested_provider:h.requestedProvider,effective_provider:h.effectiveProvider,reason:h.reason};
+          })} },
+        evidence:{ result_refs:rec.commandResults.map(function (x) { return x.result_id; }),
+          receipt_refs:rec.dispatchReceipts.map(function (x) { return x.receipt_id; }),
+          compaction_history_count:rec.compaction.history.length, event_record_count:rec.eventRecords.length }
+      };
+      return '<section class="ctx-raw"><div class="event-card"><span class="event-icon">' + icon('lock', 13) + '</span><div class="event-copy"><strong>Redacted Raw projection</strong>' +
+        '<p>Credentials, secrets, account identifiers, and local paths are omitted. Hashes and references preserve audit correlation.</p></div></div>' +
+        '<pre tabindex="0">' + esc(JSON.stringify(payload, null, 2)) + '</pre></section>';
+    }
+  }
+
+  function compactionDialog(ctx) {
+    var rec = record(ctx.state), p = rec.compactionPreview || {}, w = rec.window || {};
+    var after = p.wouldRetain == null ? w.used : p.wouldRetain;
+    return '<section class="dialog ctx-compact-dialog" role="dialog" aria-modal="true" style="width:min(620px,calc(100vw - 20px))" aria-labelledby="ctx-compact-title">' +
+      '<div class="drawer-head"><strong id="ctx-compact-title">Compact context</strong><span class="meta-pill">Preview</span><span class="spacer"></span>' +
+      '<button class="icon-button" data-action="ctx-cancel-compaction"' + tipAttrs(ctx.esc, 'ctx-cancel-compact', 'Cancel compaction preview') + '>' + ctx.icon('close', 13) + '</button></div>' +
+      '<div class="dialog-body"><div class="metric-grid"><div class="metric-card"><label>Before</label><strong>' + ktok(w.used) + '</strong></div>' +
+      '<div class="metric-card"><label>Removed</label><strong>' + ktok(p.wouldRemove) + '</strong></div>' +
+      '<div class="metric-card"><label>After</label><strong>' + ktok(after) + '</strong></div></div>' +
+      '<p style="color:var(--muted)">' + ctx.esc(p.note || 'No source-aware preview is available for this thread.') + '</p>' +
+      '<p class="ctx-note">Cancel or Escape closes this local preview without dispatching a command, result, receipt, history row, or event.</p>' +
+      '<div class="decision-actions"><button class="soft-button" data-action="ctx-cancel-compaction">Cancel</button>' +
+      '<button class="primary-button" data-action="ctx-apply-compaction">Apply compaction</button></div></div></section>';
+  }
+
+  function openPreview(ctx) {
+    var tid = ctx.state.selectedThread;
+    CS.focusOrigin[tid] = 'drawer';
+    ctx.state.menu = null;
+    ctx.state.dialog = { type:'context-compact', threadId:tid };
+    ctx.renderOverlays();
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      var apply = document.querySelector('.ctx-compact-dialog [data-action="ctx-apply-compaction"]');
+      if (apply) apply.focus({ preventScroll:true });
+    }); });
+  }
+
+  function cancelPreview(ctx) {
+    if (!ctx || !ctx.state || !ctx.state.dialog || ctx.state.dialog.type !== 'context-compact') return;
+    ctx.state.dialog = null;
+    ctx.renderOverlays();
+    focusAfter('drawer', true);
+  }
+
+  function setDrawerView(ctx, view, focus) {
+    ctx.state.context.drawerView = view === 'raw' ? 'raw' : 'curated';
+    ctx.renderOverlays();
+    if (focus) requestAnimationFrame(function () { requestAnimationFrame(function () {
+      var tab = document.querySelector('#ctx-tab-' + ctx.state.context.drawerView);
+      if (tab) tab.focus({ preventScroll:true });
+    }); });
   }
 
   /* =====================================================================
@@ -668,6 +991,10 @@
   EXT.slot('contextCompactMenu', function (ctx) { return compactMenu(ctx); });
 
   EXT.slot('contextDrawer', function (ctx) { return drawer(ctx); });
+
+  EXT.slot('dialog', function (ctx) {
+    return ctx.state.dialog && ctx.state.dialog.type === 'context-compact' ? compactionDialog(ctx) : '';
+  });
 
   EXT.action('ctx-more-limits', function (ctx, btn, e) {
     e.stopPropagation();
@@ -678,27 +1005,49 @@
 
   EXT.action('ctx-compact-now', function (ctx, btn, e) {
     e.stopPropagation();
-    var tid = ctx.state.selectedThread;
-    if (CS.run[tid] && CS.run[tid].phase === 'working') return true;
-    var rec = record(ctx.state);
-    var outcome = nextOutcome(rec, tid);
-    CS.run[tid] = { phase: 'working' };
-    ctx.renderOverlays();
-    if (CS.timers[tid]) clearTimeout(CS.timers[tid]);
-    CS.timers[tid] = setTimeout(function () {
-      CS.timers[tid] = null;
-      CS.run[tid] = { phase: 'done', outcome: outcome };
-      if (outcome.id === 'completed' || outcome.id === 'partial') {
-        /* A consequential action, not a toast: the status bar, the receipt
-           trail and the thread all record it. */
-        ctx.state.context.compacted = true;
-        ctx.addReceipt('context-compacted', outcome.title, outcomeDetail(rec, outcome));
-        ctx.renderApp();
-      } else {
-        ctx.renderOverlays();
-      }
-    }, 900);
+    dispatchCompaction(ctx, 'menu');
     return true;
+  });
+
+  EXT.action('compact-now', function (ctx, btn, e) {
+    e.stopPropagation();
+    openPreview(ctx);
+    return true;
+  });
+
+  EXT.action('ctx-apply-compaction', function (ctx, btn, e) {
+    e.stopPropagation();
+    ctx.state.dialog = null;
+    ctx.renderOverlays();
+    dispatchCompaction(ctx, 'drawer');
+    return true;
+  });
+
+  EXT.action('ctx-cancel-compaction', function (ctx, btn, e) {
+    e.stopPropagation();
+    cancelPreview(ctx);
+    return true;
+  });
+
+  EXT.action('ctx-set-view', function (ctx, btn, e) {
+    e.stopPropagation();
+    setDrawerView(ctx, btn.dataset.view, true);
+    return true;
+  });
+
+  EXT.action('raw-context', function (ctx, btn, e) {
+    e.stopPropagation();
+    setDrawerView(ctx, 'raw', true);
+    return true;
+  });
+
+  document.addEventListener('keydown', function (e) {
+    var tab = e.target && e.target.closest ? e.target.closest('.ctx-view-tab') : null;
+    if (!tab || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var view = (e.key === 'ArrowRight' || e.key === 'End') ? 'raw' : 'curated';
+    setDrawerView(EXT.ctx(), view, true);
   });
 
 })();

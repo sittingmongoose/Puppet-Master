@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-08-04.1",
+  "registry_revision": "2026-08-27.1",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -2317,16 +2317,16 @@
     },
     {
       "family_id": "event-family-workspace-layout-changed",
-      "family_revision": "1.0.0",
+      "family_revision": "1.1.0",
       "event_type": "workspace.layout_changed",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/FinalGUISpec.md#f3-home-002",
+      "semantic_owner_doc": "Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary",
       "payload_owner_doc": "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/workspace_layout_changed.schema.json",
         "json_pointer": "#",
-        "schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.0.0"
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0"
       },
       "legacy": {
         "aliases": [],
@@ -2345,7 +2345,9 @@
       },
       "source_refs": [
         "Plans/event_payloads/workspace_layout_changed.schema.json#",
-        "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts"
+        "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts",
+        "Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary",
+        "Plans/Automated_Testing_System.md#ats-040---settled-command-event-receipt-and-context-compaction-fixtures"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",

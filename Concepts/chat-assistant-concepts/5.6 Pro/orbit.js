@@ -7,30 +7,45 @@
  * WHAT THIS MODULE DOES
  *   1. Replaces working-animation take 1 (Orbit) through the `workingTake:1`
  *      render slot, so app.js is never reopened.
- *   2. Adds three actions: orbit-open-phase / orbit-toggle / orbit-collapse.
- *   3. Declares take 1 as owning its own child-agent rendering, which suppresses
- *      app.js's shared `renderLiveAgentInline()` list underneath it (that list
- *      hardcodes the count "2" and `slice(0,2)` against a 14-record fixture).
- *   4. Keeps the live phase disc scrolled into view in the shared trail, which
- *      orbit.css just turned from a clipping box into a scrolling one.
+ *   2. Live model: the stage is ALWAYS open (dial left, panel visible). The
+ *      ring starts empty and a node SPAWNS when its subject starts — duplicate
+ *      subjects are expected, so nodes are keyed by instance uid, never by
+ *      subject id. Clicking a node PINS the panel to that subject while the
+ *      core keeps following the live step; clicking the core follows live
+ *      again — the core NEVER collapses the card.
+ *   3. Every stage carries the panel X. It collapses the card — live or
+ *      completed — to a COMPACT STRIP of subject discs through a two-beat
+ *      choreography (panel closes and the dial recenters, then the dial lifts
+ *      up into the strip line); reopening a strip disc plays the same two
+ *      beats in reverse (the dial drops down from the strip line, then slides
+ *      left as the panel opens, pinned to the clicked subject). A LIVE strip
+ *      keeps spawning discs and pulses the current one; a superseded card
+ *      compacts itself through the same choreography.
+ *   4. Rows stream: the panel reveals a subject's rows as the record's clock
+ *      passes startAt+at, and `stream:true` rows word-stream through
+ *      M.words() exactly like the shared chrome.
+ *   5. Subjects can carry their own child agents (workRuns instance `agents`
+ *      refs into D.subagents); with none, no agents section renders at all.
+ *   6. Hover: nodes, satellites and strip discs use the app's instant
+ *      hover-card (data-hover-tip / data-hover-key) — native title tooltips
+ *      never survive the 500ms work tick.
+ *   7. Keeps the live phase disc scrolled into view in the shared trail.
  *
  * DESIGN NOTES THAT MATTER IF YOU EDIT THIS
  *   - The markup reuses the ORIGINAL class names (.orbit-stage / .orbit-ring /
- *     .orbit-node / .orbit-core / .orbit-track / .orbit-caption). That is
- *     deliberate: inventing new names would orphan six selector blocks in
- *     styles.css, which is the exact defect class this whole plan exists to
- *     fight. orbit.css supersedes those rules instead.
- *   - Geometry is NOT in this file. The radius is derived in CSS from the dial's
- *     own container size (`50cqi - node/2`), because the binding constraint is
- *     the user-resizable editor split, which no viewport media query can see.
- *   - Selection lives in this module's closure, not in app.js's `state`. The
- *     app's state object is closure-private and a module may not add to it; a
- *     module-local `sel` is the same idiom Wave 3 Menus used for its overlay
- *     state, and it survives every pmPatch because pmPatch never reads it.
- *   - data-k rule: the working card survives the 2s work tick, so every node
- *     here carries a key. Constant keys for the frame (orbit / orbdial / ring /
- *     core / orbpanel), subject keys where a replay IS wanted (`opin:<stepId>`
- *     replays the row cascade when the focused phase changes).
+ *     .orbit-node / .orbit-core / .orbit-track / .orbit-caption); orbit.css
+ *     supersedes the legacy styles.css rules instead of orphaning them.
+ *   - Geometry is NOT in this file: radius derives from the dial's container
+ *     size, density tiers ride the `data-orbit-tier` attribute stamped here.
+ *   - UI state lives in this module's closure, keyed BY CARD (ctx.cardId),
+ *     because one transcript can hold several Orbit cards at once. The
+ *     choreography phases live there too (`anim`: e1 → open; c1 → c2 → strip),
+ *     driven by per-card timers that re-render through the app's own
+ *     renderApp (captured from ctx — never a private render path).
+ *   - data-k rule: constant keys for the frame (orbit / orbdial / ring /
+ *     core / orbpanel), instance-uid keys where a replay IS wanted
+ *     (`opin:<uid>` replays the row cascade on a subject change,
+ *     `orow:<uid>:<j>` materializes each row exactly once as it streams in).
  */
 (function () {
   'use strict';
@@ -38,226 +53,345 @@
   var EXT = window.PM56_EXT;
   if (!EXT || !EXT.slot) return;
 
-  /* ---- module state -------------------------------------------------
-     `sel` is the index of the phase the user opened, or null for the
-     collapsed (circle-centred) resting state. */
-  var sel = null;
+  /* ---- module state ---------------------------------------------------
+     Per-card UI, keyed by the card's message id (ctx.cardId):
+       pin      index the panel is pinned to, or null = follow live
+       rotDeg/rotIdx  shortest-arc rotation accumulator (per card)
+       compact  null = follow rec.supersededBy; true/false = user override
+       anim     choreography phase: 'e1' (dial drop, panel closed),
+                'c1' (panel closing), 'c2' (dial lifting) — null = settled
+       shown    what the previous render produced ('stage'|'strip'), so a
+                newly-superseded card can start the collapse choreography */
+  var UI = {};
   var lastTake = null;
-  /* Continuous rotation. `-i * seg` alone would sweep the long way round
-     whenever the focus wraps (13 -> 0 travels 13 segments backwards), so the
-     rotation is accumulated and each move takes the shorter arc. Only ever
-     updated when the focused index actually changes, so a plain re-render
-     never nudges the ring. */
-  var rotDeg = 0, rotIdx = null;
-  /* The phase the PANEL is describing. It is not the same thing as the focused
-     phase: while collapsing, the panel must keep the content the user was
-     reading so it can shrink away, instead of blanking and leaving an empty box
-     to collapse behind it. Filmed: without this the collapse cut the content on
-     frame 1 and then spent ~280ms shrinking an empty rectangle. */
-  var lastPanelIdx = 0;
-
-  function rotationFor(i, n) {
-    if (rotIdx === i) return rotDeg;
-    var seg = 360 / n;
-    var target = -i * seg;
-    var delta = ((target - rotDeg) % 360 + 540) % 360 - 180;
-    rotDeg = rotDeg + delta;
-    rotIdx = i;
-    return rotDeg;
+  var lastRender = null;
+  function uiFor(id) {
+    return UI[id] || (UI[id] = { pin: null, rotDeg: 0, rotIdx: null, compact: null, anim: null, shown: null });
   }
 
-  function clampSel(total) {
-    if (sel == null) return null;
-    if (!(sel >= 0 && sel < total)) { sel = null; return null; }
-    return sel;
+  /* ---- per-card choreography timers ----------------------------------- */
+  var TIMERS = {};
+  function killTimers(id) { (TIMERS[id] || []).forEach(clearTimeout); TIMERS[id] = []; }
+  function later(id, ms, fn) { (TIMERS[id] = TIMERS[id] || []).push(setTimeout(fn, ms)); }
+  function clearAllTimers() { for (var k in TIMERS) killTimers(k); }
+  function rerender() { if (lastRender) lastRender(); }
+  function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
+
+  /* COLLAPSE: C1 the grid closes (420ms — panel folds, dial recenters),
+     C2 the dial lifts up into the strip line (240ms), then the strip mounts.
+     `finalCompact` true = the user asked (X); null = supersededBy drives. */
+  function beginCollapse(id, ui, finalCompact) {
+    killTimers(id);
+    if (reduced()) {
+      ui.anim = null; ui.pin = null; ui.shown = 'strip';
+      if (finalCompact != null) ui.compact = finalCompact;
+      return;
+    }
+    ui.anim = 'c1';
+    if (finalCompact != null) ui.pendingCompact = finalCompact;
+    later(id, 430, function () { ui.anim = 'c2'; rerender(); });
+    later(id, 690, function () {
+      ui.anim = null; ui.pin = null;
+      /* Mark the landing state BEFORE the render: the auto-collapse detector
+         keys on shown==='stage', and without this the finished choreography
+         read as "newly superseded while open" and restarted itself forever
+         (measured: the strip never mounted, `lift` looping every ~700ms). */
+      ui.shown = 'strip';
+      if (ui.pendingCompact != null) { ui.compact = ui.pendingCompact; delete ui.pendingCompact; }
+      rerender();
+    });
+  }
+
+  /* EXPAND: E1 the dial drops down from the strip line (240ms, panel still
+     closed — today's resting pose), then the ordinary open transition slides
+     it left and unfolds the panel onto the clicked subject. */
+  function beginExpand(id, ui, pinIdx) {
+    killTimers(id);
+    ui.compact = false;
+    ui.pin = pinIdx != null ? pinIdx : null;
+    if (reduced()) { ui.anim = null; return; }
+    ui.anim = 'e1';
+    later(id, 440, function () { ui.anim = null; rerender(); });
+  }
+
+  /* Continuous rotation: accumulated per card, shortest arc per move. */
+  function rotationFor(ui, i, n) {
+    var seg = 360 / Math.max(1, n);
+    var key = i + '/' + n;
+    if (ui.rotIdx === key) return ui.rotDeg;
+    var target = -i * seg;
+    var delta = ((target - ui.rotDeg) % 360 + 540) % 360 - 180;
+    ui.rotDeg = ui.rotDeg + delta;
+    ui.rotIdx = key;
+    return ui.rotDeg;
   }
 
   /* ---- the take ------------------------------------------------------ */
   EXT.slot('workingTake:1', function (c) {
-    var esc = c.esc, icon = c.icon, D = c.D, state = c.state;
-    var w = c.ctx;                    // makeWorkCtx: step, pct, steps, index, running, completed…
-    var steps = w.steps, total = steps.length;
-    var seg = 360 / total;
+    var w = c.ctx;
+    var rec = w.rec || c.state.work;
+    lastRender = c.renderApp;
 
-    /* Reset the module's selection when the family switches away and back, so
-       take 1 is never re-entered mid-inspection with a stale open phase. */
-    if (lastTake !== 1) { sel = null; lastTake = 1; }
+    /* Reset ALL per-card ui when the family switches away and back. */
+    if (lastTake !== 1) { UI = {}; clearAllTimers(); lastTake = 1; }
+    var ui = uiFor(w.cardId);
 
-    var s = clampSel(total);
-    var open = s != null;
-    var fi = open ? s : w.index;      // focused index: what the core and panel describe
-    var f = steps[fi] || w.step;
-    var rot = rotationFor(fi, total);
-    var pct = w.pct;
+    var wantStrip = ui.compact != null ? ui.compact : !!rec.supersededBy;
+
+    /* A card that was showing its stage and is now superseded collapses
+       through the choreography rather than snapping to the strip. */
+    if (wantStrip && ui.anim == null && ui.shown === 'stage' && !reduced()) {
+      beginCollapse(w.cardId, ui, null);
+    }
+
+    if (ui.anim != null) { ui.shown = 'stage'; return renderStage(c, ui); }
+    if (wantStrip) { ui.shown = 'strip'; return renderStrip(c, ui); }
+    ui.shown = 'stage';
+    return renderStage(c, ui);
+  });
+
+  /* ---- hover tip helpers ---------------------------------------------- */
+  function tipAttrs(esc, cardId, key, title, body) {
+    return ' data-hover-key="' + esc(cardId + ':' + key) + '"'
+      + ' data-hover-tip="' + esc(title + '\n' + body) + '"';
+  }
+
+  /* ---- full stage ----------------------------------------------------- */
+  function renderStage(c, ui) {
+    var esc = c.esc, icon = c.icon, w = c.ctx;
+    var rec = w.rec || c.state.work;
+    var steps = w.steps;
+
+    var spawned = rec.completed ? steps.slice() : steps.filter(function (s) { return s.startAt <= w.clock + 1e-6; });
+    if (!spawned.length) spawned = steps.slice(0, 1);
+    var n = spawned.length, seg = 360 / n;
+
+    var liveIdx = Math.min(w.index, n - 1);
+    var pin = (ui.pin != null && ui.pin >= 0 && ui.pin < n) ? ui.pin : null;
+    var panelIdx = pin != null ? pin : liveIdx;
+    var live = steps[liveIdx];        // what the CORE and the head caption describe
+    var pf = steps[panelIdx];         // what the PANEL describes
+    var open = ui.anim == null;       // posed (closed) during every choreography phase
+    var animAttr = ui.anim === 'e1' ? 'drop' : ui.anim === 'c2' ? 'lift' : null;
+    var rot = rotationFor(ui, panelIdx, n);
+    var tier = n >= 22 ? 'xl' : n >= 13 ? 'lg' : '';
 
     /* ---- nodes ------------------------------------------------------ */
-    var nodes = steps.map(function (sx, i) {
+    var nodes = spawned.map(function (sx, i) {
       var cls = 'orbit-node';
-      if (w.completed || i < w.index) cls += ' done';
-      if (i === w.index) cls += ' live';
-      if (i === fi) cls += ' focus';
-      if (open && i === s) cls += ' open';
-      var st = i < w.index ? 'completed' : i === w.index ? (w.completed ? 'completed' : 'in progress') : 'pending';
-      /* data-step-kind re-scopes motion.css's --pm-step per node, so the ring
-         paints its real phase spectrum instead of one flat accent. */
-      return '<button type="button" class="' + cls + '" data-k="node:' + esc(sx.id) + '"'
+      if (rec.completed || i < liveIdx) cls += ' done';
+      if (i === liveIdx && !rec.completed) cls += ' live';
+      if (i === panelIdx) cls += ' focus';
+      if (i === panelIdx && pin != null) cls += ' open';
+      var st = i < liveIdx ? 'completed' : i === liveIdx ? (rec.completed ? 'completed' : 'in progress') : 'pending';
+      var statBit = sx.stat ? sx.label + ' · ' + sx.stat : sx.label;
+      return '<button type="button" class="' + cls + '" data-k="node:' + esc(sx.uid) + '"'
         + ' data-step-kind="' + esc(sx.kind) + '"'
         + ' data-action="orbit-open-phase" data-value="' + i + '"'
-        + ' style="--angle:' + (i * seg).toFixed(4) + 'deg"'
-        + ' aria-expanded="' + (open && i === s ? 'true' : 'false') + '"'
-        + ' title="' + esc(sx.label) + ' — ' + esc(sx.verb) + ' (' + st + ')"'
-        + ' aria-label="Step ' + (i + 1) + ' of ' + total + ': ' + esc(sx.label) + ', ' + st + '">'
+        + ' style="--angle:' + (i * seg).toFixed(4) + 'deg;--node-i:' + Math.min(i, 8) + '"'
+        + ' aria-pressed="' + (i === panelIdx && pin != null ? 'true' : 'false') + '"'
+        + tipAttrs(esc, w.cardId, sx.uid, statBit, sx.verb + ' (' + st + ')')
+        + ' aria-label="Subject ' + (i + 1) + ' of ' + n + ': ' + esc(sx.label) + ', ' + st + (sx.stat ? ', ' + esc(sx.stat) : '') + '">'
         + icon(sx.icon, 13) + '<i class="orbit-node-pip"></i></button>';
     }).join('');
 
-    /* ---- subagent satellites ---------------------------------------- */
-    var agents = agentsForRun(c);
+    /* ---- subagent satellites (follow the PANEL subject) -------------- */
+    var agents = agentsFor(c, pf);
     var sats = '';
-    if (f.kind === 'agents' && agents.length) {
-      var n = Math.min(agents.length, 5);
-      sats = agents.slice(0, n).map(function (a, i) {
-        var ang = -52 + (i * (104 / Math.max(1, n - 1)));
+    if (pf.kind === 'agents' && agents.length) {
+      var an = Math.min(agents.length, 5);
+      sats = agents.slice(0, an).map(function (a, i) {
+        var ang = -52 + (i * (104 / Math.max(1, an - 1)));
         return '<button type="button" class="orbit-sat ' + tone(a.status) + '" data-k="sat:' + esc(a.id) + '"'
           + ' data-action="open-agent" data-id="' + esc(a.id) + '"'
           + ' style="--angle:' + ang.toFixed(2) + 'deg;--sat-i:' + i + '"'
-          + ' title="' + esc(a.name) + ' — ' + esc(statusLabel(c, a.status)) + '. Opens the child agent thread."'
+          + tipAttrs(esc, w.cardId, 'sat-' + a.id, a.name, statusLabel(c, a.status) + ' — opens the child agent thread')
           + ' aria-label="Open child agent ' + esc(a.name) + '">'
           + '<span class="orbit-sat-mark">' + esc(initials(a.name)) + '</span></button>';
       }).join('');
     }
 
-    /* ---- core ------------------------------------------------------- */
-    var coreTitle = open
-      ? 'Collapse back to the circle'
-      : 'Open the current phase detail';
-    var core = '<button type="button" class="orbit-core' + (w.completed ? ' done' : '') + '"'
-      + ' data-k="core" data-action="orbit-toggle" aria-expanded="' + (open ? 'true' : 'false') + '"'
-      + ' title="' + esc(coreTitle) + '">'
-      + '<span class="orbit-core-icon" data-k="coreicon:' + esc(f.id) + '">' + icon(w.completed && !open ? 'check' : f.icon, 22) + '</span>'
-      /* CONSTANT key on purpose. A subject key here remounted the label on every
-         phase change, and styles.css gives `.orbit-core strong` a
-         `pm-materialize` entrance from opacity 0 — the contact sheet showed the
-         core going completely blank for ~40ms in the middle of the ring's
-         rotation, which reads as a glitch rather than as a handover. The icon
-         keeps its subject key and still pops; the word simply swaps. */
-      + '<strong data-k="corelabel">' + esc(f.label) + '</strong>'
-      + '<span class="orbit-core-pct work-detail" data-k="corepct">' + pct + '%</span>'
+    /* ---- core: ALWAYS the live subject; NEVER a collapse control ----- */
+    var coreTitle = pin != null ? 'Follow the live step again' : 'Following the live step';
+    var core = '<button type="button" class="orbit-core' + (rec.completed ? ' done' : '') + '"'
+      + ' data-k="core" data-action="orbit-toggle" aria-pressed="' + (pin == null ? 'true' : 'false') + '"'
+      + tipAttrs(esc, w.cardId, 'core', coreTitle, pin != null ? 'Return focus to the live subject' : 'The dial follows the live subject')
+      + '>'
+      + '<span class="orbit-core-icon" data-k="coreicon:' + esc(live.uid) + '">' + icon(rec.completed ? 'check' : live.icon, 22) + '</span>'
+      /* CONSTANT key on purpose: a subject key here remounted the label on
+         every handover and the pm-materialize entrance blanked the core for
+         ~40ms mid-rotation. */
+      + '<strong data-k="corelabel">' + esc(live.label) + '</strong>'
       + '</button>';
 
-    /* ---- panel ------------------------------------------------------
-       Keyed on the PANEL's phase, which only advances while open. Collapsed,
-       the key does not change, so pmPatch patches instead of remounting and the
-       content survives the collapse to be clipped away. */
-    if (open) lastPanelIdx = s;
-    var pi = open ? s : Math.min(lastPanelIdx, total - 1);
-    var pf = steps[pi] || f;
-    var panel = '<div class="orbit-panel" data-k="orbpanel" role="region" aria-label="Phase detail"'
+    var panel = '<div class="orbit-panel" data-k="orbpanel" role="region" aria-label="Subject detail"'
       + (open ? '' : ' aria-hidden="true"') + '>'
-      + '<div class="orbit-panel-in" data-k="opin:' + esc(pf.id) + '">'
-      + renderPanel(c, pf, pi, total)
+      + '<div class="orbit-panel-in" data-k="opin:' + esc(pf.uid) + '">'
+      + renderPanel(c, ui, pf, panelIdx, n)
       + '</div></div>';
 
     return '<div class="orbit-stage' + (open ? ' is-open' : '') + '" data-k="orbit"'
-      + ' data-orbit-open="' + (open ? '1' : '0') + '" data-orbit-focus="' + esc(f.id) + '"'
-      /* The card's own data-step-kind tracks the LIVE step. Re-declaring it here
-         on the focused phase means the dial, the core and the panel all take the
-         colour of the phase being read, while the card head keeps the live one. */
-      + ' data-step-kind="' + esc(f.kind) + '"'
-      + ' style="--seg:' + seg.toFixed(4) + 'deg;--orbit-rot:' + rot.toFixed(3) + 'deg;--orbit-pct:' + pct + '">'
-      /* .orbit-stage is the CONTAINER; .orbit-layout is the grid it sizes.
-         They have to be two elements: an element is never its own container,
-         so a @container rule that selects the container itself never matches.
-         variants-a.css:24 documents the same trap for take 8's rail. */
+      + ' data-orbit-open="' + (open ? '1' : '0') + '" data-orbit-focus="' + esc(pf.uid) + '"'
+      + (animAttr ? ' data-orbit-anim="' + animAttr + '"' : '')
+      + (tier ? ' data-orbit-tier="' + tier + '"' : '')
+      + ' data-step-kind="' + esc(pf.kind) + '"'
+      + ' style="--seg:' + seg.toFixed(4) + 'deg;--orbit-rot:' + rot.toFixed(3) + 'deg">'
       + '<div class="orbit-layout" data-k="orblayout">'
       + '<div class="orbit-dial" data-k="orbdial">'
       + '<i class="orbit-track" data-k="orbtrack"></i>'
-      + '<i class="orbit-arc" data-k="orbarc"></i>'
       + '<div class="orbit-ring" data-k="ring">' + nodes + sats + '</div>'
       + core
       + '</div>'
       + panel
-      + '</div></div>'
-      /* The caption carries the phase LABEL as well as the prose. The core disc
-         ellipsises a long label to stay inside its circle, so the full name has
-         to be legible somewhere while collapsed. */
-      + (open ? '' : '<div class="orbit-caption work-detail" data-k="cap:' + esc(f.id) + '">'
-        + '<b class="orbit-caption-label">' + esc(f.label) + '</b> · ' + esc(f.detail) + '</div>')
-      + (w.completed ? w.workReceipt() : '');
-  });
+      + '</div></div>';
+  }
 
   /* ---- panel body ---------------------------------------------------- */
-  function renderPanel(c, f, fi, total) {
-    var esc = c.esc, icon = c.icon, D = c.D, w = c.ctx;
-    var state = c.state;
-    var done = fi < w.index || w.completed;
-    var live = fi === w.index && !w.completed;
-    var chip = done ? ['ok', 'Completed'] : live ? [w.running ? 'run' : 'idle', w.running ? 'In progress' : 'Paused'] : ['idle', 'Pending'];
+  function renderPanel(c, ui, pf, pi, spawnedCount) {
+    var esc = c.esc, icon = c.icon, w = c.ctx, M = w.M;
+    var rec = w.rec || c.state.work;
+    var done = pi < w.index || rec.completed;
+    var liveHere = pi === w.index && !rec.completed;
+    var chip = done ? ['ok', 'Completed'] : liveHere ? [w.running ? 'run' : 'idle', w.running ? 'In progress' : 'Paused'] : ['idle', 'Pending'];
 
-    var rows = (D.phaseRows[f.kind] && D.phaseRows[f.kind][f.id])
-      || (f.evidence || []).slice(0, 3).map(function (t) { return { text: t }; });
-
-    var rowHtml = rows.map(function (r, j) {
+    var rows = pf.rows || [];
+    var visible = rec.completed ? rows : rows.filter(function (r) { return w.rowVisible(pf, r); });
+    var word = 0;
+    var rowHtml = visible.map(function (r, j) {
+      var body;
+      if (r.stream) {
+        body = '<span class="wa-prose pm-stream">' + M.words(r.text, word) + '</span>';
+        word += M.wordCount(r.text);
+      } else {
+        body = '<span class="wa-rowtext">' + esc(r.text) + '</span>';
+      }
       var meta = r.add != null
         ? '<span class="wa-meta"><b class="wa-add">+' + r.add + '</b>' + (r.del != null ? ' <b class="wa-del">−' + r.del + '</b>' : '') + '</span>'
+        : r.url ? '<span class="wa-meta"><b class="wa-tag">' + esc(r.url) + '</b></span>'
         : r.tag ? '<span class="wa-meta"><b class="wa-tag">' + esc(r.tag) + '</b></span>' : '';
-      return '<span class="wa-row pm-materialize" data-k="orow:' + esc(f.id) + ':' + j + '" style="--pm-stagger:' + j + '">'
-        + '<span class="wa-rowtext">' + esc(r.text) + '</span>' + meta + '</span>';
+      var wrap = w.shellRowWrap;
+      if (wrap) return wrap(w.cardId, pf, r, j, body + meta, 'orow:' + esc(pf.uid) + ':' + j, 'wa-row', Math.min(j, 6));
+      return '<span class="wa-row pm-materialize" data-k="orow:' + esc(pf.uid) + ':' + j + '" style="--pm-stagger:' + Math.min(j, 6) + '">'
+        + body + meta + '</span>';
     }).join('');
 
-    /* Child agents. Rendered for the delegation phase in the panel as well as
-       on the ring, because the ring satellites are withdrawn on a narrow
-       container (they would collide with the core) and the affordance must
-       survive that. */
+    /* Child agents — only when this subject actually has some. */
     var agentsHtml = '';
-    if (f.kind === 'agents') {
-      var list = agentsForRun(c);
-      agentsHtml = '<div class="orbit-agents" data-k="oagents">'
-        + '<div class="orbit-agents-head"><span>Child agents</span><span class="count">' + list.length + '</span></div>'
-        + (list.length ? list.map(function (a) {
-          return '<button type="button" class="orbit-agent" data-k="oa:' + esc(a.id) + '"'
-            + ' data-action="open-agent" data-id="' + esc(a.id) + '"'
-            + ' title="Open the ' + esc(a.name) + ' child agent thread">'
-            + '<span class="orbit-agent-avatar">' + esc(initials(a.name)) + '</span>'
-            + '<span class="orbit-agent-copy"><strong>' + esc(a.name) + '</strong>'
-            + '<span>' + esc(a.current || a.blocker || '—') + '</span></span>'
-            + '<span class="orbit-agent-state ' + tone(a.status) + '">' + esc(statusLabel(c, a.status)) + '</span>'
-            + '</button>';
-        }).join('') : '<p class="orbit-empty">No child agents ran in this thread.</p>')
-        + '</div>';
+    if (pf.kind === 'agents') {
+      var list = agentsFor(c, pf);
+      if (list.length) {
+        agentsHtml = '<div class="orbit-agents" data-k="oagents">'
+          + '<div class="orbit-agents-head"><span>Child agents</span><span class="count">' + list.length + '</span></div>'
+          + list.map(function (a) {
+            return '<button type="button" class="orbit-agent" data-k="oa:' + esc(a.id) + '"'
+              + ' data-action="open-agent" data-id="' + esc(a.id) + '"'
+              + tipAttrs(esc, w.cardId, 'oa-' + a.id, a.name, 'Open the child agent thread')
+              + '>'
+              + '<span class="orbit-agent-avatar">' + esc(initials(a.name)) + '</span>'
+              + '<span class="orbit-agent-copy"><strong>' + esc(a.name) + '</strong>'
+              + '<span>' + esc(a.current || a.blocker || '—') + '</span></span>'
+              + '<span class="orbit-agent-state ' + tone(a.status) + '">' + esc(statusLabel(c, a.status)) + '</span>'
+              + '</button>';
+          }).join('')
+          + '</div>';
+      }
     }
 
-    /* Inspecting a phase deliberately does NOT scrub the run — the ring keeps
-       turning and the core keeps reporting. When the inspected phase is not
-       the live one, this offers the scrub explicitly, through app.js's own
-       existing `inspect-work-step` action. */
-    var jump = (fi !== w.index)
-      ? '<button type="button" class="soft-button orbit-jump" data-k="ojump" data-action="inspect-work-step" data-value="' + fi + '">'
+    var jump = (pi !== w.index && !rec.completed)
+      ? '<button type="button" class="soft-button orbit-jump" data-k="ojump" data-action="inspect-work-step" data-value="' + pi + '">'
       + icon('step', 12) + ' Move the run to this step</button>'
       : '';
 
+    /* The X collapses ANY stage — live or completed — to the strip. */
+    var close = '<button type="button" class="orbit-close" data-k="oclose" data-action="orbit-collapse"'
+      + tipAttrs(esc, w.cardId, 'oclose', 'Collapse to the summary', 'Pack this work activity into its compact strip')
+      + ' aria-label="Collapse to the compact summary">' + icon('close', 12) + '</button>';
+
     return '<div class="orbit-panel-head">'
-      + '<span class="orbit-step-no">Step ' + (fi + 1) + ' of ' + total + '</span>'
+      + '<span class="orbit-step-no">Subject ' + (pi + 1) + (rec.completed ? ' of ' + w.total : ' · ' + spawnedCount + ' so far') + '</span>'
       + '<span class="orbit-chip ' + chip[0] + '">' + chip[1] + '</span>'
       + '<span class="wa-spacer"></span>'
-      + '<button type="button" class="orbit-close" data-k="oclose" data-action="orbit-collapse"'
-      + ' title="Collapse to the circle" aria-label="Collapse phase detail">' + icon('close', 12) + '</button>'
+      + close
       + '</div>'
-      + '<strong class="orbit-panel-title">' + esc(f.verb) + '</strong>'
-      + '<p class="orbit-panel-detail">' + esc(f.detail) + '</p>'
+      + '<strong class="orbit-panel-title">' + esc(pf.verb) + '</strong>'
+      + '<p class="orbit-panel-detail">' + esc(pf.detail) + '</p>'
       + '<div class="orbit-rows pm-rows">' + rowHtml + '</div>'
       + agentsHtml
       + jump;
   }
 
+  /* ---- compact strip --------------------------------------------------
+     A LIVE record keeps spawning discs here and pulses the current one; a
+     completed record shows every subject plus the receipt chips (minus the
+     elapsed chip — the card head already prints the time). */
+  function renderStrip(c, ui) {
+    var esc = c.esc, icon = c.icon, w = c.ctx, M = w.M;
+    var rec = w.rec || c.state.work;
+    var steps = w.steps;
+    var spawned = rec.completed ? steps.slice() : steps.filter(function (s) { return s.startAt <= w.clock + 1e-6; });
+    if (!spawned.length) spawned = steps.slice(0, 1);
+    var liveIdx = Math.min(w.index, spawned.length - 1);
+
+    var discs = spawned.map(function (sx, i) {
+      var cur = !rec.completed && i === liveIdx;
+      var cls = 'pm-rail-item wa-disc orbit-strip-item ' + (cur ? 'current' : 'done');
+      var st = i < liveIdx ? 'completed' : cur ? 'in progress' : 'completed';
+      var statBit = sx.stat ? sx.label + ' · ' + sx.stat : sx.label;
+      return '<button type="button" class="' + cls + '" data-k="sd:' + esc(sx.uid) + '"'
+        + ' data-step-kind="' + esc(sx.kind) + '"'
+        + ' data-action="orbit-reopen" data-value="' + i + '"'
+        + tipAttrs(esc, w.cardId, 'sd-' + sx.uid, statBit, sx.verb + ' (' + st + ') — reopen this subject')
+        + ' aria-label="Reopen ' + esc(sx.label) + '">'
+        + icon(sx.icon, 11) + '</button>';
+    }).join('');
+
+    return '<div class="orbit-strip" data-k="strip">'
+      + '<span class="pm-rail wa-track orbit-strip-rail" data-k="striprail">' + discs + '</span>'
+      + '<span class="wa-label"><b class="wa-verb" data-k="stripn">' + M.roll(spawned.length) + (spawned.length === 1 ? ' subject' : ' subjects') + '</b></span>'
+      + '<button type="button" class="orbit-strip-chev" data-k="stripchev" data-action="orbit-reopen"'
+      + tipAttrs(esc, w.cardId, 'stripchev', 'Expand this work activity', 'Reopen the stage for the current subject')
+      + ' aria-label="Expand this work activity">' + icon('down', 12) + '</button>'
+      + '</div>'
+      + (rec.completed ? '<div class="orbit-strip-receipt" data-k="stripr">' + w.workReceipt({ elapsed: false }) + '</div>' : '');
+  }
+
+  /* ---- head caption: the live subject, left of the elapsed time ------- */
+  EXT.slot('workingHeadCaption', function (c) {
+    if (c.state.variants[2] !== 1) return '';
+    var rec = c.rec, ctx = c.ctx;
+    if (!rec || !ctx) return '';
+    /* A completed card's head already says "Completed" — repeating the final
+       subject there read as "Completed work Complete". Live cards (stage OR
+       strip) keep the running caption. */
+    if (rec.completed) return '';
+    var f = ctx.step;
+    return '<span class="orbit-caption work-detail" data-k="cap:' + c.esc(f.uid || f.id) + '">'
+      + '<b class="orbit-caption-label">' + c.esc(f.label) + '</b> · ' + c.esc(f.detail) + '</span>';
+  });
+
   /* ---- helpers ------------------------------------------------------- */
-  function agentsForRun(c) {
-    /* Strictly this thread's children. The first version fell back to
-       `all.slice(0,4)` when a thread had none, which quietly attributed another
-       thread's agents to this one — and it also made the honest empty state
-       (`.orbit-empty`) unreachable, which the orphan gate caught. An empty
-       delegation phase is a true statement about that thread; borrowed rows are
-       not. */
+  function cardBits(ctx, btn) {
+    var card = btn && btn.closest ? btn.closest('.working-card') : null;
+    if (!card) return null;
+    var wid = card.dataset.card;
+    var rec = (wid && wid !== 'primary' && ctx.state.works && ctx.state.works[wid]) || ctx.state.work;
+    return { card: card, ui: uiFor(card.dataset.cardUi || 'work'), rec: rec, uiId: card.dataset.cardUi || 'work' };
+  }
+  /* A subject that carries its own `agents` refs (workRuns instances) wins;
+     otherwise the thread's own children. No agents — no section, no sats. */
+  function agentsFor(c, pf) {
     var all = (c.D && c.D.subagents) || [];
+    if (pf && pf.agents && pf.agents.length) {
+      return pf.agents.map(function (a) {
+        var base = null;
+        for (var i = 0; i < all.length; i++) if (all[i].id === a.ref) { base = all[i]; break; }
+        var out = {}; var k;
+        if (base) for (k in base) out[k] = base[k];
+        else { out.id = a.ref || 'agent'; out.name = a.ref || 'Agent'; }
+        for (k in a) if (k !== 'ref') out[k] = a[k];
+        return out;
+      });
+    }
     var tid = c.state.selectedThread;
     return all.filter(function (a) { return a.parentThreadId === tid; });
   }
@@ -277,46 +411,63 @@
   }
 
   /* ---- actions ------------------------------------------------------- */
+  /* Node click PINS (no toggle: clicking the pinned node again is a no-op
+     re-pin, never a collapse). */
   EXT.action('orbit-open-phase', function (ctx, btn) {
-    var i = Number(btn.dataset.value);
-    sel = (sel === i) ? null : i;
+    var b = cardBits(ctx, btn); if (!b) return false;
+    if (b.ui.anim != null) return true;           // mid-choreography: ignore
+    b.ui.pin = Number(btn.dataset.value);
     ctx.renderApp();
     return true;
   });
-  EXT.action('orbit-toggle', function (ctx) {
-    sel = (sel == null) ? ctx.state.work.step : null;
+  /* Core click: follow live again. It NEVER collapses the card. */
+  EXT.action('orbit-toggle', function (ctx, btn) {
+    var b = cardBits(ctx, btn); if (!b) return false;
+    if (b.ui.anim != null) return true;
+    b.ui.pin = null;
     ctx.renderApp();
     return true;
   });
-  EXT.action('orbit-collapse', function (ctx) {
-    sel = null;
+  /* The panel X: collapse this card — live or completed — to its strip. */
+  EXT.action('orbit-collapse', function (ctx, btn) {
+    var b = cardBits(ctx, btn); if (!b) return false;
+    if (b.ui.anim != null) return true;
+    beginCollapse(b.uiId, b.ui, true);
     ctx.renderApp();
     return true;
   });
-  /* Declining (returning false) lets app.js's own branch run afterwards — the
-     documented override contract. These only clear the inspection so the
-     lifecycle buttons never leave a stale phase open. */
-  ['reset-working', 'start-working', 'complete-working'].forEach(function (a) {
-    EXT.action(a, function () { sel = null; return false; });
+  /* Strip disc: reopen this card pinned to the clicked subject, dial-drop
+     first, then the ordinary open transition. */
+  EXT.action('orbit-reopen', function (ctx, btn) {
+    var b = cardBits(ctx, btn); if (!b) return false;
+    if (b.ui.anim != null) return true;
+    var v = btn.dataset.value;
+    beginExpand(b.uiId, b.ui, (v == null || v === '') ? null : Number(v));
+    ctx.renderApp();
+    return true;
+  });
+  /* Declining (returning false) lets app.js's own branch run afterwards.
+     ONLY reset clears the card's ui: play/complete must respect the reader's
+     pin and collapse — pressing play on a collapsed live card used to pop it
+     back open, which reads as the app fighting the reader. */
+  EXT.action('reset-working', function (ctx, btn) {
+    var card = btn && btn.closest ? btn.closest('.working-card') : null;
+    if (card) {
+      var id = card.dataset.cardUi;
+      var ui = UI[id];
+      if (ui) { ui.pin = null; ui.compact = null; ui.anim = null; delete ui.pendingCompact; }
+      killTimers(id);
+    }
+    return false;
   });
 
   /* Take 1 renders its own child agents (ring satellites + panel rows), so it
-     must not also get app.js's shared inline list appended underneath.
-     takeOwnsAgents() reads this flag off PM56_WORKING; a non-function value is
-     safe because renderWorkingVariant only calls the entry when it IS a
-     function, and the render slot above wins before that check anyway. */
+     must not also get app.js's shared inline list appended underneath. */
   window.PM56_WORKING = window.PM56_WORKING || {};
   if (typeof window.PM56_WORKING[1] !== 'function') window.PM56_WORKING[1] = {};
   window.PM56_WORKING[1].ownsAgents = true;
 
-  /* ---- shared trail: keep the live disc in view -----------------------
-     orbit.css turns `.wa-track` from `overflow:hidden` (which silently
-     amputated the trail — measured 143px of content in a 141px box at the
-     DEFAULT 1440 layout) into a scroller. A scroller whose live item has
-     scrolled out of view is only half a fix, so the current disc is nudged
-     back into view after each render.
-     scrollIntoView / scrollLeft mutate no attributes and add no nodes, so
-     this cannot re-trigger its own observer. */
+  /* ---- shared trail: keep the live disc in view ----------------------- */
   var pending = false;
   function syncTrails() {
     pending = false;

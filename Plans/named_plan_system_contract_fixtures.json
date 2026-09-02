@@ -1,0 +1,426 @@
+{
+  "schema_id": "pm.named_plan_system.contract_fixtures.v1",
+  "owner_schema": "Plans/named_plan_system_contracts.schema.json",
+  "valid": [
+    {
+      "name": "named_plan_with_explicit_project_and_child_refs",
+      "definition": "named_plan_record",
+      "value": {
+        "schema_id": "pm.named_plan.record.v1",
+        "schema_version": "1.0.0",
+        "named_plan_id": "named_plan:01",
+        "project_id": "project:01",
+        "name": "Ship Settings",
+        "lifecycle": "active",
+        "priority": "high",
+        "phase": "planning",
+        "phase_freshness": "fresh",
+        "progress_percent": 40,
+        "active_agent_count": 2,
+        "queued_agent_count": 1,
+        "attention_codes": [],
+        "primary_prd_ref": "prd:01",
+        "current_planning_run_ref": "planning_run:01",
+        "current_approved_plan_pack_ref": null,
+        "current_plan_compile_run_ref": null,
+        "current_goal_run_refs": [],
+        "historical_child_refs": [
+          "prd:00"
+        ],
+        "thread_group_ref": "thread_group:named_plan:01",
+        "revision": 3,
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:00:00Z",
+        "last_activity_at_utc": "2026-08-31T00:00:00Z",
+        "migration_alias_refs": [
+          "plan_workstream:legacy:01"
+        ]
+      }
+    },
+    {
+      "name": "create_has_no_preselected_identity",
+      "definition": "named_plan_action_request",
+      "value": {
+        "schema_id": "pm.named_plan.action_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.create",
+        "command_instance_id": "command:named_plan:create:01",
+        "project_id": "project:01",
+        "named_plan_id": null,
+        "name": "New Plan",
+        "priority": "normal",
+        "expected_named_plan_revision": null,
+        "expected_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:01",
+        "idempotency_key": "idempotency:named_plan:create:01",
+        "source_surface": "shell_header",
+        "return_route_ref": "route:plans:project:01",
+        "active_child_work_expected": false,
+        "child_work_disposition": "no_child_runtime_created",
+        "confirmation_receipt_ref": null
+      }
+    },
+    {
+      "name": "open_preserves_child_work",
+      "definition": "named_plan_action_request",
+      "value": {
+        "schema_id": "pm.named_plan.action_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.open",
+        "command_instance_id": "command:named_plan:open:01",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:open-01",
+        "name": null,
+        "priority": null,
+        "expected_named_plan_revision": null,
+        "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:01",
+        "idempotency_key": "idempotency:named_plan:open:01",
+        "source_surface": "plans_page",
+        "return_route_ref": "route:plans:project:01",
+        "active_child_work_expected": true,
+        "child_work_disposition": "preserve_unchanged",
+        "confirmation_receipt_ref": null
+      }
+    },
+    {
+      "name": "rename_is_revision_and_currentness_bound",
+      "definition": "named_plan_action_request",
+      "value": {
+        "schema_id": "pm.named_plan.action_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.rename",
+        "command_instance_id": "command:named_plan:rename:01",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:rename-01",
+        "name": "Ship Settings Safely",
+        "priority": null,
+        "expected_named_plan_revision": 3,
+        "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:01",
+        "idempotency_key": "idempotency:named_plan:rename:01",
+        "source_surface": "plans_page",
+        "return_route_ref": "route:plans:project:01",
+        "active_child_work_expected": true,
+        "child_work_disposition": "preserve_unchanged",
+        "confirmation_receipt_ref": null
+      }
+    },
+    {
+      "name": "archive_active_child_work_requires_confirmation_and_preservation",
+      "definition": "named_plan_action_request",
+      "value": {
+        "schema_id": "pm.named_plan.action_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.archive",
+        "command_instance_id": "command:named_plan:archive:01",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:archive-01",
+        "name": null,
+        "priority": null,
+        "expected_named_plan_revision": 3,
+        "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:01",
+        "idempotency_key": "idempotency:named_plan:archive:01",
+        "source_surface": "plans_page",
+        "return_route_ref": "route:plans:project:01",
+        "active_child_work_expected": true,
+        "child_work_disposition": "preserve_unchanged",
+        "confirmation_receipt_ref": "receipt:confirmation:named-plan-archive:01"
+      }
+    },
+    {
+      "name": "restore_does_not_mutate_child_state",
+      "definition": "named_plan_action_request",
+      "value": {
+        "schema_id": "pm.named_plan.action_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.restore",
+        "command_instance_id": "command:named_plan:restore:01",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:restore-01",
+        "name": null,
+        "priority": null,
+        "expected_named_plan_revision": 4,
+        "expected_currentness_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:01",
+        "idempotency_key": "idempotency:named_plan:restore:01",
+        "source_surface": "plans_page",
+        "return_route_ref": "route:plans:project:01",
+        "active_child_work_expected": false,
+        "child_work_disposition": "preserve_unchanged",
+        "confirmation_receipt_ref": null
+      }
+    },
+    {
+      "name": "set_priority_does_not_take_scheduler_authority",
+      "definition": "named_plan_action_request",
+      "value": {
+        "schema_id": "pm.named_plan.action_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.set_priority",
+        "command_instance_id": "command:named_plan:priority:01",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:priority-01",
+        "name": null,
+        "priority": "urgent",
+        "expected_named_plan_revision": 5,
+        "expected_currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:01",
+        "idempotency_key": "idempotency:named_plan:priority:01",
+        "source_surface": "plans_page",
+        "return_route_ref": "route:plans:project:01",
+        "active_child_work_expected": true,
+        "child_work_disposition": "preserve_unchanged",
+        "confirmation_receipt_ref": null
+      }
+    },
+    {
+      "name": "accepted_named_plan_result_preserves_child_work",
+      "definition": "named_plan_action_result",
+      "value": {
+        "schema_id": "pm.named_plan.action_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.rename",
+        "command_instance_id": "command:named_plan:result:rename:01",
+        "outcome": "accepted",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:01",
+        "named_plan_revision": 4,
+        "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "thread_group_ref": "thread_group:named_plan:01",
+        "route_ref": "route:plans:project:01",
+        "receipt_refs": [
+          "receipt:named-plan:rename:01"
+        ],
+        "projection_ref": "projection:named-plan:01",
+        "disabled_reason": null,
+        "error_code": null,
+        "child_work_mutated": false,
+        "replayed": false
+      }
+    },
+    {
+      "name": "disabled_named_plan_result_names_registration_gap",
+      "definition": "named_plan_action_result",
+      "value": {
+        "schema_id": "pm.named_plan.action_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.create",
+        "command_instance_id": "command:named_plan:result:disabled:01",
+        "outcome": "rejected",
+        "project_id": "project:01",
+        "named_plan_id": null,
+        "named_plan_revision": null,
+        "currentness_sha256": null,
+        "thread_group_ref": null,
+        "route_ref": null,
+        "receipt_refs": [],
+        "projection_ref": null,
+        "disabled_reason": "command_not_registered",
+        "error_code": "command_not_registered",
+        "child_work_mutated": false,
+        "replayed": false
+      }
+    },
+    {
+      "name": "stale_named_plan_error_preserves_failure",
+      "definition": "named_plan_action_error",
+      "value": {
+        "schema_id": "pm.named_plan.action_error.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.rename",
+        "command_instance_id": "command:named_plan:error:stale:01",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:01",
+        "error_code": "stale_currentness",
+        "message_code": "named_plan_projection_changed",
+        "retriable": true,
+        "currentness_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "safe_next_action_ref": "action:refresh-named-plan",
+        "child_work_mutated": false
+      }
+    },
+    {
+      "name": "named_plan_availability_disabled_without_native_handler",
+      "definition": "named_plan_action_availability",
+      "value": {
+        "schema_id": "pm.named_plan.action_availability.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.create",
+        "project_id": "project:01",
+        "named_plan_id": null,
+        "availability": "disabled",
+        "currentness_sha256": null,
+        "disabled_reason": "native_handler_absent",
+        "missing_requirement_refs": [
+          "requirement:named-plan-native-handler"
+        ],
+        "safe_next_action_ref": "action:inspect-named-plan-readiness"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "candidate_identity_name_is_not_canonical",
+      "definition": "named_plan_record",
+      "expected_error": "additional property plan_workstream_id is forbidden",
+      "value": {
+        "schema_id": "pm.named_plan.record.v1",
+        "schema_version": "1.0.0",
+        "named_plan_id": "named_plan:bad",
+        "project_id": "project:01",
+        "name": "Bad Alias Writer",
+        "lifecycle": "active",
+        "priority": "normal",
+        "phase": "idea",
+        "phase_freshness": "fresh",
+        "progress_percent": 0,
+        "active_agent_count": 0,
+        "queued_agent_count": 0,
+        "attention_codes": [],
+        "primary_prd_ref": null,
+        "current_planning_run_ref": null,
+        "current_approved_plan_pack_ref": null,
+        "current_plan_compile_run_ref": null,
+        "current_goal_run_refs": [],
+        "historical_child_refs": [],
+        "thread_group_ref": "thread_group:bad",
+        "revision": 1,
+        "currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:00:00Z",
+        "last_activity_at_utc": null,
+        "migration_alias_refs": [],
+        "plan_workstream_id": "legacy:bad"
+      }
+    },
+    {
+      "name": "stale_phase_cannot_show_precise_progress",
+      "definition": "named_plan_record",
+      "expected_error": "stale phase requires null progress",
+      "value": {
+        "schema_id": "pm.named_plan.record.v1",
+        "schema_version": "1.0.0",
+        "named_plan_id": "named_plan:bad:2",
+        "project_id": "project:01",
+        "name": "Stale Progress",
+        "lifecycle": "active",
+        "priority": "normal",
+        "phase": "executing",
+        "phase_freshness": "stale",
+        "progress_percent": 80,
+        "active_agent_count": 0,
+        "queued_agent_count": 0,
+        "attention_codes": [
+          "stale_child_projection"
+        ],
+        "primary_prd_ref": "prd:01",
+        "current_planning_run_ref": null,
+        "current_approved_plan_pack_ref": "approved_plan_pack:01",
+        "current_plan_compile_run_ref": "plan_compile_run:01",
+        "current_goal_run_refs": [
+          "goal_run:01"
+        ],
+        "historical_child_refs": [],
+        "thread_group_ref": "thread_group:bad:2",
+        "revision": 4,
+        "currentness_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "created_at_utc": "2026-08-31T00:00:00Z",
+        "updated_at_utc": "2026-08-31T00:00:00Z",
+        "last_activity_at_utc": "2026-08-31T00:00:00Z",
+        "migration_alias_refs": []
+      }
+    },
+    {
+      "name": "named_plan_request_rejects_unknown_alias",
+      "definition": "named_plan_action_request",
+      "base_valid": "open_preserves_child_work",
+      "patch": {
+        "command_id": "cmd.named_plan.switch"
+      },
+      "expected_invariant": "exact_six_command_ids_only"
+    },
+    {
+      "name": "create_cannot_preselect_named_plan_identity",
+      "definition": "named_plan_action_request",
+      "base_valid": "create_has_no_preselected_identity",
+      "patch": {
+        "named_plan_id": "named_plan:preselected"
+      },
+      "expected_invariant": "identity_is_allocated_by_owner"
+    },
+    {
+      "name": "rename_requires_expected_currentness",
+      "definition": "named_plan_action_request",
+      "base_valid": "rename_is_revision_and_currentness_bound",
+      "patch": {
+        "expected_currentness_sha256": null
+      },
+      "expected_invariant": "mutation_is_currentness_bound"
+    },
+    {
+      "name": "archive_with_active_child_work_requires_confirmation",
+      "definition": "named_plan_action_request",
+      "base_valid": "archive_active_child_work_requires_confirmation_and_preservation",
+      "patch": {
+        "confirmation_receipt_ref": null
+      },
+      "expected_invariant": "archive_never_silently_hides_active_child_work"
+    },
+    {
+      "name": "archive_cannot_claim_child_runtime_creation",
+      "definition": "named_plan_action_request",
+      "base_valid": "archive_active_child_work_requires_confirmation_and_preservation",
+      "patch": {
+        "child_work_disposition": "no_child_runtime_created"
+      },
+      "expected_invariant": "non_create_actions_preserve_child_work_unchanged"
+    },
+    {
+      "name": "accepted_result_cannot_mutate_child_work",
+      "definition": "named_plan_action_result",
+      "base_valid": "accepted_named_plan_result_preserves_child_work",
+      "patch": {
+        "child_work_mutated": true
+      },
+      "expected_invariant": "named_plan_commands_do_not_reown_child_lifecycle"
+    },
+    {
+      "name": "accepted_result_requires_receipt",
+      "definition": "named_plan_action_result",
+      "base_valid": "accepted_named_plan_result_preserves_child_work",
+      "patch": {
+        "receipt_refs": []
+      },
+      "expected_invariant": "accepted_named_plan_mutation_is_receipt_backed"
+    },
+    {
+      "name": "available_named_plan_command_cannot_keep_disabled_reason",
+      "definition": "named_plan_action_availability",
+      "base_valid": "named_plan_availability_disabled_without_native_handler",
+      "patch": {
+        "availability": "available",
+        "missing_requirement_refs": [],
+        "safe_next_action_ref": null
+      },
+      "expected_invariant": "availability_and_disabled_reason_are_consistent"
+    },
+    {
+      "name": "named_plan_request_rejects_raw_secret_field",
+      "definition": "named_plan_action_request",
+      "base_valid": "create_has_no_preselected_identity",
+      "patch": {
+        "access_token": "raw-secret-forbidden"
+      },
+      "expected_invariant": "command_envelope_contains_no_secret_material"
+    }
+  ]
+}

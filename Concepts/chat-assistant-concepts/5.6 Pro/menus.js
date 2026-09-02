@@ -79,15 +79,18 @@
     L.lastHeight = ''; L.ghost = null; L.ghostTimer = 0; L.holdTimer = 0;
   });
 
-  /* Menu identity.  NOT the child count: the thread-search results list grows
-     on every keystroke and re-sprouting the box mid-typing would be absurd.
-     Class + side + the head title separate persona / mode / permissions /
-     worktree / thread-N / search / context / model from each other, and stay
-     constant while a menu is merely being filtered. */
+  /* Root identity: class + side + head title, so persona / mode / model stay
+     distinct while a list is filtered. Sidecar identity is class + side only:
+     hovering another model row changes the head title and must NOT re-sprout
+     (ACD-440). */
   function signature(el) {
+    var overlay = el.getAttribute('data-overlay') || '';
+    var side = el.getAttribute('data-side') || '';
+    if (overlay === 'sidecar') {
+      return (el.getAttribute('class') || '') + '|' + side;
+    }
     var head = el.querySelector('.menu-head strong');
-    return (el.getAttribute('class') || '') + '|' +
-           (el.getAttribute('data-side') || '') + '|' +
+    return (el.getAttribute('class') || '') + '|' + side + '|' +
            (head ? head.textContent.trim() : '');
   }
 
@@ -114,6 +117,26 @@
         continue;
       }
       var sig = signature(el);
+      /* Sidecar still present: treat as a content/height update even if
+         pmPatch swapped the node. Re-sprouting on row hover parks the box
+         at the pin origin and covers the root menu. */
+      var sidecarLive = L.id === 'side' && L.el && el;
+      if (sidecarLive) {
+        L.el = el; L.sig = sig; L.opening = false;
+        /* pmPatch rewrites the sidecar's style attribute from a template
+           with no left/top, so one frame sits at 0,0. Put the last truthful
+           placement back before paint. */
+        if (L.snap) {
+          el.style.left = L.snap.left + 'px';
+          el.style.top = L.snap.top + 'px';
+        }
+        var sprouting = overlayRoot.classList.contains('pm56-s-hold') ||
+                        overlayRoot.classList.contains('pm56-s-closed') ||
+                        overlayRoot.classList.contains('pm56-s-nomo');
+        if (!sprouting) cls(true, 'pm56-' + L.k + '-flat');
+        work = true;
+        continue;
+      }
       if (el !== L.el || sig !== L.sig) {
         L.el = el; L.sig = sig; L.opening = true; L.lastHeight = el.style.height || '';
         /* Untransformed and invisible: positionOverlays must measure the real
@@ -167,6 +190,7 @@
         applyOrigin(el, rect, L.opening);
         heightBounce(L, el);
       }
+      if (L.id === 'side') heightBounce(L, el);
 
       if (L.opening) {
         L.opening = false;
@@ -221,13 +245,13 @@
      all, so there is nothing to react to -- the only reliable answer is to stop
      listening to them for 340ms. */
   function holdGeom(L, el, rect) {
+    if (!rect || rect.width < 8 || rect.height < 8) return;
+    if (L.id === 'side' && rect.left < 16 && rect.top < 16) return;
     var pre = '--pm56-' + L.k + 'hold-';
     overlayRoot.style.setProperty(pre + 'left', rect.left.toFixed(2) + 'px');
     overlayRoot.style.setProperty(pre + 'top', rect.top.toFixed(2) + 'px');
-    if (L.id === 'root') {
-      overlayRoot.style.setProperty(pre + 'ox', (el.style.getPropertyValue('--origin-x') || '50%').trim());
-      overlayRoot.style.setProperty(pre + 'oy', (el.style.getPropertyValue('--origin-y') || '100%').trim());
-    }
+    overlayRoot.style.setProperty(pre + 'ox', (el.style.getPropertyValue('--origin-x') || (L.id === 'root' ? '50%' : '100%')).trim());
+    overlayRoot.style.setProperty(pre + 'oy', (el.style.getPropertyValue('--origin-y') || (L.id === 'root' ? '100%' : '28%')).trim());
     cls(true, 'pm56-' + L.k + '-hold');
     clearTimeout(L.holdTimer);
     L.holdTimer = setTimeout(function () { releaseHold(L); }, HOLD_MS);
@@ -252,12 +276,10 @@
         var anchored = L.id === 'root' && overlayRoot.classList.contains('pm56-anchor-bottom');
         if (lft) el.style.left = lft;
         if (tp && !anchored) el.style.top = tp;
-        if (L.id === 'root') {
-          var ox = overlayRoot.style.getPropertyValue(pre + 'ox');
-          var oy = overlayRoot.style.getPropertyValue(pre + 'oy');
-          if (ox) el.style.setProperty('--origin-x', ox);
-          if (oy) el.style.setProperty('--origin-y', oy);
-        }
+        var ox = overlayRoot.style.getPropertyValue(pre + 'ox');
+        var oy = overlayRoot.style.getPropertyValue(pre + 'oy');
+        if (ox) el.style.setProperty('--origin-x', ox);
+        if (oy) el.style.setProperty('--origin-y', oy);
       }
     }
     cls(false, 'pm56-' + L.k + '-hold');
@@ -272,18 +294,19 @@
      springs.  Here app.js has already written the target height inline
      (`height:${modelMenuHeight()}px`) and menus.css owns the height spring, so
      the only missing half is the stretch that sells the resize as elastic. */
-  var bounceTimer = 0;
+  var bounceTimers = { r: 0, s: 0 };
   function heightBounce(L, el) {
-    var h = el.style.height || '';
+    var h = String(el.offsetHeight);
     var changed = h !== L.lastHeight;
     L.lastHeight = h;
     if (!changed || L.opening || reduced()) return;
-    overlayRoot.classList.remove('pm56-r-bounce');
+    var name = 'pm56-' + L.k + '-bounce';
+    overlayRoot.classList.remove(name);
     void el.offsetWidth;
-    overlayRoot.classList.add('pm56-r-bounce');
-    clearTimeout(bounceTimer);
-    bounceTimer = setTimeout(function () {
-      overlayRoot.classList.remove('pm56-r-bounce');
+    overlayRoot.classList.add(name);
+    clearTimeout(bounceTimers[L.k]);
+    bounceTimers[L.k] = setTimeout(function () {
+      overlayRoot.classList.remove(name);
     }, BOUNCE_MS);
   }
 
@@ -324,6 +347,7 @@
     cls(false, 'pm56-' + L.k + '-pin');
     cls(false, 'pm56-' + L.k + '-flat');
     cls(false, 'pm56-' + L.k + '-closed');
+    cls(false, 'pm56-' + L.k + '-bounce');
     releaseHold(L);
     if (L.id === 'root') {
       overlayRoot.classList.remove('pm56-r-bounce');
@@ -474,7 +498,7 @@
              ' data-action="open-menu" data-menu="worktree" data-menu-anchor="worktree"' +
              ' data-wt-state="' + ctx.esc(w.state) + '"' +
              ' aria-label="' + ctx.esc('Worktree ' + w.label + ' — ' + (w.stateLabel || w.state)) + '"' +
-             ' title="' + ctx.esc(worktreeTitle(w)) + '">' +
+             ' data-hover-key="worktree" data-hover-tip="' + ctx.esc(worktreeTitle(w)) + '">' +
              ctx.icon('branch', 14) +
              '<i class="wt-dot" aria-hidden="true"></i>' +
              '</button>';

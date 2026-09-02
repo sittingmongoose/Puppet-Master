@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.assistant_chat_event.chat_thread_archived.schema.v1",
+  "$comment": "Static field-shape materialization only. This schema grants no registry admission, EventRecord append or dispatch authority, persistence binding, checkpoint advance, replay certification, or executable-depth credit.",
+  "title": "chat.thread_archived payload",
+  "description": "Closed thread lifecycle payload for an explicit active-or-suspended to archived transition. Evidence and repository/worktree context are reference-only.",
+  "x-event-type": "chat.thread_archived",
+  "x-family-id": "event-family-chat-thread-archived",
+  "x-family-revision": "1.0.0-proposed",
+  "x-scope-policy": "project_only",
+  "x-retention-policy-proposal": "RP-AUTHORITY-INDEFINITE",
+  "x-source-row-id": "ea-successor-row-7ffcd457d06b2da5fb3a",
+  "x-source-open-index": 25,
+  "x-owner-evidence-lines": [1095, 1105, 1106, 1120, 1125, 1134],
+  "x-event-append-authorized": false,
+  "x-event-dispatch-authorized": false,
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "thread_id", "thread_revision", "actor_ref", "ts"],
+  "properties": {
+    "schema_id": {"const": "pm.assistant_chat_event.chat_thread_archived.schema.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/stable_id"},
+    "thread_id": {"$ref": "#/$defs/thread_id"},
+    "thread_revision": {"$ref": "#/$defs/thread_revision"},
+    "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "reason_code": {"$ref": "#/$defs/reason_code"},
+    "worktree_id": {"$ref": "#/$defs/stable_id"},
+    "repo_id": {"$ref": "#/$defs/stable_id"},
+    "path_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "branch_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+    "ts": {"$ref": "#/$defs/utc_timestamp"}
+  },
+  "$defs": {
+    "stable_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "thread_id": {"type": "string", "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$"},
+    "thread_revision": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "utc_timestamp": {"type": "string", "format": "date-time", "maxLength": 35, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z$"}
+  }
+}

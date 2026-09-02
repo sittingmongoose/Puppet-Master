@@ -119,9 +119,13 @@
   }
 
   /* --------------------------------------------------------- the meta row */
-  function chip(esc, cls, text, title, attrs) {
+  function tipAttrs(esc, key, text) {
+    return ' data-hover-key="' + esc(key) + '" data-hover-tip="' + esc(text) + '" aria-label="' + esc(text) + '"';
+  }
+
+  function chip(esc, cls, text, tip, attrs, tipKey) {
     return '<span class="meta-chip ' + cls + '"' +
-      (title ? ' title="' + esc(title) + '"' : '') +
+      (tip ? tipAttrs(esc, tipKey || ('chip-' + cls), tip) : '') +
       (attrs || '') + '>' + esc(text) + '</span>';
   }
 
@@ -129,27 +133,30 @@
     var esc = ctx.esc, icon = ctx.icon;
     var rt = m.runtime || null;
     var out = [];
+    var mk = 'mm-' + (m.id || 'x') + '-';
 
     /* --- time: the fixture's sentAt, not a synthesised walk --------------- */
     var iso = m.sentAt || m.time || null;
     var clock = clockOf(iso);
-    out.push('<span class="meta-chip meta-time" title="' +
-      esc(clock ? 'Sent ' + fullStamp(iso) : 'This message carries no timestamp') + '">' +
-      icon('history', 10) + '<b>' + esc(clock || NOT_REPORTED) + '</b></span>');
+    out.push('<span class="meta-chip meta-time"' +
+      tipAttrs(esc, mk + 'time', clock ? 'Sent ' + fullStamp(iso) : 'This message carries no timestamp') + '>' +
+      '<b>' + esc(clock || NOT_REPORTED) + '</b></span>');
 
     if (rt) {
       /* --- provider -------------------------------------------------------- */
       out.push(chip(esc, 'meta-provider', rt.provider || NOT_REPORTED,
         'Provider' + (rt.account ? ' · ' + rt.account : ''),
-        ' data-provider="' + esc(rt.provider || '') + '"'));
+        ' data-provider="' + esc(rt.provider || '') + '"',
+        mk + 'provider'));
 
       /* --- model.  data-model is also the hook the Demo Data harness reads. - */
       out.push('<span class="meta-chip meta-model" data-model="' + esc(rt.modelId || rt.model || '') + '"' +
-        ' title="' + esc('Model ' + (rt.model || NOT_REPORTED) +
+        tipAttrs(esc, mk + 'model',
+          'Model ' + (rt.model || NOT_REPORTED) +
           ' · ' + labelFor('mode', rt.mode, 'mode ' + NOT_REPORTED) + ' mode' +
           ' · ' + labelFor('effort', rt.effort, 'effort ' + NOT_REPORTED) + ' effort' +
           (rt.persona ? ' · ' + rt.persona : '') +
-          (rt.fast ? ' · fast route' : '')) + '">' +
+          (rt.fast ? ' · fast route' : '')) + '>' +
         (rt.fast ? icon('lightning', 10, 'meta-fast') : '') +
         '<b>' + esc(rt.model || NOT_REPORTED) + '</b></span>');
 
@@ -158,28 +165,30 @@
       var worked = secondsLabel(rt.workedSeconds != null ? rt.workedSeconds
         : (rt.durationMs != null ? rt.durationMs / 1000 : null));
       var total = secondsLabel(rt.totalElapsedSeconds);
-      out.push('<span class="meta-chip meta-worked' + (live ? ' is-live' : '') + '" title="' +
-        esc((live ? 'Still working. ' : '') +
-          'Worked for ' + (worked || NOT_REPORTED) +
+      out.push('<span class="meta-chip meta-worked' + (live ? ' is-live' : '') + '"' +
+        tipAttrs(esc, mk + 'worked',
+          (live ? 'Still working. ' : '') +
+          'Worked ' + (worked || NOT_REPORTED) +
           (total ? ' · total elapsed ' + total : '') +
           (rt.queuedMs != null ? ' · queued ' + msLabel(rt.queuedMs) : '') +
-          ' · ' + labelFor('terminal', rt.terminal)) + '">' +
+          ' · ' + labelFor('terminal', rt.terminal)) + '>' +
         (live ? '<i class="meta-live-dot"></i>' : '') +
-        esc((live ? 'Working for ' : 'Worked for ') + (worked || NOT_REPORTED)) + '</span>');
+        esc((live ? 'Working ' : 'Worked ') + (worked || NOT_REPORTED)) + '</span>');
     } else if (m.role === 'user') {
-      out.push(chip(esc, 'meta-quiet', 'You',
-        'A user turn carries no runtime record, so no provider, model or timing is claimed for it.'));
+      /* User turns carry no runtime record; no meta chip is needed. */
     } else {
       /* An assistant turn with no runtime record. Do NOT backfill it from the
          current composer route and present that as a record -- that is the
          exact fake this wave removed from the details panel. Say so instead. */
       if (isUnrecordedLive(ctx, m)) {
-        out.push('<span class="meta-chip meta-worked is-live" data-k="mm-live" title="' +
-          esc('This turn is still running. No runtime record has been written yet, so no duration is claimed.') +
-          '"><i class="meta-live-dot"></i>' + esc('Working now') + '</span>');
+        out.push('<span class="meta-chip meta-worked is-live" data-k="mm-live"' +
+          tipAttrs(esc, mk + 'live',
+            'This turn is still running. No runtime record has been written yet, so no duration is claimed.') +
+          '><i class="meta-live-dot"></i>' + esc('Working now') + '</span>');
       } else {
         out.push(chip(esc, 'meta-quiet', 'Runtime ' + NOT_REPORTED,
-          'This turn has no recorded runtime block, so no provider, model or timing is claimed for it.'));
+          'This turn has no recorded runtime block, so no provider, model or timing is claimed for it.',
+          '', mk + 'quiet'));
       }
     }
 
@@ -234,14 +243,14 @@
     var items = REGISTRY.itemsFor(ctx, m);
     /* Works when empty by being absent when empty: a More button that opens an
        empty panel teaches the reviewer the surface is a mock. */
-    if (!items.length) return '';
+    if (!items.length) return { btn: '', panel: '' };
     var open = openOverflowFor === m.id;
-    var btn = '<button class="text-button pm-msg-more" data-k="pm-msg-more"' +
+    var btn = '<button class="text-button icon-only pm-msg-more" data-k="pm-msg-more"' +
       ' data-action="message-overflow" data-id="' + esc(m.id) + '"' +
       ' aria-expanded="' + (open ? 'true' : 'false') + '"' +
-      ' title="' + esc(items.length + ' more operation' + (items.length === 1 ? '' : 's') + ' for this message') + '">' +
-      icon('more', 11) + '<span>More</span></button>';
-    if (!open) return btn;
+      tipAttrs(esc, 'msg-more-' + m.id, items.length + ' more operation' + (items.length === 1 ? '' : 's') + ' for this message') + '>' +
+      icon('more', 13) + '<span>More</span></button>';
+    if (!open) return { btn: btn, panel: '' };
 
     var rows = items.map(function (it) {
       var dis = !!it.disabled;
@@ -250,14 +259,15 @@
         (dis ? ' disabled aria-disabled="true"' : ' data-action="' + esc(it.action || '') + '"' +
           ' data-id="' + esc(m.id) + '"' +
           (it.value != null ? ' data-value="' + esc(it.value) + '"' : '')) +
-        ' title="' + esc(dis ? (it.reason || 'Not available for this message') : (it.detail || it.label)) + '">' +
-        '<span class="pm-overflow-icon">' + icon(it.icon || 'more', 12) + '</span>' +
+        tipAttrs(esc, 'msg-of-' + m.id + '-' + it.id, dis ? (it.reason || 'Not available for this message') : (it.detail || it.label)) + '>' +
+        '<span class="pm-overflow-icon">' + icon(it.icon || 'more', 13) + '</span>' +
         '<span class="pm-overflow-copy"><strong>' + esc(it.label) + '</strong>' +
         '<span>' + esc(dis ? (it.reason || 'Not available for this message') : (it.detail || '')) + '</span></span></button>';
     }).join('');
 
-    return btn + '<div class="pm-msg-overflow" data-k="pm-msg-overflow" role="group"' +
+    var panel = '<div class="pm-msg-overflow" data-k="pm-msg-overflow" role="group"' +
       ' aria-label="More operations for this message">' + rows + '</div>';
+    return { btn: btn, panel: panel };
   }
 
   /* -------------------------------------------------------------- wiring */
@@ -266,12 +276,18 @@
   });
 
   EXT.slot('messageOverflow', function (ctx) {
-    return ctx.message ? renderOverflow(ctx, ctx.message) : '';
+    return ctx.message ? (renderOverflow(ctx, ctx.message).btn || '') : '';
+  });
+
+  EXT.slot('messageOverflowPanel', function (ctx) {
+    return ctx.message ? (renderOverflow(ctx, ctx.message).panel || '') : '';
   });
 
   EXT.action('message-overflow', function (ctx, btn) {
     var id = btn.dataset.id;
-    openOverflowFor = (openOverflowFor === id) ? null : id;
+    var wasOpen = openOverflowFor === id;
+    openOverflowFor = wasOpen ? null : id;
+    if (wasOpen) btn.blur();
     ctx.renderApp();
     return true;
   });

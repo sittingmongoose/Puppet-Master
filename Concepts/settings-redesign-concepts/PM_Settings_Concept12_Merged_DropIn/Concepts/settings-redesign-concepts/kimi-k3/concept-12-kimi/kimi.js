@@ -639,18 +639,6 @@
     if (!populateDetailInspector()) return;
     syncDetailButtonStates();
     if (!alreadyOpen) openDetailInspector();
-    const row = document.getElementById(`setting-${settingId}`);
-    if (row) {
-      const scroller = document.getElementById('settings-document');
-      if (scroller) {
-        scroller.scrollTo({
-          top: Math.max(0, scrollOffsetWithin(scroller, row) - 12),
-          behavior: motionReduced() ? 'auto' : 'smooth',
-        });
-      }
-    } else if (sectionId) {
-      scrollToSection(sectionId, false);
-    }
   }
 
   function getDetailNodes() {

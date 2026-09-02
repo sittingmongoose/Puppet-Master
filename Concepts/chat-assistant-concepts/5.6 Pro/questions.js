@@ -6,18 +6,19 @@
  *
  * WHAT THIS FILE FIXES
  * --------------------
- * `state.variants[6]` ("Question & decision") offers eight named options.  Seven of
- * them were pure cosmetics in `styles.css:242` — per-option declaration counts of
- * 0 · 2 · 2 · 3 · 1 · 2 · 1 · 5, with options 4 ("Step Sequence") and 6 ("Queue
- * Stack") consisting of a single declaration each.  `renderDecisionHost()` stamped
- * `data-variant` on the host and then rendered one identical `.decision-surface`
- * for all eight.  Names that promise a structure and deliver a corner radius are
- * the same defect the Activity Detail family had, one surface over.
+ * `state.variants[6]` ("Question & decision") offers nine named options.  The
+ * first eight used to be pure cosmetics in `styles.css:242` — per-option
+ * declaration counts of 0 · 2 · 2 · 3 · 1 · 2 · 1 · 5, with options 4
+ * ("Step Sequence") and 6 ("Queue Stack") consisting of a single declaration
+ * each.  `renderDecisionHost()` stamped `data-variant` on the host and then
+ * rendered one identical `.decision-surface` for all of them.  Names that
+ * promise a structure and deliver a corner radius are the same defect the
+ * Activity Detail family had, one surface over.
  *
- * The eight options below are eight different DOM structures over ONE derived
+ * The nine options below are nine different DOM structures over ONE derived
  * model.  That matters because six decision types reach this slot — question,
  * question-preparing, question-submitting, plan (review and revise), permission
- * and conflict — so eight hand-written surfaces would have been forty-eight.
+ * and conflict — so nine hand-written surfaces would have been fifty-four.
  *
  * WHAT IT ALSO REPAIRS, WHILE HERE
  *   1. `q.why` is per-question in the fixture; the stock surface printed ONE
@@ -29,7 +30,8 @@
  *   3. `D.questionFlows` (1 active, 2 queued, 1 completed) had no reader at all.
  *      The queue is now real: `qs-open-flow` opens a queued flow, keeping the
  *      draft answers of the one you left — which is what the fixture's own note
- *      claims happens.  The "N queued" pill counts the rows that are rendered.
+ *      claims happens.  Queue Stack peeks and Evidence Split queue rows ARE
+ *      the queue; header chrome does not restate it.
  *   4. Plan evidence came from a hardcoded string.  It now comes from
  *      `artifacts[plan-query].payload` (decision, acceptance, revisions), and the
  *      permission surface names the real `operational.hosts`.
@@ -40,16 +42,19 @@
  * `@media` rule in styles.css:294 used to destroy at narrow widths.  Other takes
  * surface the same `model.evidence` inside their own structure (a `<dl>` field, a
  * step body, a mono record row, a disclosure) or not at all — which is the point
- * of having eight structures rather than one with eight skins.
+ * of having nine structures rather than one with nine skins.
  */
 (function () {
   'use strict';
   var EXT = window.PM56_EXT;
   if (!EXT || !EXT.slot) return;
 
-  var TAKES = 8;
+  var TAKES = 9;
   var TAKE_NAMES = ['Stable Card', 'Morphing Composer', 'Anchored Sheet', 'Side Inspector',
-    'Step Sequence', 'Technical Decision', 'Queue Stack', 'Evidence Split'];
+    'Step Sequence', 'Technical Decision', 'Queue Stack', 'Evidence Split', 'Ask Card'];
+  var FILE_PATHS = ['src/analytics/queries.rs', 'src/analytics/schema.rs', 'src/analytics/index_hints.rs',
+    'src/analytics/bench.rs', 'migrations/0043_tenant_created_index.sql', 'docs/query-performance.md'];
+  var OTHER_PLACEHOLDER = 'Something else…';
 
   /* `D.labels` carries no host-state map (it has ten others). Declaring the three
      values locally is the honest option — the alternative is painting the raw
@@ -80,12 +85,21 @@
   }
   function hasAnswer(q) {
     if (!q) return false;
+    if (Array.isArray(q.attachments) && q.attachments.length) return true;
+    if (String(q.other == null ? '' : q.other).trim()) return true;
     if (Array.isArray(q.answer)) return q.answer.length > 0;
     return String(q.answer == null ? '' : q.answer).trim().length > 0;
   }
   function answerText(q) {
     if (!hasAnswer(q)) return '';
-    return Array.isArray(q.answer) ? q.answer.join(', ') : String(q.answer);
+    var parts = [];
+    if (Array.isArray(q.answer) && q.answer.length) parts.push(q.answer.join(', '));
+    else if (q.answer != null && String(q.answer).trim() && !Array.isArray(q.answer)) parts.push(String(q.answer));
+    if (String(q.other || '').trim()) parts.push(String(q.other).trim());
+    if (Array.isArray(q.attachments) && q.attachments.length) {
+      parts.push(q.attachments.map(function (a) { return a.path || a.name; }).join(', '));
+    }
+    return parts.join(' · ');
   }
   function answeredCount(qs) {
     var n = 0;
@@ -109,7 +123,12 @@
   /* Module state hangs off `state.qs`. DEFAULT does not carry it, so every reader
      tolerates undefined — that is the reset path, not a bug. */
   function qsState(ctx) {
-    return ctx.state.qs || (ctx.state.qs = { fold: false, drafts: {} });
+    return ctx.state.qs || (ctx.state.qs = { fold: false, drafts: {}, mention: null, leaving: false, reelDir: 'next' });
+  }
+  function currentQuestion(ctx) {
+    var qs = ctx.state.questions || [];
+    var idx = Math.min(Math.max(ctx.state.questionIndex | 0, 0), Math.max(qs.length - 1, 0));
+    return qs[idx] || null;
   }
 
   /* ------------------------------------------------------------- the queue */
@@ -150,19 +169,13 @@
     var flow = activeFlow(ctx);
     var ans = answeredCount(qs);
     var queue = queueOf(ctx, flow);
-    var queued = queue.filter(function (x) { return x.state === 'queued'; });
-    /* `state.questionQueue` is a demo counter the "Queue questionnaire" trigger
-       increments. The fixture supplies the flows; anything ABOVE that count was
-       queued during this session and is stated as such rather than silently
-       inflating a number whose rows do not exist. */
-    var extra = Math.max(0, (ctx.state.questionQueue | 0) - queued.length);
 
     var input;
     if (q.type === 'choice' || q.type === 'multi') {
       input = {
         kind: q.type,
         action: q.type === 'choice' ? 'answer-choice' : 'answer-multi',
-        options: (q.options || []).map(function (o) {
+        options: (q.options || []).slice(0, 4).map(function (o) {
           return {
             value: o, label: o, hint: '',
             selected: q.type === 'choice' ? q.answer === o
@@ -172,8 +185,8 @@
       };
     } else if (q.type === 'text') {
       input = {
-        kind: 'text', inputKey: 'question-text', value: q.answer || '',
-        placeholder: 'Optional constraints…'
+        kind: 'text', inputKey: 'question-other', value: String(q.other != null && q.other !== '' ? q.other : (q.answer || '')),
+        placeholder: OTHER_PLACEHOLDER
       };
     } else {
       input = {
@@ -200,10 +213,7 @@
       icon: 'todo',
       title: (flow && flow.title) || 'Questionnaire',
       subtitle: (flow && flow.note) || '',
-      meta: [{ text: ans + '/' + qs.length + ' answered', tone: ans === qs.length ? 'ok' : '' }]
-        .concat(queued.length ? [{ text: queued.length + ' queued', tone: 'wait' }] : [])
-        .concat(extra ? [{ text: '+' + extra + ' queued this session', tone: 'wait' }] : [])
-        .concat(q.required ? [{ text: 'Required', tone: 'need' }] : [{ text: 'Optional', tone: '' }]),
+      meta: [{ text: ans + '/' + qs.length + ' answered', tone: ans === qs.length ? 'ok' : '' }],
       prompt: q.prompt,
       required: !!q.required,
       note: q.why || '',
@@ -457,13 +467,134 @@
   }
   function ticks(ctx, m) {
     if (!m.steps || m.type !== 'question') return '';
-    return '<div class="qs-ticks" data-k="qs-ticks">' + m.steps.map(function (s) {
-      return '<i class="qs-tick is-' + s.state + '" data-k="qs-tick:' + ctx.esc(s.id) + '"></i>';
+    return '<div class="qs-ticks" data-k="qs-ticks">' + m.steps.map(function (s, i) {
+      return '<button type="button" class="qs-tick is-' + s.state + '" data-action="qs-goto-question" data-index="'
+        + s.index + '" aria-label="Question ' + (s.index + 1) + '" data-k="qs-tick:' + ctx.esc(s.id) + '"></button>';
     }).join('') + '</div>';
+  }
+  function askSpine(ctx, m) {
+    if (!m.steps || m.type !== 'question') return '';
+    var idx = Math.min(Math.max(ctx.state.questionIndex | 0, 0), Math.max(m.steps.length - 1, 0));
+    return '<div class="qs-spine" data-k="qs-spine">'
+      + '<div class="qs-spine-track" aria-hidden="true"></div>'
+      + m.steps.map(function (s) {
+        return '<button type="button" class="qs-spine-slot is-' + s.state + '" data-action="qs-goto-question" data-index="'
+          + s.index + '" aria-label="Question ' + (s.index + 1) + '" data-k="qs-spine:' + ctx.esc(s.id) + '"></button>';
+      }).join('')
+      + '<div class="qs-spine-thumb" aria-hidden="true">' + (idx + 1) + '</div>'
+      + '</div>';
+  }
+  function reel(ctx, m, inner) {
+    var st = qsState(ctx);
+    var dir = st.reelDir || 'next';
+    var live = '<div class="qs-reel qs-reel-' + dir + '" data-k="qs-reel:' + ctx.esc(m.key) + '">' + inner + '</div>';
+    if (m.take === 8 && st.outgoingHtml) {
+      var out = '<div class="qs-reel-out qs-reel-out-' + dir + '" aria-hidden="true">' + st.outgoingHtml + '</div>';
+      st.outgoingHtml = null;
+      st.outgoingH = null;
+      return '<div class="qs-reel-stage" data-k="qs-reel-stage">' + out + live + '</div>';
+    }
+    return live;
+  }
+  function reduceMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+  function fileName(p) {
+    var s = String(p || '');
+    var i = s.lastIndexOf('/');
+    return i >= 0 ? s.slice(i + 1) : s;
+  }
+  function otherRow(ctx, m, style) {
+    if (m.type !== 'question') return '';
+    var kind = (m.input && m.input.kind) || '';
+    if (kind === 'summary' || kind === 'progress' || kind === 'none') return '';
+    var q = currentQuestion(ctx) || {};
+    var other = String(q.other != null && q.other !== '' ? q.other : (kind === 'text' ? (q.answer || '') : ''));
+    var atts = Array.isArray(q.attachments) ? q.attachments : [];
+    var st = qsState(ctx);
+    var mention = st.mention && st.mention.open;
+    var query = (st.mention && st.mention.query) || '';
+    var qlc = query.toLowerCase();
+    var paths = FILE_PATHS.filter(function (p) { return !qlc || p.toLowerCase().indexOf(qlc) >= 0; });
+    var chips = atts.map(function (a, i) {
+      var label = a.path || a.name || '';
+      return '<button type="button" class="qs-file-chip" data-action="qs-chip-remove" data-index="' + i
+        + '" title="' + ctx.esc(label) + '">@' + ctx.esc(label) + '<span aria-hidden="true">×</span></button>';
+    }).join('');
+    var sprout = mention
+      ? '<div class="qs-mention" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
+          return '<button type="button" class="qs-mention-item" role="option" data-action="qs-mention-pick" data-path="'
+            + ctx.esc(p) + '">' + ctx.esc(p) + '</button>';
+        }).join('') : '<span class="qs-mention-empty">No matching files</span>') + '</div>'
+      : '';
+    var otherN = 1;
+    if (kind !== 'text') {
+      var presetN = (m.input && m.input.options) ? Math.min(m.input.options.length, 4) : 0;
+      otherN = presetN + 1;
+    }
+    var otherOn = !!(q.otherOn) || !!String(other).trim() || atts.length > 0;
+    var mark = '';
+    if (style === 'ask' && kind !== 'text') {
+      mark = '<button type="button" class="qs-ask-mark qs-ask-mark-' + (kind === 'multi' ? 'check' : 'radio')
+        + (otherOn ? ' is-on' : '') + '" data-action="qs-select-other" aria-label="Something else"></button>';
+    }
+    return '<div class="qs-other' + (style ? ' qs-other-' + style : '') + (otherOn && style === 'ask' ? ' is-on' : '')
+      + '"' + (style === 'ask' && kind !== 'text' ? ' data-action="qs-select-other"' : '')
+      + ' data-k="qs-other" style="--i:' + (otherN - 1) + '">'
+      + mark
+      + '<span class="qs-num">' + otherN + '.</span>'
+      + '<div class="qs-other-field">'
+      + '<div class="qs-other-line">'
+      + chips
+      + '<input type="text" class="qs-other-input" data-input="question-other" data-k="qs-text:question-other" placeholder="'
+      + ctx.esc(OTHER_PLACEHOLDER) + '" value="' + ctx.esc(other) + '" autocomplete="off" spellcheck="false">'
+      + '<button type="button" class="icon-button qs-attach" data-action="qs-attach" title="Attach a file" aria-label="Attach a file">'
+      + iconOf(ctx, 'attach', 16) + '</button>'
+      + '</div>'
+      + sprout
+      + '</div></div>';
+  }
+  function askNote(ctx, m) {
+    if (m.type !== 'question') return '';
+    var q = currentQuestion(ctx) || {};
+    var other = String(q.other != null && q.other !== '' ? q.other : (q.answer || ''));
+    var atts = Array.isArray(q.attachments) ? q.attachments : [];
+    var st = qsState(ctx);
+    var mention = st.mention && st.mention.open;
+    var query = (st.mention && st.mention.query) || '';
+    var qlc = query.toLowerCase();
+    var paths = FILE_PATHS.filter(function (p) { return !qlc || p.toLowerCase().indexOf(qlc) >= 0; });
+    var chips = atts.map(function (a, i) {
+      var label = a.path || a.name || '';
+      return '<button type="button" class="qs-file-chip" data-action="qs-chip-remove" data-index="' + i
+        + '" title="' + ctx.esc(label) + '">@' + ctx.esc(label) + '<span aria-hidden="true">×</span></button>';
+    }).join('');
+    var sprout = mention
+      ? '<div class="qs-mention" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
+          return '<button type="button" class="qs-mention-item" role="option" data-action="qs-mention-pick" data-path="'
+            + ctx.esc(p) + '">' + ctx.esc(p) + '</button>';
+        }).join('') : '<span class="qs-mention-empty">No matching files</span>') + '</div>'
+      : '';
+    return '<div class="qs-ask-note" data-k="qs-note" style="--i:1">'
+      + '<div class="qs-ask-note-eyebrow">Optional note</div>'
+      + '<div class="qs-ask-note-well">'
+      + chips
+      + '<textarea class="qs-other-input qs-ask-note-input" data-input="question-other" data-k="qs-text:question-other" rows="3" placeholder="'
+      + ctx.esc('Type a constraint, or leave blank to skip.') + '" autocomplete="off" spellcheck="false">'
+      + ctx.esc(other) + '</textarea>'
+      + '<button type="button" class="icon-button qs-attach" data-action="qs-attach" title="Attach a file" aria-label="Attach a file">'
+      + iconOf(ctx, 'attach', 16) + '</button>'
+      + sprout
+      + '</div></div>';
+  }
+  function optNum(i) {
+    return '<span class="qs-num">' + (i + 1) + '.</span>';
   }
 
   /* The input, in four idioms. Same data-action vocabulary in all four, so
-     app.js's own handlers stay the ones doing the work. */
+     app.js's own handlers stay the ones doing the work. Choice and multi
+     questions always carry numbered presets plus a permanent next-number
+     Something else row; text questions are that row alone. */
   function inputHtml(ctx, m, style) {
     var input = m.input || { kind: 'none' };
     if (input.kind === 'none') return '';
@@ -471,55 +602,83 @@
       return '<div class="qs-wait" data-k="qs-wait"><div class="qs-progress-track' + (input.scan ? ' is-scan' : '') + '">'
         + '<i style="width:' + input.pct + '%"></i></div></div>';
     }
-    if (input.kind === 'text') {
-      return '<textarea class="decision-textarea qs-textarea qs-textarea-' + style + '" data-input="' + ctx.esc(input.inputKey)
-        + '" data-k="qs-text:' + ctx.esc(input.inputKey) + '" placeholder="' + ctx.esc(input.placeholder || '') + '">'
-        + ctx.esc(input.value || '') + '</textarea>';
-    }
     if (input.kind === 'summary') {
+      if (style === 'ask') {
+        var all = ctx.state.questions || [];
+        var cur = currentQuestion(ctx);
+        return '<div class="qs-ask-review" data-k="qs-review">' + all.map(function (x, i) {
+          if (x === cur || x.type === 'summary') return '';
+          var ok = hasAnswer(x);
+          return '<button type="button" class="qs-ask-review-row' + (ok ? ' is-ok' : ' is-empty')
+            + '" data-action="qs-goto-question" data-index="' + i
+            + '" data-k="qs-review:' + i + '" style="--i:' + i + '">'
+            + '<span class="qs-ask-review-disc">' + (i + 1) + '</span>'
+            + '<span class="qs-ask-review-copy">'
+            + '<span class="qs-ask-review-a">' + ctx.esc(answerText(x) || 'Not answered') + '</span>'
+            + '<span class="qs-ask-review-q">' + ctx.esc(String(x.prompt || '').replace(/\s+/g, ' ').trim()) + '</span></span>'
+            + (ok ? '<span class="qs-ask-review-done">' + iconOf(ctx, 'check', 12) + '</span>' : '')
+            + '</button>';
+        }).join('') + '</div>';
+      }
       return '<div class="qs-summary" data-k="qs-summary">' + input.rows.map(function (r) {
         return '<div class="qs-summary-row' + (r.ok ? ' is-ok' : '') + '">'
           + '<span class="qs-summary-k">' + ctx.esc(r.label) + '</span>'
           + '<span class="qs-summary-v">' + ctx.esc(r.value) + '</span></div>';
       }).join('') + '</div>';
     }
+    if (input.kind === 'text') {
+      return style === 'ask' ? askNote(ctx, m) : otherRow(ctx, m, style);
+    }
     var multi = input.kind === 'multi';
     var act = input.action;
-    var opts = input.options || [];
+    var opts = (input.options || []).slice(0, 4);
+    var body;
     if (style === 'chips') {
-      return '<div class="qs-chips" data-k="qs-opts">' + opts.map(function (o, i) {
-        return '<button class="qs-chip' + (o.selected ? ' is-on' : '') + '" data-action="' + ctx.esc(act)
-          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '">'
+      body = '<div class="qs-chips" data-k="qs-opts">' + opts.map(function (o, i) {
+        return '<button type="button" class="qs-chip' + (o.selected ? ' is-on' : '') + '" data-action="' + ctx.esc(act)
+          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '" style="--i:' + i + '">'
+          + optNum(i)
           + (o.selected ? '<span class="qs-chip-mark">' + iconOf(ctx, 'check', 11) + '</span>' : '')
           + ctx.esc(o.label) + '</button>';
       }).join('') + '</div>';
-    }
-    if (style === 'rows') {
-      return '<div class="qs-tech-opts" data-k="qs-opts">' + opts.map(function (o, i) {
-        return '<button class="qs-tech-opt' + (o.selected ? ' is-on' : '') + '" data-action="' + ctx.esc(act)
-          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '">'
-          + '<span class="qs-tech-key">[' + (i + 1) + ']</span>'
+    } else if (style === 'rows') {
+      body = '<div class="qs-tech-opts" data-k="qs-opts">' + opts.map(function (o, i) {
+        return '<button type="button" class="qs-tech-opt' + (o.selected ? ' is-on' : '') + '" data-action="' + ctx.esc(act)
+          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '" style="--i:' + i + '">'
+          + '<span class="qs-tech-key">' + (i + 1) + '.</span>'
           + '<span class="qs-tech-val">' + ctx.esc(o.label) + '</span>'
           + '<span class="qs-tech-state">' + (o.selected ? (multi ? 'included' : 'selected') : '—') + '</span>'
           + (o.hint ? '<span class="qs-tech-hint">' + ctx.esc(o.hint) + '</span>' : '') + '</button>';
       }).join('') + '</div>';
-    }
-    if (style === 'stack') {
-      return '<div class="qs-opt-stack" data-k="qs-opts">' + opts.map(function (o) {
-        return '<button class="qs-opt-row' + (o.selected ? ' is-on' : '') + '" data-action="' + ctx.esc(act)
-          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '">'
+    } else if (style === 'stack') {
+      body = '<div class="qs-opt-stack" data-k="qs-opts">' + opts.map(function (o, i) {
+        return '<button type="button" class="qs-opt-row' + (o.selected ? ' is-on' : '') + '" data-action="' + ctx.esc(act)
+          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '" style="--i:' + i + '">'
+          + optNum(i)
           + '<span class="qs-opt-box">' + (o.selected ? iconOf(ctx, 'check', 10) : '') + '</span>'
           + '<span class="qs-opt-text"><strong>' + ctx.esc(o.label) + '</strong>'
           + (o.hint ? '<span>' + ctx.esc(o.hint) + '</span>' : '') + '</span></button>';
       }).join('') + '</div>';
+    } else if (style === 'ask') {
+      body = '<div class="qs-ask-opts' + (multi ? ' is-multi' : ' is-choice') + '" data-k="qs-opts">' + opts.map(function (o, i) {
+        return '<button type="button" class="qs-ask-opt' + (o.selected ? ' is-on' : '') + (multi ? ' is-multi' : ' is-choice')
+          + '" data-action="' + ctx.esc(act)
+          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '" style="--i:' + i + '">'
+          + '<span class="qs-ask-mark qs-ask-mark-' + (multi ? 'check' : 'radio') + (o.selected ? ' is-on' : '')
+          + '" aria-hidden="true"></span>'
+          + optNum(i)
+          + '<span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span></button>';
+      }).join('') + '</div>';
+    } else {
+      body = '<div class="choice-grid qs-grid" data-k="qs-opts">' + opts.map(function (o, i) {
+        return '<button type="button" class="choice' + (o.selected ? ' selected' : '') + '" data-action="' + ctx.esc(act)
+          + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '" style="--i:' + i + '">'
+          + optNum(i)
+          + '<strong>' + ctx.esc(o.label) + '</strong>'
+          + (o.hint ? '<br><span class="qs-grid-hint">' + ctx.esc(o.hint) + '</span>' : '') + '</button>';
+      }).join('') + '</div>';
     }
-    /* default: the base sheet's choice grid */
-    return '<div class="choice-grid qs-grid" data-k="qs-opts">' + opts.map(function (o) {
-      return '<button class="choice' + (o.selected ? ' selected' : '') + '" data-action="' + ctx.esc(act)
-        + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '">'
-        + '<strong>' + ctx.esc(o.label) + '</strong>'
-        + (o.hint ? '<br><span class="qs-grid-hint">' + ctx.esc(o.hint) + '</span>' : '') + '</button>';
-    }).join('') + '</div>';
+    return body + otherRow(ctx, m, style);
   }
 
   function promptHtml(ctx, m, cls) {
@@ -560,9 +719,7 @@
       + head(ctx, m)
       + '<div class="qs-body qs-scroll">'
       + ticks(ctx, m)
-      + promptHtml(ctx, m)
-      + inputHtml(ctx, m, 'grid')
-      + noteHtml(ctx, m)
+      + reel(ctx, m, promptHtml(ctx, m) + inputHtml(ctx, m, 'grid') + noteHtml(ctx, m))
       + '</div>'
       + actions(ctx, m, 'qs-actions-end')
       + '</section>';
@@ -578,12 +735,10 @@
     var back = m.actions.filter(function (a) { return a.a === 'prev-question'; })[0];
     var rest = m.actions.filter(function (a) { return a.kind !== 'primary' && a.a !== 'prev-question'; });
     return '<div class="qs qs-morph" data-qs="1" data-k="qs:1">'
-      + '<div class="qs-morph-bar">'
+      + '<div class="qs-morph-bar" data-k="qs-morph-bar">'
       + '<span class="qs-morph-badge" title="' + ctx.esc(m.title) + '">' + iconOf(ctx, m.icon, 13) + '</span>'
-      + '<div class="qs-morph-field" data-k="qs-morph:' + ctx.esc(m.key) + '">'
-      + '<div class="qs-morph-prompt">' + ctx.esc(m.prompt) + (m.required ? '<span class="qs-req">*</span>' : '') + '</div>'
-      + inputHtml(ctx, m, 'chips')
-      + '</div>'
+      + reel(ctx, m, '<div class="qs-morph-prompt">' + ctx.esc(m.prompt) + (m.required ? '<span class="qs-req">*</span>' : '') + '</div>'
+        + inputHtml(ctx, m, 'chips'))
       + ((back || send) ? '<div class="qs-morph-controls">'
         + (back ? actionBtn(ctx, { a: back.a, label: '', aria: 'Back to the previous question', kind: 'soft', icon: 'left', disabled: back.disabled }) : '')
         + (send ? actionBtn(ctx, send) : '') + '</div>' : '')
@@ -610,11 +765,11 @@
       + '<div class="qs-sheet-grip" aria-hidden="true"></div>'
       + head(ctx, m, 'qs-sheet-head')
       + '<div class="qs-sheet-body qs-scroll">'
-      + progressBar(ctx, m)
-      + promptHtml(ctx, m, 'qs-prompt-lg')
-      + ((m.subtitle && m.subtitle !== m.note && m.subtitle !== m.prompt)
-        ? '<p class="qs-sub" data-k="qs-sub">' + ctx.esc(m.subtitle) + '</p>' : '')
-      + inputHtml(ctx, m, 'stack')
+      + ticks(ctx, m)
+      + reel(ctx, m, promptHtml(ctx, m, 'qs-prompt-lg')
+        + ((m.subtitle && m.subtitle !== m.note && m.subtitle !== m.prompt)
+          ? '<p class="qs-sub" data-k="qs-sub">' + ctx.esc(m.subtitle) + '</p>' : '')
+        + inputHtml(ctx, m, 'stack'))
       + '<button class="qs-fold-trigger" data-action="qs-toggle-fold" data-k="qs-fold-trigger" aria-expanded="' + (open ? 'true' : 'false') + '">'
       + iconOf(ctx, open ? 'collapse' : 'expand', 11) + ' <span>' + (open ? 'Hide the reasoning' : 'Why this is being asked') + '</span></button>'
       + (open ? '<div class="qs-fold" data-k="qs-fold">' + m.evidence.map(function (e) {
@@ -640,8 +795,8 @@
          first and the actual answer control fell below the fold, which is the
          "present but unreachable" failure this wave exists to remove. */
       + '<div class="qs-inspector-body qs-scroll">'
-      + promptHtml(ctx, m, 'qs-prompt-sm')
-      + inputHtml(ctx, m, 'stack')
+      + ticks(ctx, m)
+      + reel(ctx, m, promptHtml(ctx, m, 'qs-prompt-sm') + inputHtml(ctx, m, 'stack'))
       + '<dl class="qs-dl" data-k="qs-dl">' + fields.map(function (f) {
         return '<div class="qs-dl-row" data-k="qs-dl:' + ctx.esc(f.k) + '"><dt>' + ctx.esc(f.k) + '</dt><dd>' + ctx.esc(f.v) + '</dd></div>';
       }).join('') + '</dl>'
@@ -681,6 +836,7 @@
     return '<section class="decision-surface qs qs-seq" data-qs="4" data-k="qs:4">'
       + head(ctx, m, 'qs-seq-head')
       + '<div class="qs-seq-body qs-scroll">'
+      + ticks(ctx, m)
       + '<div class="qs-seq-label">' + ctx.esc(m.stepsLabel || 'Steps') + '</div>'
       + '<ol class="qs-steps" data-k="qs-steps">'
       + steps.map(function (s) {
@@ -691,7 +847,7 @@
           ? '<button class="qs-step-body" data-action="' + ctx.esc(s.action) + '"' + dataAttrs(ctx, s.data) + '>' + inner + '</button>'
           : '<div class="qs-step-body">' + inner + '</div>';
         var live = s.state === 'current' && m.input && m.input.kind !== 'none'
-          ? '<div class="qs-step-live">' + inputHtml(ctx, m, 'stack') + noteHtml(ctx, m, 'qs-note-sm') + '</div>' : '';
+          ? '<div class="qs-step-live">' + reel(ctx, m, inputHtml(ctx, m, 'stack') + noteHtml(ctx, m, 'qs-note-sm')) + '</div>' : '';
         return '<li class="qs-step is-' + s.state + '" data-k="qs-step:' + ctx.esc(s.id) + '">'
           + '<span class="qs-step-dot">' + (s.state === 'done' ? iconOf(ctx, 'check', 10) : '') + '</span>'
           + body + live + '</li>';
@@ -731,12 +887,13 @@
     return '<section class="decision-surface qs qs-tech" data-qs="5" data-k="qs:5">'
       + head(ctx, m, 'qs-tech-head')
       + '<div class="qs-tech-body qs-scroll">'
+      + ticks(ctx, m)
       + '<div class="qs-tech-rows" data-k="qs-tech-rows">' + rows.map(function (r) {
         return '<div class="qs-tech-row" data-k="qs-tr:' + ctx.esc(r.k) + '"><span class="qs-tech-k">' + ctx.esc(r.k)
           + '</span><span class="qs-tech-v">' + ctx.esc(r.v) + '</span></div>';
       }).join('') + '</div>'
-      + '<div class="qs-tech-prompt" data-k="qs-tech-prompt">' + ctx.esc(m.prompt) + (m.required ? '<span class="qs-req">*</span>' : '') + '</div>'
-      + inputHtml(ctx, m, 'rows')
+      + reel(ctx, m, '<div class="qs-tech-prompt" data-k="qs-tech-prompt">' + ctx.esc(m.prompt) + (m.required ? '<span class="qs-req">*</span>' : '') + '</div>'
+        + inputHtml(ctx, m, 'rows'))
       + '<div class="qs-tech-rows qs-tech-why" data-k="qs-tech-why">' + m.evidence.map(function (e) {
         return e.lines.filter(Boolean).map(function (l, i) {
           return '<div class="qs-tech-row"><span class="qs-tech-k">' + ctx.esc(i === 0 ? e.label : '') + '</span>'
@@ -793,9 +950,7 @@
       + head(ctx, m, 'qs-stack-head')
       + '<div class="qs-stack-body qs-scroll">'
       + ticks(ctx, m)
-      + promptHtml(ctx, m)
-      + inputHtml(ctx, m, 'grid')
-      + noteHtml(ctx, m)
+      + reel(ctx, m, promptHtml(ctx, m) + inputHtml(ctx, m, 'grid') + noteHtml(ctx, m))
       + '</div>'
       + actions(ctx, m, 'qs-actions-end')
       + '</section>'
@@ -814,9 +969,8 @@
       + '<div class="qs-split-body">'
       + '<div class="qs-split-main">'
       + '<div class="qs-split-main-scroll">'
-      + progressBar(ctx, m)
-      + promptHtml(ctx, m)
-      + inputHtml(ctx, m, 'grid')
+      + ticks(ctx, m)
+      + reel(ctx, m, promptHtml(ctx, m) + inputHtml(ctx, m, 'grid'))
       /* NOT the note: the pane's first block already IS the rationale, and
          printing it twice on one surface is the contradiction-by-duplication
          this project keeps finding. The spare column height goes to the queue,
@@ -832,18 +986,167 @@
       + '</section>';
   }
 
-  var RENDERERS = [take0, take1, take2, take3, take4, take5, take6, take7];
+  /* ================================================================ TAKE 8 */
+  /* Ask Card — the reference-video layout in PM tokens. Prompt is the title,
+     ticks are a vertical rail on the right. Footer is Back, Question N of M,
+     Skip (not on review), Next or Submit. Choice does not auto-advance.
+     Composer stays below, unchanged. */
+  function take8(ctx, m) {
+    if (m.type !== 'question') return take0(ctx, m);
+    var qs = ctx.state.questions || [];
+    var last = Math.max(qs.length - 1, 0);
+    var idx = Math.min(Math.max(ctx.state.questionIndex | 0, 0), last);
+    var review = m.input && m.input.kind === 'summary';
+    var q = currentQuestion(ctx);
+    var sub = '';
+    if (m.input && m.input.kind === 'multi') {
+      var selN = (q && Array.isArray(q.answer)) ? q.answer.length : 0;
+      if (q && String(q.other || '').trim()) selN += 1;
+      sub = '<div class="qs-ask-sub" data-k="qs-ask-sub">Select all that apply'
+        + (selN ? ' · ' + selN + ' selected' : '') + '</div>';
+    }
+    var back = { a: 'prev-question', label: 'Back', kind: 'soft', disabled: idx === 0 };
+    var skip = review ? null : { a: 'skip-question', label: 'Skip', kind: 'text' };
+    var next = idx === last
+      ? { a: 'submit-questionnaire', label: 'Submit', kind: 'primary' }
+      : { a: 'next-question', label: 'Next', kind: 'primary' };
+    return '<section class="decision-surface qs qs-ask" data-qs="8" data-k="qs:8">'
+      + '<button type="button" class="qs-ask-x" data-action="close-decision" title="Close and return later; answers are preserved" aria-label="Close decision">'
+      + iconOf(ctx, 'close', 12) + '</button>'
+      + '<div class="qs-ask-row">'
+      + reel(ctx, m, promptHtml(ctx, m, 'qs-ask-title') + sub + inputHtml(ctx, m, 'ask'))
+      + askSpine(ctx, m)
+      + '</div>'
+      + '<div class="qs-ask-foot" data-k="qs-ask-foot">'
+      + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">Question ' + (idx + 1) + ' of ' + qs.length + '</span>'
+      + actionBtn(ctx, back)
+      + (skip ? actionBtn(ctx, skip) : '')
+      + actionBtn(ctx, next)
+      + '</div>'
+      + '</section>';
+  }
+
+  function orreryHtml() {
+    return '<span class="qs-orrery" aria-hidden="true">'
+      + '<span class="qs-orrery-ring qs-orrery-a"></span>'
+      + '<span class="qs-orrery-ring qs-orrery-b"></span>'
+      + '<i class="qs-orrery-bead"></i>'
+      + '<i class="qs-orrery-bead"></i>'
+      + '<i class="qs-orrery-bead"></i>'
+      + '</span>';
+  }
+  function waitPill(ctx, m) {
+    var label = m.type === 'preparing' ? 'Preparing questions…' : 'Submitting answers…';
+    var spin = (m.take === 8 || takeOf(ctx) === 8)
+      ? orreryHtml()
+      : '<span class="qs-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i></span>';
+    return '<div class="qs qs-pill-beat" data-k="qs-pill">'
+      + '<span class="qs-pill-label">' + ctx.esc(label) + '</span>'
+      + spin
+      + '</div>';
+  }
+  function wrapShell(ctx, m, html) {
+    var st = qsState(ctx);
+    var phase = (m.type === 'preparing' || m.type === 'submitting') ? m.type : 'active';
+    var origin = m.take === 3 ? 'right' : (m.take === 1 ? 'composer' : 'bottom');
+    if (phase === 'preparing' || phase === 'submitting') st.morphPlayed = false;
+    var will = (phase === 'active' && !st.morphPlayed && !st.leaving) ? ' qs-will-open' : '';
+    var leave = st.leaving ? (st.leaveKind === 'submit' ? ' is-leaving is-leaving-submit' : ' is-leaving') : '';
+    return '<div class="qs-shell qs-phase-' + phase + ' qs-origin-' + origin + will + leave
+      + '" data-k="qs-shell" data-phase="' + phase + '" data-take="' + m.take + '">' + html + '</div>';
+  }
+
+  var RENDERERS = [take0, take1, take2, take3, take4, take5, take6, take7, take8];
 
   /* ================================================================== SLOT */
   EXT.slot('questionSurface', function (ctx) {
     var m;
     try { m = buildModel(ctx); } catch (err) { console.error('questions.js model threw', err); return ''; }
     if (!m) return '';
+    var st = qsState(ctx);
+    if (!document.querySelector('.decision-host .qs-shell')) st.morphPlayed = false;
+    if (m.type === 'preparing' || m.type === 'submitting') return wrapShell(ctx, m, waitPill(ctx, m));
     var fn = RENDERERS[m.take] || RENDERERS[0];
-    return fn(ctx, m);
+    return wrapShell(ctx, m, fn(ctx, m));
   });
 
   /* ================================================================ ACTIONS */
+  function CH(name, fn) { (EXT.chainAction ? EXT.chainAction : EXT.action).call(EXT, name, fn); }
+  function clearAuto(ctx) {
+    var st = qsState(ctx);
+    if (st.autoTimer) { clearTimeout(st.autoTimer); st.autoTimer = null; }
+  }
+  function beginLeave(ctx, after, kind) {
+    var st = qsState(ctx);
+    if (st.leaving) return;
+    clearAuto(ctx);
+    st.mention = null;
+    st.leaveKind = kind || 'close';
+    var shell = document.querySelector('.qs-shell');
+    var finish = function () {
+      st.leaving = false;
+      st.leaveKind = null;
+      st.morphPlayed = false;
+      ctx.state.decision = null;
+      if (after) after();
+      ctx.renderApp();
+    };
+    if (reduceMotion() || !shell || !shell.animate) {
+      finish();
+      return;
+    }
+    st.leaving = true;
+    var once = false;
+    var wrapped = function () {
+      if (once) return;
+      once = true;
+      clearTimeout(watchdog);
+      finish();
+    };
+    var watchdog = setTimeout(wrapped, 1400);
+    playClose(shell, st.leaveKind, wrapped);
+  }
+
+  function captureReel(ctx) {
+    if (takeOf(ctx) !== 8) return;
+    var el = document.querySelector('.qs-ask .qs-reel');
+    var shell = document.querySelector('.decision-host .qs-shell');
+    var st = qsState(ctx);
+    if (el) st.outgoingHtml = el.innerHTML;
+    st.needSpring = true;
+    st.spineJump = true;
+    var spine = document.querySelector('.qs-spine');
+    var thumb = spine && spine.querySelector('.qs-spine-thumb');
+    if (spine && thumb) {
+      st.spineFromTop = thumb.getBoundingClientRect().top - spine.getBoundingClientRect().top;
+    }
+    if (shell) {
+      var h = Math.round(shell.getBoundingClientRect().height);
+      shell.__qsH = h;
+      shell.style.height = h + 'px';
+    }
+  }
+  function popAskSelect(value) {
+    if (reduceMotion()) return;
+    requestAnimationFrame(function () {
+      var row = null;
+      if (value === '__other__') {
+        row = document.querySelector('.qs-ask .qs-other-ask, .qs-ask .qs-other');
+      } else if (value != null && value !== '') {
+        var opts = document.querySelectorAll('.qs-ask-opt[data-value]');
+        var i;
+        for (i = 0; i < opts.length; i++) {
+          if (opts[i].getAttribute('data-value') === value) { row = opts[i]; break; }
+        }
+      }
+      if (!row || !row.animate) return;
+      row.animate(
+        [{ transform: 'scale(1.04)' }, { transform: 'scale(1)' }],
+        { duration: 280, easing: morphEaseOut() }
+      );
+    });
+  }
+
   /* Jump to a question. The stepper, the inspector rail and the tick row all use
      it, and it is a real navigation: `next-question` refuses to advance past an
      unanswered required question, but going BACK to one has never been gated. */
@@ -851,7 +1154,14 @@
     var qs = ctx.state.questions || [];
     var i = parseInt(btn.getAttribute('data-index'), 10);
     if (isNaN(i)) return true;
-    ctx.state.questionIndex = ctx.clamp(i, 0, Math.max(qs.length - 1, 0));
+    var next = ctx.clamp(i, 0, Math.max(qs.length - 1, 0));
+    var st = qsState(ctx);
+    if (next === (ctx.state.questionIndex | 0)) return true;
+    st.reelDir = next < (ctx.state.questionIndex | 0) ? 'prev' : 'next';
+    st.mention = null;
+    clearAuto(ctx);
+    captureReel(ctx);
+    ctx.state.questionIndex = next;
     ctx.renderApp();
     return true;
   });
@@ -867,17 +1177,30 @@
     var leaving = activeFlow(ctx);
     if (leaving) {
       st.drafts = st.drafts || {};
-      st.drafts[leaving.id] = (ctx.state.questions || []).map(function (q) { return q.answer; });
+      st.drafts[leaving.id] = (ctx.state.questions || []).map(function (q) {
+        return { answer: q.answer, other: q.other, attachments: q.attachments };
+      });
     }
     if (target.threadId && (ctx.state.threads || []).some(function (t) { return t.id === target.threadId; })) {
       ctx.switchThread(target.threadId); /* clears state.decision — so set it after */
     }
     var fresh = ctx.clone(target.questions || []);
     var saved = st.drafts && st.drafts[target.id];
-    if (saved) fresh.forEach(function (q, i) { if (saved[i] !== undefined) q.answer = saved[i]; });
+    if (saved) fresh.forEach(function (q, i) {
+      if (saved[i] === undefined) return;
+      if (saved[i] && typeof saved[i] === 'object' && !Array.isArray(saved[i])) {
+        q.answer = saved[i].answer;
+        q.other = saved[i].other;
+        q.attachments = saved[i].attachments;
+      } else {
+        q.answer = saved[i];
+      }
+    });
     ctx.state.questions = fresh;
     ctx.state.questionIndex = 0;
     ctx.state.decision = { type: 'question' };
+    st.mention = null;
+    st.reelDir = 'next';
     ctx.renderApp();
     ctx.toast(target.title, target.note || '');
     return true;
@@ -889,6 +1212,519 @@
     ctx.renderApp();
     return true;
   });
+
+  EXT.action('qs-attach', function (ctx) {
+    var q = currentQuestion(ctx);
+    if (!q) return true;
+    q.attachments = Array.isArray(q.attachments) ? q.attachments : [];
+    var used = {};
+    q.attachments.forEach(function (a) { if (a && a.path) used[a.path] = 1; });
+    var path = FILE_PATHS.filter(function (p) { return !used[p]; })[0] || FILE_PATHS[0];
+    if (used[path] && q.attachments.some(function (a) { return a.path === path; })) return true;
+    q.attachments.push({ name: fileName(path), path: path });
+    ctx.renderApp();
+    return true;
+  });
+  EXT.action('qs-chip-remove', function (ctx, btn) {
+    var q = currentQuestion(ctx);
+    if (!q || !Array.isArray(q.attachments)) return true;
+    var i = parseInt(btn.getAttribute('data-index'), 10);
+    if (isNaN(i)) return true;
+    q.attachments.splice(i, 1);
+    ctx.renderApp();
+    return true;
+  });
+  EXT.action('qs-mention-pick', function (ctx, btn) {
+    var q = currentQuestion(ctx);
+    if (!q) return true;
+    var path = btn.getAttribute('data-path') || '';
+    q.attachments = Array.isArray(q.attachments) ? q.attachments : [];
+    if (path && !q.attachments.some(function (a) { return a.path === path; })) {
+      q.attachments.push({ name: fileName(path), path: path });
+    }
+    var v = String(q.other || '');
+    var at = v.lastIndexOf('@');
+    if (at >= 0) q.other = v.slice(0, at).replace(/\s+$/, '');
+    if (q.type === 'text') q.answer = q.other;
+    qsState(ctx).mention = null;
+    ctx.renderApp();
+    return true;
+  });
+
+  EXT.action('qs-select-other', function (ctx, btn, ev) {
+    var t = ev && ev.target;
+    if (t && t.closest && t.closest('input, textarea, .qs-attach, .qs-file-chip, .qs-mention')) return true;
+    var q = currentQuestion(ctx);
+    if (!q) return true;
+    if (q.type === 'choice') q.answer = '';
+    q.otherOn = true;
+    qsState(ctx).mention = null;
+    ctx.renderApp();
+    if (takeOf(ctx) === 8) popAskSelect('__other__');
+    requestAnimationFrame(function () {
+      var inp = document.querySelector('.qs-ask .qs-other-input');
+      if (inp) inp.focus();
+    });
+    return true;
+  });
+
+  CH('answer-choice', function (ctx, btn) {
+    var q = currentQuestion(ctx);
+    if (q) { q.other = ''; q.otherOn = false; }
+    qsState(ctx).mention = null;
+    clearAuto(ctx);
+    if (takeOf(ctx) === 8) popAskSelect(btn && btn.getAttribute('data-value'));
+    return false;
+  });
+  CH('answer-multi', function (ctx, btn) {
+    if (takeOf(ctx) === 8) popAskSelect(btn && btn.getAttribute('data-value'));
+    return false;
+  });
+  CH('next-question', function (ctx) {
+    qsState(ctx).reelDir = 'next';
+    qsState(ctx).mention = null;
+    clearAuto(ctx);
+    if (takeOf(ctx) !== 8) return false;
+    var q = currentQuestion(ctx);
+    if (q && q.required && !hasAnswer(q)) return false;
+    captureReel(ctx);
+    var qs = ctx.state.questions || [];
+    ctx.state.questionIndex = Math.min(qs.length - 1, (ctx.state.questionIndex | 0) + 1);
+    ctx.renderApp();
+    return true;
+  });
+  CH('prev-question', function (ctx) {
+    qsState(ctx).reelDir = 'prev';
+    qsState(ctx).mention = null;
+    clearAuto(ctx);
+    if (takeOf(ctx) !== 8) return false;
+    captureReel(ctx);
+    ctx.state.questionIndex = Math.max(0, (ctx.state.questionIndex | 0) - 1);
+    ctx.renderApp();
+    return true;
+  });
+  CH('skip-question', function (ctx) {
+    qsState(ctx).reelDir = 'next';
+    qsState(ctx).mention = null;
+    clearAuto(ctx);
+    if (takeOf(ctx) === 8) captureReel(ctx);
+    return false;
+  });
+
+  EXT.action('close-decision', function (ctx) {
+    var d = ctx.state.decision;
+    if (!d || (d.type !== 'question' && d.type !== 'question-preparing' && d.type !== 'question-submitting')) return false;
+    beginLeave(ctx);
+    return true;
+  });
+  EXT.action('cancel-questionnaire', function (ctx) {
+    beginLeave(ctx, function () {
+      ctx.addReceipt('question-receipt', 'Questionnaire cancelled', 'The explicit cancellation is recorded. Existing answers remain in thread history.');
+    }, 'close');
+    return true;
+  });
+  EXT.action('submit-questionnaire', function (ctx) {
+    var qs = ctx.state.questions || [];
+    var missing = null;
+    for (var i = 0; i < qs.length; i++) if (qs[i].required && !hasAnswer(qs[i])) { missing = qs[i]; break; }
+    if (missing) { ctx.toast('Required answers remain', missing.prompt); return true; }
+    beginLeave(ctx, function () {
+      ctx.state.questionQueue = Math.max(0, (ctx.state.questionQueue | 0) - 1);
+      ctx.addReceipt('question-receipt', 'Questionnaire submitted', '5 answers attached to the deployment planning context.');
+    }, 'submit');
+    return true;
+  });
+
+  document.addEventListener('input', function (e) {
+    var t = e.target;
+    if (!t || t.getAttribute('data-input') !== 'question-other') return;
+    var ctx = EXT.ctx && EXT.ctx({});
+    if (!ctx || !ctx.state) return;
+    var q = (ctx.state.questions || [])[ctx.state.questionIndex | 0];
+    if (!q) return;
+    var v = t.value;
+    var hadPreset = q.type === 'choice' && String(q.answer || '').trim();
+    q.other = v;
+    if (q.type === 'choice') q.answer = '';
+    if (q.type === 'text') q.answer = v;
+    if (String(v).trim()) q.otherOn = true;
+    var at = v.lastIndexOf('@');
+    var after = at >= 0 ? v.slice(at + 1) : '';
+    var openAt = at >= 0 && !/\s/.test(after);
+    var st = qsState(ctx);
+    var was = !!(st.mention && st.mention.open);
+    if (openAt) st.mention = { open: true, query: after };
+    else st.mention = null;
+    if (openAt || was || hadPreset) ctx.renderApp();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+    var ctx = EXT.ctx && EXT.ctx({});
+    if (!ctx || !ctx.state || !ctx.state.decision || ctx.state.decision.type !== 'question') return;
+    var el = e.target;
+    if (el && el.closest && el.closest('input, textarea, select, [contenteditable="true"], .dialog, .overlay-menu')) return;
+    var k = e.key;
+    if (k < '1' || k > '5') return;
+    var n = k.charCodeAt(0) - 48;
+    var opts = document.querySelectorAll('.decision-host [data-action="answer-choice"], .decision-host [data-action="answer-multi"]');
+    var other = document.querySelector('.decision-host [data-input="question-other"]');
+    var otherN = opts.length + 1;
+    if (n >= 1 && n <= opts.length) {
+      var btn = opts[n - 1];
+      if (btn) { e.preventDefault(); btn.click(); }
+      return;
+    }
+    if (n === otherN && other) {
+      e.preventDefault();
+      var otherMark = document.querySelector('.qs-ask-mark[data-action="qs-select-other"]');
+      if (otherMark) otherMark.click();
+      else other.focus();
+    }
+  });
+
+  function cssVar(name, fallback) {
+    var v = '';
+    try { v = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); } catch (e) {}
+    return v || fallback;
+  }
+  function morphEaseOut() { return cssVar('--pm-ease-pop', 'cubic-bezier(.22,.80,.28,1)'); }
+  function morphEaseIn() { return cssVar('--pm-ease-in', 'cubic-bezier(.55,.06,.68,.19)'); }
+  function innerSurface(shell) {
+    return shell.querySelector('.qs-ask, .qs-card, .qs-sheet, .qs-inspector, .qs-morph, .qs-seq, .qs-tech, .qs-stack, .qs-split, .qs');
+  }
+  function pillFace(label, extraClass) {
+    var face = document.createElement('div');
+    face.className = 'qs-pill-beat qs-morph-face' + (extraClass ? ' ' + extraClass : '');
+    face.innerHTML = '<span class="qs-pill-label"></span>' + orreryHtml();
+    face.querySelector('.qs-pill-label').textContent = label;
+    return face;
+  }
+  function setAskDock(shell) {
+    var stage = document.querySelector('.chat-stage');
+    if (!stage || !shell) return;
+    var host = document.querySelector('.decision-host');
+    var h = (host && !host.classList.contains('empty'))
+      ? host.getBoundingClientRect().height
+      : shell.getBoundingClientRect().height;
+    if (!(h > 0)) h = 44;
+    stage.style.setProperty('--decision-h', Math.round(h) + 'px');
+  }
+  function trackAskDock(shell, flag, ms) {
+    var start = performance.now();
+    var limit = ms || 800;
+    function tick() {
+      setAskDock(shell);
+      if (shell[flag] && performance.now() - start < limit) requestAnimationFrame(tick);
+      else setAskDock(shell);
+    }
+    requestAnimationFrame(tick);
+  }
+  function cancelAnims(el) {
+    if (!el || !el.getAnimations) return;
+    el.getAnimations().forEach(function (a) {
+      try { a.cancel(); } catch (e0) {}
+    });
+  }
+  function playAnim(el, frames, opts, then) {
+    if (!el || !el.animate) { if (then) then(); return null; }
+    var a = el.animate(frames, opts);
+    var once = false;
+    var end = function () {
+      if (once) return;
+      once = true;
+      if (then) then(a);
+    };
+    if (a.finished) a.finished.then(end, end);
+    else {
+      a.onfinish = end;
+      a.oncancel = end;
+      setTimeout(end, (opts && opts.duration ? opts.duration : 0) + 80);
+    }
+    return a;
+  }
+  function playOpen(shell) {
+    if (!shell || shell.__qsOpening) return;
+    var ctx = window.PM56_EXT && window.PM56_EXT.ctx && window.PM56_EXT.ctx({});
+    var st = ctx && qsState(ctx);
+    if (reduceMotion() || !shell.animate) {
+      shell.classList.remove('qs-will-open');
+      if (st) st.morphPlayed = true;
+      return;
+    }
+    shell.__qsOpening = true;
+    shell.__qsOpened = false;
+    if (st) st.morphPlayed = true;
+    var inner = innerSurface(shell);
+    shell.classList.add('qs-measure');
+    shell.style.height = 'auto';
+    shell.style.overflow = 'visible';
+    void shell.offsetHeight;
+    var target = Math.max(
+      inner ? Math.round(inner.getBoundingClientRect().height) : 0,
+      inner ? inner.scrollHeight : 0,
+      shell.scrollHeight,
+      140
+    );
+    shell.classList.remove('qs-measure');
+    shell.style.height = '44px';
+    shell.style.overflow = 'hidden';
+    var peak = Math.round(target * 1.065);
+    var dip = Math.round(target * 0.985);
+    var ease = morphEaseOut();
+    shell.classList.add('qs-opening');
+    shell.style.position = 'relative';
+    shell.style.overflow = 'hidden';
+    shell.style.borderRadius = '999px';
+    shell.style.transformOrigin = '50% 100%';
+    if (inner) {
+      inner.style.filter = 'blur(18px)';
+      inner.style.transformOrigin = '50% 100%';
+    }
+    var face = pillFace('Preparing questions…', 'qs-open-face');
+    shell.appendChild(face);
+    void shell.offsetHeight;
+    shell.classList.remove('qs-will-open');
+    setAskDock(shell);
+    requestAnimationFrame(snapSpineThumb);
+    trackAskDock(shell, '__qsOpening', 520);
+    function finishOpen() {
+      if (shell.__qsOpened) return;
+      shell.__qsOpened = true;
+      cancelAnims(inner);
+      cancelAnims(shell);
+      if (face) cancelAnims(face);
+      if (inner) {
+        inner.style.filter = '';
+        inner.style.transform = '';
+        inner.style.transformOrigin = '';
+      }
+      if (face && face.parentNode) face.parentNode.removeChild(face);
+      shell.classList.remove('qs-will-open', 'qs-opening');
+      shell.style.height = '';
+      shell.style.borderRadius = '';
+      shell.style.overflow = '';
+      shell.style.position = '';
+      shell.style.transform = '';
+      shell.style.transformOrigin = '';
+      shell.__qsH = target;
+      shell.__qsOpening = false;
+      setAskDock(shell);
+      snapSpineThumb();
+    }
+    setTimeout(finishOpen, 560);
+    playAnim(shell, [
+      { height: '44px', borderRadius: '999px', transform: 'scaleY(1)' },
+      { height: '50px', borderRadius: '999px', transform: 'scaleY(1.04)' }
+    ], { duration: 100, easing: ease, fill: 'forwards' }, function () {
+      if (shell.__qsOpened) return;
+      playAnim(shell, [
+        { height: '50px', borderRadius: '999px', transform: 'scaleY(1.04)' },
+        { height: peak + 'px', borderRadius: '22px', transform: 'scaleY(1)' }
+      ], { duration: 180, easing: ease, fill: 'forwards' }, function () {
+        if (shell.__qsOpened) return;
+        playAnim(shell, [
+          { height: peak + 'px', borderRadius: '22px', transform: 'scaleY(1)' },
+          { height: dip + 'px', borderRadius: '22px', transform: 'scaleY(1)', offset: 0.55 },
+          { height: target + 'px', borderRadius: '22px', transform: 'none' }
+        ], { duration: 90, easing: ease, fill: 'forwards' }, finishOpen);
+      });
+      if (face) {
+        playAnim(face, [
+          { opacity: 1, filter: 'blur(0px)' },
+          { opacity: 0, filter: 'blur(20px)' }
+        ], { duration: 90, fill: 'forwards', easing: ease });
+      }
+      if (inner) {
+        playAnim(inner, [
+          { filter: 'blur(18px)', transform: 'scaleY(0.88)' },
+          { filter: 'blur(20px)', transform: 'scaleY(1.08)', offset: 0.62 },
+          { filter: 'none', transform: 'none' }
+        ], { duration: 270, easing: ease, fill: 'forwards' });
+      }
+    });
+  }
+  function playClose(shell, kind, done) {
+    if (!shell || !shell.animate) { if (done) done(); return; }
+    var h = Math.max(shell.getBoundingClientRect().height, 44);
+    var take = shell.getAttribute('data-take');
+    var radius = take === '8' ? '22px' : (getComputedStyle(innerSurface(shell) || shell).borderRadius || '22px');
+    var ease = morphEaseOut();
+    var finished = false;
+    function finishClose() {
+      if (finished) return;
+      finished = true;
+      shell.__qsClosing = false;
+      if (done) done();
+    }
+    shell.classList.add('qs-morphing', 'qs-closing');
+    shell.__qsClosing = true;
+    shell.style.position = 'relative';
+    shell.style.overflow = 'hidden';
+    shell.style.height = h + 'px';
+    shell.style.minHeight = '0';
+    shell.style.transformOrigin = '50% 100%';
+    var inner = innerSurface(shell);
+    if (inner) {
+      inner.style.transformOrigin = '50% 100%';
+      inner.style.minHeight = '0';
+    }
+    void shell.offsetHeight;
+    trackAskDock(shell, '__qsClosing', 1200);
+    var face = null;
+    if (kind === 'submit') {
+      face = pillFace('Submitting answers…', 'qs-open-face');
+      shell.appendChild(face);
+    }
+    playAnim(shell, [
+      { height: h + 'px', borderRadius: radius, transform: 'scaleY(1)' },
+      { height: h + 'px', borderRadius: radius, transform: 'scaleY(1.04)' }
+    ], { duration: 90, easing: ease, fill: 'forwards' }, function () {
+      if (finished) return;
+      playAnim(shell, [
+        { height: h + 'px', borderRadius: radius, transform: 'scaleY(1.04)' },
+        { height: '50px', borderRadius: '999px', transform: 'scaleY(1)' }
+      ], { duration: 180, easing: ease, fill: 'forwards' }, function () {
+        if (finished) return;
+        playAnim(shell, [
+          { height: '50px', borderRadius: '999px', transform: 'scaleY(1)' },
+          { height: '44px', borderRadius: '999px', transform: 'scaleY(1)' }
+        ], { duration: 90, easing: ease, fill: 'forwards' }, function (settle) {
+          if (finished) return;
+          try { if (settle && settle.commitStyles) settle.commitStyles(); } catch (e) {}
+          shell.style.height = '44px';
+          shell.style.borderRadius = '999px';
+          shell.style.transform = 'none';
+          setAskDock(shell);
+          setTimeout(function () {
+            if (finished) return;
+            playAnim(shell, [
+              { transform: 'translateY(0) scaleY(1)', opacity: 1, filter: 'blur(0px)' },
+              { transform: 'translateY(40px) scaleY(0.88)', opacity: 0, filter: 'blur(8px)' }
+            ], { duration: kind === 'submit' ? 220 : 140, easing: morphEaseIn(), fill: 'forwards' }, finishClose);
+          }, kind === 'submit' ? 300 : 0);
+        });
+      });
+    });
+    if (inner) {
+      playAnim(inner, [
+        { filter: 'blur(0px)', opacity: 1, transform: 'scaleY(1)' },
+        { filter: 'blur(8px)', opacity: 1, transform: 'scaleY(1.08)', offset: 0.25 },
+        { filter: 'blur(18px)', opacity: 0, transform: 'scaleY(0.88)' }
+      ], { duration: 270, easing: ease, fill: 'forwards' });
+    }
+    if (face) {
+      playAnim(face, [
+        { opacity: 0, filter: 'blur(16px)' },
+        { opacity: 0, filter: 'blur(16px)', offset: 0.33 },
+        { opacity: 1, filter: 'blur(0px)' }
+      ], { duration: 270, fill: 'forwards', easing: ease });
+    }
+  }
+  function springHeight(shell) {
+    if (!shell || shell.__qsOpening || shell.__qsClosing) return;
+    if (shell.classList.contains('qs-will-open') || shell.classList.contains('qs-morphing')) return;
+    if (reduceMotion() || !shell.animate) return;
+    if (shell.getAttribute('data-take') !== '8') return;
+    var inner = innerSurface(shell);
+    var next = Math.max(inner ? inner.offsetHeight : 0, 44);
+    var prev = shell.__qsH;
+    if (shell.__qsSpringing) {
+      prev = Math.round(shell.getBoundingClientRect().height) || prev;
+      shell.getAnimations().forEach(function (a) { try { a.cancel(); } catch (e0) {} });
+    }
+    if (!prev) { shell.__qsH = next; return; }
+    if (Math.abs(next - prev) < 6) {
+      shell.__qsH = next;
+      return;
+    }
+    shell.__qsSpringing = true;
+    shell.style.height = prev + 'px';
+    void shell.offsetHeight;
+    trackAskDock(shell, '__qsSpringing', 420);
+    var delta = Math.abs(next - prev);
+    var pop = Math.round(next + (delta > 24 ? Math.max(6, delta * 0.05) : 0));
+    var anim = shell.animate([
+      { height: prev + 'px' },
+      { height: pop + 'px', offset: 0.62 },
+      { height: next + 'px' }
+    ], { duration: 320, easing: morphEaseOut(), fill: 'forwards' });
+    anim.onfinish = function () {
+      try { if (anim.commitStyles) anim.commitStyles(); } catch (e) {}
+      try { anim.cancel(); } catch (e2) {}
+      shell.style.height = '';
+      shell.style.overflow = '';
+      shell.__qsH = next;
+      shell.__qsSpringing = false;
+      setAskDock(shell);
+    };
+  }
+  function spineThumbTop(spine, thumb) {
+    var cur = spine.querySelector('.qs-spine-slot.is-current') || spine.querySelector('.qs-spine-slot');
+    if (!cur) return 0;
+    var sr = cur.getBoundingClientRect();
+    var pr = spine.getBoundingClientRect();
+    var th = thumb ? thumb.offsetHeight : 16;
+    return sr.top - pr.top + (sr.height - th) / 2;
+  }
+  function snapSpineThumb() {
+    var spine = document.querySelector('.qs-spine');
+    var thumb = spine && spine.querySelector('.qs-spine-thumb');
+    if (!spine || !thumb) return;
+    thumb.style.top = Math.round(spineThumbTop(spine, thumb)) + 'px';
+    thumb.style.transform = '';
+  }
+  function springSpineThumb(jump) {
+    var spine = document.querySelector('.qs-spine');
+    var thumb = spine && spine.querySelector('.qs-spine-thumb');
+    if (!spine || !thumb) return;
+    var to = spineThumbTop(spine, thumb);
+    var ctx = window.PM56_EXT && window.PM56_EXT.ctx && window.PM56_EXT.ctx({});
+    var st = ctx && qsState(ctx);
+    var from = st && st.spineFromTop;
+    thumb.style.top = Math.round(to) + 'px';
+    if (!jump || reduceMotion() || !thumb.animate || from == null || Math.abs(to - from) < 2) return;
+    thumb.animate(
+      [
+        { top: from + 'px', transform: 'scale(1)' },
+        { top: Math.round(from + (to - from) * 0.55) + 'px', transform: 'scale(1.28)', offset: 0.45 },
+        { top: Math.round(to + (to > from ? 3 : -3)) + 'px', transform: 'scale(1.04)', offset: 0.78 },
+        { top: to + 'px', transform: 'scale(1)' }
+      ],
+      { duration: 400, easing: morphEaseOut(), fill: 'forwards' }
+    ).onfinish = function () {
+      thumb.style.top = Math.round(to) + 'px';
+      thumb.style.transform = '';
+    };
+  }
+  function syncMorph() {
+    var shell = document.querySelector('.decision-host .qs-shell');
+    if (!shell) return;
+    if (shell.classList.contains('qs-will-open') && !shell.__qsOpening) playOpen(shell);
+    else {
+      var ctx = window.PM56_EXT && window.PM56_EXT.ctx && window.PM56_EXT.ctx({});
+      var st = ctx && qsState(ctx);
+      if (st && st.needSpring) {
+        st.needSpring = false;
+        springHeight(shell);
+      }
+      if (shell.getAttribute('data-take') === '8') {
+        var jump = !!(st && st.spineJump);
+        if (st) st.spineJump = false;
+        springSpineThumb(jump);
+      }
+    }
+  }
+  function bindMorph() {
+    if (document.documentElement.__qsMorphBound) { syncMorph(); return; }
+    document.documentElement.__qsMorphBound = true;
+    new MutationObserver(function () { requestAnimationFrame(syncMorph); }).observe(document.documentElement, {
+      childList: true, subtree: true, attributes: true, attributeFilter: ['data-phase']
+    });
+    requestAnimationFrame(syncMorph);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindMorph);
+  else bindMorph();
 
   /* Published for the verification harness: a structural fingerprint that does
      not depend on reading the DOM, so a harness can cross-check what it painted

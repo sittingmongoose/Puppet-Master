@@ -1,0 +1,121 @@
+{
+  "schema_id": "pm.full_thread_runtime.contract_fixtures.v1",
+  "contract_schema_id": "pm.full_thread_runtime.contracts.v1",
+  "positive": [
+    {
+      "name": "same_frame_command_acknowledgement",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {"operation_id": "op-command", "operation_generation": 1, "attempt_id": null, "command_instance_id": "cmdi-command", "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": null, "thread_id": "thread-1", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "command_id": "cmd.environment.reconnect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "acknowledged",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack-receipt-1",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "observed_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "governor_degraded_admission_keeps_physical_parent",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "governor_decision",
+        "identity": {"operation_id": "op-1", "operation_generation": 4, "attempt_id": null, "command_instance_id": "cmdi-1", "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": "plan-1", "thread_id": null, "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": "src-1", "topology_generation": 8},
+        "resource_family": "browser",
+        "physical_parent_budget_id": "budget-physical-host-1",
+        "requested_budget_ref": "budget-request-1",
+        "effective_budget_ref": "budget-effective-1",
+        "decision": "admitted_degraded",
+        "reason_code": "memory_pressure",
+        "policy_generation": 7,
+        "host_observation_ref": "host-observation-7",
+        "lease_refs": ["lease-browser-1"],
+        "reevaluation_trigger": "pressure-or-lease-change",
+        "observed_at": "2026-08-31T00:00:00Z"
+      }
+    },
+    {
+      "name": "waiting_work_has_reason_and_reevaluation",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "observable_work",
+        "identity": {"operation_id": "op-2", "operation_generation": 2, "attempt_id": "attempt-2", "command_instance_id": "cmdi-2", "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": "plan-1", "thread_id": "thread-2", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "observable_work_id": "work-2",
+        "owner_domain": "provider",
+        "work_state": "waiting",
+        "phase": "Waiting for provider reset",
+        "wait_reason": "rate-limit",
+        "next_reevaluation_condition": "provider reset window or user reroute",
+        "progress_kind": "none",
+        "completed_units": null,
+        "total_units": null,
+        "progress_source_ref": null,
+        "freshness": "current",
+        "projection_generation": 12,
+        "cancel_available": true,
+        "background_available": true,
+        "retry_available": false,
+        "dedupe_key": "work-2-generation-12",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "observed_at": "2026-08-31T00:00:01Z"
+      }
+    },
+    {
+      "name": "hidden_projection_does_not_cancel_work",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "full_thread_projection",
+        "identity": {"operation_id": "op-3", "operation_generation": 1, "attempt_id": null, "command_instance_id": null, "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": null, "thread_id": null, "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "collection_id": "usage-ledger",
+        "collection_generation": 33,
+        "projection_generation": 44,
+        "window_start": 0,
+        "window_count": 0,
+        "overscan_count": 0,
+        "total_item_count": 50000,
+        "stable_item_ids": [],
+        "hidden_surface_policy": "hidden_paint_suppressed",
+        "durable_work_continues": true,
+        "latest_request_generation": 44,
+        "stale_generation_disposition": "not_stale",
+        "observed_at": "2026-08-31T00:00:02Z"
+      }
+    },
+    {
+      "name": "public_rate_limit_precedes_hydration",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "public_ingress_gate",
+        "endpoint_id": "endpoint-public-1",
+        "endpoint_generation": 3,
+        "request_id": "request-1",
+        "exposure_class": "public_funnel",
+        "authentication_decision_ref": "auth-decision-1",
+        "rate_decision_ref": "rate-decision-1",
+        "permission_security_refs": ["permission-snapshot-1"],
+        "checked_before_expensive_hydration": true,
+        "decision": "rate_limited",
+        "response_class": "bounded_redacted_rate_limit",
+        "operational_attribution_ref": "operational-attribution-1",
+        "usage_record_ref": null,
+        "observed_at": "2026-08-31T00:00:03Z"
+      }
+    }
+  ],
+  "negative": [
+    {"name": "flattened_status_is_not_a_contract", "instance": {"status": "running"}, "expected_failure": "no_matching_closed_record"},
+    {"name": "claimed_same_frame_has_nonzero_offset", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "command_outcome", "identity": {"operation_id": "op-x", "operation_generation": 1, "project_id": "p", "project_home_server_id": "s", "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "command_id": "cmd.environment.reconnect", "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "idempotency_key": "i", "target_generation": 1, "outcome": "acknowledged", "dispatch_frame_id": "f1", "acknowledgement_frame_id": "f2", "acknowledgement_frame_offset": 1, "same_frame_acknowledged": true, "acknowledgement_receipt_ref": "r", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "same_frame_offset_must_be_zero"},
+    {"name": "waiting_without_reason", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "observable_work", "identity": {"operation_id": "op-x", "operation_generation": 1, "project_id": "p", "project_home_server_id": "s", "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "observable_work_id": "w", "owner_domain": "provider", "work_state": "waiting", "phase": "wait", "progress_kind": "none", "freshness": "current", "projection_generation": 1, "cancel_available": false, "background_available": false, "retry_available": false, "dedupe_key": "d", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "wait_reason_and_reevaluation_required"},
+    {"name": "hidden_projection_cancels_work", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "full_thread_projection", "identity": {"operation_id": "op-x", "operation_generation": 1, "project_id": "p", "project_home_server_id": "s", "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "collection_id": "c", "collection_generation": 1, "projection_generation": 1, "window_start": 0, "window_count": 0, "overscan_count": 0, "total_item_count": 1, "stable_item_ids": [], "hidden_surface_policy": "hidden_paint_suppressed", "durable_work_continues": false, "latest_request_generation": 1, "stale_generation_disposition": "not_stale", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "durable_work_must_continue"},
+    {"name": "public_gate_after_hydration", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "public_ingress_gate", "endpoint_id": "ep", "endpoint_generation": 1, "request_id": "req", "exposure_class": "public_funnel", "authentication_decision_ref": "a", "rate_decision_ref": "r", "checked_before_expensive_hydration": false, "decision": "admitted", "response_class": "bounded_admitted", "operational_attribution_ref": "o", "usage_record_ref": null, "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "public_gate_must_precede_hydration"}
+  ]
+}

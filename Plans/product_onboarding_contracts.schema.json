@@ -1,0 +1,1401 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/product_onboarding/1.0.0/product_onboarding_contracts.schema.json",
+  "title": "Puppet Master Product Onboarding contracts",
+  "description": "Closed Product Onboarding setup-plan, session, continuation, typed UI action, owner-projection, and predecessor-migration contracts for the current nine-stage journey, plus the distinct Bootstrap restore-existing-data preflow handoff and the Remote Access connector projection consumed by Onboarding. The standalone setup plan is a secret-free draft of user choices; session, continuation, and owner-projection records reference its revision and approved SHA-256 instead of embedding it. The Bootstrap preflow is outside the Product Onboarding stage graph.",
+  "x-owner-contract-refs": [
+    "Plans/Source_Control_System.md#SCS-013",
+    "Plans/source_control_contracts.schema.json#/$defs/repository_context",
+    "Plans/Forge_Integrations.md#FGI-011",
+    "Plans/Forge_Integrations.md#FGI-012",
+    "Plans/forge_integration_contracts.schema.json#/$defs/provider_instance_profile",
+    "Plans/forge_integration_contracts.schema.json#/$defs/automation_binding",
+    "Plans/Backup_Restore_System.md#BRS-016",
+    "Plans/Remote_Access_System.md#RAS-015"
+  ],
+  "oneOf": [
+    {"$ref": "#/$defs/onboarding_setup_plan"},
+    {"$ref": "#/$defs/onboarding_session"},
+    {"$ref": "#/$defs/onboarding_return_context"},
+    {"$ref": "#/$defs/onboarding_action_request"},
+    {"$ref": "#/$defs/onboarding_action_result"},
+    {"$ref": "#/$defs/automatic_preparation_owner_projection"},
+    {"$ref": "#/$defs/bootstrap_restore_existing_pm_data_preflow"},
+    {"$ref": "#/$defs/onboarding_connector_owner_projection"},
+    {"$ref": "#/$defs/onboarding_legacy_migration_receipt"}
+  ],
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 512},
+    "row_count": {"type": "integer", "minimum": 0},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullable_string": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
+    "safe_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_safe_ref": {"oneOf": [{"$ref": "#/$defs/safe_ref"}, {"type": "null"}]},
+    "bounded_nonsecret_string": {
+      "type": "string",
+      "maxLength": 160,
+      "pattern": "^(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code)).*$"
+    },
+    "bounded_nonsecret_non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code)).+$"
+    },
+    "https_url": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 512,
+      "pattern": "^https://[^\\s/?#]+(?:[/?#][^\\s]*)?$"
+    },
+    "nonsecret_endpoint_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_positive_integer": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+    "onboarding_forge_instance_profile": {
+      "title": "OnboardingForgeInstanceProfile",
+      "description": "Secret-free planned Forgejo or Gitea instance inputs plus cached Forge-owner references. Product Onboarding does not probe, authenticate, trust, or activate the instance while writing this draft.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "provider_variant",
+        "instance_id",
+        "web_base_url",
+        "api_root",
+        "api_base_path",
+        "ssh_url",
+        "ssh_port",
+        "private_ca_ref",
+        "known_host_proof_ref",
+        "detected_product",
+        "product_version_ref",
+        "api_schema_ref",
+        "api_state_ref",
+        "git_transport_state_ref",
+        "actions_state_ref",
+        "actions_capability_ref",
+        "auth_method",
+        "oauth_registration_ref",
+        "credential_ref",
+        "automation_binding_ref",
+        "currentness_ref",
+        "probe_performed",
+        "redirect_credential_policy",
+        "restricted_network_target_policy"
+      ],
+      "properties": {
+        "provider": {"enum": ["forgejo", "gitea"]},
+        "provider_variant": {"enum": ["forgejo_self_managed", "forgejo_cloud", "gitea_self_managed", "gitea_cloud"]},
+        "instance_id": {"$ref": "#/$defs/safe_ref"},
+        "web_base_url": {"$ref": "#/$defs/https_url"},
+        "api_root": {"$ref": "#/$defs/https_url"},
+        "api_base_path": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^/(?!/)(?!.*(?:\\.\\.|[?#\\s])).+$"},
+        "ssh_url": {"type": "string", "minLength": 7, "maxLength": 512, "pattern": "^ssh://[^\\s/?#]+(?::[0-9]{1,5})?(?:/[^\\s?#]*)?$"},
+        "ssh_port": {"type": "integer", "minimum": 1, "maximum": 65535},
+        "private_ca_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "known_host_proof_ref": {"$ref": "#/$defs/safe_ref"},
+        "detected_product": {"enum": ["forgejo", "gitea"]},
+        "product_version_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "api_schema_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "api_state_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "git_transport_state_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "actions_state_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "actions_capability_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "auth_method": {"enum": ["pat_ref", "oauth_pkce", "ssh_ref"]},
+        "oauth_registration_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "credential_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "automation_binding_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "currentness_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "probe_performed": {"const": false},
+        "redirect_credential_policy": {"const": "strip_authorization_on_origin_change"},
+        "restricted_network_target_policy": {"const": "deny_localhost_and_metadata_unless_explicitly_approved"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"provider": {"const": "forgejo"}}, "required": ["provider"]},
+          "then": {"properties": {"provider_variant": {"enum": ["forgejo_self_managed", "forgejo_cloud"]}, "detected_product": {"const": "forgejo"}}}
+        },
+        {
+          "if": {"properties": {"provider": {"const": "gitea"}}, "required": ["provider"]},
+          "then": {"properties": {"provider_variant": {"enum": ["gitea_self_managed", "gitea_cloud"]}, "detected_product": {"const": "gitea"}}}
+        },
+        {
+          "if": {"properties": {"auth_method": {"const": "oauth_pkce"}}, "required": ["auth_method"]},
+          "then": {"properties": {"oauth_registration_ref": {"$ref": "#/$defs/safe_ref"}}}
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "all version, API, Git-transport, Actions, permission, automation-binding, credential, and currentness references resolve through Forge-owned contracts after Review confirmation and never expose secret bytes",
+        "automation_binding_ref may resolve to a different provider, instance, account, or host from the repository binding and cannot be inferred from the repository remote",
+        "private_ca_ref is instance-scoped and never a certificate path or global TLS-disable instruction; known_host_proof_ref is owner-verified evidence rather than a hostname",
+        "Product Onboarding records this draft without a network probe, sign-in, repository operation, trust decision, credential use, or filesystem mutation"
+      ]
+    },
+    "stage": {"enum": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]},
+    "same_stage_transition": {
+      "oneOf": [
+        {"properties": {"stage_before": {"const": "welcome"}, "stage_after": {"const": "welcome"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "simple_path"}, "stage_after": {"const": "simple_path"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "first_project"}, "stage_after": {"const": "first_project"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "source_control_setup"}, "stage_after": {"const": "source_control_setup"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "server_storage_client"}, "stage_after": {"const": "server_storage_client"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "remote_access_setup"}, "stage_after": {"const": "remote_access_setup"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "review_setup_plan"}, "stage_after": {"const": "review_setup_plan"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "automatic_preparation"}, "stage_after": {"const": "automatic_preparation"}}, "required": ["stage_before", "stage_after"]},
+        {"properties": {"stage_before": {"const": "ready"}, "stage_after": {"const": "ready"}}, "required": ["stage_before", "stage_after"]}
+      ]
+    },
+    "snapshot_matches_stage_after": {
+      "oneOf": [
+        {"properties": {"stage_after": {"const": "welcome"}, "continuation_snapshot": {"properties": {"stage": {"const": "welcome"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "simple_path"}, "continuation_snapshot": {"properties": {"stage": {"const": "simple_path"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "first_project"}, "continuation_snapshot": {"properties": {"stage": {"const": "first_project"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "source_control_setup"}, "continuation_snapshot": {"properties": {"stage": {"const": "source_control_setup"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "server_storage_client"}, "continuation_snapshot": {"properties": {"stage": {"const": "server_storage_client"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "remote_access_setup"}, "continuation_snapshot": {"properties": {"stage": {"const": "remote_access_setup"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "review_setup_plan"}, "continuation_snapshot": {"properties": {"stage": {"const": "review_setup_plan"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "automatic_preparation"}, "continuation_snapshot": {"properties": {"stage": {"const": "automatic_preparation"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
+        {"properties": {"stage_after": {"const": "ready"}, "continuation_snapshot": {"properties": {"stage": {"const": "ready"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]}
+      ]
+    },
+    "onboarding_setup_plan": {
+      "title": "OnboardingSetupPlan",
+      "description": "One closed, planned-only, secret-free Product Onboarding draft. It records user choices and stable non-secret owner references, never live discovery/authentication/trust status or raw pairing, enrollment, credential, or authentication material.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "planned_only",
+        "applied",
+        "journey",
+        "theme_family",
+        "theme_mode",
+        "project_mode",
+        "project_name",
+        "project_source_ref",
+        "backup_source_ref",
+        "project_transport",
+        "backup_transport",
+        "local_location_mode",
+        "local_location",
+        "local_history",
+        "history_backend",
+        "filesafe",
+        "online_mode",
+        "forge",
+        "forge_provider_variant",
+        "forge_instance_url",
+        "forge_instance_profile",
+        "forge_account_action",
+        "forge_account_ref",
+        "repository_name",
+        "repository_description",
+        "repository_visibility",
+        "repository_owner_scope",
+        "repository_ref",
+        "repository_container",
+        "repository_project",
+        "repository_default_branch",
+        "repository_initialize_readme",
+        "repository_gitignore",
+        "repository_license",
+        "server_mode",
+        "server_connection_mode",
+        "server_ref",
+        "server_trust_confirmed",
+        "storage_mode",
+        "storage_transport",
+        "storage_location",
+        "client_mode",
+        "remote_mode",
+        "remote_more",
+        "include_vpn_networks",
+        "connection_pairing",
+        "tailscale_control",
+        "tailscale_account_action",
+        "headscale_url",
+        "remote_endpoint",
+        "proxy_kind",
+        "proxy_hosting",
+        "proxy_hostname",
+        "proxy_tls",
+        "source_more",
+        "review_confirmed"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.setup_plan.v1"},
+        "planned_only": {"const": true},
+        "applied": {"const": false},
+        "journey": {"enum": ["new_or_local", "connect_existing"]},
+        "theme_family": {"enum": ["friendly", "glass", "retro", "basic"]},
+        "theme_mode": {"enum": ["light", "dark"]},
+        "project_mode": {"enum": ["new", "existing_local", "existing_online", "restore", "later"]},
+        "project_name": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "project_source_ref": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "backup_source_ref": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "project_transport": {"enum": ["local", "mounted", "ssh"]},
+        "backup_transport": {"enum": ["local", "mounted", "ssh"]},
+        "local_location_mode": {"enum": ["automatic", "custom"]},
+        "local_location": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "local_history": {"type": "boolean"},
+        "history_backend": {"enum": ["git", "jujutsu"]},
+        "filesafe": {"type": "boolean"},
+        "online_mode": {"enum": ["none", "new", "existing"]},
+        "forge": {"enum": ["none", "github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin"]},
+        "forge_provider_variant": {"oneOf": [{"enum": ["hosted", "self_managed", "cloud", "data_center", "preview", "forgejo_self_managed", "forgejo_cloud", "gitea_self_managed", "gitea_cloud"]}, {"type": "null"}]},
+        "forge_instance_url": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "forge_instance_profile": {"oneOf": [{"$ref": "#/$defs/onboarding_forge_instance_profile"}, {"type": "null"}]},
+        "forge_account_action": {"oneOf": [{"enum": ["sign_in_during_setup", "create_account_during_setup", "already_connected"]}, {"type": "null"}]},
+        "forge_account_ref": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "repository_name": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "repository_description": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "repository_visibility": {"oneOf": [{"enum": ["private", "public", "internal"]}, {"type": "null"}]},
+        "repository_owner_scope": {"enum": ["personal", "organization"]},
+        "repository_ref": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "repository_container": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "repository_project": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "repository_default_branch": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"},
+        "repository_initialize_readme": {"type": "boolean"},
+        "repository_gitignore": {"enum": ["automatic", "none", "rust", "node", "python", "slint"]},
+        "repository_license": {"enum": ["none", "mit", "apache_2", "gpl_3"]},
+        "server_mode": {"enum": ["this_device", "existing_server", "new_server"]},
+        "server_connection_mode": {"enum": ["discover", "manual"]},
+        "server_ref": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "server_trust_confirmed": {
+          "type": "boolean",
+          "deprecated": true,
+          "description": "Compatibility projection only. It never requires or represents a visible recognition checkbox and never substitutes for Server-owner pairing and trust results."
+        },
+        "storage_mode": {"enum": ["with_server", "this_device", "network_location"]},
+        "storage_transport": {"enum": ["mounted", "smb", "nfs", "ssh"]},
+        "storage_location": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "client_mode": {"const": "this_device"},
+        "remote_mode": {"enum": ["none", "local_or_vpn", "tailscale", "reverse_proxy", "remote_link"]},
+        "remote_more": {"type": "boolean"},
+        "include_vpn_networks": {"type": "boolean"},
+        "connection_pairing": {"enum": ["approval", "code", "qr"]},
+        "tailscale_control": {"oneOf": [{"enum": ["hosted", "headscale"]}, {"type": "null"}]},
+        "tailscale_account_action": {"oneOf": [{"enum": ["check_existing_then_sign_in_once", "headscale_enrollment"]}, {"type": "null"}]},
+        "headscale_url": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "remote_endpoint": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "proxy_kind": {"oneOf": [{"enum": ["caddy", "nginx", "traefik", "nginx_proxy_manager"]}, {"type": "null"}]},
+        "proxy_hosting": {"oneOf": [{"enum": ["generate_for_server", "generate_only", "existing_proxy"]}, {"type": "null"}]},
+        "proxy_hostname": {"$ref": "#/$defs/bounded_nonsecret_string"},
+        "proxy_tls": {"oneOf": [{"enum": ["lets_encrypt", "existing_certificate"]}, {"type": "null"}]},
+        "source_more": {"type": "boolean"},
+        "review_confirmed": {"type": "boolean"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"journey": {"const": "connect_existing"}}},
+          "then": {
+            "properties": {
+              "project_mode": {"const": "later"},
+              "local_history": {"const": false},
+              "online_mode": {"const": "none"},
+              "server_mode": {"const": "existing_server"},
+              "server_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"},
+              "remote_mode": {"enum": ["local_or_vpn", "tailscale", "reverse_proxy", "remote_link"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"project_mode": {"const": "existing_local"}}},
+          "then": {"properties": {"project_source_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}}}
+        },
+        {
+          "if": {"properties": {"project_mode": {"const": "restore"}}},
+          "then": {"properties": {"backup_source_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}}}
+        },
+        {
+          "if": {"properties": {"storage_mode": {"const": "network_location"}}},
+          "then": {"properties": {"storage_location": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}}}
+        },
+        {
+          "if": {"properties": {"online_mode": {"const": "none"}}},
+          "then": {
+            "properties": {
+              "forge": {"const": "none"},
+              "forge_provider_variant": {"type": "null"},
+              "forge_instance_url": {"const": ""},
+              "forge_instance_profile": {"type": "null"},
+              "forge_account_action": {"type": "null"},
+              "forge_account_ref": {"const": ""},
+              "repository_ref": {"const": ""},
+              "repository_visibility": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"online_mode": {"enum": ["new", "existing"]}}},
+          "then": {
+            "properties": {
+              "forge": {"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin"]},
+              "forge_provider_variant": {"enum": ["hosted", "self_managed", "cloud", "data_center", "preview", "forgejo_self_managed", "forgejo_cloud", "gitea_self_managed", "gitea_cloud"]},
+              "forge_instance_url": {"$ref": "#/$defs/https_url"},
+              "forge_account_action": {"enum": ["sign_in_during_setup", "create_account_during_setup", "already_connected"]},
+              "forge_account_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"},
+              "repository_name": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"},
+              "repository_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"forge": {"const": "github"}}},
+          "then": {"properties": {"forge_provider_variant": {"enum": ["hosted", "self_managed"]}, "repository_visibility": {"enum": ["private", "public", "internal"]}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "gitlab"}, "forge_provider_variant": {"const": "hosted"}}},
+          "then": {"properties": {"repository_visibility": {"enum": ["private", "public"]}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "gitlab"}, "forge_provider_variant": {"const": "self_managed"}}},
+          "then": {"properties": {"repository_visibility": {"enum": ["private", "public", "internal"]}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "azure_devops"}}},
+          "then": {"properties": {"forge_provider_variant": {"enum": ["cloud", "self_managed"]}, "repository_visibility": {"type": "null"}, "repository_project": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "bitbucket_cloud"}}},
+          "then": {"properties": {"forge_provider_variant": {"const": "cloud"}, "repository_visibility": {"enum": ["private", "public"]}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "bitbucket_data_center"}}},
+          "then": {"properties": {"forge_provider_variant": {"const": "data_center"}, "repository_visibility": {"oneOf": [{"enum": ["private", "public"]}, {"type": "null"}]}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "cursor_origin"}}},
+          "then": {"properties": {"forge_provider_variant": {"const": "preview"}, "forge_instance_url": {"const": "https://origin.cursor.com"}, "repository_visibility": {"enum": ["private", "internal"]}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "forgejo"}}, "required": ["forge"]},
+          "then": {"properties": {"forge_provider_variant": {"enum": ["forgejo_self_managed", "forgejo_cloud"]}, "forge_instance_profile": {"allOf": [{"$ref": "#/$defs/onboarding_forge_instance_profile"}, {"properties": {"provider": {"const": "forgejo"}, "detected_product": {"const": "forgejo"}}}]}, "repository_visibility": {"enum": ["private", "public", "internal"]}}}
+        },
+        {
+          "if": {"properties": {"forge": {"const": "gitea"}}, "required": ["forge"]},
+          "then": {"properties": {"forge_provider_variant": {"enum": ["gitea_self_managed", "gitea_cloud"]}, "forge_instance_profile": {"allOf": [{"$ref": "#/$defs/onboarding_forge_instance_profile"}, {"properties": {"provider": {"const": "gitea"}, "detected_product": {"const": "gitea"}}}]}, "repository_visibility": {"enum": ["private", "public", "internal"]}}}
+        },
+        {
+          "if": {"properties": {"remote_mode": {"const": "none"}}},
+          "then": {"properties": {"include_vpn_networks": {"const": false}, "tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "remote_endpoint": {"const": ""}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"remote_mode": {"const": "local_or_vpn"}}},
+          "then": {"properties": {"tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"remote_mode": {"const": "tailscale"}}},
+          "then": {"properties": {"server_connection_mode": {"const": "discover"}, "include_vpn_networks": {"const": false}, "tailscale_control": {"enum": ["hosted", "headscale"]}, "tailscale_account_action": {"enum": ["check_existing_then_sign_in_once", "headscale_enrollment"]}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"remote_mode": {"const": "tailscale"}, "tailscale_control": {"const": "hosted"}}},
+          "then": {"properties": {"tailscale_account_action": {"const": "check_existing_then_sign_in_once"}, "headscale_url": {"const": ""}}}
+        },
+        {
+          "if": {"properties": {"remote_mode": {"const": "tailscale"}, "tailscale_control": {"const": "headscale"}}},
+          "then": {"properties": {"tailscale_account_action": {"const": "headscale_enrollment"}, "headscale_url": {"$ref": "#/$defs/https_url"}}}
+        },
+        {
+          "if": {"properties": {"remote_mode": {"const": "reverse_proxy"}}},
+          "then": {"properties": {"include_vpn_networks": {"const": false}, "tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "remote_endpoint": {"const": ""}, "proxy_hostname": {"$ref": "#/$defs/https_url"}}}
+        },
+        {
+          "if": {"properties": {"journey": {"const": "connect_existing"}, "remote_mode": {"const": "reverse_proxy"}}},
+          "then": {"properties": {"server_connection_mode": {"const": "manual"}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_tls": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"remote_mode": {"const": "remote_link"}}},
+          "then": {"properties": {"server_connection_mode": {"const": "manual"}, "include_vpn_networks": {"const": false}, "tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "remote_endpoint": {"$ref": "#/$defs/nonsecret_endpoint_ref"}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "project_transport and backup_transport describe how an existing folder or backup is reached; storage_transport independently describes the chosen network storage protocol",
+        "history_backend=git|jujutsu is a local Safe History choice independent from online_mode and forge; Git and Jujutsu never require an account",
+        "an online copy binds both forge_account_ref and repository_ref; already_connected means reuse that explicit account and repository binding and is never a no-op",
+        "connect_existing chooses a route first, then the owner discovers or accepts the selected server_ref and performs connection_pairing=approval|code|qr; server_trust_confirmed is compatibility state only and never creates a visible recognition-checkbox gate",
+        "local_or_vpn uses LAN discovery and optionally scans already-enabled VPN interfaces when include_vpn_networks=true; it never requires a private endpoint or configures a VPN",
+        "hosted Tailscale checks current owner state before at most one protected sign-in; live signed-in and peer-discovery status remains an owner projection rather than a durable setup choice",
+        "Headscale consumes headscale_url before owner-managed enrollment and subsequent Server discovery; it never uses hosted-Tailscale account sign-in",
+        "connect_existing reverse_proxy consumes only the existing HTTPS proxy_hostname plus Server pairing; null proxy_kind, proxy_hosting, and proxy_tls prove that it does not configure Caddy, NGINX, Traefik, certificates, or another proxy",
+        "remote_endpoint is a non-secret manual discovery fallback or Puppet Master Remote Link reference; it never contains raw pairing, enrollment, credential, or authentication material",
+        "repository_visibility=internal requires a current provider capability projection before dispatch; GitLab hosted means GitLab.com and rejects internal, self_managed GitLab remains capability-probed, Azure DevOps visibility belongs to its project and stays null, and Cursor Origin Preview permits only private or internal",
+        "Forgejo and Gitea each require a matching distinct onboarding_forge_instance_profile; forge_instance_url equals that profile's web_base_url and the profile's cached refs cannot be treated as live/current owner proof",
+        "before person confirmation of the exact reviewed queued plan revision, forge/account/repository/automation choices cause no owner dispatch, network probe, authentication, trust decision, credential use, repository operation, or filesystem mutation",
+        "after confirmation, account connection/authentication, Forge repository list/create/bind, backend-native clone/publish, optional AutomationBinding setup, and Project registration dispatch only through their canonical owners with currentness, permission, FileSafe, idempotency, ObservableWork, and typed terminal returns",
+        "AutomationBinding is independent from RepositoryForgeBinding and may name a different provider, instance, account, or host; absence of automation_binding_ref never disables ordinary Git or Jujutsu"
+      ]
+    },
+    "simple_path_selection": {"description": "Current setup-origin selection made on the canonical simple_path stage and preserved across continuation, owner projection, and migration.", "oneOf": [{"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}, {"type": "null"}]},
+    "onboarding_durable_setup_state_fields": {
+      "type": "object",
+      "required": ["path_kind", "queued_setup_plan_ref", "queued_setup_plan_revision", "reviewed_setup_plan_revision", "review_confirmation", "approved_setup_plan_sha256", "automatic_preparation_currentness_ref", "active_branch"],
+      "properties": {
+        "path_kind": {"oneOf": [{"enum": ["guided_setup", "connect_existing"]}, {"type": "null"}]},
+        "queued_setup_plan_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "queued_setup_plan_revision": {"$ref": "#/$defs/nullable_positive_integer"},
+        "reviewed_setup_plan_revision": {"$ref": "#/$defs/nullable_positive_integer"},
+        "review_confirmation": {"enum": ["unconfirmed", "person_confirmed_reviewed_plan"]},
+        "approved_setup_plan_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "automatic_preparation_currentness_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "active_branch": {"oneOf": [{"$ref": "#/$defs/onboarding_branch_context"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {"if": {"properties": {"simple_path_selection": {"type": "null"}}}, "then": {"properties": {"path_kind": {"type": "null"}, "queued_setup_plan_ref": {"type": "null"}, "queued_setup_plan_revision": {"type": "null"}, "reviewed_setup_plan_revision": {"type": "null"}, "review_confirmation": {"const": "unconfirmed"}, "approved_setup_plan_sha256": {"type": "null"}, "automatic_preparation_currentness_ref": {"type": "null"}}}},
+        {"if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}, "then": {"properties": {"path_kind": {"const": "connect_existing"}}}},
+        {"if": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}, "then": {"properties": {"path_kind": {"const": "guided_setup"}}}},
+        {"if": {"properties": {"path_kind": {"const": "connect_existing"}}}, "then": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}, "stage": {"enum": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}},
+        {"if": {"properties": {"path_kind": {"const": "guided_setup"}}}, "then": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}},
+        {"if": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}, "then": {"properties": {"path_kind": {"enum": ["guided_setup", "connect_existing"]}, "queued_setup_plan_ref": {"$ref": "#/$defs/safe_ref"}, "queued_setup_plan_revision": {"type": "integer", "minimum": 1}}}},
+        {"if": {"properties": {"queued_setup_plan_ref": {"type": "null"}}}, "then": {"properties": {"queued_setup_plan_revision": {"type": "null"}}}},
+        {"if": {"properties": {"queued_setup_plan_revision": {"type": "null"}}}, "then": {"properties": {"queued_setup_plan_ref": {"type": "null"}}}},
+        {"if": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup"]}}}, "then": {"properties": {"review_confirmation": {"const": "unconfirmed"}}}},
+        {"if": {"properties": {"review_confirmation": {"const": "unconfirmed"}}}, "then": {"properties": {"reviewed_setup_plan_revision": {"type": "null"}, "approved_setup_plan_sha256": {"type": "null"}, "automatic_preparation_currentness_ref": {"type": "null"}}}},
+        {"if": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}}}, "then": {"properties": {"stage": {"enum": ["review_setup_plan", "automatic_preparation", "ready"]}, "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1}, "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"}}}},
+        {"if": {"properties": {"stage": {"const": "review_setup_plan"}}}, "then": {"properties": {"automatic_preparation_currentness_ref": {"type": "null"}}}},
+        {"if": {"properties": {"stage": {"enum": ["automatic_preparation", "ready"]}}}, "then": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}, "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1}, "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"}, "automatic_preparation_currentness_ref": {"$ref": "#/$defs/safe_ref"}}}}
+      ],
+      "x-puppet-master-assertions": [
+        "person_confirmed_reviewed_plan requires reviewed_setup_plan_revision == queued_setup_plan_revision; consumers must reject a mismatch because standard JSON Schema cannot express equality between sibling instance values",
+        "approved_setup_plan_sha256 is the SHA-256 of the exact reviewed queued plan revision and is never a hash of display copy, mutable owner state, credentials, secrets, or protected browser content",
+        "automatic_preparation_currentness_ref resolves to currentness evidence fenced by the same queued/reviewed revision and approved SHA-256"
+      ]
+    },
+    "unselected_path_continuation": {
+      "oneOf": [
+        {"properties": {"stage": {"const": "welcome"}, "history": {"const": ["welcome"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "simple_path"}, "history": {"const": ["welcome", "simple_path"]}}, "required": ["stage", "history"]}
+      ]
+    },
+    "main_path_continuation": {
+      "oneOf": [
+        {"properties": {"stage": {"const": "welcome"}, "history": {"const": ["welcome"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "simple_path"}, "history": {"const": ["welcome", "simple_path"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "first_project"}, "history": {"const": ["welcome", "simple_path", "first_project"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "source_control_setup"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "server_storage_client"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "remote_access_setup"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "review_setup_plan"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "automatic_preparation"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "ready"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}, "required": ["stage", "history"]}
+      ]
+    },
+    "connect_existing_path_continuation": {
+      "oneOf": [
+        {"properties": {"stage": {"const": "welcome"}, "history": {"const": ["welcome"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "simple_path"}, "history": {"const": ["welcome", "simple_path"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "remote_access_setup"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "review_setup_plan"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "automatic_preparation"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}}, "required": ["stage", "history"]},
+        {"properties": {"stage": {"const": "ready"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}, "required": ["stage", "history"]}
+      ]
+    },
+    "scm_backend_selection": {"oneOf": [{"enum": ["git", "jujutsu"]}, {"type": "null"}]},
+    "forge_provider_selection": {"oneOf": [{"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin", "none"]}, {"type": "null"}]},
+    "onboarding_branch_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch_kind", "branch_step", "selection_ref", "target_ref", "expected_revision", "continuation_generation", "owner_operation_id", "owner_branch_ref", "initiating_client_id", "return_stage", "return_focus_id", "pending_owner_action_id"],
+      "properties": {
+        "branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]},
+        "branch_step": {"$ref": "#/$defs/non_empty_string"},
+        "selection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "target_ref": {"$ref": "#/$defs/safe_ref"},
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1},
+        "owner_operation_id": {"$ref": "#/$defs/safe_ref"},
+        "owner_branch_ref": {"$ref": "#/$defs/safe_ref"},
+        "initiating_client_id": {"$ref": "#/$defs/safe_ref"},
+        "return_stage": {"$ref": "#/$defs/stage"},
+        "return_focus_id": {"$ref": "#/$defs/safe_ref"},
+        "pending_owner_action_id": {"$ref": "#/$defs/nullable_safe_ref"}
+      }
+    },
+    "onboarding_local_action_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "scope", "branch_kind", "branch_step", "selection_ref", "target_ref", "owner_operation_ref", "owner_branch_ref", "expanded", "start_tour", "recovery_condition"],
+      "properties": {
+        "intent": {"enum": ["start", "resume", "advance", "retry_concept_preview", "return", "dismiss", "skip_product_onboarding", "skip_optional_scope", "defer", "toggle_stage_details", "toggle_choice_explanation", "toggle_setup_options", "update_branch_state", "choose_simple_path", "open_owner_flow", "owner_route_preview", "automatic_preparation", "choose_first_project", "finish"]},
+        "review_confirmation": {"oneOf": [{"enum": ["person_confirmed_reviewed_plan", "previously_confirmed_reviewed_plan"]}, {"type": "null"}]},
+        "scope": {"oneOf": [{"enum": ["product_onboarding", "setup_options", "project_options", "welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready", "local_safe_history", "online_copy", "remote_access", "server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}, {"type": "null"}]},
+        "branch_kind": {"oneOf": [{"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}, {"type": "null"}]},
+        "branch_step": {"$ref": "#/$defs/nullable_safe_ref"},
+        "selection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "target_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_operation_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_branch_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "expanded": {"oneOf": [{"type": "boolean"}, {"type": "null"}]},
+        "start_tour": {"oneOf": [{"type": "boolean"}, {"type": "null"}]},
+        "recovery_condition": {"oneOf": [{"enum": ["offline", "error"]}, {"type": "null"}]}
+      }
+    },
+    "onboarding_continuation_snapshot": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["onboarding_session_id", "stage", "simple_path_selection", "scm_backend_selection", "forge_provider_selection", "active_branch", "history", "revision", "continuation_generation", "initiating_client_id", "return_focus_id"],
+      "properties": {
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "stage": {"$ref": "#/$defs/stage"},
+        "simple_path_selection": {"$ref": "#/$defs/simple_path_selection"},
+        "scm_backend_selection": {"$ref": "#/$defs/scm_backend_selection"},
+        "forge_provider_selection": {"$ref": "#/$defs/forge_provider_selection"},
+        "active_branch": {"oneOf": [{"$ref": "#/$defs/onboarding_branch_context"}, {"type": "null"}]},
+        "history": {"type": "array", "maxItems": 16, "items": {"$ref": "#/$defs/stage"}},
+        "revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1},
+        "initiating_client_id": {"$ref": "#/$defs/safe_ref"},
+        "return_focus_id": {"$ref": "#/$defs/safe_ref"}
+      },
+      "allOf": [
+        {"$ref": "#/$defs/onboarding_durable_setup_state_fields"},
+        {"if": {"properties": {"simple_path_selection": {"type": "null"}}}, "then": {"$ref": "#/$defs/unselected_path_continuation"}},
+        {"if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}, "then": {"$ref": "#/$defs/connect_existing_path_continuation"}},
+        {"if": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}, "then": {"$ref": "#/$defs/main_path_continuation"}}
+      ]
+    },
+    "onboarding_return_context": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["schema_id", "schema_version", "return_context_id", "onboarding_session_id", "stage", "simple_path_selection", "owner_route_ref", "project_id", "server_id", "execution_host_id", "execution_environment_id", "owner_operation_id", "expected_revision", "continuation_generation", "initiating_client_id", "client_handoff_policy", "return_focus_id", "created_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.return_context.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "return_context_id": {"$ref": "#/$defs/safe_ref"},
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "stage": {"$ref": "#/$defs/stage"},
+        "simple_path_selection": {"$ref": "#/$defs/simple_path_selection"},
+        "owner_route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "project_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "server_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "execution_host_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "execution_environment_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_operation_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1},
+        "initiating_client_id": {"$ref": "#/$defs/safe_ref"},
+        "client_handoff_policy": {"const": "initiating_active_client_only"},
+        "return_focus_id": {"$ref": "#/$defs/safe_ref"},
+        "created_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [{"$ref": "#/$defs/onboarding_durable_setup_state_fields"}]
+    },
+    "onboarding_session": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["schema_id", "schema_version", "onboarding_session_id", "project_id", "stage", "status", "simple_path_selection", "scm_backend_selection", "forge_provider_selection", "active_branch", "provider_selection_ref", "project_selection_ref", "owner_operation_refs", "warning_codes", "revision", "continuation_generation", "return_context", "guided_tour_handoff_ref", "updated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.session.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "project_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "stage": {"$ref": "#/$defs/stage"},
+        "status": {"enum": ["active", "interrupted", "deferred", "skipped", "completed", "cancelled"]},
+        "simple_path_selection": {"$ref": "#/$defs/simple_path_selection"},
+        "scm_backend_selection": {"$ref": "#/$defs/scm_backend_selection"},
+        "forge_provider_selection": {"$ref": "#/$defs/forge_provider_selection"},
+        "active_branch": {"oneOf": [{"$ref": "#/$defs/onboarding_branch_context"}, {"type": "null"}]},
+        "provider_selection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "project_selection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_operation_refs": {"type": "array", "uniqueItems": true, "maxItems": 32, "items": {"$ref": "#/$defs/safe_ref"}},
+        "warning_codes": {"type": "array", "uniqueItems": true, "maxItems": 32, "items": {"$ref": "#/$defs/non_empty_string"}},
+        "revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1},
+        "return_context": {"oneOf": [{"$ref": "#/$defs/onboarding_return_context"}, {"type": "null"}]},
+        "guided_tour_handoff_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "updated_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"$ref": "#/$defs/onboarding_durable_setup_state_fields"},
+        {"if": {"properties": {"status": {"const": "completed"}}}, "then": {"properties": {"stage": {"const": "ready"}}}},
+        {"if": {"properties": {"status": {"const": "deferred"}}}, "then": {"properties": {"return_context": {"$ref": "#/$defs/onboarding_return_context"}}}},
+        {"if": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}, "then": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}}}},
+        {"if": {"properties": {"simple_path_selection": {"type": "null"}}}, "then": {"properties": {"stage": {"enum": ["welcome", "simple_path"]}}}},
+        {"if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}, "then": {"properties": {"stage": {"enum": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}}
+      ]
+    },
+    "onboarding_action_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "action_id", "action_instance_id", "onboarding_session_id", "stage", "expected_revision", "continuation_generation", "choice", "local_context", "owner_route_ref", "actor_ref", "idempotency_key", "source_surface", "return_focus_id"],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.action_request.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "action_id": {"enum": ["ui.onboarding.start", "ui.onboarding.next", "ui.onboarding.back", "ui.onboarding.close", "ui.onboarding.skip", "ui.onboarding.defer", "ui.onboarding.open_details", "ui.onboarding.more_ways", "ui.onboarding.choose_simple_path", "ui.onboarding.open_owner_flow", "ui.onboarding.run_automatic_preparation", "ui.onboarding.choose_first_project", "ui.onboarding.finish"]},
+        "action_instance_id": {"$ref": "#/$defs/safe_ref"},
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "stage": {"$ref": "#/$defs/stage"},
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1},
+        "choice": {"oneOf": [{"enum": ["start_on_this_computer", "other_setup_options", "connect_existing_server", "setup_server", "restore_backup", "detected_provider", "setup_provider", "skip_provider", "open_detected_project", "create_project", "open_local_project", "open_online_project", "clone_project", "jj_project", "ssh_project", "restore_project", "skip_project", "local_safe_history_git", "local_safe_history_jujutsu", "keep_local_only", "add_online_copy", "forge_github", "forge_gitlab", "forge_azure_devops", "forge_bitbucket_cloud", "forge_bitbucket_data_center", "forge_forgejo", "forge_gitea", "forge_cursor_origin", "forge_sign_in", "forge_create_account", "forge_create_repository", "server_this_computer", "server_connect_existing", "server_setup_new", "remote_access_enable", "skip_remote_access", "other_project_options", "guided_tour", "enter_puppet_master"]}, {"type": "null"}]},
+        "local_context": {"$ref": "#/$defs/onboarding_local_action_context"},
+        "owner_route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "actor_ref": {"$ref": "#/$defs/safe_ref"},
+        "idempotency_key": {"$ref": "#/$defs/safe_ref"},
+        "source_surface": {"enum": ["first_run", "settings_rerun", "resume", "owner_return"]},
+        "return_focus_id": {"$ref": "#/$defs/safe_ref"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"action_id": {"enum": ["ui.onboarding.defer", "ui.onboarding.open_details"]}}},
+          "then": {"properties": {"choice": {"type": "null"}, "owner_route_ref": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.start"}}},
+          "then": {"properties": {"stage": {"const": "welcome"}, "local_context": {"properties": {"intent": {"enum": ["start", "resume"]}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.next"}}},
+          "then": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "local_context": {"properties": {"intent": {"enum": ["advance", "retry_concept_preview"]}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.back"}}},
+          "then": {"properties": {"stage": {"enum": ["simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "local_context": {"properties": {"intent": {"const": "return"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.close"}}},
+          "then": {"properties": {"local_context": {"properties": {"intent": {"const": "dismiss"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}}},
+          "then": {"properties": {"local_context": {"properties": {"intent": {"enum": ["skip_product_onboarding", "skip_optional_scope"]}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"enum": ["skip_project", "skip_remote_access"]}}},
+          "then": {"properties": {"local_context": {"properties": {"intent": {"const": "skip_optional_scope"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "local_context": {"properties": {"intent": {"const": "skip_product_onboarding"}}}}},
+          "then": {"properties": {"choice": {"type": "null"}, "local_context": {"properties": {"scope": {"const": "product_onboarding"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "local_context": {"properties": {"intent": {"const": "skip_optional_scope"}}}}},
+          "then": {"properties": {"choice": {"enum": ["skip_project", "skip_remote_access"]}, "local_context": {"properties": {"scope": {"enum": ["first_project", "remote_access"]}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"const": "skip_project"}}},
+          "then": {"properties": {"stage": {"const": "first_project"}, "local_context": {"properties": {"scope": {"const": "first_project"}, "branch_kind": {"const": "project"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"const": "skip_remote_access"}}},
+          "then": {"properties": {"stage": {"const": "remote_access_setup"}, "local_context": {"properties": {"scope": {"const": "remote_access"}, "branch_kind": {"const": "remote-access"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.defer"}}},
+          "then": {"properties": {"local_context": {"properties": {"intent": {"const": "defer"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}}},
+          "then": {"properties": {"local_context": {"properties": {"intent": {"enum": ["toggle_stage_details", "toggle_choice_explanation"]}, "branch_kind": {"type": "null"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}, "local_context": {"properties": {"intent": {"const": "toggle_stage_details"}}}}},
+          "then": {"properties": {"local_context": {"properties": {"scope": {"type": "null"}, "selection_ref": {"type": "null"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}, "local_context": {"properties": {"intent": {"const": "toggle_choice_explanation"}}}}},
+          "then": {"properties": {"local_context": {"properties": {"scope": {"enum": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}, "selection_ref": {"$ref": "#/$defs/safe_ref"}, "expanded": {"type": "boolean"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}}},
+          "then": {"properties": {"local_context": {"properties": {"intent": {"enum": ["toggle_setup_options", "update_branch_state"]}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "local_context": {"properties": {"intent": {"const": "update_branch_state"}}}}},
+          "then": {"properties": {"choice": {"type": "null"}, "local_context": {"properties": {"branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}}}}},
+          "then": {"properties": {"choice": {"enum": ["other_setup_options", "other_project_options"]}, "local_context": {"properties": {"scope": {"enum": ["setup_options", "project_options"]}, "branch_kind": {"type": "null"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "choice": {"const": "other_setup_options"}}},
+          "then": {"properties": {"stage": {"const": "simple_path"}, "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}, "scope": {"const": "setup_options"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "choice": {"const": "other_project_options"}}},
+          "then": {"properties": {"stage": {"const": "first_project"}, "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}, "scope": {"const": "project_options"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.choose_simple_path"}}},
+          "then": {"properties": {"stage": {"const": "simple_path"}, "choice": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}, "owner_route_ref": {"type": "null"}, "local_context": {"properties": {"intent": {"const": "choose_simple_path"}, "scope": {"const": "simple_path"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}}},
+          "then": {"properties": {"stage": {"enum": ["review_setup_plan", "automatic_preparation"]}, "owner_route_ref": {"$ref": "#/$defs/safe_ref"}, "local_context": {"properties": {"intent": {"const": "open_owner_flow"}, "branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}, "target_ref": {"$ref": "#/$defs/safe_ref"}}, "required": ["review_confirmation"]}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "review_setup_plan"}}},
+          "then": {"properties": {"local_context": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}, "owner_operation_ref": {"type": "null"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "automatic_preparation"}}},
+          "then": {"properties": {"source_surface": {"enum": ["resume", "owner_return"]}, "local_context": {"properties": {"review_confirmation": {"const": "previously_confirmed_reviewed_plan"}, "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.run_automatic_preparation"}}},
+          "then": {"properties": {"stage": {"const": "automatic_preparation"}, "local_context": {"properties": {"intent": {"const": "automatic_preparation"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.choose_first_project"}}},
+          "then": {"properties": {"stage": {"const": "first_project"}, "local_context": {"properties": {"intent": {"const": "choose_first_project"}}}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.finish"}}},
+          "then": {"properties": {"stage": {"const": "ready"}, "local_context": {"properties": {"intent": {"const": "finish"}}}}}
+        }
+      ]
+    },
+    "onboarding_action_result": {
+      "title": "OnboardingActionResult",
+      "description": "Closed result/error envelope for a typed Product Onboarding local action. Local choreography never claims domain-owner mutation or a production receipt.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "action_id", "action_instance_id", "onboarding_session_id", "status", "stage_before", "stage_after", "session_status_after", "local_effect", "onboarding_session_written", "continuation_snapshot", "details_open_after", "owner_route_ref", "owner_operation_ref", "production_receipt_ref", "owner_mutation_claimed", "error_code", "disabled_reason", "return_focus_id", "revision", "continuation_generation"],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.action_result.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "action_id": {"enum": ["ui.onboarding.start", "ui.onboarding.next", "ui.onboarding.back", "ui.onboarding.close", "ui.onboarding.skip", "ui.onboarding.defer", "ui.onboarding.open_details", "ui.onboarding.more_ways", "ui.onboarding.choose_simple_path", "ui.onboarding.open_owner_flow", "ui.onboarding.run_automatic_preparation", "ui.onboarding.choose_first_project", "ui.onboarding.finish"]},
+        "action_instance_id": {"$ref": "#/$defs/safe_ref"},
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "status": {"enum": ["applied", "disabled", "rejected"]},
+        "stage_before": {"$ref": "#/$defs/stage"},
+        "stage_after": {"$ref": "#/$defs/stage"},
+        "session_status_after": {"enum": ["active", "interrupted", "deferred", "skipped", "completed", "cancelled"]},
+        "local_effect": {"enum": ["none", "session_started", "advanced", "returned", "session_closed", "session_deferred", "session_skipped", "optional_scope_skipped", "disclosure_opened", "disclosure_closed", "branch_state_updated", "simple_path_selected", "owner_flow_opened", "automatic_preparation_started", "first_project_selected", "finished"]},
+        "onboarding_session_written": {"type": "boolean"},
+        "continuation_snapshot": {"oneOf": [{"$ref": "#/$defs/onboarding_continuation_snapshot"}, {"type": "null"}]},
+        "details_open_after": {"type": "boolean"},
+        "owner_route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_operation_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "production_receipt_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_mutation_claimed": {"const": false},
+        "error_code": {"$ref": "#/$defs/nullable_string"},
+        "disabled_reason": {"$ref": "#/$defs/nullable_string"},
+        "return_focus_id": {"$ref": "#/$defs/safe_ref"},
+        "revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "applied"}}},
+          "then": {"properties": {"error_code": {"type": "null"}, "disabled_reason": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"status": {"enum": ["disabled", "rejected"]}}},
+          "then": {"properties": {"error_code": {"$ref": "#/$defs/non_empty_string"}, "disabled_reason": {"$ref": "#/$defs/non_empty_string"}, "local_effect": {"const": "none"}, "onboarding_session_written": {"const": false}, "continuation_snapshot": {"type": "null"}, "owner_route_ref": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "production_receipt_ref": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"status": {"enum": ["disabled", "rejected"]}}},
+          "then": {"$ref": "#/$defs/same_stage_transition"}
+        },
+        {
+          "if": {"properties": {"onboarding_session_written": {"const": true}}},
+          "then": {"$ref": "#/$defs/snapshot_matches_stage_after", "properties": {"continuation_snapshot": {"$ref": "#/$defs/onboarding_continuation_snapshot"}}}
+        },
+        {
+          "if": {"properties": {"onboarding_session_written": {"const": false}}},
+          "then": {"properties": {"continuation_snapshot": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"enum": ["ui.onboarding.start", "ui.onboarding.next", "ui.onboarding.back", "ui.onboarding.close", "ui.onboarding.skip", "ui.onboarding.defer", "ui.onboarding.more_ways", "ui.onboarding.choose_simple_path", "ui.onboarding.open_owner_flow", "ui.onboarding.run_automatic_preparation", "ui.onboarding.choose_first_project", "ui.onboarding.finish"]}}},
+          "then": {"properties": {"onboarding_session_written": {"const": true}, "continuation_snapshot": {"$ref": "#/$defs/onboarding_continuation_snapshot"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.start"}}},
+          "then": {"properties": {"stage_before": {"const": "welcome"}, "stage_after": {"const": "simple_path"}, "session_status_after": {"const": "active"}, "local_effect": {"const": "session_started"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.next"}}},
+          "then": {
+            "properties": {"stage_before": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "advanced"}},
+            "allOf": [
+              {"if": {"properties": {"stage_before": {"const": "first_project"}}}, "then": {"properties": {"stage_after": {"const": "source_control_setup"}}}},
+              {"if": {"properties": {"stage_before": {"const": "source_control_setup"}}}, "then": {"properties": {"stage_after": {"const": "server_storage_client"}}}},
+              {"if": {"properties": {"stage_before": {"const": "server_storage_client"}}}, "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}},
+              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}}}, "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}},
+              {"if": {"properties": {"stage_before": {"const": "review_setup_plan"}}}, "then": {"properties": {"stage_after": {"const": "automatic_preparation"}}}},
+              {"if": {"properties": {"stage_before": {"const": "automatic_preparation"}}}, "then": {"properties": {"stage_after": {"const": "ready"}}}}
+            ]
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.back"}}},
+          "then": {
+            "properties": {"stage_before": {"enum": ["simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "returned"}},
+            "allOf": [
+              {"if": {"properties": {"stage_before": {"const": "simple_path"}}}, "then": {"properties": {"stage_after": {"const": "welcome"}}}},
+              {"if": {"properties": {"stage_before": {"const": "first_project"}}}, "then": {"properties": {"stage_after": {"const": "simple_path"}}}},
+              {"if": {"properties": {"stage_before": {"const": "source_control_setup"}}}, "then": {"properties": {"stage_after": {"const": "first_project"}}}},
+              {"if": {"properties": {"stage_before": {"const": "server_storage_client"}}}, "then": {"properties": {"stage_after": {"const": "source_control_setup"}}}},
+              {
+                "if": {"properties": {"stage_before": {"const": "remote_access_setup"}}},
+                "then": {
+                  "properties": {
+                    "stage_after": {"enum": ["simple_path", "server_storage_client"]},
+                    "continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}}}
+                  }
+                }
+              },
+              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}, "continuation_snapshot": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}}}, "then": {"properties": {"stage_after": {"const": "simple_path"}}}},
+              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}, "continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}}}, "then": {"properties": {"stage_after": {"const": "server_storage_client"}}}},
+              {"if": {"properties": {"stage_before": {"const": "review_setup_plan"}}}, "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}},
+              {"if": {"properties": {"stage_before": {"const": "automatic_preparation"}}}, "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}}
+            ]
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.close"}}},
+          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "interrupted"}, "local_effect": {"const": "session_closed"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.skip"}}},
+          "then": {"properties": {"session_status_after": {"enum": ["active", "skipped"]}, "local_effect": {"enum": ["session_skipped", "optional_scope_skipped"]}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.skip"}, "local_effect": {"const": "session_skipped"}}},
+          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "skipped"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.skip"}, "local_effect": {"const": "optional_scope_skipped"}}},
+          "then": {
+            "properties": {"stage_before": {"enum": ["first_project", "remote_access_setup"]}, "session_status_after": {"const": "active"}},
+            "allOf": [
+              {"if": {"properties": {"stage_before": {"const": "first_project"}}}, "then": {"properties": {"stage_after": {"const": "source_control_setup"}}}},
+              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}}}, "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}}
+            ]
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.more_ways"}}},
+          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "active"}, "local_effect": {"enum": ["disclosure_opened", "disclosure_closed", "branch_state_updated"]}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.choose_simple_path"}}},
+          "then": {
+            "properties": {"stage_before": {"const": "simple_path"}, "stage_after": {"enum": ["first_project", "remote_access_setup"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "simple_path_selected"}, "continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}}}},
+            "allOf": [
+              {"if": {"properties": {"continuation_snapshot": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}}}, "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}},
+              {"if": {"properties": {"continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}}}, "then": {"properties": {"stage_after": {"const": "first_project"}}}}
+            ]
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.open_owner_flow"}}},
+          "then": {
+            "$ref": "#/$defs/same_stage_transition",
+            "properties": {"stage_before": {"enum": ["review_setup_plan", "automatic_preparation"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "owner_flow_opened"}},
+            "allOf": [
+              {"if": {"properties": {"stage_before": {"const": "review_setup_plan"}}}, "then": {"properties": {"continuation_snapshot": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}}}}}}
+            ]
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.run_automatic_preparation"}}},
+          "then": {"properties": {"stage_before": {"const": "automatic_preparation"}, "stage_after": {"const": "automatic_preparation"}, "session_status_after": {"const": "active"}, "local_effect": {"const": "automatic_preparation_started"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.choose_first_project"}}},
+          "then": {"properties": {"stage_before": {"const": "first_project"}, "stage_after": {"const": "source_control_setup"}, "session_status_after": {"const": "active"}, "local_effect": {"const": "first_project_selected"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.finish"}}},
+          "then": {"properties": {"stage_before": {"const": "ready"}, "stage_after": {"const": "ready"}, "session_status_after": {"const": "completed"}, "local_effect": {"const": "finished"}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.defer"}, "status": {"const": "applied"}}},
+          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "deferred"}, "local_effect": {"const": "session_deferred"}, "onboarding_session_written": {"const": true}, "continuation_snapshot": {"$ref": "#/$defs/onboarding_continuation_snapshot"}, "details_open_after": {"const": false}, "owner_route_ref": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "production_receipt_ref": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}, "status": {"const": "applied"}}},
+          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "active"}, "local_effect": {"enum": ["disclosure_opened", "disclosure_closed"]}, "onboarding_session_written": {"const": false}, "continuation_snapshot": {"type": "null"}, "owner_route_ref": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "production_receipt_ref": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"enum": ["ui.onboarding.defer", "ui.onboarding.open_details"]}, "status": {"const": "applied"}}},
+          "then": {"$ref": "#/$defs/same_stage_transition"}
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "ui.onboarding.open_details preserves stage_before == stage_after and exposes at most one bounded stage disclosure or one bounded choice explanation",
+        "choice explanations use intent=toggle_choice_explanation with the exact current stage as scope and a stable help-topic selection_ref; they are ephemeral, owner-route-free, and non-persistent",
+        "ui.onboarding.open_details is ephemeral and never writes OnboardingSession or owner state",
+        "every persisted action result continuation_snapshot.stage equals stage_after and the durable history ends at that same current stage",
+        "the exact canonical main-path stage order is welcome -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready",
+        "connect_existing_server uses the exact shortcut welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready and does not materialize skipped first_project, source_control_setup, or server_storage_client history entries",
+        "a current session or continuation at first_project or any later stage has a non-null simple_path_selection; null is current only before a choice at welcome or simple_path, while later-stage predecessor null input is handled only by the migration receipt boundary",
+        "continuation history is the exact ordered prefix of either the nine-stage main path or the six-stage connect_existing_server path selected by simple_path_selection; cross-path and skipped-stage histories are rejected",
+        "path_kind is null before a path choice, equals connect_existing only for connect_existing_server, and equals guided_setup only for the three normal choices",
+        "queued_setup_plan_ref and queued_setup_plan_revision are a paired durable reference and revision; person confirmation binds reviewed_setup_plan_revision to that exact queued revision and approved_setup_plan_sha256 to the exact reviewed bytes without embedding the plan",
+        "automatic_preparation and ready require a person-confirmed reviewed plan plus a non-null automatic_preparation_currentness_ref; unconfirmed state carries null reviewed revision, approved hash, and currentness reference",
+        "ui.onboarding.start advances welcome -> simple_path; ui.onboarding.choose_simple_path advances simple_path -> first_project except that connect_existing_server advances simple_path -> remote_access_setup",
+        "ui.onboarding.back returns to the exact preceding entry in durable history, so remote_access_setup returns to simple_path on connect_existing_server and to server_storage_client on the main path",
+        "ui.onboarding.open_owner_flow is unavailable before review_setup_plan, requires person_confirmed_reviewed_plan at review_setup_plan, and is allowed at automatic_preparation only as a previously_confirmed_reviewed_plan resume or owner return with an existing owner_operation_ref",
+        "server_setup is predecessor seven-stage lineage only and is rejected by every current stage, scope, session, continuation, return-context, request, and result field",
+        "one user choice dispatches at most one owner route; a current terminal owner return advances without an additional confirmation action",
+        "scm_backend_selection and forge_provider_selection are independent; Jujutsu is never represented as a forge or account and none means local-only",
+        "cmd.source_control.repository.init is forbidden; a new local Project uses cmd.project.new_local with init_git=true through the Project owner",
+        "ui.onboarding.defer persists the exact current stage, branch, revision, continuation, and return focus before the modal closes",
+        "ui.onboarding.defer never sets completed, skipped, ready, or any owner-readiness state"
+      ]
+    },
+    "automatic_preparation_owner_projection": {
+      "title": "AutomaticPreparationOwnerProjection",
+      "description": "One closed Product Onboarding projection over owner-owned ObservableWork, result, receipt, and exact currentness. Product Onboarding observes this record; it does not implement, time, cancel, duplicate, or infer the underlying work. Browser concept fixtures are explicitly non-production and cannot carry a production receipt or readiness claim.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "automatic_preparation_projection_id",
+        "onboarding_session_id",
+        "stage",
+        "simple_path_selection",
+        "scm_backend_selection",
+        "forge_provider_selection",
+        "reviewed_setup_plan_revision",
+        "approved_setup_plan_sha256",
+        "target_ref",
+        "expected_revision",
+        "continuation_generation",
+        "projection_generation",
+        "owner_domain",
+        "owner_operation_id",
+        "observable_work_id",
+        "dedupe_key",
+        "work_state",
+        "human_phase",
+        "wait_reason",
+        "input_request_ref",
+        "progress_kind",
+        "completed_units",
+        "total_units",
+        "progress_source",
+        "can_cancel",
+        "can_background",
+        "can_retry",
+        "result_status",
+        "owner_result_ref",
+        "error_ref",
+        "production_receipt_ref",
+        "evidence_class",
+        "production_owner_work",
+        "production_readiness",
+        "native_runtime_exercised",
+        "currentness",
+        "surface_dismissal_effect",
+        "resume_disposition",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.automatic_preparation_owner_projection.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "automatic_preparation_projection_id": {"$ref": "#/$defs/safe_ref"},
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "stage": {"const": "automatic_preparation"},
+        "simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]},
+        "scm_backend_selection": {"$ref": "#/$defs/scm_backend_selection"},
+        "forge_provider_selection": {"$ref": "#/$defs/forge_provider_selection"},
+        "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1},
+        "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"},
+        "target_ref": {"$ref": "#/$defs/safe_ref"},
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1},
+        "projection_generation": {"type": "integer", "minimum": 1},
+        "owner_domain": {"enum": ["project", "source_control", "jujutsu", "forge", "server", "connection", "remote_access", "backup_restore", "shared_integration_runtime", "provider", "authentication", "storage", "other_registered"]},
+        "owner_operation_id": {"$ref": "#/$defs/safe_ref"},
+        "observable_work_id": {"$ref": "#/$defs/safe_ref"},
+        "dedupe_key": {"$ref": "#/$defs/safe_ref"},
+        "work_state": {"enum": ["pending", "queued", "starting", "running", "synchronizing", "waiting_provider", "waiting_host", "waiting_network", "waiting_resource", "waiting_permission", "waiting_for_sign_in", "waiting_for_idle", "waiting_user", "retrying", "backgrounded", "degraded", "stalled", "committing", "verifying", "requires_input", "blocked", "failed", "cancelled", "recovery_required", "ready"]},
+        "human_phase": {"$ref": "#/$defs/non_empty_string"},
+        "wait_reason": {"oneOf": [{"enum": ["provider", "host", "network", "resource", "permission", "sign_in", "idle", "user", "owner_recovery"]}, {"type": "null"}]},
+        "input_request_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "progress_kind": {"enum": ["none", "indeterminate", "units", "bytes", "items", "steps", "time"]},
+        "completed_units": {"oneOf": [{"type": "number", "minimum": 0}, {"type": "null"}]},
+        "total_units": {"oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"type": "null"}]},
+        "progress_source": {"enum": ["measured", "provider_reported", "derived", "unknown"]},
+        "can_cancel": {"type": "boolean"},
+        "can_background": {"type": "boolean"},
+        "can_retry": {"type": "boolean"},
+        "result_status": {"enum": ["pending", "requires_input", "blocked", "succeeded", "failed", "cancelled", "recovery_required"]},
+        "owner_result_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "error_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "production_receipt_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "evidence_class": {"enum": ["production_owner_projection", "browser_concept_fixture_only"]},
+        "production_owner_work": {"type": "boolean"},
+        "production_readiness": {"type": "boolean"},
+        "native_runtime_exercised": {"type": "boolean"},
+        "currentness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["session_match", "path_match", "reviewed_setup_plan_revision_match", "approved_setup_plan_sha256_match", "target_match", "revision_match", "continuation_match", "generation_match", "disposition"],
+          "properties": {
+            "session_match": {"const": true},
+            "path_match": {"const": true},
+            "reviewed_setup_plan_revision_match": {"const": true},
+            "approved_setup_plan_sha256_match": {"const": true},
+            "target_match": {"const": true},
+            "revision_match": {"const": true},
+            "continuation_match": {"const": true},
+            "generation_match": {"const": true},
+            "disposition": {"const": "current"}
+          }
+        },
+        "surface_dismissal_effect": {"const": "preserve_owner_work"},
+        "resume_disposition": {"const": "observe_existing_operation_by_dedupe_key"},
+        "observed_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"progress_kind": {"enum": ["units", "bytes", "items", "steps", "time"]}}, "required": ["progress_kind"]},
+          "then": {"properties": {"completed_units": {"type": "number", "minimum": 0}, "total_units": {"type": "number", "exclusiveMinimum": 0}, "progress_source": {"enum": ["measured", "provider_reported", "derived"]}}}
+        },
+        {
+          "if": {"properties": {"progress_kind": {"enum": ["none", "indeterminate"]}}, "required": ["progress_kind"]},
+          "then": {"properties": {"completed_units": {"type": "null"}, "total_units": {"type": "null"}, "progress_source": {"const": "unknown"}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"enum": ["waiting_provider", "waiting_host", "waiting_network", "waiting_resource", "waiting_permission", "waiting_for_sign_in", "waiting_for_idle", "waiting_user"]}}, "required": ["work_state"]},
+          "then": {"properties": {"wait_reason": {"not": {"type": "null"}}, "result_status": {"const": "pending"}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"const": "requires_input"}}, "required": ["work_state"]},
+          "then": {"properties": {"input_request_ref": {"$ref": "#/$defs/safe_ref"}, "result_status": {"const": "requires_input"}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"enum": ["pending", "queued", "starting", "running", "synchronizing", "retrying", "backgrounded", "degraded", "stalled", "committing", "verifying"]}}, "required": ["work_state"]},
+          "then": {"properties": {"result_status": {"const": "pending"}, "owner_result_ref": {"type": "null"}, "error_ref": {"type": "null"}, "production_readiness": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"const": "blocked"}}, "required": ["work_state"]},
+          "then": {"properties": {"result_status": {"const": "blocked"}, "error_ref": {"$ref": "#/$defs/safe_ref"}, "production_readiness": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"const": "failed"}}, "required": ["work_state"]},
+          "then": {"properties": {"result_status": {"const": "failed"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "error_ref": {"$ref": "#/$defs/safe_ref"}, "production_readiness": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"const": "cancelled"}}, "required": ["work_state"]},
+          "then": {"properties": {"result_status": {"const": "cancelled"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "can_cancel": {"const": false}, "production_readiness": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"const": "recovery_required"}}, "required": ["work_state"]},
+          "then": {"properties": {"result_status": {"const": "recovery_required"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "error_ref": {"$ref": "#/$defs/safe_ref"}, "production_readiness": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"work_state": {"const": "ready"}}, "required": ["work_state"]},
+          "then": {"properties": {"result_status": {"const": "succeeded"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "error_ref": {"type": "null"}, "can_cancel": {"const": false}, "can_retry": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"evidence_class": {"const": "browser_concept_fixture_only"}}, "required": ["evidence_class"]},
+          "then": {"properties": {"production_owner_work": {"const": false}, "production_readiness": {"const": false}, "native_runtime_exercised": {"const": false}, "production_receipt_ref": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"evidence_class": {"const": "production_owner_projection"}}, "required": ["evidence_class"]},
+          "then": {"properties": {"production_owner_work": {"const": true}}}
+        },
+        {
+          "if": {"properties": {"evidence_class": {"const": "production_owner_projection"}, "work_state": {"const": "ready"}}, "required": ["evidence_class", "work_state"]},
+          "then": {"properties": {"production_readiness": {"const": true}, "production_receipt_ref": {"$ref": "#/$defs/safe_ref"}}}
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "completed_units <= total_units for determinate progress",
+        "the accepting adapter compares session, current simple-path selection, exact reviewed_setup_plan_revision, exact approved_setup_plan_sha256, local backend, optional forge, target, expected revision, continuation generation, and exact next projection generation to its active fence rather than trusting currentness booleans",
+        "stale or mismatched projections are rejected without replacing the last accepted projection or advancing the stage",
+        "close, defer, resume, reload, and view changes preserve owner work and reuse the same owner_operation_id and dedupe_key",
+        "automatic preparation advances only after an accepted current ready projection; timers may settle presentation after readiness but never synthesize work, progress, result, receipt, or readiness",
+        "a browser concept fixture never claims production owner work, production readiness, native runtime execution, or a production receipt"
+      ]
+    },
+    "bootstrap_restore_existing_pm_data_preflow": {
+      "title": "BootstrapRestoreExistingPmDataPreflow",
+      "description": "Closed Bootstrap-owned handoff for Restore Existing PM Data after safe local claim and before Product Onboarding. This is not a Product Onboarding stage, simple-path choice, or replacement for the Product Onboarding Project-level Restore a backup choice.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "preflow_id",
+        "flow_kind",
+        "placement",
+        "product_onboarding_stage",
+        "safe_local_claim_ref",
+        "requires_old_catalog",
+        "requires_model_provider_auth",
+        "backup_owner_route_ref",
+        "restore_scope",
+        "target_server_id",
+        "initiating_client_id",
+        "return_focus_id",
+        "draft_revision",
+        "review_confirmation",
+        "approved_preflow_sha256",
+        "owner_operation_ref",
+        "external_effect_started",
+        "mutation_applied",
+        "connector_identity_disposition",
+        "event_family_ids",
+        "protected_material_persisted",
+        "created_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.bootstrap.restore_existing_pm_data_preflow.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "preflow_id": {"$ref": "#/$defs/safe_ref"},
+        "flow_kind": {"const": "restore_existing_pm_data"},
+        "placement": {"const": "after_safe_local_claim_before_product_onboarding"},
+        "product_onboarding_stage": {"type": "null"},
+        "safe_local_claim_ref": {"$ref": "#/$defs/safe_ref"},
+        "requires_old_catalog": {"const": false},
+        "requires_model_provider_auth": {"const": false},
+        "backup_owner_route_ref": {"const": "cmd.restore.server_full"},
+        "restore_scope": {"const": "full_server"},
+        "target_server_id": {"$ref": "#/$defs/safe_ref"},
+        "initiating_client_id": {"$ref": "#/$defs/safe_ref"},
+        "return_focus_id": {"$ref": "#/$defs/safe_ref"},
+        "draft_revision": {"type": "integer", "minimum": 1},
+        "review_confirmation": {"enum": ["unconfirmed", "person_confirmed_current_preview"]},
+        "approved_preflow_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "owner_operation_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "external_effect_started": {"type": "boolean"},
+        "mutation_applied": {"type": "boolean"},
+        "connector_identity_disposition": {"const": "foreign_or_new_server_creates_new_connector_identity_and_repairs_pairing"},
+        "event_family_ids": {"const": []},
+        "protected_material_persisted": {"const": false},
+        "created_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"review_confirmation": {"const": "unconfirmed"}}, "required": ["review_confirmation"]},
+          "then": {"properties": {"approved_preflow_sha256": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "external_effect_started": {"const": false}, "mutation_applied": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"review_confirmation": {"const": "person_confirmed_current_preview"}}, "required": ["review_confirmation"]},
+          "then": {"properties": {"approved_preflow_sha256": {"$ref": "#/$defs/sha256"}}}
+        },
+        {
+          "if": {"properties": {"external_effect_started": {"const": true}}, "required": ["external_effect_started"]},
+          "then": {"properties": {"review_confirmation": {"const": "person_confirmed_current_preview"}, "approved_preflow_sha256": {"$ref": "#/$defs/sha256"}, "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}}}
+        },
+        {
+          "if": {"properties": {"mutation_applied": {"const": true}}, "required": ["mutation_applied"]},
+          "then": {"properties": {"external_effect_started": {"const": true}}}
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "this record is owned by safe Bootstrap and is never inserted into the canonical Product Onboarding stage enum, history, or progress denominator",
+        "the preflow can import or connect a destination, unlock, discover, browse, and preview only through Backup Restore owner contracts; it does not require an old Server Catalog or model-provider authentication",
+        "no external effect or mutation begins before a person confirms the current final preview and its exact hash",
+        "Project-level Restore a backup remains the Product Onboarding choice and is not widened into Full Server recovery",
+        "raw Recovery Key or Kit bytes, destination credentials, authentication URLs or codes, browser content, connector state, and tsnet node keys are never persisted in this record",
+        "foreign or new Server recovery creates a new connector identity and re-pairs; same-host takeover requires the separately fenced Backup and Remote Access owner path",
+        "event_family_ids remains empty until Event Authority admits exact families; owner receipts and projections do not imply an EventRecord"
+      ]
+    },
+    "onboarding_connector_owner_projection": {
+      "title": "OnboardingConnectorOwnerProjection",
+      "description": "Secret-free Product Onboarding consumer projection of the Remote Access owner connector. It preserves the PM-owned Go tsnet connector phase, durable authorization handoff, Server identity, PM pairing/trust, private endpoint, browser reachability, and static-evidence boundaries without making Onboarding the connector or trust owner.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "projection_id",
+        "onboarding_session_id",
+        "projection_context",
+        "stage",
+        "reviewed_setup_plan_revision",
+        "approved_setup_plan_sha256",
+        "server_id",
+        "connector_id",
+        "connector_generation",
+        "connector_implementation",
+        "node_identity_scope",
+        "control_kind",
+        "connector_phase",
+        "authorization_handoff_state",
+        "private_endpoint_state",
+        "funnel_state",
+        "pm_server_identity_state",
+        "pm_pairing_state",
+        "pm_trust_state",
+        "browser_reachability",
+        "owner_operation_ref",
+        "owner_currentness_ref",
+        "external_effect_started_by_onboarding",
+        "protected_content_embedded",
+        "event_family_ids",
+        "evidence_class",
+        "production_owner_work",
+        "production_readiness",
+        "native_runtime_exercised",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.connector_owner_projection.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "projection_id": {"$ref": "#/$defs/safe_ref"},
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "projection_context": {"enum": ["cached_pre_review", "automatic_preparation"]},
+        "stage": {"enum": ["remote_access_setup", "automatic_preparation"]},
+        "reviewed_setup_plan_revision": {"$ref": "#/$defs/nullable_positive_integer"},
+        "approved_setup_plan_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "server_id": {"$ref": "#/$defs/safe_ref"},
+        "connector_id": {"$ref": "#/$defs/safe_ref"},
+        "connector_generation": {"type": "integer", "minimum": 1},
+        "connector_implementation": {"const": "pm_tailnet_connector_embedded_tsnet"},
+        "node_identity_scope": {"const": "one_active_persistent_connector_identity_per_server_id"},
+        "control_kind": {"enum": ["hosted_tailscale", "headscale"]},
+        "connector_phase": {"enum": ["disabled", "starting", "needs_login", "authorization_url_ready", "waiting_for_authorization", "needs_device_approval", "connected", "private_endpoint_starting", "private_endpoint_ready", "funnel_preflight", "funnel_starting", "funnel_ready", "reauth_required", "backing_off", "needs_attention", "stopping", "failed"]},
+        "authorization_handoff_state": {"enum": ["none", "redacted_url_ready", "waiting", "approval_required", "reauth_required", "complete", "cancelled", "failed"]},
+        "private_endpoint_state": {"enum": ["not_requested", "starting", "ready", "failed"]},
+        "funnel_state": {"enum": ["off", "preflight", "starting", "ready", "unsupported_headscale", "failed"]},
+        "pm_server_identity_state": {"enum": ["unverified", "verified"]},
+        "pm_pairing_state": {"enum": ["unpaired", "pending", "paired", "revoked"]},
+        "pm_trust_state": {"enum": ["untrusted", "pending", "trusted", "revoked"]},
+        "browser_reachability": {"enum": ["host_private_reachability_required", "funnel_public_route", "reverse_proxy_route", "remote_link_route", "not_applicable"]},
+        "owner_operation_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_currentness_ref": {"$ref": "#/$defs/safe_ref"},
+        "external_effect_started_by_onboarding": {"type": "boolean"},
+        "protected_content_embedded": {"const": false},
+        "event_family_ids": {"const": []},
+        "evidence_class": {"enum": ["production_owner_projection", "browser_concept_fixture_only"]},
+        "production_owner_work": {"type": "boolean"},
+        "production_readiness": {"type": "boolean"},
+        "native_runtime_exercised": {"type": "boolean"},
+        "observed_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"projection_context": {"const": "cached_pre_review"}}, "required": ["projection_context"]},
+          "then": {"properties": {"stage": {"const": "remote_access_setup"}, "reviewed_setup_plan_revision": {"type": "null"}, "approved_setup_plan_sha256": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "external_effect_started_by_onboarding": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"projection_context": {"const": "automatic_preparation"}}, "required": ["projection_context"]},
+          "then": {"properties": {"stage": {"const": "automatic_preparation"}, "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1}, "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"}, "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}}}
+        },
+        {
+          "if": {"properties": {"control_kind": {"const": "headscale"}}, "required": ["control_kind"]},
+          "then": {"properties": {"funnel_state": {"const": "unsupported_headscale"}}}
+        },
+        {
+          "if": {"properties": {"connector_phase": {"const": "private_endpoint_ready"}}, "required": ["connector_phase"]},
+          "then": {"properties": {"private_endpoint_state": {"const": "ready"}}}
+        },
+        {
+          "if": {"properties": {"connector_phase": {"const": "funnel_ready"}}, "required": ["connector_phase"]},
+          "then": {"properties": {"control_kind": {"const": "hosted_tailscale"}, "private_endpoint_state": {"const": "ready"}, "funnel_state": {"const": "ready"}, "browser_reachability": {"const": "funnel_public_route"}}}
+        },
+        {
+          "if": {"properties": {"pm_trust_state": {"const": "trusted"}}, "required": ["pm_trust_state"]},
+          "then": {"properties": {"pm_server_identity_state": {"const": "verified"}, "pm_pairing_state": {"const": "paired"}}}
+        },
+        {
+          "if": {"properties": {"evidence_class": {"const": "browser_concept_fixture_only"}}, "required": ["evidence_class"]},
+          "then": {"properties": {"production_owner_work": {"const": false}, "production_readiness": {"const": false}, "native_runtime_exercised": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"evidence_class": {"const": "production_owner_projection"}}, "required": ["evidence_class"]},
+          "then": {"properties": {"production_owner_work": {"const": true}}}
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "the connector phase is Remote Access owner truth; Product Onboarding only observes it and never owns process, IPC, authorization, endpoint, Funnel, identity, pairing, or trust transitions",
+        "connector identity is infrastructure bound one-per-server_id and never substitutes for verified PM Server identity, pairing, or trust",
+        "tailnet membership, route reachability, connector readiness, a device label, or a visible recognition checkbox never implies PM identity verification, pairing, or trust",
+        "cached_pre_review may describe already-existing owner state but cannot start login, enrollment, endpoint testing, identity acceptance, pairing, trust, network configuration, or any other external effect",
+        "automatic_preparation begins only after current Review confirmation through the separately fenced Product Onboarding owner projection",
+        "authorization work survives refresh and Client loss by owner operation identity, but protected URL or browser content is never embedded and requires a new current authorized handoff on another Client",
+        "ordinary browsers are not enrolled by embedded tsnet and still require host-private reachability or an explicit public/reverse-proxy/Remote-Link route",
+        "Headscale supports private access but never Funnel",
+        "browser concept fixtures remain simulated and cannot claim production work, readiness, native execution, security proof, or connector runtime",
+        "event_family_ids remains empty until Event Authority admits exact connector families; owner receipts and projections remain non-event evidence"
+      ]
+    },
+    "onboarding_legacy_migration_receipt": {
+      "title": "OnboardingLegacyMigrationReceipt",
+      "description": "Domain reconciliation receipt for a one-time legacy provider-first/four-screen, predecessor five-stage, or predecessor seven-stage mapping into the current nine-stage journey. Predecessor stage tokens are source-lineage values only and are never accepted by current stage fields. The referenced pm.storage_value.migration_receipt.v1 remains the sole terminal durable storage migration receipt. The x-puppet-master-assertions rules are mandatory; a consumer that cannot enforce them must reject the receipt.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "migration_receipt_id", "storage_migration_receipt_schema_id", "storage_migration_receipt_ref", "migration_kind", "migration_generation", "source_state_machine", "target_state_machine", "source_record_count", "accepted_record_count", "stale_record_count", "dropped_record_count", "quarantined_record_count", "mapped_stage_counts", "mapped_path_counts", "reviewed_setup_plan_revision", "review_confirmation", "approved_setup_plan_sha256", "automatic_preparation_currentness_ref", "preserved_decision_ref_count", "preserved_warning_count", "owner_work_replayed", "secret_handling", "disposition_manifest_ref", "disposition_manifest_sha256", "terminal_status", "completed_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.legacy_migration_receipt.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "migration_receipt_id": {"$ref": "#/$defs/safe_ref"},
+        "storage_migration_receipt_schema_id": {"const": "pm.storage_value.migration_receipt.v1"},
+        "storage_migration_receipt_ref": {"$ref": "#/$defs/safe_ref"},
+        "migration_kind": {"enum": ["legacy_provider_first_four_screen_to_nine_stage", "predecessor_five_stage_to_nine_stage", "predecessor_seven_stage_to_nine_stage"]},
+        "migration_generation": {"const": 1},
+        "source_state_machine": {"enum": ["legacy_provider_first_four_screen", "predecessor_five_stage_welcome_simple_path_automatic_preparation_first_project_ready", "predecessor_seven_stage_welcome_first_project_source_control_setup_server_setup_remote_access_setup_automatic_preparation_ready"]},
+        "target_state_machine": {"const": "nine_stage_welcome_simple_path_first_project_source_control_setup_server_storage_client_remote_access_setup_review_setup_plan_automatic_preparation_ready"},
+        "source_record_count": {"$ref": "#/$defs/row_count"},
+        "accepted_record_count": {"$ref": "#/$defs/row_count"},
+        "stale_record_count": {"$ref": "#/$defs/row_count"},
+        "dropped_record_count": {"$ref": "#/$defs/row_count"},
+        "quarantined_record_count": {"$ref": "#/$defs/row_count"},
+        "mapped_stage_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"],
+          "properties": {
+            "welcome": {"$ref": "#/$defs/row_count"},
+            "simple_path": {"$ref": "#/$defs/row_count"},
+            "first_project": {"$ref": "#/$defs/row_count"},
+            "source_control_setup": {"$ref": "#/$defs/row_count"},
+            "server_storage_client": {"$ref": "#/$defs/row_count"},
+            "remote_access_setup": {"$ref": "#/$defs/row_count"},
+            "review_setup_plan": {"$ref": "#/$defs/row_count"},
+            "automatic_preparation": {"$ref": "#/$defs/row_count"},
+            "ready": {"$ref": "#/$defs/row_count"}
+          }
+        },
+        "mapped_path_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["guided_setup", "connect_existing"],
+          "properties": {
+            "guided_setup": {"$ref": "#/$defs/row_count"},
+            "connect_existing": {"$ref": "#/$defs/row_count"}
+          }
+        },
+        "reviewed_setup_plan_revision": {"type": "null"},
+        "review_confirmation": {"const": "unconfirmed"},
+        "approved_setup_plan_sha256": {"type": "null"},
+        "automatic_preparation_currentness_ref": {"type": "null"},
+        "preserved_decision_ref_count": {"$ref": "#/$defs/row_count"},
+        "preserved_warning_count": {"$ref": "#/$defs/row_count"},
+        "owner_work_replayed": {"const": false},
+        "secret_handling": {"const": "redact_and_quarantine"},
+        "disposition_manifest_ref": {"$ref": "#/$defs/safe_ref"},
+        "disposition_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "terminal_status": {"enum": ["committed", "committed_with_quarantine", "blocked"]},
+        "completed_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"migration_kind": {"const": "legacy_provider_first_four_screen_to_nine_stage"}}}, "then": {"properties": {"source_state_machine": {"const": "legacy_provider_first_four_screen"}}}},
+        {"if": {"properties": {"migration_kind": {"const": "predecessor_five_stage_to_nine_stage"}}}, "then": {"properties": {"source_state_machine": {"const": "predecessor_five_stage_welcome_simple_path_automatic_preparation_first_project_ready"}}}},
+        {"if": {"properties": {"migration_kind": {"const": "predecessor_seven_stage_to_nine_stage"}}}, "then": {"properties": {"source_state_machine": {"const": "predecessor_seven_stage_welcome_first_project_source_control_setup_server_setup_remote_access_setup_automatic_preparation_ready"}}}}
+      ],
+      "x-puppet-master-assertions": [
+        "source_record_count == accepted_record_count + stale_record_count + dropped_record_count + quarantined_record_count",
+        "sum(mapped_stage_counts.*) == accepted_record_count + stale_record_count",
+        "mapped_path_counts.guided_setup + mapped_path_counts.connect_existing == accepted_record_count + stale_record_count",
+        "every migrated unresolved draft is unconfirmed and carries null reviewed_setup_plan_revision, approved_setup_plan_sha256, and automatic_preparation_currentness_ref; migration never fabricates review or currentness",
+        "terminal_status == 'committed' implies quarantined_record_count == 0",
+        "each accepted or stale legacy row maps once to the first applicable unresolved canonical stage",
+        "predecessor server_setup maps only to current server_storage_client and never becomes a current stage token",
+        "predecessor seven-stage rows preserve their source machine and disposition lineage while newly required simple_path and review_setup_plan resolution follows the disposition manifest",
+        "no installation, authentication, restore, Project, provider, Server, or source-control owner work is rerun"
+      ]
+    }
+  }
+}

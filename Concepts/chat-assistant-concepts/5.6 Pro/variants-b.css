@@ -39,14 +39,14 @@
   position:absolute; inset:0; display:grid; place-content:center; text-align:center; line-height:1;
 }
 .working-variant-12 .pm12-core b{ font:700 21px/1 var(--font-mono); letter-spacing:-.03em; display:flex; align-items:baseline; justify-content:center; gap:1px; }
-.working-variant-12 .pm12-core b u{ text-decoration:none; font-size:10px; color:var(--muted); }
-.working-variant-12 .pm12-core span{ display:block; margin-top:4px; font:600 7px/1 var(--font-mono); letter-spacing:.16em; color:var(--subtle); }
+.working-variant-12 .pm12-core b u{ text-decoration:none; font-size:11px; color:var(--muted); }
+.working-variant-12 .pm12-core span{ display:block; margin-top:4px; font:600 8px/1 var(--font-mono); letter-spacing:.16em; color:var(--subtle); }
 
 /* ---- channel header ---- */
 .working-variant-12 .pm12-right{ display:grid; grid-template-rows:auto auto 1fr; gap:8px; min-width:0; }
-.working-variant-12 .pm12-chan{ display:flex; align-items:center; gap:7px; font:600 9px/1 var(--font-mono); letter-spacing:.1em; }
+.working-variant-12 .pm12-chan{ display:flex; align-items:center; gap:7px; font:600 10px/1 var(--font-mono); letter-spacing:.1em; }
 .working-variant-12 .pm12-ch{ color:var(--subtle); }
-.working-variant-12 .pm12-chan strong{ font:800 12px/1 var(--font-mono); letter-spacing:.08em; }
+.working-variant-12 .pm12-chan strong{ font:800 13px/1 var(--font-mono); letter-spacing:.08em; }
 .working-variant-12 .pm12-sp{ flex:1; }
 .working-variant-12 .pm12-st{ padding:2px 5px; border:1px solid var(--border); color:var(--muted); }
 .working-variant-12 .pm12-st.live{ color:var(--pm-step,var(--accent)); border-color:color-mix(in srgb,var(--pm-step,var(--accent)) 45%,var(--border)); }
@@ -82,14 +82,14 @@
 /* ---- numeric readouts ---- */
 .working-variant-12 .pm12-meters{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; align-content:end; }
 .working-variant-12 .pm12-m{ min-width:0; border-top:1px solid var(--border); padding-top:5px; }
-.working-variant-12 .pm12-m label{ display:flex; align-items:center; gap:4px; font:600 7px/1 var(--font-mono); letter-spacing:.14em; color:var(--subtle); }
+.working-variant-12 .pm12-m label{ display:flex; align-items:center; gap:4px; font:600 8px/1 var(--font-mono); letter-spacing:.14em; color:var(--subtle); }
 .working-variant-12 .pm12-m label i{ width:5px; height:5px; flex:0 0 auto; border-radius:1px; }
 .working-variant-12 .pm12-m label i.b{ background:var(--accent-2); }
 .working-variant-12 .pm12-m label i.c{ background:var(--positive); }
 .working-variant-12 .pm12-m label i.d{ background:var(--warning); }
 .working-variant-12 .pm12-m label i.e{ background:var(--subtle); }
 .working-variant-12 .pm12-m b{ display:block; margin-top:3px; font:700 14px/1 var(--font-mono); letter-spacing:-.02em; white-space:nowrap; }
-.working-variant-12 .pm12-m b u{ text-decoration:none; font-size:8px; color:var(--muted); margin-left:2px; }
+.working-variant-12 .pm12-m b u{ text-decoration:none; font-size:9px; color:var(--muted); margin-left:2px; }
 
 /* ---- phase register ---- */
 .working-variant-12 .pm12-reg{
@@ -108,7 +108,7 @@
 .working-variant-12 .pm12-sub{
   display:grid; grid-template-columns:56px minmax(0,1fr) 34px 26px; gap:8px; align-items:center;
   width:100%; padding:0; border:0; background:transparent; cursor:pointer; text-align:left;
-  font:600 8px/1 var(--font-mono); letter-spacing:.1em; color:var(--subtle);
+  font:600 9px/1 var(--font-mono); letter-spacing:.1em; color:var(--subtle);
   animation:pm12-chan-in var(--pm-t-row) var(--pm-ease-out) both;
 }
 .working-variant-12 .pm12-sub:nth-child(2){ animation-delay:var(--pm-t-cascade); }
@@ -118,8 +118,8 @@
   display:block; height:100%; background:var(--pm-step,var(--accent));
   transition:width 640ms var(--pm-ease-out);
 }
-.working-variant-12 .pm12-sub-v{ font:700 10px/1 var(--font-mono); color:var(--text); text-align:right; }
-.working-variant-12 .pm12-sub-v u{ text-decoration:none; font-size:7px; color:var(--muted); }
+.working-variant-12 .pm12-sub-v{ font:700 11px/1 var(--font-mono); color:var(--text); text-align:right; }
+.working-variant-12 .pm12-sub-v u{ text-decoration:none; font-size:8px; color:var(--muted); }
 .working-variant-12 .pm12-sub-st{ text-align:right; color:var(--muted); }
 .working-variant-12 .pm12-sub-st.blocked{ color:var(--danger); }
 .working-variant-12 .pm12-sub.blocked .pm12-sub-bar i{ background:var(--danger); }
@@ -163,7 +163,7 @@
   --pm13-ink:300ms;
   --pm13-code:430ms;
 }
-.working-variant-13 .pm13-tb{ display:flex; align-items:center; gap:6px; font:600 8px/1 var(--font-mono); letter-spacing:.12em; }
+.working-variant-13 .pm13-tb{ display:flex; align-items:center; gap:6px; font:600 9px/1 var(--font-mono); letter-spacing:.12em; }
 .working-variant-13 .pm13-tb .k{ color:var(--subtle); }
 .working-variant-13 .pm13-tb .v{ color:var(--muted); }
 .working-variant-13 .pm13-tb .sp{ flex:1; border-bottom:1px dashed var(--border); align-self:center; height:1px; }
@@ -268,7 +268,7 @@
 .working-variant-13 .pm13-node.end .pm13-disc{ fill:color-mix(in srgb,var(--positive) 18%,var(--surface)); stroke:var(--positive); }
 .working-variant-13 .pm13-node.end .pm13-gl{ color:var(--positive); }
 .working-variant-13 .pm13-lb{
-  fill:var(--subtle); font:600 6.5px var(--font-mono); letter-spacing:.09em; text-anchor:middle;
+  fill:var(--subtle); font:600 7.5px var(--font-mono); letter-spacing:.09em; text-anchor:middle;
   animation:pm13-lb-in var(--pm-t-row) var(--pm-ease-out) both; animation-delay:var(--pm13-code);
   transition:fill var(--pm13-demote) var(--pm-ease-out);
 }
@@ -296,7 +296,7 @@
 /* ---- caption: the callout the pen writes ---- */
 .working-variant-13 .pm13-cap{ display:flex; align-items:baseline; gap:8px; min-width:0; }
 .working-variant-13 .pm13-cap-k{
-  font:700 8px/1 var(--font-mono); letter-spacing:.14em; color:var(--pm-step,var(--accent));
+  font:700 9px/1 var(--font-mono); letter-spacing:.14em; color:var(--pm-step,var(--accent));
   border:1px solid color-mix(in srgb,var(--pm-step,var(--accent)) 40%,var(--border)); padding:3px 5px;
   flex:0 0 auto;
   animation:pm13-cap-in var(--pm-t-row) var(--pm-ease-out) both;
@@ -324,7 +324,7 @@
   60% { opacity:1; }
   to  { opacity:1; transform:none; filter:blur(0); }
 }
-.working-variant-13 .pm13-cap strong{ font-size:12px; font-weight:750; letter-spacing:-.01em; min-width:0; }
+.working-variant-13 .pm13-cap strong{ font-size:13px; font-weight:750; letter-spacing:-.01em; min-width:0; }
 
 /* =====================================================================
    14 — TIMELINE SCRUB
@@ -351,11 +351,11 @@
   --pm14-travel:520ms;
   --pm14-seal:420ms;
 }
-.working-variant-14 .pm14-head-row{ display:flex; align-items:baseline; gap:6px; font:600 8px/1 var(--font-mono); letter-spacing:.12em; }
+.working-variant-14 .pm14-head-row{ display:flex; align-items:baseline; gap:6px; font:600 9px/1 var(--font-mono); letter-spacing:.12em; }
 .working-variant-14 .pm14-k{ color:var(--subtle); }
 .working-variant-14 .pm14-v{ color:var(--muted); }
 .working-variant-14 .pm14-sp{ flex:1; }
-.working-variant-14 .pm14-now{ font-size:12px; font-weight:800; letter-spacing:0; color:var(--text); }
+.working-variant-14 .pm14-now{ font-size:13px; font-weight:800; letter-spacing:0; color:var(--text); }
 .working-variant-14 .pm14-tot{ color:var(--subtle); }
 
 /* ---- ruler ---- */
@@ -363,7 +363,7 @@
 .working-variant-14 .pm14-ruler i{ position:absolute; bottom:0; width:1px; height:4px; background:color-mix(in srgb,var(--subtle) 70%,transparent); }
 .working-variant-14 .pm14-ruler i u{
   position:absolute; left:0; bottom:5px; text-decoration:none;
-  font:600 7px/1 var(--font-mono); color:var(--subtle); letter-spacing:.08em;
+  font:600 8px/1 var(--font-mono); color:var(--subtle); letter-spacing:.08em;
 }
 
 /* ---- the axis ---- */
@@ -464,18 +464,18 @@
 .working-variant-14 .pm14-card-top{ display:flex; align-items:baseline; gap:6px; min-width:0; }
 .working-variant-14 .pm14-badge{
   display:inline-flex; align-items:center; gap:4px; flex:0 0 auto;
-  font:700 8px/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase;
+  font:700 9px/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase;
   color:var(--pm-step,var(--accent));
 }
 .working-variant-14 .pm14-card-top strong{
-  font-size:12px; font-weight:750; letter-spacing:-.01em;
+  font-size:13px; font-weight:750; letter-spacing:-.01em;
   min-width:0; flex:0 1 auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .working-variant-14 .pm14-meta{ display:flex; align-items:baseline; gap:7px; margin-top:3px; }
-.working-variant-14 .pm14-span{ font:600 8px/1 var(--font-mono); color:var(--subtle); flex:0 0 auto; }
-.working-variant-14 .pm14-dur{ font:700 9px/1 var(--font-mono); color:var(--muted); flex:0 0 auto; }
+.working-variant-14 .pm14-span{ font:600 9px/1 var(--font-mono); color:var(--subtle); flex:0 0 auto; }
+.working-variant-14 .pm14-dur{ font:700 10px/1 var(--font-mono); color:var(--muted); flex:0 0 auto; }
 .working-variant-14 .pm14-card p{
-  margin:3px 0 0; font-size:10px; line-height:1.4; color:var(--muted);
+  margin:3px 0 0; font-size:11px; line-height:1.4; color:var(--muted);
   display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden;
 }
 /* The sentence resolves a word at a time behind the rows above it. The
@@ -493,9 +493,9 @@
   flex-wrap:wrap;
   --pm-row-base:340ms;
 }
-.working-variant-14 .pm14-ev span{ font:600 10px/1.3 var(--font-mono); color:var(--subtle); }
+.working-variant-14 .pm14-ev span{ font:600 11px/1.3 var(--font-mono); color:var(--subtle); }
 .working-variant-14 .pm14-ev span::before{ content:"· "; }
-.working-variant-14 .pm14-hint{ font:600 10px/1 var(--font-mono); letter-spacing:.06em; color:var(--subtle); }
+.working-variant-14 .pm14-hint{ font:600 11px/1 var(--font-mono); letter-spacing:.06em; color:var(--subtle); }
 
 /* Scrub addressing. :has() lets the hovered segment drive the deck with
    no JS at all, which means it survives the keyed patch untouched. */
@@ -542,7 +542,7 @@
 .working-variant-15 .pm15-bar{
   display:flex; align-items:center; gap:7px; padding:5px 8px;
   border-bottom:1px solid var(--border); background:var(--surface-2);
-  font:600 8px/1 var(--font-mono); letter-spacing:.08em; color:var(--muted);
+  font:600 9px/1 var(--font-mono); letter-spacing:.08em; color:var(--muted);
 }
 .working-variant-15 .pm15-title{ color:var(--subtle); }
 .working-variant-15 .pm15-sp{ flex:1; }
@@ -556,7 +556,7 @@
      max-height is the budget the take's JS renders against, so the
      transcript never overflows and never overlaps the card header. */
   min-height:150px; max-height:302px; overflow:hidden; padding:8px 9px;
-  font:10px/1.5 var(--font-mono);
+  font:11px/1.5 var(--font-mono);
 }
 .working-variant-15 .pm15-scroll.scrolled{
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 20px);
@@ -611,7 +611,7 @@
   to  { opacity:1; filter:blur(0); transform:none; }
 }
 
-.working-variant-15 .pm15-exit{ display:flex; align-items:baseline; gap:8px; padding-left:2px; font-size:9px; }
+.working-variant-15 .pm15-exit{ display:flex; align-items:baseline; gap:8px; padding-left:2px; font-size:10px; }
 .working-variant-15 .pm15-ok{ color:var(--positive); }
 .working-variant-15 .pm15-el{ color:var(--subtle); }
 .working-variant-15 .pm15-at{ color:color-mix(in srgb,var(--subtle) 85%,transparent); }

@@ -76,7 +76,7 @@ Tab badges stay sparse and purposeful: the `Progress` badge represents meaningfu
 
 ### Canonical route payload
 
-Route payloads may target `source_control`, `github_actions`, `docker_manager`, or `document_pane`; panel-local subviews and `/selectors` refine the landing inside that destination, and remembered state supplies defaults only when the route does not override them.
+Route payloads may target `source_control`, `repository_automation`, `docker_manager`, or `document_pane`; panel-local subviews and `/selectors` refine the landing inside that destination, and remembered state supplies defaults only when the route does not override them. The retired `github_actions` panel ID is a migration-read alias that normalizes to `repository_automation` with a GitHub automation binding; it never creates a second occupant.
 
 Object-first deep-link recipes normalize `/message`, scheduler `/blocking/safe-point/remediation/attempt`, and `/package/lane/worktree/concern/promotion/graph` lineage through one route shape; `Plans/assistant-chat-design.md`, `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/WorktreeGitImprovement.md` consume the same object-first routing instead of inventing an SCM-local navigation identity.
 
@@ -163,15 +163,15 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 ## 1. Executive Summary
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with eight built-in themes across four families (Friendly, Glass, Retro, Basic; default Friendly Dark) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with eight built-in themes across four families (Friendly, Glass, Retro, Basic; untouched first-open/fresh-project factory default Basic Dark) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard. An existing project's explicit saved theme and layout always win over that factory seed, and a copied project receives a detached theme/layout snapshot that does not follow its source project.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
 Key changes from the retired Rust/Iced-lineage GUI:
 - **Layout:** Single-page-at-a-time replaced with persistent IDE shell (Activity Bar, Primary Content, Side Panel, Bottom Panel)
 - **Navigation:** 16 flat buttons replaced with 5-group Activity Bar + Command Palette
-- **Settings restructure:** Old `Settings` becomes `App Settings`; old `Config` becomes `Settings`; Login and Doctor merge into unified Settings
-- **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, GitHub Actions, Docker Manager, and Run & Debug side-panel surfaces
+- **Settings and owner routing:** `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; the Doctor registry/router/projection remains separate and owner-routed inside the K3 shell; auth/account owners retain Login; Final GUI owns presentation, chrome, theme, and motion
+- **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, Actions & Pipelines, Docker Manager, and Run & Debug side-panel surfaces
 - **Bottom runtime zone:** Terminal, Problems, Output, Ports, and the classical **Debugger** / **DAP Debugger** live here; normal browsing and HTML preview remain editor-tab or detached-window browser surfaces rather than bottom-panel tabs
 - Coarse surface vocabulary treats primary-content pages `/views`, side-panel destinations, bottom-panel surfaces, and Orchestrator tabs as shell categories, not interchangeable route identities.
 - **Themes:** Four theme families (eight built-in themes) with full extensibility and deterministic built-in variants
@@ -675,8 +675,10 @@ projection with the pickup-band and preview-capture guards; the one-way top-bar
 `Collapse Bottom Terminal` contract is superseded by the runtime toggle relabel;
 the kebab Placement section/hint is retired; the equal-height three-column grid
 is superseded by the full-height `dock_right` template; the dedicated editor
-pane-close glyph is retired in favour of the kebab `Close Panel` row; and the
-app status bar is removed from the PM7 shell.
+pane-close glyph is retired in favour of the kebab `Close Panel` row. The same
+wave's removal of the app status bar is itself superseded on 2026-08-27: PM7
+retains the full-width bottom status bar and the trimmed no-bell inventory owned
+by F3-448.
 
 Superseded 2026-08-13 (wave 3): the head-row kebab placement is superseded by
 the vertical-dots 16 by 20 control at the surface's right edge below the grip
@@ -1492,14 +1494,14 @@ before the title-bar search, then the search field, then the theme/settings
 cluster. The diagram above reflects this order; the 2026-08-12 after-search
 placement of the notification stack is retired (see F3-460 dispositions).
 
-Amended 2026-08-13 (tweak wave): the PM7 shell removes the app STATUS BAR — the
-`footer.status-bar` element and its menu are gone and shell hooks no longer
-reference it, so the diagram's status-bar row and §3.2's status-bar zone carry
-this dated disposition for the PM7 shell; the status-bar chip inventory (F3-448)
-is not re-owned here and any future reinstatement must go through that owner.
-Spacing under the tweak wave: 4 px gaps between zones, 4 px outer margin, and no
-page gutter under Home. Wave 3 (2026-08-13) re-tunes the vertical axis to 2 px
-via the `--pm-home-pad-y`/`--pm-home-gap-y` tokens, keeping 4 px sides.
+Superseded 2026-08-27: the 2026-08-13 tweak-wave removal of the PM7 app STATUS
+BAR is retired. The shell retains one full-width bottom status bar on every
+primary page; it participates in layout, never covers page content, and renders
+the trimmed F3-448 inventory with no notifications item or bell. The generated
+concept may use `footer.pm7-statusbar`; production Slint consumes the semantic
+zone rather than that DOM selector. Spacing otherwise remains 4 px between
+zones and at the outer sides with no Home page gutter; the Home workspace's
+vertical padding remains 2 px through `--pm-home-pad-y`/`--pm-home-gap-y`.
 
 ### 3.2 Structural Zones
 
@@ -1510,7 +1512,7 @@ via the `--pm-home-pad-y`/`--pm-home-gap-y` tokens, keeping 4 px sides.
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
 | **Bottom panel** | `VerticalLayout` | height: 120-300px, collapsible | Terminal, Problems, Output tabs |
-| **Status bar** | `HorizontalLayout` | height: 24px fixed | Workspace status menu, orchestrator status, regex-index progress / refresh disclosure, ports, branch, and sync chips (chat mode, platform/model, and context usage moved to the assistant chat surface and chat context ring per the amended F3-448). Amended 2026-08-13 (tweak wave): removed from the PM7 shell — see the dated §3.1 note; F3-448 remains the chip-inventory owner. |
+| **Status bar** | `HorizontalLayout` | height: 24px fixed | Full-width layout participant on every primary page. It renders the F3-448 inventory: workspace status menu, orchestrator status, regex-index progress / refresh disclosure, ports, branch, and sync; it has no platform/model/mode/context or notifications/bell item and never overlays page content. The 2026-08-13 removal prose is superseded by the 2026-08-27 §3.1 disposition. |
 
 `FinalGUISpec.md §3.1` is the shell confirmation for right-hand side-panel occupants: the side panel is the Activity Bar surface slot with a 240-480px width budget. Legacy labels such as `/File`, `/Source`, `/GitHub`, and `/etc` are migration labels for occupants or groups, not separate page surfaces that bypass the right-hand side-panel model.
 
@@ -1606,14 +1608,14 @@ Primary content: 1280 - 48 - 48 = 1184px wide
 
 ### 4.1 Activity Bar
 
-The activity bar is the canonical entry point for persistent right-hand side-panel operational surfaces.
+The activity bar is the canonical entry point for persistent left-hand side-panel operational surfaces per F3-481.
 
 Required side-panel items for this feature set:
 - `search`
 - `chat`
 - `files`
 - `source_control`
-- `github_actions`
+- `repository_automation`
 - `docker_manager`
 - `artifacts`
 - `run_debug`
@@ -1621,10 +1623,10 @@ Required side-panel items for this feature set:
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
 
 Required shell rules:
-- Search, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, Chat, and Run & Debug occupy the single right-hand side-panel slot defined by the shell.
+- Search, File Manager, Source Control, Actions & Pipelines, Docker Manager, Artifacts, Chat, and Run & Debug occupy the single left-hand side-panel slot defined by the shell.
 - None of those surfaces are described as canonical primary-content pages unless the statement is explicitly about a routed detail page launched from the surface.
 - Activity-bar labels, tooltips, shortcuts, and command IDs MUST use the same surface vocabulary across shell chrome, command palette, and wiring tables.
-- Detachable side-panel surfaces return to the same right-hand slot when re-docked.
+- Detachable side-panel surfaces return to the same left-hand slot when re-docked.
 - The bottom runtime zone remains terminal/output/problems/debug/ports territory; normal browsing and HTML preview remain editor/workspace-tab hosted.
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
@@ -1636,7 +1638,7 @@ Canonical side-panel descriptions:
 | `search` | Search | Project-wide find-in-files and replace-in-files with persistent query/result state |
 | `files` | File Manager | Project tree, local tree filter, file actions, and editor handoff |
 | `source_control` | Source Control | Git-first repo state, changes, history, graph, branches/stash, and worktrees |
-| `github_actions` | GitHub Actions | GitHub-hosted workflows, runs, logs, dispatch, and admin settings |
+| `repository_automation` | Actions & Pipelines | Provider-neutral checks, workflows/pipelines, runs, gates, job/stage detail, logs, artifacts, dispatch, runners, and supported administration for the selected automation binding |
 | `docker_manager` | Docker Manager | Containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes |
 | `artifacts` | Artifacts | Runtime/browser/build artifacts and cross-surface evidence navigation |
 | `chat` | Assistant Chat | Threaded assistant workflows, context management, and activity transparency |
@@ -1644,9 +1646,9 @@ Canonical side-panel descriptions:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
 
-#### GitHub Actions side-panel owner
+#### Actions & Pipelines side-panel owner
 
-GitHub Actions is the `github_actions` side-panel owner for shell entry, label, command-palette surface ID, detachable side-panel state, and route-open behavior for `Current Branch`, `Workflows`, and `Settings`. This shell-surface owner-boundary stops at the hosted workflow/admin contract: `Plans/GitHub_Integration.md` owns those semantics, while FinalGUISpec keeps shell summaries, disabled-state copy, cross-surface CTAs, and panel restore behavior aligned with that owner.
+Actions & Pipelines is the `repository_automation` side-panel owner for shell entry, label, command-palette surface ID, detachable side-panel state, and route-open behavior. The Forge/integration boundary owns the provider-neutral shell and independent `AutomationBinding`; provider owners retain native semantics and vocabulary. A selected GitHub binding therefore keeps `Current Branch`, `Workflows`, `Settings`, pins, rerun, and log recovery under `Plans/GitHub_Integration.md`, while GitLab renders Pipelines/Stages/Jobs/Trace and Forgejo/Gitea render Actions only when their exact capability profile proves it.
 
 #### Run & Debug side-panel owner
 
@@ -1666,13 +1668,13 @@ Search-seam ownership is already-specified rather than a new universal bucket: `
 
 GUI search ownership has explicit Activity Bar, side-panel, command-family, and detachable-panel IDs. `search_panel_state` and `cmd.search.*` result IDs may carry recent-file, `/modified`, or symbol-aware metadata, but those are routing facts for the canonical-doc search owner rather than an under-specified second File Manager or LSP search surface.
 
-The GUI concept artifact `Concepts/PuppetMasterDashComp.html` (`/PuppetMasterDashComp.html`) is historical design evidence for the side-panel model, not a live owner path. Its labels `GITHUB ACTIONS`, `DOCKER MANAGE`, and `SOURCE CONTROL` map to the canonical GitHub Actions, Docker Manager, and Source Control panels. `DOCKER MANAGE` / `Docker Manage` copy migrates to Docker Manager. A separate `UNRAID` panel/icon is retired by the concept-vs-plan reconciliation: Unraid behavior lives in Docker Manager > `Publish / Unraid`, preserving the accepted direction without adding another activity-bar slot.
+The GUI concept artifact `Concepts/PuppetMasterDashComp.html` (`/PuppetMasterDashComp.html`) is historical design evidence for the side-panel model, not a live owner path. Its labels `GITHUB ACTIONS`, `DOCKER MANAGE`, and `SOURCE CONTROL` map to the canonical Actions & Pipelines, Docker Manager, and Source Control panels; the GitHub label selects a GitHub automation binding rather than naming the shell. `DOCKER MANAGE` / `Docker Manage` copy migrates to Docker Manager. A separate `UNRAID` panel/icon is retired by the concept-vs-plan reconciliation: Unraid behavior lives in Docker Manager > `Publish / Unraid`, preserving the accepted direction without adding another activity-bar slot.
 
-Panel-ownership is resolved before any plan-doc rewrite, shortcut map, or command-palette migration changes shell navigation. The activity bar MUST NOT expose a `Git` icon that opens `GITHUB ACTIONS`: `GITHUB ACTIONS` belongs to panel ID `github_actions`, and `SOURCE CONTROL` / `CONTROL` belongs to panel ID `source_control`. Older combined Git/GitHub or `Git (GitHub)` docs are migration evidence only. `cmd.panel.switch` and any `/shortcut` aliases use canonical side-panel IDs (`source_control`, `github_actions`, `docker_manager`) and preserve the separation between local SCM and hosted workflow administration. `unraid` does not survive as a first-class panel ID or first-class shell shortcut; any compatibility alias opens `docker_manager` with `Publish / Unraid` focused.
+Panel-ownership is resolved before any plan-doc rewrite, shortcut map, or command-palette migration changes shell navigation. The activity bar MUST NOT expose a `Git` icon that opens automation: historical `GITHUB ACTIONS` normalizes to `repository_automation` with an exact GitHub binding, and `SOURCE CONTROL` / `CONTROL` belongs to panel ID `source_control`. Older combined Git/GitHub or `Git (GitHub)` docs are migration evidence only. `cmd.panel.switch` and any `/shortcut` aliases use canonical side-panel IDs (`source_control`, `repository_automation`, `docker_manager`) and preserve the separation between local SCM and hosted automation. `unraid` does not survive as a first-class panel ID or first-class shell shortcut; any compatibility alias opens `docker_manager` with `Publish / Unraid` focused.
 
-Account-switch propagation is visible at the shell boundary. When the effective account changes, Source Control, GitHub Actions, Docker Manager, Kubernetes, receipts, and blocked-state projections hard-refresh or clear stale selections; Orchestrator CTAs are reclassified against the new requested/effective authority; background observation continues read-only or is marked interrupted until revalidation finishes. Export/share copy follows account-identity redaction separate from token secrecy: account handles, namespace ownership, kube user/context names, and SSH usernames/host aliases are masked by default unless the export profile explicitly permits disclosure.
+Account-switch propagation is visible at the shell boundary. When the effective account changes, Source Control, Actions & Pipelines, Docker Manager, Kubernetes, receipts, and blocked-state projections hard-refresh or clear stale selections; Orchestrator CTAs are reclassified against the new requested/effective authority; background observation continues read-only or is marked interrupted until revalidation finishes. Export/share copy follows account-identity redaction separate from token secrecy: account handles, namespace ownership, kube user/context names, and SSH usernames/host aliases are masked by default unless the export profile explicitly permits disclosure.
 
-Help/copy inventory is authored by namespace instead of improvised in each surface. `source_control`, `github_actions`, `docker_manager`, `kubernetes`, `receipts`, `blocked_state`, and `requested_effective` each provide empty states, disabled-state explainers, first-use disclosure copy, expert variants, and eli5 variants. Worktree-native SCM first-use teaching triggers on the first worktree-backed run, conflict, orphan recovery, or compare-review open, and the persistent "what worktrees mean here" entry is reachable from Source Control and Orchestrator.
+Help/copy inventory is authored by namespace instead of improvised in each surface. `source_control`, `repository_automation`, `docker_manager`, `kubernetes`, `receipts`, `blocked_state`, and `requested_effective` each provide empty states, disabled-state explainers, first-use disclosure copy, expert variants, and eli5 variants. Worktree-native SCM first-use teaching triggers on the first worktree-backed run, conflict, orphan recovery, or compare-review open, and the persistent "what worktrees mean here" entry is reachable from Source Control and Orchestrator.
 
 `Critical workflow pinning / health badges` appears as a GitHub Actions affordance, with dashboard and Orchestrator mirrors only linking back to the owner surface. `GitHub Actions > Workflows` owns pin and unpin, including `cmd.github.actions.pin`, `cmd.github.actions.unpin`, pinned-workflow state, the persisted pinned workflow list, `/build/deploy` and `/deploy` badge mapping, noisy-workflow suppression, `/event/storage` provenance, stale-pin warnings, and the over-pinning tradeoff.
 
@@ -1936,15 +1938,15 @@ Three-signal system for panel detach discovery:
 
 | Theme Family | Variants | Signature Effects | Target Audience |
 |-------|--------|--------------|----------------|
-| **Friendly** (default: Friendly Dark) | 2 (Friendly Dark, Friendly Light) | Cozy: Cal Sans/Quicksand/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars | Default experience; warm, approachable |
+| **Friendly** | 2 (Friendly Dark, Friendly Light) | Cozy: Cal Sans/Quicksand/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars | Warm, approachable experience |
 | **Glass** | 2 (Glass Dark, Glass Light) | One-pane glass slab: single backdrop blur over a pre-blurred wallpaper asset, alpha-derived transparency steps, glass-alpha slider, background modes mesh/depth/minimal | Users who want the translucent composition |
 | **Retro** | 2 (Retro Dark, Retro Light) | Full: pixel grid, paper texture, scanlines (dark) or reduced opacity (light), hard shadows, sharp corners, Orbitron + Rajdhani | Users who love the original aesthetic |
-| **Basic** | 2 (Basic Dark, Basic Light) | None: flat colors, subtle borders, rounded corners, system fonts | Accessibility, readability, reduced visual noise |
+| **Basic** (factory seed: Basic Dark) | 2 (Basic Dark, Basic Light) | None: flat colors, subtle borders, rounded corners, system fonts | Accessibility, readability, reduced visual noise |
 
 User-facing selector contract:
 - The GUI MUST expose exactly eight built-in theme variants, organized as four theme families (Friendly, Glass, Retro, Basic) x two schemes (dark, light): `Friendly Dark`, `Friendly Light`, `Glass Dark`, `Glass Light`, `Retro Dark`, `Retro Light`, `Basic Dark`, and `Basic Light`.
 - In addition to the variant set, the selector carries a presentation mode dimension: Light, Dark, and Auto. Auto resolves the selected family to its dark or light variant by following the operating system appearance (`prefers-color-scheme`) and updates live when the OS setting changes; Light and Dark pin the scheme manually.
-- The default is family Friendly with mode Dark as shipped (`Friendly Dark`).
+- The untouched first-open/fresh-project factory default is family Basic with mode Dark (`Basic Dark`). This seed applies only when no committed project theme exists; an explicit saved project selection survives open/reopen and project switching. A copied project materializes the source selection as its own detached snapshot, so later source-project changes do not propagate. Prior active statements naming `Friendly Dark` as the default are superseded by this later factory-default contract; `Friendly Dark` remains one of the eight supported variants.
 - Migration lineage (superseded 2026-07-16 by the four-family promotion, kept findable for token continuity): the prior contract read "The GUI MUST expose exactly three built-in theme choices: `Retro Dark`, `Retro Light`, and `Basic`", where `Basic` internally resolved to light or dark palette tokens without creating a fourth user-facing built-in theme promise.
 
 ### 6.2 Theme Token Table (Retro/Basic variants; Friendly and Glass variant tables are in the Theme System addendum - 2026-07-16)
@@ -2060,7 +2062,7 @@ impl ThemeVariant {
 The architecture supports unlimited user-created themes beyond the eight built-in variants.
 
 **Built-in themes (ship with app):**
-- Friendly Dark (default), Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Light, Basic Dark (the eight variants in §6.1-6.2 and the Theme System addendum - 2026-07-16)
+- Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Light, Basic Dark (the eight variants in §6.1-6.2 and the Theme System addendum - 2026-07-16). Basic Dark is the untouched first-open/fresh-project factory seed; the former Friendly Dark default is superseded, while project-saved selections remain authoritative after initialization.
 
 **Custom theme file format:** Custom themes are defined as TOML files in `~/.puppet-master/themes/<name>.toml`. Each file specifies token overrides; any token not specified inherits from any built-in variant base named by a `base` field (`basic-*`, `retro-*`, `glass-*`, or `friendly-*`).
 
@@ -2190,7 +2192,7 @@ Side inspectors stay summary/action-light; `/action-light` affordances belong th
 
 #### Cross-surface state presentation and disabled controls
 
-SCM, GitHub Actions, Docker/Kubernetes, Orchestrator, and other /runtime-backed surfaces share one user-facing status vocabulary: `Running`, `Ready`, `Blocked`, `Needs Attention`, `Degraded`, `Stale`, `Detached`, and `Not Configured`. Icon, text, and badge presentation may vary by density, but `/text/badge` meaning must stay consistent and derive from canonical reason codes rather than panel-local copy.
+SCM, Actions & Pipelines, Docker/Kubernetes, Orchestrator, and other /runtime-backed surfaces share one user-facing status vocabulary: `Running`, `Ready`, `Blocked`, `Needs Attention`, `Degraded`, `Stale`, `Detached`, and `Not Configured`. Icon, text, and badge presentation may vary by density, but `/text/badge` meaning must stay consistent and derive from canonical reason codes rather than panel-local copy.
 
 Every disabled mutation affordance uses the shared `disabled-control` explanation model. Disabled controls expose a short inline reason, a hover/focus tooltip with the exact blocking condition, and the primary recovery CTA when one exists. Controls remain keyboard-focusable when that focus is needed for `/accessibility`, explanation, or recovery discovery.
 
@@ -2198,11 +2200,11 @@ Deep links from `Operation receipts`, Orchestrator blocked views, and owner-rout
 
 Shell `/navigation` and `deep-link` handling in `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` must consume the shared route contract before reviving any stale `Tiers` or widgetized Orchestrator surface assumption.
 
-`Explain this state` is a GUI-level affordance on status pills, disabled buttons, blocked banners, and receipt rows across SCM, GitHub Actions, Docker/Kubernetes, and Orchestrator. It can auto-open on the first block when the user enables that behavior, and it offers ELI5 plus expert detail without inventing panel-local explanations. The explanation derives from canonical reason codes, validation fields, `allowed_action_ids[]`, requested/effective state, `/blocked/diverged/degraded` chains, and the `/event/storage` or `/events/storage` receipt projection; if a field is missing, the GUI says what data is unavailable instead of filling the gap with generic copy. `/tradeoffs`: one-click reasoning is valuable only when it stays tied to the same evidence that disables or permits the action.
+`Explain this state` is a GUI-level affordance on status pills, disabled buttons, blocked banners, and receipt rows across SCM, Actions & Pipelines, Docker/Kubernetes, and Orchestrator. It can auto-open on the first block when the user enables that behavior, and it offers ELI5 plus expert detail without inventing panel-local explanations. The explanation derives from canonical reason codes, validation fields, `allowed_action_ids[]`, requested/effective state, `/blocked/diverged/degraded` chains, and the `/event/storage` or `/events/storage` receipt projection; if a field is missing, the GUI says what data is unavailable instead of filling the gap with generic copy. `/tradeoffs`: one-click reasoning is valuable only when it stays tied to the same evidence that disables or permits the action.
 
 Destructive, `/targeted`, and remote-mutating surfaces show a compact target/context banner before rendering mutation CTAs. The banner includes the effective target identity, fallback source, and whether the context came from selected worktree, receipt context, workspace branch, Docker context, Kubernetes namespace/environment, or `/runtime/context`. Empty-state taxonomy is canonical: `Not relevant`, `Not configured`, `Unavailable`, `No data yet`, and `No results for current filter` are distinct states, not interchangeable copy. Hide-when-unused surfaces remain rediscoverable through Settings, commands, and receipt or CTA deep links.
 
-Accessibility for dense custom surfaces is non-color dependent. Source Control, GitHub Actions, Docker Manager, Kubernetes, Orchestrator, receipt views, and any `/table` fallback must preserve `/screen-reader` labels, keyboard traversal, non-color state indicators, and text equivalents for graph badges, status badges, blocked reasons, and filter results.
+Accessibility for dense custom surfaces is non-color dependent. Source Control, Actions & Pipelines, Docker Manager, Kubernetes, Orchestrator, receipt views, and any `/table` fallback must preserve `/screen-reader` labels, keyboard traversal, non-color state indicators, and text equivalents for graph badges, status badges, blocked reasons, and filter results.
 
 Blocked-state integration uses one shared contract rather than surface-specific recovery wording. Orchestrator remains the hub for blocked episodes, while destination panels render the same reason code, owner route, recovery CTA, and allowed actions in local context. If a destination panel cannot host the requested recovery action, it links back to the owner route with the original receipt/filter context preserved; it must not create a competing remediation path.
 
@@ -2245,7 +2247,7 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 
 Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. The default Dashboard widget set is exactly `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; broader `widget.*` catalog entries are compatibility, candidate, or widget-library material unless promoted by a specific owner PlanUnit.
 
-Dashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, GitHub Actions, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
+Dashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
 
 ### 7.3 Shared route and open behavior
 
@@ -2401,7 +2403,7 @@ The settings resolver uses three axes:
 
 Resolver display grammar is deterministic: show worker-policy display first, then source snapshot, then request snapshot, then execution outcome. Resolver inputs are the three axes above plus current projection trust. The deterministic resolver matrix is: `required` must bind or block; `preferred` binds when available and otherwise falls back with an explicit `switch_reason`; `none` keeps the request visible but lets policy choose execution. The emit shape is `settings_resolution { source_snapshot, request_snapshot, execution_snapshot, switch_reason, resolution_status }`.
 
-Panel-specific persistence and visibility controls live in Settings only when they are durable app or project preferences. Settings groups them by owning surface rather than by implementation store: Source Control / Branching, GitHub Actions, Docker Manager / Kubernetes, Terminal, File Manager, Models / Providers, plus General, Shortcuts, Advanced, and Health for cross-cutting controls. Active runtime object selection, live run actions, and transient inspector focus remain in the owning panel.
+Panel-specific persistence and visibility controls live in Settings only when they are durable app or project preferences. Settings groups them by owning surface rather than by implementation store: Source Control / Branching, Actions & Pipelines, Docker Manager / Kubernetes, Terminal, File Manager, Models / Providers, plus General, Shortcuts, Advanced, and Health for cross-cutting controls. GitHub-specific settings keep their stable IDs and GitHub owner. Active runtime object selection, live run actions, and transient inspector focus remain in the owning panel.
 
 Agent-Config is the visible provider/model/account/instruction management surface for the now-locked `/provider` model. Settings and `/inspector` language must name Agent-Config, persistent Effective Runtime inspectors, provider entries, account/profile rows, instruction projections, and skill/MCP status rather than generic provider settings.
 
@@ -3151,7 +3153,7 @@ puppet-master-rs/
 |   |   +-- interview_panel.slint
 |   +-- views/                        # Page-level views
 |   |   +-- dashboard.slint
-|   |   +-- settings.slint            # Unified (old config + settings + login + doctor)
+|   |   +-- settings.slint            # Final GUI presentation host for the Settings_System shell; Doctor consumes N2-151 projections and Login stays with auth/account owners
 |   |   +-- wizard.slint
 |   |   +-- interview.slint
 |   |   +-- nodes.slint
@@ -3279,6 +3281,13 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 | `gha_panel_state.v1:{project_id}` | GitHub Actions panel UI state: account-sensitive pins, filters, auto-refresh preference, collapsed groups, and last viewed run partitioned by effective account or invalidated on account switch | On change (debounced 250ms) |
 | `artifact_panel_state.v1:{project_id}` | Artifacts panel UI state: expanded groups, selected artifact, compare target, and preview mode | On change (debounced 250ms) |
 
+The shell appearance keys above are Project-scoped even where a compatibility key name omits an inline
+`{project_id}` suffix. On an untouched first open or a genuinely fresh Project with no committed appearance
+snapshot, the GUI seeds Basic Dark plus the factory layout. Opening, reopening, or switching to an existing
+Project restores that Project's explicit saved theme and layout without reapplying factory values. An admitted
+Project copy materializes the source theme/layout values into a new destination-owned snapshot at the copy
+boundary; source and destination then evolve independently, with no live inheritance or later propagation.
+
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 
 **Chat, settings, and review state**
@@ -3360,8 +3369,8 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 
 ### 15.4 Startup Restore
 On startup:
-1. Read `layout:v1` from redb and restore panel positions, sizes, dock states, and detached-terminal geometry.
-2. Read `theme:v1` from redb and apply theme.
+1. Resolve the active Project's detached shell snapshot. Read its `layout:v1` and restore panel positions, sizes, dock states, and detached-terminal geometry; only a genuinely absent fresh-project snapshot receives the factory layout. A copied Project reads its destination-owned snapshot, never a live source-project value.
+2. Read the active Project's `theme:v1` and apply its explicit saved selection. Only an untouched first-open/fresh-project absence seeds Basic Dark; startup never replaces an existing saved selection with either Basic Dark or the superseded Friendly Dark default.
 3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`.
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
@@ -3834,10 +3843,10 @@ Agent ecosystem seams remain explicit migration references: `Plans/Skills_System
 | `wizard.rs` | `views/wizard.slint` (Run group) | Add agent activity pane, intent selection |
 | `interview.rs` | `views/interview.slint` (Run group) | Also available as Chat mode |
 | `tiers.rs` | `views/nodes.slint` (Run group) | Renamed to match the node/package/lane/seam model; otherwise minimal changes |
-| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Legacy Config rows route into the F3-432 search-first Settings surface; the former 19-tab table is owner-routing lineage only. |
-| `settings.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: General |
-| `login.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Authentication |
-| `doctor.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Health |
+| `config.rs` | **Retired into Settings owner routing** | Legacy Config rows resolve through `Plans/Settings_System.md`; Final GUI presents the owner projection and does not own the setting semantics. |
+| `settings.rs` | **Retired into Settings owner routing** | `Plans/Settings_System.md` owns the Settings shell, ordinary values, search, transfer, and manager grammar. |
+| `login.rs` | **Retired; auth/account-owned** | Settings may expose an owner-routed sign-in entry, but Login behavior and account truth remain with the auth/account owners. |
+| `doctor.rs` | **Retired into N2-151 Doctor routing** | `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; Final GUI owns only its presentation in the K3 shell. |
 | `setup.rs` | `views/setup.slint` (Run group) | Minimal changes |
 | `metrics.rs` | `views/metrics.slint` (Data group) | Minimal changes |
 | `evidence.rs` | `views/evidence.slint` (Data group) | Minimal changes |
@@ -4009,8 +4018,8 @@ These decisions are final and must not be revisited during implementation:
 2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
 3. **No React/Tauri/DOM-rendered product UI or HTML/CSS/JS product shell** -- native desktop is Rust + Slint `.slint` markup; Slint/WASM web may use only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
-5. **Four theme families / eight built-in themes** -- Friendly Dark (default), Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML); supersedes the prior three-family lock (Retro Dark, Retro Light, Basic Modern) per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal
-6. **Settings restructure** -- unified page merging old Config + Settings + Login + Doctor
+5. **Four theme families / eight built-in themes** -- Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
+6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
 8. **redb for layout persistence**, seglog for events, Tantivy for search
 9. **Model/platform selection via dropdowns**, not text entry
@@ -6278,8 +6287,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Canonical route payloads target source_control, github_actions, docker_manager, or document_pane
-  and normalize message, scheduler, package, lane, worktree, concern, promotion, and graph lineage
+  Canonical route payloads target source_control, repository_automation, docker_manager, or document_pane;
+  the legacy github_actions input normalizes to repository_automation with a GitHub automation binding and never
+  creates another occupant. Routes normalize message, scheduler, package, lane, worktree, concern, promotion, and graph lineage
   through one object-first route shape.
 gui_related: true
 gui_classification_reason: >-
@@ -6307,7 +6317,8 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0012"
 preserved_exact_tokens:
 - "source_control"
-- "github_actions"
+- "repository_automation"
+- "github_actions (migration-read alias only)"
 - "docker_manager"
 - "document_pane"
 - "/message"
@@ -6745,7 +6756,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The GUI surface set includes Usage, File Manager, editor surface, Chat, Agent Activity,
-  Artifacts, Source Control, GitHub Actions, Docker Manager, Run & Debug, Assistant Debug Mode,
+  Artifacts, Source Control, Actions & Pipelines, Docker Manager, Run & Debug, Assistant Debug Mode,
   project switching, language detection, audio feedback, catalog/sync, and SSH remote editing.
 gui_related: true
 gui_classification_reason: >-
@@ -7486,7 +7497,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The canonical side-panel inventory and labels are search, chat, files, source_control,
-  github_actions, docker_manager, artifacts, run_debug, testing, and agents with
+  repository_automation, docker_manager, artifacts, run_debug, testing, and agents with
   matching labels, tooltips, shortcuts, and command IDs. The testing and agents
   panels joined the inventory per the 2026-07-16 shell sweep promotion (F3-451, F3-452).
 gui_related: true
@@ -7519,7 +7530,7 @@ preserved_exact_tokens:
 - "chat"
 - "files"
 - "source_control"
-- "github_actions"
+- "repository_automation"
 - "docker_manager"
 - "artifacts"
 - "run_debug"
@@ -7534,7 +7545,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-043 - GitHub Actions Side Panel Owner Boundary
+### F3-043 - Actions And Pipelines Side Panel Owner Boundary
 
 ```yaml
 plan_unit_id: F3-043
@@ -7542,9 +7553,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  GitHub Actions is the github_actions side-panel owner for shell entry, label, command-palette
-  surface ID, detachable state, and route-open behavior while GitHub_Integration owns hosted
-  workflow and admin semantics.
+  Actions & Pipelines is the repository_automation side-panel owner for shell entry, label,
+  command-palette surface ID, detachable state, and route-open behavior. Forge_Integrations owns
+  the provider-neutral shell and AutomationBinding boundary; GitHub_Integration and other provider
+  owners retain their hosted workflow/pipeline, log, artifact, and administration semantics.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7565,12 +7577,14 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: github_actions_side_panel_owner_boundary
+  mode: repository_automation_side_panel_owner_boundary
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0037"
 preserved_exact_tokens:
-- "github_actions"
+- "repository_automation"
+- "Actions & Pipelines"
+- "AutomationBinding"
 - "Current Branch"
 - "Workflows"
 - "Settings"
@@ -7847,9 +7861,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Historical concept labels map to canonical side panels: GitHub Actions, Docker Manager, and
-  Source Control remain separate, DOCKER MANAGE migrates to Docker Manager, Unraid focuses Docker
-  Manager Publish / Unraid, and aliases use canonical side-panel IDs.
+  Historical concept labels map to canonical side panels: GITHUB ACTIONS migrates to Actions &
+  Pipelines with a GitHub automation binding, while Docker Manager and Source Control remain
+  separate; DOCKER MANAGE migrates to Docker Manager, Unraid focuses Docker Manager Publish /
+  Unraid, and aliases use canonical side-panel IDs.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7881,6 +7896,7 @@ preserved_exact_tokens:
 - "cmd.panel.switch"
 - "Publish / Unraid"
 - "source_control"
+- "repository_automation"
 - "github_actions"
 negative_constraints:
 - "The activity bar MUST NOT expose a Git icon that opens GITHUB ACTIONS."
@@ -9087,10 +9103,10 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The GUI exposes exactly eight built-in theme choices across four families, Friendly Dark,
   Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light,
-  with Friendly Dark as the default. Superseded lineage (2026-07-16 promotion, kept findable):
-  the prior contract exposed exactly three built-in theme choices, Retro Dark, Retro Light, and
-  Basic, while Basic could resolve internally to light or dark palette tokens without creating a
-  fourth built-in theme promise.
+  with Basic Dark as the untouched first-open/fresh-project factory default. An existing explicit
+  saved Project selection survives, and a copied Project receives a detached selection snapshot.
+  The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic
+  contract are superseded lineage kept findable; all eight variants remain supported.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -9100,6 +9116,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "Basic Dark is used only at the untouched first-open/fresh-project factory boundary; an existing saved Project selection and a copied Project's detached snapshot take precedence."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -9124,7 +9141,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Basic internal palette choice must not create a fourth user-facing built-in theme promise."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Friendly Dark as the factory default is superseded by the later Basic Dark first-open/fresh-project contract; Friendly Dark remains a supported variant."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -9360,7 +9378,8 @@ canonical_text: >-
   (friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light,
   basic-dark) and theme token properties for colors, accents, retro effects, paper texture,
   borders, padding, scrollbar width, line height, and base font size, with the property defaults
-  illustrative per active variant and friendly-dark as the default mode. The
+  illustrative per active variant and basic-dark as the untouched first-open/fresh-project
+  factory mode. The former friendly-dark default is superseded lineage. The
   ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same
   eight token sets; in auto the effective variant tracks the OS appearance
   (prefers-color-scheme) live and feeds the identical per-variant tokens.
@@ -9408,7 +9427,8 @@ preserved_exact_tokens:
 - "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The former friendly-dark default-mode clause is superseded; it remains theme lineage, not the factory selection."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -12364,8 +12384,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
 - "Compact Now failure must not be silent or logs-only."
+- "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.* EventRecord is emitted."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The former context.compaction.failed event implication is retired because no context.compaction.* family is registered in Event Authority."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16825,7 +16847,10 @@ canonical_text: >-
   `filetree_state:v1:{project_id}`, `search_panel_state.v1:{project_id}`,
   `project_state:v1:{project_id}`, `gha_panel_state.v1:{project_id}`, and
   `artifact_panel_state.v1:{project_id}` with their debounce/write frequencies and owner
-  ContractRefs.
+  ContractRefs. Shell theme and layout are Project-scoped snapshots: a genuinely absent
+  first-open/fresh-project snapshot receives Basic Dark and the factory layout, an existing
+  Project's explicit saved theme/layout survives every open and Project switch, and Project
+  copy materializes a detached destination snapshot with no continuing source inheritance.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
@@ -16836,6 +16861,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "A genuinely fresh Project seeds Basic Dark plus factory layout, existing explicit saved theme/layout survives startup and switching, and a copied Project owns an independent detached destination snapshot."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -16867,6 +16893,7 @@ preserved_exact_tokens:
 - "ContractName:Plans/LSPSupport.md"
 negative_constraints:
 - "`layout:v1` is not terminal topology or terminal session identity."
+- "Do not reapply factory theme/layout over an existing Project or keep a copied Project live-linked to its source snapshot."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -19829,8 +19856,10 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
   no React/JS/TS/HTML/CSS shell, IDE shell layout, four theme families (eight built-in themes,
-  default Friendly Dark; supersedes the prior three-family decision per
-  dec-2026-07-16-pm6-theme-settings-canon-promotion-seal), Settings restructure,
+  untouched first-open/fresh-project factory default Basic Dark; the former Friendly Dark and
+  prior three-family defaults remain superseded lineage), Settings owned by `Plans/Settings_System.md`,
+  the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login retained by
+  auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and motion,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
 gui_related: true
@@ -19876,8 +19905,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "These decisions are final and must not be revisited during implementation."
 compatibility_only_notes: []
-stale_retired_dispositions: []
-owner_boundary_notes: []
+stale_retired_dispositions:
+- "The Friendly Dark factory-default and unified Settings + Login + Doctor ownership summaries are superseded by the later factory-default and owner-routing contracts."
+owner_boundary_notes:
+- "Settings_System owns the Settings shell and ordinary-setting semantics; N2-151 owns Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns presentation only."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -28919,7 +28950,7 @@ Repairs row `sfk-94c4451c654561bebe80cef7`.
 The four Activity Bar groups are:
 
 1. `project`: File Manager, Search, Source Control.
-2. `automation`: GitHub Actions, Docker Manager, Testing.
+2. `automation`: Actions & Pipelines, Docker Manager, Testing.
 3. `communication`: Chat, Agents.
 4. `system`: Runtime Artifacts.
 
@@ -28947,7 +28978,7 @@ Required Slint host files:
 | Orchestrator seven-tab page | `ui/orchestrator/orchestrator_page.slint` |
 | Docker/Hosts | `ui/docker/docker_hosts_view.slint` |
 | Source Control | `ui/source_control/source_control_panel.slint` |
-| GitHub Actions | `ui/github_actions/github_actions_panel.slint` |
+| Actions & Pipelines | `ui/repository_automation/repository_automation_panel.slint` |
 | Docker Manager | `ui/docker/docker_manager_panel.slint` |
 | Artifacts | `ui/artifacts/artifacts_panel.slint` |
 | Search | `ui/search/search_panel.slint` |
@@ -28992,7 +29023,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord identity and usage_event_ref normalized to object_kind = usage_event are the primary navigation and rollup identity; thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total.
+  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord and usage_event_ref remain the accounting and rollup identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total.
 gui_related: true
 gui_classification_reason: Defines visible Usage, Dashboard, settings, graph, orchestrator, and artifact rendering behavior.
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
@@ -29044,12 +29075,14 @@ preserved_exact_tokens:
   - hidden_subscription
   - usage_event_ref
   - object_kind = usage_event
+  - object_kind = usage_attempt
+  - attempt_id
   - antigravity_cli
   - agy
   - G1 credits
 negative_constraints:
   - Do not render missing, unknown, hidden, stale, disabled, not exposed, partial, failed, or unsupported values as zero.
-  - Do not treat thread_id, tier_id, timestamp, or run_id as primary Usage identity when usage_event_ref is available.
+  - Do not treat thread_id, tier_id, timestamp, or run_id as primary Usage identity when a canonical event or attempt selector is available.
   - Do not infer Antigravity usage, quota, credits, or countdowns from status/login/model probes.
   - Do not expose unredacted raw provider payloads in GUI debug views.
 owner_hints:
@@ -29487,7 +29520,7 @@ owner_hints:
 
 This addendum promotes the user-approved PMConcept6 eight-theme system into canonical PlanUnits and carries the exact per-variant token tables as spec data. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
-### F3-425 - Eight Built-In Themes And Friendly Dark Default
+### F3-425 - Eight Built-In Themes And Basic Dark Factory Default
 
 ```yaml
 plan_unit_id: F3-425
@@ -29497,15 +29530,17 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The built-in theme set is exactly eight variants across four families: friendly-dark,
   friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light.
-  The default theme is friendly-dark. The selector additionally carries a presentation mode
-  dimension (Light, Dark, Auto); Auto resolves the selected family to its dark or light variant
-  by following the operating system appearance (prefers-color-scheme) and updates live when the
-  OS setting changes. This supersedes the prior three-family adjudication
-  (exactly three built-in theme choices with a Retro Dark default), which is preserved as
-  clearly labeled migration lineage prose so its exact tokens remain findable. Theme identity
-  persistence continues through the existing theme:v1 storage contract carrying the theme
-  family, presentation mode, and resolved variant; no new storage key is introduced for theme
-  identity.
+  Basic Dark is the factory theme only for an untouched first open or a genuinely fresh Project
+  with no committed theme snapshot. Existing explicit saved Project theme/layout customization
+  survives startup and Project switching. An admitted Project copy materializes the source
+  theme/layout into a detached destination-owned snapshot; subsequent source changes do not
+  propagate. The selector additionally carries a presentation mode dimension (Light, Dark,
+  Auto); Auto resolves the selected family to its dark or light variant by following the
+  operating system appearance (prefers-color-scheme) and updates live when the OS setting
+  changes. The former Friendly Dark default and prior three-family/Retro Dark adjudication are
+  preserved only as clearly labeled superseded lineage. Theme identity continues through the
+  existing Project-scoped theme:v1 contract carrying family, presentation mode, and resolved
+  variant; no new storage key is introduced for theme identity.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible built-in theme set and the default theme selection.
 split_recommended: false
@@ -29514,9 +29549,10 @@ unblocks: []
 acceptance_criteria:
 - "The theme selector exposes exactly eight built-in variants: friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light."
 - "The selector additionally exposes a Light/Dark/Auto presentation mode, and in Auto the selected family resolves to its dark or light variant by following the OS appearance (prefers-color-scheme) live."
-- "The default theme is friendly-dark."
-- "The superseded three-family selector contract remains findable in the owner doc as clearly labeled migration lineage prose."
-- "theme:v1 persists the theme family, presentation mode, and resolved variant, and no new storage key is registered for theme identity."
+- "Basic Dark is the untouched first-open/fresh-project factory default; an explicit saved Project selection is never overwritten by that seed."
+- "A copied Project receives a detached destination-owned theme/layout snapshot and never continuously inherits later source-project changes."
+- "The superseded Friendly Dark default and three-family selector contracts remain findable in the owner doc as clearly labeled lineage prose."
+- "Project-scoped theme:v1 persists the theme family, presentation mode, and resolved variant, and no new storage key is registered for theme identity."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -29527,7 +29563,7 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: eight_built_in_themes_and_friendly_dark_default
+  mode: eight_built_in_themes_and_basic_dark_factory_default
   create_worknodes: false
 source_lineage:
 - "Plans/FinalGUISpec.md:166"
@@ -29547,13 +29583,16 @@ preserved_exact_tokens:
 - "Light, Dark, Auto"
 negative_constraints:
 - "Retro Dark is not the default."
+- "Friendly Dark is not the current factory default; it remains one supported theme and superseded default lineage."
+- "Do not overwrite an explicit saved Project theme/layout or keep a copied Project live-linked to its source Project."
 - "Do not register a new storage key for theme identity; theme:v1 carries the theme family, presentation mode, and resolved variant."
 compatibility_only_notes:
 - "Slint portability: all eight built-in variants resolve to deterministic precomputed token sets; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
 - "The three-family / Retro-Dark-default selector adjudication is superseded per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal and preserved as migration lineage prose."
+- "The later Friendly-Dark-default promotion is itself superseded by the Basic Dark untouched first-open/fresh-project factory contract; it remains historical lineage only."
 owner_boundary_notes:
-- "The theme:v1 key row and its write frequency remain owned by the section 15.1 redb schema and F3-217; this unit widens only the persisted enum."
+- "The Project-scoped theme:v1/layout:v1 snapshot and write behavior remain owned by section 15.1 and F3-217; this unit defines factory selection and visible restoration/copy behavior."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -30274,7 +30313,7 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Typography | `--line-height` | `1.5` |
 | Typography | `--letter-spacing` | `0.01em` |
 
-#### friendly-dark (default; 02-css-tokens.part.html:436-493)
+#### friendly-dark (historical source label `default` is superseded by the Basic Dark factory contract; 02-css-tokens.part.html:436-493)
 
 | Group | Token | Value |
 |---|---|---|
@@ -31338,14 +31377,18 @@ canonical_text: >-
   scrolls horizontally when tabs overflow its width, and tab labels truncate with an
   ellipsis. Tabs shrink flexibly between a 56px minimum and a 180px maximum width. Editor
   tabs are explicitly excluded from this recipe and keep the width-aware "+N more" overflow
-  chip specified by F3-421.
+  chip specified by F3-421. The recovered PMConcept7 title-bar page strip may use its existing
+  bounded page-overflow picker when physical width cannot keep every named page visible. While
+  that in-tree picker is opening, open, or closing, the strip's decorative edge-fade mask is
+  disabled so the picker stays painted above and hit-testable instead of exposing page controls
+  beneath it; the mask returns immediately after the picker closes.
 gui_related: true
 gui_classification_reason: This unit defines visible tabstrip layout, scrolling, and label truncation for non-editor tab systems.
 split_recommended: false
 depends_on: [F3-421]
 unblocks: []
 acceptance_criteria:
-- "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels."
+- "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels; when the PMConcept7 title-bar page overflow picker is present, every hidden page remains reachable, the picker stays above and owns hit testing across its full painted rectangle, the ancestor edge-fade mask is disabled only for its opening/open/closing lifecycle, and no click falls through to an underlying page control."
 - "Tabs in these systems shrink no narrower than 56px and grow no wider than 180px."
 - "Editor tabs keep the F3-421 +N more overflow chip and do not adopt the scroll-and-ellipsis recipe."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -31369,6 +31412,7 @@ preserved_exact_tokens:
 - "+N more"
 negative_constraints:
 - "Editor tabs keep the +N more overflow chip; the scroll-and-ellipsis recipe must not replace editor tab overflow behavior."
+- "Do not leave the title-bar edge-fade mask active over an open in-tree page picker or disable that mask after the picker closes."
 compatibility_only_notes:
 - "Slint portability: the tabstrip renders as an opaque horizontally scrollable row of precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []
@@ -32133,14 +32177,21 @@ canonical_text: >-
   motion kills the entire system by clearing translate and glow and stopping the engine.
   One shared animation driver services the system, effect writes are compositor-friendly
   translate and opacity writes, and the driver self-suspends when nothing is hovered,
-  settling, or glowing.
+  settling, or glowing. On magnetic Usage cards, the painted move and resize controls define
+  measured base-relative corner zones. Magnet translation attenuates continuously to zero as
+  the pointer enters either zone, while body magnetism remains unchanged elsewhere. A short
+  pointer-id-, time-, and bounds-scoped lease may hand an otherwise displaced corner control
+  to the existing drag/resize controller from document capture; unrelated buttons, links,
+  fields, pointer ids, expired leases, and points outside the corridor never activate it. Every
+  direct or rescued transaction clears the lease before capture and resets latent magnet state
+  on cleanup.
 gui_related: true
 gui_classification_reason: This unit defines visible magnet lean, spotlight ring, wash, and bloom hover behavior on shell boxes.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "Every box in the former jiggle selector set runs the magnet and spotlight hover system with spring translate toward the pointer and a continuous-intensity accent ring, interior wash, and outward bloom."
+- "Every box in the former jiggle selector set runs the magnet and spotlight hover system with spring translate toward the pointer and a continuous-intensity accent ring, interior wash, and outward bloom; Usage move/resize corner acquisition measures the painted controls in the card's base coordinates, continuously attenuates only card translation to zero near those controls, preserves body magnetism elsewhere, scopes rescue to one live pointer id plus a short time/bounds corridor, excludes other interactive controls, and clears the lease and latent magnet state on direct activation, rescued activation, commit, cancellation, and no-op cleanup."
 - "Intensity ramps continuously from a bleed distance outside the box with no snap at edges; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
 - "Per-theme knobs give retro a stiff small hard ring, basic restraint, glass a wide soft ring with stronger magnet, and friendly springy micro-overshoot, with the accent color riding the theme accent."
 - "Reduced motion clears translate and glow and stops the engine; one shared self-suspending driver performs compositor-friendly translate and opacity writes."
@@ -32167,6 +32218,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate channel."
 - "Do not attach per-element pointer-move listeners; one shared driver services the whole selector set through the merged document pointer-move handler."
+- "Do not disable Usage card magnetism globally, synthesize a second pointerdown, or let a stale/foreign acquisition lease activate through another interactive control."
 compatibility_only_notes:
 - "Slint portability: the magnet maps to translate plus an animated spring, pointer tracking maps to TouchArea.mouse-cursor-position, the ring renders as a radial-gradient Rectangle with an inner cover instead of a mask, the wash is a second under-content Rectangle, and the bloom is a drop-shadow on the box (ScrollView clips automatically with no fixed proxy needed); no blend modes, filters, or canvas."
 stale_retired_dispositions:
@@ -32758,7 +32810,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The panels/ Slint host-file inventory adds panels/search_panel.slint,
-  panels/source_control_panel.slint, panels/github_actions_panel.slint,
+  panels/source_control_panel.slint, panels/repository_automation_panel.slint,
   panels/testing_panel.slint, panels/agents_panel.slint, and
   panels/artifacts_panel.slint, so every canonical side-panel occupant has a named host
   file; file_manager_panel.slint and docker_manager_panel.slint are already listed. Where
@@ -32772,7 +32824,7 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The panels/ inventory lists host files for search, source control, GitHub Actions, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
+- "The panels/ inventory lists host files for search, source control, Actions & Pipelines, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
 - "Duplicate ui/<domain>/ spellings in the FABLE Slint Host File Inventory resolve to the same planned surface, not a second file."
 - "No implementation files are created and no source tree is authorized by these registrations."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
@@ -32792,7 +32844,7 @@ source_lineage:
 preserved_exact_tokens:
 - "panels/search_panel.slint"
 - "panels/source_control_panel.slint"
-- "panels/github_actions_panel.slint"
+- "panels/repository_automation_panel.slint"
 - "panels/testing_panel.slint"
 - "panels/agents_panel.slint"
 - "panels/artifacts_panel.slint"
@@ -33074,7 +33126,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Ratified decision (2026-07-27): the side-panel occupant stack (activity bar plus the
-  single panel slot hosting search, chat, files, source_control, github_actions,
+  single panel slot hosting search, chat, files, source_control, repository_automation,
   docker_manager, testing, agents, artifacts, run_debug) mounts on the LEFT edge of the
   shell. This supersedes the right-hand slot language in the section 3/4 shell prose and
   closes the carried deviation recorded by F3-478: the concept family (PMConcept7 and the
@@ -34400,4 +34452,1292 @@ owner_boundary_notes:
 - "F3-447/F3-460 own the notification affordance decision; this unit records only the view removal mechanics."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+```
+
+## PMConcept7 User-Polished Runtime Contract Addendum - 2026-08-27
+
+This addendum makes the recovered, source-owned PMConcept7 behavior canonical without treating the generated HTML or concept-only storage and command aliases as production authorities. It covers the complete application surface, not Usage alone, and delegates data, command, storage, event, and testing ownership to their existing canonical owners.
+
+Final successor evidence is report-owned. When `audit_report.json` records `status = pass_with_named_residuals`
+and `verdict = successor_scope_verified_with_named_residuals`, the `evidence_ref` entries below prove only their
+named exact-hash PMConcept7 concept/demo slices. They grant no native Slint, production-runtime, PNC-019,
+certification, completeness, or product-readiness credit; every blocked, failed, uncaptured, or residual lane
+retains that classification.
+
+Build8 browser receipts do not establish an all-visuals pass. The protected Settings actual-pixel review retains
+`IVR-T41-B8-XPAGE-001`: the rightmost Settings card column is visibly cropped at 1180, 980, 860, and 680 in all
+eight themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
+keyboard-focus and Arrow-key-navigation defect also remains open, and PNC-019 remains outside this evidence.
+
+### F3-513 - User-Polished PMConcept7 Whole-Application Authority
+
+```yaml
+plan_unit_id: F3-513
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The user-polished PMConcept7 is the visual and interaction authority for the recovered concept across the
+  global shell, title bar, primary pages, side panels, Cozy Shelves, Home workspace, Dashboard, Usage,
+  shared Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion. The current
+  pinned PM7 base plus source-owned T33-T43 transforms owns the current build path; generated PMConcept7.html
+  is a product and comparison input, never the sole authored source or product canon. The eight built-in themes remain Basic Dark,
+  Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, and Glass Light, with the
+  recovered family-specific typography, palette, shape, contrast, and motion behavior.
+gui_related: true
+gui_classification_reason: This unit establishes the complete user-visible PMConcept7 authority and source-owned build boundary.
+split_recommended: false
+depends_on: [F3-425, F3-426, F3-500]
+unblocks: [F3-514, F3-516, F3-517, ATS-037, ATS-038]
+acceptance_criteria:
+  - "A clean build from the pinned PM7 base through source-owned T33-T43 produces PMConcept7.html; repo-local audit-20260830-001 must record two-build byte equality and any residual before a successor-scope verdict, and no new required behavior may exist only as a hand edit in generated HTML."
+  - "All primary pages, shell chrome, global panels, Cozy Shelves, Home, Dashboard, Usage, Assistant/context, bottom panel, and status bar retain the recovered semantic and presentation contract."
+  - "All eight theme families preserve their intended font, palette, shape, inactive-state contrast, first-paint background, and family-specific composition."
+  - "Initial paint and transitions never expose white or blank controls until hover and never introduce black-screen or uniform-frame flashes."
+  - "This contract creates no WorkNodes, NodeSeeds, executable queues, implementation tasks, production code, or accessibility acceptance expansion."
+validation_surfaces:
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures"
+risk_class: pm7_whole_application_fidelity_drift
+reasoning_tier: high
+context_scope: pm7_whole_application_authority
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/base/PM7-base.html
+  - Concepts/pm7-tools/build_pm7.py
+  - Concepts/PMConcept7.html
+node_compile_hint:
+  mode: pm7_whole_application_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; base_sha256=9dcde2a8862de0cdd28a0d540cb4976396ea0556e6ff15a5c9c8fc14bd121090)"
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+preserved_exact_tokens: [T33, T34, T38, T39, T40, T41, Basic Dark, Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, Glass Light]
+negative_constraints:
+  - "Do not treat generated PMConcept7.html as an authored source."
+  - "Do not narrow the recovered authority to Usage-only behavior."
+  - "Do not add accessibility bootstrap acceptance work; preserve already-useful keyboard behavior without expanding scope."
+owner_hints: [Plans/FinalGUISpec.md]
+```
+
+### F3-514 - Usage Rooms Curated Sizes And Complete-Or-Hidden Presentation
+
+```yaml
+plan_unit_id: F3-514
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
+  disclosure ladder from the Usage owner into a balanced twelve-track widget workspace. Curated defaults,
+  provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
+  content tiers, chart and meter lanes, source-confidence copy, Raw versus Curated views, Context details, and
+  humanized Ledger labels must remain readable at supported sizes. Wider or taller widgets earn their footprint
+  with additional columns, facts, or rows; routine internal body scrolling, clipped labels, partial next-tier
+  content, and empty decorative width are not accepted product states. Content tiers respond to the widget body's
+  measured rendered width rather than nominal grid spans, and reorder placeholders use the measured physical
+  width and height without persisting those preview spans. Vertical charts reserve a measured in-plot label
+  region and paint exactly one visible value for every painted bar, including zero bars, while keeping every
+  label inside the plot and collision-free. Labels remain horizontally associated with their own bars and may
+  use measured vertical lanes when direct-above placement would collide; no datum is suppressed. Tiny charts
+  retain the complete ordered series in accessible text. Chart values use the metric's declared
+  display unit and formatter, including currency formatting for attempt-charge integer cents, and the chart title
+  plus Latest and distinct peak facts remain complete in one row or a narrow two-row composition. An active
+  reorder ghost stays visibly above the workspace until cleanup.
+  Every room remains reachable at every supported width, and Source authority mounts exactly 4/6/8 panels for
+  At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
+  the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation and continuation
+  identity, and reuses `cmd.settings.open` with the typed Settings target
+  `target_type=setting`, `setting_id=ai.accounts.provider-connections`; UF-090, UF-092, and CBP-028 retain policy ownership, so installation and
+  authentication remain separate and the GUI starts no automatic acquisition or silent reroute.
+  PMConcept7 Ledger attempt controls dispatch `cmd.nav.open_usage_subject` only with stable `attempt_id` and
+  `usage_event_ref`, normalize to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep
+  the event/provider/account/runtime identities as correlation, and carry no `OpenSubject`. Event-primary callers
+  retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
+  inspector with no route command, receipt, or domain event.
+gui_related: true
+gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
+split_recommended: false
+depends_on: [F3-513, UF-093, UF-094, UF-096, WS-017, WS-018, WS-020]
+unblocks: [F3-515, F3-518, ATS-036, ATS-038]
+acceptance_criteria:
+  - "Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, and Source authority are all addressable, in that order and at every supported physical width, with only At a glance, Detailed, and Diagnostics as user-facing disclosure labels; Source authority mounts exactly 4/6/8 panels, and provider setup absence renders exact Provider Setup Required copy, explicit Host/Environment, preserved operation/continuation identity, and a cmd.settings.open CTA with target_type setting and setting_id ai.accounts.provider-connections."
+  - "Every room has a non-empty curated default; partial final rows retain intentional widths and provider-heavy boards prefer narrower, taller, information-dense cards."
+  - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
+  - "Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and display unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, and the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition; reorder ghosts remain above cards until cleanup."
+  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged."
+validation_surfaces:
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
+  - "python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures"
+risk_class: pm7_usage_visual_semantic_false_pass
+reasoning_tier: high
+context_scope: pm7_usage_curated_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+  - tests/fixtures/usage_gui
+node_compile_hint:
+  mode: pm7_usage_presentation_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
+  - Plans/Widget_System.md#ws-017---kind-aware-curated-size-and-adaptive-content-contract
+preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated]
+negative_constraints:
+  - "Do not revive Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels."
+  - "Do not stretch lone cards across a row or preserve wide empty space merely because the grid permits it."
+  - "Do not render missing, hidden, disabled, unsupported, or unknown values as zero."
+  - "Do not bundle installation with authentication, start automatic acquisition, or silently reroute from Provider Setup Required."
+  - "Do not route a provider/account/panel presentation ID, use usage_event_ref as the PMConcept7 Ledger attempt object_id, invent an unregistered aggregate-card object kind, or attach OpenSubject to either cmd.nav.open_usage_subject selector branch."
+owner_hints: [Plans/FinalGUISpec.md, Plans/usage-feature.md, Plans/Widget_System.md]
+```
+
+### F3-515 - Settled Interaction Event And Persistence Boundary
+
+```yaml
+plan_unit_id: F3-515
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  PMConcept7 widget and Home direct manipulation is transactional. Pointer movement, keyboard reorder preview,
+  placeholders, ghosts, target animation, Usage pointer-only live resize-peer displacement, Dashboard frozen resize-peer geometry, live reorder-peer displacement, popup
+  disclosure, and hover are view-local. Widget pickup snapshots stable widget identity, committed order, measured
+  physical footprint, and stable before/after correlation. Usage derives a stable two-dimensional candidate set
+  from the frozen grid, including empty same-footprint cavities and lower rows; pointer selection aligns the
+  ghost's anchored top-left with a candidate origin under real geometric hysteresis, so overlapping multi-span
+  candidate rectangles cannot redirect the visible placeholder. Pointer and keyboard reorder use the same
+  candidate model with live interruptible peer displacement while peer nodes remain mounted and fully painted;
+  entrance animations do not restart and the accepted settlement reconciles DOM order once. Usage pointer resize
+  advances its real target footprint through the same deterministic slot projection, visibly repacks only
+  obstructed peers during the held preview, and retains that last-painted topology on acceptance without remounting
+  peers; Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
+  axis at the far right, far left, and middle while minimizing companion-axis drift; an edge-constrained deliberate
+  drag can express one step, and an in-viewport release commits the last painted supported size even after
+  same-direction overshoot. A changed reorder
+  release/drop commits the last intent actually painted without a new pointer-up hit test or release-time retarget;
+  other changed releases or semantic activations resolve their final coordinate and target. The accepted action
+  dispatches exactly one existing command, reconciles one owner result and its dispatch receipt, emits the existing
+  workspace.layout_changed event only when that event is applicable, and persists one settled state. Escape,
+  pointercancel, `lostpointercapture`, blur, invalid target, stale revision, no-change release/drop, and popup
+  dismissal restore committed state, clear capture and transient state, and produce no command, receipt, persisted
+  event, or storage write. An owner-rejected command or post-dispatch persistence-adapter failure restores the
+  authoritative state and emits no settled event or successful owner-store write while retaining exactly one
+  attempted command and its typed rejected/failed result and dispatch receipt. Commit and rollback both restore any
+  temporary preview board extent, and one active pointer or keyboard widget transaction excludes every competing
+  operation before focus, capture, class, or DOM mutation. The compatibility-only
+  cmd.workspace_layout.size_surface token resolves a semantic preset to dimensions and dispatches
+  cmd.workspace_layout.resize_surface; it is not a second registered command.
+gui_related: true
+gui_classification_reason: This unit governs visible drag, resize, reorder, preset, cancellation, and cleanup behavior.
+split_recommended: false
+depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012]
+unblocks: [ATS-037, ATS-039, ATS-040]
+acceptance_criteria:
+  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
+  - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
+  - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
+  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema."
+  - "No PM7-only command family, preview-frame event family, second layout store, or registered cmd.workspace_layout.size_surface command is introduced."
+validation_surfaces:
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-shared-runtime-command-contracts.py validate"
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+risk_class: pm7_preview_commit_or_duplicate_effect_drift
+reasoning_tier: high
+context_scope: pm7_transactional_direct_manipulation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/event_payloads/workspace_layout_changed.schema.json
+  - Plans/event_family_registry.json
+  - Plans/shared_runtime_command_contracts.schema.json
+  - Plans/shared_runtime_command_contract_fixtures.json
+node_compile_hint:
+  mode: pm7_transaction_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Commands_System.md#cs-068---pmconcept7-settled-interaction-command-reuse-and-local-preview-boundary
+  - Plans/UI_Wiring_Rules.md#uiw-012---transactional-preview-commit-cancel-cleanup-and-shared-assistant-re-seating
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [workspace.layout_changed, cmd.workspace_layout.size_surface, cmd.workspace_layout.resize_surface, Escape, pointercancel, lostpointercapture, no-change release, last painted intent]
+negative_constraints:
+  - "Do not persist or emit pointer-preview frames."
+  - "Do not dispatch a command merely because a pointer moved, a hover changed, or a popup opened."
+  - "Do not re-hit-test or retarget a reorder at pointer-up after a different stable intent was last painted."
+  - "Do not treat cancellation acknowledgement as successful cleanup without rollback evidence."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
+```
+
+### F3-516 - One Shared Assistant Context And Status Continuity
+
+```yaml
+plan_unit_id: F3-516
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  PMConcept7 uses one shared Assistant node, controller, transcript/thread store, draft/attachment state,
+  context state, and Context Detail Pane. Home seats that identity in its saved dock; other pages re-seat the
+  same identity in the right-side global host without remounting or losing state, and failed re-seating restores
+  the prior seat. The context ring exposes current-window use, effective window and loaded tokens, cache hit,
+  and source composition. Its compact menu offers Compact Now and More Details. Compact Now dispatches
+  cmd.chat.compact_context and projects the existing result, receipt, and compaction history; it does not invent
+  context.compaction.started, context.compaction.completed, or context.compaction.failed EventRecord families.
+  The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
+gui_related: true
+gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
+split_recommended: false
+depends_on: [F3-513, ACD-448, WM-045, UIW-012]
+unblocks: [F3-517, F3-518, ATS-037, ATS-038, ATS-040]
+acceptance_criteria:
+  - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
+  - "A failed or stale re-seat restores the prior host and preserves the saved Home dock rather than creating a second Assistant or blank seat."
+  - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
+  - "Compact Now uses cmd.chat.compact_context result and receipt projection with zero registered context.compaction.* event families; More Details reuses the existing Context Detail Pane commands."
+  - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
+validation_surfaces:
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures"
+risk_class: duplicate_assistant_or_context_authority
+reasoning_tier: high
+context_scope: pm7_shared_assistant_context_status
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/event_family_registry.json
+  - tests/fixtures/pm7_shared
+node_compile_hint:
+  mode: pm7_shared_assistant_context_status_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/assistant-chat-design.md#acd-448---one-shared-assistant-seat-and-coherent-context-ring-detail-contract
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [Compact Now, More Details, Curated, Raw, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
+negative_constraints:
+  - "Do not create a second Assistant, transcript store, context store, or Context Detail Pane."
+  - "Do not register context compaction lifecycle events merely to mirror a local working animation."
+  - "Do not put notifications or a bell in the status bar."
+owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
+```
+
+### F3-517 - Global Shell Home Dashboard Panels Themes And Motion Compatibility
+
+```yaml
+plan_unit_id: F3-517
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The recovered global shell composes title/search/toolbars, page tabs, side panels, Cozy Shelves, Home editor
+  and terminal surfaces, Dashboard widgets, bottom surfaces, status, hover layers, menus, portals, and liquid-ink
+  or editor-tab motion without clipping or incompatible ownership. Home and Dashboard preserve their distinct
+  tab models while using the shared Usage visual grammar for move, options, resize, and settled sizing. Dashboard
+  cards remain children of and are mutated through their owning Dashboard tab/category wrapper or host even when
+  that wrapper participates presentation-only in an outer grid; the outer presentation grid is never the widget
+  mutation owner. Pointer and keyboard Dashboard manipulation share the same dedicated handle, truthful
+  `aria-grabbed` state, measured-footprint placeholder, fixed ghost, stable before/after insertion intent, live
+  reorder-peer displacement, Dashboard-frozen resize peers, last-painted-intent commit, changed-only existing widget command
+  and persistence boundary, and silent cancellation/no-op cleanup. Reorder preview keeps peer nodes mounted and
+  fully painted, does not restart entrance animation, and reserves DOM-order reconciliation for the accepted
+  settlement. Theme
+  overlays may change palette, typography, radius, opacity, texture, and silhouette, but they do not reorder,
+  rename, hide, or resize functional surfaces. Motion is slow enough to read, continuously visible, and free of
+  black frames, white-until-hover artifacts, clipped transition plates, or independent tab-layer easing.
+  Physical container width, not a nominal breakpoint token alone, drives narrow composition: Planning Wizard,
+  Home, Orchestrator, and Projects collapse to viable single-column/scrollable arrangements without empty grid
+  tracks or page overflow. Contrast repairs are component-scoped to the affected non-Settings/non-Chat surface
+  and must not rewrite global theme tokens, Settings, or the protected Chat design. The title-bar page-overflow
+  picker remains above and hit-testable at narrow widths; its ancestor edge-fade mask is disabled only while the
+  picker is opening, open, or closing, so clicks cannot fall through to page controls beneath it.
+gui_related: true
+gui_classification_reason: This unit governs visible compatibility across shell, Home, Dashboard, panels, themes, and motion.
+split_recommended: false
+depends_on: [F3-513, F3-514, F3-516]
+unblocks: [F3-518, ATS-037, ATS-038, ATS-039]
+acceptance_criteria:
+  - "Basic, Friendly, Retro, and Glass dark/light variants preserve the recovered font, palette, tab, panel, and inactive-state behavior without changing functional inventory; component-scoped contrast repairs do not mutate global theme tokens, Settings, or protected Chat surfaces."
+  - "Home editor/terminal surfaces and Dashboard widgets preserve stable identities, tabs, move/options/resize affordances, semantic sizes, and settled-state continuity; Panel 1 retains the Browser Preview and Automation owner sessions without duplication in the stable `Preview -> Automation -> overflow/actions anchor` group order, owner refresh is idempotent and produces no recurring child-list reseat loop once that group is settled, only the active session participates in layout or focus order, and legacy overflow fitting cannot reveal inactive Automation; Dashboard cards remain owned by their tab/category wrapper or host even when that wrapper participates presentation-only in the outer grid, and pointer/keyboard move and resize have parity for the dedicated handle, truthful aria-grabbed state, measured placeholder and ghost, stable before/after insertion intent, live reorder-peer displacement versus Dashboard-frozen resize peers, last-painted-intent changed-only commit, rollback, and complete cancellation/no-op cleanup without NotFound or a stuck move state."
+  - "Search, Source Control, Artifacts, Tests, Actions, Agents, Debug & Run, Docker, Files, and related Cozy Shelves panels retain recovered spacing, indentation, readable rows, and working controls."
+  - "Title bar, page tabs, theme picker, left rail, menus, portals, bottom surfaces, and status remain inside viewport bounds at supported desktop widths; Planning Wizard, Home, Orchestrator, and Projects use physical-width-aware one-column or scrollable narrow composition with no empty tracks or application/page horizontal overflow; a narrow title-bar page overflow picker remains visually above and owns hit testing across its painted rectangle, disables the ancestor edge-fade mask only through opening/open/closing, restores the mask afterward, and never exposes an underlying page control to the same click."
+  - "Page, tab, menu, drawer, hover, drag, resize, and reflow motion has no black, blank, white-until-hover, clipped, or one-frame teardown state; Usage reorder and pointer-only live resize-repack preview keep every peer mounted and nonzero-opacity with no restarted entrance animation, while Dashboard resize retains frozen peers."
+validation_surfaces:
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-focused-regression-rerun-2/report.json (SHA-256 4de0320f73010440560c5fed357df8b67f02188b6ca0a07c1ff3875de31485c0; historical predecessor concept/browser slice; superseded for Usage pointer-resize timing; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/films/build8/t41-final/independent_visual_review.json (SHA-256 b669c7588b87ecd757addb6cdd0b59b473d9de89e0bd9e53a916ecc484ff559b; credited Build8 Usage/Home lossless-film review only; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-cross-page-matrix-clean-tmp/report.json (SHA-256 d310b6ccbe900c4f7845b15e79e92de6ac89487ac258ed82f0116992efc1104b; exact Build8 cross-page concept/browser geometry and state slice; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-cross-page-matrix-clean-tmp/independent_visual_review.json (SHA-256 daac899e74e5e74727ac8ba545441c5a593a3b7a55e39e4be4c2d1c430af2b7c; status=completed_with_visual_finding; IVR-T41-B8-XPAGE-001 retains protected Settings card crop at 1180/980/860/680; readiness_claim=false)"
+risk_class: pm7_cross_surface_theme_or_motion_regression
+reasoning_tier: high
+context_scope: pm7_shell_home_dashboard_panels_themes_motion
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/base/PM7-base.html
+  - Concepts/pm7-tools/build_pm7.py
+  - Concepts/pm7-tools/home_workspace_source.py
+  - tests/fixtures/pm7_shared
+node_compile_hint:
+  mode: pm7_cross_surface_compatibility_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform; Dashboard behavior unchanged)
+  - Concepts/pm7-tools/home_workspace_source.py (authored Home owner projection; Browser Preview and Automation inactive-state repair)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+preserved_exact_tokens: [Basic, Friendly, Retro, Glass, liquid-ink, Home, Dashboard, Cozy Shelves, aria-grabbed]
+negative_constraints:
+  - "Do not let theme overlays alter functional ownership or control identity."
+  - "Do not replace the custom Home editor or Dashboard tab models with a generic tab implementation."
+  - "Do not let the outer presentation grid directly own or mutate Dashboard cards, and do not give pointer and keyboard movement different commit semantics."
+  - "Do not accept geometry-only checks as proof that pixels and motion are correct."
+  - "Do not use this repair lane to change Settings or Chat GUI bytes or to rewrite global theme tokens."
+owner_hints: [Plans/FinalGUISpec.md]
+```
+
+### F3-518 - PMConcept7 Fixture Evidence And Bootstrap Scope Boundary
+
+```yaml
+plan_unit_id: F3-518
+unit_type: acceptance_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  PMConcept7 acceptance evidence is rooted in canonical repository fixtures and reports, not in concept-only
+  demo reports. Usage fixtures live under tests/fixtures/usage_gui, shared PM7 surface and interaction fixtures
+  live under tests/fixtures/pm7_shared, and the current authored concept runners may produce execution evidence
+  for their owned slices. Every fixture names its owner PlanUnits, source lineage, positive assertions, negative
+  assertions, and intended visual or interaction surface. Fixture presence and `must`/`must_not` lists establish
+  static representation only and never prove runtime, visual, motion, or migration behavior; those require fresh
+  browser execution, raw receipts, and independent review. Final certification combines deterministic build
+  proof, machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
+  The widget interaction slice binds the exact generated artifact hash and covers repeated right-edge (primary),
+  left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity,
+  direct and rescued magnetic-control
+  acquisition, cancellation/no-op cleanup, stable mounted reorder peers, and black/empty-frame detection.
+  The acquisition evidence includes a real top-layer occluder and transaction reentrancy probes, while settled
+  reorder evidence proves preview-only board extent does not survive or compound after commit.
+  Accessibility remains outside this bootstrap expansion; existing keyboard behavior may be preserved, but this
+  recovery does not create new accessibility PlanUnits, acceptance matrices, or implementation work.
+gui_related: true
+gui_classification_reason: This unit defines how visible PMConcept7 acceptance evidence is owned and reviewed.
+split_recommended: false
+depends_on: [F3-514, F3-515, F3-516, F3-517]
+unblocks: [ATS-036, ATS-037, ATS-038, ATS-039, ATS-040]
+acceptance_criteria:
+  - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
+  - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
+  - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, exact preview-to-accepted-settlement topology parity, Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
+validation_surfaces:
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
+  - "python3 scripts/pm-plans-verify.py run-gates"
+risk_class: pm7_fixture_or_visual_evidence_false_completion
+reasoning_tier: high
+context_scope: pm7_fixture_evidence_boundary
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Automated_Testing_System.md
+  - tests/fixtures/usage_gui
+  - tests/fixtures/pm7_shared
+node_compile_hint:
+  mode: pm7_fixture_evidence_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - Plans/Automated_Testing_System.md
+preserved_exact_tokens: [tests/fixtures/usage_gui, tests/fixtures/pm7_shared, actual pixels, frame-by-frame, accessibility]
+negative_constraints:
+  - "Do not call concept reports or screenshots alone a canonical fixture suite."
+  - "Do not claim final visual completion from geometry-only checks."
+  - "Do not add accessibility bootstrap acceptance work."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Automated_Testing_System.md]
+```
+
+## Settings, Product Onboarding, Guided Tour, Doctor, And Hover Presentation Reconciliation - 2026-08-31 (amended 2026-09-01)
+
+This addendum is the current Final GUI presentation authority for the Settings, Product Onboarding, Guided Tour,
+Doctor, and global hover-tag surfaces. It consumes system-owner state and commands; it does not move semantic,
+runtime, persistence, security, probe, remediation, or domain-mutation ownership into Final GUI. The strict static
+presentation sidecar is `Plans/final_gui_interaction_contracts.schema.json`, and its positive/negative examples are
+`Plans/final_gui_interaction_contract_fixtures.json`. Schema and fixture success proves only contract shape.
+
+The following predecessor clauses remain historical lineage, not current behavior:
+
+- F3-411's four-screen/provider-first order, prohibition on a full product tour, and compact-Doctor-only language
+  are superseded by F3-520 through F3-522. Its beginner-friendly, concise-copy, truthful-state, and pre-shell intent
+  remains current.
+- F3-409's provider-first onboarding choreography is superseded; its Free Models requested/effective override and
+  truthful availability presentation remain current outside the simple default onboarding path.
+- F3-513's T33-T43 build-tail statement is predecessor lineage for these surfaces; authored T44 Settings/Doctor,
+  T45 Product Onboarding/Guided Tour, T46 system consumers, T47 hover, and the bounded T48 Home refresh are the
+  current concept path. T48 may refresh authored Home source to expose the setup-wizard return route; it does not
+  authorize a hand edit to generated `Concepts/PMConcept7.html`.
+- F3-517's prohibition on Settings changes does not apply to this user-authorized Settings/Doctor port. Its rule
+  against theme overlays changing functional identity remains current.
+- F3-518's no-accessibility-expansion clause is superseded for the T44-T47 touched surfaces. The broader bootstrap
+  boundary remains historical context, but keyboard, screen-reader, focus, tooltip, and reduced-motion acceptance
+  below is required.
+
+### F3-519 - K3 Settings And Doctor Geometry In PMConcept7 Chrome
+
+```yaml
+plan_unit_id: F3-519
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Final GUI renders Settings and operational Doctor with the selected K3 Tome Tabs geometry inside PMConcept7
+  shared chrome: a 250 px domain rail, 62 px top bar, workspace tabs, continuous document, 168 px page index,
+  350 px details inspector, manager destinations, and a 1040 px maximum ordinary document body, with the
+  host-width responsive states owned by SSYS-003. Mild theme and surrounding-chrome adaptation may change paint,
+  typography, shape, opacity, texture, and motion while preserving this information architecture. No Settings- or
+  Doctor-specific Back control or breadcrumb is added merely to fit the outer shell. All eight built-in PMConcept7
+  themes render the same functional inventory and geometry contract.
+gui_related: true
+gui_classification_reason: This unit owns the visible K3 layout, PMConcept7 chrome fit, and theme adaptation.
+split_recommended: false
+depends_on: [F3-513, F3-517, SSYS-003, SSYS-016, N2-152, N2-153]
+unblocks: [F3-520, F3-522, F3-523, F3-524]
+acceptance_criteria:
+  - "Wide-state geometry proves 250/62/168/350/1040 values and preserves the continuous document/index/details/manager structure."
+  - "Host-width behavior follows SSYS-003 at 1180, 960, 720, and 320 px without clipped or unreachable content."
+  - "Basic, Friendly, Glass, and Retro light/dark variants preserve control identity, order, and availability while applying theme-native paint and motion."
+  - "No new Settings- or Doctor-specific Back button or breadcrumb is required or rendered by this integration."
+  - "Settings and Doctor consume owner projections and typed routes; neither becomes a runtime or mutation owner."
+validation_surfaces:
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - future native Slint host-width geometry and actual-pixel review
+risk_class: k3_geometry_or_owner_drift
+reasoning_tier: high
+context_scope: k3_settings_doctor_pm7_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/settings_tome_source.py
+  - Concepts/pm7-tools/build_pm7.py
+  - future native Slint Settings and Doctor components
+node_compile_hint: {mode: k3_settings_doctor_presentation_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Settings_System.md#SSYS-003
+  - Plans/Settings_System.md#SSYS-016
+  - Plans/newtools.md#N2-152
+  - Plans/newtools.md#N2-153
+  - Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html
+preserved_exact_tokens: [K3 Tome Tabs, 250px, 62px, 168px, 350px, 1040px, Basic, Friendly, Glass, Retro]
+negative_constraints:
+  - "Do not change K3 geometry for aesthetic cleanup."
+  - "Do not add a new Settings- or Doctor-specific Back or breadcrumb requirement."
+  - "Do not let Final GUI own setting values, Doctor checks, domain truth, or remediation mutations."
+  - "Do not infer native Slint correctness from generated HTML or browser geometry."
+owner_boundary_notes:
+  - "Settings System owns Settings semantics and data; newtools Doctor owns the registry/router/projection; Final GUI owns paint, layout, motion, and overlays only."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Settings_System.md, Plans/newtools.md]
+```
+
+### F3-520 - Simple Cinematic Product Onboarding Presentation
+
+```yaml
+plan_unit_id: F3-520
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Product Onboarding is a beautiful, calm first impression presented as one bounded modal window over a theme-aware
+  scrim, with the live PMConcept7 application still visibly present behind it; it is never a full-page route or a
+  replacement application surface. The modal presents the exact nine-stage main journey welcome -> simple_path ->
+  first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan ->
+  automatic_preparation -> ready. Choosing the connect-existing path uses the exact bounded six-stage shortcut
+  welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready and does not
+  fabricate empty first_project, source_control_setup, or server_storage_client stages. The bounded eight-theme choice
+  appears at welcome, before Project or infrastructure choices, and changes presentation only. In user language, the
+  main journey welcomes the person, chooses whether to begin here or connect to an existing Puppet Master, creates or
+  opens their first project, gives the project safe version history, chooses the computer and storage places that will
+  do and hold the work, offers private access, reviews the complete setup plan, prepares only the approved choices, and
+  finishes in a concise Ready state. Before the person confirms the current Review Setup Plan, choices update the local
+  draft and may consume cached projections, detected-account observations, and explicitly read-only Local/VPN or active
+  Tailscale discovery; authentication, enrollment, pairing, trust, restore, repository creation or binding, filesystem
+  writes, and every other owner mutation remain forbidden. Confirm and prepare validates that current plan and dispatches
+  it exactly once through canonical owners; Automatic Preparation observes only those real owner results. Each screen has
+  one clear decision, one dominant primary action, short human copy, automatic detection, safe defaults, and calm
+  progressive disclosure. The First Project decision is the deliberate exception to progressive hiding: its four equal
+  aligned routes remain visible together so no one must guess what a More menu conceals.
+  Safe History is the beginner-facing local version timeline: Git is the recommended local engine, Jujutsu is an
+  alternative local engine with no account, FileSafe adds complementary local recovery points, and GitHub, GitLab,
+  Azure DevOps, Bitbucket, or eligible Cursor Origin may hold a separate optional online copy without replacing local
+  history.
+  User-visible copy assumes no coding or IDE knowledge: it uses familiar words and never exposes the internal term
+  `shell`, raw command/route/schema identifiers, owner names, host/environment vocabulary, provider matrices,
+  diagnostics dashboards, network topology, or unexplained source-control jargon. Optional owner-routed branches
+  cover opening an existing or online project, restoring a backup, keeping history locally or using a connected
+  source service, discovering/pairing or manually locating another computer, setting up a work computer, optional
+  service help, and private-access choices; advanced detail remains deferred or disclosed only when needed. Server,
+  Storage, and this Client are three independent placements; local/mounted folders, advanced SSH/SFTP sources, and
+  backup sources remain distinct. Every main stage has a scene-specific, theme-native cinematic composition rather than
+  a generic repeated fade. The four theme families use substantially different illustration systems and directing
+  language--Basic is an exact instructional blueprint, Friendly is an organic storybook workspace, Glass is a layered
+  spatial composition, and Retro is a pixel/terminal sequence--rather than recoloring one shared image or silhouette.
+  The interruptible opening hero assembles the Puppet Master identity in approximately 1.2-1.5 seconds without
+  blocking input; step transitions use 420-560 ms, element choreography uses 60-80 ms stagger, microinteractions use
+  120-220 ms, and success settles in approximately 700 ms. Reduced Motion preserves hierarchy with immediate state
+  change or a very short opacity settle. Retro uses deliberate stepped, no-scale motion and hard compact reveals;
+  Basic, Friendly, and Glass use material-appropriate easing and paint.
+gui_related: true
+gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
+split_recommended: false
+depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, RAS-014, SCS-012, FGI-011]
+unblocks: [F3-521, F3-524]
+acceptance_criteria:
+  - "Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop width; narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page route."
+  - "The scrim blocks interaction with the application while the modal is active, including body-level surfaces mounted after the modal opens; exactly one element exposes role=dialog and aria-modal=true, its accessible name follows the active stage or owner-branch heading, the aria-hidden outgoing visual layer is inert and contains no duplicate IDs, focus remains trapped inside, and Close/Escape returns to the exact initiating application control or the verified active application tab for automatic first-run opening."
+  - "Welcome presents one immediate Begin setup/Get Started action whose availability is never delayed by the hero sequence; the exact nine-stage main order is welcome, simple_path, first_project, source_control_setup, server_storage_client, remote_access_setup, review_setup_plan, automatic_preparation, ready."
+  - "Choosing connect-existing follows exactly welcome, simple_path, remote_access_setup, review_setup_plan, automatic_preparation, ready; it skips first_project, source_control_setup, and server_storage_client instead of mounting blank or inapplicable stages, while Back follows the same bounded shortcut in reverse."
+  - "The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition box; entering it lands on the route chooser, never on a premature Review summary or a redundant Use nearby devices/Find one I already use pre-step."
+  - "The bounded eight-theme choice is available at welcome before Project and infrastructure decisions and changes presentation without dispatching owner work; Basic, Friendly, Glass, and Retro use drastically different scene imagery, composition, material, typography, and motion direction, while each family's light/dark pair preserves that family identity instead of presenting eight recolors of one illustration."
+  - "Before the current review_setup_plan revision is confirmed, every choice updates only the local draft; cached projections, detected-account observation, and explicitly read-only Local/VPN or already-active Tailscale discovery may update that draft without changing external state, but no authentication, enrollment, pairing, trust, restore, repository creation/binding, filesystem write, Project/Source Control/Server/storage/Remote Access mutation, update, or other owner mutation is dispatched."
+  - "Confirm and prepare at review_setup_plan validates the current path, revision, choices, consequences, and approved-plan hash, dispatches the approved owner work exactly once, and only then permits automatic_preparation to observe current real results; stale, unconfirmed, or expanded plans dispatch nothing."
+  - "The first_project stage exposes four equal, aligned, keyboard-reachable choices together--Start a new project, Open a folder here, Bring one from online, and Restore a backup--with no More project choices disclosure; source_control_setup, server_storage_client, and remote_access_setup then occur before review_setup_plan rather than hiding work behind a setup shortcut."
+  - "Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected computer, while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented as an account, website, or online-copy provider, and FileSafe is described only as complementary local recovery."
+  - "After current Review confirmation, a new-project owner route initializes local Git through `cmd.project.new_local {init_git:true}`; local-engine selection uses the canonical Source Control owner, while GitHub, GitLab, Azure DevOps, Bitbucket, and eligible Cursor Origin account verification, repository creation/selection, visibility, and binding remain explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge, never as a no-host or local-only preview."
+  - "An online copy becomes ready only after both a current verified account identity and the exact repository binding exist; Already connected must select and verify both and is never a no-op. Account creation, sign-in, organization/namespace/workspace/project selection, repository name, allowed visibility, and optional repository details follow the selected forge's owner contract rather than a generic one-field form."
+  - "Open a folder here distinguishes a local folder, an OS-mounted SMB/NFS location, and an Advanced SSH/SFTP source; Restore a backup has its own source and transport rather than reusing an ordinary folder path. Server (where work runs), Storage (where files live), and this Client (the device in hand) remain visibly independent choices."
+  - "Connect existing selects the route before discovery and pairing: Local or VPN uses LAN plus an `Include connected VPN networks` checkbox and asks for no private address by default; a usable active Tailscale tailnet needs no sign-in, otherwise one protected built-in sign-in is offered and an official site is used only for explicit account creation; Headscale takes its control URL and owner-managed enrollment; Reverse proxy accepts the existing protected Puppet Master HTTPS URL rather than offering proxy generation; Puppet Master Remote Link remains visible and accepts its link, QR, or short code. Manual Server identity/address entry appears only when safe discovery cannot find the intended Server."
+  - "A visible recognition checkbox is absent. Reachability, a device label, or possession of an address never grants trust; the selected Server identity proceeds through its owner-controlled approval, code, or QR pairing after Review confirmation."
+  - "Optional branches use one calm layer of progressive disclosure to collect opening/restoring, source-service, Server, storage, and access details without turning the modal into an advanced-settings surface; safe read-only discovery may inform the draft before Review, but authentication and all mutating owner execution wait for current Review confirmation."
+  - "Automatic preparation shows one calm owner-projected progress statement; determinate progress appears only with an owner denominator, questions appear only when the current owner projection cannot choose safely, and timers never synthesize work or readiness."
+  - "Pending, measured-running, ready, failed, and same-operation retry states remain visually calm and preserve the owner operation/work/dedupe identity across modal interruption and resume."
+  - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
+  - "Ready presents one dominant enter action, a working Back action, and an optional Guided Tour without trapping the user; Back returns to Review with the complete live draft intact. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace initiator/fallback."
+  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout`; it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
+  - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
+  - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
+  - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
+  - "One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery, availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade as completed setup."
+  - "Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead of replaying its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing and incoming headings never ghost through one another."
+  - "Ready summarizes only the selections actually made, marks skipped choices as not set up, and never claims that all important systems or production owner work are ready."
+  - "Modal controls use the typed `ui.onboarding.*` local-action vocabulary and owner branches route only to already-canonical domain commands; no `cmd.onboarding.*` family or Final-GUI-owned mutation path is introduced."
+  - "The authored browser concept labels its persistence, projections, owner previews, receipts, readiness, and native binding truthfully: browser choreography is concept simulation only, production owner work/readiness remain false or unavailable, and no production or native Slint result is fabricated."
+  - "Review is a live projection of the current draft: every route, placement, transport, Safe History engine, online service/account/repository/visibility, pairing choice, skip, and consequence updates immediately when the person goes Back and edits it; Review never displays stale defaults or marks an unconfigured connection ready."
+  - "Back, Close, Skip, Do this later, interruption, reversal, resize, and theme changes acknowledge in the same frame and settle deterministically; Back works on every reversible stage including Ready, and Set up access later persists a truthful resumable state. The modal entrance uses fixed-bounds opacity/clipping so a cross-family theme switch cannot translate or scale the window outside its viewport margin."
+  - "At the standard review viewport, each stage--including Review and Ready--fits within the bounded modal without a floating action bar, obscured content, or required page scroll; short/narrow fallback may scroll one explicit content region while its in-flow actions remain reachable and never cover the choices."
+  - "Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text remain fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders, duplicate Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent."
+  - "Every stage has a distinct visual scene and meaningful continuity of focus; the four theme families use different directing systems rather than paint-only variants, all motion uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential storytelling does not require browser-only effects."
+validation_surfaces:
+  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (current exact nine-stage/six-stage Onboarding presentation, welcome theme choice, and Review hard-fence contract; its current F3-521 Guided Tour remains three scenes and exactly ten actions)"
+  - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (current exact nine-stage/six-stage owner, action, persistence, Review-fence, independent local Safe History, optional online-forge, and typed choice-help contract)"
+  - Concepts/pm7-tools/onboarding_cinematic_source.py authored guards
+  - Concepts/pm7-tools/home_workspace_refresh_source.py authored guards
+  - future eight-theme, Reduced Motion, interruption, reversal, and short-window film review
+risk_class: onboarding_overload_or_motion_blocking
+reasoning_tier: high
+context_scope: product_onboarding_cinematic_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/onboarding_cinematic_source.py
+  - Concepts/pm7-tools/home_workspace_source.py
+  - Concepts/pm7-tools/home_workspace_refresh_source.py
+  - future native Slint Product Onboarding components
+node_compile_hint: {mode: onboarding_cinematic_presentation_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Planning_Wizard.md#PWIZ-021
+  - Plans/Planning_Wizard.md#PWIZ-022
+  - Plans/Planning_Wizard.md#PWIZ-024
+  - Plans/Remote_Access_System.md#RAS-014
+  - Plans/Source_Control_System.md#SCS-012
+  - Plans/Forge_Integrations.md#FGI-011
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - Concepts/pm7-tools/onboarding_cinematic_source.py
+  - Concepts/pm7-tools/home_workspace_source.py
+  - Concepts/pm7-tools/home_workspace_refresh_source.py
+preserved_exact_tokens: [welcome, simple_path, first_project, source_control_setup, server_storage_client, remote_access_setup, review_setup_plan, automatic_preparation, ready, connect_existing, Get Started, Begin setup, Confirm and prepare, Do this later, Run setup wizard, Reset Layout, ui.onboarding.start, home_menu, Start a new project, Open a folder here, Bring one from online, Restore a backup, Safe History, FileSafe, Local or VPN, Include connected VPN networks, Reverse proxy, Puppet Master Remote Link, Cursor Origin, SSH/SFTP, 1.2-1.5 seconds, 420-560 ms, 60-80 ms, 120-220 ms, 700 ms]
+negative_constraints:
+  - "Do not render Product Onboarding as a full-page route or replacement application experience."
+  - "Do not restore F3-411's four-screen/provider-first choreography."
+  - "Do not restore the predecessor five-stage simple-path order as the current main journey."
+  - "Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client into connect-existing, or bypass review_setup_plan before automatic_preparation."
+  - "Do not authenticate, enroll, pair, trust, restore, create/bind a repository, write a filesystem, or dispatch any owner mutation before the person confirms the current review_setup_plan revision; do not misclassify explicitly read-only local/VPN/Tailscale discovery or detected-account observation as a mutation."
+  - "Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced Settings."
+  - "Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment."
+  - "Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected, or an inert Set up access later action."
+  - "Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained developer/source-control vocabulary in user-visible onboarding copy."
+  - "Do not make animation block input, delay navigation, loop continuously, or become required to understand state."
+  - "Do not require Canvas, WebGL, browser physics, heavy SVG filters, or blur-dependent storytelling."
+  - "Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI."
+  - "Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command."
+  - "Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work, readiness, handler, native Slint, or certification claims."
+owner_boundary_notes:
+  - "Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control, Server, Remote Access, Backup/Restore, provider, and authentication owners retain their domain state and commands; Home owns only the visible relaunch trigger; Final GUI owns visual hierarchy and motion."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md]
+```
+
+### F3-521 - Guided Tour Directed Beginner Film Presentation
+
+```yaml
+plan_unit_id: F3-521
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Guided Tour is a directed beginner film over the mounted Puppet Master application in one stable order: Usage,
+  Planning Wizard, then Assistant Chat with Teacher. Usage first establishes basic page navigation and the meaning of
+  the workspace panels, demonstrates how a real card hides and returns, and visually demonstrates that panels/cards
+  can be moved and resized; the performed Try beat advances only after the person opens that card's exact Options
+  control. Navigation, move, resize, change, and hide remain a compact coherent lesson rather than separate chapters.
+  Planning Wizard then explains how a plain-language goal becomes a reviewable sequence, shows the resulting editable
+  planning structure, and advances only after the person chooses one real intent on its mounted surface and sees the
+  action acknowledged. Assistant Chat docks at the far right, shows the real guide selector, waits for the person to
+  select Teacher and send one supported question through the real composer, and displays a deterministic local answer
+  in that same conversation. Teacher exposes a large categorized beginner question library in addition to accepting
+  free-form supported questions. ELI5 remains a persistent top control beside Pause and Skip and is called
+  out in the first scene; the same opening moment explains that people who prefer less animation can enable Reduced
+  Motion later in Settings. All visible copy is written for a person who has never coded or used an IDE and never
+  calls the application a `shell` or exposes command IDs, owners, providers, models, tokens, receipts, routes, or
+  implementation terms. The overlay tracks and highlights mounted controls without cloning them, intercepting owner
+  work, or fabricating success. Automatic scene transitions focus the current scene heading, never an action, and do
+  not open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme change, and effective
+  Reduced Motion preserve real state and focus. Back and forward movement follow the valid story state and never become
+  inert or skip required practice. Basic, Friendly, Glass, and Retro direct the film with substantially different
+  callout composition, illustration, typography, target treatment, and motion--not one recolored overlay--while never
+  using a left-edge accent rail. Transitions preserve the mounted application continuously without a black or empty
+  flash. Skip restores the pre-tour layout and exact composer placeholder; successful completion keeps Assistant Chat
+  at the far right so Teacher remains the natural final destination.
+gui_related: true
+gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
+split_recommended: false
+depends_on: [F3-520, PWIZ-023, ACD-431]
+unblocks: [F3-524]
+acceptance_criteria:
+  - "The three visible scenes occur in the exact order Usage, Planning Wizard, and Assistant Chat/Teacher; replay and Back preserve that story instead of bouncing between features."
+  - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
+  - "The first Usage beat introduces the persistent `ui.guided_tour.toggle_eli5` control beside Pause and Skip and explains Reduced Motion in the same concise moment; it reads the effective `general.visual.reduce-animations` preference and directs changes to Settings without inventing `ui.guided_tour.toggle_reduced_motion` or another screen."
+  - "Usage establishes basic page navigation and panel purpose, groups card hide/reveal into one Watch beat, visibly demonstrates panel/card movement and resizing, requires the exact real card Options control for its Try beat, and explains move, resize, change, and hide together rather than dropping those concepts or splitting them into verbose pages."
+  - "The Usage demonstration observes real widget-owner results for hide and reveal; highlighting, narration, elapsed animation, clicking a look-alike, or any unrelated screen change never counts as successful Try completion. The required action receives same-frame acknowledgement before the film advances, so the learner can tell that it worked."
+  - "Planning Wizard explains the purpose of planning, shows how one plain-language goal becomes a reviewable and editable sequence, identifies what the learner can change next, and advances only from activation of the exact mounted intent control; it shows and narrates that real result before leaving the scene and adds no redundant confirmation click."
+  - "Assistant Chat is docked at the far right before its scene begins and remains there after successful completion; the tour never returns to Usage or Planning after entering the final scene."
+  - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
+  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives a concise adult beginner explanation with useful detail, while ELI5 replaces jargon and abstraction with a concrete familiar analogy and smaller next action rather than merely shortening the same sentence."
+  - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
+  - "Teacher's first view exposes four calm suggestions plus `Browse 26 more`. The expanded categorized question library is mounted inside Assistant Chat; while it is open the tour callout yields completely, the library and its Close control remain topmost and keyboard-reachable, and closing the library restores the same tour beat without growing, relocating, or clipping the callout."
+  - "Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy."
+  - "The final Teacher practice requires opening the real Assistant Chat guide selector, choosing Teacher, sending a user-authored supported message through the real composer, and receiving the deterministic reply in that same conversation before Finish becomes the concluding action."
+  - "Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1 and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag, while exact coached interactions wait for the person to focus or activate the real target."
+  - "Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind."
+  - "Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear in product copy."
+  - "Pause, Back, forward navigation where applicable, and Skip are always reachable and operational; Back restores the prior beat and target state without resetting the whole film, Skip restores the captured starting arrangement, and successful Finish deliberately keeps Chat on the far right without asking for a redundant layout decision."
+  - "Effective Reduced Motion removes travel choreography while retaining focus, hierarchy, announcements, and action parity; a preference change made in Settings is honored without discarding the active tour step."
+  - "Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight."
+  - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
+  - "Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame; no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside the viewport is accepted."
+  - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
+  - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
+validation_surfaces:
+  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (directed three-scene order and exact-target progression revision required before current acceptance)"
+  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (current v2 three-scene story, exact-target progression, ten-action census, Teacher, focus, and terminal-disposition contract)"
+  - Concepts/pm7-tools/guided_tour_source.py authored guards
+  - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
+risk_class: guided_tour_fake_state_or_story_loss
+reasoning_tier: high
+context_scope: guided_tour_directed_beginner_film_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/guided_tour_source.py
+  - future native Slint Guided Tour overlay components
+node_compile_hint: {mode: guided_tour_directed_beginner_film_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Planning_Wizard.md#PWIZ-023
+  - Plans/assistant-chat-design.md#ACD-431
+  - Concepts/pm7-tools/guided_tour_source.py
+preserved_exact_tokens: [Usage, Planning Wizard, Assistant Chat, Teacher, Ask Teacher anything about Puppet Master…, ELI5, ELI5: Off, Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, programmatic-focus-landmark, Pause, Skip Tour, Back, Finish tour]
+negative_constraints:
+  - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
+  - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
+  - "Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson."
+  - "Do not restore the superseded order that opens Assistant Chat first or bounces from Chat to Usage and back."
+  - "Do not omit basic navigation or the panel/card move and resize demonstration; do not teach panel float/redock or card move, resize, configure, focus, hide, and reveal as separate verbose pages."
+  - "Do not put the Reduced Motion introduction into Product Onboarding or a separate tour chapter; keep the explanation in the opening Usage/ELI5 moment and preference ownership in Settings."
+  - "Do not restore `ui.guided_tour.toggle_reduced_motion`; ELI5 is the only tour-specific top-bar preference toggle."
+  - "Do not expose the internal word `shell`, raw action identifiers, receipts, owners, routes, or developer jargon in visible tour copy."
+  - "Do not auto-focus a tour action on scene entry or leave the Teacher-practice placeholder installed after Skip."
+  - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
+  - "Do not offer a redundant restore-or-keep decision after the final Teacher reply; successful completion keeps Chat at the far right and Skip restores the captured start."
+  - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
+owner_boundary_notes:
+  - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]
+```
+
+### F3-522 - Operational Doctor K3 Workspace Presentation
+
+```yaml
+plan_unit_id: F3-522
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Doctor is an ongoing operational destination in the full K3 Settings workspace, not the compact post-onboarding
+  card described by predecessor F3-411. It renders the Doctor owner's cached-first normalized projections as a calm
+  health overview, lazy detail, bounded logs and receipts, scoped rechecks, truthful requested/effective state,
+  freshness, confidence, applicability, and one owner-routed remediation path. Pending work acknowledges immediately;
+  fresh-result replacement does not move the row. Theme and motion follow F3-519 and Reduced Motion, while stable IDs
+  retain focus and accessible position across virtualization and narrow host states.
+gui_related: true
+gui_classification_reason: This unit owns Doctor's K3 workspace composition and truthful visible projection states.
+split_recommended: false
+depends_on: [F3-519, N2-152, N2-153]
+unblocks: [F3-524]
+acceptance_criteria:
+  - "Normal entry is useful from cached projections offline or under partial failure and never starts broad probing."
+  - "Summary, Details, Logs, and Receipt hydrate progressively and preserve explicit freshness/confidence and stale/unknown truth."
+  - "A scoped check shows immediate pending state, retains focus, and cannot convert route success into remediation success."
+  - "Requested and effective state remain distinct; disabled or unavailable controls explain the owner reason."
+  - "Doctor never privately installs, authenticates, repairs, updates, moves storage, browses, restores, or performs source-control mutations."
+validation_surfaces:
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/doctor_contracts.schema.json
+  - future cached/offline, scoped-check, stale-return, remediation-return, accessibility, and eight-theme tests
+risk_class: doctor_compact_false_green_or_private_repair
+reasoning_tier: high
+context_scope: doctor_k3_operational_workspace
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/settings_tome_source.py
+  - Concepts/pm7-tools/systems_integration_source.py
+  - future native Slint Doctor components
+node_compile_hint: {mode: doctor_k3_presentation_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/newtools.md#N2-152
+  - Plans/newtools.md#N2-153
+  - Plans/Settings_System.md#SSYS-003
+preserved_exact_tokens: [Check now, Details, Logs, Receipt, requested, effective, freshness, confidence]
+negative_constraints:
+  - "Do not restore compact-Doctor-only or post-onboarding-only presentation."
+  - "Do not infer healthy from stale, unknown, interrupted, required-missing, or security-critical state."
+  - "Do not let Doctor own probes, domain truth, or remediation mutations."
+owner_boundary_notes:
+  - "newtools Doctor owns descriptor/router/projection state; domain owners own truth and mutation; Final GUI owns presentation."
+owner_hints: [Plans/FinalGUISpec.md, Plans/newtools.md, Plans/Settings_System.md]
+```
+
+### F3-523 - Global PMHoverTag Overlay And Accessibility
+
+```yaml
+plan_unit_id: F3-523
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay root for
+  every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled
+  control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies.
+  A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize
+  line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin,
+  center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the
+  visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent
+  within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement,
+  pointer press, scrolling, or departure before the thresholds resets or cancels the pending opening; pointer departure
+  after opening uses a 160 ms grace period; Escape closes.
+  Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state,
+  shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route
+  IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current.
+  While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or
+  open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility
+  exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference
+  240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass
+  follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded,
+  performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real
+  semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or
+  steal Onboarding or Guided Tour's animation budget.
+gui_related: true
+gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
+split_recommended: false
+depends_on: [F3-517, F3-519]
+unblocks: [F3-524]
+acceptance_criteria:
+  - "One overlay controller positions all tags above/below with edge clamping, no clipping, and no layout shift."
+  - "A pointer tag becomes visible only after at least 1600 ms of residence plus 1100 ms of stationary intent within a 5 px radius, and a keyboard-focus tag only after 1000 ms of continuous focus; persistent accessible descriptions and relationships remain available immediately rather than waiting for either visual dwell; movement, target relocation, pointer press, scrolling, departure, or focus change resets/cancels the pending open, opened pointer tags retain the 160 ms departure grace, and Escape closes immediately."
+  - "Every required target has one stable hover key, accessible name, aria-describedby-equivalent relationship, and role=tooltip semantics; disabled controls remain reachable and explain their disabled reason."
+  - "general.interaction.show-tooltips suppresses visual tags without removing accessible explanatory text."
+  - "User-facing native title-only behavior is absent; tests use stable IDs/data attributes rather than title text."
+  - "Every tag uses human, contextual effect/state/shortcut/value/consequence language; raw command, action, schema, route, DOM, or machine identifiers never become generic visible fallback copy, while a genuinely useful technical value may appear as clearly explained secondary detail."
+  - "Dynamic text, shortcut, full-value, state, consequence, and disabled reason remain current after pin/unpin, availability, truncation, theme, transparency, and Settings changes."
+  - "When Product Onboarding or Guided Tour is open, outside anchors cannot open or retain a tag, outside descriptions are temporarily removed from tooltip/accessibility semantics, and both bindings and semantics restore when the active overlay closes; tags inside the active overlay remain available."
+  - "One bounded startup pass and incremental live binding preserve same-frame pointer/focus acknowledgement; exact old/current attribute reassertions schedule no tag work, while real attribute, character-data, insertion, removal, and subtree changes remain observable and auditable."
+  - "A generated census fails on missing bindings, undocumented exemptions, duplicate keys, stale text, clipping, inaccessible disabled controls, or native-title-only behavior."
+validation_surfaces:
+  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
+  - Concepts/pm7-tools/global_hover_tags_source.py authored guards
+  - future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests
+risk_class: hover_overlay_accessibility_or_census_drift
+reasoning_tier: high
+context_scope: global_pm_hover_tag
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/global_hover_tags_source.py
+  - future native Slint PMHoverTag and HoverTagController components
+node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
+  - Concepts/pm7-tools/global_hover_tags_source.py
+preserved_exact_tokens: [PMHoverTag, HoverTagController, 24px, 8px, 12px, 11px, 280px, 1600 ms, 1100 ms, 5 px, 1000 ms, 160 ms, 240 ms, 140 ms, role=tooltip, aria-describedby, general.interaction.show-tooltips, attributeOldValue]
+negative_constraints:
+  - "Do not invent domain commands for opening, closing, or repositioning a hover tag; these are typed local UI actions."
+  - "Do not remove accessible explanatory text when visual tooltips are disabled."
+  - "Do not use native title as the only user-facing help or as a test selector."
+  - "Do not attach tags to static body copy or purely decorative elements by default."
+  - "Do not expose raw command/action/schema/route/DOM identifiers, machine tokens, or developer jargon as fallback hover copy."
+  - "Do not let an underlying application tag compete with or leak through active Product Onboarding or Guided Tour."
+  - "Do not rescan or rewrite a tag for an exact old/current attribute no-op, and do not spend an unbounded startup/live batch on census work."
+owner_boundary_notes:
+  - "Final GUI owns overlay presentation, dwell timers, overlay isolation, and human fallback grammar; target owners supply truthful effect, state, shortcut, value, consequence, and disabled-reason data."
+owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
+```
+
+### F3-524 - Model-Backed Slint Portability And Evidence Separation
+
+```yaml
+plan_unit_id: F3-524
+unit_type: acceptance_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings, Doctor, Product Onboarding, Guided Tour, and PMHoverTag target Rust stable plus Slint 1.17.1. Settings binds
+  the owner inventory and manager projections through stable typed models and variable-height virtualization; Doctor
+  binds stable normalized finding IDs; Onboarding and Tour bind their owner state machines; PMHoverTag binds typed
+  anchor geometry, timers, hover/focus state, accessible description identity, and theme tokens. Essential behavior
+  uses native properties, models, transforms, opacity, scale, clipping/masking, vector shapes, bounded timelines, and
+  precomputed tokens/assets. PMConcept7 HTML/JavaScript/localStorage, DOM selectors, CSS viewport logic, browser
+  physics, Canvas/WebGL, arbitrary backdrop blur, and heavy SVG filters are concept translation inputs only. Static,
+  schema, browser, visual, motion, accessibility, performance, native runtime, and certification evidence remain
+  separately classified.
+gui_related: true
+gui_classification_reason: This unit governs native GUI portability and truthful evidence classification for all reconciled surfaces.
+split_recommended: false
+depends_on: [F3-519, F3-520, F3-521, F3-522, F3-523, SSYS-005, SSYS-016, TCME-007]
+unblocks: []
+acceptance_criteria:
+  - "The complete Settings inventory remains model-backed and variable-height virtualized with stable IDs, anchor preservation, overscan, and no eager manager hydration."
+  - "Concept and browser runs are labeled concept_fixture_only or browser evidence and never promoted to native Slint certification."
+  - "Responsive/browser review covers widths 320, 520, 680, 720, 750, 760, 860, 900, 960, 975, 980, 1180, 1200, 1280, 1440, 1700, 2200, and 2500 across all eight themes and full/Reduced Motion."
+  - "Motion evidence reports actual delivered frame pacing and dropped/delayed frames without resampling or claiming native 60 FPS."
+  - "Every delivered full-resolution campaign frame receives the TCME-007 review coverage, high-risk spans receive two independent reviews, unresolved defects require repair and replacement capture, and approval-gated evidence is retained until explicit user cleanup approval."
+  - "Native Slint claims require a fresh Slint 1.17.1 build/run plus platform, accessibility, visual, motion, performance, and wiring evidence for the claimed slice."
+  - "Browser-only capabilities have an explicit native counterpart or named residual risk; no hidden DOM dependency is admitted."
+validation_surfaces:
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
+  - Concepts/pm7-tools/verify/final_evidence_gate.py
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future native Slint build/runtime and independent actual-pixel/frame review
+risk_class: browser_concept_promoted_to_native_certification
+reasoning_tier: high
+context_scope: reconciled_gui_portability_and_evidence
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Concepts/pm7-tools/build_pm7.py
+  - future native Slint components
+node_compile_hint: {mode: final_gui_portability_evidence_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Settings_System.md#SSYS-005
+  - Plans/Settings_System.md#SSYS-016
+  - Plans/Planning_Wizard.md#PWIZ-022
+preserved_exact_tokens: [Rust stable, Slint 1.17.1, variable-height virtualization, stable IDs, concept_fixture_only, Reduced Motion, 60 FPS]
+negative_constraints:
+  - "Do not call generated HTML, schema success, Playwright, Chrome, or Codex app browser evidence native Slint proof."
+  - "Do not hand-port localStorage, DOM ownership, CSS viewport queries, or browser-only animation architecture into production."
+  - "Do not imply 60 FPS by resampling or by reporting a capture target instead of delivered frames."
+  - "Do not claim portability, readiness, or certification from this PlanUnit alone."
+owner_boundary_notes:
+  - "Final GUI owns native presentation architecture; system owners retain models and behavior; Automated Testing owns evidence execution and disposition."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Settings_System.md, Plans/Automated_Testing_System.md]
+```
+
+### F3-525 - K3 Plugins Owner Projection And Theme-Native Action States
+
+```yaml
+plan_unit_id: F3-525
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Plugins consumer lives inside K3 Toolchain and Extensions without changing the 250 px rail, 62 px topbar,
+  split-manager roster/detail geometry, document/index/detail continuity, or responsive host behavior. Its detail uses
+  calm progressive tabs for overview, update review, access/runtime bounds, and integrity/evidence. Compact cards show
+  Plugins System owner facts rather than a copied runtime reducer. Every exact cmd.agent_plugin.* action is focusable,
+  PMHoverTag-described, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
+  handler_unavailable until a native owner handler exists. Invoking an unavailable action opens one truthful bounded
+  explanation without changing plugin fixture state, fabricating success, issuing a production receipt, or emitting an
+  EventRecord. The Doctor projects eight separate Plugins System findings and returns to the exact Plugins tab/detail.
+gui_related: true
+gui_classification_reason: This unit owns the K3 Plugins presentation, progressive disclosure, disabled controls, hover help, theme paint, responsive behavior, and Doctor-to-Plugins focus route.
+split_recommended: false
+depends_on: [F3-519, F3-522, F3-523, F3-524, SSYS-024, N2-154, PLUG-070]
+unblocks: []
+acceptance_criteria:
+  - K3 geometry remains within the frozen manifest; only plugin detail content, owner-action chrome, theme paint, hover overlay, and named mild chrome adaptations differ.
+  - Overview separates package/plugin identities, three generations, manifest lane, required/optional component state, adapter round trips, conformance, and freshness.
+  - Update, Access, and Integrity tabs progressively disclose complete diff/reapproval/rollback, permissions/containment/runtime bounds, and supply-chain/bounded-evidence facts without a dense configuration wall.
+  - The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and PMHoverTag consequence text.
+  - Legacy generic Add/Edit/Test/More, Permissions, Discover, and Remove paths fail closed for plugins and cannot mutate the concept fixture.
+  - Pointer, keyboard, narrow widths, all eight themes, full/Reduced Motion, hover/focus help, Doctor routing, and no-state-change assertions pass in the browser concept; results remain non-native evidence.
+  - The consolidated final film includes the Plugins owner projection, all four progressive detail tabs, one truthful handler-unavailable command path, and an exact Doctor-to-Plugins return route without promoting the recording to native or runtime proof.
+validation_surfaces:
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/plugin_contracts.schema.json
+  - Plans/plugin_contract_fixtures.json
+  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
+  - Concepts/pm7-tools/verify/hover_tags.mjs
+  - Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs
+  - Concepts/pm7-tools/verify/final_campaign_capture.mjs
+  - future native Slint Plugins manager visual/accessibility/runtime tests
+risk_class: plugin_manager_geometry_drift_or_false_owner_success
+reasoning_tier: high
+context_scope: pmconcept7_k3_plugins_projection
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Plugins_System.md
+  - Plans/newtools.md
+  - Concepts/pm7-tools/systems_integration_source.py
+  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
+  - Concepts/pm7-tools/verify/final_campaign_capture.mjs
+  - future native Slint Plugins manager components
+node_compile_hint: {mode: k3_plugins_owner_projection_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Plugins_System.md#PLUG-067
+  - Plans/Plugins_System.md#PLUG-070
+  - Plans/Settings_System.md#SSYS-024
+  - Plans/newtools.md#N2-154
+preserved_exact_tokens: [250 px, 62 px, plugin.json, pm-plugin.json, cmd.agent_plugin, handler_unavailable, PluginCommandResult, EventRecord, PMHoverTag, Basic, Friendly, Glass, Retro, Reduced Motion]
+negative_constraints:
+  - "Do not create a second Plugins System owner, package reducer, permission reducer, update engine, runtime manager, or Doctor repair path in the GUI."
+  - "Do not replace K3 geometry with cards, a new sidebar, a full-page plugin surface, Back chrome, or breadcrumbs."
+  - "Do not display simulated command success, mutate plugin fixture state, issue a production receipt, emit EventRecord, or claim native Slint/runtime proof."
+  - "Do not expose raw package bytes, secret bytes, protected-auth content, sensitive paths, or unbounded logs."
+owner_boundary_notes:
+  - "Plugins System owns package/runtime truth, commands, handlers, effects, and receipts; Settings consumes owner facts; Doctor consumes normalized findings; Final GUI owns presentation, themes, focus, hover, and motion."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Settings_System.md, Plans/Plugins_System.md, Plans/newtools.md]
+```
+
+### F3-526 - Operational Doctor Consumer Currentness And Evidence Closure
+
+```yaml
+plan_unit_id: F3-526
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The PMConcept7 Doctor consumer projects the one Doctor registry as an 18-domain, 20-finding cached workspace with
+  stable finding identity, requested/effective truth, last-known result, freshness, confidence, owner/cache
+  generations, recovery divergence, and one persistent ObservableWork-view identity. Its remediation partition is
+  exactly fifteen owner-command routes, one typed owner route, and four unavailable routes with explicit disabled
+  reasons. Eight typed local Doctor actions cover cached summary, bounded Details/Logs/Receipt, scoped refresh/check,
+  diagnostic copy, and exact owner return without creating a Doctor mutation engine. Closing, hiding, or navigating
+  away detaches only the viewer; reopening rejoins the same work identity. A route is never remediation success:
+  replacement requires an exact fresh owner result matching check, finding revision, target, action/route,
+  idempotency key, owner generation, cache generation, and return focus.
+gui_related: true
+gui_classification_reason: This unit closes the exact visible Doctor catalog, evidence disclosures, action states, detach/rejoin behavior, and owner-return presentation in PMConcept7.
+split_recommended: false
+depends_on: [F3-522, F3-525, N2-152, N2-153, N2-154]
+unblocks: []
+acceptance_criteria:
+  - "The exact Doctor census is 18 domain identities and 20 finding rows, partitioned into 15 owner-command routes, one typed owner route, and four unavailable routes."
+  - "The eight exact local actions are ui.doctor.open, ui.doctor.open_details, ui.doctor.open_logs, ui.doctor.open_receipt, ui.doctor.open_remediation, ui.doctor.refresh_visible, ui.doctor.run_check, and ui.doctor.copy_diagnostics."
+  - "Details, Logs, and Receipt hydrate only after their exact local action, remain bounded and redacted, and carry finding revision plus owner/cache generation currentness."
+  - "Project/Vault authority remains Unknown without the Project Sync and Backbone owner feed; required-missing, security-critical, stale, unknown, blocked, and interrupted state cannot paint healthy."
+  - "Provider CLI remediation opens the exact Settings target and does not install, authenticate, select a profile, or mark readiness. Named Plan remediation binds exact project_id and named_plan_id."
+  - "View detach never cancels owner work; re-entry rejoins one persistent work identity and stale or mismatched owner returns fail closed without moving the finding row."
+  - "The authored transform self-check and browser matrix prove only deterministic browser-concept behavior; production/native runtime state stays unavailable and no production mutation, receipt, EventRecord, or Slint certification is claimed."
+validation_surfaces:
+  - Plans/doctor_contracts.schema.json
+  - Plans/doctor_contract_fixtures.json
+  - Concepts/pm7-tools/systems_integration_source.py
+  - Concepts/pm7-tools/verify/systems_integration.mjs
+  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
+  - future native Doctor owner-feed, ObservableWork detach/rejoin, stale-return, focus, accessibility, and Slint 1.17.1 tests
+risk_class: doctor_false_green_private_repair_or_stale_owner_return
+reasoning_tier: high
+context_scope: pmconcept7_operational_doctor_consumer_closure
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/newtools.md
+  - Plans/Settings_System.md
+  - Concepts/pm7-tools/systems_integration_source.py
+  - Concepts/pm7-tools/verify/systems_integration.mjs
+  - future native Slint Doctor consumer components
+node_compile_hint: {mode: operational_doctor_consumer_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/newtools.md#N2-152
+  - Plans/newtools.md#N2-153
+  - Plans/newtools.md#N2-154
+  - PM_Onboarding_Doctor_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md
+preserved_exact_tokens: [18, 20, 15, one typed owner route, four unavailable, ui.doctor.copy_diagnostics, ObservableWork, project_id, named_plan_id]
+negative_constraints:
+  - "Do not make Doctor an installer, authenticator, repair engine, updater, storage mover, browser owner, backup owner, source-control owner, or private runtime scheduler."
+  - "Do not infer current readiness from route success, focus, cached paint, last-known result, or a stale/unknown owner projection."
+  - "Do not cancel owner work when the Doctor viewer closes or mint a second work identity when it reopens."
+  - "Do not promote the browser fixture, handler target strings, static schemas, or browser receipts into native/runtime/readiness proof."
+owner_boundary_notes:
+  - "newtools Doctor owns registry/router/normalization; domain owners own checks and remediation; Shared Integration Runtime owns ObservableWork; Final GUI owns this consumer presentation."
+owner_hints: [Plans/FinalGUISpec.md, Plans/newtools.md, Plans/Shared_Integration_Runtime.md, Plans/Settings_System.md]
+```
+
+### F3-527 - Settled Panel Undock And Redock Event Identity
+
+```yaml
+plan_unit_id: F3-527
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  panel.undocked and panel.redocked are independent persisted semantic transitions owned by the shared panel shell,
+  not aliases of workspace.layout_changed. panel.undocked occurs only after cmd.panel.undock has successfully moved
+  one identified panel from its settled workspace host into one identified detached window and the owner state is
+  durably committed. panel.redocked occurs only after cmd.panel.redock has successfully moved one identified
+  detached panel window into its settled target workspace host and the owner state is durably committed. The same
+  accepted command may also emit workspace.layout_changed only when it independently changes the settled workspace
+  layout; a shared correlation and an explicit nullable event reference relate the two records without collapsing
+  their identities. Preview movement, pickup, window creation/close attempts, dispatch acceptance, rejected or stale
+  owner results, persistence failure, cancellation, no-change settlement, and rollback emit neither panel event.
+gui_related: true
+gui_classification_reason: This unit defines the durable semantics behind visible panel pop-out and redock actions while keeping all preview animation view-local.
+split_recommended: false
+depends_on: [F3-515, UCC-147, CV-215, SP-001]
+unblocks: []
+acceptance_criteria:
+  - "panel.undocked validates only against pm.event.panel_undocked.v1 and requires cmd.panel.undock, panel/window/host identity, exact result and receipt references, monotonic layout revisions, settled-only truth, persistence truth, and the workspace-layout co-emission relationship."
+  - "panel.redocked validates only against pm.event.panel_redocked.v1 and requires cmd.panel.redock, panel/window/target-host identity, exact result and receipt references, monotonic layout revisions, settled-only truth, persistence truth, and the workspace-layout co-emission relationship."
+  - "workspace.layout_changed remains separately owned; it is co-emitted only where the same accepted transition also changes the settled workspace layout, and its event reference is required exactly when co-emission is true."
+  - "Cancellation, no-op, stale/rejected result, failed persistence, rollback, preview, and command acceptance produce no panel EventRecord and do not advance a projector checkpoint."
+  - "Static owner text and payload schemas do not authorize event append or dispatch; admission still requires the exact registry rows, storage binding, compatibility/retention/redaction rules, and executable positive/negative/replay/recovery fixtures."
+validation_surfaces:
+  - Plans/event_payloads/panel_undocked.schema.json
+  - Plans/event_payloads/panel_redocked.schema.json
+  - Plans/event_family_registry.json
+  - Plans/storage-plan.md
+  - future panel transition producer, append/dedupe/replay/recovery, and projector fixtures
+risk_class: panel_transition_alias_or_duplicate_event_drift
+reasoning_tier: high
+context_scope: settled_panel_host_transition_event_identity
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/event_payloads/panel_undocked.schema.json
+  - Plans/event_payloads/panel_redocked.schema.json
+  - Plans/event_family_registry.json
+  - Plans/storage-plan.md
+node_compile_hint: {mode: panel_transition_event_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/UI_Command_Catalog.md:8087
+  - Plans/UI_Command_Catalog.md:8088
+  - Plans/Contracts_V0.md:3414
+  - scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/PRIMARY_OWNER_DECISIONS.json
+preserved_exact_tokens: [panel.undocked, panel.redocked, workspace.layout_changed, cmd.panel.undock, cmd.panel.redock, settled_only, preview_state_included]
+negative_constraints:
+  - "Do not alias either panel event to workspace.layout_changed or infer either transition from layout persistence alone."
+  - "Do not emit a panel event for preview motion, window attempts, command acceptance, failure, rejection, cancellation, rollback, or no-change settlement."
+  - "Do not register a generic panel transition event with a subtype field."
+  - "Do not claim native producer, persistence, replay, runtime, buildability, or PNC-019 proof from this static owner/schema materialization."
+owner_boundary_notes:
+  - "Final GUI owns panel-host transition semantics and presentation; Contracts owns EventRecord; storage owns admission, append, retention, dedupe, replay, and checkpoint rules."
+owner_hints: [Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md]
+```
+
+## Forge/Backup/tsnet shared GUI consumer addendum - 2026-09-01
+
+F3-528 supersedes only generic GitHub-Actions-shell identity and the older Backup/Remote Access presentation details
+named below. GitHub-specific behavior remains intact inside the selected GitHub automation binding. The selected K3
+Settings layout, PMConcept7 chrome, left-rail placement, exact ten-panel census, eight-theme authority, title-bar
+notification stack, sprout inbox, and bottom/status mechanisms remain unchanged.
+
+### F3-528 - Provider-neutral automation and recovery/connector presentation
+
+```yaml
+plan_unit_id: F3-528
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines, owner-routed
+  Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access connector state in
+  existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections, routes, currentness,
+  availability, protected handoffs, ObservableWork phases, alerts, focus, and return context without owning provider,
+  source-control, backup, scheduler, encryption/key, connector, auth, Doctor, notification-store, or status truth.
+  Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
+gui_related: true
+gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
+split_recommended: false
+depends_on: [F3-019, F3-042, F3-043, F3-049, F3-050, F3-229, F3-448, F3-453, F3-460, F3-461, F3-476, F3-481, F3-519, F3-520, F3-522, SSYS-026, PWIZ-025, N2-156, SRV-013, FGI-012, BRS-012, BRS-013, BRS-014, BRS-015, BRS-016, RAS-015]
+unblocks: []
+acceptance_criteria:
+  - The left Activity Bar retains exactly ten canonical occupants and replaces `github_actions` one-for-one with `repository_automation`; label, tooltip, palette, help, route, planned Slint host, order, hidden/More state, keyboard slot, width, dock/undock state, and window identity say `Actions & Pipelines` without adding a forge-specific or second rail icon.
+  - Legacy `github_actions` routes and panel-state keys are migration-read aliases only. They normalize to the same `repository_automation` occupant with a GitHub automation binding, preserve GitHub pins and subview/focus/log position, and never create duplicate panels or discard GitHub Current Branch, Workflows, Settings, rerun, or log-recovery behavior.
+  - The automation header selects an `AutomationBinding` only when multiple services apply. Repository hosting and automation may target different providers/instances; exact project/repository/binding/currentness identity travels in routes and actions rather than being inferred from the Git remote.
+  - Provider-neutral regions cover repository/automation context, current checks, pinned definitions, definitions/workflows/pipelines, runs, gates/approvals, stage/job/step detail when supported, logs/trace, artifacts, manual dispatch, runners/secrets/variables, and external/unsupported explanation. Capability refresh never reorders icons or jumps focus.
+  - Provider headings remain native: GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions only when the selected binding proves them. Forgejo and Gitea use distinct instance/capability profiles; API-disabled/Git-ready remains truthful; Bitbucket Data Center without configured CI says `Connect automation service`; Origin never fabricates `Origin Actions`.
+  - Backup presentation reuses exact owner-routed `DestinationCard`, `ScopeCoverageSummary`, `SnapshotBrowser`, `RestorePreview`, `RecoveryKitHandoff`, `VerificationBadge`, `RetentionPreview`, and `ObservableWorkProgress` components. It creates no Backup Activity Bar occupant, page owner, command family, engine, scheduler, or notification center.
+  - Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last complete remote backup receipt time, verification/drill state, Recovery Kit status, `[Back Up Now] [Restore…] [Add Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
+  - Snapshot Browse is read-only and binds immutable repository/snapshot/capture-set identity. Download returns only to the initiating Client, extract requires an explicit authorized Host/path, compare binds immutable and current identities, export is disclosed as a non-restore artifact, and none activates or executes a Project.
+  - Archive retrieval presents capability, wait, possible fee/cost without a hard-coded price, explicit human consent, external-effect/indeterminate outcome, phase-based ObservableWork, cancellation/recovery truth, and exact reverse focus. No billable action starts from visibility or stale projection.
+  - RecoveryKitHandoff is human-only, step-up protected, no-store, initiating-Client bound, non-recordable, and absent from agent/NL/API automation, Doctor, screenshots, recordings, ordinary clipboard history, logs, Chat, Usage, and concept fixtures. It shows masked/non-secret state and never Recovery Key/Kit bytes.
+  - Backup failures and reminders reuse the F3-453 alert store, F3-460 title-bar stack, and F3-461 sprout inbox. Bottom/status may say `Backing up`, `Waiting for source`, `Restore in progress`, or `Backup needs attention`; it does not add a bell, toast center, rail panel, routine `Synced`, or model-token usage statistic.
+  - Remote Access disconnected presentation is exactly `Tailscale` / `Built into Puppet Master` / `Not connected` / `[Set Up]`. Hosted ready, self-hosted Headscale, reauth, connector starting/restarting/crashed/corrupt/protocol-mismatch, route failure, private ready, and hosted Funnel preflight/ready states remain distinct; Headscale never shows Funnel and private access has no normal Serve toggle.
+  - Setup projects the Server-owned connector phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection, and Ready. The operation survives refresh/Client loss while protected browser content remains authorized-Client bound; exact origin/focus return is preserved.
+  - Advanced `Connection engine` may show bounded redacted connector/tsnet build/protocol, control kind, Headscale origin, node/DNS and endpoint IDs, process/IPC/state/listener/binding health, last auth/test, logs, and owner repair/reset routes. It never shows private/auth/pre-auth keys, raw state, reusable authorization URLs, browser content/cookies, IPC secrets, or a backend selector.
+  - Browser copy states that PM-native connector egress does not enroll an ordinary browser; private browser access still needs user-managed reachability or an approved public/other route. Funnel remains hosted-only, public, off by default, consent/preflight gated, and separable from private/LAN/proxy/Remote Link operation.
+  - F3-520 keeps the exact nine/six Product Onboarding stage graphs and Review hard fence. Bootstrap Full Server recovery renders before Product Onboarding after safe local claim; the Product `Restore a backup` route stays Project-scoped, and post-first-Project destination/Recovery Kit setup uses owner projections only.
+  - F3-522 consumes N2-156's independent Backup and connector findings. Optional-off or inapplicable targets do not paint global degradation; Doctor never installs, authenticates, decrypts, unlocks, exports, prunes, restores, or resets identity without an explicit owner-routed destructive flow.
+  - All eight PMConcept7 themes, selected K3 geometry, representative narrow/default/wide widths, variable-height virtualization, keyboard/touch, stable focus, non-color status, screen readers, localization, Reduced Motion, and phase-based non-fake progress apply to every new state. Browser-concept or static fixture results remain `concept_fixture_only`, never native Slint/runtime/visual/security/performance/accessibility evidence.
+  - No command or EventRecord is admitted by this GUI unit. All new Forge, Backup, and connector command families remain handler_unavailable and event-silent with expected_event_types=[] until owner schema, central command, sole handler, permission, receipt/ObservableWork, persistence, production/reverse wiring, and executable evidence close independently.
+validation_surfaces:
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - Plans/forge_integration_contracts.schema.json
+  - Plans/backup_restore_system_contracts.schema.json
+  - Plans/remote_access_system_contracts.schema.json
+  - future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures
+  - future protected-handoff/no-capture and immutable-snapshot exact-return fixtures
+  - future native Slint eight-theme/width/keyboard/touch/Reduced-Motion/virtualization tests
+risk_class: generic_shell_migration_or_protected_recovery_presentation_leak
+reasoning_tier: high
+context_scope: final_gui_forge_backup_tsnet_consumers
+implementation_surfaces: [Plans/FinalGUISpec.md, future repository automation, K3 Backup, Onboarding, Doctor, and Remote Access Slint components]
+node_compile_hint: {mode: final_gui_cross_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#finalgui-strings-routes-and-planned-ui-file-inventory
+  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
+  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#4
+  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-001
+  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-005
+  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-008
+  - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md
+  - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+preserved_exact_tokens: [repository_automation, Actions & Pipelines, github_actions, DestinationCard, ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, Tailscale, Built into Puppet Master, Connection engine, K3 Tome Tabs, PMConcept7, handler_unavailable, "expected_event_types=[]"]
+negative_constraints:
+  - Do not add a Backup, Tailscale, forge-specific, Server, Sync, or second Activity Bar item or notification center.
+  - Do not merge Source Control with Actions & Pipelines, or erase GitHub-specific semantics while migrating the generic host shell.
+  - Do not conflate Forgejo with Gitea, Git transport with API readiness, repository hosting with automation binding, or Origin checks with an Origin-hosted CI engine.
+  - Do not display or capture Recovery Key/Kit bytes, connector secrets/state, provider credentials, protected browser content, reusable auth URLs, cookies, IPC secrets, raw paths, or unbounded logs.
+  - Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.
+  - Do not add a Product Onboarding stage, bypass Review, or move Bootstrap/Backup/Remote Access/Forge/Doctor/notification/status ownership into Final GUI.
+  - Do not restore Serve/full-package/sidecar/daemon/TUN/backend-selector UI or imply an ordinary browser is enrolled by tsnet.
+  - Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or hand-edit generated PMConcept7 HTML as source truth.
+  - Do not claim handler, EventRecord, provider, crypto, restore, connector, native Slint, runtime, visual, security, performance, accessibility, readiness, or certification proof from Plans/static/concept material.
+owner_boundary_notes:
+  - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, and routes only; Forge, Backup/Restore, Remote Access, Planning Wizard, Doctor, notification, and status owners retain semantic truth and effects.
+owner_hints: [Plans/FinalGUISpec.md, Plans/Forge_Integrations.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/Planning_Wizard.md, Plans/newtools.md, Plans/Settings_System.md]
+```
+
+## Source Control And Provider-Operational GUI Depth Repair - 2026-09-02
+
+### F3-529 - Source Control, Reviews, Actions And Pipelines, And Related-Surface Semantics
+
+```yaml
+plan_unit_id: F3-529
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Source Control header identifies repository/workspace plus compact local-engine and hosting-service labels;
+  its detail disclosure shows Home Server, Execution Environment, Source Location path, distinct remote fetch
+  and push targets, authentication, and observed revision without overloading the header with infrastructure.
+  Its minimum section census is changes/diff; Git staging/commit or Jujutsu Current Change; branch/bookmark
+  tracking; remotes/publication; history/graph; conflicts; Git-only stashes; worktrees/workspaces; review requests;
+  changed files/comments/checks; recovery/Jujutsu operation history; and source-protection/Backup route. Every
+  additional live section is retained or explicitly migrated. Git renders Staged/Unstaged, index-aware diff,
+  Commit, stash, branches/upstream, and Worktrees. Jujutsu renders Current Change @, description and parent/change
+  context, New Change/Edit/Split/Squash/Abandon, bookmarks/tracking, stable change ID plus current commit ID,
+  rewritten/abandoned/conflicted state, local/remote bookmarks, Workspaces, and Operation History; staging and
+  stash are hidden, operation restore is previewed and distinct from Backup, and no UI-only action hides a Git
+  mutation. Reviews use one common list shell while detail preserves Pull request or Merge request vocabulary,
+  native status, source/target refs, author, draft, permissions, threads, checks, and currentness. Publish preview
+  shows the actual destination/refspec, Origin mirror write-through, protection, and CI/cost effects. Publish and
+  review creation are separate unless one explicit combined preview lists both effects; expected-head fencing,
+  remote limitation reasons, per-target fan-out outcome, outcome_unknown, and API-unavailable/push-ready states
+  remain visible, with no blanket Origin read-only badge. Actions & Pipelines selects AutomationBinding only when
+  more than one service applies and shows current revision checks, pinned and available definitions, active/recent
+  runs, queued/scheduled/manual gates, run detail, native stage/job/step hierarchy or the provider's available
+  trace, streamed logs, artifacts/retention, environments/deployments/approvals, runner/secrets/variables links,
+  and external/unsupported explanation. Provider-native headings and names remain GitHub Actions, GitLab
+  Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no
+  invented definitions and Origin checks never imply Origin Actions. Files uses engine-correct decoration/ignore,
+  useful repository/source badges, read-only Backup preview, and Restore this file. Artifacts distinguishes
+  provider CI artifacts, Puppet Master runtime outputs, and Backup exports while preserving expiry, checksum,
+  provenance, explicit import/download, and never auto-executing a download. Testing/Run & Debug may link checks
+  and reproduction receipts but does not treat remote CI as local proof. Assistant Chat receives compact
+  capability/receipt data without another forge/host banner. Bottom/status shows truthful publication, Backup,
+  and connector work without routine Synced, secrets, or Backup-as-token-usage. Cross-panel routes preserve exact
+  repository, revision, provider artifact, Backup, and initiating Client/Server destination identity.
+gui_related: true
+gui_classification_reason: This unit is the canonical detailed user-visible Source Control and Actions & Pipelines interaction contract.
+depends_on: [F3-528, SCS-015, SCS-016, FGI-014, FGI-015, GAAAF-016, GAAAF-017]
+unblocks: []
+acceptance_criteria:
+  - Live pre/post inventory maps every Source Control and hosted-admin section, control, state, command, and disposition; the packet minimum is never used to delete an unlisted live section.
+  - Git, Jujutsu, and no-forge profiles render at narrow/default/wide widths with stable selection/focus and only engine-valid actions.
+  - Protected branch, rejected push, Origin mirror mapping, stale review head, one-to-many partial push, and review-API-unavailable/push-ready fixtures show exact target and outcome truth.
+  - Every provider profile consumes the automation section matrix; missing step APIs show a job trace rather than invented steps, and existing pinned GitHub workflows/rerun controls survive.
+  - Capability transitions ready/auth expired/restored/service disabled/no runner/unsupported/unknown/stale retain saved layout, do not reorder rail icons or jump focus, and expose exact remediation or Open in service behavior.
+  - Files, Artifacts, Testing, Chat, and bottom/status deep links preserve exact identities; downloaded provider artifacts never auto-execute and remote CI is never local test proof.
+  - Hosted administration renders read/write independently for repository/branch policy, environments/deployment approvals, secrets/variables, runners, and release assets from versioned provider schemas; secret readback and implicit runner registration remain impossible.
+validation_surfaces: [Plans/final_gui_interaction_contracts.schema.json, Plans/final_gui_interaction_contract_fixtures.json, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future native Slint width/theme/keyboard/touch/accessibility/provider fixtures]
+risk_class: gui_backend_provider_effect_or_evidence_misrepresentation
+reasoning_tier: high
+context_scope: source_control_review_automation_and_related_surface_presentation
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/final_gui_interaction_contracts.schema.json, Plans/final_gui_interaction_contract_fixtures.json, future Source Control and repository_automation Slint components]
+node_compile_hint: {mode: static_gui_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:15-21
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:23-29
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:31-37
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:39-45
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:55-61
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:39-45
+  - source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:170-220
+  - source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:4-72
+  - source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
+  - source_ref:corrected-slice:machine__panel_sections.json__part-001__lines-000001-000220.txt:1-220
+  - source_ref:corrected-slice:machine__panel_sections.json__part-002__lines-000201-000263.txt:201-263
+preserved_exact_tokens: [Staged, Unstaged, Commit, Current Change, New Change, Edit, Split, Squash, Abandon, Operation History, Pull request, Merge request, outcome_unknown, Actions & Pipelines, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, Restore this file, Synced]
+negative_constraints:
+  - Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git mutation.
+  - Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
+  - Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin blanket read-only.
+  - Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner registration.
+  - Do not equate provider CI with local proof, auto-execute downloaded artifacts, show routine Synced, expose secret content, or count Backup statistics as model usage.
+  - Do not claim native Slint, visual, motion, accessibility, performance, handler, provider, runtime, security, or readiness proof from static Plans/schema/fixtures.
 ```

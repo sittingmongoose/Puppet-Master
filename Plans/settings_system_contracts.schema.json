@@ -1,0 +1,3355 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json",
+  "title": "Puppet Master Settings System contracts",
+  "description": "Strict Plans-only contracts for project Settings snapshots, transaction preview/apply/rollback/export, exact Settings routes and returns, manager/owner projections, Doctor projection boundaries, migration previews, appearance previews, UI action availability, and concept-fixture custody. These schemas and fixtures are not runtime or certification evidence.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/project_settings_snapshot"
+    },
+    {
+      "$ref": "#/$defs/settings_transaction_preview_request"
+    },
+    {
+      "$ref": "#/$defs/settings_transaction_preview"
+    },
+    {
+      "$ref": "#/$defs/settings_transaction_apply_request"
+    },
+    {
+      "$ref": "#/$defs/settings_transaction_result"
+    },
+    {
+      "$ref": "#/$defs/settings_transaction_rollback_request"
+    },
+    {
+      "$ref": "#/$defs/settings_export_request"
+    },
+    {
+      "$ref": "#/$defs/settings_export_manifest"
+    },
+    {
+      "$ref": "#/$defs/settings_route_request"
+    },
+    {
+      "$ref": "#/$defs/settings_route_return"
+    },
+    {
+      "$ref": "#/$defs/settings_owner_projection"
+    },
+    {
+      "$ref": "#/$defs/settings_doctor_projection"
+    },
+    {
+      "$ref": "#/$defs/settings_migration_preview"
+    },
+    {
+      "$ref": "#/$defs/settings_appearance_preview"
+    },
+    {
+      "$ref": "#/$defs/settings_ui_action_projection"
+    },
+    {
+      "$ref": "#/$defs/settings_concept_boundary"
+    },
+    {
+      "$ref": "#/$defs/settings_contract_fixture_pack"
+    },
+    {
+      "$ref": "#/$defs/settings_cross_owner_group_projection"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "nullable_non_empty_string": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^project:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "nullable_project_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/project_id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "setting_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+    },
+    "manager_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_non_secret_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "string_set": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "uniqueItems": true
+    },
+    "ref_set": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_secret_ref"
+      },
+      "uniqueItems": true
+    },
+    "setting_id_set": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/setting_id"
+      },
+      "uniqueItems": true
+    },
+    "setting_value": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "maxLength": 16384
+        },
+        {
+          "type": "array",
+          "maxItems": 2048,
+          "items": {
+            "$ref": "#/$defs/setting_value"
+          }
+        },
+        {
+          "type": "object",
+          "maxProperties": 2048,
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/setting_value"
+          }
+        }
+      ]
+    },
+    "values_by_setting_id": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/setting_id"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/setting_value"
+      }
+    },
+    "source_by_setting_id": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/setting_id"
+      },
+      "additionalProperties": {
+        "enum": [
+          "default",
+          "explicit",
+          "copied",
+          "restored_default",
+          "imported",
+          "migrated"
+        ]
+      }
+    },
+    "disabled_reason": {
+      "enum": [
+        "no_project_context",
+        "stale_revision",
+        "stale_preview",
+        "invalid_value",
+        "already_in_state",
+        "approval_required",
+        "official_source_unverified",
+        "host_environment_mismatch",
+        "resource_blocked",
+        "permission_required",
+        "policy_denied",
+        "managed_by_policy",
+        "owner_unavailable",
+        "owner_contract_missing",
+        "command_not_registered",
+        "handler_unavailable",
+        "operation_in_progress",
+        "target_missing",
+        "target_changed",
+        "unsupported_platform",
+        "capability_unavailable",
+        "setup_required",
+        "secret_excluded",
+        "migration_required",
+        "currentness_expired",
+        "readback_failed",
+        "rollback_required",
+        "route_stale",
+        "doctor_projection_stale",
+        "concept_fixture_only",
+        "not_applicable"
+      ]
+    },
+    "availability": {
+      "type": "object",
+      "required": [
+        "state",
+        "reason_code",
+        "human_reason",
+        "selector_ref",
+        "evaluated_at_utc",
+        "projection_generation"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "available",
+            "disabled",
+            "hidden"
+          ]
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/disabled_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "human_reason": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "selector_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "evaluated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "available"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "type": "null"
+              },
+              "human_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "disabled",
+                  "hidden"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/disabled_reason"
+              },
+              "human_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "theme_pair": {
+      "type": "object",
+      "required": [
+        "family",
+        "presentation_mode"
+      ],
+      "properties": {
+        "family": {
+          "enum": [
+            "Friendly",
+            "Glass",
+            "Retro",
+            "Basic"
+          ]
+        },
+        "presentation_mode": {
+          "enum": [
+            "Light",
+            "Dark",
+            "Auto"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "effective_theme_variant": {
+      "enum": [
+        "Friendly Dark",
+        "Friendly Light",
+        "Glass Dark",
+        "Glass Light",
+        "Retro Dark",
+        "Retro Light",
+        "Basic Dark",
+        "Basic Light"
+      ]
+    },
+    "glass_projection": {
+      "type": "object",
+      "required": [
+        "background_mode",
+        "alpha",
+        "availability"
+      ],
+      "properties": {
+        "background_mode": {
+          "oneOf": [
+            {
+              "enum": [
+                "Mesh",
+                "Depth",
+                "Minimal"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "alpha": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0.35,
+              "maximum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "$ref": "#/$defs/availability"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tooltip_projection": {
+      "type": "object",
+      "required": [
+        "hover_tooltips_enabled",
+        "focus_accessible_description_retained",
+        "help_details_retained"
+      ],
+      "properties": {
+        "hover_tooltips_enabled": {
+          "type": "boolean"
+        },
+        "focus_accessible_description_retained": {
+          "const": true
+        },
+        "help_details_retained": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "reduced_motion_projection": {
+      "type": "object",
+      "required": [
+        "project_requested",
+        "platform_requested",
+        "effective",
+        "policy"
+      ],
+      "properties": {
+        "project_requested": {
+          "type": "boolean"
+        },
+        "platform_requested": {
+          "type": "boolean"
+        },
+        "effective": {
+          "type": "boolean"
+        },
+        "policy": {
+          "const": "calm_nonessential_motion_preserve_state_feedback"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "project_requested": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "project_requested"
+                ]
+              },
+              {
+                "properties": {
+                  "platform_requested": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "platform_requested"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "project_requested": {
+                "const": false
+              },
+              "platform_requested": {
+                "const": false
+              }
+            },
+            "required": [
+              "project_requested",
+              "platform_requested"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective": {
+                "const": false
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "appearance_projection": {
+      "type": "object",
+      "required": [
+        "theme_pair",
+        "effective_theme_variant",
+        "glass",
+        "tooltips",
+        "reduced_motion",
+        "derived_from_setting_ids"
+      ],
+      "properties": {
+        "theme_pair": {
+          "$ref": "#/$defs/theme_pair"
+        },
+        "effective_theme_variant": {
+          "$ref": "#/$defs/effective_theme_variant"
+        },
+        "glass": {
+          "$ref": "#/$defs/glass_projection"
+        },
+        "tooltips": {
+          "$ref": "#/$defs/tooltip_projection"
+        },
+        "reduced_motion": {
+          "$ref": "#/$defs/reduced_motion_projection"
+        },
+        "derived_from_setting_ids": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "general.visual.theme"
+            },
+            {
+              "const": "general.visual.theme-mode"
+            },
+            {
+              "const": "general.visual.glass-background-mode"
+            },
+            {
+              "const": "general.visual.glass-transparency"
+            },
+            {
+              "const": "general.interaction.show-tooltips"
+            },
+            {
+              "const": "general.visual.reduce-animations"
+            }
+          ],
+          "items": false,
+          "minItems": 6,
+          "maxItems": 6
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "theme_pair": {
+                "properties": {
+                  "family": {
+                    "const": "Glass"
+                  }
+                },
+                "required": [
+                  "family"
+                ]
+              }
+            },
+            "required": [
+              "theme_pair"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_theme_variant": {
+                "enum": [
+                  "Glass Dark",
+                  "Glass Light"
+                ]
+              },
+              "glass": {
+                "properties": {
+                  "background_mode": {
+                    "enum": [
+                      "Mesh",
+                      "Depth",
+                      "Minimal"
+                    ]
+                  },
+                  "alpha": {
+                    "type": "number",
+                    "minimum": 0.35,
+                    "maximum": 1.0
+                  },
+                  "availability": {
+                    "properties": {
+                      "state": {
+                        "const": "available"
+                      },
+                      "reason_code": {
+                        "type": "null"
+                      },
+                      "human_reason": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "glass": {
+                "properties": {
+                  "background_mode": {
+                    "type": "null"
+                  },
+                  "alpha": {
+                    "type": "null"
+                  },
+                  "availability": {
+                    "properties": {
+                      "state": {
+                        "const": "disabled"
+                      },
+                      "reason_code": {
+                        "const": "not_applicable"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "effective_theme_variant": {
+                "const": "Glass Light"
+              }
+            },
+            "required": [
+              "effective_theme_variant"
+            ]
+          },
+          "then": {
+            "properties": {
+              "glass": {
+                "properties": {
+                  "alpha": {
+                    "type": "number",
+                    "minimum": 0.45,
+                    "maximum": 1.0
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "theme_pair": {
+                "properties": {
+                  "family": {
+                    "const": "Friendly"
+                  }
+                },
+                "required": [
+                  "family"
+                ]
+              }
+            },
+            "required": [
+              "theme_pair"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_theme_variant": {
+                "enum": [
+                  "Friendly Dark",
+                  "Friendly Light"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "theme_pair": {
+                "properties": {
+                  "family": {
+                    "const": "Retro"
+                  }
+                },
+                "required": [
+                  "family"
+                ]
+              }
+            },
+            "required": [
+              "theme_pair"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_theme_variant": {
+                "enum": [
+                  "Retro Dark",
+                  "Retro Light"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "theme_pair": {
+                "properties": {
+                  "family": {
+                    "const": "Basic"
+                  }
+                },
+                "required": [
+                  "family"
+                ]
+              }
+            },
+            "required": [
+              "theme_pair"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_theme_variant": {
+                "enum": [
+                  "Basic Dark",
+                  "Basic Light"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "project_settings_snapshot": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "snapshot_id",
+        "project_id",
+        "revision",
+        "inventory_schema_version",
+        "values_by_setting_id",
+        "source_by_setting_id",
+        "appearance_projection",
+        "owner_validation_refs",
+        "projection_generation",
+        "committed_at_utc",
+        "content_sha256",
+        "migration_receipt_ref"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "project_settings_snapshot"
+        },
+        "schema_id": {
+          "const": "pm.project_settings_snapshot.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "snapshot_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inventory_schema_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "values_by_setting_id": {
+          "$ref": "#/$defs/values_by_setting_id"
+        },
+        "source_by_setting_id": {
+          "$ref": "#/$defs/source_by_setting_id"
+        },
+        "appearance_projection": {
+          "$ref": "#/$defs/appearance_projection"
+        },
+        "owner_validation_refs": {
+          "$ref": "#/$defs/ref_set"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "committed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "migration_receipt_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      },
+      "additionalProperties": false
+    },
+    "excluded_setting": {
+      "type": "object",
+      "required": [
+        "setting_id",
+        "reason_code",
+        "human_reason"
+      ],
+      "properties": {
+        "setting_id": {
+          "$ref": "#/$defs/setting_id"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/disabled_reason"
+        },
+        "human_reason": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_transaction_preview": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "preview_id",
+        "operation_kind",
+        "destination_project_id",
+        "source_project_id",
+        "source_revision",
+        "expected_destination_revision",
+        "inventory_schema_version",
+        "exact_setting_ids",
+        "proposed_values_by_setting_id",
+        "excluded_settings",
+        "conflict_classes",
+        "before_sha256",
+        "after_sha256",
+        "restore_point_plan_ref",
+        "owner_validation_refs",
+        "effect_requirements",
+        "preview_generation",
+        "preview_sha256",
+        "created_at_utc",
+        "expires_at_utc",
+        "confirmation_required",
+        "availability"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_transaction_preview"
+        },
+        "schema_id": {
+          "const": "pm.settings_transaction_preview.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "preview_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "operation_kind": {
+          "enum": [
+            "set",
+            "restore_defaults",
+            "transfer",
+            "import",
+            "migration"
+          ]
+        },
+        "destination_project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "source_project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "source_revision": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_destination_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inventory_schema_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "exact_setting_ids": {
+          "$ref": "#/$defs/setting_id_set",
+          "minItems": 1
+        },
+        "proposed_values_by_setting_id": {
+          "$ref": "#/$defs/values_by_setting_id"
+        },
+        "excluded_settings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/excluded_setting"
+          }
+        },
+        "conflict_classes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "compatible",
+              "destination_modified",
+              "owner_validation_required",
+              "unsupported_value",
+              "managed_by_policy"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "before_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "after_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "restore_point_plan_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "owner_validation_refs": {
+          "$ref": "#/$defs/ref_set"
+        },
+        "effect_requirements": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "instant",
+              "restart_app",
+              "reconnect_provider",
+              "reconnect_host",
+              "reopen_project"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "preview_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "preview_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "confirmation_required": {
+          "const": true
+        },
+        "availability": {
+          "$ref": "#/$defs/availability"
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_request_common": {
+      "type": "object",
+      "required": [
+        "request_id",
+        "project_id",
+        "idempotency_key",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "settings_transaction_preview_request": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/command_request_common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "record_type",
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "operation_kind",
+            "source_project_id",
+            "expected_source_revision",
+            "expected_destination_revision",
+            "selector_ids",
+            "exact_setting_ids",
+            "proposed_values_by_setting_id",
+            "intent"
+          ],
+          "properties": {
+            "record_type": {
+              "const": "settings_transaction_preview_request"
+            },
+            "schema_id": {
+              "const": "pm.settings_transaction_preview_request.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "command_id": {
+              "const": "cmd.settings.transaction.preview"
+            },
+            "operation_kind": {
+              "enum": [
+                "set",
+                "restore_defaults",
+                "transfer",
+                "import",
+                "migration"
+              ]
+            },
+            "source_project_id": {
+              "$ref": "#/$defs/nullable_project_id"
+            },
+            "expected_source_revision": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_destination_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "selector_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "uniqueItems": true
+            },
+            "exact_setting_ids": {
+              "$ref": "#/$defs/setting_id_set"
+            },
+            "proposed_values_by_setting_id": {
+              "$ref": "#/$defs/values_by_setting_id"
+            },
+            "intent": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "settings_transaction_apply_request": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/command_request_common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "record_type",
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "preview_id",
+            "preview_generation",
+            "preview_sha256",
+            "expected_project_revision"
+          ],
+          "properties": {
+            "record_type": {
+              "const": "settings_transaction_apply_request"
+            },
+            "schema_id": {
+              "const": "pm.settings_transaction_apply_request.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "command_id": {
+              "const": "cmd.settings.transaction.apply"
+            },
+            "preview_id": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "preview_generation": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "preview_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "expected_project_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "settings_transaction_result": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "request_id",
+        "project_id",
+        "transaction_id",
+        "outcome",
+        "previous_revision",
+        "current_revision",
+        "changed_setting_ids",
+        "snapshot_ref",
+        "receipt_ref",
+        "rollback_token_ref",
+        "disabled_reasons",
+        "replayed",
+        "settled_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_transaction_result"
+        },
+        "schema_id": {
+          "const": "pm.settings_transaction_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.settings.transaction.apply",
+            "cmd.settings.transaction.rollback"
+          ]
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "transaction_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "enum": [
+            "applied",
+            "no_change",
+            "blocked",
+            "failed",
+            "rolled_back",
+            "recovery_required"
+          ]
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changed_setting_ids": {
+          "$ref": "#/$defs/setting_id_set"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "rollback_token_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "disabled_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/disabled_reason"
+          },
+          "uniqueItems": true
+        },
+        "replayed": {
+          "type": "boolean"
+        },
+        "settled_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_transaction_rollback_request": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/command_request_common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "record_type",
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "transaction_id",
+            "rollback_token_ref",
+            "expected_project_revision",
+            "reason"
+          ],
+          "properties": {
+            "record_type": {
+              "const": "settings_transaction_rollback_request"
+            },
+            "schema_id": {
+              "const": "pm.settings_transaction_rollback_request.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "command_id": {
+              "const": "cmd.settings.transaction.rollback"
+            },
+            "transaction_id": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "rollback_token_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "expected_project_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reason": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "settings_export_request": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/command_request_common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "record_type",
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "expected_project_revision",
+            "exact_setting_ids",
+            "format",
+            "destination_artifact_ref"
+          ],
+          "properties": {
+            "record_type": {
+              "const": "settings_export_request"
+            },
+            "schema_id": {
+              "const": "pm.settings_export_request.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "command_id": {
+              "const": "cmd.settings.export"
+            },
+            "expected_project_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "exact_setting_ids": {
+              "$ref": "#/$defs/setting_id_set",
+              "minItems": 1
+            },
+            "format": {
+              "const": "pm-settings-export-json-v1"
+            },
+            "destination_artifact_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "settings_export_manifest": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "export_id",
+        "project_id",
+        "source_revision",
+        "exact_setting_ids",
+        "excluded_settings",
+        "format",
+        "artifact_ref",
+        "content_sha256",
+        "byte_length",
+        "credential_material_included",
+        "detached",
+        "created_at_utc",
+        "receipt_ref"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_export_manifest"
+        },
+        "schema_id": {
+          "const": "pm.settings_export_manifest.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "export_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exact_setting_ids": {
+          "$ref": "#/$defs/setting_id_set",
+          "minItems": 1
+        },
+        "excluded_settings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/excluded_setting"
+          }
+        },
+        "format": {
+          "const": "pm-settings-export-json-v1"
+        },
+        "artifact_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "byte_length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "credential_material_included": {
+          "const": false
+        },
+        "detached": {
+          "const": true
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      },
+      "additionalProperties": false
+    },
+    "exact_context": {
+      "type": "object",
+      "required": [
+        "project_id",
+        "server_id",
+        "vault_id",
+        "host_id",
+        "environment_id",
+        "client_id",
+        "provider_id",
+        "provider_route_id",
+        "thread_id",
+        "operation_id",
+        "topology_generation",
+        "expected_revision"
+      ],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "server_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "vault_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "host_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "environment_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "client_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "provider_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "provider_route_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "return_contract": {
+      "type": "object",
+      "required": [
+        "continuation_id",
+        "continuation_generation",
+        "origin_surface",
+        "origin_route",
+        "origin_focus_id",
+        "origin_query",
+        "origin_scroll_anchor",
+        "close_behavior",
+        "escape_order",
+        "exact_context",
+        "expires_at_utc",
+        "stale_return_policy"
+      ],
+      "properties": {
+        "continuation_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "continuation_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "origin_surface": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "origin_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "origin_focus_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "origin_query": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "origin_scroll_anchor": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "close_behavior": {
+          "enum": [
+            "return_to_opener",
+            "host_back",
+            "close_surface"
+          ]
+        },
+        "escape_order": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "close_transient"
+            },
+            {
+              "const": "close_details"
+            },
+            {
+              "const": "clear_query"
+            },
+            {
+              "const": "return_to_opener"
+            }
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "exact_context": {
+          "$ref": "#/$defs/exact_context"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "stale_return_policy": {
+          "const": "reject_and_keep_current_context"
+        }
+      },
+      "additionalProperties": false
+    },
+    "route_target": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "target_type",
+            "setting_id",
+            "manager_id",
+            "detail_id"
+          ],
+          "properties": {
+            "target_type": {
+              "const": "setting"
+            },
+            "setting_id": {
+              "$ref": "#/$defs/setting_id"
+            },
+            "manager_id": {
+              "type": "null"
+            },
+            "detail_id": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "target_type",
+            "setting_id",
+            "manager_id",
+            "detail_id"
+          ],
+          "properties": {
+            "target_type": {
+              "const": "manager"
+            },
+            "setting_id": {
+              "type": "null"
+            },
+            "manager_id": {
+              "$ref": "#/$defs/manager_id"
+            },
+            "detail_id": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "settings_route_request": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "route_id",
+        "project_id",
+        "target",
+        "return_contract",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_route_request"
+        },
+        "schema_id": {
+          "const": "pm.settings_route_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.settings.open"
+        },
+        "route_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "target": {
+          "$ref": "#/$defs/route_target"
+        },
+        "return_contract": {
+          "$ref": "#/$defs/return_contract"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_route_return": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "route_id",
+        "continuation_id",
+        "continuation_generation",
+        "outcome",
+        "restored_focus_id",
+        "restored_query",
+        "restored_scroll_anchor",
+        "disabled_reason",
+        "returned_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_route_return"
+        },
+        "schema_id": {
+          "const": "pm.settings_route_return.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "route_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "continuation_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "continuation_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outcome": {
+          "enum": [
+            "returned",
+            "rejected_stale",
+            "rejected_context_changed",
+            "cancelled"
+          ]
+        },
+        "restored_focus_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "restored_query": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "restored_scroll_anchor": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/disabled_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returned_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_manager_descriptor": {
+      "type": "object",
+      "required": [
+        "title",
+        "purpose",
+        "owner_refs",
+        "owner_disposition",
+        "route_ref",
+        "search_aliases",
+        "summary_projection_schema_ref",
+        "owner_action_ids",
+        "required_target_fields",
+        "hydration_policy",
+        "owner_gap_reason"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "purpose": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "owner_refs": {
+          "$ref": "#/$defs/ref_set",
+          "minItems": 1
+        },
+        "owner_disposition": {
+          "enum": [
+            "canonical_owner_registered",
+            "owner_route_aggregate",
+            "accepted_owner_contract_pending",
+            "deferred_gui_owner_registered"
+          ]
+        },
+        "route_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "search_aliases": {
+          "$ref": "#/$defs/string_set"
+        },
+        "summary_projection_schema_ref": {
+          "const": "#/$defs/settings_owner_projection"
+        },
+        "owner_action_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^cmd\\.[a-z0-9_.-]+$"
+          },
+          "uniqueItems": true
+        },
+        "required_target_fields": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "project_id",
+              "server_id",
+              "vault_id",
+              "host_id",
+              "environment_id",
+              "client_id",
+              "provider_id",
+              "provider_route_id",
+              "thread_id",
+              "operation_id"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "hydration_policy": {
+          "const": "cached_bounded_summary_then_selected_details"
+        },
+        "owner_gap_reason": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_owner_projection": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "projection_id",
+        "manager_id",
+        "owner_refs",
+        "owner_contract_ref",
+        "projection_generation",
+        "captured_at_utc",
+        "expires_at_utc",
+        "requested_state",
+        "effective_state",
+        "health",
+        "availability",
+        "active_operation_ref",
+        "receipt_refs",
+        "evidence_refs",
+        "summary",
+        "details_route_ref",
+        "raw_logs_included",
+        "settings_is_runtime_owner"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_owner_projection"
+        },
+        "schema_id": {
+          "const": "pm.settings_owner_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "projection_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "manager_id": {
+          "$ref": "#/$defs/manager_id"
+        },
+        "owner_refs": {
+          "$ref": "#/$defs/ref_set",
+          "minItems": 1
+        },
+        "owner_contract_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "captured_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "requested_state": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "effective_state": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "health": {
+          "enum": [
+            "ok",
+            "attention",
+            "blocked",
+            "failed",
+            "unknown",
+            "stale"
+          ]
+        },
+        "availability": {
+          "$ref": "#/$defs/availability"
+        },
+        "active_operation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "receipt_refs": {
+          "$ref": "#/$defs/ref_set"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_set"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "details_route_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "raw_logs_included": {
+          "const": false
+        },
+        "settings_is_runtime_owner": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_doctor_projection": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "manager_id",
+        "check_id",
+        "domain_owner_ref",
+        "projection_generation",
+        "captured_at_utc",
+        "expires_at_utc",
+        "severity",
+        "status",
+        "evidence_refs",
+        "remediation_action",
+        "probe_execution_owner",
+        "settings_authority",
+        "readiness_claim",
+        "dedupe_key"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_doctor_projection"
+        },
+        "schema_id": {
+          "const": "pm.settings_doctor_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "manager_id": {
+          "const": "doctor"
+        },
+        "check_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "domain_owner_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "captured_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "finding",
+            "failed",
+            "unavailable",
+            "stale",
+            "not_run"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_set"
+        },
+        "remediation_action": {
+          "type": "object",
+          "required": [
+            "owner_command_id",
+            "owner_route_ref",
+            "availability"
+          ],
+          "properties": {
+            "owner_command_id": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "pattern": "^cmd\\.[a-z0-9_.-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "owner_route_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "availability": {
+              "$ref": "#/$defs/availability"
+            }
+          },
+          "additionalProperties": false
+        },
+        "probe_execution_owner": {
+          "const": "domain_owner_only"
+        },
+        "settings_authority": {
+          "const": "cached_projection_and_owner_route_only"
+        },
+        "readiness_claim": {
+          "const": false
+        },
+        "dedupe_key": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_migration_preview": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "migration_id",
+        "source_kind",
+        "source_sha256",
+        "destination_project_id",
+        "expected_destination_revision",
+        "detected_setting_ids",
+        "mappable_setting_ids",
+        "excluded_settings",
+        "unmapped_legacy_keys",
+        "theme_pair_after_migration",
+        "transaction_preview_ref",
+        "confirmation_required",
+        "auto_apply",
+        "legacy_source_authoritative",
+        "created_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_migration_preview"
+        },
+        "schema_id": {
+          "const": "pm.settings_migration_preview.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "migration_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "source_kind": {
+          "enum": [
+            "legacy_global_snapshot",
+            "legacy_singleton_settings",
+            "legacy_browser_concept_fixture",
+            "settings_export_v1"
+          ]
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "destination_project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "expected_destination_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "detected_setting_ids": {
+          "$ref": "#/$defs/setting_id_set"
+        },
+        "mappable_setting_ids": {
+          "$ref": "#/$defs/setting_id_set"
+        },
+        "excluded_settings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/excluded_setting"
+          }
+        },
+        "unmapped_legacy_keys": {
+          "$ref": "#/$defs/string_set"
+        },
+        "theme_pair_after_migration": {
+          "$ref": "#/$defs/theme_pair"
+        },
+        "transaction_preview_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "confirmation_required": {
+          "const": true
+        },
+        "auto_apply": {
+          "const": false
+        },
+        "legacy_source_authoritative": {
+          "const": false
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_appearance_preview": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "preview_id",
+        "project_id",
+        "base_revision",
+        "appearance_projection",
+        "preview_only",
+        "persistent_write_performed",
+        "revert_trigger",
+        "apply_command_id",
+        "created_at_utc",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_appearance_preview"
+        },
+        "schema_id": {
+          "const": "pm.settings_appearance_preview.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "preview_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "base_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "appearance_projection": {
+          "$ref": "#/$defs/appearance_projection"
+        },
+        "preview_only": {
+          "const": true
+        },
+        "persistent_write_performed": {
+          "const": false
+        },
+        "revert_trigger": {
+          "enum": [
+            "cancel",
+            "close",
+            "route_change",
+            "expiry",
+            "project_switch"
+          ]
+        },
+        "apply_command_id": {
+          "const": "cmd.settings.transaction.apply"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_ui_action_projection": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "ui_action_id",
+        "command_id",
+        "target",
+        "owner_ref",
+        "availability",
+        "requested_state",
+        "effective_state",
+        "active_operation_ref",
+        "receipt_refs"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_ui_action_projection"
+        },
+        "schema_id": {
+          "const": "pm.settings_ui_action_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "ui_action_id": {
+          "type": "string",
+          "pattern": "^settings\\.[a-z0-9_.-]+$"
+        },
+        "command_id": {
+          "type": "string",
+          "pattern": "^cmd\\.[a-z0-9_.-]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/exact_context"
+        },
+        "owner_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "availability": {
+          "$ref": "#/$defs/availability"
+        },
+        "requested_state": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "effective_state": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "active_operation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "receipt_refs": {
+          "$ref": "#/$defs/ref_set"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_concept_boundary": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "artifact_ref",
+        "authored_source_ref",
+        "builder_ref",
+        "evidence_level",
+        "handlers_simulated",
+        "persistence_mode",
+        "direct_generated_edit_allowed",
+        "allowed_claims",
+        "prohibited_claims",
+        "native_runtime_executed"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_concept_boundary"
+        },
+        "schema_id": {
+          "const": "pm.settings_concept_boundary.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "artifact_ref": {
+          "const": "Concepts/PMConcept7.html"
+        },
+        "authored_source_ref": {
+          "const": "Concepts/pm7-tools/settings_tome_source.py"
+        },
+        "builder_ref": {
+          "const": "Concepts/pm7-tools/build_pm7.py"
+        },
+        "evidence_level": {
+          "const": "concept_fixture_only"
+        },
+        "handlers_simulated": {
+          "const": true
+        },
+        "persistence_mode": {
+          "const": "fixture_local_non_authoritative"
+        },
+        "direct_generated_edit_allowed": {
+          "const": false
+        },
+        "allowed_claims": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "geometry_demonstration",
+              "content_projection_demonstration",
+              "interaction_prototype"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "prohibited_claims": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "production_runtime"
+            },
+            {
+              "const": "production_persistence"
+            },
+            {
+              "const": "handler_wiring"
+            },
+            {
+              "const": "visual_acceptance"
+            },
+            {
+              "const": "performance_acceptance"
+            },
+            {
+              "const": "accessibility_acceptance"
+            },
+            {
+              "const": "certification"
+            }
+          ],
+          "items": false,
+          "minItems": 7,
+          "maxItems": 7
+        },
+        "native_runtime_executed": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_named_visible_state_projection": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "manager_id",
+        "projection_kind",
+        "owner_refs",
+        "visible_state_fields",
+        "route_ref",
+        "owner_action_policy",
+        "settings_is_runtime_owner",
+        "raw_logs_included",
+        "negative_constraints"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_named_visible_state_projection"
+        },
+        "schema_id": {
+          "const": "pm.settings_named_visible_state_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "manager_id": {
+          "enum": [
+            "teacher-help",
+            "project-search-index",
+            "dry-method"
+          ]
+        },
+        "projection_kind": {
+          "enum": [
+            "teacher_help",
+            "project_search_index",
+            "dry_method"
+          ]
+        },
+        "owner_refs": {
+          "$ref": "#/$defs/ref_set",
+          "minItems": 1
+        },
+        "visible_state_fields": {
+          "$ref": "#/$defs/string_set",
+          "minItems": 4
+        },
+        "route_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "owner_action_policy": {
+          "const": "owner_admitted_command_or_typed_route_only"
+        },
+        "settings_is_runtime_owner": {
+          "const": false
+        },
+        "raw_logs_included": {
+          "const": false
+        },
+        "negative_constraints": {
+          "$ref": "#/$defs/string_set",
+          "minItems": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "manager_id": {
+                "const": "teacher-help"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "projection_kind": {
+                "const": "teacher_help"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "manager_id": {
+                "const": "project-search-index"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "projection_kind": {
+                "const": "project_search_index"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "manager_id": {
+                "const": "dry-method"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "projection_kind": {
+                "const": "dry_method"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "named_visible_state_projection_registry": {
+      "type": "object",
+      "required": [
+        "teacher-help",
+        "project-search-index",
+        "dry-method"
+      ],
+      "properties": {
+        "teacher-help": {
+          "$ref": "#/$defs/settings_named_visible_state_projection"
+        },
+        "project-search-index": {
+          "$ref": "#/$defs/settings_named_visible_state_projection"
+        },
+        "dry-method": {
+          "$ref": "#/$defs/settings_named_visible_state_projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_local_ui_action_payload": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "action_id",
+        "project_id",
+        "target_ref",
+        "projection_generation",
+        "domain_mutation_authorized",
+        "persistence_write_authorized",
+        "owner_operation_authorized"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_local_ui_action_payload"
+        },
+        "schema_id": {
+          "const": "pm.settings_local_ui_action_payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "action_id": {
+          "enum": [
+            "settings.search.focus",
+            "settings.search.result.activate",
+            "settings.category.select",
+            "settings.subcategory.select",
+            "settings.setting.focus",
+            "settings.scope.details.open",
+            "settings.provider.installation.select"
+          ]
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "domain_mutation_authorized": {
+          "const": false
+        },
+        "persistence_write_authorized": {
+          "const": false
+        },
+        "owner_operation_authorized": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "packet_command_disposition": {
+      "type": "object",
+      "required": [
+        "disposition",
+        "replacement_command_ids",
+        "typed_local_ui_action_id",
+        "typed_local_payload_schema_ref",
+        "reason",
+        "native_handler_claim"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "reuse_canonical_command",
+            "approved_alias",
+            "superseded_by_typed_local_ui_action",
+            "retired_bakeoff_only",
+            "rejected_with_reason"
+          ]
+        },
+        "replacement_command_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^cmd\\.[a-z0-9_.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 4
+        },
+        "typed_local_ui_action_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^settings\\.[a-z0-9_.-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typed_local_payload_schema_ref": {
+          "oneOf": [
+            {
+              "const": "#/$defs/settings_local_ui_action_payload"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "native_handler_claim": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "reuse_canonical_command",
+                  "approved_alias"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "replacement_command_ids": {
+                "minItems": 1
+              },
+              "typed_local_ui_action_id": {
+                "type": "null"
+              },
+              "typed_local_payload_schema_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "superseded_by_typed_local_ui_action"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "replacement_command_ids": {
+                "maxItems": 0
+              },
+              "typed_local_ui_action_id": {
+                "type": "string"
+              },
+              "typed_local_payload_schema_ref": {
+                "const": "#/$defs/settings_local_ui_action_payload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "retired_bakeoff_only",
+                  "rejected_with_reason"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "replacement_command_ids": {
+                "maxItems": 0
+              },
+              "typed_local_ui_action_id": {
+                "type": "null"
+              },
+              "typed_local_payload_schema_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "packet_command_disposition_registry": {
+      "type": "object",
+      "minProperties": 80,
+      "maxProperties": 80,
+      "propertyNames": {
+        "enum": [
+          "cmd.account.select_profile",
+          "cmd.provider.switch_route",
+          "cmd.usage.refresh",
+          "cmd.usage.export",
+          "cmd.settings.bloom.open",
+          "cmd.settings.open",
+          "cmd.settings.navigate",
+          "cmd.settings.search.focus",
+          "cmd.settings.search.select_result",
+          "cmd.settings.category.select",
+          "cmd.settings.subcategory.select",
+          "cmd.settings.setting.focus",
+          "cmd.settings.manager.open",
+          "cmd.settings.value.set",
+          "cmd.settings.default.restore",
+          "cmd.settings.scope.inspect",
+          "cmd.settings.export",
+          "cmd.settings.import.preview",
+          "cmd.settings.import.apply",
+          "cmd.settings.import.rollback",
+          "cmd.settings.reset.preview",
+          "cmd.settings.reset.apply",
+          "cmd.settings.copy_from_project.preview",
+          "cmd.settings.copy_from_project.apply",
+          "cmd.provider.installation.scan",
+          "cmd.provider.installation.select",
+          "cmd.provider.installation.install",
+          "cmd.provider.installation.update",
+          "cmd.provider.installation.repair",
+          "cmd.provider.installation.rollback",
+          "cmd.provider.installation.verify",
+          "cmd.provider.connection.add",
+          "cmd.provider.connection.authenticate",
+          "cmd.provider.connection.reconnect",
+          "cmd.provider.catalog.refresh",
+          "cmd.model.favorite.set",
+          "cmd.model.alias.set",
+          "cmd.model.priority.set",
+          "cmd.model.visibility.set",
+          "cmd.memory.open",
+          "cmd.memory.verify",
+          "cmd.memory.edit",
+          "cmd.memory.delete",
+          "cmd.memory.restore",
+          "cmd.persona.manage",
+          "cmd.crew.template.create",
+          "cmd.crew.template.update",
+          "cmd.crew.template.delete",
+          "cmd.permissions.rule.add",
+          "cmd.permissions.rule.update",
+          "cmd.permissions.rule.reorder",
+          "cmd.permissions.rule.delete",
+          "cmd.permissions.rule.test",
+          "cmd.notifications.sound.upload",
+          "cmd.notifications.sound.import_pack",
+          "cmd.notifications.sound.preview",
+          "cmd.notifications.sound.delete",
+          "cmd.notifications.sound.export",
+          "cmd.notifications.destination.test",
+          "cmd.theme.create",
+          "cmd.theme.import",
+          "cmd.theme.export",
+          "cmd.theme.preview",
+          "cmd.theme.apply",
+          "cmd.commands.custom.create",
+          "cmd.commands.custom.update",
+          "cmd.commands.custom.delete",
+          "cmd.commands.custom.dry_run",
+          "cmd.shortcuts.bind",
+          "cmd.shortcuts.reset",
+          "cmd.shortcuts.import",
+          "cmd.shortcuts.export",
+          "cmd.mcp.server.add",
+          "cmd.mcp.server.restart",
+          "cmd.lsp.server.add",
+          "cmd.lsp.server.restart",
+          "cmd.formatter.add",
+          "cmd.formatter.test",
+          "cmd.storage.backup.open",
+          "cmd.artifact.manager.open"
+        ]
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/packet_command_disposition"
+      }
+    },
+    "settings_command_contract": {
+      "type": "object",
+      "required": [
+        "semantic_owner",
+        "ui_action_id",
+        "request_schema_ref",
+        "result_schema_ref",
+        "availability_selector_ref",
+        "disabled_reason_set",
+        "catalog_obligation",
+        "concept_simulation_allowed"
+      ],
+      "properties": {
+        "semantic_owner": {
+          "const": "Plans/Settings_System.md"
+        },
+        "ui_action_id": {
+          "type": "string",
+          "pattern": "^settings\\.[a-z0-9_.-]+$"
+        },
+        "request_schema_ref": {
+          "type": "string",
+          "pattern": "^#/\\$defs/[a-z0-9_]+$"
+        },
+        "result_schema_ref": {
+          "type": "string",
+          "pattern": "^#/\\$defs/[a-z0-9_]+$"
+        },
+        "availability_selector_ref": {
+          "type": "string",
+          "pattern": "^settings\\.[a-z0-9_.-]+$"
+        },
+        "disabled_reason_set": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/disabled_reason"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "catalog_obligation": {
+          "const": "must_register_same_id_payload_result_selector_and_handler"
+        },
+        "concept_simulation_allowed": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_route_ui_action_contract": {
+      "type": "object",
+      "required": [
+        "command_id",
+        "request_schema_id",
+        "result_schema_id",
+        "target_manager_id",
+        "target_detail_id",
+        "effect",
+        "owner_operation_authorized"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.settings.open"
+        },
+        "request_schema_id": {
+          "const": "pm.settings_route_request.v1"
+        },
+        "result_schema_id": {
+          "const": "pm.settings_route_return.v1"
+        },
+        "target_manager_id": {
+          "enum": [
+            "onboarding-guided-tour",
+            "doctor"
+          ]
+        },
+        "target_detail_id": {
+          "enum": [
+            "overview",
+            "run-onboarding-again",
+            "replay-guided-tour",
+            "check:{check_id}"
+          ]
+        },
+        "effect": {
+          "const": "route_only"
+        },
+        "owner_operation_authorized": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "route_ui_action_registry": {
+      "type": "object",
+      "required": [
+        "settings.onboarding.open",
+        "settings.onboarding.run_again",
+        "settings.guided_tour.replay",
+        "settings.doctor.open",
+        "settings.doctor.remediation.open"
+      ],
+      "properties": {
+        "settings.onboarding.open": {
+          "$ref": "#/$defs/settings_route_ui_action_contract"
+        },
+        "settings.onboarding.run_again": {
+          "$ref": "#/$defs/settings_route_ui_action_contract"
+        },
+        "settings.guided_tour.replay": {
+          "$ref": "#/$defs/settings_route_ui_action_contract"
+        },
+        "settings.doctor.open": {
+          "$ref": "#/$defs/settings_route_ui_action_contract"
+        },
+        "settings.doctor.remediation.open": {
+          "$ref": "#/$defs/settings_route_ui_action_contract"
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_contract_registry": {
+      "type": "object",
+      "required": [
+        "cmd.settings.open",
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply",
+        "cmd.settings.transaction.rollback",
+        "cmd.settings.export"
+      ],
+      "properties": {
+        "cmd.settings.open": {
+          "$ref": "#/$defs/settings_command_contract"
+        },
+        "cmd.settings.transaction.preview": {
+          "$ref": "#/$defs/settings_command_contract"
+        },
+        "cmd.settings.transaction.apply": {
+          "$ref": "#/$defs/settings_command_contract"
+        },
+        "cmd.settings.transaction.rollback": {
+          "$ref": "#/$defs/settings_command_contract"
+        },
+        "cmd.settings.export": {
+          "$ref": "#/$defs/settings_command_contract"
+        }
+      },
+      "additionalProperties": false
+    },
+    "manager_registry": {
+      "type": "object",
+      "required": [
+        "all-settings",
+        "general-appearance-input",
+        "providers-accounts-models",
+        "web-routes",
+        "media-routes",
+        "back-seat-driver",
+        "memory-context-instructions",
+        "goals-crew-personas",
+        "permissions-filesafe",
+        "commands-shortcuts",
+        "tools-integrations",
+        "testing-debug-capture",
+        "files-editor-terminal",
+        "notifications-sounds",
+        "source-control",
+        "browser-policy",
+        "containers-registries",
+        "storage-retention-recovery",
+        "project-history-artifacts",
+        "settings-transfer",
+        "settings-export-migration",
+        "server-claim-bootstrap",
+        "servers-hosts-environments",
+        "clients-continuity",
+        "project-hosting-files",
+        "project-sync-move-copy",
+        "ssh-remote",
+        "remote-access",
+        "server-backup-restore",
+        "project-backup",
+        "updates",
+        "project-defaults-templates",
+        "onboarding-guided-tour",
+        "doctor",
+        "usage-budgets",
+        "teacher-help",
+        "project-search-index",
+        "dry-method"
+      ],
+      "properties": {
+        "all-settings": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "general-appearance-input": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "providers-accounts-models": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "web-routes": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "media-routes": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "back-seat-driver": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "memory-context-instructions": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "goals-crew-personas": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "permissions-filesafe": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "commands-shortcuts": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "tools-integrations": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "testing-debug-capture": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "files-editor-terminal": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "notifications-sounds": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "source-control": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "browser-policy": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "containers-registries": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "storage-retention-recovery": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "project-history-artifacts": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "settings-transfer": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "settings-export-migration": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "server-claim-bootstrap": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "servers-hosts-environments": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "clients-continuity": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "project-hosting-files": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "project-sync-move-copy": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "ssh-remote": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "remote-access": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "server-backup-restore": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "project-backup": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "updates": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "project-defaults-templates": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "onboarding-guided-tour": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "doctor": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "usage-budgets": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "teacher-help": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "project-search-index": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        },
+        "dry-method": {
+          "$ref": "#/$defs/settings_manager_descriptor"
+        }
+      },
+      "additionalProperties": false
+    },
+    "valid_fixture_case": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "schema_ref",
+        "record"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^valid-[a-z0-9-]+$"
+        },
+        "schema_ref": {
+          "type": "string",
+          "pattern": "^#/\\$defs/[a-z0-9_]+$"
+        },
+        "record": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "negative_fixture_case": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "schema_ref",
+        "record",
+        "expected_keyword"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^invalid-[a-z0-9-]+$"
+        },
+        "schema_ref": {
+          "type": "string",
+          "pattern": "^#/\\$defs/[a-z0-9_]+$"
+        },
+        "record": {},
+        "expected_keyword": {
+          "enum": [
+            "required",
+            "const",
+            "enum",
+            "type",
+            "pattern",
+            "additionalProperties",
+            "unevaluatedProperties",
+            "format",
+            "minimum",
+            "minProperties",
+            "maxProperties",
+            "uniqueItems"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_cross_owner_group_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "schema_id", "plan_unit_ref", "layout_authority", "manager_count", "visible_group", "stable_manager_keys", "detail_role", "scope_selector", "compatibility_routes", "protected_actions", "source_control", "remote_access", "command_availability", "expected_event_types", "runtime_claim"],
+      "properties": {
+        "record_type": {"const": "settings_cross_owner_group_projection"},
+        "schema_id": {"const": "pm.settings_cross_owner_group_projection.v1"},
+        "plan_unit_ref": {"const": "Plans/Settings_System.md#SSYS-026"},
+        "layout_authority": {"const": "K3 Tome Tabs"},
+        "manager_count": {"const": 38},
+        "visible_group": {"const": "Data Backup and Retention"},
+        "stable_manager_keys": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "storage-retention-recovery"},
+            {"const": "server-backup-restore"},
+            {"const": "project-backup"}
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "detail_role": {"const": "typed_child_detail_descriptors_under_one_visible_group"},
+        "scope_selector": {"const": "server|project:{id}"},
+        "compatibility_routes": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "route:settings/storage-retention-recovery"},
+            {"const": "route:settings/server-backup-restore"},
+            {"const": "route:settings/project-backup"}
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "protected_actions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["actions", "human_only", "step_up_required", "no_store_delivery_required", "agent_or_automation_allowed", "capture_allowed", "secret_bytes_exposed"],
+          "properties": {
+            "actions": {"type": "array", "items": {"enum": ["save", "export", "copy", "print", "test", "acknowledge", "rotate", "reencrypt", "unlock"]}, "minItems": 9, "maxItems": 9, "uniqueItems": true},
+            "human_only": {"const": true},
+            "step_up_required": {"const": true},
+            "no_store_delivery_required": {"const": true},
+            "agent_or_automation_allowed": {"const": false},
+            "capture_allowed": {"const": false},
+            "secret_bytes_exposed": {"const": false}
+          }
+        },
+        "source_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manager_key", "routing_targets", "providers", "repository_hosting_independent", "automation_binding_independent", "credential_values_stored"],
+          "properties": {
+            "manager_key": {"const": "source-control"},
+            "routing_targets": {"type": "array", "prefixItems": [{"const": "source_control"}, {"const": "repository_automation"}], "items": false, "minItems": 2, "maxItems": 2},
+            "providers": {"type": "array", "prefixItems": [{"const": "Forgejo"}, {"const": "Gitea"}], "items": false, "minItems": 2, "maxItems": 2},
+            "repository_hosting_independent": {"const": true},
+            "automation_binding_independent": {"const": true},
+            "credential_values_stored": {"const": false}
+          }
+        },
+        "remote_access": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manager_key", "normal_title", "normal_subtitle", "detail_title", "connector_owner_ref", "hosted_tailscale_and_headscale_distinct", "headscale_funnel_available", "secret_material_exposed"],
+          "properties": {
+            "manager_key": {"const": "remote-access"},
+            "normal_title": {"const": "Tailscale"},
+            "normal_subtitle": {"const": "Built into Puppet Master"},
+            "detail_title": {"const": "Connection engine"},
+            "connector_owner_ref": {"const": "Plans/Remote_Access_System.md#RAS-015"},
+            "hosted_tailscale_and_headscale_distinct": {"const": true},
+            "headscale_funnel_available": {"const": false},
+            "secret_material_exposed": {"const": false}
+          }
+        },
+        "command_availability": {"const": "handler_unavailable"},
+        "expected_event_types": {"type": "array", "maxItems": 0},
+        "runtime_claim": {"const": false}
+      }
+    },
+    "settings_contract_fixture_pack": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "schema_version",
+        "owner_doc",
+        "evidence_level",
+        "native_runtime_executed",
+        "command_contracts",
+        "ui_action_contracts",
+        "packet_command_dispositions",
+        "manager_registry",
+        "named_visible_state_projections",
+        "valid_cases",
+        "negative_cases"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings_system_contract_fixtures.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "owner_doc": {
+          "const": "Plans/Settings_System.md"
+        },
+        "evidence_level": {
+          "const": "schema_fixture_only"
+        },
+        "native_runtime_executed": {
+          "const": false
+        },
+        "command_contracts": {
+          "$ref": "#/$defs/command_contract_registry"
+        },
+        "ui_action_contracts": {
+          "$ref": "#/$defs/route_ui_action_registry"
+        },
+        "packet_command_dispositions": {
+          "$ref": "#/$defs/packet_command_disposition_registry"
+        },
+        "manager_registry": {
+          "$ref": "#/$defs/manager_registry"
+        },
+        "named_visible_state_projections": {
+          "$ref": "#/$defs/named_visible_state_projection_registry"
+        },
+        "valid_cases": {
+          "type": "array",
+          "minItems": 15,
+          "items": {
+            "$ref": "#/$defs/valid_fixture_case"
+          }
+        },
+        "negative_cases": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/negative_fixture_case"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "x-server-gap-alias-normalization": {
+    "cmd.project.settings_copy.apply": {
+      "target": "cmd.settings.transaction.apply",
+      "typed_contract_ref": "#/$defs/settings_command_contract",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::settings::transaction_apply",
+      "intended_semantics": "Apply the current Settings preview atomically after creating the required restore point and return verification evidence.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1320"
+    },
+    "cmd.project.settings_copy.preview": {
+      "target": "cmd.settings.transaction.preview",
+      "typed_contract_ref": "#/$defs/settings_command_contract",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::settings::transaction_preview",
+      "intended_semantics": "Preview the exact cross-Project Settings transaction, selected categories, exclusions, validation, and rollback plan.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1326"
+    },
+    "cmd.project.settings_copy.rollback": {
+      "target": "cmd.settings.transaction.rollback",
+      "typed_contract_ref": "#/$defs/settings_command_contract",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::settings::transaction_rollback",
+      "intended_semantics": "Roll back the exact Settings-copy transaction using its verified rollback token and owner readback.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1332"
+    }
+  },
+  "x-server-gap-source-adjudication-rows": {
+    "119": {
+      "source_token": "cmd.project.settings_copy.apply",
+      "canonical_target": "cmd.settings.transaction.apply",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Apply the current Settings preview atomically after creating the required restore point and return verification evidence.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1320",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SettingsTransactionCoordinator",
+      "sole_handler": "handlers::settings::transaction_apply",
+      "gui_consumers": [
+        "Settings > Projects > Copy Settings From",
+        "Projects duplicate/template flows"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "120": {
+      "source_token": "cmd.project.settings_copy.preview",
+      "canonical_target": "cmd.settings.transaction.preview",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Preview the exact cross-Project Settings transaction, selected categories, exclusions, validation, and rollback plan.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1326",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SettingsTransactionCoordinator",
+      "sole_handler": "handlers::settings::transaction_preview",
+      "gui_consumers": [
+        "Settings > Projects > Copy Settings From",
+        "Projects duplicate/template flows"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "121": {
+      "source_token": "cmd.project.settings_copy.rollback",
+      "canonical_target": "cmd.settings.transaction.rollback",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Roll back the exact Settings-copy transaction using its verified rollback token and owner readback.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1332",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SettingsTransactionCoordinator",
+      "sole_handler": "handlers::settings::transaction_rollback",
+      "gui_consumers": [
+        "Settings > Projects > Copy Settings From",
+        "Projects duplicate/template flows"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    }
+  },
+  "x-server-gap-claim-boundary": "three compatibility aliases only; no source-token command registration, independent handler, independent policy evaluation, independent wiring, or second EventRecord"
+}

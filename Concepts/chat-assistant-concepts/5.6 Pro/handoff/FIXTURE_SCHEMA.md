@@ -210,8 +210,12 @@ skipped`. Today's raw `doing` / `next` are printed verbatim as user-facing copy.
 `activityDefs()` already accepts **both** spellings, so the migration can happen in one step
 without a renderer change.
 
+`todos[].threadId` is required. The Chat Activity Bar, filter, and Activity Detail only
+show todos whose `threadId` matches the selected thread. The current fixture stamps every
+todo `query` (the Query Performance thread); other demo threads have an empty todo domain.
+
 ```js
-todo = { id, label, status, source:'Goal 2', goalPhaseId:'ph-proto'|null, blocker:null, updatedAt }
+todo = { id, label, status, source:'Goal 2', goalPhaseId:'ph-proto'|null, blocker:null, updatedAt, threadId:'query' }
 subagent = { id, name, model, status, current, elapsed, progress, blocker,
              route:'Anthropic · work', parentThreadId:'query',        // NEW, must resolve
              group:'analysis',                                        // NEW, 3 groups
@@ -224,8 +228,9 @@ subagent = { id, name, model, status, current, elapsed, progress, blocker,
 ## 7. `activityDefs()` is derived — do not re-author it
 
 `app.js` no longer holds five hand-written literals. `activityDefs()` computes `count`, `state`,
-`tone`, `summary` and `detail` from `D.goal`, `D.todos`, `D.subagents`, `D.changes` and
-`D.artifacts`, each field with a fallback. Consequences:
+`tone`, `summary` and `detail` from the **selected thread's** slice of `D.goal`, `D.todos`,
+`D.subagents`, `D.changes` and `D.artifacts`. A domain with no items on that thread is omitted
+from the object (not rendered as a zero). Consequences:
 
 - Adding a subagent changes the bar count, the hover count, the panel count and the section count
   **at once**. There is no longer a second place to update.

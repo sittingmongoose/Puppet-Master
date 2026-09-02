@@ -1,0 +1,3817 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json",
+  "title": "Puppet Master neutral source-control contracts",
+  "description": "Backend-neutral repository, workspace, revision, writer-lease, credential-lease, setup, operation, receipt, projection, Backup source-closure, and restore-reconciliation contracts plus owner-DRY generic contracts for the nineteen canonical Source Control command request/result/error/availability/disabled-reason records and checkpoint permission decisions. Paths, focused UI state, newest records, remote text, and generic provider labels are descriptive and never identity authority. RepositoryForgeBinding remains repository-hosting authority; optional automation_binding_ref points to the independent Forge-owned AutomationBinding and never implies the same provider, instance, account, or host. Backup remains owner of BackupManifest, RestoreRun, staging, activation, and rollback; these records expose only Source Control closure and owner-route truth. Central catalog registration, native handlers, production wiring, Event Authority admission, remote calls, and runtime proof are outside this schema.",
+  "x-owner-contract-refs": [
+    "Plans/Forge_Integrations.md#FGI-012",
+    "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding",
+    "Plans/forge_integration_contracts.schema.json#/$defs/automation_binding",
+    "Plans/forge_integration_contracts.schema.json#/$defs/provider_instance_profile",
+    "Plans/Backup_Restore_System.md#BRS-002",
+    "Plans/Backup_Restore_System.md#BRS-003",
+    "Plans/Backup_Restore_System.md#BRS-006",
+    "Plans/Backup_Restore_System.md#BRS-014",
+    "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_manifest",
+    "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+    "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_run",
+    "Plans/Jujutsu_Integration.md#JJI-008"
+  ],
+  "oneOf": [
+    {
+      "$ref": "#/$defs/repository_context"
+    },
+    {
+      "$ref": "#/$defs/writer_lease"
+    },
+    {
+      "$ref": "#/$defs/credential_lease"
+    },
+    {
+      "$ref": "#/$defs/setup_state"
+    },
+    {
+      "$ref": "#/$defs/jj_effective_capability_snapshot"
+    },
+    {
+      "$ref": "#/$defs/operation_request"
+    },
+    {
+      "$ref": "#/$defs/operation_receipt"
+    },
+    {
+      "$ref": "#/$defs/source_control_command_request"
+    },
+    {
+      "$ref": "#/$defs/source_control_command_result"
+    },
+    {
+      "$ref": "#/$defs/source_control_command_error"
+    },
+    {
+      "$ref": "#/$defs/source_control_command_availability"
+    },
+    {
+      "$ref": "#/$defs/source_control_command_disabled_reason"
+    },
+    {
+      "$ref": "#/$defs/source_control_projection"
+    },
+    {
+      "$ref": "#/$defs/backup_source_closure_record"
+    },
+    {
+      "$ref": "#/$defs/backup_source_restore_reconciliation_receipt"
+    },
+    {
+      "$ref": "#/$defs/source_control_permission_decision"
+    },
+    {
+      "$ref": "#/$defs/effective_operation_capability"
+    },
+    {
+      "$ref": "#/$defs/remote_operation_target"
+    },
+    {
+      "$ref": "#/$defs/backend_operation_semantics"
+    },
+    {
+      "$ref": "#/$defs/normalized_remote_record"
+    },
+    {
+      "$ref": "#/$defs/external_effect_reconciliation"
+    },
+    {
+      "$ref": "#/$defs/observation_subscription_contract"
+    },
+    {
+      "$ref": "#/$defs/source_operation_routing_and_agent_boundary"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identity_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 192,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "non_secret_ref_list": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_secret_ref"
+      }
+    },
+    "scm_backend": {
+      "enum": [
+        "git",
+        "jujutsu"
+      ]
+    },
+    "forge_provider": {
+      "enum": [
+        "github",
+        "gitlab",
+        "azure_devops",
+        "bitbucket_cloud",
+        "bitbucket_data_center",
+        "forgejo",
+        "gitea",
+        "cursor_origin",
+        "none"
+      ]
+    },
+    "lineage": {
+      "type": "object",
+      "required": [
+        "project_id",
+        "project_home_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "topology_generation"
+      ],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "plan_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "run_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "agent_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "project_home_server_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "git_revision": {
+      "type": "object",
+      "required": [
+        "kind",
+        "object_format",
+        "commit_oid",
+        "ref_name",
+        "index_generation"
+      ],
+      "properties": {
+        "kind": {
+          "const": "git"
+        },
+        "object_format": {
+          "enum": [
+            "sha1",
+            "sha256"
+          ]
+        },
+        "commit_oid": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "ref_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "branch_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "index_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "object_format": {
+                "const": "sha1"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "commit_oid": {
+                "pattern": "^[0-9a-f]{40}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "object_format": {
+                "const": "sha256"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "commit_oid": {
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "jujutsu_revision": {
+      "type": "object",
+      "required": [
+        "kind",
+        "change_id",
+        "commit_id",
+        "operation_id",
+        "workspace_id",
+        "bookmarks"
+      ],
+      "properties": {
+        "kind": {
+          "const": "jujutsu"
+        },
+        "change_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "commit_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "bookmarks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "writer_lease": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "lease_id",
+        "repo_id",
+        "workspace_id",
+        "scm_backend",
+        "holder_ref",
+        "generation",
+        "epoch",
+        "state",
+        "acquired_at_utc",
+        "expires_at_utc",
+        "reconciliation_state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.writer_lease.v1"
+        },
+        "lease_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "holder_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "active",
+            "release_requested",
+            "released",
+            "expired_pending_reconciliation",
+            "reconciling",
+            "reconciled",
+            "revoked",
+            "quarantined"
+          ]
+        },
+        "acquired_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "reconciliation_state": {
+          "enum": [
+            "not_required",
+            "pending",
+            "observing",
+            "clean",
+            "conflicted",
+            "manual_recovery_required"
+          ]
+        },
+        "pre_mutation_operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "post_mutation_operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "credential_lease": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "credential_lease_id",
+        "credential_ref",
+        "transport",
+        "repo_id",
+        "host_identity",
+        "operation_id",
+        "goal_run_id",
+        "issued_at_utc",
+        "expires_at_utc",
+        "revocation_state",
+        "prompt_suppressed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.credential_lease.v1"
+        },
+        "credential_lease_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "credential_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "transport": {
+          "enum": [
+            "https",
+            "ssh"
+          ]
+        },
+        "repo_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "host_identity": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "goal_run_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "revocation_state": {
+          "enum": [
+            "active",
+            "revoked",
+            "expired",
+            "consumed"
+          ]
+        },
+        "prompt_suppressed": {
+          "const": true
+        },
+        "use_http_path": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "known_hosts_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "forwarding_disabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "transport": {
+                "const": "https"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "use_http_path": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transport": {
+                "const": "ssh"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "known_hosts_receipt_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "forwarding_disabled": {
+                "const": true
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "repository_context": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "lineage",
+        "revision",
+        "writer_lease_ref",
+        "credential_binding_ref",
+        "forge_binding"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.repository_context.v1"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "lineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "writer_lease_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "credential_binding_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "forge_binding": {
+          "type": "object",
+          "required": [
+            "forge_provider",
+            "binding_ref"
+          ],
+          "properties": {
+            "forge_provider": {
+              "$ref": "#/$defs/forge_provider"
+            },
+            "binding_ref": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "forge_instance_profile_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automation_binding_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "display_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "git"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "revision": {
+                "$ref": "#/$defs/git_revision"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "jujutsu"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "revision": {
+                "$ref": "#/$defs/jujutsu_revision"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge_binding": {
+                "properties": {
+                  "forge_provider": {
+                    "const": "none"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge_binding": {
+                "properties": {
+                  "binding_ref": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "x-puppet-master-assertions": [
+        "forge_instance_profile_ref resolves through the Forge owner and carries typed endpoint, trust, independent Git/API/Actions state, permission, and currentness facts without embedding credentials or certificate bytes",
+        "automation_binding_ref resolves to pm.forge.automation_binding.v1 and may name a different provider, instance, account, or host from forge_binding",
+        "absence of automation_binding_ref never disables ordinary source-control behavior, and no repository remote name or display label may synthesize one"
+      ]
+    },
+    "setup_state": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "scm_backend",
+        "execution_host_id",
+        "execution_environment_id",
+        "installation_ref",
+        "requested_action",
+        "phase",
+        "capability_state",
+        "owner_state",
+        "version",
+        "certification_catalog_ref",
+        "observable_work_id",
+        "disabled_reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.setup_state.v1"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "installation_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "requested_action": {
+          "enum": [
+            "install_git",
+            "install_jujutsu",
+            "use_existing_git",
+            "use_git_here",
+            "use_jujutsu_here",
+            "repair",
+            "rollback",
+            "none"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "cached",
+            "discovering",
+            "setup_required",
+            "awaiting_user",
+            "installing",
+            "verifying",
+            "ready",
+            "ready_with_limits",
+            "needs_attention",
+            "unavailable"
+          ]
+        },
+        "capability_state": {
+          "enum": [
+            "unknown",
+            "read_only",
+            "mutation_certified",
+            "blocked",
+            "unavailable"
+          ]
+        },
+        "owner_state": {
+          "enum": [
+            "pm_managed",
+            "user_managed",
+            "duplicate",
+            "shadowed",
+            "conflicted",
+            "unknown"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "certification_catalog_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "observable_work_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "disabled_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "jj_effective_capability_snapshot": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "scm_backend",
+        "adapter_version",
+        "repository_profile",
+        "certification_catalog_ref",
+        "official_source_ref",
+        "catalog_currentness",
+        "requested_capabilities",
+        "effective_capabilities",
+        "certified_adapter_gate_ref",
+        "exact_live_probe_ref",
+        "disposition",
+        "disabled_reason_code",
+        "implicit_reconciliation_allowed",
+        "fallback_mutation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.jj_effective_capability_snapshot.v1"
+        },
+        "scm_backend": {
+          "const": "jujutsu"
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_profile": {
+          "enum": [
+            "standalone",
+            "colocated"
+          ]
+        },
+        "certification_catalog_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "official_source_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "catalog_currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "unavailable"
+          ]
+        },
+        "requested_capabilities": {
+          "type": "object",
+          "required": [
+            "git_import",
+            "git_export"
+          ],
+          "properties": {
+            "git_import": {
+              "type": "boolean"
+            },
+            "git_export": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "effective_capabilities": {
+          "type": "object",
+          "required": [
+            "git_import",
+            "git_export"
+          ],
+          "properties": {
+            "git_import": {
+              "type": "boolean"
+            },
+            "git_export": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "certified_adapter_gate_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "exact_live_probe_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "disposition": {
+          "enum": [
+            "admitted",
+            "blocked"
+          ]
+        },
+        "disabled_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "implicit_reconciliation_allowed": {
+          "const": false
+        },
+        "fallback_mutation": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "adapter_version": {
+                "const": "0.44.0"
+              },
+              "repository_profile": {
+                "const": "colocated"
+              },
+              "certified_adapter_gate_ref": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "adapter_version",
+              "repository_profile",
+              "certified_adapter_gate_ref"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_capabilities": {
+                "properties": {
+                  "git_import": {
+                    "const": false
+                  },
+                  "git_export": {
+                    "const": false
+                  }
+                }
+              },
+              "exact_live_probe_ref": {
+                "type": "null"
+              },
+              "disposition": {
+                "const": "blocked"
+              },
+              "disabled_reason_code": {
+                "const": "jj_0_44_colocated_import_export_disabled_upstream_race"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "admitted"
+              }
+            },
+            "required": [
+              "disposition"
+            ]
+          },
+          "then": {
+            "properties": {
+              "certified_adapter_gate_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "exact_live_probe_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "disabled_reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "blocked"
+              }
+            },
+            "required": [
+              "disposition"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason_code": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "operation_request": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "command_id",
+        "command_instance_id",
+        "idempotency_key",
+        "repository_context_ref",
+        "scm_backend",
+        "expected_revision",
+        "writer_lease_ref",
+        "credential_lease_ref",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.operation_request.v1"
+        },
+        "command_id": {
+          "type": "string",
+          "pattern": "^cmd\\.(source_control|jujutsu)\\.[a-z0-9_.]+$"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "expected_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "writer_lease_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "credential_lease_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "observable_work_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "git"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expected_revision": {
+                "$ref": "#/$defs/git_revision"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "jujutsu"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expected_revision": {
+                "$ref": "#/$defs/jujutsu_revision"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "operation_receipt": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "receipt_id",
+        "command_instance_id",
+        "operation_id",
+        "outcome",
+        "scm_backend",
+        "repository_context_ref",
+        "before_revision",
+        "after_revision",
+        "writer_lease_ref",
+        "credential_lease_ref",
+        "observable_work_id",
+        "event_refs",
+        "completed_at_utc",
+        "degradation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.operation_receipt.v1"
+        },
+        "receipt_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "succeeded",
+            "blocked",
+            "failed",
+            "cancelled",
+            "recovery_required",
+            "effect_unknown"
+          ]
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "before_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "after_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "writer_lease_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "credential_lease_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "observable_work_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "event_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "degradation": {
+          "type": "object",
+          "required": [
+            "state",
+            "reason_codes",
+            "allowed_action_ids"
+          ],
+          "properties": {
+            "state": {
+              "enum": [
+                "none",
+                "read_only",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "reason_codes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "uniqueItems": true
+            },
+            "allowed_action_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^cmd\\.[a-z0-9_.]+$"
+              },
+              "uniqueItems": true
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_control_command_id": {
+      "type": "string",
+      "enum": [
+        "cmd.source_control.backend.detect",
+        "cmd.source_control.backend.select",
+        "cmd.source_control.repository.clone",
+        "cmd.source_control.repository.bind",
+        "cmd.source_control.repository.unbind",
+        "cmd.source_control.status.refresh",
+        "cmd.source_control.diff.open",
+        "cmd.source_control.history.open",
+        "cmd.source_control.workspace.list",
+        "cmd.source_control.workspace.create",
+        "cmd.source_control.workspace.open",
+        "cmd.source_control.workspace.switch",
+        "cmd.source_control.workspace.remove",
+        "cmd.source_control.remote.fetch",
+        "cmd.source_control.remote.sync",
+        "cmd.source_control.remote.publish",
+        "cmd.source_control.checkpoint.create",
+        "cmd.source_control.checkpoint.inspect",
+        "cmd.source_control.checkpoint.restore"
+      ]
+    },
+    "repository_forge_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "forge_provider",
+        "binding_ref"
+      ],
+      "properties": {
+        "forge_provider": {
+          "$ref": "#/$defs/forge_provider"
+        },
+        "binding_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "forge_provider": {
+                "const": "none"
+              }
+            },
+            "required": [
+              "forge_provider"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "not": {
+              "properties": {
+                "forge_provider": {
+                  "const": "none"
+                }
+              },
+              "required": [
+                "forge_provider"
+              ]
+            }
+          },
+          "then": {
+            "properties": {
+              "binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "return_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "route_ref",
+        "focus_id",
+        "invocation_token",
+        "caller_context_ref",
+        "expected_caller_revision",
+        "continuation_generation"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "route_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "focus_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "caller_context_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_caller_revision": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "continuation_generation": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "source_control_command_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "lineage"
+      ],
+      "properties": {
+        "command_id": {
+          "$ref": "#/$defs/source_control_command_id"
+        },
+        "lineage": {
+          "$ref": "#/$defs/source_control_command_lineage"
+        },
+        "backend_candidates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/scm_backend"
+          }
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "requested_workspace_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "expected_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "currentness_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "writer_lease_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "credential_lease_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "transport": {
+          "type": "string",
+          "enum": [
+            "https",
+            "ssh"
+          ]
+        },
+        "forge_binding": {
+          "$ref": "#/$defs/repository_forge_binding"
+        },
+        "remote_identity_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "destination_source_location_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "checkpoint_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "checkpoint_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "checkpoint_purpose": {
+          "enum": [
+            "recovery",
+            "handoff",
+            "pre_move",
+            "manual"
+          ]
+        },
+        "expected_checkpoint_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restore_confirmation": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.backend.detect"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "backend_candidates"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.backend.select"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "scm_backend"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.repository.clone"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "currentness_generation",
+              "currentness_ref",
+              "currentness_sha256",
+              "writer_lease_ref",
+              "credential_lease_ref",
+              "transport",
+              "forge_binding",
+              "remote_identity_ref",
+              "destination_source_location_ref"
+            ],
+            "properties": {
+              "scm_backend": {
+                "const": "git"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.repository.bind"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "forge_binding"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.repository.unbind"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "currentness_generation",
+              "writer_lease_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.source_control.status.refresh",
+                  "cmd.source_control.diff.open",
+                  "cmd.source_control.history.open",
+                  "cmd.source_control.workspace.open"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "currentness_generation"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.workspace.list"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "expected_revision",
+              "currentness_generation"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.workspace.create"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "expected_revision",
+              "currentness_generation",
+              "writer_lease_ref",
+              "requested_workspace_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.source_control.workspace.switch",
+                  "cmd.source_control.workspace.remove"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "currentness_generation",
+              "writer_lease_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.source_control.remote.fetch",
+                  "cmd.source_control.remote.sync",
+                  "cmd.source_control.remote.publish"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "currentness_generation",
+              "writer_lease_ref",
+              "credential_lease_ref",
+              "transport",
+              "forge_binding"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "git"
+              }
+            },
+            "required": [
+              "scm_backend",
+              "expected_revision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expected_revision": {
+                "$ref": "#/$defs/git_revision"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "jujutsu"
+              }
+            },
+            "required": [
+              "scm_backend",
+              "expected_revision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expected_revision": {
+                "$ref": "#/$defs/jujutsu_revision"
+              }
+            }
+          }
+        },
+        {
+          "x-server-gap-b": true,
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.checkpoint.create"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "currentness_generation",
+              "writer_lease_ref",
+              "checkpoint_id",
+              "checkpoint_purpose",
+              "expected_checkpoint_generation"
+            ]
+          }
+        },
+        {
+          "x-server-gap-b": true,
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.checkpoint.inspect"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "currentness_generation",
+              "checkpoint_ref",
+              "expected_checkpoint_generation"
+            ]
+          }
+        },
+        {
+          "x-server-gap-b": true,
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.checkpoint.restore"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_context_ref",
+              "repo_id",
+              "scm_backend",
+              "workspace_id",
+              "expected_revision",
+              "currentness_generation",
+              "writer_lease_ref",
+              "checkpoint_ref",
+              "expected_checkpoint_generation",
+              "restore_confirmation"
+            ]
+          }
+        }
+      ]
+    },
+    "source_control_command_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "project_home_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "topology_generation"
+      ],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "plan_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identity_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identity_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identity_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "agent_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identity_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "project_home_server_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "source_control_command_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_instance_id",
+        "idempotency_key",
+        "scope",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_request.v1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/source_control_command_scope"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "return_context": {
+          "$ref": "#/$defs/return_context"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.source_control.repository.clone"
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "return_context"
+            ]
+          }
+        },
+        {
+          "x-server-gap-b": true,
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "enum": [
+                      "cmd.source_control.checkpoint.create",
+                      "cmd.source_control.checkpoint.inspect",
+                      "cmd.source_control.checkpoint.restore"
+                    ]
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "return_context"
+            ]
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "repository.clone is the ordinary Git clone and requires scm_backend=git",
+        "repository.clone never normalizes to cmd.jujutsu.git.clone",
+        "return_context is echoed byte-for-byte by the terminal clone result"
+      ]
+    },
+    "source_control_command_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_instance_id",
+        "scope",
+        "outcome",
+        "effect_state",
+        "result_refs",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_result.v1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/source_control_command_scope"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "succeeded",
+            "blocked",
+            "failed",
+            "cancelled",
+            "recovery_required",
+            "effect_unknown"
+          ]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": [
+            "no_effect",
+            "effects_reconciled",
+            "effect_unknown"
+          ]
+        },
+        "result_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "operation_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "observable_work_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "return_context": {
+          "$ref": "#/$defs/return_context"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "enum": [
+                      "cmd.source_control.repository.clone",
+                      "cmd.source_control.remote.fetch",
+                      "cmd.source_control.remote.sync",
+                      "cmd.source_control.remote.publish"
+                    ]
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": [
+              "scope",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            },
+            "required": [
+              "operation_receipt_ref",
+              "observable_work_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.source_control.repository.clone"
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "return_context"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.source_control.repository.clone"
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              },
+              "outcome": {
+                "const": "cancelled"
+              }
+            },
+            "required": [
+              "scope",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "enum": [
+                  "no_effect",
+                  "effects_reconciled"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-server-gap-b": true,
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "enum": [
+                      "cmd.source_control.checkpoint.create",
+                      "cmd.source_control.checkpoint.inspect",
+                      "cmd.source_control.checkpoint.restore"
+                    ]
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "return_context"
+            ]
+          }
+        },
+        {
+          "x-server-gap-b": true,
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "enum": [
+                      "cmd.source_control.checkpoint.create",
+                      "cmd.source_control.checkpoint.inspect",
+                      "cmd.source_control.checkpoint.restore"
+                    ]
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": [
+              "scope",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            },
+            "required": [
+              "operation_receipt_ref"
+            ]
+          }
+        },
+        {
+          "x-server-gap-b": true,
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "enum": [
+                      "cmd.source_control.checkpoint.create",
+                      "cmd.source_control.checkpoint.restore"
+                    ]
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": [
+              "scope",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observable_work_id": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            },
+            "required": [
+              "observable_work_id"
+            ]
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "terminal clone result returns the initiating return_context exactly",
+        "cancelled clone leaves no registered Project and reports cleanup through result_refs"
+      ]
+    },
+    "source_control_command_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_instance_id",
+        "scope",
+        "error_code",
+        "effect_state",
+        "retry_allowed",
+        "safe_next_actions",
+        "occurred_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_error.v1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/source_control_command_scope"
+        },
+        "error_code": {
+          "type": "string",
+          "enum": [
+            "backend_missing",
+            "repository_missing",
+            "workspace_missing",
+            "stale_revision",
+            "lease_conflict",
+            "permission_denied",
+            "credential_required",
+            "setup_required",
+            "degraded",
+            "recovery_required",
+            "effect_unknown",
+            "identity_incomplete",
+            "forge_binding_missing",
+            "handler_unavailable",
+            "checkpoint_missing",
+            "checkpoint_invalid",
+            "checkpoint_mismatch",
+            "filesafe_denied",
+            "topology_stale"
+          ]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": [
+            "no_effect",
+            "effects_reconciled",
+            "effect_unknown"
+          ]
+        },
+        "retry_allowed": {
+          "type": "boolean"
+        },
+        "safe_next_actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "refresh",
+              "inspect",
+              "retry",
+              "reconcile_effects",
+              "rebind_repository",
+              "renew_lease",
+              "connect_credentials",
+              "repair_setup",
+              "none"
+            ]
+          }
+        },
+        "detail_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "occurred_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": [
+              "effect_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retry_allowed": {
+                "const": false
+              },
+              "safe_next_actions": {
+                "contains": {
+                  "const": "reconcile_effects"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source_control_command_disabled_reason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "scope",
+        "reason_code",
+        "safe_next_actions",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_disabled_reason.v1"
+        },
+        "scope": {
+          "$ref": "#/$defs/source_control_command_scope"
+        },
+        "reason_code": {
+          "type": "string",
+          "enum": [
+            "backend_missing",
+            "repository_missing",
+            "workspace_missing",
+            "stale_revision",
+            "lease_conflict",
+            "permission_denied",
+            "credential_required",
+            "setup_required",
+            "degraded",
+            "recovery_required",
+            "handler_unavailable",
+            "checkpoint_missing",
+            "checkpoint_invalid",
+            "checkpoint_mismatch",
+            "filesafe_denied",
+            "topology_stale"
+          ]
+        },
+        "blocking_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "safe_next_actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "refresh",
+              "inspect",
+              "retry",
+              "reconcile_effects",
+              "rebind_repository",
+              "renew_lease",
+              "connect_credentials",
+              "repair_setup",
+              "none"
+            ]
+          }
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "source_control_command_availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "scope",
+        "available",
+        "disabled_reason",
+        "checked_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_availability.v1"
+        },
+        "scope": {
+          "$ref": "#/$defs/source_control_command_scope"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/source_control_command_disabled_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checked_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": false
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/source_control_command_disabled_reason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source_control_projection": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "repository_context_ref",
+        "scm_backend",
+        "forge_provider",
+        "currentness",
+        "sections",
+        "health",
+        "updated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.projection.v1"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "forge_provider": {
+          "$ref": "#/$defs/forge_provider"
+        },
+        "automation_binding_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currentness": {
+          "enum": [
+            "cached",
+            "refreshing",
+            "current",
+            "stale",
+            "degraded",
+            "unavailable"
+          ]
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "changes",
+              "workspaces",
+              "history",
+              "git_branches",
+              "jj_bookmarks",
+              "jj_operation_log",
+              "reviews",
+              "review_versions",
+              "review_threads",
+              "pipelines_checks",
+              "source_of_truth",
+              "mirror_health"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "health": {
+          "enum": [
+            "ready",
+            "ready_with_limits",
+            "needs_attention",
+            "blocked",
+            "unavailable"
+          ]
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "git"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "properties": {
+                "sections": {
+                  "contains": {
+                    "enum": [
+                      "jj_bookmarks",
+                      "jj_operation_log"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scm_backend": {
+                "const": "jujutsu"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "properties": {
+                "sections": {
+                  "contains": {
+                    "const": "git_branches"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "backup_source_closure_record": {
+      "title": "BackupSourceClosureRecord",
+      "type": "object",
+      "required": [
+        "schema_id",
+        "closure_id",
+        "backup_manifest_ref",
+        "backup_repository_binding_ref",
+        "repository_context_ref",
+        "scm_backend",
+        "source_layout",
+        "captured_revision",
+        "capture_barrier_ref",
+        "barrier_outcome",
+        "gc_prune_rewrite_fence_ref",
+        "gc_fence_outcome",
+        "filesystem_capture_ref",
+        "dirty_tracked_ref",
+        "approved_untracked_ref",
+        "lfs_state",
+        "submodule_state",
+        "alternate_shared_store_refs",
+        "workspace_map_refs",
+        "missing_dependency_refs",
+        "unsafe_activation_config_refs",
+        "credential_config_disposition",
+        "historical_secret_warning",
+        "capture_completeness",
+        "closure_receipt_ref",
+        "expected_event_types",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.backup_source_closure.v1"
+        },
+        "closure_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "backup_manifest_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "backup_repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "source_layout": {
+          "enum": [
+            "git_common_directory",
+            "jujutsu_colocated",
+            "jujutsu_non_colocated",
+            "jujutsu_shared_multi_workspace"
+          ]
+        },
+        "captured_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "capture_barrier_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "barrier_outcome": {
+          "enum": [
+            "held_during_capture",
+            "not_acquired",
+            "lost_during_capture"
+          ]
+        },
+        "gc_prune_rewrite_fence_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "gc_fence_outcome": {
+          "enum": [
+            "held_during_capture",
+            "not_acquired",
+            "lost_during_capture"
+          ]
+        },
+        "filesystem_capture_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "dirty_tracked_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "approved_untracked_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lfs_state": {
+          "enum": [
+            "complete",
+            "partial",
+            "not_applicable"
+          ]
+        },
+        "submodule_state": {
+          "enum": [
+            "complete",
+            "partial",
+            "not_applicable"
+          ]
+        },
+        "alternate_shared_store_refs": {
+          "$ref": "#/$defs/non_secret_ref_list"
+        },
+        "workspace_map_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "missing_dependency_refs": {
+          "$ref": "#/$defs/non_secret_ref_list"
+        },
+        "unsafe_activation_config_refs": {
+          "$ref": "#/$defs/non_secret_ref_list"
+        },
+        "credential_config_disposition": {
+          "enum": [
+            "no_credential_fields_detected",
+            "sanitized_reconnect_required",
+            "portable_reference_pending_owner_validation",
+            "blocked_untrusted_configuration"
+          ]
+        },
+        "historical_secret_warning": {
+          "type": "boolean"
+        },
+        "capture_completeness": {
+          "enum": [
+            "complete",
+            "partial",
+            "blocked"
+          ]
+        },
+        "closure_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source_layout": {
+                "const": "git_common_directory"
+              }
+            },
+            "required": [
+              "source_layout"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scm_backend": {
+                "const": "git"
+              },
+              "captured_revision": {
+                "$ref": "#/$defs/git_revision"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_layout": {
+                "enum": [
+                  "jujutsu_colocated",
+                  "jujutsu_non_colocated",
+                  "jujutsu_shared_multi_workspace"
+                ]
+              }
+            },
+            "required": [
+              "source_layout"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scm_backend": {
+                "const": "jujutsu"
+              },
+              "captured_revision": {
+                "$ref": "#/$defs/jujutsu_revision"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "capture_completeness": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "capture_completeness"
+            ]
+          },
+          "then": {
+            "properties": {
+              "barrier_outcome": {
+                "const": "held_during_capture"
+              },
+              "gc_fence_outcome": {
+                "const": "held_during_capture"
+              },
+              "lfs_state": {
+                "enum": [
+                  "complete",
+                  "not_applicable"
+                ]
+              },
+              "submodule_state": {
+                "enum": [
+                  "complete",
+                  "not_applicable"
+                ]
+              },
+              "missing_dependency_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "capture_completeness": {
+                "enum": [
+                  "partial",
+                  "blocked"
+                ]
+              }
+            },
+            "required": [
+              "capture_completeness"
+            ]
+          },
+          "then": {
+            "properties": {
+              "missing_dependency_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "x-puppet-master-owner-contracts": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_manifest",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+        "Plans/Jujutsu_Integration.md#JJI-008"
+      ],
+      "x-puppet-master-assertions": [
+        "this record supplies Source Control closure truth and never owns backup bytes or BackupManifest",
+        "complete source history requires a barrier and GC/prune/rewrite fence held throughout capture",
+        "ordinary capture records credential-bearing mutable configuration as sanitized or blocked without rewriting immutable repository history",
+        "expected_event_types remains empty until Event Authority separately admits a producer and payload"
+      ],
+      "additionalProperties": false
+    },
+    "backup_source_restore_reconciliation_receipt": {
+      "title": "BackupSourceRestoreReconciliationReceipt",
+      "type": "object",
+      "required": [
+        "schema_id",
+        "reconciliation_receipt_id",
+        "restore_run_ref",
+        "restore_preview_ref",
+        "backup_manifest_ref",
+        "immutable_snapshot_ref",
+        "capture_set_ref",
+        "restore_mode",
+        "source_repository_context_ref",
+        "staged_repository_context_ref",
+        "target_repository_context_ref",
+        "binding_disposition",
+        "merge_disposition",
+        "remote_validation",
+        "repository_forge_binding_ref",
+        "automation_binding_ref",
+        "credential_resolution",
+        "credential_resolution_ref",
+        "activation_config_disposition",
+        "collision_refs",
+        "conflict_refs",
+        "owner_route_refs",
+        "no_remote_write",
+        "expected_event_types",
+        "outcome",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.backup_source_restore_reconciliation_receipt.v1"
+        },
+        "reconciliation_receipt_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "restore_run_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "restore_preview_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "backup_manifest_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "immutable_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "capture_set_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "restore_mode": {
+          "enum": [
+            "as_new",
+            "in_place",
+            "selective",
+            "server_full",
+            "read_only_browse"
+          ]
+        },
+        "source_repository_context_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "staged_repository_context_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "target_repository_context_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding_disposition": {
+          "enum": [
+            "new_binding_required",
+            "existing_binding_reverified",
+            "rebind_required",
+            "blocked_identity_collision",
+            "read_only_no_activation"
+          ]
+        },
+        "merge_disposition": {
+          "enum": [
+            "not_applicable",
+            "owner_merge_preview_required",
+            "owner_merge_verified",
+            "manual_conflict_resolution_required",
+            "blocked_stale_target"
+          ]
+        },
+        "remote_validation": {
+          "enum": [
+            "not_requested",
+            "offline_unverified",
+            "identity_verified_credential_missing",
+            "fetch_read_verified",
+            "write_capability_checked_without_write",
+            "blocked_identity_mismatch",
+            "blocked_trust_or_currentness"
+          ]
+        },
+        "repository_forge_binding_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automation_binding_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "credential_resolution": {
+          "enum": [
+            "excluded_reconnect_required",
+            "placeholder_requires_owner_revalidation",
+            "portable_reference_pending_owner_validation",
+            "fresh_credential_lease_verified",
+            "not_required"
+          ]
+        },
+        "credential_resolution_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "activation_config_disposition": {
+          "enum": [
+            "sanitized_inactive",
+            "review_required",
+            "blocked_unsafe_configuration",
+            "not_applicable"
+          ]
+        },
+        "collision_refs": {
+          "$ref": "#/$defs/non_secret_ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/non_secret_ref_list"
+        },
+        "owner_route_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "no_remote_write": {
+          "const": true
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "outcome": {
+          "enum": [
+            "ready_for_backup_activation",
+            "external_reattachment_required",
+            "sign_in_required",
+            "download_verify_required",
+            "blocked_collision",
+            "blocked_conflict",
+            "failed",
+            "read_only_complete"
+          ]
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "credential_resolution": {
+                "const": "fresh_credential_lease_verified"
+              }
+            },
+            "required": [
+              "credential_resolution"
+            ]
+          },
+          "then": {
+            "properties": {
+              "credential_resolution_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "merge_disposition": {
+                "const": "owner_merge_verified"
+              }
+            },
+            "required": [
+              "merge_disposition"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_repository_context_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "collision_refs": {
+                "maxItems": 0
+              },
+              "conflict_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "blocked_collision"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "collision_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "blocked_conflict"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "conflict_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "ready_for_backup_activation"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "activation_config_disposition": {
+                "enum": [
+                  "sanitized_inactive",
+                  "not_applicable"
+                ]
+              },
+              "collision_refs": {
+                "maxItems": 0
+              },
+              "conflict_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "x-puppet-master-owner-routes": {
+        "backup_browse_compare": [
+          "cmd.backup.browse",
+          "cmd.backup.file.compare"
+        ],
+        "neutral_rebind_and_validation": [
+          "cmd.source_control.repository.bind",
+          "cmd.source_control.status.refresh",
+          "cmd.source_control.remote.fetch"
+        ],
+        "jj_operation_verification": [
+          "cmd.jujutsu.operation.show",
+          "cmd.jujutsu.operation.restore"
+        ],
+        "external_bindings": [
+          "Plans/Forge_Integrations.md",
+          "Plans/Multi-Account_Connection_Spec.md",
+          "Plans/Project_System.md"
+        ]
+      },
+      "x-puppet-master-assertions": [
+        "restore validation is isolated and does not activate content or write to a remote",
+        "restored remote and credential references remain non-authoritative until their owners revalidate identity trust scope and currentness",
+        "RepositoryForgeBinding and AutomationBinding remain separate and neither is inferred from a remote named origin",
+        "merge and rebind outcomes require backend-native receipts; collision conflict stale and effect-unknown states block activation",
+        "expected_event_types remains empty until Event Authority separately admits a producer and payload"
+      ],
+      "additionalProperties": false
+    },
+    "source_control_permission_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "scope",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "permission_class",
+        "decision",
+        "authority_widening",
+        "secret_material_exposed",
+        "reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.permission_decision.v1"
+        },
+        "scope": {
+          "$ref": "#/$defs/source_control_command_scope"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_class": {
+          "enum": [
+            "source_control.checkpoint.inspect",
+            "source_control.checkpoint.mutate"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "deny",
+                  "prompt_human"
+                ]
+              }
+            },
+            "required": [
+              "decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "effective_operation_capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "capability_id", "operation", "repository_context_ref", "remote_binding_ref", "forge_binding_ref", "automation_binding_ref", "revision_ref", "inputs", "support_state", "support_evidence_refs", "freshness", "availability", "remediation_refs", "consumer_classes", "execution_recheck_required", "cached_permission_authorizes_mutation", "evaluated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.effective_operation_capability.v1"},
+        "capability_id": {"$ref": "#/$defs/identity_id"},
+        "operation": {"enum": ["fetch", "publish", "review", "merge", "ci_dispatch", "ci_cancel", "ci_rerun", "local_mutation"]},
+        "repository_context_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "remote_binding_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "forge_binding_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "automation_binding_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "revision_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "inputs": {
+          "type": "object", "additionalProperties": false,
+          "required": ["product_support", "adapter_implementation", "instance_version_tier_feature", "credential_scopes", "repository_branch_permissions", "pm_policy", "locks_revision", "connectivity"],
+          "properties": {
+            "product_support": {"enum": ["supported", "unsupported", "unknown"]},
+            "adapter_implementation": {"enum": ["implemented", "adapter_missing", "unknown"]},
+            "instance_version_tier_feature": {"enum": ["configured", "not_configured", "disabled", "unsupported", "unknown"]},
+            "credential_scopes": {"enum": ["ready", "auth_required", "permission_denied", "unknown"]},
+            "repository_branch_permissions": {"enum": ["allowed", "permission_denied", "protected", "unknown"]},
+            "pm_policy": {"enum": ["allowed", "policy_blocked", "approval_required", "unknown"]},
+            "locks_revision": {"enum": ["current", "locked", "stale", "unknown"]},
+            "connectivity": {"enum": ["online", "temporarily_unavailable", "offline", "unknown"]}
+          }
+        },
+        "support_state": {"enum": ["supported", "unsupported", "unknown"]},
+        "support_evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+        "freshness": {
+          "type": "object", "additionalProperties": false,
+          "required": ["state", "capability_revision", "observed_at_utc", "expires_at_utc"],
+          "properties": {
+            "state": {"enum": ["current", "stale", "unknown"]},
+            "capability_revision": {"type": "integer", "minimum": 0},
+            "observed_at_utc": {"$ref": "#/$defs/timestamp"},
+            "expires_at_utc": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]}
+          }
+        },
+        "availability": {"enum": ["ready", "not_configured", "auth_required", "permission_denied", "policy_blocked", "protected", "unsupported", "adapter_missing", "external_only", "temporarily_unavailable", "stale", "unknown"]},
+        "remediation_refs": {"$ref": "#/$defs/non_secret_ref_list"},
+        "consumer_classes": {
+          "type": "array", "uniqueItems": true, "minItems": 6, "maxItems": 6,
+          "items": {"enum": ["gui", "command_palette", "natural_language", "agents", "doctor", "dispatch"]},
+          "allOf": [
+            {"contains": {"const": "gui"}}, {"contains": {"const": "command_palette"}}, {"contains": {"const": "natural_language"}},
+            {"contains": {"const": "agents"}}, {"contains": {"const": "doctor"}}, {"contains": {"const": "dispatch"}}
+          ]
+        },
+        "execution_recheck_required": {"const": true},
+        "cached_permission_authorizes_mutation": {"const": false},
+        "evaluated_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"freshness": {"properties": {"state": {"enum": ["stale", "unknown"]}}, "required": ["state"]}}}, "then": {"properties": {"availability": {"enum": ["stale", "unknown"]}}}},
+        {"if": {"properties": {"support_state": {"const": "unknown"}}, "required": ["support_state"]}, "then": {"properties": {"availability": {"not": {"const": "unsupported"}}}}}
+      ]
+    },
+    "remote_operation_target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "operation_id", "project_id", "repository_id", "remote_id", "forge_instance_id", "account_id", "revision_ref", "fetch_url", "push_targets", "review_binding_ref", "selection_snapshot_generation", "fanout_atomic", "mirror_duplicate_push_allowed", "identity_equivalence_from_shared_commits"],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.remote_operation_target.v1"},
+        "operation_id": {"$ref": "#/$defs/identity_id"}, "project_id": {"$ref": "#/$defs/identity_id"}, "repository_id": {"$ref": "#/$defs/identity_id"}, "remote_id": {"$ref": "#/$defs/identity_id"},
+        "forge_instance_id": {"oneOf": [{"$ref": "#/$defs/identity_id"}, {"type": "null"}]}, "account_id": {"oneOf": [{"$ref": "#/$defs/identity_id"}, {"type": "null"}]},
+        "revision_ref": {"$ref": "#/$defs/non_secret_ref"}, "fetch_url": {"type": "string", "minLength": 1},
+        "push_targets": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["target_id", "push_url", "refspecs", "preview_ref", "idempotency_key", "outcome"], "properties": {"target_id": {"$ref": "#/$defs/identity_id"}, "push_url": {"type": "string", "minLength": 1}, "refspecs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "preview_ref": {"$ref": "#/$defs/non_secret_ref"}, "idempotency_key": {"$ref": "#/$defs/non_secret_ref"}, "outcome": {"enum": ["pending", "succeeded", "rejected", "failed", "outcome_unknown"]}}}},
+        "review_binding_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "selection_snapshot_generation": {"type": "integer", "minimum": 0}, "fanout_atomic": {"const": false}, "mirror_duplicate_push_allowed": {"const": false}, "identity_equivalence_from_shared_commits": {"const": false}
+      }
+    },
+    "backend_operation_semantics": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["schema_id", "backend", "visible_concepts", "operation_history_kind", "adoption_requires_preview", "hidden_cross_backend_mapping", "colocated_lock_and_import_export_coordination"], "properties": {"schema_id": {"const": "pm.source_control.backend_operation_semantics.v1"}, "backend": {"const": "git"}, "visible_concepts": {"type": "array", "prefixItems": [{"const": "staged"}, {"const": "unstaged"}, {"const": "index"}, {"const": "HEAD"}, {"const": "commit"}, {"const": "stash"}, {"const": "branch_upstream"}, {"const": "worktrees"}], "items": false}, "operation_history_kind": {"const": "source_commit_history"}, "adoption_requires_preview": {"const": true}, "hidden_cross_backend_mapping": {"const": false}, "colocated_lock_and_import_export_coordination": {"const": true}}},
+        {"type": "object", "additionalProperties": false, "required": ["schema_id", "backend", "visible_concepts", "operation_history_kind", "adoption_requires_preview", "hidden_cross_backend_mapping", "colocated_lock_and_import_export_coordination"], "properties": {"schema_id": {"const": "pm.source_control.backend_operation_semantics.v1"}, "backend": {"const": "jujutsu"}, "visible_concepts": {"type": "array", "prefixItems": [{"const": "current_at"}, {"const": "change_id"}, {"const": "commit_id"}, {"const": "describe"}, {"const": "new"}, {"const": "edit"}, {"const": "split"}, {"const": "squash"}, {"const": "abandon"}, {"const": "bookmarks_tracking"}, {"const": "conflicts"}, {"const": "workspaces"}, {"const": "operation_history"}], "items": false}, "operation_history_kind": {"const": "jj_operation_log_distinct_from_source_history_and_backup"}, "adoption_requires_preview": {"const": true}, "hidden_cross_backend_mapping": {"const": false}, "colocated_lock_and_import_export_coordination": {"const": true}}}
+      ]
+    },
+    "normalized_remote_record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "provider_kind", "instance_id", "account_id", "repository_id", "immutable_external_id", "raw_status", "normalized_status", "revision_ref", "canonical_url", "observed_at_utc", "native_object_label", "vendor_extensions", "vendor_extensions_preserved"],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.normalized_remote_record.v1"},
+        "record_kind": {"enum": ["ReviewRequest", "ReviewThread", "Check", "AutomationDefinition", "AutomationRun", "JobOrStage", "LogSegment", "RemoteArtifact"]},
+        "provider_kind": {"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin", "generic_git"]},
+        "instance_id": {"$ref": "#/$defs/identity_id"}, "account_id": {"$ref": "#/$defs/identity_id"}, "repository_id": {"$ref": "#/$defs/identity_id"}, "immutable_external_id": {"$ref": "#/$defs/identity_id"},
+        "raw_status": {"type": "string", "minLength": 1}, "normalized_status": {"type": "string", "minLength": 1}, "revision_ref": {"$ref": "#/$defs/non_secret_ref"}, "canonical_url": {"type": "string", "format": "uri"}, "observed_at_utc": {"$ref": "#/$defs/timestamp"},
+        "native_object_label": {"enum": ["Pull request", "Merge request", "Check", "Workflow", "Pipeline", "Stage", "Job", "Trace", "Log segment", "Artifact"]},
+        "vendor_extensions": {"type": "object"}, "vendor_extensions_preserved": {"const": true}
+      },
+      "allOf": [{"if": {"properties": {"provider_kind": {"const": "gitlab"}, "record_kind": {"const": "ReviewRequest"}}, "required": ["provider_kind", "record_kind"]}, "then": {"properties": {"native_object_label": {"const": "Merge request"}}}}]
+    },
+    "external_effect_reconciliation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "operation_id", "operation_kind", "intended_target_ref", "precondition_refs", "intent_recorded_before_call", "provider_idempotency_supported", "idempotency_key", "state", "exact_reconciliation_evidence_refs", "blind_retry_allowed", "successful_cli_exit_proves_remote_state", "force_guard", "accepted_request_distinct_from_durable_outcome"],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.external_effect_reconciliation.v1"}, "operation_id": {"$ref": "#/$defs/identity_id"}, "operation_kind": {"enum": ["push", "merge", "review_create", "review_comment", "ci_dispatch", "ci_cancel", "ci_rerun"]}, "intended_target_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "precondition_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}}, "intent_recorded_before_call": {"const": true}, "provider_idempotency_supported": {"type": "boolean"}, "idempotency_key": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "state": {"enum": ["prepared", "accepted", "outcome_unknown", "reconciling", "observed_success", "observed_failure", "blocked_stale"]}, "exact_reconciliation_evidence_refs": {"$ref": "#/$defs/non_secret_ref_list"}, "blind_retry_allowed": {"const": false}, "successful_cli_exit_proves_remote_state": {"const": false},
+        "force_guard": {"type": "object", "additionalProperties": false, "required": ["force_requested", "expected_head_ref", "lease_ref", "dangerous_action_policy_ref"], "properties": {"force_requested": {"type": "boolean"}, "expected_head_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}, "lease_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}, "dangerous_action_policy_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}}},
+        "accepted_request_distinct_from_durable_outcome": {"const": true}
+      },
+      "allOf": [{"if": {"properties": {"provider_idempotency_supported": {"const": true}}, "required": ["provider_idempotency_supported"]}, "then": {"properties": {"idempotency_key": {"$ref": "#/$defs/non_secret_ref"}}}}, {"if": {"properties": {"force_guard": {"properties": {"force_requested": {"const": true}}, "required": ["force_requested"]}}}, "then": {"properties": {"force_guard": {"properties": {"expected_head_ref": {"$ref": "#/$defs/non_secret_ref"}, "lease_ref": {"$ref": "#/$defs/non_secret_ref"}, "dangerous_action_policy_ref": {"$ref": "#/$defs/non_secret_ref"}}}}}}]
+    },
+    "observation_subscription_contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "subscription_id", "home_server_id", "authorized_binding_ref", "underlying_worker_key", "client_projection_refs", "one_underlying_worker", "webhook", "poll_reconciliation_available", "public_ingress_enabled_for_webhook", "cache_key_parts", "discard_stale_selection_results", "governors"],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.observation_subscription.v1"}, "subscription_id": {"$ref": "#/$defs/identity_id"}, "home_server_id": {"$ref": "#/$defs/identity_id"}, "authorized_binding_ref": {"$ref": "#/$defs/non_secret_ref"}, "underlying_worker_key": {"$ref": "#/$defs/non_secret_ref"}, "client_projection_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/non_secret_ref"}}, "one_underlying_worker": {"const": true},
+        "webhook": {"type": "object", "additionalProperties": false, "required": ["optional_accelerator", "authenticated", "replay_checked", "ordering_checked"], "properties": {"optional_accelerator": {"const": true}, "authenticated": {"const": true}, "replay_checked": {"const": true}, "ordering_checked": {"const": true}}},
+        "poll_reconciliation_available": {"const": true}, "public_ingress_enabled_for_webhook": {"const": false},
+        "cache_key_parts": {"type": "array", "prefixItems": [{"const": "instance_id"}, {"const": "account_id"}, {"const": "repository_id"}, {"const": "revision_id"}], "items": false}, "discard_stale_selection_results": {"const": true},
+        "governors": {"type": "array", "uniqueItems": true, "minItems": 5, "items": {"enum": ["pagination", "log_streams", "retry_jitter", "http_429_backoff", "inactive_subscriptions"]}, "allOf": [{"contains": {"const": "pagination"}}, {"contains": {"const": "log_streams"}}, {"contains": {"const": "retry_jitter"}}, {"contains": {"const": "http_429_backoff"}}, {"contains": {"const": "inactive_subscriptions"}}]}
+      }
+    },
+    "source_operation_routing_and_agent_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "repository_context_ref", "local_filesystem_route", "hosting_api_route", "cli_hosting_route", "durable_receipt_home_server_ref", "worker_becomes_project_authority", "agent_summary", "automated_mutation"],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.routing_and_agent_boundary.v1"}, "repository_context_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "local_filesystem_route": {"type": "object", "additionalProperties": false, "required": ["source_location_execution_environment_ref", "selected_installation_ref", "worktree_or_workspace_manager_ref", "file_safe_decision_ref"], "properties": {"source_location_execution_environment_ref": {"$ref": "#/$defs/non_secret_ref"}, "selected_installation_ref": {"$ref": "#/$defs/non_secret_ref"}, "worktree_or_workspace_manager_ref": {"$ref": "#/$defs/non_secret_ref"}, "file_safe_decision_ref": {"$ref": "#/$defs/non_secret_ref"}}},
+        "hosting_api_route": {"type": "object", "additionalProperties": false, "required": ["egress_host_ref", "forge_adapter_ref", "credential_ref", "assumes_checkout_present", "git_credential_interchangeable"], "properties": {"egress_host_ref": {"$ref": "#/$defs/non_secret_ref"}, "forge_adapter_ref": {"$ref": "#/$defs/non_secret_ref"}, "credential_ref": {"$ref": "#/$defs/non_secret_ref"}, "assumes_checkout_present": {"const": false}, "git_credential_interchangeable": {"const": false}}},
+        "cli_hosting_route": {"type": "object", "additionalProperties": false, "required": ["installation_profile_ref", "explicit_repository_target", "current_working_branch_default_used"], "properties": {"installation_profile_ref": {"$ref": "#/$defs/non_secret_ref"}, "explicit_repository_target": {"$ref": "#/$defs/non_secret_ref"}, "current_working_branch_default_used": {"const": false}}},
+        "durable_receipt_home_server_ref": {"$ref": "#/$defs/non_secret_ref"}, "worker_becomes_project_authority": {"const": false},
+        "agent_summary": {"type": "object", "additionalProperties": false, "required": ["compact_typed_actions", "structured_blockers", "whole_registry_or_log_dump", "same_registered_commands", "ui_scraping_substitute", "alternate_account_fallback"], "properties": {"compact_typed_actions": {"const": true}, "structured_blockers": {"const": true}, "whole_registry_or_log_dump": {"const": false}, "same_registered_commands": {"const": true}, "ui_scraping_substitute": {"const": false}, "alternate_account_fallback": {"const": false}}},
+        "automated_mutation": {"type": "object", "additionalProperties": false, "required": ["exact_task_policy_ref", "approval_ref", "protected_branch_bypass", "ci_cost_trigger_disclosed", "runner_is_execution_host_without_configuration"], "properties": {"exact_task_policy_ref": {"$ref": "#/$defs/non_secret_ref"}, "approval_ref": {"$ref": "#/$defs/non_secret_ref"}, "protected_branch_bypass": {"const": false}, "ci_cost_trigger_disclosed": {"const": true}, "runner_is_execution_host_without_configuration": {"const": false}}}
+      }
+    }
+  },
+  "x-backup-source-claim-boundary": {
+    "owner_split": "Backup owns BackupManifest RestoreRun staging activation rollback and recovery readiness; Source Control owns only source closure rebind merge remote-validation and backend receipt truth",
+    "command_effect": "no new command or handler; existing owner commands retain handler_unavailable until independently proven",
+    "event_effect": "expected_event_types=[]; receipt-only until Event Authority admits an exact producer payload retention redaction and consumer transaction",
+    "protected_data": "raw keys tokens passwords cookies private key bytes auth URLs callback material protected-browser content credential-bearing paths and restored unsafe configuration are forbidden",
+    "runtime_evidence": false
+  },
+  "x-server-gap-command-contracts": {
+    "cmd.source_control.checkpoint.create": {
+      "request_ref": "#/$defs/source_control_command_request",
+      "result_ref": "#/$defs/source_control_command_result",
+      "error_ref": "#/$defs/source_control_command_error",
+      "availability_ref": "#/$defs/source_control_command_availability",
+      "disabled_reason_ref": "#/$defs/source_control_command_disabled_reason",
+      "permission_ref": "#/$defs/source_control_permission_decision",
+      "sole_handler": "handlers::source_control::checkpoint_create",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Create a backend-native fenced Source Control checkpoint for recovery or handoff without conflating Git and Jujutsu identities.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1998"
+    },
+    "cmd.source_control.checkpoint.inspect": {
+      "request_ref": "#/$defs/source_control_command_request",
+      "result_ref": "#/$defs/source_control_command_result",
+      "error_ref": "#/$defs/source_control_command_error",
+      "availability_ref": "#/$defs/source_control_command_availability",
+      "disabled_reason_ref": "#/$defs/source_control_command_disabled_reason",
+      "permission_ref": "#/$defs/source_control_permission_decision",
+      "sole_handler": "handlers::source_control::checkpoint_inspect",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Read the bounded current checkpoint identity, backend-native revision, validity, and restore preconditions.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2004"
+    },
+    "cmd.source_control.checkpoint.restore": {
+      "request_ref": "#/$defs/source_control_command_request",
+      "result_ref": "#/$defs/source_control_command_result",
+      "error_ref": "#/$defs/source_control_command_error",
+      "availability_ref": "#/$defs/source_control_command_availability",
+      "disabled_reason_ref": "#/$defs/source_control_command_disabled_reason",
+      "permission_ref": "#/$defs/source_control_permission_decision",
+      "sole_handler": "handlers::source_control::checkpoint_restore",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Restore one exact backend-native checkpoint under writer lease, FileSafe, permission, topology, and revision fences.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2010"
+    }
+  },
+  "x-server-gap-alias-normalization": {
+    "cmd.project.checkout.add_worktree": {
+      "target": "cmd.source_control.workspace.create",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::source_control::workspace_create",
+      "intended_semantics": "Create and bind one additional backend-native workspace for the exact Project checkout/workspace binding, preserving repository, Host, Environment, and Source Location identity.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1182"
+    },
+    "cmd.project.checkout.connect_existing": {
+      "target": "cmd.source_control.repository.bind",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::source_control::repository_bind",
+      "intended_semantics": "Bind a verified existing checkout/workspace to the exact Project repository context.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1188"
+    },
+    "cmd.project.checkout.create": {
+      "target": "cmd.source_control.workspace.create",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::source_control::workspace_create",
+      "intended_semantics": "Create the exact Project checkout/workspace binding through its semantic owner with stable identity, idempotency, and a typed receipt.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1194"
+    },
+    "cmd.project.checkout.remove": {
+      "target": "cmd.source_control.workspace.remove",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::source_control::workspace_remove",
+      "intended_semantics": "Remove the exact Project checkout/workspace binding only with explicit ownership, dependency, active-work, and data-disposition handling.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1200"
+    },
+    "cmd.project.checkout.verify": {
+      "target": "cmd.source_control.status.refresh",
+      "normalize_before_policy_and_dispatch": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "sole_handler": "handlers::source_control::status_refresh",
+      "intended_semantics": "Verify the exact Project checkout/workspace binding using layered identity, compatibility, provenance, capability, and currentness evidence.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1206"
+    }
+  },
+  "x-server-gap-source-adjudication-rows": {
+    "98": {
+      "source_token": "cmd.project.checkout.add_worktree",
+      "canonical_target": "cmd.source_control.workspace.create",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Create and bind one additional backend-native workspace for the exact Project checkout/workspace binding, preserving repository, Host, Environment, and Source Location identity.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1182",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlWorkspaceCoordinator",
+      "sole_handler": "handlers::source_control::workspace_create",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "99": {
+      "source_token": "cmd.project.checkout.connect_existing",
+      "canonical_target": "cmd.source_control.repository.bind",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Bind a verified existing checkout/workspace to the exact Project repository context.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1188",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlWorkspaceCoordinator",
+      "sole_handler": "handlers::source_control::repository_bind",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "100": {
+      "source_token": "cmd.project.checkout.create",
+      "canonical_target": "cmd.source_control.workspace.create",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Create the exact Project checkout/workspace binding through its semantic owner with stable identity, idempotency, and a typed receipt.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1194",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlWorkspaceCoordinator",
+      "sole_handler": "handlers::source_control::workspace_create",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "101": {
+      "source_token": "cmd.project.checkout.remove",
+      "canonical_target": "cmd.source_control.workspace.remove",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Remove the exact Project checkout/workspace binding only with explicit ownership, dependency, active-work, and data-disposition handling.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1200",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlWorkspaceCoordinator",
+      "sole_handler": "handlers::source_control::workspace_remove",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "102": {
+      "source_token": "cmd.project.checkout.verify",
+      "canonical_target": "cmd.source_control.status.refresh",
+      "disposition": "approved_alias_to_exact",
+      "intended_semantics": "Verify the exact Project checkout/workspace binding using layered identity, compatibility, provenance, capability, and currentness evidence.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1206",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlWorkspaceCoordinator",
+      "sole_handler": "handlers::source_control::status_refresh",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "inherit exact target",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "150": {
+      "source_token": "cmd.source_control.checkpoint.create",
+      "canonical_target": "cmd.source_control.checkpoint.create",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Create a backend-native fenced Source Control checkpoint for recovery or handoff without conflating Git and Jujutsu identities.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1998",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlOperationCoordinator",
+      "sole_handler": "handlers::source_control::checkpoint_create",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "151": {
+      "source_token": "cmd.source_control.checkpoint.inspect",
+      "canonical_target": "cmd.source_control.checkpoint.inspect",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Read the bounded current checkpoint identity, backend-native revision, validity, and restore preconditions.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2004",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlOperationCoordinator",
+      "sole_handler": "handlers::source_control::checkpoint_inspect",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    },
+    "152": {
+      "source_token": "cmd.source_control.checkpoint.restore",
+      "canonical_target": "cmd.source_control.checkpoint.restore",
+      "disposition": "new_canonical_required",
+      "intended_semantics": "Restore one exact backend-native checkpoint under writer lease, FileSafe, permission, topology, and revision fences.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:2010",
+      "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+      "owner_component": "SourceControlOperationCoordinator",
+      "sole_handler": "handlers::source_control::checkpoint_restore",
+      "gui_consumers": [
+        "Source Control panel",
+        "Settings > Source Control",
+        "Projects checkout/worktree flow",
+        "Doctor",
+        "palette/API"
+      ],
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
+    }
+  },
+  "x-server-gap-claim-boundary": "static owner contract only; three checkpoint commands remain handler_unavailable; five aliases normalize before policy/dispatch with no independent handler or wiring"
+}

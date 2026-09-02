@@ -1,0 +1,3586 @@
+{
+  "schema_id": "pm.jujutsu.integration_contract_fixtures.v1",
+  "owner_schema": "Plans/jujutsu_integration_contracts.schema.json",
+  "command_coverage": {
+    "canonical_command_count": 31,
+    "positive_request_command_ids": [
+      "cmd.jujutsu.status.refresh",
+      "cmd.jujutsu.diff.open",
+      "cmd.jujutsu.history.open",
+      "cmd.jujutsu.change.new",
+      "cmd.jujutsu.change.describe",
+      "cmd.jujutsu.change.edit",
+      "cmd.jujutsu.change.split",
+      "cmd.jujutsu.change.squash",
+      "cmd.jujutsu.change.rebase",
+      "cmd.jujutsu.change.abandon",
+      "cmd.jujutsu.change.restore",
+      "cmd.jujutsu.bookmark.create",
+      "cmd.jujutsu.bookmark.move",
+      "cmd.jujutsu.bookmark.rename",
+      "cmd.jujutsu.bookmark.delete",
+      "cmd.jujutsu.bookmark.track",
+      "cmd.jujutsu.bookmark.untrack",
+      "cmd.jujutsu.workspace.list",
+      "cmd.jujutsu.workspace.create",
+      "cmd.jujutsu.workspace.open",
+      "cmd.jujutsu.workspace.switch",
+      "cmd.jujutsu.workspace.remove",
+      "cmd.jujutsu.operation.log",
+      "cmd.jujutsu.operation.show",
+      "cmd.jujutsu.operation.undo",
+      "cmd.jujutsu.operation.restore",
+      "cmd.jujutsu.git.clone",
+      "cmd.jujutsu.git.fetch",
+      "cmd.jujutsu.git.push",
+      "cmd.jujutsu.git.import",
+      "cmd.jujutsu.git.export"
+    ],
+    "negative_request_command_ids": [
+      "cmd.jujutsu.status.refresh",
+      "cmd.jujutsu.diff.open",
+      "cmd.jujutsu.history.open",
+      "cmd.jujutsu.change.new",
+      "cmd.jujutsu.change.describe",
+      "cmd.jujutsu.change.edit",
+      "cmd.jujutsu.change.split",
+      "cmd.jujutsu.change.squash",
+      "cmd.jujutsu.change.rebase",
+      "cmd.jujutsu.change.abandon",
+      "cmd.jujutsu.change.restore",
+      "cmd.jujutsu.bookmark.create",
+      "cmd.jujutsu.bookmark.move",
+      "cmd.jujutsu.bookmark.rename",
+      "cmd.jujutsu.bookmark.delete",
+      "cmd.jujutsu.bookmark.track",
+      "cmd.jujutsu.bookmark.untrack",
+      "cmd.jujutsu.workspace.list",
+      "cmd.jujutsu.workspace.create",
+      "cmd.jujutsu.workspace.open",
+      "cmd.jujutsu.workspace.switch",
+      "cmd.jujutsu.workspace.remove",
+      "cmd.jujutsu.operation.log",
+      "cmd.jujutsu.operation.show",
+      "cmd.jujutsu.operation.undo",
+      "cmd.jujutsu.operation.restore",
+      "cmd.jujutsu.git.clone",
+      "cmd.jujutsu.git.fetch",
+      "cmd.jujutsu.git.push",
+      "cmd.jujutsu.git.import",
+      "cmd.jujutsu.git.export"
+    ],
+    "compatibility_alias_policy": "cmd.jj.* is rejected as a primary ID and normalizes outside this owner contract before policy/dispatch"
+  },
+  "valid": [
+    {
+      "name": "command_request_jujutsu_status_refresh",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "command_instance_id": "command:jj:1",
+        "idempotency_key": "idempotency:jj:1",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-1",
+          "commit_id": "commit-expected-1",
+          "operation_id": "op-expected-1",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "read",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:1",
+          "expected_operation_id": "op-expected-1",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": null,
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:1",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:1",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": null,
+        "confirmation": null,
+        "target": {
+          "target_kind": "repository",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_diff_open",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.diff.open",
+        "command_instance_id": "command:jj:2",
+        "idempotency_key": "idempotency:jj:2",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-2",
+          "commit_id": "commit-expected-2",
+          "operation_id": "op-expected-2",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "navigation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:2",
+          "expected_operation_id": "op-expected-2",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": null,
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:2",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:2",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": null,
+        "confirmation": null,
+        "target": {
+          "target_kind": "repository",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_history_open",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.history.open",
+        "command_instance_id": "command:jj:3",
+        "idempotency_key": "idempotency:jj:3",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-3",
+          "commit_id": "commit-expected-3",
+          "operation_id": "op-expected-3",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "navigation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:3",
+          "expected_operation_id": "op-expected-3",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": null,
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:3",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:3",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": null,
+        "confirmation": null,
+        "target": {
+          "target_kind": "repository",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_new",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.new",
+        "command_instance_id": "command:jj:4",
+        "idempotency_key": "idempotency:jj:4",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-4",
+          "commit_id": "commit-expected-4",
+          "operation_id": "op-expected-4",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:4",
+          "expected_operation_id": "op-expected-4",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:4",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:4",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:4",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:4",
+        "confirmation": null,
+        "target": {
+          "target_kind": "change",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-4",
+            "commit_id": "commit-src-4",
+            "operation_id": "op-src-4",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-4",
+            "commit_id": "commit-dst-4",
+            "operation_id": "op-dst-4",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_describe",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.describe",
+        "command_instance_id": "command:jj:5",
+        "idempotency_key": "idempotency:jj:5",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-5",
+          "commit_id": "commit-expected-5",
+          "operation_id": "op-expected-5",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:5",
+          "expected_operation_id": "op-expected-5",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:5",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:5",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:5",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:5",
+        "confirmation": null,
+        "target": {
+          "target_kind": "change",
+          "change_id": "change-5",
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-5",
+            "commit_id": "commit-src-5",
+            "operation_id": "op-src-5",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-5",
+            "commit_id": "commit-dst-5",
+            "operation_id": "op-dst-5",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_edit",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.edit",
+        "command_instance_id": "command:jj:6",
+        "idempotency_key": "idempotency:jj:6",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-6",
+          "commit_id": "commit-expected-6",
+          "operation_id": "op-expected-6",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:6",
+          "expected_operation_id": "op-expected-6",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:6",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:6",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:6",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:6",
+        "confirmation": null,
+        "target": {
+          "target_kind": "change",
+          "change_id": "change-6",
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-6",
+            "commit_id": "commit-src-6",
+            "operation_id": "op-src-6",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-6",
+            "commit_id": "commit-dst-6",
+            "operation_id": "op-dst-6",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_split",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.split",
+        "command_instance_id": "command:jj:7",
+        "idempotency_key": "idempotency:jj:7",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-7",
+          "commit_id": "commit-expected-7",
+          "operation_id": "op-expected-7",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:7",
+          "expected_operation_id": "op-expected-7",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:7",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:7",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:7",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:7",
+        "confirmation": null,
+        "target": {
+          "target_kind": "change",
+          "change_id": "change-7",
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-7",
+            "commit_id": "commit-src-7",
+            "operation_id": "op-src-7",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-7",
+            "commit_id": "commit-dst-7",
+            "operation_id": "op-dst-7",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_squash",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.squash",
+        "command_instance_id": "command:jj:8",
+        "idempotency_key": "idempotency:jj:8",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-8",
+          "commit_id": "commit-expected-8",
+          "operation_id": "op-expected-8",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:8",
+          "expected_operation_id": "op-expected-8",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:8",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:8",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:8",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:8",
+        "confirmation": null,
+        "target": {
+          "target_kind": "change",
+          "change_id": "change-8",
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-8",
+            "commit_id": "commit-src-8",
+            "operation_id": "op-src-8",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-8",
+            "commit_id": "commit-dst-8",
+            "operation_id": "op-dst-8",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_rebase",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.rebase",
+        "command_instance_id": "command:jj:9",
+        "idempotency_key": "idempotency:jj:9",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-9",
+          "commit_id": "commit-expected-9",
+          "operation_id": "op-expected-9",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:9",
+          "expected_operation_id": "op-expected-9",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:9",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:9",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:9",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:9",
+        "confirmation": null,
+        "target": {
+          "target_kind": "change",
+          "change_id": "change-9",
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-9",
+            "commit_id": "commit-src-9",
+            "operation_id": "op-src-9",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-9",
+            "commit_id": "commit-dst-9",
+            "operation_id": "op-dst-9",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:9",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_abandon",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.abandon",
+        "command_instance_id": "command:jj:10",
+        "idempotency_key": "idempotency:jj:10",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-10",
+          "commit_id": "commit-expected-10",
+          "operation_id": "op-expected-10",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:10",
+          "expected_operation_id": "op-expected-10",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:10",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:10",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:10",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:10",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:10",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:10"
+        },
+        "target": {
+          "target_kind": "change",
+          "change_id": "change-10",
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-10",
+            "commit_id": "commit-src-10",
+            "operation_id": "op-src-10",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-10",
+            "commit_id": "commit-dst-10",
+            "operation_id": "op-dst-10",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_change_restore",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.change.restore",
+        "command_instance_id": "command:jj:11",
+        "idempotency_key": "idempotency:jj:11",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-11",
+          "commit_id": "commit-expected-11",
+          "operation_id": "op-expected-11",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "recovery_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:11",
+          "expected_operation_id": "op-expected-11",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:11",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:11",
+          "decision": "allow",
+          "scope": "recovery",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:11",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:11",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:11",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:11"
+        },
+        "target": {
+          "target_kind": "change",
+          "change_id": "change-11",
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-src-11",
+            "commit_id": "commit-src-11",
+            "operation_id": "op-src-11",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-11",
+            "commit_id": "commit-dst-11",
+            "operation_id": "op-dst-11",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_create",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.bookmark.create",
+        "command_instance_id": "command:jj:12",
+        "idempotency_key": "idempotency:jj:12",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-12",
+          "commit_id": "commit-expected-12",
+          "operation_id": "op-expected-12",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:12",
+          "expected_operation_id": "op-expected-12",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:12",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:12",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:12",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:12",
+        "confirmation": null,
+        "target": {
+          "target_kind": "bookmark",
+          "change_id": null,
+          "bookmark_name": "bookmark-12",
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_move",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.bookmark.move",
+        "command_instance_id": "command:jj:13",
+        "idempotency_key": "idempotency:jj:13",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-13",
+          "commit_id": "commit-expected-13",
+          "operation_id": "op-expected-13",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:13",
+          "expected_operation_id": "op-expected-13",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:13",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:13",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:13",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:13",
+        "confirmation": null,
+        "target": {
+          "target_kind": "bookmark",
+          "change_id": null,
+          "bookmark_name": "bookmark-13",
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": {
+            "kind": "jujutsu",
+            "change_id": "change-dst-13",
+            "commit_id": "commit-dst-13",
+            "operation_id": "op-dst-13",
+            "workspace_id": "ws-main",
+            "bookmarks": [
+              "main"
+            ]
+          },
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_rename",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.bookmark.rename",
+        "command_instance_id": "command:jj:14",
+        "idempotency_key": "idempotency:jj:14",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-14",
+          "commit_id": "commit-expected-14",
+          "operation_id": "op-expected-14",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:14",
+          "expected_operation_id": "op-expected-14",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:14",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:14",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:14",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:14",
+        "confirmation": null,
+        "target": {
+          "target_kind": "bookmark",
+          "change_id": null,
+          "bookmark_name": "bookmark-14",
+          "destination_bookmark_name": "bookmark-new-14",
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_delete",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.bookmark.delete",
+        "command_instance_id": "command:jj:15",
+        "idempotency_key": "idempotency:jj:15",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-15",
+          "commit_id": "commit-expected-15",
+          "operation_id": "op-expected-15",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:15",
+          "expected_operation_id": "op-expected-15",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:15",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:15",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:15",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:15",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:15",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:15"
+        },
+        "target": {
+          "target_kind": "bookmark",
+          "change_id": null,
+          "bookmark_name": "bookmark-15",
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_track",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.bookmark.track",
+        "command_instance_id": "command:jj:16",
+        "idempotency_key": "idempotency:jj:16",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-16",
+          "commit_id": "commit-expected-16",
+          "operation_id": "op-expected-16",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "transport_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:16",
+          "expected_operation_id": "op-expected-16",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:16",
+        "credential_lease_ref": "credential-lease:jj:16",
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:16",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:16",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:16",
+        "confirmation": null,
+        "target": {
+          "target_kind": "bookmark",
+          "change_id": null,
+          "bookmark_name": "bookmark-16",
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": "remote:jj:16",
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:16",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_untrack",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.bookmark.untrack",
+        "command_instance_id": "command:jj:17",
+        "idempotency_key": "idempotency:jj:17",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-17",
+          "commit_id": "commit-expected-17",
+          "operation_id": "op-expected-17",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "transport_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:17",
+          "expected_operation_id": "op-expected-17",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:17",
+        "credential_lease_ref": "credential-lease:jj:17",
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:17",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:17",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:17",
+        "confirmation": null,
+        "target": {
+          "target_kind": "bookmark",
+          "change_id": null,
+          "bookmark_name": "bookmark-17",
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": "remote:jj:17",
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:17",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_workspace_list",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.workspace.list",
+        "command_instance_id": "command:jj:18",
+        "idempotency_key": "idempotency:jj:18",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-18",
+          "commit_id": "commit-expected-18",
+          "operation_id": "op-expected-18",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "read",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:18",
+          "expected_operation_id": "op-expected-18",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": null,
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:18",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:18",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": null,
+        "confirmation": null,
+        "target": {
+          "target_kind": "workspace",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": "snapshot:jj:18",
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:18",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_workspace_create",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.workspace.create",
+        "command_instance_id": "command:jj:19",
+        "idempotency_key": "idempotency:jj:19",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-19",
+          "commit_id": "commit-expected-19",
+          "operation_id": "op-expected-19",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:19",
+          "expected_operation_id": "op-expected-19",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:19",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:19",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:19",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:19",
+        "confirmation": null,
+        "target": {
+          "target_kind": "workspace",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": "workspace-19",
+          "workspace_snapshot_id": "snapshot:jj:19",
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:19",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_workspace_open",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.workspace.open",
+        "command_instance_id": "command:jj:20",
+        "idempotency_key": "idempotency:jj:20",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-20",
+          "commit_id": "commit-expected-20",
+          "operation_id": "op-expected-20",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "navigation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:20",
+          "expected_operation_id": "op-expected-20",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": null,
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:20",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:20",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": null,
+        "confirmation": null,
+        "target": {
+          "target_kind": "workspace",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": "workspace-20",
+          "workspace_snapshot_id": "snapshot:jj:20",
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:20",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_workspace_switch",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.workspace.switch",
+        "command_instance_id": "command:jj:21",
+        "idempotency_key": "idempotency:jj:21",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-21",
+          "commit_id": "commit-expected-21",
+          "operation_id": "op-expected-21",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:21",
+          "expected_operation_id": "op-expected-21",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:21",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:21",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:21",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:21",
+        "confirmation": null,
+        "target": {
+          "target_kind": "workspace",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": "workspace-21",
+          "workspace_snapshot_id": "snapshot:jj:21",
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:21",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_workspace_remove",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.workspace.remove",
+        "command_instance_id": "command:jj:22",
+        "idempotency_key": "idempotency:jj:22",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-22",
+          "commit_id": "commit-expected-22",
+          "operation_id": "op-expected-22",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "local_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:22",
+          "expected_operation_id": "op-expected-22",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:22",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:22",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:22",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:22",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:22",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:22"
+        },
+        "target": {
+          "target_kind": "workspace",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": "workspace-22",
+          "workspace_snapshot_id": "snapshot:jj:22",
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:22",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_operation_log",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.operation.log",
+        "command_instance_id": "command:jj:23",
+        "idempotency_key": "idempotency:jj:23",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-23",
+          "commit_id": "commit-expected-23",
+          "operation_id": "op-expected-23",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "read",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:23",
+          "expected_operation_id": "op-expected-23",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": null,
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:23",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:23",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": null,
+        "confirmation": null,
+        "target": {
+          "target_kind": "operation",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_operation_show",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.operation.show",
+        "command_instance_id": "command:jj:24",
+        "idempotency_key": "idempotency:jj:24",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-24",
+          "commit_id": "commit-expected-24",
+          "operation_id": "op-expected-24",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "read",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:24",
+          "expected_operation_id": "op-expected-24",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": null,
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:24",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:24",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": null,
+        "confirmation": null,
+        "target": {
+          "target_kind": "operation",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": "operation-target-24",
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": null,
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_operation_undo",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.operation.undo",
+        "command_instance_id": "command:jj:25",
+        "idempotency_key": "idempotency:jj:25",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-25",
+          "commit_id": "commit-expected-25",
+          "operation_id": "op-expected-25",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "recovery_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:25",
+          "expected_operation_id": "op-expected-25",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:25",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:25",
+          "decision": "allow",
+          "scope": "recovery",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:25",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:25",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:25",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:25"
+        },
+        "target": {
+          "target_kind": "operation",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": "operation-target-25",
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:25",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_operation_restore",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.operation.restore",
+        "command_instance_id": "command:jj:26",
+        "idempotency_key": "idempotency:jj:26",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-26",
+          "commit_id": "commit-expected-26",
+          "operation_id": "op-expected-26",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "recovery_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:26",
+          "expected_operation_id": "op-expected-26",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:26",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:26",
+          "decision": "allow",
+          "scope": "recovery",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:26",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:26",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:26",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:26"
+        },
+        "target": {
+          "target_kind": "operation",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": "operation-target-26",
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:26",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_git_clone",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.git.clone",
+        "command_instance_id": "command:jj:27",
+        "idempotency_key": "idempotency:jj:27",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-27",
+          "commit_id": "commit-expected-27",
+          "operation_id": "op-expected-27",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "transport_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:27",
+          "expected_operation_id": "op-expected-27",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:27",
+        "credential_lease_ref": "credential-lease:jj:27",
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:27",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:27",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:27",
+        "confirmation": null,
+        "target": {
+          "target_kind": "transport",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": "remote:jj:27",
+          "destination_source_location_ref": "source-location:jj:27",
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:27",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.jj_project",
+          "invocation_token": "return:jujutsu:clone:27",
+          "caller_context_ref": "onboarding-return:first-project:jj:27",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        },
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_git_fetch",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.git.fetch",
+        "command_instance_id": "command:jj:28",
+        "idempotency_key": "idempotency:jj:28",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-28",
+          "commit_id": "commit-expected-28",
+          "operation_id": "op-expected-28",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "transport_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:28",
+          "expected_operation_id": "op-expected-28",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:28",
+        "credential_lease_ref": "credential-lease:jj:28",
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:28",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:28",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:28",
+        "confirmation": null,
+        "target": {
+          "target_kind": "transport",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": "remote:jj:28",
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:28",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_git_push",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.git.push",
+        "command_instance_id": "command:jj:29",
+        "idempotency_key": "idempotency:jj:29",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-29",
+          "commit_id": "commit-expected-29",
+          "operation_id": "op-expected-29",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "transport_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:29",
+          "expected_operation_id": "op-expected-29",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:29",
+        "credential_lease_ref": "credential-lease:jj:29",
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:29",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:29",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:29",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:29",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:29"
+        },
+        "target": {
+          "target_kind": "transport",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": "remote:jj:29",
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:29",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_git_import",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.git.import",
+        "command_instance_id": "command:jj:30",
+        "idempotency_key": "idempotency:jj:30",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-30",
+          "commit_id": "commit-expected-30",
+          "operation_id": "op-expected-30",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "interop_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:30",
+          "expected_operation_id": "op-expected-30",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:30",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:30",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:30",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:30",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:30",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:30"
+        },
+        "target": {
+          "target_kind": "transport",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": "colocation-profile:jj:30"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": {
+          "capability": "git_import",
+          "requested": true,
+          "effective": true,
+          "repository_profile": "colocated",
+          "certified_adapter_gate_ref": "certified-adapter:jj:30",
+          "exact_live_probe_ref": "live-probe:jj:30",
+          "implicit_reconciliation_allowed": false,
+          "fallback_mutation": "none",
+          "disabled_reason_code": null
+        },
+        "observable_work_id": "observable-work:jj:30",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_request_jujutsu_git_export",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.git.export",
+        "command_instance_id": "command:jj:31",
+        "idempotency_key": "idempotency:jj:31",
+        "repository_context_ref": "repository-context:jj:main",
+        "scm_backend": "jujutsu",
+        "expected_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-expected-31",
+          "commit_id": "commit-expected-31",
+          "operation_id": "op-expected-31",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "command_class": "interop_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:31",
+          "expected_operation_id": "op-expected-31",
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:31",
+        "credential_lease_ref": null,
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:31",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:31",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:31",
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:31",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:31"
+        },
+        "target": {
+          "target_kind": "transport",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": null,
+          "destination_source_location_ref": null,
+          "colocation_profile_ref": "colocation-profile:jj:31"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": {
+          "capability": "git_export",
+          "requested": true,
+          "effective": true,
+          "repository_profile": "colocated",
+          "certified_adapter_gate_ref": "certified-adapter:jj:31",
+          "exact_live_probe_ref": "live-probe:jj:31",
+          "implicit_reconciliation_allowed": false,
+          "fallback_mutation": "none",
+          "disabled_reason_code": null
+        },
+        "observable_work_id": "observable-work:jj:31",
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
+      "name": "command_result_mutation_succeeded",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.change.rebase",
+        "command_instance_id": "command:jj:result:1",
+        "operation_id": "operation:jj:result:1",
+        "outcome": "succeeded",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-after-result",
+          "commit_id": "commit-after-result",
+          "operation_id": "op-after-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "affected_identities": {
+          "change_ids": [
+            "change-result"
+          ],
+          "commit_ids": [
+            "commit-after-result"
+          ],
+          "bookmark_names": [],
+          "workspace_ids": [
+            "ws-main"
+          ],
+          "operation_ids": [
+            "op-before-result",
+            "op-after-result"
+          ],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": null,
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": "receipt:jj:result:1",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
+    },
+    {
+      "name": "command_result_jujutsu_clone_succeeded_returns_exact_onboarding_context",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.git.clone",
+        "command_instance_id": "command:jj:clone:result:27",
+        "operation_id": "operation:jj:clone:result:27",
+        "outcome": "succeeded",
+        "repository_context_ref": "repository-context:jj:clone:27",
+        "before_revision": {"kind":"jujutsu","change_id":"change-before-clone-27","commit_id":"commit-before-clone-27","operation_id":"op-before-clone-27","workspace_id":"ws-clone-27","bookmarks":[]},
+        "after_revision": {"kind":"jujutsu","change_id":"change-after-clone-27","commit_id":"commit-after-clone-27","operation_id":"op-after-clone-27","workspace_id":"ws-clone-27","bookmarks":["main"]},
+        "affected_identities": {"change_ids":["change-after-clone-27"],"commit_ids":["commit-after-clone-27"],"bookmark_names":["main"],"workspace_ids":["ws-clone-27"],"operation_ids":["op-before-clone-27","op-after-clone-27"],"conflict_refs":[]},
+        "availability": {"requested":true,"effective":true,"state":"available","reason_codes":[],"disabled_reason_code":null,"allowed_action_ids":[],"evaluated_at_utc":"2026-08-31T20:10:27Z"},
+        "error": null,
+        "observable_work_id": "observable-work:jj:clone:result:27",
+        "receipt_ref": "receipt:jj:clone:result:27",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "currentness": {"execution_host_id":"host:local","execution_environment_id":"environment:native","adapter_ref":"adapter:jj:current","adapter_version":"0.44.0","certification_catalog_ref":"catalog:jj:current","catalog_generation":4,"catalog_currentness":"current","snapshot_id":"snapshot:jj:27","expected_operation_id":"op-expected-27","checked_at_utc":"2026-08-31T20:00:00Z"},
+        "return_context": {"surface_id":"product_onboarding","route_ref":"route:onboarding:first_project","focus_id":"onboarding.first_project.jj_project","invocation_token":"return:jujutsu:clone:27","caller_context_ref":"onboarding-return:first-project:jj:27","expected_caller_revision":5,"continuation_generation":2},
+        "completed_at_utc": "2026-08-31T20:10:27Z"
+      }
+    },
+    {
+      "name": "command_result_jujutsu_clone_cancelled_after_cleanup",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.git.clone",
+        "command_instance_id": "command:jj:clone:cancelled:27",
+        "operation_id": "operation:jj:clone:cancelled:27",
+        "outcome": "cancelled",
+        "repository_context_ref": "repository-context:jj:clone:cancelled:27",
+        "before_revision": {"kind":"jujutsu","change_id":"change-before-clone-cancelled-27","commit_id":"commit-before-clone-cancelled-27","operation_id":"op-before-clone-cancelled-27","workspace_id":"ws-clone-cancelled-27","bookmarks":[]},
+        "after_revision": null,
+        "affected_identities": {"change_ids":[],"commit_ids":[],"bookmark_names":[],"workspace_ids":[],"operation_ids":["op-before-clone-cancelled-27"],"conflict_refs":[]},
+        "availability": {"requested":true,"effective":true,"state":"available","reason_codes":[],"disabled_reason_code":null,"allowed_action_ids":[],"evaluated_at_utc":"2026-08-31T20:10:28Z"},
+        "error": {"code":"operation_cancelled","message":"Jujutsu clone was cancelled and destination cleanup completed.","retry_disposition":"after_revalidation","effect_state":"known_not_applied","recovery_action_ids":[],"detail_ref":"diagnostic:jj:clone-cancelled:27"},
+        "observable_work_id": "observable-work:jj:clone:cancelled:27",
+        "receipt_ref": "receipt:jj:clone-cleanup:27",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "currentness": {"execution_host_id":"host:local","execution_environment_id":"environment:native","adapter_ref":"adapter:jj:current","adapter_version":"0.44.0","certification_catalog_ref":"catalog:jj:current","catalog_generation":4,"catalog_currentness":"current","snapshot_id":"snapshot:jj:27","expected_operation_id":"op-expected-27","checked_at_utc":"2026-08-31T20:00:00Z"},
+        "return_context": {"surface_id":"product_onboarding","route_ref":"route:onboarding:first_project","focus_id":"onboarding.first_project.jj_project","invocation_token":"return:jujutsu:clone:cancelled:27","caller_context_ref":"onboarding-return:first-project:jj:cancelled:27","expected_caller_revision":5,"continuation_generation":2},
+        "completed_at_utc": "2026-08-31T20:10:28Z"
+      }
+    },
+    {
+      "name": "command_error_effect_unknown",
+      "definition": "command_error_record",
+      "value": {
+        "schema_id": "pm.jujutsu.command_error.v1",
+        "command_id": "cmd.jujutsu.change.rebase",
+        "command_instance_id": "command:jj:error:1",
+        "error": {
+          "code": "effect_unknown_reconciliation_required",
+          "message": "Effect is unknown; reconcile the exact operation before retry.",
+          "retry_disposition": "after_reconciliation",
+          "effect_state": "unknown",
+          "recovery_action_ids": [
+            "cmd.jujutsu.status.refresh"
+          ],
+          "detail_ref": "diagnostic:jj:error:1"
+        },
+        "recorded_at_utc": "2026-08-31T20:11:00Z"
+      }
+    },
+    {
+      "name": "command_availability_import_blocked_upstream_race",
+      "definition": "command_availability",
+      "value": {
+        "schema_id": "pm.jujutsu.command_availability.v1",
+        "command_id": "cmd.jujutsu.git.import",
+        "repository_context_ref": "repository-context:jj:main",
+        "availability": {
+          "requested": true,
+          "effective": false,
+          "state": "blocked",
+          "reason_codes": [
+            "jj_0_44_colocated_import_export_disabled_upstream_race"
+          ],
+          "disabled_reason_code": "jj_0_44_colocated_import_export_disabled_upstream_race",
+          "allowed_action_ids": [
+            "cmd.jujutsu.status.refresh"
+          ],
+          "evaluated_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:0.44.0",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:generation-4",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:blocked",
+          "expected_operation_id": "op-expected-blocked",
+          "checked_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "recorded_at_utc": "2026-08-31T20:12:00Z"
+      }
+    },
+    {
+      "name": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "definition": "backup_jj_closure_record",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_closure.v1",
+        "jj_closure_id": "jj-closure:colocated:alpha:41",
+        "source_closure_ref": "source-closure:jj:colocated:alpha:41",
+        "backup_manifest_ref": "backup-manifest:project-alpha:41",
+        "repository_context_ref": "repository-context:jj:project-alpha",
+        "layout_profile": "colocated",
+        "captured_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:alpha:working",
+          "commit_id": "commit:alpha:immutable:41",
+          "operation_id": "jj-op:alpha:41",
+          "workspace_id": "jj-workspace:alpha",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "operation_head_refs": [
+          "operation-head:alpha:41"
+        ],
+        "retained_operation_refs": [
+          "operation:alpha:12",
+          "operation:alpha:41"
+        ],
+        "repository_view_refs": [
+          "repository-view:alpha:12",
+          "repository-view:alpha:41"
+        ],
+        "object_store_refs": [
+          "object-store:jj:alpha",
+          "object-store:git-common:alpha"
+        ],
+        "workspace_map_refs": [
+          "workspace-map:jj:alpha"
+        ],
+        "git_common_directory_ref": "git-common-directory:alpha",
+        "alternate_store_refs": [],
+        "shared_store_refs": [
+          "shared-store:git-common:alpha"
+        ],
+        "dirty_working_copy_ref": "dirty-working-copy:alpha:41",
+        "latest_snapshot_operation_id": "jj-op:alpha:41",
+        "captured_files_relation": "dirty_after_latest_snapshot",
+        "conflict_refs": [
+          "jj-conflict:alpha:41"
+        ],
+        "missing_dependency_refs": [],
+        "capture_barrier_ref": "capture-barrier:jj:alpha:41",
+        "gc_fence_ref": "gc-fence:jj:alpha:41",
+        "closure_state": "complete",
+        "expected_event_types": [],
+        "recorded_at_utc": "2026-09-01T14:15:00Z"
+      }
+    },
+    {
+      "name": "backup_jj_non_colocated_closure_does_not_invent_git_checkout",
+      "definition": "backup_jj_closure_record",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_closure.v1",
+        "jj_closure_id": "jj-closure:non-colocated:beta:18",
+        "source_closure_ref": "source-closure:jj:non-colocated:beta:18",
+        "backup_manifest_ref": "backup-manifest:project-beta:18",
+        "repository_context_ref": "repository-context:jj:project-beta",
+        "layout_profile": "non_colocated",
+        "captured_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:beta:working",
+          "commit_id": "commit:beta:immutable:18",
+          "operation_id": "jj-op:beta:18",
+          "workspace_id": "jj-workspace:beta",
+          "bookmarks": []
+        },
+        "operation_head_refs": [
+          "operation-head:beta:18"
+        ],
+        "retained_operation_refs": [
+          "operation:beta:3",
+          "operation:beta:18"
+        ],
+        "repository_view_refs": [
+          "repository-view:beta:3",
+          "repository-view:beta:18"
+        ],
+        "object_store_refs": [
+          "object-store:jj:beta"
+        ],
+        "workspace_map_refs": [
+          "workspace-map:jj:beta"
+        ],
+        "git_common_directory_ref": null,
+        "alternate_store_refs": [
+          "alternate-store:jj:beta"
+        ],
+        "shared_store_refs": [],
+        "dirty_working_copy_ref": "dirty-working-copy:beta:18",
+        "latest_snapshot_operation_id": "jj-op:beta:18",
+        "captured_files_relation": "matches_latest_snapshot",
+        "conflict_refs": [],
+        "missing_dependency_refs": [],
+        "capture_barrier_ref": "capture-barrier:jj:beta:18",
+        "gc_fence_ref": "gc-fence:jj:beta:18",
+        "closure_state": "complete",
+        "expected_event_types": [],
+        "recorded_at_utc": "2026-09-01T14:20:00Z"
+      }
+    },
+    {
+      "name": "backup_jj_shared_multi_workspace_closure_preserves_stable_maps",
+      "definition": "backup_jj_closure_record",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_closure.v1",
+        "jj_closure_id": "jj-closure:shared:gamma:9",
+        "source_closure_ref": "source-closure:jj:shared:gamma:9",
+        "backup_manifest_ref": "backup-manifest:project-gamma:9",
+        "repository_context_ref": "repository-context:jj:project-gamma",
+        "layout_profile": "shared_multi_workspace",
+        "captured_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:gamma:working",
+          "commit_id": "commit:gamma:immutable:9",
+          "operation_id": "jj-op:gamma:9",
+          "workspace_id": "jj-workspace:gamma-main",
+          "bookmarks": [
+            "main",
+            "review"
+          ]
+        },
+        "operation_head_refs": [
+          "operation-head:gamma:9"
+        ],
+        "retained_operation_refs": [
+          "operation:gamma:2",
+          "operation:gamma:9"
+        ],
+        "repository_view_refs": [
+          "repository-view:gamma:2",
+          "repository-view:gamma:9"
+        ],
+        "object_store_refs": [
+          "object-store:jj:gamma",
+          "object-store:shared:gamma"
+        ],
+        "workspace_map_refs": [
+          "workspace-map:jj:gamma-main",
+          "workspace-map:jj:gamma-review"
+        ],
+        "git_common_directory_ref": "git-common-directory:gamma",
+        "alternate_store_refs": [],
+        "shared_store_refs": [
+          "shared-store:jj:gamma"
+        ],
+        "dirty_working_copy_ref": "dirty-working-copy:gamma:9",
+        "latest_snapshot_operation_id": "jj-op:gamma:9",
+        "captured_files_relation": "dirty_after_latest_snapshot",
+        "conflict_refs": [],
+        "missing_dependency_refs": [],
+        "capture_barrier_ref": "capture-barrier:jj:gamma:9",
+        "gc_fence_ref": "gc-fence:jj:gamma:9",
+        "closure_state": "complete",
+        "expected_event_types": [],
+        "recorded_at_utc": "2026-09-01T14:25:00Z"
+      }
+    },
+    {
+      "name": "backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in",
+      "definition": "backup_jj_restore_verification_receipt",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_restore_verification_receipt.v1",
+        "verification_receipt_id": "jj-restore-verification:alpha:41",
+        "source_closure_ref": "jj-closure:colocated:alpha:41",
+        "restore_run_ref": "restore-run:project-alpha:as-new:1",
+        "restore_preview_ref": "restore-preview:project-alpha:as-new:1",
+        "isolated_repository_context_ref": "repository-context:jj:project-alpha:isolated",
+        "layout_profile": "colocated",
+        "verified_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:alpha:restored",
+          "commit_id": "commit:alpha:restored:41",
+          "operation_id": "jj-op:alpha:restored:41",
+          "workspace_id": "jj-workspace:alpha:isolated",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "operation_head_refs": [
+          "operation-head:alpha:restored:41"
+        ],
+        "selected_historical_operation_id": "jj-op:alpha:12",
+        "historical_operation_result": "verified_on_disposable_copy",
+        "object_closure_result": "complete",
+        "workspace_map_result": "verified",
+        "working_copy_relation": "dirty_files_preserved_separately",
+        "colocation_activation_disposition": "restored_colocated_single_writer",
+        "conflict_refs": [],
+        "collision_refs": [],
+        "activation_config_disposition": "sanitized_inactive",
+        "credential_resolution": "excluded_reconnect_required",
+        "credential_resolution_ref": null,
+        "remote_validation_receipt_ref": "restore-reconciliation:as-new:1",
+        "repository_forge_binding_ref": "forge-binding:forgejo:instance-a:project-alpha",
+        "automation_binding_ref": "automation-binding:github:ci-for-project-alpha",
+        "owner_route_refs": [
+          "route:cmd.backup.browse",
+          "route:cmd.jujutsu.operation.show",
+          "route:cmd.source_control.repository.bind"
+        ],
+        "isolated_verification": true,
+        "hook_execution_performed": false,
+        "remote_write_performed": false,
+        "expected_event_types": [],
+        "outcome": "sign_in_required",
+        "recorded_at_utc": "2026-09-01T14:30:00Z"
+      }
+    },
+    {
+      "name": "backup_jj_restore_conflict_receipt_blocks_activation",
+      "definition": "backup_jj_restore_verification_receipt",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_restore_verification_receipt.v1",
+        "verification_receipt_id": "jj-restore-verification:beta:conflict",
+        "source_closure_ref": "jj-closure:non-colocated:beta:18",
+        "restore_run_ref": "restore-run:project-beta:in-place:1",
+        "restore_preview_ref": "restore-preview:project-beta:in-place:1",
+        "isolated_repository_context_ref": "repository-context:jj:project-beta:isolated",
+        "layout_profile": "non_colocated",
+        "verified_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:beta:restored",
+          "commit_id": "commit:beta:restored:18",
+          "operation_id": "jj-op:beta:restored:18",
+          "workspace_id": "jj-workspace:beta:isolated",
+          "bookmarks": []
+        },
+        "operation_head_refs": [
+          "operation-head:beta:restored:18"
+        ],
+        "selected_historical_operation_id": "jj-op:beta:3",
+        "historical_operation_result": "verified_on_disposable_copy",
+        "object_closure_result": "complete",
+        "workspace_map_result": "verified",
+        "working_copy_relation": "matches_latest_snapshot",
+        "colocation_activation_disposition": "owner_rebind_non_colocated_required",
+        "conflict_refs": [
+          "jj-conflict:beta:restored:1"
+        ],
+        "collision_refs": [],
+        "activation_config_disposition": "sanitized_inactive",
+        "credential_resolution": "not_required",
+        "credential_resolution_ref": null,
+        "remote_validation_receipt_ref": null,
+        "repository_forge_binding_ref": null,
+        "automation_binding_ref": null,
+        "owner_route_refs": [
+          "route:cmd.backup.file.compare",
+          "route:cmd.jujutsu.operation.show",
+          "route:cmd.jujutsu.change.restore"
+        ],
+        "isolated_verification": true,
+        "hook_execution_performed": false,
+        "remote_write_performed": false,
+        "expected_event_types": [],
+        "outcome": "blocked_conflict",
+        "recorded_at_utc": "2026-09-01T14:35:00Z"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "backup_jj_colocated_closure_requires_git_common_directory_ref",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "git_common_directory_ref": null
+      },
+      "expected_error": "colocated recovery must preserve the exact Git common directory dependency"
+    },
+    {
+      "name": "backup_jj_shared_layout_requires_multiple_workspace_maps",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_shared_multi_workspace_closure_preserves_stable_maps",
+      "patch": {
+        "workspace_map_refs": [
+          "workspace-map:jj:gamma-main"
+        ]
+      },
+      "expected_error": "shared multi-workspace closure cannot collapse to one workspace map"
+    },
+    {
+      "name": "backup_jj_complete_closure_rejects_missing_object_dependency",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_non_colocated_closure_does_not_invent_git_checkout",
+      "patch": {
+        "missing_dependency_refs": [
+          "object-store:missing:beta"
+        ]
+      },
+      "expected_error": "complete JJ closure cannot contain a missing dependency"
+    },
+    {
+      "name": "backup_jj_verified_restore_requires_historical_operation_proof",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in",
+      "patch": {
+        "outcome": "ready_for_owner_activation",
+        "historical_operation_result": "blocked_operation_mismatch"
+      },
+      "expected_error": "activation readiness requires historical operation verification on the disposable copy"
+    },
+    {
+      "name": "backup_jj_restore_verification_cannot_push_remote",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in",
+      "patch": {
+        "remote_write_performed": true
+      },
+      "expected_error": "isolated restore verification performs no remote write"
+    },
+    {
+      "name": "backup_jj_restore_conflict_outcome_requires_conflict_receipt",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_conflict_receipt_blocks_activation",
+      "patch": {
+        "conflict_refs": []
+      },
+      "expected_error": "blocked JJ conflict requires a native conflict receipt reference"
+    },
+    {
+      "name": "backup_jj_verified_credential_requires_owner_lease_ref",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in",
+      "patch": {
+        "credential_resolution": "fresh_credential_lease_verified",
+        "credential_resolution_ref": null
+      },
+      "expected_error": "fresh restored credential readiness requires an owner lease reference"
+    },
+    {
+      "name": "backup_jj_restore_rejects_raw_credential_path",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in",
+      "patch": {
+        "credential_resolution_ref": "/home/user/.ssh/id_ed25519"
+      },
+      "expected_error": "restored JJ credential state contains only a non-secret owner reference"
+    },
+    {
+      "name": "command_request_jujutsu_status_refresh_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_status_refresh",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_diff_open_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_diff_open",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_history_open_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_history_open",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_new_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_new",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_describe_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_describe",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_edit_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_edit",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_split_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_split",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_squash_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_squash",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_rebase_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_rebase",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_abandon_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_abandon",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_change_restore_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_restore",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_create_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_create",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_move_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_move",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_rename_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_rename",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_delete_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_delete",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_track_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_track",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_bookmark_untrack_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_untrack",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_workspace_list_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_workspace_list",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_workspace_create_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_workspace_create",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_workspace_open_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_workspace_open",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_workspace_switch_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_workspace_switch",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_workspace_remove_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_workspace_remove",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_operation_log_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_operation_log",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_operation_show_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_operation_show",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_operation_undo_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_operation_undo",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_operation_restore_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_operation_restore",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_git_clone_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_clone",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_git_clone_missing_exact_return_context",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_clone",
+      "remove": [
+        "return_context"
+      ],
+      "expected_error": "Product Onboarding clone requires exact return context"
+    },
+    {
+      "name": "source_control_git_clone_is_not_a_jujutsu_command",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_clone",
+      "patch": {
+        "command_id": "cmd.source_control.repository.clone"
+      },
+      "expected_error": "ordinary Git clone remains Source Control owned"
+    },
+    {
+      "name": "command_request_jujutsu_git_fetch_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_fetch",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_git_push_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_push",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_git_import_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_import",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_jujutsu_git_export_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_export",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every command request requires a permission snapshot"
+    },
+    {
+      "name": "compatibility_alias_is_not_primary",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_status_refresh",
+      "patch": {
+        "command_id": "cmd.jj.status.refresh"
+      },
+      "expected_error": "cmd.jj.* is compatibility-only"
+    },
+    {
+      "name": "git_alias_backend_rejected",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_status_refresh",
+      "patch": {
+        "scm_backend": "git"
+      },
+      "expected_error": "Jujutsu commands require scm_backend=jujutsu"
+    },
+    {
+      "name": "mutation_stale_catalog_rejected",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_rebase",
+      "patch": {
+        "currentness.catalog_currentness": "stale"
+      },
+      "expected_error": "mutation requires current catalog"
+    },
+    {
+      "name": "mutation_missing_writer_lease_rejected",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_rebase",
+      "patch": {
+        "writer_lease_ref": null
+      },
+      "expected_error": "mutation requires writer lease"
+    },
+    {
+      "name": "transport_missing_credential_lease_rejected",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_push",
+      "patch": {
+        "credential_lease_ref": null
+      },
+      "expected_error": "transport requires credential lease"
+    },
+    {
+      "name": "destructive_confirmation_required",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_operation_restore",
+      "patch": {
+        "confirmation": null
+      },
+      "expected_error": "exact operation restore requires confirmation"
+    },
+    {
+      "name": "bookmark_cannot_be_git_branch",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_move",
+      "patch": {
+        "target.target_kind": "branch"
+      },
+      "expected_error": "JJ bookmark is not Git branch"
+    },
+    {
+      "name": "workspace_path_cannot_be_identity",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_workspace_switch",
+      "patch": {
+        "target.display_path": "C:/inferred/workspace"
+      },
+      "expected_error": "additional path identity is forbidden"
+    },
+    {
+      "name": "interop_requires_effective_gate",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_import",
+      "patch": {
+        "interop_gate.effective": false,
+        "interop_gate.certified_adapter_gate_ref": null,
+        "interop_gate.exact_live_probe_ref": null,
+        "interop_gate.disabled_reason_code": "jj_0_44_colocated_import_export_disabled_upstream_race"
+      },
+      "expected_error": "blocked interop cannot dispatch"
+    },
+    {
+      "name": "interop_cannot_enable_implicit_reconciliation",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_export",
+      "patch": {
+        "interop_gate.implicit_reconciliation_allowed": true
+      },
+      "expected_error": "implicit reconciliation forbidden"
+    },
+    {
+      "name": "interop_cannot_fallback_to_git_mutation",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_export",
+      "patch": {
+        "interop_gate.fallback_mutation": "git"
+      },
+      "expected_error": "fallback Git mutation forbidden"
+    },
+    {
+      "name": "credential_ref_cannot_contain_secret",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_push",
+      "patch": {
+        "credential_lease_ref": "access_token:raw-secret"
+      },
+      "expected_error": "raw secret reference forbidden"
+    },
+    {
+      "name": "effect_unknown_requires_error",
+      "definition": "command_result",
+      "base_valid": "command_result_mutation_succeeded",
+      "patch": {
+        "outcome": "effect_unknown",
+        "after_revision": null,
+        "error": null
+      },
+      "expected_error": "effect unknown requires typed error"
+    },
+    {
+      "name": "blocked_availability_requires_reason",
+      "definition": "command_availability",
+      "base_valid": "command_availability_import_blocked_upstream_race",
+      "patch": {
+        "availability.reason_codes": [],
+        "availability.disabled_reason_code": null
+      },
+      "expected_error": "blocked availability requires exact reason"
+    },
+    {
+      "name": "unknown_error_code_rejected",
+      "definition": "command_error_record",
+      "base_valid": "command_error_effect_unknown",
+      "patch": {
+        "error.code": "unknown_free_form_code"
+      },
+      "expected_error": "error code must be closed"
+    },
+    {
+      "name": "command_result_jujutsu_clone_requires_currentness",
+      "definition": "command_result",
+      "base_valid": "command_result_jujutsu_clone_succeeded_returns_exact_onboarding_context",
+      "remove": [
+        "currentness"
+      ],
+      "expected_error": "clone result preserves exact currentness fence"
+    },
+    {
+      "name": "command_result_jujutsu_clone_requires_exact_return_focus",
+      "definition": "command_result",
+      "base_valid": "command_result_jujutsu_clone_cancelled_after_cleanup",
+      "remove": [
+        "return_context.focus_id"
+      ],
+      "expected_error": "cancelled clone returns to exact focus"
+    }
+  ]
+}

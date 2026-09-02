@@ -1,0 +1,2244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.multi_account.auth_profile_command_contracts.schema.v1",
+  "x-schema-id": "pm.multi_account.auth_profile_command_contracts.v1",
+  "title": "Puppet Master Multi-Account authentication-profile command contracts",
+  "description": "Owner-side typed contracts for the eight exact cmd.auth_profile candidates. This schema does not register commands, create native handlers, admit events, persist secrets, or make protected AuthBrowserSession content observable.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/AuthProfileCommandRequest"
+    },
+    {
+      "$ref": "#/$defs/AuthProfileCommandResult"
+    },
+    {
+      "$ref": "#/$defs/AuthProfileCommandAvailability"
+    },
+    {
+      "$ref": "#/$defs/AuthProfilePermissionDecision"
+    },
+    {
+      "$ref": "#/$defs/AuthProfileCommandError"
+    },
+    {
+      "$ref": "#/$defs/AuthProfileLocalActionRequest"
+    },
+    {
+      "$ref": "#/$defs/AuthProfileLocalActionResult"
+    }
+  ],
+  "$defs": {
+    "Id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@+-]*$"
+    },
+    "NonSecretRef": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Id"
+        },
+        {
+          "not": {
+            "pattern": "(^|[._:/-])(raw|password|secret|access_token|refresh_token|api_key|cookie|authorization)([._:/-]|$)"
+          }
+        }
+      ]
+    },
+    "NullableNonSecretRef": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AuthProfileCommandId": {
+      "type": "string",
+      "enum": [
+        "cmd.auth_profile.sign_in",
+        "cmd.auth_profile.sign_out",
+        "cmd.auth_profile.verify",
+        "cmd.auth_profile.cancel",
+        "cmd.auth_profile.retry",
+        "cmd.auth_profile.submit_code",
+        "cmd.auth_profile.open_official_page",
+        "cmd.auth_profile.select",
+        "cmd.auth_profile.rename",
+        "cmd.auth_profile.revoke",
+        "cmd.auth_profile.transfer.apply",
+        "cmd.auth_profile.transfer.preview"
+      ]
+    },
+    "AuthProfileOperation": {
+      "type": "string",
+      "enum": [
+        "sign_in",
+        "sign_out",
+        "verify",
+        "cancel",
+        "retry",
+        "submit_code",
+        "open_official_page",
+        "select",
+        "rename",
+        "revoke",
+        "transfer_apply",
+        "transfer_preview"
+      ]
+    },
+    "AuthProfileDisabledReasonCode": {
+      "type": "string",
+      "enum": [
+        "none",
+        "command_not_registered",
+        "native_handler_unavailable",
+        "setup_required",
+        "profile_missing",
+        "profile_ineligible",
+        "profile_ambiguous",
+        "authentication_required",
+        "auth_state_mismatch",
+        "operation_missing",
+        "operation_not_cancellable",
+        "operation_not_recoverable",
+        "operation_already_terminal",
+        "expected_code_step_inactive",
+        "deadline_expired",
+        "retry_budget_exhausted",
+        "credential_unavailable",
+        "dependent_connections_present",
+        "installation_unverified",
+        "topology_unavailable",
+        "topology_mismatch",
+        "stale_auth_revision",
+        "stale_profile_generation",
+        "initiating_client_inactive",
+        "initiating_client_disconnected",
+        "initiating_client_mismatched",
+        "official_source_unverified",
+        "unsafe_external_handoff",
+        "verification_method_unsupported",
+        "provider_unavailable",
+        "rate_limited",
+        "permission_required",
+        "permission_denied",
+        "policy_denied",
+        "protected_surface_required",
+        "human_action_required",
+        "transfer_plan_missing",
+        "transfer_plan_stale",
+        "destination_incompatible",
+        "encrypted_transfer_not_admitted",
+        "dependent_use_unsettled",
+        "handler_unavailable"
+      ]
+    },
+    "AuthProfileErrorCode": {
+      "type": "string",
+      "enum": [
+        "invalid_request",
+        "command_action_mismatch",
+        "setup_required",
+        "profile_missing",
+        "profile_ineligible",
+        "profile_ambiguous",
+        "auth_state_mismatch",
+        "operation_missing",
+        "operation_in_progress",
+        "operation_not_cancellable",
+        "operation_not_recoverable",
+        "already_in_state",
+        "deadline_expired",
+        "retry_budget_exhausted",
+        "protected_input_missing",
+        "protected_input_malformed",
+        "protected_input_expired",
+        "protected_input_replayed",
+        "credential_unavailable",
+        "credential_revocation_failed",
+        "dependent_connections_present",
+        "installation_unverified",
+        "topology_unavailable",
+        "topology_mismatch",
+        "stale_auth_revision",
+        "stale_profile_generation",
+        "initiating_client_inactive",
+        "initiating_client_disconnected",
+        "initiating_client_mismatched",
+        "official_source_unverified",
+        "external_protocol_refused",
+        "redirect_refused",
+        "verification_method_unsupported",
+        "provider_unavailable",
+        "network_unavailable",
+        "rate_limited",
+        "permission_required",
+        "permission_denied",
+        "policy_denied",
+        "protected_surface_required",
+        "protected_surface_forbidden",
+        "recovery_required",
+        "internal_fail_closed",
+        "transfer_plan_missing",
+        "transfer_plan_mismatch",
+        "destination_incompatible",
+        "encrypted_transfer_not_admitted",
+        "dependent_use_unsettled",
+        "duplicate_conflict"
+      ]
+    },
+    "AuthProfilePermissionScope": {
+      "type": "string",
+      "enum": [
+        "profile_authenticate",
+        "profile_sign_out",
+        "profile_verify",
+        "auth_operation_control",
+        "protected_input_submit",
+        "official_page_open",
+        "profile_select",
+        "credential_broker_use",
+        "provider_egress",
+        "profile_rename",
+        "profile_revoke",
+        "profile_transfer_preview",
+        "profile_transfer_apply"
+      ]
+    },
+    "AuthProfilePermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "decision",
+        "required_scopes",
+        "granted_scopes",
+        "permission_snapshot_ref",
+        "credential_material_exposed",
+        "protected_content_exposed",
+        "authority_widening",
+        "reason_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.auth_profile_permission_decision.v1"
+        },
+        "record_kind": {
+          "const": "AuthProfilePermissionDecision"
+        },
+        "command_id": {
+          "$ref": "#/$defs/AuthProfileCommandId"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "required_scopes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/AuthProfilePermissionScope"
+          }
+        },
+        "granted_scopes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/AuthProfilePermissionScope"
+          }
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "credential_material_exposed": {
+          "const": false
+        },
+        "protected_content_exposed": {
+          "const": false
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "reason_code": {
+          "$ref": "#/$defs/Id"
+        }
+      }
+    },
+    "ProtectedAuthBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_contract_ref",
+        "human_only",
+        "ephemeral",
+        "content_observation_allowed",
+        "persistence_allowed",
+        "recording_allowed",
+        "inspection_allowed",
+        "export_allowed",
+        "agent_access_allowed",
+        "adapter_access_allowed",
+        "tool_access_allowed",
+        "automation_allowed",
+        "browser_program_access_allowed",
+        "capture_allowed",
+        "ordinary_browser_navigation_allowed",
+        "storage_state_access_allowed",
+        "initiating_client_policy"
+      ],
+      "properties": {
+        "owner_contract_ref": {
+          "const": "SchemaID:pm.protected_auth_browser_contracts.schema.v1#/$defs/protected_auth_browser_lifecycle_projection"
+        },
+        "human_only": {
+          "const": true
+        },
+        "ephemeral": {
+          "const": true
+        },
+        "content_observation_allowed": {
+          "const": false
+        },
+        "persistence_allowed": {
+          "const": false
+        },
+        "recording_allowed": {
+          "const": false
+        },
+        "inspection_allowed": {
+          "const": false
+        },
+        "export_allowed": {
+          "const": false
+        },
+        "agent_access_allowed": {
+          "const": false
+        },
+        "adapter_access_allowed": {
+          "const": false
+        },
+        "tool_access_allowed": {
+          "const": false
+        },
+        "automation_allowed": {
+          "const": false
+        },
+        "browser_program_access_allowed": {
+          "const": false
+        },
+        "capture_allowed": {
+          "const": false
+        },
+        "ordinary_browser_navigation_allowed": {
+          "const": false
+        },
+        "storage_state_access_allowed": {
+          "const": false
+        },
+        "initiating_client_policy": {
+          "const": "initiating_active_client_only"
+        }
+      }
+    },
+    "NullableProtectedAuthBoundary": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ProtectedAuthBoundary"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AuthProfileActionPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "auth_surface",
+        "authentication_operation_id",
+        "continuation_ref",
+        "credential_ref",
+        "protected_input_ref",
+        "official_route_ref",
+        "domain_policy_ref",
+        "verification_policy_ref",
+        "retry_budget_ref",
+        "credential_disposition",
+        "dependent_connection_disposition",
+        "human_confirmation_ref",
+        "protected_auth_boundary",
+        "protected_input_contract",
+        "official_source_proof_ref",
+        "official_source_currentness",
+        "profile_eligibility_proof_ref",
+        "installation_eligibility_proof_ref"
+      ],
+      "properties": {
+        "auth_surface": {
+          "type": "string",
+          "enum": [
+            "protected_auth_browser",
+            "device_code",
+            "terminal_user_flow",
+            "provider_owned_external",
+            "noninteractive_verification",
+            "not_applicable"
+          ]
+        },
+        "authentication_operation_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "continuation_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "credential_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "protected_input_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "official_route_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "domain_policy_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "verification_policy_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "retry_budget_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "credential_disposition": {
+          "type": "string",
+          "enum": [
+            "not_applicable",
+            "retain",
+            "revoke"
+          ]
+        },
+        "dependent_connection_disposition": {
+          "type": "string",
+          "enum": [
+            "not_applicable",
+            "block_if_present",
+            "retain_and_mark_auth_required"
+          ]
+        },
+        "human_confirmation_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "protected_auth_boundary": {
+          "$ref": "#/$defs/NullableProtectedAuthBoundary"
+        },
+        "protected_input_contract": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ProtectedInputContract"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "official_source_proof_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "official_source_currentness": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "current",
+            "stale",
+            "unverified",
+            null
+          ]
+        },
+        "profile_eligibility_proof_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "installation_eligibility_proof_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "new_display_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "dependent_use_disposition": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "block_if_present",
+            "retain_and_mark_auth_required",
+            "settled",
+            null
+          ]
+        },
+        "destination_host_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "destination_environment_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "transfer_plan_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "transfer_plan_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "compatibility_snapshot_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "approved_preview_receipt_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "encrypted_transfer_authorization_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "secret_transfer_disposition": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "excluded",
+            "encrypted_admitted",
+            null
+          ]
+        }
+      }
+    },
+    "AuthProfileCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "idempotency_key",
+        "origin",
+        "provider_id",
+        "route_id",
+        "profile_id",
+        "account_id",
+        "connection_id",
+        "installation_id",
+        "project_id",
+        "home_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "initiating_client_id",
+        "expected_auth_revision",
+        "expected_profile_generation",
+        "topology_generation",
+        "permission_snapshot_ref",
+        "observable_work_ref",
+        "return_context_ref",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.auth_profile_command_request.v1"
+        },
+        "record_kind": {
+          "const": "AuthProfileCommandRequest"
+        },
+        "command_id": {
+          "$ref": "#/$defs/AuthProfileCommandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/AuthProfileOperation"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/Id"
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "human_gui",
+            "human_palette",
+            "owner_reconciler"
+          ]
+        },
+        "provider_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "route_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "profile_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "account_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "connection_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "installation_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "project_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "home_server_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "initiating_client_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "expected_auth_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_profile_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "observable_work_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "return_context_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "payload": {
+          "$ref": "#/$defs/AuthProfileActionPayload"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.sign_in"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "sign_in"
+              },
+              "origin": {
+                "enum": [
+                  "human_gui",
+                  "human_palette"
+                ]
+              },
+              "payload": {
+                "properties": {
+                  "protected_auth_boundary": {
+                    "$ref": "#/$defs/ProtectedAuthBoundary"
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "installation_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.sign_out"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "sign_out"
+              },
+              "origin": {
+                "enum": [
+                  "human_gui",
+                  "human_palette"
+                ]
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "payload": {
+                "properties": {
+                  "credential_disposition": {
+                    "enum": [
+                      "retain",
+                      "revoke"
+                    ]
+                  },
+                  "dependent_connection_disposition": {
+                    "enum": [
+                      "block_if_present",
+                      "retain_and_mark_auth_required"
+                    ]
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.verify"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "verify"
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "payload": {
+                "properties": {
+                  "verification_policy_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.cancel"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "cancel"
+              },
+              "origin": {
+                "enum": [
+                  "human_gui",
+                  "human_palette"
+                ]
+              },
+              "payload": {
+                "properties": {
+                  "authentication_operation_id": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "protected_auth_boundary": {
+                    "$ref": "#/$defs/ProtectedAuthBoundary"
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.retry"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "retry"
+              },
+              "origin": {
+                "enum": [
+                  "human_gui",
+                  "human_palette"
+                ]
+              },
+              "payload": {
+                "properties": {
+                  "authentication_operation_id": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "continuation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "retry_budget_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "protected_auth_boundary": {
+                    "$ref": "#/$defs/ProtectedAuthBoundary"
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.submit_code"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "submit_code"
+              },
+              "origin": {
+                "enum": [
+                  "human_gui",
+                  "human_palette"
+                ]
+              },
+              "payload": {
+                "properties": {
+                  "authentication_operation_id": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "protected_input_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "protected_auth_boundary": {
+                    "$ref": "#/$defs/ProtectedAuthBoundary"
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "protected_input_contract": {
+                    "$ref": "#/$defs/ProtectedInputContract"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.open_official_page"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "open_official_page"
+              },
+              "origin": {
+                "enum": [
+                  "human_gui",
+                  "human_palette"
+                ]
+              },
+              "payload": {
+                "properties": {
+                  "official_route_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "domain_policy_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "protected_auth_boundary": {
+                    "$ref": "#/$defs/ProtectedAuthBoundary"
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "official_source_proof_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "official_source_currentness": {
+                    "const": "current"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.select"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "select"
+              },
+              "origin": {
+                "enum": [
+                  "human_gui",
+                  "human_palette"
+                ]
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "installation_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "payload": {
+                "properties": {
+                  "profile_eligibility_proof_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "installation_eligibility_proof_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.rename"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rename"
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "payload": {
+                "required": [
+                  "new_display_name"
+                ],
+                "properties": {
+                  "new_display_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.revoke"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "revoke"
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "payload": {
+                "required": [
+                  "dependent_use_disposition",
+                  "human_confirmation_ref"
+                ],
+                "properties": {
+                  "dependent_use_disposition": {
+                    "enum": [
+                      "block_if_present",
+                      "retain_and_mark_auth_required",
+                      "settled"
+                    ]
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.transfer.preview"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "transfer_preview"
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "payload": {
+                "required": [
+                  "destination_host_id",
+                  "destination_environment_id",
+                  "compatibility_snapshot_ref",
+                  "secret_transfer_disposition"
+                ],
+                "properties": {
+                  "destination_host_id": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "destination_environment_id": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "compatibility_snapshot_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "secret_transfer_disposition": {
+                    "const": "excluded"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.transfer.apply"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "transfer_apply"
+              },
+              "profile_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "account_id": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "payload": {
+                "required": [
+                  "destination_host_id",
+                  "destination_environment_id",
+                  "transfer_plan_ref",
+                  "transfer_plan_sha256",
+                  "approved_preview_receipt_ref",
+                  "encrypted_transfer_authorization_ref",
+                  "secret_transfer_disposition",
+                  "human_confirmation_ref"
+                ],
+                "properties": {
+                  "destination_host_id": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "destination_environment_id": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "transfer_plan_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "transfer_plan_sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "approved_preview_receipt_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "encrypted_transfer_authorization_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  },
+                  "secret_transfer_disposition": {
+                    "enum": [
+                      "excluded",
+                      "encrypted_admitted"
+                    ]
+                  },
+                  "human_confirmation_ref": {
+                    "$ref": "#/$defs/NonSecretRef"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AuthProfileCommandAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_registered",
+        "native_handler_available",
+        "available",
+        "disabled_reason",
+        "expected_auth_revision",
+        "expected_profile_generation",
+        "permission_snapshot_ref",
+        "safe_user_message"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.auth_profile_command_availability.v1"
+        },
+        "record_kind": {
+          "const": "AuthProfileCommandAvailability"
+        },
+        "command_id": {
+          "$ref": "#/$defs/AuthProfileCommandId"
+        },
+        "command_registered": {
+          "type": "boolean"
+        },
+        "native_handler_available": {
+          "type": "boolean"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "disabled_reason": {
+          "$ref": "#/$defs/AuthProfileDisabledReasonCode"
+        },
+        "expected_auth_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_profile_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "safe_user_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_registered": {
+                "const": true
+              },
+              "native_handler_available": {
+                "const": true
+              },
+              "disabled_reason": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_registered": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "available": {
+                "const": false
+              },
+              "disabled_reason": {
+                "const": "command_not_registered"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "native_handler_available": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "available": {
+                "const": false
+              },
+              "disabled_reason": {
+                "enum": [
+                  "command_not_registered",
+                  "native_handler_unavailable"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AuthProfileCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "error_code",
+        "category",
+        "retryability",
+        "safe_user_message",
+        "detail_ref",
+        "credential_material_exposed",
+        "protected_content_exposed",
+        "protected_input_retained"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.auth_profile_command_error.v1"
+        },
+        "record_kind": {
+          "const": "AuthProfileCommandError"
+        },
+        "command_id": {
+          "$ref": "#/$defs/AuthProfileCommandId"
+        },
+        "error_code": {
+          "$ref": "#/$defs/AuthProfileErrorCode"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "validation",
+            "state",
+            "permission",
+            "policy",
+            "topology",
+            "provider",
+            "protected_surface",
+            "recovery",
+            "internal_fail_closed"
+          ]
+        },
+        "retryability": {
+          "type": "string",
+          "enum": [
+            "not_retryable",
+            "retry_after_state_change",
+            "retry_after_backoff",
+            "resume_same_operation",
+            "manual_recovery_required"
+          ]
+        },
+        "safe_user_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "detail_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "credential_material_exposed": {
+          "const": false
+        },
+        "protected_content_exposed": {
+          "const": false
+        },
+        "protected_input_retained": {
+          "const": false
+        }
+      }
+    },
+    "AuthProfileCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "operation",
+        "outcome",
+        "effect_kind",
+        "provider_id",
+        "route_id",
+        "profile_id",
+        "account_id",
+        "authentication_operation_ref",
+        "authentication_proof_ref",
+        "expected_auth_revision",
+        "resulting_auth_revision",
+        "expected_profile_generation",
+        "resulting_profile_generation",
+        "projected_auth_state",
+        "credential_material_exposed",
+        "protected_content_exposed",
+        "protected_input_persisted",
+        "availability_ref",
+        "permission_decision_ref",
+        "error_ref",
+        "observable_work_ref",
+        "receipt_ref",
+        "event_effect_policy",
+        "protected_input_disposition",
+        "authentication_proof_issued_at_utc",
+        "authentication_proof_expires_at_utc",
+        "proof_currentness",
+        "remediation_ref",
+        "official_source_proof_ref",
+        "selection_eligibility_proof_ref",
+        "return_settlement",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.auth_profile_command_result.v1"
+        },
+        "record_kind": {
+          "const": "AuthProfileCommandResult"
+        },
+        "command_id": {
+          "$ref": "#/$defs/AuthProfileCommandId"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "operation": {
+          "$ref": "#/$defs/AuthProfileOperation"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "completed",
+            "blocked",
+            "rejected",
+            "cancelled",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "effect_kind": {
+          "type": "string",
+          "enum": [
+            "no_effect",
+            "authentication_state_changed",
+            "profile_selection_changed",
+            "external_handoff_started",
+            "profile_metadata_changed",
+            "profile_revoked",
+            "transfer_previewed",
+            "transfer_applied"
+          ]
+        },
+        "provider_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "route_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "profile_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "account_id": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "authentication_operation_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "authentication_proof_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "expected_auth_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resulting_auth_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_profile_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resulting_profile_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projected_auth_state": {
+          "type": "string",
+          "enum": [
+            "unknown",
+            "signed_out",
+            "sign_in_required",
+            "authenticating",
+            "awaiting_human",
+            "authenticated_unverified",
+            "verified",
+            "expired",
+            "revoked",
+            "blocked",
+            "failed"
+          ]
+        },
+        "credential_material_exposed": {
+          "const": false
+        },
+        "protected_content_exposed": {
+          "const": false
+        },
+        "protected_input_persisted": {
+          "const": false
+        },
+        "availability_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "permission_decision_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "error_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "observable_work_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "event_effect_policy": {
+          "const": "receipt_only_no_eventrecord_pending_event_authority"
+        },
+        "protected_input_disposition": {
+          "type": "string",
+          "enum": [
+            "not_applicable",
+            "consumed_and_zeroized",
+            "rejected_expired",
+            "rejected_replay",
+            "rejected_wrong_binding"
+          ]
+        },
+        "authentication_proof_issued_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "authentication_proof_expires_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "proof_currentness": {
+          "type": "string",
+          "enum": [
+            "not_applicable",
+            "current",
+            "expired",
+            "revoked",
+            "stale"
+          ]
+        },
+        "remediation_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "official_source_proof_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "selection_eligibility_proof_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "return_settlement": {
+          "$ref": "#/$defs/ReturnSettlement"
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "profile_display_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "dependent_use_disposition": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "blocked",
+            "auth_required",
+            "settled",
+            null
+          ]
+        },
+        "transfer_plan_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "transfer_plan_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "destination_profile_ref": {
+          "$ref": "#/$defs/NullableNonSecretRef"
+        },
+        "secret_transfer_disposition": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "excluded",
+            "encrypted_admitted",
+            null
+          ]
+        },
+        "secret_material_exposed": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.sign_in"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "sign_in"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.sign_out"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "sign_out"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.verify"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "verify"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.cancel"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "cancel"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.retry"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "retry"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.submit_code"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "submit_code"
+              },
+              "protected_input_disposition": {
+                "enum": [
+                  "consumed_and_zeroized",
+                  "rejected_expired",
+                  "rejected_replay",
+                  "rejected_wrong_binding"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.open_official_page"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "open_official_page"
+              },
+              "official_source_proof_ref": {
+                "$ref": "#/$defs/NonSecretRef"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.select"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "select"
+              },
+              "selection_eligibility_proof_ref": {
+                "$ref": "#/$defs/NonSecretRef"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.verify"
+              },
+              "outcome": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "command_id",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "authentication_proof_ref": {
+                "$ref": "#/$defs/NonSecretRef"
+              },
+              "authentication_proof_issued_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "authentication_proof_expires_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "proof_currentness": {
+                "const": "current"
+              },
+              "projected_auth_state": {
+                "const": "verified"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.verify"
+              },
+              "outcome": {
+                "enum": [
+                  "blocked",
+                  "failed",
+                  "recovery_required"
+                ]
+              }
+            },
+            "required": [
+              "command_id",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remediation_ref": {
+                "$ref": "#/$defs/NonSecretRef"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.submit_code"
+              },
+              "outcome": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "command_id",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "protected_input_disposition": {
+                "const": "consumed_and_zeroized"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.rename"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "rename"
+              }
+            },
+            "required": [
+              "profile_display_name",
+              "secret_material_exposed"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.revoke"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "revoke"
+              }
+            },
+            "required": [
+              "dependent_use_disposition",
+              "secret_material_exposed"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.transfer.preview"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "transfer_preview"
+              }
+            },
+            "required": [
+              "transfer_plan_ref",
+              "transfer_plan_sha256",
+              "secret_transfer_disposition",
+              "secret_material_exposed"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.transfer.apply"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "transfer_apply"
+              }
+            },
+            "required": [
+              "transfer_plan_ref",
+              "transfer_plan_sha256",
+              "destination_profile_ref",
+              "secret_transfer_disposition",
+              "secret_material_exposed"
+            ]
+          }
+        }
+      ]
+    },
+    "ReturnSettlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "return_context_ref",
+        "settlement",
+        "initiating_surface_restored"
+      ],
+      "properties": {
+        "return_context_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "settlement": {
+          "type": "string",
+          "enum": [
+            "restored",
+            "retained",
+            "caller_unavailable"
+          ]
+        },
+        "initiating_surface_restored": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "settlement": {
+                "const": "restored"
+              }
+            },
+            "required": [
+              "settlement"
+            ]
+          },
+          "then": {
+            "properties": {
+              "initiating_surface_restored": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settlement": {
+                "enum": [
+                  "retained",
+                  "caller_unavailable"
+                ]
+              }
+            },
+            "required": [
+              "settlement"
+            ]
+          },
+          "then": {
+            "properties": {
+              "initiating_surface_restored": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProtectedInputContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generation",
+        "expires_at_utc",
+        "input_currentness",
+        "replay_status",
+        "use_policy",
+        "replay_policy",
+        "binding_ref",
+        "persistence_allowed"
+      ],
+      "properties": {
+        "generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "input_currentness": {
+          "const": "current"
+        },
+        "replay_status": {
+          "const": "fresh"
+        },
+        "use_policy": {
+          "const": "one_use_consume_and_zeroize"
+        },
+        "replay_policy": {
+          "const": "reject_replay"
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "persistence_allowed": {
+          "const": false
+        }
+      }
+    },
+    "AuthProfileLocalActionId": {
+      "const": "ui.auth_profile.open_details"
+    },
+    "AuthProfileLocalActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "profile_id",
+        "expected_profile_generation",
+        "projection_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.auth_profile_local_action_request.v1"
+        },
+        "record_kind": {
+          "const": "AuthProfileLocalActionRequest"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/AuthProfileLocalActionId"
+        },
+        "profile_id": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "expected_profile_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "return_context_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        }
+      }
+    },
+    "AuthProfileLocalActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "local_action_id",
+        "profile_id",
+        "projection_ref",
+        "redacted",
+        "lazy",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "protected_content_exposed",
+        "credential_material_exposed",
+        "return_settlement"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.auth_profile_local_action_result.v1"
+        },
+        "record_kind": {
+          "const": "AuthProfileLocalActionResult"
+        },
+        "local_action_id": {
+          "$ref": "#/$defs/AuthProfileLocalActionId"
+        },
+        "profile_id": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "redacted": {
+          "const": true
+        },
+        "lazy": {
+          "const": true
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "protected_content_exposed": {
+          "const": false
+        },
+        "credential_material_exposed": {
+          "const": false
+        },
+        "return_settlement": {
+          "$ref": "#/$defs/ReturnSettlement"
+        }
+      }
+    }
+  },
+  "x-owner-command-count": 12,
+  "x-owner-command-ids": [
+    "cmd.auth_profile.sign_in",
+    "cmd.auth_profile.sign_out",
+    "cmd.auth_profile.verify",
+    "cmd.auth_profile.cancel",
+    "cmd.auth_profile.retry",
+    "cmd.auth_profile.submit_code",
+    "cmd.auth_profile.open_official_page",
+    "cmd.auth_profile.select",
+    "cmd.auth_profile.rename",
+    "cmd.auth_profile.revoke",
+    "cmd.auth_profile.transfer.apply",
+    "cmd.auth_profile.transfer.preview"
+  ],
+  "x-local-action-count": 1,
+  "x-local-action-ids": [
+    "ui.auth_profile.open_details"
+  ],
+  "x-server-gap-command-contracts": {
+    "cmd.auth_profile.rename": {
+      "request_ref": "#/$defs/AuthProfileCommandRequest",
+      "result_ref": "#/$defs/AuthProfileCommandResult",
+      "error_ref": "#/$defs/AuthProfileCommandError",
+      "availability_ref": "#/$defs/AuthProfileCommandAvailability",
+      "permission_ref": "#/$defs/AuthProfilePermissionDecision",
+      "sole_handler": "handlers::multi_account::rename",
+      "gui_consumers": [
+        "Settings > Integrations > Profiles",
+        "Product Onboarding owner handoff",
+        "Doctor remediation",
+        "authentication handoff surface",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.auth_profile.revoke": {
+      "request_ref": "#/$defs/AuthProfileCommandRequest",
+      "result_ref": "#/$defs/AuthProfileCommandResult",
+      "error_ref": "#/$defs/AuthProfileCommandError",
+      "availability_ref": "#/$defs/AuthProfileCommandAvailability",
+      "permission_ref": "#/$defs/AuthProfilePermissionDecision",
+      "sole_handler": "handlers::multi_account::revoke",
+      "gui_consumers": [
+        "Settings > Integrations > Profiles",
+        "Product Onboarding owner handoff",
+        "Doctor remediation",
+        "authentication handoff surface",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.auth_profile.transfer.apply": {
+      "request_ref": "#/$defs/AuthProfileCommandRequest",
+      "result_ref": "#/$defs/AuthProfileCommandResult",
+      "error_ref": "#/$defs/AuthProfileCommandError",
+      "availability_ref": "#/$defs/AuthProfileCommandAvailability",
+      "permission_ref": "#/$defs/AuthProfilePermissionDecision",
+      "sole_handler": "handlers::multi_account::transfer_apply",
+      "gui_consumers": [
+        "Settings > Integrations > Profiles",
+        "Product Onboarding owner handoff",
+        "Doctor remediation",
+        "authentication handoff surface",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    },
+    "cmd.auth_profile.transfer.preview": {
+      "request_ref": "#/$defs/AuthProfileCommandRequest",
+      "result_ref": "#/$defs/AuthProfileCommandResult",
+      "error_ref": "#/$defs/AuthProfileCommandError",
+      "availability_ref": "#/$defs/AuthProfileCommandAvailability",
+      "permission_ref": "#/$defs/AuthProfilePermissionDecision",
+      "sole_handler": "handlers::multi_account::transfer_preview",
+      "gui_consumers": [
+        "Settings > Integrations > Profiles",
+        "Product Onboarding owner handoff",
+        "Doctor remediation",
+        "authentication handoff surface",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
+    }
+  }
+}

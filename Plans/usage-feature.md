@@ -83,13 +83,13 @@ Until this stack exists, any temporary compatibility path MUST still preserve th
 - Quiet suppression only affects advisory resurfacing. Attention center and project badges must preserve canonical blocked and `/approval-wait` rows with precise owner and reason metadata, even when a quiet window is active.
 - `tool_llm_trace` records carry `attempt_id?`, `provider_attempt_ref?`, and `execution_role?` so tool, runtime, and Usage projections can join the same execution identity without local argument guessing.
 - Usage consumes `Project_Output_Artifacts.md` and `Project_Output_Artifacts` through a seglog-first / staging-second artifact model that aligns subject-open routing with canonical record identity before staging views become user-facing.
-- `UI_Command_Catalog.md` and `UI_Command_Catalog` wrappers must normalize artifact actions, thread usage actions, panel switches, and Orchestrator pivots into shared route/subject payloads rather than preserving separate local arg sets.
+- `UI_Command_Catalog.md` and `UI_Command_Catalog` wrappers normalize event-backed Usage/Ledger drill-through through `route_target.object_kind = usage_event` and `object_id = usage_event_ref`; `attempt_id`, provider/account identity, and runtime refs remain correlation fields. `OpenSubject` remains document/artifact-only, and aggregate provider/account/panel cards stay in their local inspector because Contracts_V0 registers no route object kind for them.
 - `storage-plan.md` and `storage-plan` thread/run history export to JSONL/JSON is a coarse export enhancement only; Usage treats it as projection output over canonical records rather than a replacement for the record/bundle/view taxonomy.
 - Runtime recovery gate material with the `Runtime Recovery Canonicalization Gate Addendum` label, runtime-lineage checks, and free-floating notes must be integrated into numbered gate canon before Usage relies on it as a blocked/runtime authority.
 - Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current. On the Usage page head, Refresh renders icon-only with `title` and `aria-label` accessible names per UF-089.
 - Usage consumes `/package` and `/worktree` cleanup state only after owner records mark stale lanes or worktrees `cleanup_eligible`: lane/package completion, graph-patch supersession, revoked/reopened flow via `/reopened`, and completed recovery may make old backing removable only when no retention reason remains.
 - `Provider_OpenCode.md`, `Provider_OpenCode`, `CLI_Bridged_Providers.md`, and `CLI_Bridged_Providers` must carry account identity and execution-scope attribution before Usage projections consume provider events, so account identity is not silently lost before rollups see the data.
-- `cmd.nav.open_usage_subject` resolves canonical Usage/Ledger identity from `usage_event_ref` or an equivalent usage target; domain-specific usage commands are wrappers over the shared route/subject model, not independent argument families.
+- `cmd.nav.open_usage_subject` resolves only stable object-backed Usage/Ledger identity. Event-primary callers use `route_target.object_kind = usage_event` plus `object_id = usage_event_ref`. A PMConcept7 Ledger attempt row instead uses `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, repeats `attempt_id` at top level, and retains `usage_event_ref` plus provider/account/runtime refs as correlation. Neither object route carries `OpenSubject`. Aggregate provider/account/panel detail cards open local inspectors with no route command, receipt, or domain event.
 - `/multi-account` usage surfaces keep configurable thresholds, platform quota visibility, rate-limit/reset countdowns, project-scoped usage storage, dashboard widgets, runtime event persistence, and usage + ledger + analytics rollups in one Usage projection model.
 - `Concepts/pm6-build/**`, including PMConcept6 Usage page parts, internal contracts, manifest owners, embedded demo data, and working/assembled HTML, is illustrative source-lineage only. It does not define active Usage UX, UsageRecord fields, source classes, cost authority, provider quota truth, refresh/retention intervals, widget IDs, commands, runtime events, receipts, WorkNodes, NodeSeeds, queues, or wiring. Any promoted detail must be restated in live owner docs and, for controls/actions, production wiring evidence; otherwise Usage follows this document's normalized UsageRecord/value-state contracts and `Plans/FinalGUISpec.md` presentation constraints.
 
@@ -515,7 +515,7 @@ History inspector deref policy is on-demand only, never eager. History rows comb
 ### Canonical UsageRecord fields
 - For gap-001 lineage, this section is also the usage-side partial-transfer anchor for ``### Unified `UsageRecord` schema expectations`` and the queue-escaped alias ``### Unified \`UsageRecord\` schema expectations``; both resolve here rather than creating a second schema section.
 - UF-085 is the implementation-ready UsageRecord contract. Older field names in this section are compatibility, import, export, or display aliases unless they are repeated by UF-085.
-- `usage_id` resolves to `usage_record_id` or `usage_event_ref` according to the importing source; UI routes prefer `usage_event_ref` normalized through `object_kind = usage_event` and `object_id`.
+- `usage_id` resolves to `usage_record_id` or `usage_event_ref` according to the importing source; event-primary UI routes normalize `usage_event_ref` through `object_kind = usage_event`, while a PMConcept7 Ledger attempt row normalizes `attempt_id` through `object_kind = usage_attempt` and keeps the event ref as correlation.
 - `input_tokens` resolves to `input_total`; `output_tokens` resolves to `output_total`; older `cache_read_tokens`, `cached_input_tokens`, and `cache_creation_input_tokens` aliases resolve to `cache_read`, `cache_write`, `cache_write_1h`, or `cache_write_ttl` only when the provider mapper states the TTL and inclusive/exclusive semantics.
 - `cost_usd` is display or migration material only. Canonical cost authority uses `cost_microdollars`, provider minor units, currency, cost_status, pricing_snapshot_id/version/date/source, and custom-provider price row refs where applicable.
 - `usage_source_kind` remains source-lineage vocabulary and maps to UF-085 `source_class`, `source_confidence`, and `source_authority`; it does not replace the closed source classes `provider_reported`, `provider_header`, `cli_reported`, `local_estimated`, `pricing_estimated`, and `unknown`.
@@ -3234,16 +3234,21 @@ owner_hints:
 - Plans/usage-feature.md
 ```
 
-### UF-044 - Deferred Time Window Selector
+### UF-044 - Current Time Window And Scope Selectors
 
 ```yaml
 plan_unit_id: UF-044
-unit_type: deferred_enhancement
+unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage may later add a time-window selector with 5h, 7d, 24h, and custom date range presets; the phase label is v1 optional and fixed 5h/7d can ship first.
-gui_related: false
-gui_classification_reason: The unit is a deferred option-set control requirement rather than current visual layout.
+canonical_text: >-
+  Current Usage projections expose exactly the `5h|24h|7d|30d` time-range set and aggregate only
+  timestamped, identity-bound usage records inside the selected interval. The `all` scope admits every
+  otherwise qualifying record, provider scopes isolate records for the selected provider, and `work` and
+  `personal` scopes filter records by account scope. Changing either selector recomputes the projection from
+  qualifying records and never simulates a range or scope by scaling one scalar.
+gui_related: true
+gui_classification_reason: The unit defines current user-visible Usage time-range and provider/account-scope selector behavior.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -3252,8 +3257,8 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UF-044 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- The only current time-range values are 5h, 24h, 7d, and 30d, in that order, and every projection filters timestamped, identity-bound records before aggregation.
+- The all scope admits every otherwise qualifying record; a provider scope admits only records for that provider, while work and personal scopes admit only accounts with the matching scope, and changing scope or range changes the qualifying record set rather than applying a scalar multiplier or fixed-total relabeling.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -3264,23 +3269,27 @@ context_scope: usage_feature_batch_195
 implementation_surfaces:
 - Plans/usage-feature.md
 node_compile_hint:
-  mode: deferred_time_window_selector
+  mode: current_time_window_scope_selectors
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0077
+- Concepts/pm7-tools/build_pm7.py#T34 (current source-owned selector behavior; verification input only)
 preserved_exact_tokens:
+- 5h|24h|7d|30d
 - 5h
-- 7d
 - 24h
-- custom date range
-- dropdown
-- preset buttons
-- v1 optional
-- fixed 5h/7d first
-negative_constraints: []
+- 7d
+- 30d
+- all
+- work
+- personal
+negative_constraints:
+- Do not scale one scalar to simulate different ranges or scopes.
+- Do not aggregate a record that lacks the timestamp and stable identity axes required by the Usage owner.
+stale_retired_dispositions:
+- The deferred custom-range and fixed-5h/7d-first wording is superseded by the current exact 5h, 24h, 7d, and 30d selector contract.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
 ```
@@ -5534,7 +5543,7 @@ acceptance_criteria:
   - GUI-USG-008 partial/aborted stream preserves streaming_partial or failed settlement, trace lifecycle partial or aborted, dedupe_key, and accepted partial rollup once without showing final/settled copy.
   - GUI-CBP-001 Antigravity missing commands covers missing or broken `/stats`, `/usage`, `/quota`, and `/credits` as stats unavailable, usage unknown, quota not exposed, and credits not exposed.
   - GUI-CBP-002 Antigravity G1 credits carries provider_id antigravity_cli, route agy, credits status/remaining, and UseG1Credits without populating token, cost, quota, or provider_total fields.
-  - GUI-ROUTE-001 object-first usage route asserts route_target.object_kind = usage_event and object_id from usage_event_ref plus attempt/provider refs, source_class/source_confidence/source_authority, settlement_status, projection_freshness, and projection_health, and fails timestamp/run/thread/tier primary routing.
+  - GUI-ROUTE-001 object-first PMConcept7 Ledger route asserts route_target.object_kind = usage_attempt and object_id from attempt_id, keeps usage_event_ref plus UsageRecord/provider/runtime refs as correlation, carries no OpenSubject, and fails timestamp/run/thread/tier primary routing; event-primary artifact callers retain usage_event/usage_event_ref.
   - GUI-RAW-001 Raw/Curated redaction shows normalized Curated fields including source_class/source_confidence/source_authority plus Raw redacted refs, hashes, omitted counts, and permission state with no credentials, account ids, local paths, or raw provider secrets.
   - GUI-RAP-001 envelope plus per-type validation rejects envelope-only or arbitrary non-empty type_payload artifacts for cost_usage and tool_llm_trace.
 validation_surfaces:
@@ -6325,12 +6334,13 @@ canonical PlanUnit. `Concepts/usage-concepts/QwenUsageConcept/u11-prism.html` an
 This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts,
 generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
-The concept's Settings destinations were re-bound during the audit to the canonical Settings deep-link
-identity: `open(category, focusSettingId)` owned by `Plans/FinalGUISpec.md` F3-434, dispatched as
-`cmd.settings.bloom.open` and certified by the `catalog.settings_bloom_open` production wiring row. The
-category is one of the twelve in `Plans/settings_inventory.json` and the focus setting id is a real row id
-from the same inventory. The earlier four-field destination envelope, and its `manager`/`section`/
-focus-reason vocabulary, are retired concept inventions with no canonical standing.
+The concept's Settings destinations now consume the canonical typed route owned by
+`Plans/Settings_System.md` SSYS-018: `cmd.settings.open` carries
+`pm.settings_route_request.v1`, a setting or manager/detail target, and an exact-return contract. The
+provider-setup route uses `target_type=setting` with the real inventory id
+`ai.accounts.provider-connections`. The former `open(category, focusSettingId)` and four-field
+manager/section/focus-reason envelopes are superseded inputs that require pre-dispatch migration and have
+no primary catalog standing.
 
 ### UF-092 - Usage Page Counting Honesty, Settlement Axis, And Policy Boundary
 
@@ -6349,8 +6359,8 @@ canonical_text: >-
   describes how far one attempt has progressed toward final accounting, while entitlement_class and
   provider_route_kind describe who pays for it, and the page never collapses the two into one badge. Usage
   reports and routes but owns no policy: a Usage affordance that would change a Settings-owned value
-  deep-links to its owner through cmd.settings.bloom.open with a real Settings category and a real setting
-  id, and the page stores, mutates, and re-declares nothing on the policy side. Provider-native quota units
+  deep-links to its owner through cmd.settings.open with a typed Settings-owned setting or manager/detail
+  target, and the page stores, mutates, and re-declares nothing on the policy side. Provider-native quota units
   keep their own units, windows, and reset semantics and are never flattened onto a single cross-provider
   percentage scale.
 gui_related: true
@@ -6361,7 +6371,7 @@ acceptance_criteria:
   - A route with no published separate billing treatment for its cache-read or reasoning bucket renders that bucket as not exposed and leaves displayed totals unchanged; no fixture infers an inclusive or exclusive rule from an unpublished route.
   - Unknown and provider-reported zero render as distinct states with distinct reasons on every Usage surface, and no projection path converts one into the other.
   - Settlement state and billing route render as independent axes; a combined badge that hides one behind the other fails the fixture.
-  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.bloom.open with a category from Plans/settings_inventory.json and a real setting id from the same inventory, and writes no local policy value.
+  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.open with a typed target whose setting id exists in Plans/settings_inventory.json, preserves the exact-return contract, and writes no local policy value.
   - Provider-native quota units keep their own unit, window, and reset semantics; a single cross-provider percentage rollup fails the fixture.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -6391,7 +6401,7 @@ preserved_exact_tokens:
   - settlement_status
   - entitlement_class
   - provider_route_kind
-  - cmd.settings.bloom.open
+  - cmd.settings.open
   - "ai.usage.usage-windows"
   - "scope:all"
 negative_constraints:
@@ -6404,5 +6414,467 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md
+  - Plans/Widget_System.md
+```
+
+## PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27
+
+This addendum integrates the recovered PMConcept7 Usage workspace into the current Usage owner without
+disturbing the 2026-08-18 Usage accounting, disclosure, or policy-boundary canon above. Current source lineage
+is the pinned `Concepts/pm7-tools/base/PM7-base.html` plus the assertion-guarded T33-T41 pipeline in
+`Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` is the protected generated output and is never an
+authored product or command owner. The current repo-local audit status is
+`Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`; incomplete or failed runtime,
+visual, interaction, motion, or accessibility rows remain `verification_pending`, and static source presence or
+this Plans compile grants none of that audit credit. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation tasks,
+production implementation code, or generated governance artifacts.
+
+Final successor evidence is report-owned. When `audit_report.json` records `status = pass_with_named_residuals`
+and `verdict = successor_scope_verified_with_named_residuals`, the `evidence_ref` entries below prove only their
+named exact-hash PMConcept7 concept/demo slices. They grant no native Slint, production-runtime, PNC-019,
+certification, completeness, or product-readiness credit; every blocked, failed, uncaptured, or residual lane
+retains that classification.
+
+### UF-093 - Usage Rooms Disclosure And Local Projection State
+
+```yaml
+plan_unit_id: UF-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Usage is one widget-composed workspace with the exact user-facing rooms `Overview`, `Plans & limits`,
+  `Costs`, `Accounts`, `Free models`, `Context`, `Analytics`, `Ledger`, `Attention`, `Prompt cache`, `Tools`,
+  `Signals`, and `Source authority`. Its user-facing disclosure ladder is exactly `At a glance`, `Detailed`,
+  and `Diagnostics`. Disclosure changes the mounted panel set and the useful facts inside eligible panels; it
+  is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts exactly
+  4, 6, and 8 panels at those three disclosure levels, and all thirteen rooms remain reachable at every supported
+  physical viewport width even when the secondary rail collapses into an overflow surface. Active room, scope, date
+  range, disclosure level, and the expanded-room rail state are local view projections unless an existing
+  canonical command owner explicitly requires a command; changing them does not justify a new command family.
+  Usage refresh and object-backed Usage/Ledger drill-through continue through their existing authorities. A
+  PMConcept7 Ledger attempt row dispatches `cmd.nav.open_usage_subject` only with stable `attempt_id` and
+  `usage_event_ref`, normalizes to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keeps
+  the event/provider/account/runtime refs as correlation, and carries no `OpenSubject`; event-primary callers
+  retain `usage_event` plus `usage_event_ref`, while aggregate provider/account/panel details remain local inspectors and dispatch no
+  command, receipt, or domain event. When a selected provider
+  route cannot run because setup is absent, the exact state is `Provider Setup Required`; it shows explicit
+  `Host/Environment`, preserves operation and continuation identity, and reuses `cmd.settings.open` with
+  `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028 remain the policy
+  owners: installation and authentication stay separate, and Usage neither starts an automatic acquisition nor
+  silently reroutes the request.
+gui_related: true
+gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
+depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
+unblocks: [UF-094, UF-095, UF-096]
+acceptance_criteria:
+  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width, including through the secondary-room overflow surface when required, and each renders its room-specific panel catalog at the current disclosure level.
+  - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
+  - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts exactly 4/6/8 panels for At a glance/Detailed/Diagnostics, and no disclosure switch deletes an existing widget instance or stored layout.
+  - Active room, scope, date range, disclosure, and expanded-room rail state remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
+  - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - tests/fixtures/usage_gui/presentation/room_disclosure_matrix.json (static contract fixture only)
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/room_disclosure_width_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/t35-t37-focused-verification.json"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/interaction-visual-supplement-verification.json"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/browser-verification-report.json"
+risk_class: usage_room_or_disclosure_drift
+reasoning_tier: high
+context_scope: usage_rooms_disclosure_projection
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: usage_rooms_disclosure_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+preserved_exact_tokens:
+  - Overview
+  - "Plans & limits"
+  - Costs
+  - Accounts
+  - "Free models"
+  - Context
+  - Analytics
+  - Ledger
+  - Attention
+  - "Prompt cache"
+  - Tools
+  - Signals
+  - "Source authority"
+  - "Provider Setup Required"
+  - "Host/Environment"
+  - cmd.settings.open
+  - ai
+  - ai.accounts.provider-connections
+  - "At a glance"
+  - Detailed
+  - Diagnostics
+negative_constraints:
+  - Do not expose Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels.
+  - Do not mint commands merely to persist local room, scope, date-range, disclosure, or expanded-rail projection state.
+  - Do not route aggregate provider/account/panel cards, copy a presentation card ID into route_target.object_id, attach OpenSubject to either typed cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the primary object_id of a PMConcept7 Ledger attempt row.
+  - Do not treat the protected generated artifact or in-progress audit work as passed executable acceptance evidence.
+  - Do not bundle installation with authentication, start automatic acquisition, or silently reroute a setup-blocked request.
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+```
+
+## Full-Thread Runtime Projection And Gate Attribution Addendum - 2026-08-31
+
+Usage consumes `SchemaID:pm.full_thread_runtime.contracts.v1` and the owner records in `Plans/Shared_Integration_Runtime.md` without becoming a resource governor, command-outcome owner, work-lifecycle owner, connection supervisor, public-ingress gate, or domain scheduler. Usage remains the sole owner of provider-attempt accounting and human usage/cost/quota presentation.
+
+### Accounting identity across command and runtime continuity
+
+One real provider attempt still creates one immutable `UsageRecord`. `OperationId`, command instance, `AttemptId`, provider-attempt ref, UsageRecord identity, owner generation, topology generation, and dedupe key remain joinable but non-interchangeable. Reconnect, process restart, operating-system sleep/wake, external-return navigation, projector retry, and replay/live overlap preserve the logical operation and do not create a second billed attempt. A genuinely new retry, fallback, or provider attempt receives a new `AttemptId` and UsageRecord linked to the parent operation.
+
+The runtime axes remain visibly separate in Usage:
+
+- a `RuntimeResourceGovernor` decision explains admission or resource wait but never creates token, cost, quota, or settlement facts;
+- a command `accepted` or `acknowledged` outcome explains that the request entered its durable lineage but never means provider execution or billing completed;
+- `ObservableWork` explains the current work lifecycle and time partitions but is not billing or settlement authority.
+
+Usage preserves all shared work states: `accepted`, `queued`, `starting`, `running`, `waiting`, `retrying`, `reconnecting`, `backgrounded`, `degraded`, `stalled`, `committing`, `verifying`, `testing-route`, `migrating-route`, `rolling-back`, `completed`, `failed`, `cancelled`, and `recovery-required`. Normal copy maps these values to precise human labels and reasons rather than displaying raw enums. `testing-route` and `migrating-route` never render as a passed test or completed migration.
+
+Provider-active time, local compute, resource wait, permission/approval wait, offline/outbox wait, reconnect/sync/replay/snapshot time, maintenance, and total elapsed remain distinguishable. Install, authentication, repair, update, rollback, public-ingress rejection, local probe, and non-model plugin work are operational attribution only. If one invokes a model, that attempt receives a separate linked UsageRecord.
+
+### Same-frame acknowledgement, bounded lists, and hidden surfaces
+
+Usage controls reuse their existing canonical command IDs. When an action obtains durable acceptance in the dispatch frame, its pending shell renders from the shared `CommandOutcomeRecord`; a same-frame acknowledgement is never shown as provider success, settled cost, or completed work. Later owner failure rolls the shell back and retains the failed/recovery-required attempt or operational row when canon requires it.
+
+Ledger rows, attempts, provider/account lists, alerts, resets, and long widget detail collections use stable record IDs, bounded virtualized windows, bounded overscan, narrow deltas, and collection/projection generations. Scope, room, disclosure, time range, filter, search, refresh, and selected-detail requests are latest-request-wins for projection work. A response whose generation no longer matches is rejected and cannot replace the current list, total, selection, or inspector. De-duplication occurs by immutable UsageRecord/provider-attempt identity, never by similar copy, timestamps, display name, or price.
+
+When the Usage page, room, widget, rail, inspector, or undocked view is hidden/off-screen/collapsed, it suppresses paint, animation clocks, chart/layout work, eager raw-payload dereference, and high-volume hydration. Durable provider work, operational work, UsageRecord settlement, owner subscriptions, receipts, alerts, and terminal transitions continue. Returning visibility rehydrates the current generation; it does not replay every hidden paint frame or mint new Usage/operational records.
+
+Under the shared low-resource profile, Usage stops prefetch, reduces background refresh concurrency, shrinks bounded chart/detail caches, closes idle raw-payload readers, and keeps compact summaries. It does not drop failed/superseded attempts, hide spend or quota risk, change settlement, omit required provider attempts, fabricate zeroes, or weaken refresh currentness.
+
+### Authentication, provider-rate, quota, and public-ingress separation
+
+Authentication readiness, provider rate-limit/cooldown state, plan allowance/quota state, runtime resource admission, and public endpoint admission are separate axes. A provider `authentication_required` state cannot be relabeled `rate_limited`; a provider rate reset cannot be inferred from plan quota; and an application public-ingress rate rejection cannot be projected as provider quota or billed Usage.
+
+Rejected unauthenticated or rate-limited public ingress receives only the bounded redacted operational attribution ref from `PublicIngressGateDecision`. Usage exposes no raw endpoint, credential, cookie, secret-store key, internal socket, private path, or protected `AuthBrowserSession` detail. It never creates a UsageRecord for traffic rejected before model dispatch.
+
+### Forward and reverse coverage
+
+| Usage projection | Owner input | Reverse proof |
+|---|---|---|
+| pending action shell | exact command ID and `CommandOutcomeRecord` | one dispatch, same-frame IDs when claimed, stable command instance, rollback/result receipt |
+| attempt/work state | `ObservableWorkRecord` plus immutable UsageRecord | separate lifecycle and accounting axes, typed wait reason, freshness, provider-attempt dedupe |
+| resource wait | `GovernorDecisionRecord` | requested/effective budget refs, decision/reason, reevaluation, no token/cost fabrication |
+| long list/widget detail | `FullThreadProjectionRecord` | stable IDs, bounded window/overscan, generation, stale-result rejection, accessible retained labels |
+| reconnect/restart/sleep/external return | `ContinuityRecord` and UsageRecord identity | same logical operation, new attempt only when real, no replay/projector double count |
+| public auth/rate rejection | `PublicIngressGateDecision` | pre-hydration owner gate, bounded redaction, operational-only attribution, null UsageRecord ref |
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, SchemaID:pm.full_thread_runtime.contracts.v1, SchemaID:pm.usage_record.v1
+
+### UF-097 - Full-Thread Usage Projection And Attempt Continuity
+
+```yaml
+plan_unit_id: UF-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Usage consumes separate governor, command-outcome, and ObservableWork axes, preserves every retained
+  work state, virtualizes bounded stable-ID projections, rejects stale generations, suppresses hidden-surface
+  paint without cancelling durable work, and deduplicates reconnect/restart/sleep/external-return continuity
+  by immutable operation and provider-attempt identity.
+gui_related: true
+gui_classification_reason: Pending shells, work states, waits, lists, hidden widgets, and continuity are visible Usage behavior.
+depends_on: [SIR-015, UF-085, UF-090, UF-091, UF-092, UF-093]
+unblocks: [UF-098]
+acceptance_criteria:
+  - Admission, command acknowledgement, work lifecycle, provider attempt, and settlement remain independently visible and joinable.
+  - All retained work states render precise human copy, and testing-route or migrating-route never implies successful proof.
+  - Usage long lists are stable-ID, bounded, virtualized, narrow-delta projections with stale-generation rejection.
+  - Hidden paint and hydration suppression never cancels work, loses accounting/alerts/receipts, or changes settlement.
+  - Reconnect, restart, sleep, external return, replay, and projector overlap cannot double-count one provider attempt.
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, future Usage virtualization, acknowledgement rollback, stale-generation, continuity, and low-resource fixtures]
+risk_class: usage_runtime_axis_or_attempt_double_count
+reasoning_tier: high
+context_scope: usage_full_thread_projection_continuity
+implementation_surfaces: [Plans/usage-feature.md]
+node_compile_hint: {mode: usage_full_thread_projection_continuity, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/04_DATA_CONTRACTS_AND_STATE_MACHINES.md
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/08_ACCEPTANCE_TEST_AND_FAILURE_MATRIX.md
+preserved_exact_tokens: [accepted, queued, starting, running, waiting, retrying, reconnecting, backgrounded, degraded, stalled, committing, verifying, testing-route, migrating-route, rolling-back, completed, failed, cancelled, recovery-required]
+negative_constraints:
+  - Do not treat RuntimeResourceGovernor, command acknowledgement, or ObservableWork as token, cost, quota, or settlement authority.
+  - Do not cancel durable work because a Usage surface is hidden or a projection request is superseded.
+  - Do not deduplicate genuinely distinct provider attempts or double-count replay/projector duplicates.
+```
+
+### UF-098 - Public Gate, Authentication, Rate, And Quota Separation
+
+```yaml
+plan_unit_id: UF-098
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Usage keeps provider authentication, provider rate/cooldown, plan quota/allowance, runtime admission,
+  and application public-ingress admission separate; pre-dispatch public rejection is redacted operational
+  attribution only and never creates billed Usage.
+gui_related: true
+gui_classification_reason: Authentication, rate, quota, and blocked-operation explanations are user-visible Usage and limits states.
+depends_on: [SIR-016, UF-083, UF-085, UF-092, UF-097]
+unblocks: []
+acceptance_criteria:
+  - Provider authentication is not rendered as rate limiting and provider rate evidence is not inferred from plan quota.
+  - Public-ingress rate/auth rejection is never rendered as provider quota, provider attempt, token usage, or billed cost.
+  - Rejection detail is bounded and redacted and exposes no protected browser, credential, cookie, internal socket, private path, or raw endpoint secret.
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, future auth/rate/quota axis and pre-dispatch rejection Usage fixtures]
+risk_class: usage_auth_rate_quota_conflation
+reasoning_tier: high
+context_scope: usage_public_gate_auth_rate_quota
+implementation_surfaces: [Plans/usage-feature.md]
+node_compile_hint: {mode: usage_public_gate_auth_rate_quota, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md
+negative_constraints:
+  - Do not create UsageRecord rows for traffic rejected before model dispatch.
+  - Do not expose AuthBrowserSession or secret-bearing public-ingress evidence.
+```
+
+### UF-094 - Curated Room Defaults And Saved-Layout Migration
+
+```yaml
+plan_unit_id: UF-094
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Every Usage room starts from a non-empty, room-specific, balanced curated board on the current twelve-track
+  layout. Default rows preserve intentional card widths and alignment; a partial final row does not stretch a
+  lone card to full width, provider-heavy rooms prefer narrower taller cards, and the mixed-size stress/demo
+  arrangement is not a product default. The seven-widget four-column table retained by UF-058 is legacy source
+  lineage and migration compatibility, not the current default-board authority. A saved layout may override
+  current defaults only after its schema and default-set version migrate and its widget identities and supported
+  geometry validate; otherwise the room falls back to the corrected current default with an explicit migration
+  or reset disposition.
+gui_related: true
+gui_classification_reason: This unit defines the visible default composition and safe restoration of every Usage room.
+depends_on: [UF-056, UF-058, UF-059, WS-017, WS-018]
+unblocks: [UF-095, UF-096]
+acceptance_criteria:
+  - Every room has an intentional non-empty default board and the default catalog is room-specific rather than one stress/demo layout copied everywhere.
+  - Partial rows retain curated widths and deliberate alignment; All signals and comparable lone cards do not stretch across the full board.
+  - Provider-heavy default boards use narrower taller cards and reveal complete additional rows rather than low-density horizontal space.
+  - The legacy UF-058 seven-widget four-column table is accepted only as migration/source lineage and cannot replace the current twelve-track room defaults.
+  - Saved layout restore requires a current or successfully migrated schema/default-set version, valid widget identities, and supported geometry; failed validation falls back to the current curated default.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - tests/fixtures/usage_gui/presentation/curated_size_matrix.json (static contract fixture only)
+  - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/runtime_size_render_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/migration_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/independent-visual-review.json"
+risk_class: usage_bad_default_or_stale_layout_override
+reasoning_tier: high
+context_scope: usage_curated_defaults_migration
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: usage_curated_defaults_migration
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+preserved_exact_tokens:
+  - twelve-track
+  - balanced curated board
+  - partial final row
+  - default-set version
+  - widget identity
+negative_constraints:
+  - Do not use a mixed-size stress or demonstration layout as the product default.
+  - Do not let an unversioned or invalid saved layout override corrected defaults.
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+  - Plans/storage-plan.md
+```
+
+### UF-095 - Usage Workspace Settled-State Persistence Consumer Contract
+
+```yaml
+plan_unit_id: UF-095
+unit_type: data_contract
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Usage restores the current workspace from eight view/layout state families: active `room`, disclosure
+  `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
+  per-room settled widget `layout`, and per-room widget `order`. The product implementation stores these
+  through the current storage and widget-layout owners, not through the PMConcept7 prototype localStorage
+  keys. The current `pm7:usage:prototype:workspace:v12` envelope is demo-only, noncanonical prototype lineage.
+  It validates and considers the prior v11 envelope once when v12 is absent, while `pm7:usage:v10:*` may be
+  considered only by the bounded legacy import when neither valid current nor prior envelope is admitted; none
+  is a canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
+  operation; pointer-preview rectangles, ghosts, placeholders, animation state, and per-frame drafts never
+  become durable state. Missing rooms, widgets, scopes, or unsupported geometry migrate or evict to the
+  documented safe current default rather than leaving a dangling identity.
+gui_related: true
+gui_classification_reason: These fields determine what Usage shows after reload and how committed widgets are restored.
+depends_on: [UF-060, UF-093, UF-094, WS-019, WS-020, SP-248]
+unblocks: []
+acceptance_criteria:
+  - Reload restores room, disclosure, date range, scope, expanded-room rail state, per-room visibility, per-room order, and committed size/layout according to the current model.
+  - Visibility, order, supported geometry, and semantic size are written only for settled operations through existing widget-layout authorities.
+  - No pointer-preview rectangle, ghost, placeholder, animation state, or per-frame draft is persisted.
+  - Missing or retired room, widget, scope, or geometry references migrate or evict to a named safe current default.
+  - PMConcept7 prototype keys remain source-lineage/migration shims rather than canonical storage keys; the v12 envelope remains demo-only and noncanonical, v11 is considered only as its prior one-time import source, and v10 import is bounded rather than becoming a continuing dual-read path.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/migration_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/transaction_interaction_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/browser-verification-report.json"
+risk_class: usage_workspace_state_orphan_or_preview_persistence
+reasoning_tier: high
+context_scope: usage_workspace_settled_state
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: usage_workspace_settled_state
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+preserved_exact_tokens:
+  - room
+  - detail
+  - range
+  - scope
+  - more
+  - hidden
+  - layout
+  - order
+  - widget_layout:v1:usage
+  - pm7:usage:prototype:workspace:v12
+  - pm7:usage:prototype:workspace:v11
+  - pm7:usage:v10:*
+negative_constraints:
+  - Do not make a pointer move, held resize preview, ghost, placeholder, or animation frame durable.
+  - Do not promote `pm7:usage:v10:*` prototype keys to canonical key names.
+  - Do not promote v12, v11, or `pm7:usage:v10:*` prototype lineage to a canonical key or maintain a continuing dual-read path.
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/storage-plan.md
+  - Plans/Widget_System.md
+```
+
+### UF-096 - Polished Usage Widget Width Coverage Set
+
+```yaml
+plan_unit_id: UF-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  The current Usage catalog applies the smaller polished minimum/default width family and content-earning
+  larger tiers to Plans & limits instruments, Token analytics, Usage ledger widgets, Recent events, Analytics
+  widgets, Model mix, Anomaly comparison, Savings trend, Reporting state, every Context widget except Current
+  window, Source mix, Model limits, Maintenance history, Fallback order, Account routing, Fallback reasons,
+  Pricing confidence, Provider charges, Allowance authority, Pressure order, Upcoming resets, Settlement mix,
+  Route pressure, Tool details, Current sources, All signals, Cache economics, Routing trace, and Free usage.
+  Each named card still follows its kind-specific supported geometry; this list is coverage, not a mandate to
+  force unrelated widgets to one numeric width. Content-tier selection and reorder placeholder footprint follow
+  the card body's measured rendered width and height rather than a stale nominal grid-span or breakpoint
+  assumption; preview-only physical spans never become settled layout fields. A vertical chart reserves a
+  measured in-plot label region and paints exactly one visible value for every painted bar, including zero bars,
+  while keeping every label inside the plot and collision-free. Labels remain horizontally associated with their
+  own bar and may use measured vertical lanes when direct-above placement would collide; no datum is suppressed.
+  Tiny charts retain the complete ordered point sequence in accessible text. Chart
+  values use the metric's declared display unit and formatter, including rendering attempt-charge integer cents
+  as currency rather than raw cents. The chart title plus Latest and distinct peak facts remain complete in one
+  row or a narrow two-row composition, and an active reorder ghost remains visibly above the workspace until
+  commit or rollback.
+gui_related: true
+gui_classification_reason: This unit names the visible cards whose polished minimum/default and wider adaptive tiers must be retained.
+depends_on: [UF-094, WS-017, WS-018]
+unblocks: []
+acceptance_criteria:
+  - Every named card has a smaller polished minimum/default variant that remains composed without clipped values or avoidable empty width, with content tiers and reorder placeholder footprints chosen from measured rendered geometry rather than nominal spans, while every larger supported variant reveals additional useful content or plot area rather than blank space.
+  - Current window retains its separately approved Context default while the other Context widgets use the smaller polished family.
+  - The coverage list does not override kind-specific min/max constraints or force all cards to identical numeric spans; preview physical spans do not become settled layout fields.
+  - Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition, and reorder ghosts remain visibly above card/content layers until cleanup.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - tests/fixtures/usage_gui/presentation/curated_size_matrix.json (static contract fixture only)
+  - tests/fixtures/usage_gui/presentation/widget_content_tiers.json (static contract fixture only)
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/runtime_size_render_observations"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/t35-t37-focused-verification.json"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/visual-census.json"
+  - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/independent-visual-review.json"
+risk_class: usage_named_widget_width_regression
+reasoning_tier: high
+context_scope: usage_polished_widget_width_coverage
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: usage_polished_widget_width_coverage
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+preserved_exact_tokens:
+  - "Plans & limits"
+  - "Token analytics"
+  - "Recent events"
+  - "Model mix"
+  - "Anomaly comparison"
+  - "Savings trend"
+  - "Reporting state"
+  - "Current window"
+  - "Source mix"
+  - "Model limits"
+  - "Maintenance history"
+  - "Fallback order"
+  - "Account routing"
+  - "Fallback reasons"
+  - "Pricing confidence"
+  - "Provider charges"
+  - "Allowance authority"
+  - "Pressure order"
+  - "Upcoming resets"
+  - "Settlement mix"
+  - "Route pressure"
+  - "Tool details"
+  - "Current sources"
+  - "All signals"
+  - "Cache economics"
+  - "Routing trace"
+  - "Free usage"
+negative_constraints:
+  - Do not interpret the coverage set as one universal fixed width for every widget kind.
+  - Do not let a larger tier earn its size with empty space alone.
+  - Do not drop chart points from accessible text, suppress a painted bar's label, or let an active reorder ghost render under workspace cards.
+  - Do not position a value label outside the plot, detach it horizontally from its own bar, permit label overlap, or display attempt-charge cents without exactly two currency decimals.
+  - Do not persist preview-only measured physical spans or use stale nominal spans as rendered-width authority.
+owner_hints:
+  - Plans/usage-feature.md
   - Plans/Widget_System.md
 ```

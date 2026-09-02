@@ -58,7 +58,9 @@
         "observable_work_id": "work:1",
         "current_revision_or_epoch": 1,
         "projection_ref": "projection:environment:1",
-        "receipt_refs": ["receipt:admission:1"],
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
         "artifact_refs": [],
         "disabled_reason": null,
         "error": null,
@@ -84,45 +86,1358 @@
         "cleanup_evidence_ref": null,
         "terminal_result_ref": null
       }
+    },
+    {
+      "name": "pm7_preview_is_local",
+      "definition": "pm7_settled_interaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.settled_interaction_trace.v1",
+        "fixture_id": "PM7-TRACE-PREVIEW-001",
+        "surface_kind": "usage_widget",
+        "phase": "preview",
+        "command_id": null,
+        "command_dispatch_count": 0,
+        "command_result_count": 0,
+        "receipt_count": 0,
+        "result_outcome": "not_dispatched",
+        "dispatch_accepted": null,
+        "event_types": [],
+        "persistence_write_attempt_count": 0,
+        "persistence_write_count": 0,
+        "settled_state_changed": false,
+        "preview_frame_count": 12,
+        "rollback_completed": false,
+        "cleanup_completed": true
+      }
+    },
+    {
+      "name": "pm7_commit_changed_once",
+      "definition": "pm7_settled_interaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.settled_interaction_trace.v1",
+        "fixture_id": "PM7-TRACE-COMMIT-001",
+        "surface_kind": "home_surface",
+        "phase": "commit",
+        "command_id": "cmd.workspace_layout.resize_surface",
+        "command_dispatch_count": 1,
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "result_outcome": "accepted",
+        "dispatch_accepted": true,
+        "event_types": [
+          "workspace.layout_changed"
+        ],
+        "persistence_write_attempt_count": 1,
+        "persistence_write_count": 1,
+        "settled_state_changed": true,
+        "preview_frame_count": 18,
+        "rollback_completed": false,
+        "cleanup_completed": true
+      }
+    },
+    {
+      "name": "pm7_cancel_rolls_back",
+      "definition": "pm7_settled_interaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.settled_interaction_trace.v1",
+        "fixture_id": "PM7-TRACE-CANCEL-001",
+        "surface_kind": "home_surface",
+        "phase": "cancel",
+        "command_id": null,
+        "command_dispatch_count": 0,
+        "command_result_count": 0,
+        "receipt_count": 0,
+        "result_outcome": "not_dispatched",
+        "dispatch_accepted": null,
+        "event_types": [],
+        "persistence_write_attempt_count": 0,
+        "persistence_write_count": 0,
+        "settled_state_changed": false,
+        "preview_frame_count": 9,
+        "rollback_completed": true,
+        "cleanup_completed": true
+      }
+    },
+    {
+      "name": "pm7_no_change_release_is_silent",
+      "definition": "pm7_settled_interaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.settled_interaction_trace.v1",
+        "fixture_id": "PM7-TRACE-NOCHANGE-001",
+        "surface_kind": "dashboard_widget",
+        "phase": "no_change",
+        "command_id": null,
+        "command_dispatch_count": 0,
+        "command_result_count": 0,
+        "receipt_count": 0,
+        "result_outcome": "not_dispatched",
+        "dispatch_accepted": null,
+        "event_types": [],
+        "persistence_write_attempt_count": 0,
+        "persistence_write_count": 0,
+        "settled_state_changed": false,
+        "preview_frame_count": 3,
+        "rollback_completed": true,
+        "cleanup_completed": true
+      }
+    },
+    {
+      "name": "pm7_usage_widget_commit_changed_once_without_workspace_event",
+      "definition": "pm7_settled_interaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.settled_interaction_trace.v1",
+        "fixture_id": "PM7-TRACE-USAGE-COMMIT-001",
+        "surface_kind": "usage_widget",
+        "phase": "commit",
+        "command_id": "cmd.widget.move",
+        "command_dispatch_count": 1,
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "result_outcome": "accepted",
+        "dispatch_accepted": true,
+        "event_types": [],
+        "persistence_write_attempt_count": 1,
+        "persistence_write_count": 1,
+        "settled_state_changed": true,
+        "preview_frame_count": 18,
+        "rollback_completed": false,
+        "cleanup_completed": true
+      }
+    },
+    {
+      "name": "pm7_usage_widget_owner_rejection_rolls_back_after_dispatch",
+      "definition": "pm7_settled_interaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.settled_interaction_trace.v1",
+        "fixture_id": "PM7-TRACE-USAGE-OWNER-REJECTED-001",
+        "surface_kind": "usage_widget",
+        "phase": "owner_rejected",
+        "command_id": "cmd.widget.resize",
+        "command_dispatch_count": 1,
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "result_outcome": "rejected",
+        "dispatch_accepted": false,
+        "event_types": [],
+        "persistence_write_attempt_count": 0,
+        "persistence_write_count": 0,
+        "settled_state_changed": false,
+        "preview_frame_count": 14,
+        "rollback_completed": true,
+        "cleanup_completed": true
+      }
+    },
+    {
+      "name": "pm7_usage_widget_persistence_adapter_failure_rolls_back",
+      "definition": "pm7_settled_interaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.settled_interaction_trace.v1",
+        "fixture_id": "PM7-TRACE-USAGE-PERSISTENCE-FAILED-001",
+        "surface_kind": "usage_widget",
+        "phase": "persistence_adapter_failed",
+        "command_id": "cmd.widget.resize",
+        "command_dispatch_count": 1,
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "result_outcome": "failed",
+        "dispatch_accepted": true,
+        "event_types": [],
+        "persistence_write_attempt_count": 1,
+        "persistence_write_count": 0,
+        "settled_state_changed": false,
+        "preview_frame_count": 14,
+        "rollback_completed": true,
+        "cleanup_completed": true
+      }
+    },
+    {
+      "name": "pm7_context_compaction_started_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-STARTED-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "started",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 20,
+        "context_revision_after": 20,
+        "compaction_history_ref": "context:compaction:history:started:20"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_already_running_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-ALREADY-RUNNING-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "already_running",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 21,
+        "context_revision_after": 21,
+        "compaction_history_ref": "context:compaction:history:already-running:21"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_cancelled_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-CANCELLED-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "cancelled",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 22,
+        "context_revision_after": 22,
+        "compaction_history_ref": "context:compaction:history:cancelled:22"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_no_op_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-NO-OP-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "no_op",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 23,
+        "context_revision_after": 23,
+        "compaction_history_ref": "context:compaction:history:no-op:23"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_degraded_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-DEGRADED-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "degraded",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 24,
+        "context_revision_after": 25,
+        "compaction_history_ref": "context:compaction:history:degraded:25"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_unavailable_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-UNAVAILABLE-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "unavailable",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 26,
+        "context_revision_after": 26,
+        "compaction_history_ref": "context:compaction:history:unavailable:26"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_retry_scheduled_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-RETRY-SCHEDULED-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "retry_scheduled",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 27,
+        "context_revision_after": 27,
+        "compaction_history_ref": "context:compaction:history:retry-scheduled:27"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "completed",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 17,
+        "context_revision_after": 18,
+        "compaction_history_ref": "context:compaction:history:18"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_failed_result_receipt_without_event",
+      "definition": "pm7_context_compaction_trace",
+      "value": {
+        "schema_id": "pm.pm7.context_compaction_trace.v1",
+        "fixture_id": "PM7-CONTEXT-COMPACT-FAILED-001",
+        "command_id": "cmd.chat.compact_context",
+        "outcome": "failed",
+        "command_result_count": 1,
+        "receipt_count": 1,
+        "event_types": [],
+        "context_revision_before": 28,
+        "context_revision_after": 28,
+        "compaction_history_ref": "context:compaction:history:failed:28"
+      }
+    },
+    {
+      "name": "protected_auth_start_bound_to_initiating_active_client",
+      "definition": "authentication_command_request",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.authentication.start",
+        "command_instance_id": "command-instance:auth-start:1",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:auth-start:1",
+          "scope_ref": "project:1",
+          "binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding",
+          "original_operation_id": null,
+          "original_result_ref": null
+        },
+        "project_id": "project:1",
+        "project_home_server_id": "server:home:1",
+        "execution_host_id": "host:1",
+        "execution_environment_id": "environment:1",
+        "source_location_id": null,
+        "topology_generation": 7,
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:snapshot:auth:1",
+        "goal_id": null,
+        "plan_id": null,
+        "run_id": null,
+        "thread_id": null,
+        "agent_id": null,
+        "crew_id": null,
+        "deadline_utc": "2026-09-01T02:30:00Z",
+        "recovery_of_operation_id": null,
+        "action": "start",
+        "provider_id": "provider:tailscale",
+        "route_id": "route:tailscale:hosted",
+        "profile_ref": "profile:tailscale:primary",
+        "account_id": "account:tailscale:primary",
+        "connection_id": "connection:tailscale:1",
+        "auth_surface": "protected_auth_browser",
+        "credential_ref": null,
+        "authentication_operation_id": "auth-operation:1",
+        "expected_auth_revision": null,
+        "continuation_ref": "continuation:onboarding:provider:1",
+        "initiating_client_id": "client:active:1",
+        "expected_initiating_client_session_generation": 12,
+        "protected_auth_session_ref": "auth-browser-session:1",
+        "return_target_ref": "ui-return:onboarding:provider-sign-in",
+        "client_handoff_policy": "initiating_active_client_only"
+      }
+    },
+    {
+      "name": "protected_auth_resume_same_operation_and_initiating_client",
+      "definition": "authentication_command_request",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.authentication.resume",
+        "command_instance_id": "command-instance:auth-resume:1",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:auth-resume:1",
+          "scope_ref": "project:1",
+          "binding_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding",
+          "original_operation_id": "auth-operation:1",
+          "original_result_ref": "result:auth-start:1"
+        },
+        "project_id": "project:1",
+        "project_home_server_id": "server:home:1",
+        "execution_host_id": "host:1",
+        "execution_environment_id": "environment:1",
+        "source_location_id": null,
+        "topology_generation": 7,
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:snapshot:auth:1",
+        "goal_id": null,
+        "plan_id": null,
+        "run_id": null,
+        "thread_id": null,
+        "agent_id": null,
+        "crew_id": null,
+        "deadline_utc": "2026-09-01T02:30:00Z",
+        "recovery_of_operation_id": "auth-operation:1",
+        "action": "resume",
+        "provider_id": "provider:tailscale",
+        "route_id": "route:tailscale:hosted",
+        "profile_ref": "profile:tailscale:primary",
+        "account_id": "account:tailscale:primary",
+        "connection_id": "connection:tailscale:1",
+        "auth_surface": "protected_auth_browser",
+        "credential_ref": null,
+        "authentication_operation_id": "auth-operation:1",
+        "expected_auth_revision": 3,
+        "continuation_ref": "continuation:onboarding:provider:1",
+        "initiating_client_id": "client:active:1",
+        "expected_initiating_client_session_generation": 12,
+        "protected_auth_session_ref": "auth-browser-session:1",
+        "return_target_ref": "ui-return:onboarding:provider-sign-in",
+        "client_handoff_policy": "initiating_active_client_only"
+      }
+    },
+    {
+      "name": "protected_auth_cancel_redacted_exact_return",
+      "definition": "authentication_command_result",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AuthenticationCommandResult",
+        "command_id": "cmd.authentication.cancel",
+        "operation_id": "auth-operation:1",
+        "command_instance_id": "command-instance:auth-cancel:1",
+        "outcome": "cancelled",
+        "observable_work_id": null,
+        "current_revision_or_epoch": 4,
+        "projection_ref": "projection:authentication:1:4",
+        "receipt_refs": [
+          "receipt:authentication:cancelled:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:authentication:cancelled:1",
+        "subject_ref": "authentication:operation:1",
+        "authentication_operation_id": "auth-operation:1",
+        "auth_revision": 4,
+        "auth_surface": "protected_auth_browser",
+        "initiating_client_id": "client:active:1",
+        "observed_initiating_client_session_generation": 12,
+        "return_target_ref": "ui-return:onboarding:provider-sign-in",
+        "return_fence_state": "cancelled_without_content_return",
+        "authentication_disposition": "cancelled",
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false
+      }
+    },
+    {
+      "name": "protected_auth_timeout_failed_deadline_expired",
+      "definition": "authentication_command_result",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AuthenticationCommandResult",
+        "command_id": "cmd.authentication.resume",
+        "operation_id": "auth-operation:2",
+        "command_instance_id": "command-instance:auth-resume:2",
+        "outcome": "failed",
+        "observable_work_id": null,
+        "current_revision_or_epoch": 8,
+        "projection_ref": "projection:authentication:2:8",
+        "receipt_refs": [
+          "receipt:authentication:timeout:2"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": "deadline_expired",
+        "error": {
+          "schema_id": "pm.shared_runtime.command_error.v1",
+          "category": "external_dependency",
+          "code": "deadline_expired",
+          "retryability": "not_retryable",
+          "safe_user_message": "The protected authentication session timed out without returning content.",
+          "detail_ref": null
+        },
+        "recovery_actions": [
+          "authentication.start_again"
+        ],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:authentication:timeout:2",
+        "subject_ref": "authentication:operation:2",
+        "authentication_operation_id": "auth-operation:2",
+        "auth_revision": 8,
+        "auth_surface": "protected_auth_browser",
+        "initiating_client_id": "client:active:1",
+        "observed_initiating_client_session_generation": 12,
+        "return_target_ref": "ui-return:onboarding:provider-sign-in",
+        "return_fence_state": "timed_out_without_content_return",
+        "authentication_disposition": "timed_out",
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false
+      }
+    },
+    {
+      "name": "protected_auth_verified_exact_return_without_content",
+      "definition": "authentication_command_result",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AuthenticationCommandResult",
+        "command_id": "cmd.authentication.start",
+        "operation_id": "auth-operation:3",
+        "command_instance_id": "command-instance:auth-start:3",
+        "outcome": "no_change",
+        "observable_work_id": null,
+        "current_revision_or_epoch": 6,
+        "projection_ref": "projection:authentication:3:6",
+        "receipt_refs": [
+          "receipt:authentication:verified:3"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:authentication:verified:3",
+        "subject_ref": "authentication:operation:3",
+        "authentication_operation_id": "auth-operation:3",
+        "auth_revision": 6,
+        "auth_surface": "protected_auth_browser",
+        "initiating_client_id": "client:active:1",
+        "observed_initiating_client_session_generation": 12,
+        "return_target_ref": "ui-return:onboarding:provider-sign-in",
+        "return_fence_state": "exact_operation_and_initiating_active_client",
+        "authentication_disposition": "verified",
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.execution_environment.open_details",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.execution_environment.open_details",
+        "packet_token": "cmd.execution_environment.open_details",
+        "request_id": "local:execution_environment-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:execution_environment-open_details",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:execution_environment-open_details",
+        "accessibility_description_ref": "a11y:execution_environment-open_details",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.execution_environment.open_details",
+      "definition": "ExecutionTopologyLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.execution_environment.open_details",
+        "packet_token": "cmd.execution_environment.open_details",
+        "request_id": "local:execution_environment-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:execution_environment-open_details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.execution_environment.open_logs",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.execution_environment.open_logs",
+        "packet_token": "cmd.execution_environment.open_logs",
+        "request_id": "local:execution_environment-open_logs",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:execution_environment-open_logs",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:execution_environment-open_logs",
+        "accessibility_description_ref": "a11y:execution_environment-open_logs",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.execution_environment.open_logs",
+      "definition": "ExecutionTopologyLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.execution_environment.open_logs",
+        "packet_token": "cmd.execution_environment.open_logs",
+        "request_id": "local:execution_environment-open_logs",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:execution_environment-open_logs",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.execution_host.open_details",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.execution_host.open_details",
+        "packet_token": "cmd.execution_host.open_details",
+        "request_id": "local:execution_host-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:execution_host-open_details",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:execution_host-open_details",
+        "accessibility_description_ref": "a11y:execution_host-open_details",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.execution_host.open_details",
+      "definition": "ExecutionTopologyLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.execution_host.open_details",
+        "packet_token": "cmd.execution_host.open_details",
+        "request_id": "local:execution_host-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:execution_host-open_details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.installation.open_details",
+      "definition": "InstallationLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.installation.open_details",
+        "packet_token": "cmd.installation.open_details",
+        "request_id": "local:installation-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:installation-open_details",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:installation-open_details",
+        "accessibility_description_ref": "a11y:installation-open_details",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.installation.open_details",
+      "definition": "InstallationLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.installation.open_details",
+        "packet_token": "cmd.installation.open_details",
+        "request_id": "local:installation-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:installation-open_details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.installation.open_logs",
+      "definition": "InstallationLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.installation.open_logs",
+        "packet_token": "cmd.installation.open_logs",
+        "request_id": "local:installation-open_logs",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:installation-open_logs",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:installation-open_logs",
+        "accessibility_description_ref": "a11y:installation-open_logs",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.installation.open_logs",
+      "definition": "InstallationLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.installation.open_logs",
+        "packet_token": "cmd.installation.open_logs",
+        "request_id": "local:installation-open_logs",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:installation-open_logs",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.project.source_location.open_details",
+      "definition": "ProjectTopologyLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.project.source_location.open_details",
+        "packet_token": "cmd.project.source_location.open_details",
+        "request_id": "local:project-source_location-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:project-source_location-open_details",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:project-source_location-open_details",
+        "accessibility_description_ref": "a11y:project-source_location-open_details",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.project.source_location.open_details",
+      "definition": "ProjectTopologyLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.project.source_location.open_details",
+        "packet_token": "cmd.project.source_location.open_details",
+        "request_id": "local:project-source_location-open_details",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:project-source_location-open_details",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.tool_package.open_provenance",
+      "definition": "InstallationLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.tool_package.open_provenance",
+        "packet_token": "cmd.tool_package.open_provenance",
+        "request_id": "local:tool_package-open_provenance",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:tool_package-open_provenance",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:tool_package-open_provenance",
+        "accessibility_description_ref": "a11y:tool_package-open_provenance",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.tool_package.open_provenance",
+      "definition": "InstallationLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.tool_package.open_provenance",
+        "packet_token": "cmd.tool_package.open_provenance",
+        "request_id": "local:tool_package-open_provenance",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:tool_package-open_provenance",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_request.ui.tool_package.review_license",
+      "definition": "InstallationLocalActionRequest",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.tool_package.review_license",
+        "packet_token": "cmd.tool_package.review_license",
+        "request_id": "local:tool_package-review_license",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_request",
+        "projection_ref": "projection:tool_package-review_license",
+        "expected_projection_generation": 3,
+        "return_context_ref": "return:tool_package-review_license",
+        "accessibility_description_ref": "a11y:tool_package-review_license",
+        "requested_at_utc": "2026-09-01T00:00:00Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
+    },
+    {
+      "name": "runtime_local_result.ui.tool_package.review_license",
+      "definition": "InstallationLocalActionResult",
+      "value": {
+        "schema_id": "pm.shared_integration_runtime.expansion_contracts.v1",
+        "action_id": "ui.tool_package.review_license",
+        "packet_token": "cmd.tool_package.review_license",
+        "request_id": "local:tool_package-review_license",
+        "controller_target": "owner_local_typed_ui_controller",
+        "domain_command_registered": false,
+        "semantic_domain_handler": null,
+        "domain_event_emitted": false,
+        "record_kind": "sir_local_action_result",
+        "projection_generation": 3,
+        "outcome": "completed",
+        "return_settlement": {
+          "return_context_ref": "return:tool_package-review_license",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "completed_at_utc": "2026-09-01T00:00:01Z",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "return_behavior": "deterministic_presentation_settlement",
+        "installation_authority_granted": false,
+        "authentication_authority_granted": false,
+        "filesystem_authority_granted": false,
+        "browser_authority_granted": false,
+        "provider_authority_granted": false
+      }
     }
   ],
   "invalid": [
     {
       "name": "request_missing_exact_execution_environment",
       "base_valid": "environment_connect_request",
-      "remove": ["execution_environment_id"]
+      "remove": [
+        "execution_environment_id"
+      ]
     },
     {
       "name": "command_and_action_mismatch",
       "base_valid": "environment_connect_request",
-      "patch": {"action": "disconnect"}
+      "patch": {
+        "action": "disconnect"
+      }
     },
     {
       "name": "request_cannot_embed_secret_shaped_actor_ref",
       "base_valid": "environment_connect_request",
-      "patch": {"actor_ref": "Bearer abcdefgh12345678"}
+      "patch": {
+        "actor_ref": "Bearer abcdefgh12345678"
+      }
     },
     {
       "name": "replayed_result_requires_original_operation",
       "base_valid": "accepted_environment_result_is_nonterminal",
-      "patch": {"replayed": true}
+      "patch": {
+        "replayed": true
+      }
     },
     {
       "name": "cancel_ack_cannot_claim_cleanup",
       "base_valid": "cancellation_ack_is_not_cleanup",
-      "patch": {"cleanup_evidence_ref": "cleanup:1", "terminal_result_ref": "result:cancelled:1"}
+      "patch": {
+        "cleanup_evidence_ref": "cleanup:1",
+        "terminal_result_ref": "result:cancelled:1"
+      }
+    },
+    {
+      "name": "pm7_preview_cannot_dispatch",
+      "base_valid": "pm7_preview_is_local",
+      "patch": {
+        "command_id": "cmd.widget.move",
+        "command_dispatch_count": 1
+      }
+    },
+    {
+      "name": "pm7_cancel_cannot_persist",
+      "base_valid": "pm7_cancel_rolls_back",
+      "patch": {
+        "persistence_write_count": 1
+      }
+    },
+    {
+      "name": "pm7_no_change_cannot_emit_event",
+      "base_valid": "pm7_no_change_release_is_silent",
+      "patch": {
+        "event_types": [
+          "workspace.layout_changed"
+        ]
+      }
+    },
+    {
+      "name": "pm7_commit_cannot_double_dispatch",
+      "base_valid": "pm7_commit_changed_once",
+      "patch": {
+        "command_dispatch_count": 2
+      }
+    },
+    {
+      "name": "pm7_changed_commit_requires_one_receipt",
+      "base_valid": "pm7_commit_changed_once",
+      "patch": {
+        "receipt_count": 0
+      }
+    },
+    {
+      "name": "pm7_changed_commit_requires_workspace_layout_event",
+      "base_valid": "pm7_commit_changed_once",
+      "patch": {
+        "event_types": [
+          "workspace.layout_previewed"
+        ]
+      }
+    },
+    {
+      "name": "pm7_usage_widget_commit_cannot_emit_workspace_event",
+      "base_valid": "pm7_usage_widget_commit_changed_once_without_workspace_event",
+      "patch": {
+        "event_types": [
+          "workspace.layout_changed"
+        ]
+      }
+    },
+    {
+      "name": "pm7_commit_cannot_claim_unchanged",
+      "base_valid": "pm7_commit_changed_once",
+      "patch": {
+        "settled_state_changed": false
+      }
+    },
+    {
+      "name": "pm7_owner_rejection_cannot_claim_successful_write",
+      "base_valid": "pm7_usage_widget_owner_rejection_rolls_back_after_dispatch",
+      "patch": {
+        "persistence_write_count": 1
+      }
+    },
+    {
+      "name": "pm7_owner_rejection_cannot_claim_dispatch_accepted",
+      "base_valid": "pm7_usage_widget_owner_rejection_rolls_back_after_dispatch",
+      "patch": {
+        "dispatch_accepted": true
+      }
+    },
+    {
+      "name": "pm7_persistence_failure_requires_attempted_adapter_call",
+      "base_valid": "pm7_usage_widget_persistence_adapter_failure_rolls_back",
+      "patch": {
+        "persistence_write_attempt_count": 0
+      }
+    },
+    {
+      "name": "pm7_persistence_failure_cannot_claim_successful_write",
+      "base_valid": "pm7_usage_widget_persistence_adapter_failure_rolls_back",
+      "patch": {
+        "persistence_write_count": 1
+      }
+    },
+    {
+      "name": "pm7_failed_or_rejected_settlement_cannot_emit_event",
+      "base_valid": "pm7_usage_widget_persistence_adapter_failure_rolls_back",
+      "patch": {
+        "event_types": [
+          "workspace.layout_changed"
+        ]
+      }
+    },
+    {
+      "name": "pm7_error_phase_not_admitted",
+      "base_valid": "pm7_commit_changed_once",
+      "patch": {
+        "phase": "error"
+      }
+    },
+    {
+      "name": "pm7_context_compaction_cannot_fabricate_event",
+      "base_valid": "pm7_context_compaction_result_receipt_without_event",
+      "patch": {
+        "event_types": [
+          "context.compaction.completed"
+        ]
+      }
+    },
+    {
+      "name": "protected_auth_missing_initiating_client_fence",
+      "base_valid": "protected_auth_start_bound_to_initiating_active_client",
+      "remove": [
+        "initiating_client_id",
+        "expected_initiating_client_session_generation"
+      ]
+    },
+    {
+      "name": "protected_auth_rejects_fallback_client",
+      "base_valid": "protected_auth_start_bound_to_initiating_active_client",
+      "patch": {
+        "client_handoff_policy": "not_applicable"
+      }
+    },
+    {
+      "name": "protected_auth_resume_rejects_missing_operation_or_revision_fence",
+      "base_valid": "protected_auth_resume_same_operation_and_initiating_client",
+      "patch": {
+        "authentication_operation_id": null,
+        "expected_auth_revision": null
+      }
+    },
+    {
+      "name": "protected_auth_result_rejects_shadow_returned_operation",
+      "base_valid": "protected_auth_verified_exact_return_without_content",
+      "patch": {
+        "returned_operation_id": "auth-operation:shadow"
+      }
+    },
+    {
+      "name": "protected_auth_cancel_requires_exact_operation_and_return_target",
+      "base_valid": "protected_auth_resume_same_operation_and_initiating_client",
+      "patch": {
+        "command_id": "cmd.authentication.cancel",
+        "action": "cancel",
+        "authentication_operation_id": null,
+        "return_target_ref": null
+      }
+    },
+    {
+      "name": "protected_auth_timeout_cannot_report_success",
+      "base_valid": "protected_auth_timeout_failed_deadline_expired",
+      "patch": {
+        "outcome": "no_change"
+      }
+    },
+    {
+      "name": "protected_auth_result_cannot_expose_content",
+      "base_valid": "protected_auth_verified_exact_return_without_content",
+      "patch": {
+        "content_exposed_to_caller": true
+      }
+    },
+    {
+      "name": "runtime_local_action_is_non_persistent",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "persistent_state_mutation": true
+      }
+    },
+    {
+      "name": "runtime_local_action_return_is_deterministic",
+      "definition": "ExecutionTopologyLocalActionResult",
+      "base_valid": "runtime_local_result.ui.execution_environment.open_details",
+      "patch": {
+        "return_behavior": "ambient_navigation"
+      }
+    },
+    {
+      "name": "runtime_local_action_grants_no_installation_authority",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "installation_authority_granted": true
+      }
+    },
+    {
+      "name": "runtime_local_action_grants_no_authentication_authority",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "authentication_authority_granted": true
+      }
+    },
+    {
+      "name": "runtime_local_action_grants_no_filesystem_authority",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "filesystem_authority_granted": true
+      }
+    },
+    {
+      "name": "runtime_local_action_grants_no_browser_authority",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "browser_authority_granted": true
+      }
+    },
+    {
+      "name": "runtime_local_action_grants_no_provider_authority",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "provider_authority_granted": true
+      }
+    },
+    {
+      "name": "execution_local_action_rejects_installation_family",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "action_id": "ui.installation.open_details",
+        "packet_token": "cmd.installation.open_details"
+      }
+    },
+    {
+      "name": "execution_local_action_rejects_mismatched_token",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "packet_token": "cmd.execution_environment.open_logs"
+      }
+    },
+    {
+      "name": "runtime_local_action_has_no_domain_handler",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "semantic_domain_handler": "handlers::execution_topology::open_details"
+      }
+    },
+    {
+      "name": "runtime_local_action_is_not_registered_domain_command",
+      "definition": "ExecutionTopologyLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.execution_environment.open_details",
+      "patch": {
+        "domain_command_registered": true
+      }
+    },
+    {
+      "name": "runtime_local_action_emits_no_domain_event",
+      "definition": "ExecutionTopologyLocalActionResult",
+      "base_valid": "runtime_local_result.ui.execution_environment.open_details",
+      "patch": {
+        "domain_event_emitted": true
+      }
+    },
+    {
+      "name": "runtime_local_action_is_presentation_only",
+      "definition": "InstallationLocalActionRequest",
+      "base_valid": "runtime_local_request.ui.installation.open_details",
+      "patch": {
+        "presentation_only": false
+      }
     }
   ],
   "pairwise_invalid": [
     {
       "name": "same_idempotency_key_different_binding",
       "left_valid": "environment_connect_request",
-      "right_patch": {"idempotency.binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+      "right_patch": {
+        "idempotency.binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
     },
     {
       "name": "replay_cannot_mint_new_operation_identity",
       "left_valid": "accepted_environment_result_is_nonterminal",
-      "right_patch": {"replayed": true, "original_operation_id": "operation:1", "operation_id": "operation:2"}
+      "right_patch": {
+        "replayed": true,
+        "original_operation_id": "operation:1",
+        "operation_id": "operation:2"
+      }
     }
-  ]
+  ],
+  "server_gap_materialization_coverage": {
+    "execution_topology_local_action_count": 3,
+    "project_topology_local_action_count": 1,
+    "installation_local_action_count": 4,
+    "positive_request_and_result_count": 16,
+    "negative_case_count": 13,
+    "non_domain_non_persistent_deterministic_return": true,
+    "authority_granted": false
+  }
 }

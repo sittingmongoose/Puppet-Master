@@ -1,0 +1,305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.plugin.command_contracts.schema.v1",
+  "title": "Puppet Master plugin command contracts",
+  "description": "Closed owner-side request, result, availability, permission, disabled-reason, and error contracts for the twelve centrally registered plugin lifecycle command identities. Central catalog and production-intent wiring are validated separately; this schema supplies their canonical shapes and lowercase reference aliases but does not establish a native handler, runtime effect, or EventRecord producer.",
+  "x-schema-id": "pm.plugin.command_contracts.v1",
+  "oneOf": [
+    {"$ref": "#/$defs/PluginCommandRequest"},
+    {"$ref": "#/$defs/PluginCommandResult"},
+    {"$ref": "#/$defs/PluginCommandAvailability"},
+    {"$ref": "#/$defs/PluginPermissionDecision"},
+    {"$ref": "#/$defs/PluginCommandError"}
+  ],
+  "$defs": {
+    "Id": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "NonSecretRef": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*(?:secret|token|password|credential|cookie)=).+$"},
+    "Sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "plugin_command_request": {"$ref": "#/$defs/PluginCommandRequest"},
+    "plugin_command_result": {"$ref": "#/$defs/PluginCommandResult"},
+    "PluginCommandId": {
+      "enum": [
+        "cmd.agent_plugin.scan",
+        "cmd.agent_plugin.install",
+        "cmd.agent_plugin.update",
+        "cmd.agent_plugin.enable",
+        "cmd.agent_plugin.disable",
+        "cmd.agent_plugin.reload",
+        "cmd.agent_plugin.remove",
+        "cmd.agent_plugin.validate",
+        "cmd.agent_plugin.review_changes",
+        "cmd.agent_plugin.rollback",
+        "cmd.agent_plugin.open_details",
+        "cmd.agent_plugin.open_logs"
+      ]
+    },
+    "PluginOperation": {
+      "enum": ["scan", "install", "update", "enable", "disable", "reload", "remove", "validate", "review_changes", "rollback", "open_details", "open_logs"]
+    },
+    "PluginManifestClass": {
+      "enum": ["pm_internal_interchange", "pm_native", "dual_manifest", "legacy_imported"]
+    },
+    "PluginPackageStatus": {
+      "enum": ["portable_conformant", "portable_partial", "pm_extended", "legacy_imported", "nonconformant", "rejected"]
+    },
+    "ReturnSettlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["return_context_ref", "settlement", "initiating_surface_restored"],
+      "properties": {
+        "return_context_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "settlement": {"enum": ["restored", "retained", "caller_unavailable"]},
+        "initiating_surface_restored": {"type": "boolean"}
+      },
+      "allOf": [
+        {"if": {"properties": {"settlement": {"const": "restored"}}, "required": ["settlement"]}, "then": {"properties": {"initiating_surface_restored": {"const": true}}}},
+        {"if": {"properties": {"settlement": {"enum": ["retained", "caller_unavailable"]}}, "required": ["settlement"]}, "then": {"properties": {"initiating_surface_restored": {"const": false}}}}
+      ]
+    },
+    "PluginCommandDisabledReasonCode": {
+      "enum": [
+        "handler_unavailable",
+        "package_missing",
+        "package_generation_stale",
+        "permission_generation_stale",
+        "topology_generation_stale",
+        "manifest_invalid",
+        "dual_manifest_identity_mismatch",
+        "legacy_migration_required",
+        "conformance_missing",
+        "provenance_missing",
+        "signature_untrusted",
+        "containment_failed",
+        "compatibility_failed",
+        "known_bad_blocked",
+        "permission_required",
+        "permission_denied",
+        "capability_mismatch",
+        "sandbox_unavailable",
+        "approval_required",
+        "operation_in_progress",
+        "component_dependency_active",
+        "rollback_proof_missing",
+        "logs_unavailable",
+        "details_unavailable",
+        "resource_blocked",
+        "quarantined",
+        "recovery_required",
+        "policy_denied"
+      ]
+    },
+    "PluginCommandErrorCode": {
+      "enum": [
+        "handler_unavailable",
+        "invalid_request",
+        "identity_mismatch",
+        "stale_generation",
+        "not_found",
+        "already_in_state",
+        "permission_denied",
+        "policy_denied",
+        "approval_missing",
+        "manifest_rejected",
+        "legacy_migration_required",
+        "conformance_failed",
+        "supply_chain_rejected",
+        "containment_failed",
+        "compatibility_failed",
+        "known_bad_blocked",
+        "component_failed",
+        "operation_conflict",
+        "rollback_failed",
+        "bounded_projection_unavailable",
+        "cancelled",
+        "effect_unknown",
+        "recovery_required"
+      ]
+    },
+    "PluginPermissionScope": {
+      "enum": [
+        "plugin_discovery_read",
+        "plugin_package_install",
+        "plugin_package_update",
+        "plugin_activation",
+        "plugin_deactivation",
+        "plugin_reload",
+        "plugin_remove",
+        "plugin_validate",
+        "plugin_review",
+        "plugin_rollback",
+        "plugin_details_read",
+        "plugin_logs_read"
+      ]
+    },
+    "PluginPermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "decision_id", "command_id", "package_id", "plugin_id", "permission_snapshot_ref", "required_scopes", "decision", "approval_ref", "credential_material_exposed", "protected_auth_access_allowed", "private_absolute_path_exposed", "authority_widening", "decided_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.plugin.command_contracts.v1"},
+        "record_kind": {"const": "plugin_permission_decision"},
+        "decision_id": {"$ref": "#/$defs/Id"},
+        "command_id": {"$ref": "#/$defs/PluginCommandId"},
+        "package_id": {"$ref": "#/$defs/Id"},
+        "plugin_id": {"$ref": "#/$defs/Id"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "required_scopes": {"type": "array", "minItems": 1, "maxItems": 12, "uniqueItems": true, "items": {"$ref": "#/$defs/PluginPermissionScope"}},
+        "decision": {"enum": ["admitted", "approval_required", "denied", "stale", "policy_blocked"]},
+        "approval_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "credential_material_exposed": {"const": false},
+        "protected_auth_access_allowed": {"const": false},
+        "private_absolute_path_exposed": {"const": false},
+        "authority_widening": {"const": false},
+        "decided_at_utc": {"type": "string", "format": "date-time"}
+      }
+    },
+    "PluginCommandAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "package_id", "plugin_id", "package_generation", "permission_generation", "topology_generation", "state", "disabled_reason", "owner_contract_ref", "evaluated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.plugin.command_contracts.v1"},
+        "record_kind": {"const": "plugin_command_availability"},
+        "command_id": {"$ref": "#/$defs/PluginCommandId"},
+        "package_id": {"$ref": "#/$defs/Id"},
+        "plugin_id": {"$ref": "#/$defs/Id"},
+        "package_generation": {"type": "integer", "minimum": 0},
+        "permission_generation": {"type": "integer", "minimum": 0},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "state": {"enum": ["available", "unavailable", "busy", "blocked", "recovery_required"]},
+        "disabled_reason": {"anyOf": [{"$ref": "#/$defs/PluginCommandDisabledReasonCode"}, {"type": "null"}]},
+        "owner_contract_ref": {"const": "Plans/plugin_contracts.schema.json"},
+        "evaluated_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "available"}}, "required": ["state"]}, "then": {"properties": {"disabled_reason": {"type": "null"}}}},
+        {"if": {"properties": {"state": {"enum": ["unavailable", "busy", "blocked", "recovery_required"]}}, "required": ["state"]}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/PluginCommandDisabledReasonCode"}}}}
+      ]
+    },
+    "PluginCommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "error_code", "retryable", "safe_message", "technical_details_ref", "effect_state"],
+      "properties": {
+        "schema_id": {"const": "pm.plugin.command_contracts.v1"},
+        "record_kind": {"const": "plugin_command_error"},
+        "error_code": {"$ref": "#/$defs/PluginCommandErrorCode"},
+        "retryable": {"type": "boolean"},
+        "safe_message": {"type": "string", "minLength": 1, "maxLength": 512},
+        "technical_details_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "effect_state": {"enum": ["none", "committed", "rolled_back", "partial", "unknown"]}
+      }
+    },
+    "PluginActionPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest_class", "portable_manifest_sha256", "pm_manifest_sha256", "legacy_manifest_sha256", "package_proof_ref", "conformance_refs", "permission_diff_ref", "update_diff_ref", "rollback_ref", "reload_authority_change_ref", "data_disposition", "bounded_projection_ref"],
+      "properties": {
+        "manifest_class": {"$ref": "#/$defs/PluginManifestClass"},
+        "portable_manifest_sha256": {"anyOf": [{"$ref": "#/$defs/Sha256"}, {"type": "null"}]},
+        "pm_manifest_sha256": {"anyOf": [{"$ref": "#/$defs/Sha256"}, {"type": "null"}]},
+        "legacy_manifest_sha256": {"anyOf": [{"$ref": "#/$defs/Sha256"}, {"type": "null"}]},
+        "migration_receipt_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "package_proof_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "conformance_refs": {"type": "array", "maxItems": 16, "uniqueItems": true, "items": {"$ref": "#/$defs/NonSecretRef"}},
+        "permission_diff_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "update_diff_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "rollback_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "reload_authority_change_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "data_disposition": {"enum": ["not_applicable", "retain_owned_data", "remove_owned_data", "migrate_owned_data", "recovery_required"]},
+        "bounded_projection_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512}
+      },
+      "allOf": [
+        {"if": {"properties": {"manifest_class": {"const": "pm_internal_interchange"}}, "required": ["manifest_class"]}, "then": {"properties": {"portable_manifest_sha256": {"$ref": "#/$defs/Sha256"}, "pm_manifest_sha256": {"type": "null"}, "legacy_manifest_sha256": {"type": "null"}}}},
+        {"if": {"properties": {"manifest_class": {"const": "pm_native"}}, "required": ["manifest_class"]}, "then": {"properties": {"portable_manifest_sha256": {"type": "null"}, "pm_manifest_sha256": {"$ref": "#/$defs/Sha256"}, "legacy_manifest_sha256": {"type": "null"}}}},
+        {"if": {"properties": {"manifest_class": {"const": "dual_manifest"}}, "required": ["manifest_class"]}, "then": {"properties": {"portable_manifest_sha256": {"$ref": "#/$defs/Sha256"}, "pm_manifest_sha256": {"$ref": "#/$defs/Sha256"}, "legacy_manifest_sha256": {"type": "null"}}}},
+        {"if": {"properties": {"manifest_class": {"const": "legacy_imported"}}, "required": ["manifest_class"]}, "then": {"required": ["migration_receipt_ref"], "properties": {"portable_manifest_sha256": {"type": "null"}, "pm_manifest_sha256": {"type": "null"}, "legacy_manifest_sha256": {"$ref": "#/$defs/Sha256"}, "migration_receipt_ref": {"$ref": "#/$defs/NonSecretRef"}}}}
+      ]
+    },
+    "PluginCommandRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "command_id", "operation", "command_instance_id", "idempotency_key", "origin", "package_id", "plugin_id", "project_id", "execution_host_id", "execution_environment_id", "topology_generation", "expected_package_generation", "expected_permission_generation", "permission_snapshot_ref", "confirmation_ref", "observable_work_ref", "return_context_ref", "payload"],
+      "properties": {
+        "schema_id": {"const": "pm.plugin.command_contracts.v1"},
+        "record_kind": {"const": "plugin_command_request"},
+        "command_id": {"$ref": "#/$defs/PluginCommandId"},
+        "operation": {"$ref": "#/$defs/PluginOperation"},
+        "command_instance_id": {"$ref": "#/$defs/Id"},
+        "idempotency_key": {"$ref": "#/$defs/Id"},
+        "origin": {"enum": ["plugins_gui", "settings_gui", "command_palette", "natural_language_user", "owner_reconciler"]},
+        "package_id": {"$ref": "#/$defs/Id"},
+        "plugin_id": {"$ref": "#/$defs/Id"},
+        "project_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "expected_package_generation": {"type": "integer", "minimum": 0},
+        "expected_permission_generation": {"type": "integer", "minimum": 0},
+        "permission_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "confirmation_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "observable_work_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "return_context_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "payload": {"$ref": "#/$defs/PluginActionPayload"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.scan"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "scan"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.install"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "install"}, "confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "payload": {"properties": {"package_proof_ref": {"$ref": "#/$defs/NonSecretRef"}, "conformance_refs": {"type": "array", "minItems": 1}, "permission_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "rollback_ref": {"$ref": "#/$defs/NonSecretRef"}}}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.update"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "update"}, "confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "payload": {"properties": {"package_proof_ref": {"$ref": "#/$defs/NonSecretRef"}, "conformance_refs": {"type": "array", "minItems": 1}, "permission_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "update_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "rollback_ref": {"$ref": "#/$defs/NonSecretRef"}}}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.enable"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "enable"}, "confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "payload": {"properties": {"manifest_class": {"enum": ["pm_native", "dual_manifest"]}, "package_proof_ref": {"$ref": "#/$defs/NonSecretRef"}, "conformance_refs": {"type": "array", "minItems": 1}, "permission_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "rollback_ref": {"$ref": "#/$defs/NonSecretRef"}}}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.disable"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "disable"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.reload"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "reload"}, "confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "payload": {"properties": {"package_proof_ref": {"$ref": "#/$defs/NonSecretRef"}, "conformance_refs": {"type": "array", "minItems": 1}, "permission_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "update_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "rollback_ref": {"$ref": "#/$defs/NonSecretRef"}, "reload_authority_change_ref": {"$ref": "#/$defs/NonSecretRef"}}}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.remove"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "remove"}, "confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "payload": {"properties": {"package_proof_ref": {"$ref": "#/$defs/NonSecretRef"}, "conformance_refs": {"type": "array", "minItems": 1}, "permission_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "rollback_ref": {"$ref": "#/$defs/NonSecretRef"}, "data_disposition": {"enum": ["retain_owned_data", "remove_owned_data", "migrate_owned_data", "recovery_required"]}}}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.validate"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "validate"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.review_changes"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "review_changes"}, "payload": {"properties": {"update_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "bounded_projection_ref": {"$ref": "#/$defs/NonSecretRef"}}}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.rollback"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "rollback"}, "confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "payload": {"properties": {"package_proof_ref": {"$ref": "#/$defs/NonSecretRef"}, "conformance_refs": {"type": "array", "minItems": 1}, "permission_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "update_diff_ref": {"$ref": "#/$defs/NonSecretRef"}, "rollback_ref": {"$ref": "#/$defs/NonSecretRef"}}}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.open_details"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "open_details"}, "observable_work_ref": {"type": "null"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.agent_plugin.open_logs"}}, "required": ["command_id"]}, "then": {"properties": {"operation": {"const": "open_logs"}, "observable_work_ref": {"type": "null"}}}}
+      ]
+    },
+    "PluginCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "result_id", "command_id", "command_instance_id", "package_id", "plugin_id", "prior_package_generation", "result_package_generation", "outcome", "state_changed", "package_status_before", "package_status_after", "availability", "permission_decision_ref", "component_result_refs", "conformance_refs", "permission_diff_ref", "update_diff_ref", "supply_chain_ref", "rollback_ref", "bounded_projection_ref", "observable_work_ref", "return_settlement", "error", "receipt_ref", "event_effect_policy", "completed_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.plugin.command_contracts.v1"},
+        "record_kind": {"const": "plugin_command_result"},
+        "result_id": {"$ref": "#/$defs/Id"},
+        "command_id": {"$ref": "#/$defs/PluginCommandId"},
+        "command_instance_id": {"$ref": "#/$defs/Id"},
+        "package_id": {"$ref": "#/$defs/Id"},
+        "plugin_id": {"$ref": "#/$defs/Id"},
+        "prior_package_generation": {"type": "integer", "minimum": 0},
+        "result_package_generation": {"type": "integer", "minimum": 0},
+        "outcome": {"enum": ["succeeded", "failed", "cancelled", "rejected", "recovery_required", "no_effect"]},
+        "state_changed": {"type": "boolean"},
+        "package_status_before": {"$ref": "#/$defs/PluginPackageStatus"},
+        "package_status_after": {"$ref": "#/$defs/PluginPackageStatus"},
+        "availability": {"$ref": "#/$defs/PluginCommandAvailability"},
+        "permission_decision_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "component_result_refs": {"type": "array", "maxItems": 2048, "uniqueItems": true, "items": {"$ref": "#/$defs/NonSecretRef"}},
+        "conformance_refs": {"type": "array", "maxItems": 16, "uniqueItems": true, "items": {"$ref": "#/$defs/NonSecretRef"}},
+        "permission_diff_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "update_diff_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "supply_chain_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "rollback_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "bounded_projection_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "observable_work_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 512},
+        "return_settlement": {"$ref": "#/$defs/ReturnSettlement"},
+        "error": {"anyOf": [{"$ref": "#/$defs/PluginCommandError"}, {"type": "null"}]},
+        "receipt_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "event_effect_policy": {"const": "receipt_only_no_eventrecord_pending_event_authority"},
+        "completed_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"enum": ["failed", "rejected", "recovery_required"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"$ref": "#/$defs/PluginCommandError"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["succeeded", "cancelled", "no_effect"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"type": "null"}}}},
+        {"if": {"properties": {"availability": {"properties": {"state": {"enum": ["unavailable", "busy", "blocked", "recovery_required"]}}, "required": ["state"]}}, "required": ["availability"]}, "then": {"properties": {"outcome": {"const": "rejected"}, "state_changed": {"const": false}}}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.agent_plugin.scan", "cmd.agent_plugin.validate", "cmd.agent_plugin.review_changes", "cmd.agent_plugin.open_details", "cmd.agent_plugin.open_logs"]}, "availability": {"properties": {"state": {"const": "available"}}, "required": ["state"]}}, "required": ["command_id", "availability"]}, "then": {"properties": {"outcome": {"const": "no_effect"}, "state_changed": {"const": false}}}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.agent_plugin.update", "cmd.agent_plugin.reload", "cmd.agent_plugin.review_changes", "cmd.agent_plugin.rollback"]}}, "required": ["command_id"]}, "then": {"properties": {"update_diff_ref": {"$ref": "#/$defs/NonSecretRef"}}}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.agent_plugin.review_changes", "cmd.agent_plugin.open_details", "cmd.agent_plugin.open_logs"]}}, "required": ["command_id"]}, "then": {"properties": {"bounded_projection_ref": {"$ref": "#/$defs/NonSecretRef"}}}},
+        {"if": {"properties": {"command_id": {"enum": ["cmd.agent_plugin.open_details", "cmd.agent_plugin.open_logs"]}}, "required": ["command_id"]}, "then": {"properties": {"observable_work_ref": {"type": "null"}}}}
+      ]
+    }
+  }
+}

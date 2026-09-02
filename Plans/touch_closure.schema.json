@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/touch_closure.schema.json",
+  "title": "Puppet Master Touch Closure Matrix",
+  "description": "Each compact action row resolves through exactly one closure profile. The validator expands every row and fails closed unless all Touch Closure columns are complete.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "invariants", "external_disposition_registries", "profiles", "row_columns", "rows", "alias_bindings", "excluded_tokens"],
+  "properties": {
+    "schema_id": {"const": "pm.touch_closure.v2"},
+    "schema_version": {"const": "2.1.0"},
+    "invariants": {"type": "array", "minItems": 10, "items": {"$ref": "#/$defs/invariant"}},
+    "external_disposition_registries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/external_disposition_registry"}
+    },
+    "profiles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/profile"}},
+    "row_columns": {"const": ["touch_id", "profile_id", "action_kind", "action_id", "disposition", "residual_risk"]},
+    "rows": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/row"}},
+    "alias_bindings": {
+      "type": "object",
+      "propertyNames": {"pattern": "^cmd\\.[a-z0-9_.-]+$"},
+      "additionalProperties": {"$ref": "#/$defs/alias_binding"}
+    },
+    "excluded_tokens": {"type": "array", "items": {"$ref": "#/$defs/excluded_token"}}
+  },
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1},
+    "string_array": {"type": "array", "items": {"$ref": "#/$defs/non_empty_string"}},
+    "invariant": {
+      "type": "object", "additionalProperties": false, "required": ["invariant_id", "rule"],
+      "properties": {"invariant_id": {"type": "string", "pattern": "^TCI-[0-9]{3}$"}, "rule": {"$ref": "#/$defs/non_empty_string"}}
+    },
+    "external_disposition_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry_id", "source_path", "json_pointer", "source_sha256", "owner_plan", "plan_unit",
+        "expected_token_count", "expected_disposition_counts", "canonical_target_count",
+        "typed_local_ui_action_count", "manager_registry_count", "named_projection_count"
+      ],
+      "properties": {
+        "registry_id": {"type": "string", "pattern": "^TCR-[A-Z0-9-]+$"},
+        "source_path": {"type": "string", "pattern": "^Plans/[^/].*\\.json$"},
+        "json_pointer": {"type": "string", "pattern": "^/"},
+        "source_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "owner_plan": {"type": "string", "pattern": "^Plans/[^/].*\\.md$"},
+        "plan_unit": {"type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{3}$"},
+        "expected_token_count": {"type": "integer", "minimum": 1},
+        "expected_disposition_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reuse_canonical_command", "superseded_by_typed_local_ui_action",
+            "retired_bakeoff_only", "rejected_with_reason"
+          ],
+          "properties": {
+            "reuse_canonical_command": {"type": "integer", "minimum": 0},
+            "superseded_by_typed_local_ui_action": {"type": "integer", "minimum": 0},
+            "retired_bakeoff_only": {"type": "integer", "minimum": 0},
+            "rejected_with_reason": {"type": "integer", "minimum": 0}
+          }
+        },
+        "canonical_target_count": {"type": "integer", "minimum": 0},
+        "typed_local_ui_action_count": {"type": "integer", "minimum": 0},
+        "manager_registry_count": {"type": "integer", "minimum": 0},
+        "named_projection_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "profile_id", "requirement_refs", "owner_plan", "plan_unit", "dry_contract_ref",
+        "payload_schema_ref", "result_schema_ref", "error_schema_ref", "availability_rule",
+        "permission_gate", "disabled_reason_rule", "handler_owner", "handler_status", "wiring_status",
+        "production_or_simulation", "gui_triggers", "return_route", "reverse_consumers", "event_refs",
+        "receipt_refs", "observable_work", "persistence_refs", "migration_refs", "test_refs", "evidence_refs"
+      ],
+      "properties": {
+        "profile_id": {"type": "string", "pattern": "^TCP-[A-Z0-9-]+$"},
+        "requirement_refs": {"$ref": "#/$defs/string_array", "minItems": 1},
+        "owner_plan": {"type": "string", "pattern": "^Plans/[^/].*\\.md$"},
+        "plan_unit": {"type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{3}$"},
+        "dry_contract_ref": {"$ref": "#/$defs/non_empty_string"},
+        "payload_schema_ref": {"$ref": "#/$defs/non_empty_string"},
+        "result_schema_ref": {"$ref": "#/$defs/non_empty_string"},
+        "error_schema_ref": {"$ref": "#/$defs/non_empty_string"},
+        "availability_rule": {"$ref": "#/$defs/non_empty_string"},
+        "permission_gate": {"$ref": "#/$defs/non_empty_string"},
+        "disabled_reason_rule": {"$ref": "#/$defs/non_empty_string"},
+        "handler_owner": {"$ref": "#/$defs/non_empty_string"},
+        "handler_status": {"enum": ["absent", "specified", "implemented", "verified"]},
+        "wiring_status": {"enum": ["absent", "specified", "concept_simulated", "verified"]},
+        "production_or_simulation": {"$ref": "#/$defs/non_empty_string"},
+        "gui_triggers": {"$ref": "#/$defs/string_array", "minItems": 1},
+        "return_route": {"$ref": "#/$defs/non_empty_string"},
+        "reverse_consumers": {"$ref": "#/$defs/string_array", "minItems": 1},
+        "event_refs": {"$ref": "#/$defs/string_array"},
+        "receipt_refs": {"$ref": "#/$defs/string_array"},
+        "observable_work": {"$ref": "#/$defs/string_array"},
+        "persistence_refs": {"$ref": "#/$defs/string_array"},
+        "migration_refs": {"$ref": "#/$defs/string_array"},
+        "test_refs": {"$ref": "#/$defs/string_array", "minItems": 1},
+        "evidence_refs": {"$ref": "#/$defs/string_array"}
+      }
+    },
+    "row": {
+      "type": "array", "minItems": 6, "maxItems": 6,
+      "prefixItems": [
+        {"type": "string", "pattern": "^TOUCH-[A-Z0-9]+-[0-9]{3}$"},
+        {"type": "string", "pattern": "^TCP-[A-Z0-9-]+$"},
+        {"enum": ["command", "command_alias", "ui_action", "presentation"]},
+        {"type": "string", "pattern": "^(cmd|ui|settings)\\.[a-z0-9_.-]+$"},
+        {"enum": ["implemented", "already_current_with_evidence", "superseded", "retired_bakeoff_process_only", "partial", "blocked", "missing"]},
+        {"$ref": "#/$defs/non_empty_string"}
+      ]
+    },
+    "alias_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact_target", "normalization_phase", "source_registered", "independent_handler_allowed",
+        "independent_wiring_allowed", "availability_source", "handler_dispatch_token", "canonical_handler_id",
+        "source_receipt_identity", "domain_event_emitted_by_alias"
+      ],
+      "properties": {
+        "exact_target": {"type": "string", "pattern": "^cmd\\.[a-z0-9_.-]+$"},
+        "normalization_phase": {"const": "before_permission_and_dispatch"},
+        "source_registered": {"const": false},
+        "independent_handler_allowed": {"const": false},
+        "independent_wiring_allowed": {"const": false},
+        "availability_source": {"type": "string", "pattern": "^cmd\\.[a-z0-9_.-]+$"},
+        "handler_dispatch_token": {"type": "string", "pattern": "^cmd\\.[a-z0-9_.-]+$"},
+        "canonical_handler_id": {"type": "string", "minLength": 1},
+        "source_receipt_identity": {"const": "preserve_invoked_alias_as_compatibility_source_only"},
+        "domain_event_emitted_by_alias": {"const": false}
+      }
+    },
+    "excluded_token": {
+      "type": "object", "additionalProperties": false,
+      "required": ["token", "classification", "source_refs", "reason", "replacement"],
+      "properties": {
+        "token": {"type": "string", "pattern": "^cmd\\.[a-z0-9_.-]+$"},
+        "classification": {"enum": ["documentation_family", "forbidden", "fixture_only_unregistered_external_owner", "retired_bakeoff_only", "superseded_by_typed_local_ui_action"]},
+        "source_refs": {"$ref": "#/$defs/string_array", "minItems": 1},
+        "reason": {"$ref": "#/$defs/non_empty_string"},
+        "replacement": {"type": "string"}
+      }
+    }
+  }
+}

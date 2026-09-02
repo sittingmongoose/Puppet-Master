@@ -33,6 +33,7 @@ html[data-ab-ready] .activity-item .state-mark { display: none; }
 html[data-ab-ready] .activity-item[data-hover-domain="goal"]      { --ab-ink: var(--ab-ink-goal);      --ab-anim: var(--ab-anim-goal);      --ab-shadow: var(--ab-shadow-goal); --ab-stroke: var(--ab-stroke-goal); }
 html[data-ab-ready] .activity-item[data-hover-domain="todo"]      { --ab-ink: var(--ab-ink-todo);      --ab-anim: var(--ab-anim-todo);      --ab-shadow: var(--ab-shadow-todo); --ab-stroke: var(--ab-stroke-todo); }
 html[data-ab-ready] .activity-item[data-hover-domain="subagents"] { --ab-ink: var(--ab-ink-subagents); --ab-anim: var(--ab-anim-subagents); --ab-shadow: var(--ab-shadow-subagents); --ab-stroke: var(--ab-stroke-subagents); }
+html[data-ab-ready] .activity-item[data-hover-domain="crew"]      { --ab-ink: var(--ab-ink-crew);      --ab-anim: var(--ab-anim-crew);      --ab-shadow: var(--ab-shadow-crew); --ab-stroke: var(--ab-stroke-crew); }
 html[data-ab-ready] .activity-item[data-hover-domain="changes"]   { --ab-ink: var(--ab-ink-changes);   --ab-anim: var(--ab-anim-changes);   --ab-shadow: var(--ab-shadow-changes); --ab-stroke: var(--ab-stroke-changes); }
 html[data-ab-ready] .activity-item[data-hover-domain="artifacts"] { --ab-ink: var(--ab-ink-artifacts); --ab-anim: var(--ab-anim-artifacts); --ab-shadow: var(--ab-shadow-artifacts); --ab-stroke: var(--ab-stroke-artifacts); }
 
@@ -96,6 +97,25 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::before {
 html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
   content: var(--ab-del, ""); order: 3; color: var(--danger);
 }
+
+/* Icon Dock (Demo Studio Chat Activity Bar #3, data-variant="2"): separate
+   bordered tiles that carry the same icon / label / count as Extended PM7,
+   including Changes +N −M. Width follows content, not a 38px icon slot.
+   Compact tiers (label drop, then icon-only) are the same as every other
+   variant; tiles stay bordered squares at the last tier. */
+.activity-bar[data-variant="2"] .activity-item {
+  width: auto;
+  min-width: max-content;
+  flex: 0 0 auto;
+  padding: 0 12px;
+  gap: 6px;
+}
+html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2"] .activity-item {
+  width: 30px;
+  min-width: 30px;
+  padding: 0;
+  gap: 0;
+}
 /* Below 560px the bar is already a horizontal scroller; the totals are the
    first thing to drop, because the hover card still states them exactly. */
 @media (max-width: 560px) {
@@ -110,6 +130,8 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
   width: min(354px, calc(100vw - 16px));
   padding: 0;
   overflow: hidden;
+  border-radius: 12px;
+  background: var(--surface-2);
   /* Column flex + a viewport cap so the card fits a short window; .ab-body is
      the part that gives. Without this the card simply grew past the bottom. */
   display: flex; flex-direction: column;
@@ -138,22 +160,35 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
 .ab-card .ab-head, .ab-card .ab-foot { flex: 0 0 auto; }
 .ab-card .ab-head {
   display: flex; align-items: center; gap: 7px;
-  padding: 8px 10px 7px;
+  min-height: 44px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-3) 55%, transparent);
+  background: var(--surface-2);
 }
-.ab-card .ab-head strong { display: block; font-size: 11px; font-weight: 700; color: var(--text); }
+.ab-card .ab-head strong { display: block; font-size: 14px; line-height: 18px; font-weight: 650; color: var(--text); }
 .ab-card .ab-head-meta {
   margin-left: auto; flex: 0 0 auto;
-  font-size: 9px; color: var(--muted); font-variant-numeric: tabular-nums;
+  font-size: 11px; line-height: 15px; color: var(--muted); font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 .ab-card .ab-head-icon {
-  width: 21px; height: 21px; flex: 0 0 auto;
+  position: relative;
+  width: 24px; height: 24px; flex: 0 0 auto;
   display: grid; place-items: center; border-radius: 7px;
-  color: var(--ab-t, var(--accent));
-  background: color-mix(in srgb, var(--ab-t, var(--accent)) 15%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ab-t, var(--accent)) 34%, transparent);
+  color: var(--muted);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+}
+.ab-card .ab-head-icon::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 6px;
+  height: 6px;
+  border: 2px solid var(--surface-2);
+  border-radius: 50%;
+  background: var(--ab-t,var(--subtle));
 }
 
 /* One tone vocabulary for every glyph, avatar and right-hand value in the
@@ -168,15 +203,16 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
 
 .ab-card .ab-body {
   display: flex; flex-direction: column; gap: 1px;
-  padding: 5px;
+  padding: 4px;
   flex: 0 1 auto; min-height: 0;
-  max-height: 262px; overflow: auto; overscroll-behavior: contain;
+  max-height: 270px; overflow: auto; overscroll-behavior: contain;
   scrollbar-width: thin;
 }
 .ab-card .ab-row {
   display: flex; align-items: center; gap: 8px;
   width: 100%; min-width: 0;
-  padding: 5px 6px; border-radius: 8px;
+  min-height: 48px;
+  padding: 7px 8px; border-radius: 7px;
   background: transparent; border: 0; text-align: left;
   color: inherit;
 }
@@ -188,16 +224,17 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
 
 .ab-card .ab-row-copy { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .ab-card .ab-row-copy b {
-  font-size: 10px; font-weight: 650; color: var(--text);
+  font-size: 13px; line-height: 17px; font-weight: 600; color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .ab-card .ab-row-copy i {
-  font-style: normal; font-size: 9px; color: var(--muted);
+  font-style: normal; font-size: 11.5px; line-height: 16px; color: var(--muted);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .ab-card .ab-row-right {
-  flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
-  font-size: 9px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+  flex: 0 0 68px; width: 68px; display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
+  overflow: hidden; font-size: 10.5px; line-height: 15px; color: var(--muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .ab-card .ab-row-right b { font-weight: 650; color: var(--ab-t, var(--muted)); }
 .ab-card .ab-row-right i { font-style: normal; color: var(--ab-t, var(--subtle)); }
@@ -205,33 +242,58 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
 .ab-card .ab-diff b { color: var(--positive); }
 .ab-card .ab-diff i { color: var(--danger); }
 
-.ab-card .ab-glyph {
-  width: 19px; height: 19px; flex: 0 0 auto;
-  display: grid; place-items: center; border-radius: 6px;
-  color: var(--ab-t, var(--subtle));
-  background: color-mix(in srgb, var(--ab-t, var(--subtle)) 13%, transparent);
-}
 .ab-card .ab-avatar {
-  width: 21px; height: 21px; flex: 0 0 auto;
+  position: relative;
+  width: 28px; height: 28px; flex: 0 0 auto;
   display: grid; place-items: center; border-radius: 7px;
-  font-size: 8px; font-weight: 700; letter-spacing: .02em;
-  color: var(--ab-t, var(--subtle));
-  background: color-mix(in srgb, var(--ab-t, var(--subtle)) 15%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ab-t, var(--subtle)) 30%, transparent);
+  font-size: 10px; font-weight: 650; letter-spacing: .02em;
+  color: var(--muted);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+}
+.ab-card .ab-avatar::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 6px;
+  height: 6px;
+  border: 2px solid var(--surface-2);
+  border-radius: 50%;
+  background: var(--ab-t,var(--subtle));
 }
 
-.ab-card .ab-more { padding: 5px 8px 3px; font-size: 9px; color: var(--muted); }
-.ab-card .ab-empty { padding: 12px 8px; font-size: 10px; color: var(--muted); }
+.ab-card .ab-more { padding: 6px 8px 5px 8px; font-size: 11px; color: var(--muted); }
+.ab-card .ab-empty { padding: 14px 8px; font-size: 12px; line-height: 17px; color: var(--muted); }
 .ab-card .ab-foot {
-  padding: 6px 10px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 34px;
+  padding: 7px 10px 7px 12px;
   border-top: 1px solid var(--border);
-  font-size: 9px; color: var(--muted); font-variant-numeric: tabular-nums;
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+.ab-card .ab-foot:hover,
+.ab-card .ab-foot:focus-visible {
+  background: var(--surface-3);
+  outline: none;
+}
+.ab-card .ab-foot:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--border-strong);
 }
 
 /* Goal card: the objective, then whatever the Goals module publishes. */
 .ab-card .ab-objective {
-  font-size: 10.5px; line-height: 1.35; color: var(--text);
-  margin: 2px 2px 7px;
+  font-size: 13px; line-height: 18px; color: var(--text);
+  margin: 4px 4px 8px;
 }
 .ab-card .ab-pips { display: flex; gap: 4px; margin: 0 2px 7px; }
 .ab-card .ab-pips i { flex: 1 1 0; height: 4px; border-radius: 3px; background: var(--surface-4); }
@@ -239,18 +301,202 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
 .ab-card .ab-pips i[data-state="in_progress"] { background: var(--accent); }
 .ab-card .ab-goal-lines {
   display: flex; flex-direction: column; gap: 2px;
-  margin: 0 2px 2px; font-size: 9px; color: var(--muted);
+  margin: 0 4px 4px; font-size: 11.5px; line-height: 16px; color: var(--muted);
+}
+.hover-card.ab-card .goal-compact { gap: 7px; padding: 4px; }
+.hover-card.ab-card .goal-compact-head strong { font-size: 13px; line-height: 17px; }
+.hover-card.ab-card .goal-compact-line { font-size: 11.5px; line-height: 16px; }
+.hover-card.ab-card .goal-compact-list { gap: 0; }
+.hover-card.ab-card .goal-compact-list li {
+  min-height: 30px;
+  grid-template-columns: 15px minmax(0,1fr) auto;
+  gap: 7px;
+  border-top: 1px solid var(--border);
+  font-size: 11.5px;
+}
+.hover-card.ab-card .goal-compact-state { font-size: 10.5px; }
+.hover-card.ab-card .goal-compact-blocker {
+  padding: 7px;
+  border-radius: 7px;
+  background: color-mix(in srgb,var(--warning) 8%,var(--surface-3));
+  color: var(--warning);
+  font-size: 11.5px;
+  line-height: 16px;
+}
+
+@media (max-width: 319px) {
+  .ab-card .ab-row-copy i { display: none; }
 }
 
 /* =====================================================================
-   4. The bar degrades on ITS OWN width, not the window's.
+   4. Activity bar + queue sit in flow between decision and composer.
    ---------------------------------------------------------------------
-   styles.css drops `.label` at a 1180px and a 700px VIEWPORT width, but the
-   activity bar lives inside the assistant pane, whose width is set by the
-   editor split — at 1440px with the editor open the pane is 433px while the
-   viewport query still thinks there is room for everything. That mismatch is
-   what starved the icons. A container query asks the right question.
+   The wrap used to be a full-width layout stripe (border, surface fill,
+   min-height 45px). The inner pill already looked floating; the stripe is
+   the box that goes away. `.chat-float` is an in-flow grid row so Plan /
+   questionnaire hosts sit visually above the Activity Bar. Jump-to-bottom
+   is still `position:absolute; bottom:100%` on this relative stack.
+   `--chat-dock-h` is the composer height (transient Activity Detail
+   clearance). `--thread-float-h` is unused for transcript padding now that
+   the bar no longer overlays the thread.
+
+   Compact is pane-width, not viewport-width: three tiers with ~8px
+   hysteresis (labeled → icon+count → icon-only), applied to every
+   variant including Icon Dock. Domain Grid must not shrink below
+   content and clip nowrap labels.
    ===================================================================== */
+.chat-stage {
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+}
+.chat-float {
+  position: relative;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 0 10px 8px;
+  pointer-events: none;
+}
+.chat-float .activity-wrap {
+  position: relative;
+  left: auto; right: auto; bottom: auto;
+  border: 0;
+  background: transparent;
+  min-height: 0;
+  padding: 0;
+  pointer-events: none;
+  z-index: 8;
+}
+.chat-float .activity-bar { pointer-events: auto; margin: 0 auto; }
+
+/* Scroll-to-bottom: overlay the transcript, right side, just above the bar.
+   Absolute so it does not grow --thread-float-h. Hidden until the reader
+   leaves the bottom; working treatment is accent + breathe like the bar. */
+.jump-bottom {
+  position: absolute;
+  right: 10px;
+  bottom: calc(100% + var(--decision-h, 0px) + 8px);
+  z-index: 9;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-2);
+  box-shadow: 0 8px 25px rgb(0 0 0 / .12);
+  color: var(--subtle);
+  cursor: pointer;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 160ms var(--ease, ease), visibility 0s linear 160ms, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+}
+.jump-bottom.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+}
+.jump-bottom > svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.jump-bottom.is-working {
+  color: var(--accent);
+}
+.jump-bottom.is-working > svg {
+  stroke-width: 2.1;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 60%, transparent));
+  animation: ab-breathe 2200ms ease-in-out infinite, jump-bounce 1400ms ease-in-out infinite;
+}
+@keyframes jump-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+.jump-bottom:hover {
+  color: var(--text);
+  background: var(--surface-3);
+}
+.jump-bottom.is-working:hover { color: var(--accent); }
+
+.chat-stage .transcript {
+  padding-top: calc(18px + var(--lens-strip-h, 0px));
+  padding-bottom: 24px;
+}
+@media (max-width: 820px) {
+  .chat-stage .transcript {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+}
+@media (max-width: 590px) {
+  .chat-stage .transcript {
+    padding-top: calc(12px + var(--lens-strip-h, 0px));
+    padding-bottom: 16px;
+  }
+}
+
+.activity-panel.transient {
+  bottom: 10px;
+}
+
+html[data-ab-ready] .activity-bar {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+html[data-ab-ready] .activity-bar::-webkit-scrollbar { display: none; }
+/* Domain Grid: size to content, then compact/overflow — never squeeze labels. */
+html[data-ab-ready] .activity-bar[data-variant="3"] {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  max-width: 100%;
+  gap: 0;
+  overflow-x: auto;
+  grid-template-columns: none;
+}
+html[data-ab-ready] .activity-bar .activity-item {
+  flex: 0 0 auto;
+  min-width: max-content;
+}
+html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item {
+  min-width: 0;
+}
+
+/* JS-driven compact beats viewport media that hid labels at 1100/590/390. */
+html[data-ab-ready] .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label {
+  display: inline;
+}
+html[data-ab-ready] .activity-wrap.is-ab-compact .activity-item .label,
+html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item .label { display: none; }
+html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item .count { display: inline; }
+html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count {
+  display: inline-flex;
+}
+html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item .count { display: none; }
+html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8px; }
+
+@media (max-width: 1100px) {
+  html[data-ab-ready] .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label { display: inline; }
+}
+@media (max-width: 590px) {
+  html[data-ab-ready] .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label { display: inline; }
+}
+@media (max-width: 390px) {
+  html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item .count { display: inline; }
+  html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count {
+    display: inline-flex;
+  }
+}
+
 .activity-wrap { container: pmActivityBar / inline-size; }
 
 /* Tier 1 — tighten before deleting. Measured: the five labelled items need
@@ -258,8 +504,9 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
    14px of trim buys the labels back rather than removing them. */
 @container pmActivityBar (max-width: 700px) {
   html[data-ab-ready] .activity-item { padding: 0 6px; gap: 4px; }
-  html[data-ab-ready] .activity-item .label { font-size: 9.5px; }
-  html[data-ab-ready] .activity-item .count { font-size: 8.5px; }
+  html[data-ab-ready] .activity-item .label { font-size: 10.5px; }
+  html[data-ab-ready] .activity-item .count { font-size: 9.5px; }
+  html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8px; }
   /* Items keep their size and the bar scrolls, instead of every item being
      squeezed until its nowrap text clips. `.activity-bar` already carries
      overscroll-behavior:contain from Wave 1B; the 4px bar padding leaves room
@@ -268,21 +515,9 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
   html[data-ab-ready] .activity-bar::-webkit-scrollbar { display: none; }
   html[data-ab-ready] .activity-item { flex: 0 0 auto; }
 }
-/* Tier 2 — now the labels go; the hover card names every domain in full.
-   Measured at 1440x900 with the editor pane open (container = 413px): five
-   labelled items need 503px and cannot be tightened into that, while the same
-   five icon-and-count items need 272px. 520px is where the labelled row stops
-   fitting, so that is where it stops being drawn. */
-@container pmActivityBar (max-width: 520px) {
-  html[data-ab-ready] .activity-item .label { display: none; }
-  html[data-ab-ready] .activity-item { padding: 0 8px; gap: 6px; }
-}
 @container pmActivityBar (max-width: 330px) {
   html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::before,
   html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after { content: ""; }
-}
-@container pmActivityBar (max-width: 250px) {
-  html[data-ab-ready] .activity-item .count { display: none; }
 }
 @container pmActivityBar (max-width: 220px) {
   html[data-ab-ready] .activity-bar { justify-content: flex-start; }
@@ -297,4 +532,6 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
    ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
   html[data-ab-ready] .activity-item > svg { animation: none !important; }
+  .hover-card.ab-card { animation: none !important; }
+  .jump-bottom.is-working > svg { animation: none !important; }
 }

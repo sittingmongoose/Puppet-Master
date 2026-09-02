@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.cursor_origin.integration_fixtures.v1",
+  "owner_schema": "Plans/forge_integration_contracts.schema.json",
+  "valid": [
+    {
+      "name": "origin_preview_adapter_profile",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "cursor_origin",
+        "provider_variant": "preview",
+        "host_class": "preview_hosted",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "checks",
+        "auth_methods": ["app_installation", "jit_token", "cli_session_ref"],
+        "required_capabilities": ["repository", "review", "transport"],
+        "optional_capabilities": ["review_threads", "review_versions", "checks", "mirror", "apps", "webhooks"],
+        "version_or_tier_gate": "signed_preview_eligibility_catalog",
+        "official_page_route_ref": "official-page:cursor-origin:install-app",
+        "structured_cli_fallback": true,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": ["preview_not_eligible", "adapter_contract_unknown", "origin_cli_missing_on_selected_environment"]
+      }
+    },
+    {
+      "name": "origin_app_installation",
+      "definition": "app_installation",
+      "value": {
+        "schema_id": "pm.forge.app_installation.v1",
+        "installation_id": "origin-installation:1",
+        "provider": "cursor_origin",
+        "account_id": "account:origin:1",
+        "provider_installation_id": "origin-app-installation:481",
+        "grant_refs": ["grant:origin:repo:alpha", "grant:origin:review:alpha"],
+        "state": "active",
+        "credential_key_ref": "credential-key:origin-app-ed25519:1",
+        "created_at_utc": "2026-08-31T14:00:00Z",
+        "updated_at_utc": "2026-08-31T14:01:00Z"
+      }
+    },
+    {
+      "name": "origin_five_minute_installation_receipt",
+      "definition": "installation_receipt",
+      "value": {
+        "schema_id": "pm.forge.installation_receipt.v1",
+        "provider": "cursor_origin",
+        "state": "anti-forgery-state:1",
+        "issuer": "https://origin.cursor.example",
+        "audience": "puppet-master-origin-app",
+        "installation_identity": "origin-app-installation:481",
+        "issued_at_utc": "2026-08-31T14:00:00Z",
+        "expires_at_utc": "2026-08-31T14:05:00Z",
+        "valid_for_seconds": 300,
+        "nonce": "nonce:origin:1",
+        "signature_key_id": "origin-jwks:key-4",
+        "verification_state": "verified",
+        "consumed_at_utc": "2026-08-31T14:01:00Z"
+      }
+    },
+    {
+      "name": "origin_jit_repo_token_lease",
+      "definition": "token_lease",
+      "value": {
+        "schema_id": "pm.forge.installation_token_lease.v1",
+        "token_lease_id": "origin-token-lease:1",
+        "provider": "cursor_origin",
+        "installation_ref": "origin-installation:1",
+        "repository_binding_ref": "forge-binding:origin:alpha",
+        "scope_grant_refs": ["grant:origin:repo:alpha", "grant:origin:transport:alpha"],
+        "credential_ref": "credential:origin:jit:lease-1",
+        "issued_at_utc": "2026-08-31T14:00:00Z",
+        "expires_at_utc": "2026-08-31T14:15:00Z",
+        "ttl_seconds": 900,
+        "state": "active"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "origin_is_not_an_scm_backend",
+      "definition": "provider_adapter_profile",
+      "expected_error": "origin must remain forge_provider=cursor_origin",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "origin",
+        "provider_variant": "preview",
+        "host_class": "preview_hosted",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "checks",
+        "auth_methods": ["jit_token"],
+        "required_capabilities": ["repository"],
+        "optional_capabilities": [],
+        "version_or_tier_gate": "preview",
+        "official_page_route_ref": "official-page:cursor-origin",
+        "structured_cli_fallback": true,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": []
+      }
+    },
+    {
+      "name": "origin_installation_receipt_exceeds_five_minutes",
+      "definition": "installation_receipt",
+      "expected_error": "Origin receipt lifetime must be exactly 300 seconds",
+      "value": {
+        "schema_id": "pm.forge.installation_receipt.v1",
+        "provider": "cursor_origin",
+        "state": "anti-forgery-state:bad",
+        "issuer": "https://origin.cursor.example",
+        "audience": "puppet-master-origin-app",
+        "installation_identity": "origin-app-installation:bad",
+        "issued_at_utc": "2026-08-31T14:00:00Z",
+        "expires_at_utc": "2026-08-31T14:05:01Z",
+        "valid_for_seconds": 301,
+        "nonce": "nonce:origin:bad",
+        "signature_key_id": "origin-jwks:key-4",
+        "verification_state": "verified",
+        "consumed_at_utc": null
+      }
+    },
+    {
+      "name": "origin_jit_token_exceeds_fifteen_minutes",
+      "definition": "token_lease",
+      "expected_error": "Origin JIT token lifetime cannot exceed 900 seconds",
+      "value": {
+        "schema_id": "pm.forge.installation_token_lease.v1",
+        "token_lease_id": "origin-token-lease:bad",
+        "provider": "cursor_origin",
+        "installation_ref": "origin-installation:1",
+        "repository_binding_ref": "forge-binding:origin:alpha",
+        "scope_grant_refs": ["grant:origin:repo:alpha"],
+        "credential_ref": "credential:origin:jit:bad",
+        "issued_at_utc": "2026-08-31T14:00:00Z",
+        "expires_at_utc": "2026-08-31T14:15:01Z",
+        "ttl_seconds": 901,
+        "state": "active"
+      }
+    },
+    {
+      "name": "origin_webhook_requires_ed25519",
+      "definition": "signed_webhook_delivery",
+      "expected_error": "Cursor Origin webhooks require Ed25519",
+      "value": {
+        "schema_id": "pm.forge.signed_webhook_delivery.v1",
+        "provider": "cursor_origin",
+        "delivery_id": "origin-delivery:bad-algorithm",
+        "repository_binding_ref": "forge-binding:origin:1",
+        "received_at_utc": "2026-08-31T13:04:00Z",
+        "provider_timestamp_utc": "2026-08-31T13:03:58Z",
+        "raw_body_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "signature_key_id": "origin-jwks:key-4",
+        "signature_algorithm": "hmac_sha256",
+        "verification_state": "verified_before_parse",
+        "replay_state": "fresh",
+        "dedupe_state": "new",
+        "ack_state": "acknowledged",
+        "recovery_state": "not_required"
+      }
+    }
+  ]
+}
