@@ -2,10 +2,55 @@
   "overall": "FAIL",
   "checks": [
     {
+      "name": "direct-file:api",
+      "status": "PASS",
+      "detail": {}
+    },
+    {
+      "name": "direct-file:history",
+      "status": "FAIL",
+      "detail": {
+        "history": false,
+        "selectors": 0,
+        "triggers": 90,
+        "hOverflow": 0
+      }
+    },
+    {
+      "name": "direct-file:selectors",
+      "status": "FAIL",
+      "detail": {
+        "history": false,
+        "selectors": 0,
+        "triggers": 90,
+        "hOverflow": 0
+      }
+    },
+    {
+      "name": "direct-file:triggers",
+      "status": "PASS",
+      "detail": {
+        "history": false,
+        "selectors": 0,
+        "triggers": 90,
+        "hOverflow": 0
+      }
+    },
+    {
+      "name": "direct-file:no-horizontal-overflow",
+      "status": "PASS",
+      "detail": {
+        "history": false,
+        "selectors": 0,
+        "triggers": 90,
+        "hOverflow": 0
+      }
+    },
+    {
       "name": "runner",
       "status": "FAIL",
       "detail": {
-        "error": "Error: Playwright unavailable\n    at pw (file:///mnt/data/work/pm56_pro_reaudit/tests/standalone-smoke.mjs:4:203)\n    at async file:///mnt/data/work/pm56_pro_reaudit/tests/standalone-smoke.mjs:6:13"
+        "error": "page.evaluate: TypeError: window.PM56_DEMO.auditInvariants is not a function\n    at eval (eval at evaluate (:311:30), <anonymous>:1:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/tests/standalone-smoke.mjs:6:1963"
       }
     }
   ],

@@ -219,3 +219,131 @@ compile_disposition: extend_existing_owner
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/touch_closure.json
+
+## 9. Assistant Plan consumer boundary (2026-09-03)
+
+Three durable meanings share the English word `Plan` and this document owns exactly one of them. `AssistantPlan` is a thread-scoped task Plan owned by `Plans/Assistant_Plan_Runtime.md`. `NamedPlan` is the durable cross-surface aggregate owned by this document. Canonical repository `Plans/**` documents plus their canonical PlanUnits are the Puppet Master product/build specification and are owned by `Plans/Plan_Document_System.md`. They are three separate types with three separate lifecycles, and no writer may use the bare word `Plan` in code, schema, command, event, or storage identity without a disambiguating type and owner prefix.
+
+A small chat Plan stays `AssistantPlan` only. Creating, revising, building, canceling, or completing an `AssistantPlan` never creates a `NamedPlan`, never allocates a `named_plan_id`, never creates a Project planning lineage, and never appears in the Named Plan switcher. There is no implicit wrapper, no lazily materialized shell, and no background promotion. A `NamedPlan` child or source ref for an Assistant Plan comes into existence only through an explicit user-initiated durable action: an explicit save/promote action on the Plan card, an explicit `Send To Planning Wizard` handoff, or another explicit durable-Plan action that an owner document defines. Automatic promotion is a defect, not a convenience.
+
+When such an explicit link is created, the Assistant Plan identity is preserved as a child/source ref, not absorbed. The link records `plan_id`, exact `plan_version`, the approved structured-document hash, the originating thread and message refs, backend kind (`direct` or `ledger_bound`), and, for a Deep Plan, the run-scoped ledger session ref and scoped PlanUnit bundle ref. The Assistant Plan runtime remains the sole authority for that Plan's document revisions, Revise flow, Build control state, PlanRun, adherence, and To-Do mapping after the link exists; this document only records that a relationship exists and reduces it into the aggregate summary and derived phase. Rename, archive, restore, or priority changes on the `NamedPlan` never mutate Assistant Plan content, version, hash, build state, or thread placement.
+
+A `NamedPlan` link does not force Orchestrator. Linking an Assistant Plan to a `NamedPlan` creates no PRD, no PlanningRun, no ApprovedPlanPack, no PlanCompileRun, no NodeSeed, no WorkNode, no GoalRun, and no provider request. The only route from an Assistant Plan into full planning, Plan Compile, and Orchestrator is the explicit `Send To Planning Wizard` handoff owned by `Plans/Planning_Wizard.md`, and that route bypasses PRD Builder because the Assistant Plan is itself the intake specification. Until Planning Wizard produces an approved pack under its own rules, a linked `NamedPlan` remains at derived phase `idea` or `planning` with truthful child refs and must not display compile, execution, or certification progress it does not have.
+
+File, attachment, and artifact detail surfaces may show a related `NamedPlan` when, and only when, such a link exists. The projection is read-only navigation: human name, Project, short ID, and an open route. Absence of a link renders a truthful no-linked-Plan state rather than an invented shell, and a detail surface never creates a `NamedPlan` as a side effect of being opened. Assistant Plan cards, Deep Plan ledgers, scoped PlanUnit bundles, and To-Do lists are not Named Plan children until an explicit link exists.
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/PRD_Builder.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+### NPLAN-004 - Assistant Plan Is Not Automatically A Named Plan
+
+```yaml
+plan_unit_id: NPLAN-004
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Named_Plan_System.md
+canonical_text: >-
+  AssistantPlan, NamedPlan, and canonical repository Plans/** specifications are three distinct types with separate owners and lifecycles, and a thread-scoped AssistantPlan is never automatically wrapped in a NamedPlan. A small chat Plan stays AssistantPlan-only through creation, revision, build, cancel, and completion, allocates no named_plan_id, and does not appear in the Named Plan switcher. A NamedPlan child or source ref is created only by an explicit user-initiated save/promotion action or an explicit Send To Planning Wizard handoff, and that link preserves plan_id, plan_version, approved document hash, thread/message refs, backend kind, and any Deep Plan ledger or scoped PlanUnit bundle refs as child/source identity rather than absorbing them.
+gui_related: true
+gui_classification_reason: Determines whether an Assistant Plan appears in the Named Plan switcher, aggregate lists, and Plan detail surfaces, and whether a promote action is offered.
+depends_on:
+  - NPLAN-001
+unblocks: []
+acceptance_criteria:
+  - Creating, revising, building, canceling, or completing an Assistant Plan produces no NamedPlanRecord, no named_plan_id, and no switcher row.
+  - A NamedPlan link exists only after an explicit save/promotion or Planning Wizard handoff request carrying exact Plan identity, version, and hash.
+  - A created link stores the Assistant Plan as a child/source ref and leaves Assistant Plan Runtime authoritative for document revisions, Build state, PlanRun, and To-Do mapping.
+  - Named Plan rename, archive, restore, and priority actions leave Assistant Plan content, version, hash, and build state unchanged.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/named_plan_system_contract_fixtures.json
+risk_class: assistant_plan_named_plan_conflation
+reasoning_tier: high
+context_scope: named_plan_assistant_plan_boundary
+implementation_surfaces:
+  - Plans/Named_Plan_System.md
+  - Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: named_plan_consumer_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:PLAN-014
+  - pm-assistant-implementation-2026-09-02-recovered:DRY-001
+  - "packet:06_OWNER_AND_PLAN_CHANGES.md#Plans/Named_Plan_System.md"
+  - "packet:07_DRY_OWNERSHIP_MAP.md#2"
+preserved_exact_tokens:
+  - "AssistantPlan"
+  - "NamedPlan"
+  - "named_plan_id"
+  - "Send To Planning Wizard"
+negative_constraints:
+  - Do not create a NamedPlan shell implicitly for a thread Plan.
+  - Do not use the bare word Plan as a type name without an owner-qualified type.
+  - Do not let a Named Plan aggregate action mutate Assistant Plan runtime state.
+owner_hints:
+  - Plans/Named_Plan_System.md
+  - Plans/Assistant_Plan_Runtime.md
+```
+
+### NPLAN-005 - Promotion Link Effects And Artifact Detail Projection
+
+```yaml
+plan_unit_id: NPLAN-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Named_Plan_System.md
+canonical_text: >-
+  Linking an Assistant Plan to a NamedPlan is a lineage record and never a runtime trigger: it creates no PRD, PlanningRun, ApprovedPlanPack, PlanCompileRun, NodeSeed, WorkNode, GoalRun, or provider request, and it does not admit the Plan into Orchestrator. The only route from an Assistant Plan into full planning, Plan Compile, and Orchestrator is the explicit Send To Planning Wizard handoff owned by Planning Wizard, which bypasses PRD Builder. File, attachment, and artifact detail surfaces may show a related NamedPlan as read-only navigation when a link exists and otherwise render a truthful no-linked-Plan state without creating an aggregate as a side effect.
+gui_related: true
+gui_classification_reason: Defines the related-Plan row in file/artifact details, the truthful empty state, and the absence of compile or execution progress on a merely linked Plan.
+depends_on:
+  - NPLAN-004
+  - NPLAN-002
+unblocks: []
+acceptance_criteria:
+  - Creating a NamedPlan link emits no child-runtime record and the aggregate derived phase stays idea or planning until a child owner publishes real evidence.
+  - Opening a file, attachment, or artifact detail surface never creates or mutates a NamedPlan.
+  - A detail surface with no link renders a truthful no-linked-Plan state instead of an invented shell or short ID.
+  - Orchestrator admission for a promoted Plan is observable only through Planning Wizard approval refs, never through the Named Plan link itself.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/named_plan_system_contract_fixtures.json
+risk_class: named_plan_link_false_runtime_implication
+reasoning_tier: high
+context_scope: named_plan_link_projection
+implementation_surfaces:
+  - Plans/Named_Plan_System.md
+  - Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: named_plan_link_projection_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:PLAN-013
+  - pm-assistant-implementation-2026-09-02-recovered:PLAN-014
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-008
+  - "packet:15_EDGE_CASE_CLOSURES.md#2"
+preserved_exact_tokens:
+  - "Send To Planning Wizard"
+  - "ApprovedPlanPack"
+negative_constraints:
+  - Do not treat a NamedPlan link as Orchestrator admission.
+  - Do not display compile, execution, or certification progress that no child owner published.
+  - Do not create aggregate records from read-only detail surfaces.
+owner_hints:
+  - Plans/Named_Plan_System.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Planning_Wizard.md
+```
+
+## Additive Correction v4 — Assistant Plans Are Not NamedPlans (2026-09-03)
+
+`PDET-005`. An Assistant Plan is thread-scoped. It is never written into the project
+automatically and never promoted to a `NamedPlan` as a side effect of being created, built,
+exported, or scheduled. A Quick Plan does not acquire project-scale Plan identity.
+
+Promotion happens only through an explicit user promotion or a Planning Wizard handoff, which may
+then bind `named_plan_id` on the Assistant Plan record. This document owns the `NamedPlan` side
+of that binding; `Plans/Assistant_Plan_Runtime.md` owns the Assistant Plan and its runtime, and
+this owner does not acquire authority over Plan content, versions, progress, or builds by virtue
+of a binding existing.

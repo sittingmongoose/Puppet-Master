@@ -1,0 +1,108 @@
+{
+  "suite": "bsd-verify",
+  "total": 20,
+  "pass": 20,
+  "fail": 0,
+  "results": [
+    {
+      "name": "bsd.js registered PM56_BSD",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "BSD default mode is Auto",
+      "pass": true,
+      "detail": "auto"
+    },
+    {
+      "name": "severity vocabulary is exactly nit | concern | critical",
+      "pass": true,
+      "detail": "critical,concern,nit"
+    },
+    {
+      "name": "BSD is not modelled as a collaborative workflow kind",
+      "pass": true,
+      "detail": "crew,brainstorm,review,chat_room"
+    },
+    {
+      "name": "a finding starts HELD against the generation that raised it",
+      "pass": true,
+      "detail": "[{\"id\":\"bsd-f2\",\"raised\":12,\"status\":\"held\"}]"
+    },
+    {
+      "name": "a HELD finding is never rendered as current advice",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "the BSD section is reachable in Context Details",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "the hold/reconfirm demonstration has a real control",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "advancing the primary flow advances the BSD generation",
+      "pass": true,
+      "detail": "14 -> 18"
+    },
+    {
+      "name": "a held finding is CLEARED when newer work addressed it (never delivered as current)",
+      "pass": true,
+      "detail": "[{\"gen\":15,\"held\":0,\"cleared\":2,\"emitted\":1},{\"gen\":16,\"held\":0,\"cleared\":2,\"emitted\":1},{\"gen\":17,\"held\":0,\"cleared\":2,\"emitted\":1},{\"gen\":18,\"held\":0,\"cleared\":2,\"emitted\":1}]"
+    },
+    {
+      "name": "every finding records a per-generation history",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "emitted advice states the generation it was raised against",
+      "pass": true,
+      "detail": "(none emitted in this run)"
+    },
+    {
+      "name": "the advisor can fail in isolation",
+      "pass": true,
+      "detail": "{\"q\":true,\"s\":\"failed\"}"
+    },
+    {
+      "name": "a quarantined advisor does not disturb the primary transcript",
+      "pass": true,
+      "detail": "13 -> 13"
+    },
+    {
+      "name": "the advisor recovers from its recorded cursor",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "BSD Off leaves the primary flow intact",
+      "pass": true,
+      "detail": "{\"mode\":\"off\",\"threads\":13,\"boot\":true}"
+    },
+    {
+      "name": "no BSD surface exposes an approve/certify/mutate action",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "BSD Usage is tracked with its own attribution",
+      "pass": true,
+      "detail": "{\"calls\":24,\"cost\":0.021,\"separate\":true}"
+    },
+    {
+      "name": "stage bindings cover PRD / Wizard / PlanUnit / WorkNode / audit / execution / certification",
+      "pass": true,
+      "detail": "covered 7/7 — missing: none"
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

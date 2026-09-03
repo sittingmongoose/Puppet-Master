@@ -1,0 +1,533 @@
+/* bsd.css — styles for bsd.js (Back Seat Driver: passive read-only advisor).
+ * OWNER: ui-designer pass, Assistant-redesign wave (2026-09-03).
+ *
+ * Concatenated after styles.css/context.css/menus.css, so every rule here is
+ * scoped under a class this module owns (`.bsd-*`) or, where bsd.js's markup
+ * gives no class hook (`.bsd-quarantine`'s raw icon, `.bsd-hrow`'s trailing
+ * span), qualified by a `.bsd-*` ancestor — nothing here is a bare element or
+ * utility selector that could leak onto other modules' chrome.
+ *
+ * TOKEN NOTE FOR THE INTEGRATOR: the brief's colour list includes
+ * `--text-dim`, but only `--muted`/`--subtle` are defined in styles.css's
+ * theme blocks (checked all 8). Every secondary-text rule below reads
+ * `var(--text-dim, var(--muted))` so it renders correctly today and adopts
+ * `--text-dim` for free if that token is ever added. Flagged again in the
+ * handoff report.
+ *
+ * `.bsd-dialog` (stage-configuration + advisor-transcript dialogs) ships in
+ * bsd.js WITHOUT the base `.dialog` class those two markups would otherwise
+ * need for position/background/pointer-events — see bsd.js's own dialog slot.
+ * Section 7 below supplies that chrome directly so the dialogs centre,
+ * paint, and stay clickable through #pmOverlayRoot's `pointer-events:none`.
+ */
+
+/* =====================================================================
+   1. COMPACT CONTEXT ROW  (slot contextBsdRow — appended inside .ctx-pop)
+   Exactly two lines: "BSD  <mode> · <persona>" then the live status line,
+   each single-line and ellipsis-truncated so unpredictable copy length
+   never grows the row past two lines or forces the popover wider.
+   ===================================================================== */
+.bsd-ctx-row {
+  display: grid;
+  grid-template-columns: 23px minmax(0, 1fr);
+  column-gap: 8px;
+  row-gap: 2px;
+  height: auto;
+  min-height: 38px;
+  padding: 7px 8px;
+  align-items: start;
+}
+.bsd-ctx-row .menu-icon { grid-row: 1 / 3; align-self: center; }
+.bsd-ctx-row .menu-copy {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 0;
+}
+.bsd-ctx-row .menu-copy strong { display: inline; flex: none; }
+.bsd-ctx-row .menu-copy span {
+  display: inline;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The live-status line. A generated dot (not colour alone) carries the tone:
+   hollow ring = idle, solid pulsing = working, solid haloed = attention /
+   changed, solid diamond = blocked. Positioned absolutely in a reserved
+   left gutter so it never fights the sibling text's own ellipsis math. */
+.bsd-live {
+  display: block;
+  position: relative;
+  min-width: 0;
+  padding-left: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  color: var(--text-dim, var(--muted));
+}
+.bsd-live::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dim, var(--muted));
+}
+.bsd-live.bsd-tone-idle::before {
+  background: transparent;
+  border: 1.5px solid var(--text-dim, var(--muted));
+  width: 5px;
+  height: 5px;
+}
+.bsd-live.bsd-tone-working { color: var(--accent); }
+.bsd-live.bsd-tone-working::before {
+  background: var(--accent);
+  animation: bsd-pulse 1.6s ease-in-out infinite;
+}
+.bsd-live.bsd-tone-attention { color: var(--warning); }
+.bsd-live.bsd-tone-attention::before {
+  background: var(--warning);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--warning) 22%, transparent);
+}
+.bsd-live.bsd-tone-changed { color: var(--accent); }
+.bsd-live.bsd-tone-changed::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.bsd-live.bsd-tone-blocked { color: var(--danger); }
+.bsd-live.bsd-tone-blocked::before {
+  background: var(--danger);
+  border-radius: 2px;
+  transform: translateY(-50%) rotate(45deg);
+}
+@keyframes bsd-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(.78); }
+}
+
+/* =====================================================================
+   2. SEVERITY + STATUS  (nit | concern | critical — never colour alone)
+   Hierarchy reads through FILL STATE as much as hue: nit is an outline on
+   dim text, concern is a tinted fill, critical is a solid inverted fill.
+   That order is legible in greyscale, not just to full colour vision.
+   ===================================================================== */
+.bsd-sev {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 16px;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-dim, var(--muted));
+}
+.bsd-sev-concern {
+  border-color: color-mix(in srgb, var(--warning) 55%, var(--border-strong));
+  background: color-mix(in srgb, var(--warning) 18%, transparent);
+  color: var(--warning);
+}
+.bsd-sev-critical {
+  border-color: transparent;
+  background: var(--danger);
+  color: var(--on-accent);
+}
+
+.bsd-status {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-dim, var(--muted));
+}
+.bsd-status-held { color: var(--warning); }
+.bsd-status-emitted { color: var(--accent); }
+.bsd-status-suppressed {
+  text-decoration: line-through;
+  color: var(--text-dim, var(--muted));
+}
+
+.bsd-gen { font-size: 10px; color: var(--text-dim, var(--muted)); }
+
+/* =====================================================================
+   3. CONTEXT DETAILS SECTION  (slot contextBsdSection — appended in the
+   Context drawer, .context-section is already fully chromed by styles.css;
+   this only spaces its diverse children — a metric grid, prose, chip rows,
+   finding cards, a usage grid — on one consistent rhythm).
+   ===================================================================== */
+.bsd-section .context-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bsd-policy {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+@media (max-width: 590px) {
+  .bsd-policy { grid-template-columns: repeat(2, 1fr); }
+}
+
+.bsd-identity, .bsd-isolation {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-dim, var(--muted));
+  line-height: 1.55;
+}
+.bsd-identity b { color: var(--text); font-weight: 650; }
+
+.bsd-sub {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-dim, var(--muted));
+  line-height: 1.5;
+}
+.bsd-watch {
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---- Stage bindings ---------------------------------------------- */
+.bsd-stages-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bsd-stages-head strong { font-size: 11.5px; }
+
+.bsd-stage-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+.bsd-stage {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  font-size: 10.5px;
+  font-weight: 600;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text-dim, var(--muted));
+}
+.bsd-stage.on {
+  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  color: var(--accent);
+  font-weight: 700;
+}
+/* The "N of M stages bound" note has no margin of its own (.bsd-sub is
+   margin:0 by default) and would otherwise sit flush against the chip row. */
+.bsd-stages .bsd-sub { margin-top: 7px; }
+
+/* ---- Findings ------------------------------------------------------
+   Severity escalates through border-left THICKNESS and a background tint
+   on top of the badge's own fill state (section 2) — a third, independent
+   read of the same hierarchy that never depends on hue perception alone. */
+.bsd-findings {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.bsd-finding {
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+.bsd-finding:has(.bsd-sev-concern) { border-left-color: var(--warning); }
+.bsd-finding:has(.bsd-sev-critical) {
+  border-left-width: 4px;
+  border-left-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 5%, var(--surface-2));
+}
+.bsd-finding-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.bsd-finding-title {
+  display: block;
+  margin: 5px 0 3px;
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--text);
+}
+.bsd-finding-detail {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-dim, var(--muted));
+  line-height: 1.5;
+}
+.bsd-stale {
+  margin: 7px 0 0;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--warning) 32%, var(--border));
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  color: var(--warning);
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+/* Expanded per-finding history. Reuses styles.css's own `details-open`
+   keyframe (already exempt from the reduced-motion loop cap, being finite)
+   rather than declaring a duplicate. */
+.bsd-history {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  animation: details-open 280ms var(--spring-soft-ease) both;
+}
+.bsd-hrow {
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+  font-size: 11px;
+}
+.bsd-hrow > span:last-child {
+  color: var(--text-dim, var(--muted));
+  flex: 1;
+  min-width: 0;
+}
+.bsd-hgen {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text-dim, var(--muted));
+}
+
+/* ---- Usage (attributed to BSD only, never folded into the primary run) */
+.bsd-usage { display: flex; flex-direction: column; }
+.bsd-usage > strong { font-size: 11.5px; }
+.bsd-usage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px 10px;
+  margin: 8px 0;
+}
+@media (max-width: 380px) {
+  .bsd-usage-grid { grid-template-columns: 1fr; }
+}
+.bsd-usage-grid > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+}
+.bsd-usage-grid label { font-size: 10px; color: var(--text-dim, var(--muted)); }
+.bsd-usage-grid b {
+  font-size: 11.5px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.bsd-usage .bsd-sub { margin-top: 2px; }
+/* bsd.js concatenates the two Usage buttons with no whitespace between
+   them in the source string, so browsers get no natural inline gap. */
+.bsd-usage .soft-button { margin-top: 8px; }
+.bsd-usage .soft-button + .soft-button { margin-left: 6px; }
+
+/* ---- Quarantine notice (advisor isolated after malformed output) ---- */
+.bsd-quarantine {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, var(--border));
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--warning) 9%, var(--surface-2));
+}
+.bsd-quarantine > svg { flex: none; color: var(--warning); margin-top: 2px; }
+.bsd-quarantine strong { display: block; font-size: 12px; color: var(--text); }
+.bsd-quarantine p {
+  margin: 3px 0 0;
+  font-size: 11.5px;
+  color: var(--text-dim, var(--muted));
+  line-height: 1.5;
+}
+
+/* ---- Demonstrate (drives the hold/reconfirm cycle and the isolated-
+   failure toggle for real — see bsd.js section 3 and tests/bsd-verify.mjs) */
+.bsd-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+}
+.bsd-demo > strong { font-size: 11.5px; }
+.bsd-demo-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* =====================================================================
+   4. TRANSCRIPT ADVICE CARD  (slot transcriptMessage, type bsd-advice-v2)
+   Only an EMITTED finding ever reaches this slot (bsd.js declines for held/
+   cleared/suppressed), so the card itself just needs the same severity read
+   as section 2, echoed onto the icon chip and a left accent bar.
+   ===================================================================== */
+.bsd-card { border-left: 3px solid var(--border-strong); }
+.bsd-card:has(.bsd-sev-concern) { border-left-color: var(--warning); }
+.bsd-card:has(.bsd-sev-concern) .event-icon {
+  background: color-mix(in srgb, var(--warning) 16%, var(--surface-3));
+  color: var(--warning);
+}
+.bsd-card:has(.bsd-sev-critical) {
+  border-left-width: 4px;
+  border-left-color: var(--danger);
+}
+.bsd-card:has(.bsd-sev-critical) .event-icon {
+  background: color-mix(in srgb, var(--danger) 18%, var(--surface-3));
+  color: var(--danger);
+}
+.bsd-attr {
+  margin: 6px 0 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+  font-size: 10.5px;
+  color: var(--text-dim, var(--muted));
+}
+
+/* =====================================================================
+   5. DIALOGS — stage configuration, advisor transcript
+   bsd.js's markup is `<div class="demo-dialog bsd-dialog">`: it opts into
+   `.demo-dialog`'s "not centred, has its own min-size" posture but never
+   carries the base `.dialog` class that would otherwise supply position,
+   background, border, blur, shadow and — critically — the `pointer-events:
+   auto` that #pmOverlayRoot's children need (the root itself is
+   `pointer-events:none`). `.bsd-dialog` below supplies that chrome directly
+   rather than fighting `.demo-dialog`'s conflicting left/top/transform: at
+   equal specificity this file's later source order wins property-by-
+   property, but leaving anything unset here would leave it unset, so every
+   property `.dialog` would have contributed is repeated explicitly.
+   ===================================================================== */
+.bsd-dialog {
+  position: fixed;
+  z-index: var(--z-dialog);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(440px, calc(100vw - 20px));
+  max-height: calc(100vh - 20px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  background: var(--glass);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-float);
+  pointer-events: auto;
+  animation: dialog-in var(--spring) both;
+}
+.bsd-dialog .demo-dialog-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 11px;
+  border-bottom: 1px solid var(--border);
+}
+.bsd-dialog .demo-dialog-head strong { font-size: 13px; }
+.bsd-dialog .demo-dialog-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bsd-dialog .demo-dialog-foot {
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 9px 11px;
+  border-top: 1px solid var(--border);
+}
+
+.bsd-dialog .bsd-stage-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.bsd-dialog .bsd-stage-row:hover { background: var(--surface-3); }
+.bsd-dialog .bsd-stage-row input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  flex: none;
+}
+.bsd-dialog .bsd-stage-row span { font-size: 12px; color: var(--text); }
+
+/* Advisor transcript lines. System notes (the hold/re-evaluate narration)
+   read as dim italic asides; advisor lines stay full-weight body text. */
+.bsd-tline {
+  display: flex;
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 1px solid var(--border);
+}
+.bsd-tline:first-child { border-top: 0; padding-top: 0; }
+.bsd-tline .bsd-hgen { margin-top: 2px; }
+.bsd-tline p {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.bsd-tline-system p {
+  color: var(--text-dim, var(--muted));
+  font-style: italic;
+}
+
+/* =====================================================================
+   6. REDUCED MOTION
+   The app-wide rule in motion.css already caps every `infinite` animation
+   at one pass (`animation-iteration-count:1 !important`), so bsd-pulse
+   already stops looping. This makes that explicit and documents why it
+   loses nothing: the working tone is already carried by accent colour and
+   a solid dot fill (vs. idle's hollow ring), not by the pulse alone.
+   Finite reveals (.bsd-history's details-open, the dialog's dialog-in) are
+   left untouched, matching this codebase's existing entrances.
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .bsd-live.bsd-tone-working::before { animation-iteration-count: 1; }
+}

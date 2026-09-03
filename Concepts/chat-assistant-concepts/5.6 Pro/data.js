@@ -2376,12 +2376,20 @@
     summary:'Optimize tenant-scoped analytics queries and validate the result.',
     messages:turns('query', { route:'sonnet', startMin:392, mode:'agent', persona:'Product Manager', contextStart:12400 }, [
       ['u','Analyze the analytics query performance, use subagents where useful, and give me a safe implementation plan.'],
+      /* Two historical Plans, in place and chronological. They default COMPACT and
+         carry terminal Build-control labels; there is no `Superseded` label and no
+         Plan picker -- both are retired by the redesign. */
+      ['e','plan-card-v2',{ planId:'ap-auth' }],
+      ['e','plan-card-v2',{ planId:'ap-flags' }],
       ['a','Starting with measurement rather than a hypothesis. I will read the query builders, the schema, and the migration history first, then delegate the schema review and the benchmark so those run in parallel.'],
       ['e','working',{ title:'Optimizing analytics queries' }],
       ['a','First finding, and it changes the shape of the problem: the ticket says p95 is 310 ms, but that was measured against an 8x400-row benchmark fixture. At production row shape — 214 tenants, 128,400 rows — p95 is 482 ms. The old fixture was small enough that a sequential scan actually wins, so the benchmark was hiding the very thing it was supposed to measure.'],
       ['u','That is annoying but good to know. Keep going.'],
       ['a','Two problems, not one. Three queries do a full table scan, and two of them sit inside a per-tenant loop, so cost scales with tenant count rather than page size. The index fixes the first; batching fixes the second. Doing only one of them leaves most of the win on the table.'],
-      ['e','plan-card',{ artifactId:'plan-query' }],
+      /* Assistant-redesign wave: the Plan is now the `plan-card-v2` document card
+         owned by plans.js. app.js's renderPlanCard stays as the fallback for the
+         slash-command demo path; nothing in a thread fixture uses it any more. */
+      ['e','plan-card-v2',{ planId:'ap-index' }],
       ['a','Plan is up. The short version: a tenant-first composite index, one batched query replacing the fan-out, and the materialized view kept as a documented fallback rather than the default — it adds refresh lag and a second piece of operational state, and the read win is available without it.'],
       ['u','Hold on, I want to argue with the column order before we commit to it. Almost every query we write filters on a date range first — last seven days, last thirty days, this quarter — and only then narrows to a tenant. From the outside that makes created_at look like the obvious leading column, and I have had two people tell me the same thing independently.\n\nSo before I sign off on tenant_id leading, walk me through what actually happens at the planner level in both orders, with the row counts we really have rather than a toy example. I would rather spend ten minutes on this now than find out in six months that we picked the order that reads well in a diagram.',{ long:true }],
       ['a','Because the date range is a range and the tenant is an equality. An index can only use one range predicate efficiently, and it has to be the last column used. With tenant_id leading, the planner does an equality seek and then walks created_at DESC in index order, which also removes the sort node. Lead with created_at and every tenant read scans the whole date range and filters afterwards.'],
@@ -2713,7 +2721,7 @@
     messages:turns('plan-deep', { route:'opus', startMin:150, mode:'deep_plan', persona:'Plan Critic', contextStart:11200 }, [
       ['u','Deep plan the analytics work. I want to disagree with specifics, not with the general idea.'],
       ['a','Deep Plan reads the whole surface before proposing anything, so this takes longer and produces something you can argue with in detail. Reading the query builders, the schema, the migration history, the benchmark harness, and the two most recent incident notes.'],
-      ['e','plan-card',{ artifactId:'plan-query', deep:true }],
+      ['e','plan-card-v2',{ planId:'ap-cache' }],
       ['a','Six steps, four acceptance criteria, one rollback gate with a named owner. The acceptance criteria are deliberately binary — p95 below 100 ms, no tenant crossover, write overhead below 8%, all tests green including the rollback rehearsal. Nothing subjective like "performs well".'],
       ['u','Why binary? Some of this is genuinely a judgement call.'],
       ['a','Because a criterion that needs judgement cannot be evaluated by anything except the person who wrote it, and that person is usually gone by the time it matters. If a step genuinely needs judgement, it should be a decision point in the plan rather than an acceptance criterion.'],

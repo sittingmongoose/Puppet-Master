@@ -1,0 +1,4673 @@
+{
+ "schema_id": "pm.assistant_redesign_traceability.v1",
+ "generated": "2026-09-03",
+ "packet": "pm-assistant-implementation-2026-09-02-recovered",
+ "requirements_total": 236,
+ "rows": [
+  {
+   "requirement_id": "AUTH-001",
+   "category": "Authority and preservation",
+   "statement": "Packet decisions supersede conflicting Chat updates and older Plans; non-conflicting Chat updates remain mandatory.",
+   "gui_related": false,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": null,
+   "test_suite": "\u2014"
+  },
+  {
+   "requirement_id": "AUTH-002",
+   "category": "Authority and preservation",
+   "statement": "The current 5.6 Pro concept is modified in place rather than replaced.",
+   "gui_related": false,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": null,
+   "test_suite": "\u2014"
+  },
+  {
+   "requirement_id": "AUTH-003",
+   "category": "Authority and preservation",
+   "statement": "Generated index.html and standalone HTML are never hand-edited.",
+   "gui_related": false,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": null,
+   "test_suite": "\u2014"
+  },
+  {
+   "requirement_id": "AUTH-004",
+   "category": "Authority and preservation",
+   "statement": "Canonical, concept, and native readiness are reported independently.",
+   "gui_related": false,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": null,
+   "test_suite": "\u2014"
+  },
+  {
+   "requirement_id": "AUTH-005",
+   "category": "Authority and preservation",
+   "statement": "Accessibility expansion is outside this scope.",
+   "gui_related": false,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": null,
+   "test_suite": "\u2014"
+  },
+  {
+   "requirement_id": "COMPOSER-001",
+   "category": "Composer persistence and targeting",
+   "statement": "Each temporary or durable thread has one invisibly persisted ComposerBuffer.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-002",
+   "category": "Composer persistence and targeting",
+   "statement": "Unsent text survives thread switches, restart, and crash without a Draft UI.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-003",
+   "category": "Composer persistence and targeting",
+   "statement": "Attachments and browser context persist independently of text.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-004",
+   "category": "Composer persistence and targeting",
+   "statement": "The buffer clears only after durable message admission.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-005",
+   "category": "Composer persistence and targeting",
+   "statement": "Up/Down history activates only when text is empty and no conflicting pending context exists.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-006",
+   "category": "Composer persistence and targeting",
+   "statement": "Input history uses prior sent user text from the same thread and does not silently reattach files.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-007",
+   "category": "Composer persistence and targeting",
+   "statement": "Workflow Message actions target the ordinary composer rather than creating secondary input boxes.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-008",
+   "category": "Composer persistence and targeting",
+   "statement": "Targeted composer chrome includes a destination ribbon, distinct theme-aware treatment, glyph, and placeholder.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-009",
+   "category": "Composer persistence and targeting",
+   "statement": "Changing/clearing destination preserves text and attachments.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-010",
+   "category": "Composer persistence and targeting",
+   "statement": "An ended target cannot silently redirect non-empty composer content.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "COMPOSER-011",
+   "category": "Composer persistence and targeting",
+   "statement": "Primary-agent follow-up queue semantics remain max two, FIFO, Edit, Send Now, and Stop does not auto-send.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-001",
+   "category": "Attachments, files and artifacts",
+   "statement": "Attach icon remains bottom-left inside text entry and attachment tray appears above text entry.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-002",
+   "category": "Attachments, files and artifacts",
+   "statement": "Attachment origins distinguish uploaded snapshots, live project refs, frozen refs, generated artifacts, external refs, clipboard, browser captures, source-control objects, and folders.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-003",
+   "category": "Attachments, files and artifacts",
+   "statement": "Composer thumbnails show a top-edge tracer for processing rather than a conventional progress bar.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-004",
+   "category": "Attachments, files and artifacts",
+   "statement": "Hover reveals an X in the thumbnail top-right; body click opens/preview when supported.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-005",
+   "category": "Attachments, files and artifacts",
+   "statement": "Type, size, source, state, Open, Download and Details are hover-gated rather than permanent transcript text.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-006",
+   "category": "Attachments, files and artifacts",
+   "statement": "Failed processing retains text and sibling attachments and supports Retry/Remove.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-007",
+   "category": "Attachments, files and artifacts",
+   "statement": "Project live references retain the exact revision/hash materialized for each model turn.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-008",
+   "category": "Attachments, files and artifacts",
+   "statement": "Changed-since-message disclosure does not mutate historical truth.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-009",
+   "category": "Attachments, files and artifacts",
+   "statement": "Download returns the exact stored referenced version and never regenerates silently.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-010",
+   "category": "Attachments, files and artifacts",
+   "statement": "Folders use bounded manifests rather than uncontrolled recursive context dumps.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-011",
+   "category": "Attachments, files and artifacts",
+   "statement": "More Info includes producer, related message/workflows, version, hash, trust/freshness, retention, export history and materialization truth.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-012",
+   "category": "Attachments, files and artifacts",
+   "statement": "Visibility in history does not imply inclusion in future prompts; materialization status is recorded per run.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-013",
+   "category": "Attachments, files and artifacts",
+   "statement": "Deletion cannot purge an artifact still referenced by another message, Plan, Goal, workflow, evidence or hold.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "ATT-014",
+   "category": "Attachments, files and artifacts",
+   "statement": "Assistant Chat reuses File Manager/FileSafe/Artifact owners and does not create a second transfer/artifact store.",
+   "gui_related": true,
+   "owner_hint": "Plans/FileManager.md",
+   "canonical_evidence": {
+    "doc": "Plans/FileManager.md",
+    "exists": true,
+    "bytes": 290852
+   },
+   "concept_module": [
+    {
+     "file": "attachments.js",
+     "exists": true,
+     "bytes": 75286
+    }
+   ],
+   "test_suite": "attachments-composer-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-001",
+   "category": "Thread title and spellcheck",
+   "statement": "Thread title setting offers Default, None, or an explicit currently available model.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-002",
+   "category": "Thread title and spellcheck",
+   "statement": "Default title resolver is deterministic and prioritizes eligible local/included, low-pressure, low-latency routes.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-003",
+   "category": "Thread title and spellcheck",
+   "statement": "Explicit title model has no silent fallback when unavailable.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-004",
+   "category": "Thread title and spellcheck",
+   "statement": "Title input is a bounded safe excerpt plus safe attachment labels, never attachment bodies or secrets.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-005",
+   "category": "Thread title and spellcheck",
+   "statement": "Manual rename locks automatic title updates until explicit Regenerate Title.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-006",
+   "category": "Thread title and spellcheck",
+   "statement": "Late generated title cannot overwrite a manual rename.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-007",
+   "category": "Thread title and spellcheck",
+   "statement": "Spellcheck is passive red-underlining plus right-click replacement with no Assistant icon/button/provider call/Usage.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "TITLE-008",
+   "category": "Thread title and spellcheck",
+   "statement": "Code, paths, URLs, hashes, commands and recognized identifiers are excluded from spellcheck as appropriate.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    },
+    {
+     "file": "composer-state.js",
+     "exists": true,
+     "bytes": 36519
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "GOAL-001",
+   "category": "Simplified Goal Runtime",
+   "statement": "Goal is one concise objective plus revision and active/paused/blocked/completed lifecycle.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-002",
+   "category": "Simplified Goal Runtime",
+   "statement": "Goal has no title, phase, tranche, child goals, goal-specific budget, mandatory role cast, current action, next action, separate done-when, scope, constraints or attachment fields.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-003",
+   "category": "Simplified Goal Runtime",
+   "statement": "Goal remains extensively usable in Assistant and internal research, ledger-to-Plans, PlanUnit generation, audit/repair and WorkNode-related execution.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-004",
+   "category": "Simplified Goal Runtime",
+   "statement": "Workflow-specific state remains owned by each workflow and is supplied by reference to the Goal-driven agent.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-005",
+   "category": "Simplified Goal Runtime",
+   "statement": "One model turn ending does not complete an unfinished active Goal; host continuation schedules another turn.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-006",
+   "category": "Simplified Goal Runtime",
+   "statement": "User Pause/Cancel/Stop prevents continuation and every automatic resume path.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-007",
+   "category": "Simplified Goal Runtime",
+   "statement": "User edits Goal text directly in Activity Detail; Save is the approved user mutation.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-008",
+   "category": "Simplified Goal Runtime",
+   "statement": "Agent-proposed Goal replacement requires the existing approval system and explicit user instruction.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-009",
+   "category": "Simplified Goal Runtime",
+   "statement": "Agent may create a Goal without second approval when user explicitly requests Goal creation.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-010",
+   "category": "Simplified Goal Runtime",
+   "statement": "Goal hover supports Pause/Resume, Cancel and edit icon; edit opens Activity Detail.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-011",
+   "category": "Simplified Goal Runtime",
+   "statement": "Goal is an Activity domain, not a transcript card.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-012",
+   "category": "Simplified Goal Runtime",
+   "statement": "Goal cancellation removes active projection while preserving minimal history/receipt.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-013",
+   "category": "Simplified Goal Runtime",
+   "statement": "Provider-native Goal loops cannot run concurrently with PM Goal continuation unless exact one-loop mapping is proven.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "GOAL-014",
+   "category": "Simplified Goal Runtime",
+   "statement": "Goal records and consumers migrate from complex v1 semantics without data loss.",
+   "gui_related": true,
+   "owner_hint": "Plans/Goal_Runtime_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Goal_Runtime_System.md",
+    "exists": true,
+    "bytes": 331708
+   },
+   "concept_module": [
+    {
+     "file": "goals.js",
+     "exists": true,
+     "bytes": 25060
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs (mode menu) + manual"
+  },
+  {
+   "requirement_id": "PLAN-001",
+   "category": "Regular Assistant Plan",
+   "statement": "Regular Plan choices are exactly Quick, Standard and Thorough.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-002",
+   "category": "Regular Assistant Plan",
+   "statement": "Every Plan produces a structured Plan document with Rich default, Markdown toggle and PDF/Markdown export.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-003",
+   "category": "Regular Assistant Plan",
+   "statement": "Plan content is read-only to the user; all content changes use agent-mediated Revise.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-004",
+   "category": "Regular Assistant Plan",
+   "statement": "One unfinished current Plan exists per thread and historical Plans remain linear in transcript order.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-005",
+   "category": "Regular Assistant Plan",
+   "statement": "Plan revisions keep one identity and display Vn; old versions remain immutable.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-006",
+   "category": "Regular Assistant Plan",
+   "statement": "The same primary control displays Build, Building\u2026, Completed or Canceled.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-007",
+   "category": "Regular Assistant Plan",
+   "statement": "Building\u2026 remains while paused, waiting for quota/window, or otherwise nonterminal; reason is secondary text.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-008",
+   "category": "Regular Assistant Plan",
+   "statement": "Regular Plan creates only a Plan document and To-Dos; no ledger, PlanUnits, NodeSeeds, WorkNodes, Plan Compile or Orchestrator.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-009",
+   "category": "Regular Assistant Plan",
+   "statement": "Build freezes exact Plan ID/version/hash, runtime, permissions and project/worktree context.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-010",
+   "category": "Regular Assistant Plan",
+   "statement": "Build is idempotent and cannot create duplicate PlanRuns/To-Dos.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-011",
+   "category": "Regular Assistant Plan",
+   "statement": "Build With Crew always opens a configuration modal and starts Plan/Crew/To-Dos atomically.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-012",
+   "category": "Regular Assistant Plan",
+   "statement": "Build At binds exact Plan version/hash and revision invalidates the schedule.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-013",
+   "category": "Regular Assistant Plan",
+   "statement": "Send To Planning Wizard bypasses PRD Builder and passes a structured Plan handoff.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-014",
+   "category": "Regular Assistant Plan",
+   "statement": "A small Assistant Plan is not automatically a NamedPlan; explicit save/promotion/handoff may link one.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-015",
+   "category": "Regular Assistant Plan",
+   "statement": "An explicit new Plan request closes the old unfinished Plan as Canceled; no Superseded user status.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-016",
+   "category": "Regular Assistant Plan",
+   "statement": "Regular Plan may use Goal-driven execution only when the user explicitly requests it.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-017",
+   "category": "Regular Assistant Plan",
+   "statement": "Plan adherence binds material work to Plan step and To-Do identities.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "PLAN-018",
+   "category": "Regular Assistant Plan",
+   "statement": "Material Plan divergence requires Revise; constraint conflicts stop affected work.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-001",
+   "category": "Deep Plan",
+   "statement": "Deep Plan choices are exactly Thorough, Exhaustive and BrainStorm.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-002",
+   "category": "Deep Plan",
+   "statement": "Deep Plan uses a run-scoped native ledger in the background.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-003",
+   "category": "Deep Plan",
+   "statement": "The ledger produces a standardized human-readable Plan document.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-004",
+   "category": "Deep Plan",
+   "statement": "Before Build, user can request agent-mediated revisions without direct editing.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-005",
+   "category": "Deep Plan",
+   "statement": "On Build, Deep Plan creates standard-schema Plan-scoped PlanUnits, then maps them to To-Dos.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-006",
+   "category": "Deep Plan",
+   "statement": "Deep Plan PlanUnits retain standard semantics but do not enter the global product PlanUnit index.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-007",
+   "category": "Deep Plan",
+   "statement": "Deep Plan does not create NodeSeeds, WorkNodes, Plan Compile, Spec Lock or Orchestrator work.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-008",
+   "category": "Deep Plan",
+   "statement": "Deep Plan can be promoted to Planning Wizard with ledger, PlanUnits, sources, answers and attachments intact.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-009",
+   "category": "Deep Plan",
+   "statement": "Exhaustive includes more complete research, adversarial alternatives, cross-system effects, migrations, compatibility, security, performance, operations, rollback and uncertainty closure.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "DPLAN-010",
+   "category": "Deep Plan",
+   "statement": "BrainStorm is a strict superset of Exhaustive.",
+   "gui_related": true,
+   "owner_hint": "Plans/Assistant_Plan_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/Assistant_Plan_Runtime.md",
+    "exists": true,
+    "bytes": 78188
+   },
+   "concept_module": [
+    {
+     "file": "plans.js",
+     "exists": true,
+     "bytes": 69577
+    }
+   ],
+   "test_suite": "assistant-plan-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-001",
+   "category": "To-Do Runtime",
+   "statement": "Each thread has one current To-Do list and no cross-thread or source-grouped display.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-002",
+   "category": "To-Do Runtime",
+   "statement": "To-Dos support parent/child hierarchy and stable identities.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-003",
+   "category": "To-Do Runtime",
+   "statement": "Leaf To-Dos are bounded independent outcomes rather than multi-day projects.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-004",
+   "category": "To-Do Runtime",
+   "statement": "To-Dos support dependencies, parallel groups, simultaneous in-progress items and out-of-display-order execution.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-005",
+   "category": "To-Do Runtime",
+   "statement": "Visible statuses are pending, in_progress, completed, blocked and skipped.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-006",
+   "category": "To-Do Runtime",
+   "statement": "Waiting on another To-Do is pending with dependency, not blocked.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-007",
+   "category": "To-Do Runtime",
+   "statement": "Verification is neither a To-Do status nor user-visible metadata; validation is a separate To-Do when needed.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-008",
+   "category": "To-Do Runtime",
+   "statement": "Completed To-Dos stay inline with filled dot and strike-through; no Done section.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-009",
+   "category": "To-Do Runtime",
+   "statement": "ToDoController owns stable item mutation, work binding, state transitions, rollups, recovery and projection.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-010",
+   "category": "To-Do Runtime",
+   "statement": "Provider/model whole-list replacement cannot directly mark canonical items complete.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-011",
+   "category": "To-Do Runtime",
+   "statement": "Tool success alone cannot complete a To-Do unless expected outcome is satisfied.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-012",
+   "category": "To-Do Runtime",
+   "statement": "Every completion transition has an item-level cause/evidence reference.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-013",
+   "category": "To-Do Runtime",
+   "statement": "Goal, Plan, Crew and ordinary tasks feed the same thread list without visible source headers.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "TODO-014",
+   "category": "To-Do Runtime",
+   "statement": "To-Dos are Activity-only and do not become transcript cards.",
+   "gui_related": true,
+   "owner_hint": "Plans/ToDo_Runtime.md",
+   "canonical_evidence": {
+    "doc": "Plans/ToDo_Runtime.md",
+    "exists": true,
+    "bytes": 42097
+   },
+   "concept_module": [
+    {
+     "file": "todos.js",
+     "exists": true,
+     "bytes": 59130
+    }
+   ],
+   "test_suite": "todo-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-001",
+   "category": "Shared collaborative workflows",
+   "statement": "Crew, BrainStorm, Review and Chat Room share one participant/run/message/artifact/Usage/recovery/composer-target foundation.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-002",
+   "category": "Shared collaborative workflows",
+   "statement": "Every invocation opens a configuration modal populated from Settings defaults.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-003",
+   "category": "Shared collaborative workflows",
+   "statement": "Every participant supports requested/effective model, account, Persona, Skills and tools.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-004",
+   "category": "Shared collaborative workflows",
+   "statement": "No selected model or Persona is silently substituted.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-005",
+   "category": "Shared collaborative workflows",
+   "statement": "Each workflow produces a transcript card, expandable recent detail, full panel and Activity domain.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-006",
+   "category": "Shared collaborative workflows",
+   "statement": "Each participant is clickable to open the exact participant transcript and evidence.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-007",
+   "category": "Shared collaborative workflows",
+   "statement": "Workflow Message targets the ordinary composer with visual destination chrome.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-008",
+   "category": "Shared collaborative workflows",
+   "statement": "Pause/resume/cancel preserve truthful state, transcript and artifacts.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-009",
+   "category": "Shared collaborative workflows",
+   "statement": "Permissions are bounded by the parent ceiling and participants cannot self-authorize.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "COLLAB-010",
+   "category": "Shared collaborative workflows",
+   "statement": "Multi-Agent Workflows Settings manager has Crew, BrainStorm, Review and Chat Room tabs.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "CREW-001",
+   "category": "Crew and Crew Auto",
+   "statement": "Crew config includes coordinator, roles, models, Personas, context, tools, permissions, dependencies, expected outputs, parallelism, synthesis and limits.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "CREW-002",
+   "category": "Crew and Crew Auto",
+   "statement": "Crew executes delegated work rather than functioning as a discussion-only Chat Room.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "CREW-003",
+   "category": "Crew and Crew Auto",
+   "statement": "Crew Auto is a checkable Multi-Agent submenu item.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "CREW-004",
+   "category": "Crew and Crew Auto",
+   "statement": "Enabling Crew Auto opens its configuration modal before the check becomes active.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "CREW-005",
+   "category": "Crew and Crew Auto",
+   "statement": "Crew Auto criteria cannot widen authority or override an explicit single-agent selection.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "CREW-006",
+   "category": "Crew and Crew Auto",
+   "statement": "Build With Crew binds Crew to exact Plan version and To-Dos.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "CREW-007",
+   "category": "Crew and Crew Auto",
+   "statement": "Crew participant rows open individual transcripts.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-001",
+   "category": "BrainStorm",
+   "statement": "BrainStorm is the third Deep Plan option and outputs exactly one Deep Plan.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-002",
+   "category": "BrainStorm",
+   "statement": "BrainStorm baseline maximum user-decision questions is 15.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-003",
+   "category": "BrainStorm",
+   "statement": "Grill Me increases the effective maximum by a configurable extension; default extension is 10.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-004",
+   "category": "BrainStorm",
+   "statement": "Question allowance is shared across all participants and does not reset when Grill Me is enabled mid-flow.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-005",
+   "category": "BrainStorm",
+   "statement": "Previously answered and semantically duplicate questions are not repeated.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-006",
+   "category": "BrainStorm",
+   "statement": "Researchable factual questions are assigned to agents rather than asked of the user.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-007",
+   "category": "BrainStorm",
+   "statement": "BrainStorm is read-only against the target project.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-008",
+   "category": "BrainStorm",
+   "statement": "BrainStorm may request permission-gated temporary isolated MCP/tool/package provisioning for research.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-009",
+   "category": "BrainStorm",
+   "statement": "Persistent project/host/global installation requires ordinary explicit approval.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-010",
+   "category": "BrainStorm",
+   "statement": "Core participants make blind independent proposals before seeing other proposals.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-011",
+   "category": "BrainStorm",
+   "statement": "Participants debate, challenge assumptions, request targeted research and may propose hybrids.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-012",
+   "category": "BrainStorm",
+   "statement": "Voting records support/oppose/abstain, confidence, reason, evidence and hard-constraint conflicts.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-013",
+   "category": "BrainStorm",
+   "statement": "Hard user-constraint violations disqualify an approach regardless of vote count.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-014",
+   "category": "BrainStorm",
+   "statement": "Final synthesis preserves material dissent and explains rejected alternatives.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-015",
+   "category": "BrainStorm",
+   "statement": "BrainStorm card remains after linked Plan creation and opens full transcript/panel.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BRAIN-016",
+   "category": "BrainStorm",
+   "statement": "Wonderer and Grill Me are additive participants rather than replacements.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-001",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Review is a primary Assistant mode with Single Agent and Multi-Pass Review submenu choices.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-002",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Single Agent creates a fresh-context reviewer subagent with selected model and Persona.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-003",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Multi-Pass supports 1\u20138 reviewers with default 3 and permits repeated model choices.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-004",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Every initial review pass receives a unique attempt and frozen target pack.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-005",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Initial review passes run concurrently and blind.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-006",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Findings are normalized for likely duplicates without losing origin/evidence.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-007",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Reviewers then corroborate findings using confirm, reject, duplicate or uncertain dispositions.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-008",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Final adjudication preserves unresolved material disagreement rather than manufacturing consensus.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-009",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Reviews of different target hashes cannot silently merge.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-010",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Review output is a versioned Rich/Markdown artifact plus concise thread summary.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-011",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Review is read-only and never automatically repairs target work.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "REVIEW-012",
+   "category": "Review and Multi-Pass Review",
+   "statement": "Confirmed findings can be explicitly sent to agent or converted to To-Dos.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "ROOM-001",
+   "category": "Chat Room",
+   "statement": "Chat Room is a persistent multi-agent discussion distinct from Crew execution.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "ROOM-002",
+   "category": "Chat Room",
+   "statement": "Configuration includes participants, moderator, turn policy, mentions/replies, tools, rounds/stop and output.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "ROOM-003",
+   "category": "Chat Room",
+   "statement": "User can message the room through the ordinary targeted composer.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "ROOM-004",
+   "category": "Chat Room",
+   "statement": "Room discussion does not automatically create To-Dos, Plans or Goals.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "ROOM-005",
+   "category": "Chat Room",
+   "statement": "Explicit promotions preserve source lineage into Plan, To-Do, Goal or artifact.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "ROOM-006",
+   "category": "Chat Room",
+   "statement": "Room transcript and participant sessions survive restart.",
+   "gui_related": true,
+   "owner_hint": "Plans/Collaborative_Workflows.md",
+   "canonical_evidence": {
+    "doc": "Plans/Collaborative_Workflows.md",
+    "exists": true,
+    "bytes": 97731
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-001",
+   "category": "Wonderer and Grill Me",
+   "statement": "Wonderer is implemented as a built-in Persona plus methodology Skill, not Hermes profile infrastructure.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-002",
+   "category": "Wonderer and Grill Me",
+   "statement": "Wonderer explores adjacent domains and overlooked possibilities and connects each lead to the seed topic.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-003",
+   "category": "Wonderer and Grill Me",
+   "statement": "Wonderer output remains hypothesis/lead until researched or decided.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-004",
+   "category": "Wonderer and Grill Me",
+   "statement": "Wonderer is additive in BrainStorm, Crew, Chat Room, PRD Builder and Planning Wizard.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-005",
+   "category": "Wonderer and Grill Me",
+   "statement": "Grill Me uses a shared dependency-aware question frontier and recommended answers.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-006",
+   "category": "Wonderer and Grill Me",
+   "statement": "Grill Me routes factual research to agents and has no implementation authority.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-007",
+   "category": "Wonderer and Grill Me",
+   "statement": "Grill Me appears as an additive option in workflow modals and a Deep Plan submenu footer toggle.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-008",
+   "category": "Wonderer and Grill Me",
+   "statement": "PRD Builder uses Wonderer early and Grill Me near discovery closure when enabled.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "WONDER-009",
+   "category": "Wonderer and Grill Me",
+   "statement": "Planning Wizard uses Wonderer at topic entry and Grill Me near topic closure with global duplicate prevention.",
+   "gui_related": true,
+   "owner_hint": "Plans/Skills_System.md",
+   "canonical_evidence": {
+    "doc": "Plans/Skills_System.md",
+    "exists": true,
+    "bytes": 148937
+   },
+   "concept_module": [
+    {
+     "file": "collaboration.js",
+     "exists": true,
+     "bytes": 127728
+    }
+   ],
+   "test_suite": "collaboration-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-001",
+   "category": "Back Seat Driver",
+   "statement": "BSD is a separate passive read-only advisor, not part of Multi-Agent Workflows and not a required reviewer/certifier.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-002",
+   "category": "Back Seat Driver",
+   "statement": "BSD modes are Off, Auto and On with Auto default.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-003",
+   "category": "Back Seat Driver",
+   "statement": "Auto uses deterministic trigger kinds and On evaluates every eligible bounded update within policy.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-004",
+   "category": "Back Seat Driver",
+   "statement": "Each BSD assignment has isolated context/tool session, model/Persona, cursor, epoch, transcript and Usage.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-005",
+   "category": "Back Seat Driver",
+   "statement": "BSD input is a bounded redacted delta plus current constraint/Goal/Plan/PlanUnit/To-Do/evidence refs.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-006",
+   "category": "Back Seat Driver",
+   "statement": "Async concern/critical findings are held and must be reconfirmed against newer work before delivery.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-007",
+   "category": "Back Seat Driver",
+   "statement": "Synchronous frozen safe-point findings may deliver immediately.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-008",
+   "category": "Back Seat Driver",
+   "statement": "Terminal timeout may show unreconfirmed critical advice only with explicit stale labeling and cannot fail/restart primary.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-009",
+   "category": "Back Seat Driver",
+   "statement": "BSD severities are nit, concern and critical; public blocker is not used.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-010",
+   "category": "Back Seat Driver",
+   "statement": "BSD findings have stable dedup/closure identity and unchanged closed findings do not recur.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-011",
+   "category": "Back Seat Driver",
+   "statement": "BSD tools are read-only and exclude mutation, install, approval, credentials, publish and protected auth.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-012",
+   "category": "Back Seat Driver",
+   "statement": "BSD unsafe output is quarantined; one re-prime is allowed then BSD pauses.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-013",
+   "category": "Back Seat Driver",
+   "statement": "BSD failure, quota or unavailability cannot block primary work.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-014",
+   "category": "Back Seat Driver",
+   "statement": "BSD reset/re-prime and epoch fencing cover compaction, fork, rewind, replacement and model/Persona changes.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-015",
+   "category": "Back Seat Driver",
+   "statement": "BSD supports configurable cooldown and bounded catch-up.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-016",
+   "category": "Back Seat Driver",
+   "statement": "BSD can be enabled by stage in PRD Builder, Planning Wizard, PlanUnit, Plan Compile, WorkNode, audit, execution, verification, remediation and certification.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-017",
+   "category": "Back Seat Driver",
+   "statement": "BSD configuration modal appears when explicitly selected for PRD Builder/Planning Wizard and freezes stage bindings.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-018",
+   "category": "Back Seat Driver",
+   "statement": "Compact Context and Context Details show truthful BSD state and identity.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-019",
+   "category": "Back Seat Driver",
+   "statement": "Usage distinguishes BSD calls, no-calls, held/cleared/emitted/suppressed outcomes, cost, stage, latency and quota.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BSD-020",
+   "category": "Back Seat Driver",
+   "statement": "BSD command/event/storage/wiring authority must be closed before implementation-ready status.",
+   "gui_related": true,
+   "owner_hint": "Plans/Back_Seat_Driver.md",
+   "canonical_evidence": {
+    "doc": "Plans/Back_Seat_Driver.md",
+    "exists": true,
+    "bytes": 112389
+   },
+   "concept_module": [
+    {
+     "file": "bsd.js",
+     "exists": true,
+     "bytes": 26720
+    }
+   ],
+   "test_suite": "bsd-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-001",
+   "category": "Browser capture and DevTools",
+   "statement": "Browser supports visible full screenshot, explicit full-scroll-page screenshot, region screenshot and component selection.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-002",
+   "category": "Browser capture and DevTools",
+   "statement": "Full/region screenshots immediately send an isolated payload to current destination without unrelated composer text.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-003",
+   "category": "Browser capture and DevTools",
+   "statement": "Component selection shows adjacent instruction bar with Send, menu and persisted last mode.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-004",
+   "category": "Browser capture and DevTools",
+   "statement": "Component modes are Send Now, Add To Composer List and Insert Component At Cursor.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-005",
+   "category": "Browser capture and DevTools",
+   "statement": "Add To Composer List creates numbered visible instructions with stable hidden component refs and is distinct from live follow-up queue.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-006",
+   "category": "Browser capture and DevTools",
+   "statement": "Insert Component At Cursor sends nothing.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-007",
+   "category": "Browser capture and DevTools",
+   "statement": "BrowserElementContext retains session/page/frame/generation, locator, DOM/component/source/style/rect and optional crop.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-008",
+   "category": "Browser capture and DevTools",
+   "statement": "Agent has policy-controlled full ordinary internal browser and DevTools access.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "BROWSER-009",
+   "category": "Browser capture and DevTools",
+   "statement": "Protected authentication browser is always human-only and excluded from capture, DevTools, BSD and persistence.",
+   "gui_related": true,
+   "owner_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "canonical_evidence": {
+    "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "exists": true,
+    "bytes": 620743
+   },
+   "concept_module": [
+    {
+     "file": "browser-capture.js",
+     "exists": true,
+     "bytes": 74090
+    }
+   ],
+   "test_suite": "browser-capture-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-001",
+   "category": "Scheduling and quota resume",
+   "statement": "Schedule Message appears in the wand menu.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-002",
+   "category": "Scheduling and quota resume",
+   "statement": "Scheduled message freezes exact destination, text, attachments, requested runtime/model/account, time and policy.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-003",
+   "category": "Scheduling and quota resume",
+   "statement": "Plan Build At binds exact Plan ID/version/hash.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-004",
+   "category": "Scheduling and quota resume",
+   "statement": "Plan revision invalidates its pending build schedule rather than retargeting silently.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-005",
+   "category": "Scheduling and quota resume",
+   "statement": "Execution windows support one-time/recurring start, pause, wind-down, days, IANA timezone and local wall-clock DST policy.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-006",
+   "category": "Scheduling and quota resume",
+   "statement": "Wind-down stops new large work and pauses at a safe checkpoint.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-007",
+   "category": "Scheduling and quota resume",
+   "statement": "Recurring windows resume the same unfinished run and never start duplicate nightly builds.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-008",
+   "category": "Scheduling and quota resume",
+   "statement": "Usage exhaustion shows reset time with provider_reported, locally_inferred, user_supplied or unknown truth.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-009",
+   "category": "Scheduling and quota resume",
+   "statement": "Auto-resume requires explicit per-run consent by default and persists server-side.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-010",
+   "category": "Scheduling and quota resume",
+   "statement": "Auto-resume revalidates provider/account, Plan version, project/worktree, permissions/tools and execution window.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-011",
+   "category": "Scheduling and quota resume",
+   "statement": "Manual Stop/Cancel/Pause always overrides schedules, quota reset and Goal continuation.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "SCHED-012",
+   "category": "Scheduling and quota resume",
+   "statement": "Scheduled dispatch and resume are idempotent and survive client closure/restart.",
+   "gui_related": true,
+   "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+   "canonical_evidence": {
+    "doc": "Plans/Scheduling_and_Quota_Resume.md",
+    "exists": true,
+    "bytes": 39193
+   },
+   "concept_module": [
+    {
+     "file": "scheduling.js",
+     "exists": true,
+     "bytes": 80851
+    }
+   ],
+   "test_suite": "scheduling-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-001",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Teach is user-to-Puppet-Master durable teaching through /teach and explicit natural language.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-002",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Teacher is a separate Persona that explains Puppet Master and does not equal Teach.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-003",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Automatic Assistant memory at run boundaries/milestones remains enabled under the memory owner.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-004",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Explicit taught/locked memory cannot be silently overridden by automatic memory.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-005",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "ELI5 has an application/project default and independent per-thread override.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-006",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "ELI5 changes explanation style only and never mutates code, Plan, artifact, evidence or identifiers.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-007",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Debug remains a primary mode and implements target, baseline, instrumentation, reproduction, analysis, repair, verification and cleanup.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-008",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Debug exposes Investigation Context, revalidation, failure/recovery, redaction/revocation and bundle handling.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-009",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Revert Last Agent Edit dispatches the existing whole-turn cmd.chat.revert and is distinct from Rewind.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "FEATURE-010",
+   "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+   "statement": "Context Lens remains a top-of-chat header control and is not in the wand.",
+   "gui_related": true,
+   "owner_hint": "Plans/assistant-chat-design.md",
+   "canonical_evidence": {
+    "doc": "Plans/assistant-chat-design.md",
+    "exists": true,
+    "bytes": 1156287
+   },
+   "concept_module": [
+    {
+     "file": "assistant-features.js",
+     "exists": true,
+     "bytes": 83716
+    }
+   ],
+   "test_suite": "restored-features-verify.mjs"
+  },
+  {
+   "requirement_id": "PROVIDER-001",
+   "category": "Provider control",
+   "statement": "Puppet Master owns canonical Goal, Plan, To-Do, tools, MCP, Skills, permissions, subagents, artifacts and workflow state across providers.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-002",
+   "category": "Provider control",
+   "statement": "Provider-native systems are disabled, redirected, projected or retained as noncanonical observations in that order.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-003",
+   "category": "Provider control",
+   "statement": "Provider session IDs are correlation only and never replace PM thread/workflow/object identity.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-004",
+   "category": "Provider control",
+   "statement": "Adapters publish a closed capability matrix with source/currentness.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-005",
+   "category": "Provider control",
+   "statement": "Each run discloses Full, Constrained or Provider-managed execution control tier.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-006",
+   "category": "Provider control",
+   "statement": "Host Tool Execution is preferred; delegated execution is isolated and reconciled; reasoning-only is fallback.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-007",
+   "category": "Provider control",
+   "statement": "Provider-native To-Do/Plan/Goal state cannot directly mutate PM canon.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-008",
+   "category": "Provider control",
+   "statement": "Fresh Review and blind BrainStorm claims require truly independent sessions or truthful constrained disclosure.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-009",
+   "category": "Provider control",
+   "statement": "Attachment materialization accurately describes full file, excerpt, vision or omission.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-010",
+   "category": "Provider control",
+   "statement": "Provider Usage/reset truth is labeled and never fabricated.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-011",
+   "category": "Provider control",
+   "statement": "Official CLI authentication remains owned by official CLI; direct API credentials remain PM-secure.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "PROVIDER-012",
+   "category": "Provider control",
+   "statement": "Private Usage telemetry is not execution/auth authority.",
+   "gui_related": false,
+   "owner_hint": "Plans/CLI_Bridged_Providers.md",
+   "canonical_evidence": {
+    "doc": "Plans/CLI_Bridged_Providers.md",
+    "exists": true,
+    "bytes": 119949
+   },
+   "concept_module": null,
+   "test_suite": "canonical only \u2014 no concept surface"
+  },
+  {
+   "requirement_id": "GUI-001",
+   "category": "Concept and GUI integration",
+   "statement": "Current selected concept defaults, menus, questionnaires, history, Context, Orbit/Step Rail, themes and Stop/queue behavior are preserved.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-002",
+   "category": "Concept and GUI integration",
+   "statement": "Activity domains include Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts when relevant.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-003",
+   "category": "Concept and GUI integration",
+   "statement": "Goal and To-Dos are Activity-only; collaborative workflows and Plans have transcript cards.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-004",
+   "category": "Concept and GUI integration",
+   "statement": "Plan card defaults Rich and shows exact status control labels.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-005",
+   "category": "Concept and GUI integration",
+   "statement": "Multi-agent cards expand recent detail and open full panels.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-006",
+   "category": "Concept and GUI integration",
+   "statement": "Participant rows are fully clickable.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-007",
+   "category": "Concept and GUI integration",
+   "statement": "Attachment tray, destination ribbon and quota strip coexist without clipping.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-008",
+   "category": "Concept and GUI integration",
+   "statement": "All new UI uses existing theme tokens/SVG/motion grammar and avoids left accent bars/excess padding.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-009",
+   "category": "Concept and GUI integration",
+   "statement": "Chat updates file is updated by replacing obsolete truth.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-010",
+   "category": "Concept and GUI integration",
+   "statement": "Concept source modules are modified and both generated HTML files rebuilt and byte-checked.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "GUI-011",
+   "category": "Concept and GUI integration",
+   "statement": "Required interactions cannot be implemented as toast-only simulation.",
+   "gui_related": true,
+   "owner_hint": "Plans/FinalGUISpec.md",
+   "canonical_evidence": {
+    "doc": "Plans/FinalGUISpec.md",
+    "exists": true,
+    "bytes": 1944074
+   },
+   "concept_module": [
+    {
+     "file": "app.js",
+     "exists": true,
+     "bytes": 286113
+    },
+    {
+     "file": "build.py",
+     "exists": true,
+     "bytes": 7030
+    }
+   ],
+   "test_suite": "all suites + build --check"
+  },
+  {
+   "requirement_id": "DRY-001",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Each semantic system has one owner and Assistant/Settings consume projections rather than duplicate runtime.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  },
+  {
+   "requirement_id": "DRY-002",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Every mutating UI action uses a registered command or explicitly documented local-only view action.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  },
+  {
+   "requirement_id": "DRY-003",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Every command has typed request/result/error/availability, one handler, currentness, permission and idempotency.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  },
+  {
+   "requirement_id": "DRY-004",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Every persisted effect has Event Authority admission or an explicit receipt-only disposition.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  },
+  {
+   "requirement_id": "DRY-005",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Production wiring includes forward and reverse GUI coverage.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  },
+  {
+   "requirement_id": "DRY-006",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Settings managers route domain operations and do not own runtime records.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  },
+  {
+   "requirement_id": "DRY-007",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Generated governance is refreshed only after live source stabilization.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  },
+  {
+   "requirement_id": "DRY-008",
+   "category": "DRY, commands, wiring and proof",
+   "statement": "Packet, canonical, concept and native tests are not conflated.",
+   "gui_related": false,
+   "owner_hint": "Plans/DRY_Rules.md",
+   "canonical_evidence": {
+    "doc": "Plans/DRY_Rules.md",
+    "exists": true,
+    "bytes": 127009
+   },
+   "concept_module": null,
+   "test_suite": "registry census"
+  }
+ ]
+}

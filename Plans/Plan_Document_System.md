@@ -1192,3 +1192,127 @@ This owner note closes or dispositions non-runtime rows from `Plans/.audits/fabl
 - `registry_line 358` (repaired; source line 1198; `sfk-d062076ff34ca358d84be28b`): GUI model routing setting repaired: default is gui_related_model_routing.enabled=false with gui_model_id unset; Settings > Models/Agent Config owns the visible control. Source summary: - [HIGH] L299-337 (PDS-007): the one unambiguously runtime-facing setting ("use different model for GUI elements?") has no UI location, default, or model list hedges with "such as."
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## 4. Scoped Assistant Deep Plan PlanUnit Profile
+
+This document gains a third PlanUnit profile alongside the Legacy Converted Plan Profile and the New Plan Authoring Profile: the **Scoped Assistant Deep Plan PlanUnit Profile**. It defines how a Deep Plan (`Thorough`, `Exhaustive`, `BrainStorm`) materializes PlanUnits on Build approval without those units becoming canonical repository PlanUnits.
+
+Scoped units use the standard PlanUnit field set and the standard block grammar defined by PDS-003 and PDS-008, and they pass the same structural validation. A scoped unit may carry dependencies, acceptance conditions, negative constraints, source and research lineage, affected surfaces, risks, expected outcomes, validation tasks, and parallelization hints. Nothing in the field meanings changes; only the scope changes.
+
+Every scoped unit carries explicit scope and parent identity so it can never be mistaken for a global product PlanUnit. It declares `scope_kind: assistant_deep_plan` and names its parent `assistant_plan_id`, `plan_version`, and `plan_hash`. Units are delivered as one `AssistantDeepPlanUnitBundle` (`pm.assistant_plan.planunit_bundle.v1`) that binds `bundle_id`, the parent Plan identity triple, `scope_kind`, the unit list, the source ledger ref, `generated_at`, `validation_status` in `pass|failed`, and validation refs. The bundle is the atomic materialization boundary: a failed bundle admits no units and blocks the Build transition rather than admitting a partial set.
+
+The scoped profile is distinct from canonical repository PlanUnits in authority, not just in labeling. Scoped units are not canonical repository PlanUnits, do not belong to any `owner_doc` under `Plans/**`, do not imply that an owner document exists or must be created, and are never admitted into the global product PlanUnit index. Materializing a bundle performs no write to `Plans/**`, `Plans/_shards/**`, `Plans/.plan_index/**`, `Plans/.evidence/**`, or `Plans/Spec_Lock.json`, refreshes no generated governance, and emits no seal, coverage, or readiness receipt. The `owner_doc` field of a scoped unit names the Assistant Plan identity scope rather than a repository owner document, and the generated PlanUnit index boundary of PDS-006 continues to see only canonical repository units. Index tooling that encounters a scoped bundle must ignore it or reject it explicitly; it must never silently absorb it.
+
+Scoped units map to To-Dos rather than to nodes. On Build approval the Deep Plan first materializes and validates the bundle, then maps units and Plan steps onto the thread To-Do hierarchy owned by `Plans/ToDo_Runtime.md`. A unit may map to several To-Dos and a To-Do may aggregate several tightly related operations, but a raw scoped PlanUnit is never rendered to the user as a To-Do. Scoped units create no NodeSeeds and no WorkNodes; `Plans/Plan_To_Node_Compilation.md` states the matching negative boundary.
+
+Promotion or translation of scoped units into Planning Wizard work or into canonical repository PlanUnits happens only through an explicit user-initiated handoff. `Send To Planning Wizard` may carry the bundle, its parent Plan identity and hash, and its source ledger ref into `Plans/Planning_Wizard.md`, which then performs its own topic conversion, audits, and Final Plan Pack work under its own authority and produces canonical units only through its own approval path. There is no implicit path by which a scoped unit becomes a canonical unit, and no Assistant surface may write canonical PlanUnits directly.
+
+A regular Assistant Plan (`Quick`, `Standard`, `Thorough`) produces no PlanUnits of any kind, scoped or canonical. A request to materialize a bundle for a regular Plan is rejected as an owner-boundary violation.
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Planning_Wizard.md
+
+### PDS-021 - Scoped Assistant Deep Plan PlanUnit Profile
+
+```yaml
+plan_unit_id: PDS-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Plan Document System owns a Scoped Assistant Deep Plan PlanUnit Profile in which Deep Plan Build approval materializes standard-schema PlanUnits that declare scope_kind assistant_deep_plan and carry parent assistant_plan_id, plan_version, and plan_hash inside one AssistantDeepPlanUnitBundle with a pass or failed validation status. Scoped units use the standard field set, block grammar, and structural validation but are not canonical repository PlanUnits: they belong to no Plans owner document, imply no owner document, are never admitted into the generated global PlanUnit index, and their materialization writes nothing to Plans product canon, shards, plan index, evidence, or Spec Lock. A failed bundle admits no units and blocks Build rather than admitting a partial set, and a regular Plan Quick, Standard, or Thorough materializes no PlanUnits at all.
+gui_related: false
+gui_classification_reason: Scoped unit schema, scope declaration, and index exclusion are backend document-standard semantics; the Assistant exposes only hidden details and a To-Do projection owned elsewhere.
+depends_on:
+  - PDS-001
+  - PDS-003
+  - PDS-006
+  - PDS-008
+unblocks: []
+acceptance_criteria:
+  - Every scoped unit validates against the standard PlanUnit required-field set and declares scope_kind assistant_deep_plan with a complete parent identity triple.
+  - A bundle with validation_status failed admits zero units and blocks the Build transition.
+  - Index generation over live Plans docs produces the same canonical unit set whether or not scoped bundles exist.
+  - Materializing a bundle performs no write to Plans/**, Plans/_shards, Plans/.plan_index, Plans/.evidence, or Plans/Spec_Lock.json.
+  - A materialization request for a regular Plan strategy is rejected as an owner-boundary violation.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: scoped_planunit_admitted_as_product_canon
+reasoning_tier: high
+context_scope: scoped_assistant_planunit_profile
+implementation_surfaces:
+  - Plans/Plan_Document_System.md
+  - Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: scoped_planunit_profile_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-005
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-006
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-007
+  - "packet:02_RUNTIME_AND_STORAGE_CONTRACTS.md#5.5"
+  - "packet:07_DRY_OWNERSHIP_MAP.md#1"
+preserved_exact_tokens:
+  - "scope_kind=assistant_deep_plan"
+  - "AssistantDeepPlanUnitBundle"
+  - "pm.assistant_plan.planunit_bundle.v1"
+negative_constraints:
+  - Do not admit scoped units into the global product PlanUnit index.
+  - Do not infer or create an owner document from a scoped unit.
+  - Do not refresh generated governance from an Assistant Plan build.
+owner_hints:
+  - Plans/Plan_Document_System.md
+  - Plans/Assistant_Plan_Runtime.md
+```
+
+### PDS-022 - Scoped Unit To-Do Mapping And Explicit Promotion Only
+
+```yaml
+plan_unit_id: PDS-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Scoped Assistant Deep Plan PlanUnits map onto the thread To-Do hierarchy owned by ToDo Runtime and never onto NodeSeeds or WorkNodes; one unit may produce several To-Dos and one To-Do may aggregate several related operations, but a raw scoped unit is never rendered to the user as a To-Do. Translation of scoped units into Planning Wizard work or into canonical repository PlanUnits occurs only through the explicit user-initiated Send To Planning Wizard handoff, which carries the bundle, parent Plan identity and hash, and source ledger ref and leaves Planning Wizard to produce canonical units through its own approval path. No Assistant surface writes canonical PlanUnits directly and no implicit path converts a scoped unit into a canonical one.
+gui_related: true
+gui_classification_reason: Determines what the To-Do panel and Plan hidden details may display and forbids exposing raw scoped units as user-visible To-Do rows.
+depends_on:
+  - PDS-021
+unblocks: []
+acceptance_criteria:
+  - Build maps a validated bundle to To-Dos and creates zero NodeSeeds and zero WorkNodes.
+  - No user-visible To-Do row is a raw scoped PlanUnit identifier or body.
+  - Canonical PlanUnits appear only after an explicit Planning Wizard approval, never as a side effect of Assistant Build.
+  - A handoff payload preserves bundle identity, parent plan identity and hash, and source ledger ref.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: scoped_unit_to_canonical_leak
+reasoning_tier: high
+context_scope: scoped_unit_mapping_and_promotion
+implementation_surfaces:
+  - Plans/Plan_Document_System.md
+  - Plans/ToDo_Runtime.md
+  - Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: scoped_unit_mapping_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-005
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-008
+  - pm-assistant-implementation-2026-09-02-recovered:PLAN-013
+  - "packet:07_DRY_OWNERSHIP_MAP.md#4"
+preserved_exact_tokens:
+  - "Send To Planning Wizard"
+  - "scope_kind=assistant_deep_plan"
+negative_constraints:
+  - Do not show raw PlanUnits as To-Dos.
+  - Do not create canonical PlanUnits from an Assistant Build.
+  - Do not compile scoped units into NodeSeeds or WorkNodes.
+owner_hints:
+  - Plans/Plan_Document_System.md
+  - Plans/ToDo_Runtime.md
+  - Plans/Planning_Wizard.md
+```

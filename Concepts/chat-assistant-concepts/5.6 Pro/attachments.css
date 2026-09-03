@@ -1,0 +1,658 @@
+/* attachments.css — feature module styles.  OWNER: Assistant-redesign wave
+ * (2026-09-03) — attachments agent.  Pairs with attachments.js.
+ *
+ * Concatenated last (after every other module sheet and composer.css), so
+ * rules here win at equal specificity — see build.py's CSS join order.
+ *
+ * Every rule is scoped under an `att-` class this module owns. No hex colour
+ * for a themed surface: only the existing tokens (--surface-*, --border*,
+ * --text, --muted, --subtle, --accent, --accent-2, --positive, --warning,
+ * --danger, --on-accent, --radius*, --shadow-*, --spring*, --ease, --z-*,
+ * --font-ui, --font-mono) so all eight themes stay correct automatically.
+ *
+ * The top-edge tracer (§3.3 of the packet) is intentionally NOT a rectangular
+ * progress bar: state is expressed through width + colour + pattern of a 2px
+ * bar pinned to the thumbnail's top edge, keyed purely off the `data-state`
+ * attribute attachments.js already writes — no extra classes to keep in sync.
+ * Motion (the travelling glint / ripple / pulse) lives ONLY inside
+ * `@media (prefers-reduced-motion: no-preference)`; the state-carrying
+ * width/colour/pattern rules above that block apply unconditionally, so
+ * reduced motion drops the animation but never the information.
+ */
+
+/* =====================================================================
+   1. Composer tray (packet §3.3 / GUI §5.2)
+   ===================================================================== */
+.att-tray {
+  position: relative;
+  padding: 9px 9px 0 9px;
+}
+.att-tray-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+}
+.att-more-chip {
+  align-self: center;
+  height: 60px;
+  padding: 0 12px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  color: var(--muted);
+  font: 600 11px var(--font-ui);
+  cursor: pointer;
+  transition: background 140ms var(--ease), color 140ms var(--ease), border-color 140ms var(--ease);
+}
+.att-more-chip:hover {
+  background: var(--surface-4);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+/* ---- drag/drop overlay (§3.4) ----------------------------------------- */
+.att-drop-overlay {
+  position: absolute;
+  inset: 4px 6px 4px 6px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed color-mix(in srgb, var(--accent) 55%, var(--border-strong));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-2) 85%);
+  pointer-events: none;
+  animation: att-drop-in 160ms var(--ease) both;
+}
+.att-drop-copy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font: 600 12px var(--font-ui);
+  box-shadow: var(--shadow-soft);
+}
+.att-drop-copy svg { color: var(--accent); }
+@keyframes att-drop-in { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
+
+/* =====================================================================
+   2. Thumbnail card — composer tray
+   ===================================================================== */
+.att-thumb {
+  /* No overflow:hidden here on purpose: .att-thumb-chrome (the hover popover)
+     is an absolutely-positioned child anchored at top:100%, i.e. OUTSIDE this
+     box, and an overflow-hidden ancestor would clip it to invisible. The
+     tracer's own rounded corners come from .att-tracer/.att-tracer-fill
+     below, not from clipping here. */
+  position: relative;
+  width: 108px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  transition: border-color 140ms var(--ease), box-shadow 140ms var(--ease);
+}
+.att-thumb:hover,
+.att-thumb:focus-within {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-soft);
+}
+.att-thumb-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 8px 6px 6px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--text);
+  text-align: center;
+}
+.att-thumb-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+.att-thumb-media-img {
+  width: 100%;
+  height: 30px;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-4);
+}
+.att-thumb-name {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 500 10px var(--font-ui);
+  color: var(--muted);
+}
+.att-thumb-x {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(-2px) scale(.9);
+  transition: opacity 140ms var(--ease), transform 140ms var(--ease), color 140ms var(--ease), background 140ms var(--ease);
+  cursor: pointer;
+}
+.att-thumb:hover .att-thumb-x,
+.att-thumb:focus-within .att-thumb-x,
+.att-thumb-x:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+.att-thumb-x:hover {
+  color: var(--on-accent);
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+/* =====================================================================
+   3. Top-edge tracer (packet §3.3) — shared by tray + transcript thumbs
+   ---------------------------------------------------------------------
+   `.att-obj` is written onto both `.att-thumb` (tray) and `.att-msg-thumb`
+   (transcript) so every state rule is declared once instead of twice.
+   Width/colour/pattern below carry the STATE and apply unconditionally;
+   the travelling/pulsing motion is added only under a motion-safe media
+   query further down, per the reduced-motion contract in §7 of the module
+   contract ("drop decoration, not state changes").
+   ===================================================================== */
+.att-tracer {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px 2px 0 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  background: transparent;
+  transition: opacity 220ms var(--ease);
+}
+.att-tracer-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+}
+
+.att-obj[data-state="selected"] > .att-tracer { opacity: .55; }
+.att-obj[data-state="selected"] > .att-tracer-fill { width: 10%; background: var(--muted); }
+
+.att-obj[data-state="resolving"] > .att-tracer { opacity: 1; background: color-mix(in srgb, var(--muted) 20%, transparent); }
+.att-obj[data-state="resolving"] > .att-tracer-fill { width: 28%; background: var(--muted); }
+
+/* uploading — determinate: a filled bar with a soft leading edge, i.e. a
+   "faint completed wake" behind the working edge, not a flat rectangle. */
+.att-obj[data-state="uploading"] > .att-tracer { opacity: 1; background: color-mix(in srgb, var(--accent) 16%, transparent); }
+.att-obj[data-state="uploading"] > .att-tracer-fill {
+  width: 66%;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 35%, transparent), var(--accent));
+}
+
+.att-obj[data-state="scanning"] > .att-tracer,
+.att-obj[data-state="extracting"] > .att-tracer { opacity: 1; background: color-mix(in srgb, var(--accent-2) 18%, transparent); }
+.att-obj[data-state="scanning"] > .att-tracer-fill,
+.att-obj[data-state="extracting"] > .att-tracer-fill { width: 86%; background: var(--accent-2); }
+
+/* ready — settles, then disappears entirely (no permanent bar at rest). */
+.att-obj[data-state="ready"] > .att-tracer { opacity: 0; }
+.att-obj[data-state="ready"] > .att-tracer-fill { width: 100%; background: var(--positive); }
+
+/* warning — a short SEGMENTED edge, deliberately not a full solid bar. */
+.att-obj[data-state="warning"] > .att-tracer { opacity: 1; }
+.att-obj[data-state="warning"] > .att-tracer-fill {
+  width: 52%;
+  background-color: transparent;
+  background-image: repeating-linear-gradient(90deg, var(--warning) 0 5px, transparent 5px 9px);
+}
+
+/* failed — freezes in place and grows a small warning point at the edge
+   where it stopped, rather than continuing to animate. */
+.att-obj[data-state="failed"] > .att-tracer { opacity: 1; }
+.att-obj[data-state="failed"] > .att-tracer-fill { width: 58%; background: var(--danger); }
+.att-obj[data-state="failed"] > .att-tracer::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 58%;
+  width: 6px; height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 25%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .att-obj[data-state="resolving"] > .att-tracer-fill {
+    width: 24%;
+    animation: att-glint 1500ms ease-in-out infinite;
+  }
+  .att-obj[data-state="uploading"] > .att-tracer-fill {
+    width: 0%;
+    animation: att-fill 900ms linear forwards;
+  }
+  .att-obj[data-state="scanning"] > .att-tracer-fill,
+  .att-obj[data-state="extracting"] > .att-tracer-fill {
+    animation: att-ripple 950ms ease-in-out infinite;
+  }
+  .att-obj[data-state="warning"] > .att-tracer-fill {
+    animation: att-warn-pulse 1900ms ease-in-out infinite;
+  }
+}
+@keyframes att-glint {
+  0%   { transform: translateX(0);    opacity: .55; }
+  50%  { transform: translateX(280%); opacity: 1; }
+  100% { transform: translateX(0);    opacity: .55; }
+}
+@keyframes att-fill { from { width: 0%; } to { width: 100%; } }
+@keyframes att-ripple { 0%, 100% { opacity: .6; } 50% { opacity: 1; } }
+@keyframes att-warn-pulse { 0%, 100% { opacity: .68; } 50% { opacity: 1; } }
+
+/* =====================================================================
+   4. Hover-gated chrome (packet §3.3 / §3.5, "Chat updates.md" grammar)
+   ---------------------------------------------------------------------
+   Same hidden-at-rest / hover-reveal / ~280ms linger grammar as the
+   built-in `.message-chrome` (transcript.css §1): opacity+transform fade in
+   150ms, `visibility` only flips after a 280ms delay on the way OUT so a
+   pointer overshoot has time to land back on the popover. Shared by both
+   the composer-tray thumbnail and the transcript thumbnail; `-msg` modifies
+   only position/width, never the timing, so the two stay visually aligned.
+   ===================================================================== */
+.att-thumb-chrome {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: var(--z-tip);
+  margin-top: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 150ms, transform 150ms, visibility 0s linear 280ms;
+  pointer-events: none;
+}
+.att-thumb:hover .att-thumb-chrome,
+.att-thumb:focus-within .att-thumb-chrome,
+.att-msg-thumb:hover .att-thumb-chrome,
+.att-msg-thumb:focus-within .att-thumb-chrome {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity 150ms, transform 150ms, visibility 0s;
+}
+.att-thumb-chrome-msg { top: 100%; left: 0; }
+
+.att-chrome-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 226px;
+  max-width: calc(100vw - 24px);
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+}
+.att-chrome-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  font: 650 12px var(--font-ui);
+  color: var(--text);
+  word-break: break-word;
+}
+.att-chrome-meta,
+.att-chrome-state {
+  font: 500 10.5px var(--font-ui);
+  color: var(--muted);
+}
+.att-chrome-state.is-warning { color: var(--warning); }
+.att-chrome-state.is-failed { color: var(--danger); }
+.att-chrome-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 2px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+.att-chrome-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 120ms var(--ease), color 120ms var(--ease), border-color 120ms var(--ease);
+}
+.att-chrome-btn:hover {
+  background: var(--surface-3);
+  color: var(--text);
+  border-color: var(--border);
+}
+.att-chrome-btn.is-danger:hover {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 40%, var(--border));
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+}
+.att-chrome-btn.is-warning { color: var(--warning); }
+.att-chrome-btn.is-warning:hover {
+  background: color-mix(in srgb, var(--warning) 14%, transparent);
+  border-color: color-mix(in srgb, var(--warning) 40%, var(--border));
+}
+.att-chrome-btn.is-disabled { opacity: .4; cursor: not-allowed; }
+.att-chrome-btn.is-disabled:hover { background: transparent; color: var(--muted); border-color: transparent; }
+
+.att-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px 1px 4px;
+  border-radius: 999px;
+  font: 650 9.5px var(--font-ui);
+  white-space: nowrap;
+}
+.att-chip svg { width: 9px; height: 9px; }
+.att-chip-stale {
+  color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning) 34%, transparent);
+}
+
+/* =====================================================================
+   5. Transcript thumbnail (packet §3.5 / GUI §6)
+   ===================================================================== */
+.att-msg-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 3px 0 5px;
+}
+.message-user .att-msg-row { justify-content: flex-end; }
+.att-msg-thumb {
+  position: relative;
+  display: inline-flex;
+}
+.att-msg-thumb-body {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 9px 0 7px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  max-width: 220px;
+}
+.att-msg-thumb-body svg { flex: 0 0 auto; color: var(--muted); }
+.att-msg-thumb-name {
+  font: 500 11px var(--font-ui);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.att-msg-drift-dot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--warning) 22%, transparent);
+}
+
+/* =====================================================================
+   6. Add-attachment source picker dialog
+   ---------------------------------------------------------------------
+   Reuses the app's own `.dialog` / `.drawer-head` / `.dialog-body` /
+   `.meta-pill` frame (styles.css) for chrome consistency; only the
+   section/row layout inside is this module's own.
+   ===================================================================== */
+.att-source-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.att-source-section {
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.att-source-section h3 {
+  margin: 0;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 650;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.att-source-section-body {
+  display: flex;
+  flex-direction: column;
+}
+.att-source-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: background 130ms var(--ease);
+}
+.att-source-section-body .att-source-row:last-child { border-bottom: 0; }
+.att-source-row:hover { background: var(--surface-3); }
+.att-source-row-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: var(--surface-3);
+  color: var(--muted);
+}
+.att-source-row-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.att-source-row-copy strong {
+  font-size: 12px;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.att-source-row-copy span {
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+/* =====================================================================
+   7. More Info (deep detail surface, packet §3.6)
+   ===================================================================== */
+.att-detail-section .context-section-body { padding: 8px 9px; }
+.att-detail-row {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.att-detail-row + .att-detail-row { border-top: 1px dashed var(--border); }
+.att-detail-label {
+  color: var(--subtle);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding-top: 2px;
+}
+.att-detail-value { color: var(--text); word-break: break-word; }
+.att-hash {
+  font: 500 11px var(--font-mono);
+  color: var(--muted);
+  background: var(--code);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.att-lineage {
+  margin: 5px 0 0;
+  padding-left: 16px;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+.att-export-history {
+  margin: 0;
+  padding: 2px 9px;
+  list-style: none;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.8;
+}
+.att-export-history li { border-bottom: 1px dashed var(--border); padding: 3px 0; }
+.att-export-history li:last-child { border-bottom: 0; }
+
+.att-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font: 650 10px var(--font-ui);
+  background: var(--surface-3);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  margin-right: 5px;
+}
+.att-pill-materialized { color: var(--positive); border-color: color-mix(in srgb, var(--positive) 35%, var(--border)); }
+.att-pill-available,
+.att-pill-selected { color: var(--muted); }
+.att-pill-partially_materialized { color: var(--warning); border-color: color-mix(in srgb, var(--warning) 35%, var(--border)); }
+.att-pill-omitted_by_budget,
+.att-pill-unsupported_by_route,
+.att-pill-stale_reference { color: var(--warning); border-color: color-mix(in srgb, var(--warning) 35%, var(--border)); }
+.att-pill-blocked_by_policy { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--border)); }
+
+.att-details-footer { flex-wrap: wrap; }
+.att-details-footer .soft-button.is-warning { color: var(--warning); border-color: color-mix(in srgb, var(--warning) 40%, var(--border)); }
+.att-details-footer .soft-button.is-disabled,
+.att-source-row:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* =====================================================================
+   8. Image preview dialog
+   ===================================================================== */
+.att-preview-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: var(--code);
+}
+.att-preview-img {
+  display: block;
+  max-width: 100%;
+  max-height: min(70vh, 640px);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* =====================================================================
+   9. Narrow widths — same 590px rule the built-in message chrome uses
+   ("Chat updates.md": hover metadata hidden at rest on pointer-capable
+   widths, always available at phone widths because hover is unavailable).
+   Below that width the popover leaves absolute positioning and joins
+   normal flow instead of staying an always-open floating overlay, so
+   several attachments on screen at once do not stack floating cards.
+   ===================================================================== */
+@media (max-width: 590px) {
+  .att-thumb { height: auto; min-height: 64px; }
+  .att-thumb-x { opacity: 1; transform: none; }
+  .att-thumb-chrome,
+  .att-msg-thumb .att-thumb-chrome {
+    position: static;
+    display: block;
+    margin: 6px 0 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: none;
+    pointer-events: auto;
+  }
+  .att-chrome-body { width: 100%; max-width: none; box-shadow: none; }
+  .att-msg-thumb-body { max-width: 76vw; }
+}
+
+/* =====================================================================
+   10. Reduced motion — drop decoration, keep every state distinguishable
+   (tracer state rules above this point already apply unconditionally;
+   this block only removes transition/animation timing elsewhere).
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .att-drop-overlay { animation: none; }
+  .att-thumb,
+  .att-thumb-x,
+  .att-more-chip,
+  .att-chrome-btn,
+  .att-source-row { transition: none; }
+  .att-thumb-chrome {
+    transition: none;
+  }
+  .att-thumb:hover .att-thumb-chrome,
+  .att-thumb:focus-within .att-thumb-chrome,
+  .att-msg-thumb:hover .att-thumb-chrome,
+  .att-msg-thumb:focus-within .att-thumb-chrome {
+    transition: none;
+  }
+}

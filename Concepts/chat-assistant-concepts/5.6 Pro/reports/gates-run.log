@@ -1,0 +1,2075 @@
+[pm-plans-verify] start json_syntax
+[pm-plans-verify] done json_syntax status=pass elapsed_ms=71302
+[pm-plans-verify] start verify_spec_lock
+[pm-plans-verify] done verify_spec_lock status=fail elapsed_ms=348
+[pm-plans-verify] start validate_plan_graph
+[pm-plans-verify] done validate_plan_graph status=fail elapsed_ms=11071
+[pm-plans-verify] start validate_auto_decisions
+[pm-plans-verify] done validate_auto_decisions status=pass elapsed_ms=246
+[pm-plans-verify] start validate_evidence
+[pm-plans-verify] done validate_evidence status=fail elapsed_ms=11426
+[pm-plans-verify] start lint_contractrefs
+[pm-plans-verify] done lint_contractrefs status=pass elapsed_ms=109929
+[pm-plans-verify] start lint_banned_phrases
+[pm-plans-verify] done lint_banned_phrases status=pass elapsed_ms=176
+[pm-plans-verify] start lint_path_refs
+[pm-plans-verify] done lint_path_refs status=fail elapsed_ms=2432
+[pm-plans-verify] start check_project_artifact_requirements
+[pm-plans-verify] done check_project_artifact_requirements status=pass elapsed_ms=172
+[pm-plans-verify] start validate_plans_to_code_handoff_schema
+[pm-plans-verify] done validate_plans_to_code_handoff_schema status=pass elapsed_ms=196
+[pm-plans-verify] start validate_prd_planning_runtime_contracts
+[pm-plans-verify] done validate_prd_planning_runtime_contracts status=pass elapsed_ms=543
+[pm-plans-verify] start validate_new_contracts
+[pm-plans-verify] done validate_new_contracts status=pass elapsed_ms=98325
+[pm-plans-verify] start validate_server_command_gap
+[pm-plans-verify] done validate_server_command_gap status=pass elapsed_ms=6960
+[pm-plans-verify] start validate_case_l_non_event_materialization
+[pm-plans-verify] done validate_case_l_non_event_materialization status=pass elapsed_ms=697
+[pm-plans-verify] start validate_implementation_readiness
+[pm-plans-verify] done validate_implementation_readiness status=fail elapsed_ms=9380
+[pm-plans-verify] start validate_plan_migration
+[pm-plans-verify] done validate_plan_migration status=fail elapsed_ms=91662
+[pm-plans-verify] start validate_runtime_artifact_schemas
+[pm-plans-verify] done validate_runtime_artifact_schemas status=pass elapsed_ms=178
+[pm-plans-verify] start validate_goal_runtime_event_fixtures
+[pm-plans-verify] done validate_goal_runtime_event_fixtures status=pass elapsed_ms=193
+[pm-plans-verify] start validate_project_output_fixtures
+[pm-plans-verify] done validate_project_output_fixtures status=pass elapsed_ms=199
+[pm-plans-verify] start validate_usage_gui_fixtures
+[pm-plans-verify] done validate_usage_gui_fixtures status=pass elapsed_ms=189
+[pm-plans-verify] start validate_pm7_gui_fixtures
+[pm-plans-verify] done validate_pm7_gui_fixtures status=fail elapsed_ms=1647
+[pm-plans-verify] start validate_usage_contract_drift
+[pm-plans-verify] done validate_usage_contract_drift status=pass elapsed_ms=12424
+[pm-plans-verify] start validate_gui_asset_policy
+[pm-plans-verify] done validate_gui_asset_policy status=pass elapsed_ms=73719
+[pm-plans-verify] start validate_web_capability_contracts
+[pm-plans-verify] done validate_web_capability_contracts status=pass elapsed_ms=55299
+[pm-plans-verify] start validate_filesafe_security_policy
+[pm-plans-verify] done validate_filesafe_security_policy status=pass elapsed_ms=250
+[pm-plans-verify] start validate_wiring_matrix
+[pm-plans-verify] done validate_wiring_matrix status=fail elapsed_ms=414
+[pm-plans-verify] start validate_touch_closure
+[pm-plans-verify] done validate_touch_closure status=fail elapsed_ms=1250
+[pm-plans-verify] start validate_audit_closure
+[pm-plans-verify] done validate_audit_closure status=fail elapsed_ms=17216
+[pm-plans-verify] start validate_audit_status_index
+[pm-plans-verify] done validate_audit_status_index status=pass elapsed_ms=412
+[pm-plans-verify] start check_shards
+[pm-plans-verify] done check_shards status=pass elapsed_ms=10992
+{
+  "check": "run-gates",
+  "failures": [
+    {
+      "check": "verify_spec_lock",
+      "failures": [
+        {
+          "actual": "82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be",
+          "error": "stale_hash",
+          "expected": "7fcd6ef30a113ac13345c458296b99bfabdabd08bcb1a291d38000ba648327fc",
+          "path": "Plans/00-plans-index.md"
+        },
+        {
+          "actual": "d9088cb32285085b1df949842deb13a1346357974dd723292987bea02a7e9b0f",
+          "error": "stale_hash",
+          "expected": "b25fb1aa2371456e671d9f1b4f5ae98200727a5497af258069de595ce5aa4ee9",
+          "path": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "actual": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "error": "stale_hash",
+          "expected": "8c7a1cfb06b9002436190af12a1dcdccdc2913bbb7c6ffe13118bc081fa33613",
+          "path": "Plans/Contracts_V0.md"
+        },
+        {
+          "actual": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c",
+          "error": "stale_hash",
+          "expected": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80",
+          "path": "Plans/Crosswalk.md"
+        },
+        {
+          "actual": "595e587a48b45dbe60cfa50b0191bdfd70d86f1f7943227f32d39c85dd8ed3ec",
+          "error": "stale_hash",
+          "expected": "cb12a21b6f76385bb48e02a87047d8586b53cb48f51d50da069664cadbf5125d",
+          "path": "Plans/DRY_Rules.md"
+        },
+        {
+          "actual": "3109298d54ea966d7161ce851efa826bbb71ce09feba86cc2cc2b79fdaa307a2",
+          "error": "stale_hash",
+          "expected": "9a1b15ff570170004e106ad168572e399378dfbe596bbd6d66b10f9e5437e899",
+          "path": "Plans/GitHub_API_Auth_and_Flows.md"
+        },
+        {
+          "actual": "905e3f1889eb2f6aaf3583d278b9d49b80cc69be4f01fecefbcbda7f3887d429",
+          "error": "stale_hash",
+          "expected": "98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e",
+          "path": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "actual": "ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3",
+          "error": "stale_hash",
+          "expected": "f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c",
+          "path": "Plans/Plan_Document_System.md"
+        },
+        {
+          "actual": "871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b",
+          "error": "stale_hash",
+          "expected": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+          "path": "Plans/Planning_Ledger_System.md"
+        },
+        {
+          "actual": "f26aaf82474af8d25a284a9515fae5789162c320bc40129358312da00915367d",
+          "error": "stale_hash",
+          "expected": "5aea224c7bb380fd6d0a7469de4e21e7ec55a458f2790f3c3fe188a2ed9c3e11",
+          "path": "Plans/Project_Output_Artifacts.md"
+        },
+        {
+          "actual": "e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9",
+          "error": "stale_hash",
+          "expected": "96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75",
+          "path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "actual": "44ce597ce5bf097e88f4b251ca537b723e43b793c9451a298b866b8579d49b08",
+          "error": "stale_hash",
+          "expected": "7a15961b4ff08bfa2b5605e52379ce6b363e56d1edf973f3e7cfa72024470dad",
+          "path": "Plans/Wiring_Matrix.schema.json"
+        },
+        {
+          "actual": "4f4bb7616ec39436c1da781e87c687fcce3f751b216f21be6ea4877cb00771cb",
+          "error": "stale_hash",
+          "expected": "14e22c1e44ae7d36c81046d518be1da44fa01da718dd2b6b99391f317b91b033",
+          "path": "scripts/pm-plans-verify.py"
+        },
+        {
+          "actual": "24a5510a584db2f77f2eab5c2c6c68dbd01ed909b1664bf1678692cbd172a2f8",
+          "error": "stale_hash",
+          "expected": "27dacbbe7a1bcad074c650e89c8411bf044858dcacfeb0236b7b9492a590cbda",
+          "path": "Plans/PRD_Builder.md"
+        },
+        {
+          "actual": "de4da73fc489b3041304f58d5cf5d6563aa152b5ba4bd3256b81f4c1bc43351e",
+          "error": "stale_hash",
+          "expected": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+          "path": "Plans/Planning_Wizard.md"
+        },
+        {
+          "actual": "75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de",
+          "error": "stale_hash",
+          "expected": "bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a",
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "actual": "117994732b67efbb2279148d469030d2175a733ee1beab59b62a24ce81506288",
+          "error": "stale_hash",
+          "expected": "fb10700922c0e0320613b1bfabc05fc1b63bbf142db41fe88df84c5700522805",
+          "path": "Plans/Models_System.md"
+        },
+        {
+          "actual": "1769da806f49028e344a75438045ab181b017f323574d63f24a1a714003feaad",
+          "error": "stale_hash",
+          "expected": "a2589377dc51f33ab43491aa30435c44a29276532ef7618254678e5ebef803e1",
+          "path": "Plans/Multi-Account.md"
+        },
+        {
+          "actual": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "error": "stale_hash",
+          "expected": "4f05884b775e23367a0d722ec0cc8a1392dd703302a694415ff22fd1f92c2b41",
+          "path": "Plans/assistant-chat-design.md"
+        },
+        {
+          "actual": "d108a46be70fbc2c9a91dc216f291f8238ed1201412f6582a4ad93a1ccad03f6",
+          "error": "stale_hash",
+          "expected": "29b9500b2b14b8ea6eb56ae60091650bb635d556c5fe223a7e2051e590e29256",
+          "path": "Plans/Wiring_Matrix.md"
+        },
+        {
+          "actual": "118be1d006503d8868bd2c1f8a80b1ca1c2c3f80417be9090296bb82770d777c",
+          "error": "stale_hash",
+          "expected": "cceff122a79a89afe52631580df3de0a5913aea95a20d2bfe113e9ce88933a9a",
+          "path": "Plans/Release_Supply_Chain.md"
+        },
+        {
+          "actual": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+          "error": "stale_hash",
+          "expected": "61a9a0ddd19ab642235848b85a254bdb19219aa1aa1b2d11b64eaf9624149c92",
+          "path": "Plans/storage_value_registry.schema.json"
+        },
+        {
+          "actual": "9d030e98346f4594999345282d649f784c3485a3de9754ad6131674d5719ffb1",
+          "error": "stale_hash",
+          "expected": "17dcf812f651faa3bc66bf8597731f66bffa5fa340f64359510f0b933beb6bbb",
+          "path": "Plans/storage_value_registry.json"
+        },
+        {
+          "actual": "2798b306a8bebfc44d2add1d29c25cba2f762b388d6248a564227e8a42de2e45",
+          "error": "stale_hash",
+          "expected": "4dea9175dadfaebb338bcd2957d53fed33cd25c26d350a63f5169c643f8e78c0",
+          "path": "Plans/usage-feature.md"
+        },
+        {
+          "actual": "db711baae6304f4c31237a191c2082b2fa1927f0335f365800b690e34697555d",
+          "error": "stale_hash",
+          "expected": "13a2d1319de9ca386a950e7b4deddae37debb57befbdaf81be0922dfbac58cae",
+          "path": "Plans/Widget_System.md"
+        },
+        {
+          "actual": "c0d0f887c5dec45535091dc8cb54ac655874a783a962dc42a9e16326923a9738",
+          "error": "stale_hash",
+          "expected": "3184c41cc0823c7cc39c93fd44bebed5bed5d784b4ac43e35979ad7b1e47ab94",
+          "path": "Plans/storage-plan.md"
+        },
+        {
+          "actual": "f083fc0c7e53c324e4b735dc7df7db49667b8f504ac8c22329fa3aa4f6274487",
+          "error": "stale_hash",
+          "expected": "94877149d1b497059f7b921e13eb98409c6de5f1862ae5e6bc7bbcf566b4988a",
+          "path": "Plans/Commands_System.md"
+        },
+        {
+          "actual": "f09b36aca095a89c9de76ec314ef04d1e8b986d2b92185baacf9b56dcf1d026f",
+          "error": "stale_hash",
+          "expected": "1b85ffc05fc50570536d9c60b4a47e0ba1ec018de6b448c626df22858f70ed27",
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_plan_graph",
+      "failures": [
+        {
+          "actual": "9df469e613ac95c78b875f768c12fd5ae1be7641f5941ebe65f5233a437e494e",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "be5ecd83027920e85aaca19a180b41d5bb401da9e2870c68d3bb04aea686b40d",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "e5cb391a81ebfd81e1651154addc8349a7136dd34ec0c18d9bd6b78473a7f832",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+          "error": "artifact_hash_stale",
+          "expected": "c73a0175d45c7651c89c89355b154c88fc3339393339c979896d6873dc865f07",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de",
+          "artifact": "Plans/FinalGUISpec.md",
+          "error": "artifact_hash_stale",
+          "expected": "bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "38f11bc4b805c40728384f6abde7d75cf427b449d4c1955cc502e75dff0278fa",
+          "artifact": "Plans/_shards/finalguispec/00-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "9fa6fb65aaac545775598979b139399ae1a307d44b41f69efa63e875424f1072",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "fb86ae7dff61201b8da36ebb61b0efcebc602a56fdbb0d3594df8faf97d1a906",
+          "artifact": "Plans/_shards/finalguispec/manifest.json",
+          "error": "artifact_hash_stale",
+          "expected": "6d8cc2549358c75722dcddaa6c5707076d4e777d1ad7b602b46ab5019854b5eb",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "094ec1ef656618a2adaeb9e00d0ecafe029fa196db8c361edc37c62cb090c445",
+          "artifact": "Plans/_shards/finalguispec/001-preamble.md",
+          "error": "artifact_hash_stale",
+          "expected": "d8a063518aeff6b444f6f0f783f2da642f037ea523bb13a7032217a1a8608c10",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "f5b7074e67b9f8291ba22c951985abadfcdf00549de749c93b0a110ffda6c714",
+          "artifact": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+          "error": "artifact_hash_stale",
+          "expected": "b51510735e5179cd1799d29c1277f580d107d93c249e731aa7ae87b2de46d68c",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "938d9eb1a696eb8b9e6e55f77090793affdde2cb08b0e46ec93df3d8a9b48ca4",
+          "artifact": "Plans/_shards/finalguispec/003-table-of-contents.md",
+          "error": "artifact_hash_stale",
+          "expected": "55da4c1775e4bc01ca2e147ae16e80e6f06e5aa9613a4a16677708f9e3926d4a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "e529fd2f1263ceaf08a34cd157d1df1e8dd992b2e4a272dfb7871ce12f5768af",
+          "artifact": "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+          "error": "artifact_hash_stale",
+          "expected": "e313a5cfc7628d097e669b32e11600ec07fcf413401ce450f815967016991368",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "0fa1e6bd13df1c6fc647b5da3858d9d5c45e275fd694a211d0ff7a1f5dc09f87",
+          "artifact": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+          "error": "artifact_hash_stale",
+          "expected": "ef75ebfab9c08db5e99cadcb27d9212b47fe5140f5b8944eea45bbc08ad4ff7f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "0e738571fd6b09b4f9a0040d07e062d677e147f20fef126f182173e115dc2610",
+          "artifact": "Plans/_shards/finalguispec/006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md",
+          "error": "artifact_hash_stale",
+          "expected": "2ce37c932c583638734a439b55562f1467843990748bd6871dd2473161657f99",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "1cf00ae81b1bf3cfd917b910aceb7fb542826154ab682cf6e877bac2e6da93bb",
+          "artifact": "Plans/_shards/finalguispec/007-known-37-recovery-unavailable-gui-projection-2026-07-18.md",
+          "error": "artifact_hash_stale",
+          "expected": "7bf1820d75d506bee0984386007178df9dd162fa50ab905cf596b7cd53d74598",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "68624ffc05c676390d8451fbaedbda778c56969346fc6b7878091874cf8f0a46",
+          "artifact": "Plans/_shards/finalguispec/008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+          "error": "artifact_hash_stale",
+          "expected": "9513711b59decc90627a41b78830efd03f382af1d3796faffcf947712385b680",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "75753ad06606b4fcaa775d06be739ffccecb010d0061506d238350df364ca6fe",
+          "artifact": "Plans/_shards/finalguispec/009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+          "error": "artifact_hash_stale",
+          "expected": "6073a58113444e3db59379131a4cda87d2b0d17050666a6b8036613520001c74",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "00a702104f0307e699001f3c2b5b477a804c537c7e073167c3b52211895230f2",
+          "artifact": "Plans/_shards/finalguispec/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+          "error": "artifact_hash_stale",
+          "expected": "4b93c3c99e61d4db12272055e02f276c0662b70d5a5c6ca0089265955d312d0f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2abd2ec3991b47fc27abcbd7541630e592768342961cc411144257546c042010",
+          "artifact": "Plans/_shards/finalguispec/011-3.-master-layout.md",
+          "error": "artifact_hash_stale",
+          "expected": "d38e417bdf0d5730c840b56ea1f806f7a7b65486639ea554676b458052e16bad",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "a75d6f5195c9477b192516c0b120efa76bbb63664633270e016c19a864fa5885",
+          "artifact": "Plans/_shards/finalguispec/012-4.-navigation-architecture.md",
+          "error": "artifact_hash_stale",
+          "expected": "4cb4e722de4f35e2f89dd2280620e8d24699480d115c6c45a410de7bc7530bd5",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "f3f0099b9b59ab00c12b1099d42fc89f7c59c7287ad3d7f9b43d806c082119ec",
+          "artifact": "Plans/_shards/finalguispec/013-5.-panel-system.md",
+          "error": "artifact_hash_stale",
+          "expected": "b738a45af0a4f28147bd676c71d275a4df21a6008cfc462eecfa540b472cd0f7",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3b22fa2c272f307b053e46617529095fdfab9d3c4038756199e64b9cfe79e1aa",
+          "artifact": "Plans/_shards/finalguispec/014-6.-theme-system.md",
+          "error": "artifact_hash_stale",
+          "expected": "0b7102ff1b72943f3bef8f29f08706150a4cadd788915c42f40882e9d71322e0",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "61a6ef6514f4a176c4cc215259edc1284118bc354c06336715ea2f7f7f807e7f",
+          "artifact": "Plans/_shards/finalguispec/015-7.-views-specification.md",
+          "error": "artifact_hash_stale",
+          "expected": "78e60915c0fa02bf5ee921ea31ce22fcca7d7c7299b4cb48a48667df73afe112",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "20b5fc82808695a7c9ada4836aebb4f3a3bab0102d98060d0e0312aab80c3684",
+          "artifact": "Plans/_shards/finalguispec/016-8.-widget-catalog.md",
+          "error": "artifact_hash_stale",
+          "expected": "08eb4c4b16a2c918ff8e6e2b22aaac001a472212f8632d7d961edac7e1cb3048",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "a7269190f9619b83e69496b1e4167a816fbc13fe903f78cddeca4f6ee44b12cb",
+          "artifact": "Plans/_shards/finalguispec/017-9.-state-management.md",
+          "error": "artifact_hash_stale",
+          "expected": "082aa7076ca472c14937344609cd4ce94d9c90027abf4abbc8ccdc072252758c",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3315aad8364a105cf1ad1c293f91d4f7e54af11a8d6888075aea00db85d020fb",
+          "artifact": "Plans/_shards/finalguispec/018-10.-ux-patterns.md",
+          "error": "artifact_hash_stale",
+          "expected": "851174aa2289f0da9de4365f00aa59900e5e1b421c8c5cd3a0501cd4d9b989b7",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "cfa57867d12f3fd1378e9bc4b369ca4a5660cbe6238068b04679210113d258a9",
+          "artifact": "Plans/_shards/finalguispec/019-11.-anti-flickering-and-scroll-preservation.md",
+          "error": "artifact_hash_stale",
+          "expected": "fedb0e5306a58870e3782f5c760589ed8f258c94a344792457ed39bec9acf6bc",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "d17597f7dd1b6191c840faba9a67a88e35163a57d4309db6b0c018a6bdfa177c",
+          "artifact": "Plans/_shards/finalguispec/020-12.-responsive-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "9e2e2a052e599c91c841d915bc58913040191e372e6af32e8854b053d9c5b92b",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2725f07b7bcbc024de0016a30209dbc880d282bdd5ff8fe0e33786c7605dc8c5",
+          "artifact": "Plans/_shards/finalguispec/021-13.-accessibility.md",
+          "error": "artifact_hash_stale",
+          "expected": "0022751565527a5f9fcb040807cd60d79957d930da37e1f1e91cf41a013ddf6d",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "1b5060c4a4b118ca1001984f77d1124d3818669aa99f4fcdfba12df3b0dd800e",
+          "artifact": "Plans/_shards/finalguispec/022-14.-slint-file-organization.md",
+          "error": "artifact_hash_stale",
+          "expected": "8e4a4f0726dcc1c6387443cb0e48c6e7ea8c497cc392884f5cc250c29ae587e9",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "fa5574feb3c56aaab2c3781fa25711d7e1348b88514bc61efa6c2b878b5935b5",
+          "artifact": "Plans/_shards/finalguispec/023-15.-persistence.md",
+          "error": "artifact_hash_stale",
+          "expected": "c1d8c8360a136378f1a46c5ae4e23b12e9dfd2a535448640937bb671fd1adb2f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "a247c6a021495aba872f79a303bad1e2f82cf52689e9bf3f7c8249b69296927e",
+          "artifact": "Plans/_shards/finalguispec/024-16.-migration-mapping.md",
+          "error": "artifact_hash_stale",
+          "expected": "c9ac0445ae885bbe952723edad888e3633c5df382d6b0ac87af170fab4f8bf5e",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "b1fe403f356e4f653583cbb4e744fb92c3174331914010847213041dafa243fd",
+          "artifact": "Plans/_shards/finalguispec/025-17.-risks-and-mitigations.md",
+          "error": "artifact_hash_stale",
+          "expected": "39a3341e2c52f3be2d1031f95006a804dd3a0a0414dc967ca3587e8e6a906ee3",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "7be799380c607de21cf8f34ae12374f272d8837ec99658225318759dbf932316",
+          "artifact": "Plans/_shards/finalguispec/026-18.-promoted-features-formerly-future-considerations.md",
+          "error": "artifact_hash_stale",
+          "expected": "7eff7c2e95ffe9717b155904e6c4aa0d400ee1fd53de56489e7c2ecfc2220f09",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "f482f8562faa317d23cd9caa3a6bd1b3cbd47190190b66cb8f998cdd822478fc",
+          "artifact": "Plans/_shards/finalguispec/027-appendix-a-cross-references.md",
+          "error": "artifact_hash_stale",
+          "expected": "cbd30f8274cea7422dc778ed08b0708ebf264d9185428dc150e700a14badef7f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "e0ce34ac16535a7867cb4fc2dd4613d0ba51e9cfeda1243d12bec6595c116614",
+          "artifact": "Plans/_shards/finalguispec/028-appendix-b-locked-decisions-summary.md",
+          "error": "artifact_hash_stale",
+          "expected": "af1dd38fdb0cf58aaa3a3463ee66ce0a5ae91743db90f274387549dc283d6384",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "09f5470955736b6049425d3d1890186dac49f9ff3b155289b6ac47aa8ddd379e",
+          "artifact": "Plans/_shards/finalguispec/029-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md",
+          "error": "artifact_hash_stale",
+          "expected": "14d6fd3d2d0d19c41a35c8c75cf923abceb53f7fb0c2733737caeab8dcc40a01",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "5d88738fb26923daba64859d303c2b302f3907a092636d73e0c759e6f484651c",
+          "artifact": "Plans/_shards/finalguispec/030-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md",
+          "error": "artifact_hash_stale",
+          "expected": "54f0794c500ca7dc6863340f05eb453b926aae7d61b976c7d090cbc941243a93",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "d7839bbe9e824b01ae091a904254335a4ae7483409e589646748a960b3e361fa",
+          "artifact": "Plans/_shards/finalguispec/031-rendering-surface-addendum-2026-03-07.md",
+          "error": "artifact_hash_stale",
+          "expected": "038a7ec034628c17ac95d220741a20af7902952e0496c47112591e7ff06e64c6",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "91ad5dc51d305ced3f2f7fd40c30f911c7a569378e83834f87ff9e1b16f39571",
+          "artifact": "Plans/_shards/finalguispec/032-assistant-planning-ux-addendum-2026-03-08.md",
+          "error": "artifact_hash_stale",
+          "expected": "22b3a0b85ea6545c7027744196f5ecee92eac29c4ac470ac19ea3974536ae05e",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "4a6852678e621186ae91d09840bb46ba47a2977f23d868f0ee6fd1821b1aa2c9",
+          "artifact": "Plans/_shards/finalguispec/033-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md",
+          "error": "artifact_hash_stale",
+          "expected": "b235d7b5a8b42a17d4d9d2f33db3c17ac1958283f45fdd7a1ce916777cbb582c",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3d1c58f0b3aa9e56d7202c3c17d5a8ff7905c14426a23bd09f8e0e94fe2b37b8",
+          "artifact": "Plans/_shards/finalguispec/034-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md",
+          "error": "artifact_hash_stale",
+          "expected": "4e86bd13a8bf3883b651d4955402b0fb270acb3c75cef70844d04ca57d6fd262",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2ee0d691d3b038525ba3398f9f97199b1f9819d94056ca423becba496570c7da",
+          "artifact": "Plans/_shards/finalguispec/035-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md",
+          "error": "artifact_hash_stale",
+          "expected": "13b43219fe90881e223a77b05f629b37596e038d077a01b8a3edac5bc61a693d",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "b4f4701b85f79f35051935b3b75d7fe9279b28197f62de9e9f4ae373f8c4fb85",
+          "artifact": "Plans/_shards/finalguispec/036-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md",
+          "error": "artifact_hash_stale",
+          "expected": "7199ebc32b9cddcfe2292400456230b082bdd95738f47f5bbea127c0944b5d48",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "39d29777bf293bdff2a0eccdb55ec446ed42693fd38a6a59242b995509482e56",
+          "artifact": "Plans/_shards/finalguispec/037-canonical-blocked-recovery-behavior.md",
+          "error": "artifact_hash_stale",
+          "expected": "4fed904238a7c4b992160b770292b5a85758c84fcca6b3950239644734f648ae",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "57155bb8f24c3337c2b1dd42d4dd128ed2f1da5ca04f49a732c72a5a7c09222c",
+          "artifact": "Plans/_shards/finalguispec/038-compatibility-source-lineage-blocked-state-visual-distinction-an.md",
+          "error": "artifact_hash_stale",
+          "expected": "e41c6b235960216ae5c4cbb57aeb3e76c01ad7612460363901c52242ebfcc9b1",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2059150f031079362702e4e86aa3d3c0ce31fe1b321c513818197853732908c1",
+          "artifact": "Plans/_shards/finalguispec/039-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md",
+          "error": "artifact_hash_stale",
+          "expected": "c0beddfd8753a85c2ea42088098847f951ae8a336ff7e7e4e3b745e80520434a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "4e1d37b3a99125b2e462555bdb21d58d050a2aadc338f5ec5e3be2216a414795",
+          "artifact": "Plans/_shards/finalguispec/040-owner-consumer-map.md",
+          "error": "artifact_hash_stale",
+          "expected": "c77e7ed13da9c3ce6c8d623bd7202f7f8b226b7060115257a963823a60a5e6b1",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3cd8e533dda9582c639ae259518d50174a42baa424667c3a0a7fece3a21b2732",
+          "artifact": "Plans/_shards/finalguispec/041-planunits.md",
+          "error": "artifact_hash_stale",
+          "expected": "ddbe11dcb1fa8180da4690d1f2dbae3452e710ed233ffa70a89d917ad57b6e0a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "d5bbe3bd3afe36706adb966f0efb9117032f0a127ed7967bc1c19284397bab8a",
+          "artifact": "Plans/_shards/finalguispec/042-remaining-runtime-canon-closure-addendum-2026-08-14.md",
+          "error": "artifact_hash_stale",
+          "expected": "2cd00ce9e5ee157a6da24be5016ba253fc40c709ef2b608e9021cbcf966171a9",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3d809bc760ea5a0bf7f7dbc702800eb529efbe516a162a83532030d371137daa",
+          "artifact": "Plans/_shards/finalguispec/043-shared-runtime-projection-addendum-2026-08-13.md",
+          "error": "artifact_hash_stale",
+          "expected": "b6f5af265bfd237bba3e6d01329443ac2adb39875bf4ba30f10683980f659131",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "6803778d37aca820404606b7509be2be333bbeb289b607a656377630f26ebdb8",
+          "artifact": "Plans/_shards/finalguispec/044-migration-coverage.md",
+          "error": "artifact_hash_stale",
+          "expected": "542f34c63ecae040b8dc5549a8a8bc99e66a3e8b66c80fc189b6de52e1e41b3a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "db51c6f99735c9588b38b3f6e20a7a6c36356a567b7b919cc2a24717c2bdcb51",
+          "artifact": "Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260614-001.md",
+          "error": "artifact_hash_stale",
+          "expected": "1a4163f59cdc6d3c30061044d2362a2f50c190c385c3c8c954195fceaa7dd7f5",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_evidence",
+      "failures": [
+        {
+          "actual": "9df469e613ac95c78b875f768c12fd5ae1be7641f5941ebe65f5233a437e494e",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "be5ecd83027920e85aaca19a180b41d5bb401da9e2870c68d3bb04aea686b40d",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "e5cb391a81ebfd81e1651154addc8349a7136dd34ec0c18d9bd6b78473a7f832",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+          "error": "artifact_hash_stale",
+          "expected": "c73a0175d45c7651c89c89355b154c88fc3339393339c979896d6873dc865f07",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de",
+          "artifact": "Plans/FinalGUISpec.md",
+          "error": "artifact_hash_stale",
+          "expected": "bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "38f11bc4b805c40728384f6abde7d75cf427b449d4c1955cc502e75dff0278fa",
+          "artifact": "Plans/_shards/finalguispec/00-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "9fa6fb65aaac545775598979b139399ae1a307d44b41f69efa63e875424f1072",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "fb86ae7dff61201b8da36ebb61b0efcebc602a56fdbb0d3594df8faf97d1a906",
+          "artifact": "Plans/_shards/finalguispec/manifest.json",
+          "error": "artifact_hash_stale",
+          "expected": "6d8cc2549358c75722dcddaa6c5707076d4e777d1ad7b602b46ab5019854b5eb",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "094ec1ef656618a2adaeb9e00d0ecafe029fa196db8c361edc37c62cb090c445",
+          "artifact": "Plans/_shards/finalguispec/001-preamble.md",
+          "error": "artifact_hash_stale",
+          "expected": "d8a063518aeff6b444f6f0f783f2da642f037ea523bb13a7032217a1a8608c10",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "f5b7074e67b9f8291ba22c951985abadfcdf00549de749c93b0a110ffda6c714",
+          "artifact": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+          "error": "artifact_hash_stale",
+          "expected": "b51510735e5179cd1799d29c1277f580d107d93c249e731aa7ae87b2de46d68c",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "938d9eb1a696eb8b9e6e55f77090793affdde2cb08b0e46ec93df3d8a9b48ca4",
+          "artifact": "Plans/_shards/finalguispec/003-table-of-contents.md",
+          "error": "artifact_hash_stale",
+          "expected": "55da4c1775e4bc01ca2e147ae16e80e6f06e5aa9613a4a16677708f9e3926d4a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "e529fd2f1263ceaf08a34cd157d1df1e8dd992b2e4a272dfb7871ce12f5768af",
+          "artifact": "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+          "error": "artifact_hash_stale",
+          "expected": "e313a5cfc7628d097e669b32e11600ec07fcf413401ce450f815967016991368",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "0fa1e6bd13df1c6fc647b5da3858d9d5c45e275fd694a211d0ff7a1f5dc09f87",
+          "artifact": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+          "error": "artifact_hash_stale",
+          "expected": "ef75ebfab9c08db5e99cadcb27d9212b47fe5140f5b8944eea45bbc08ad4ff7f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "0e738571fd6b09b4f9a0040d07e062d677e147f20fef126f182173e115dc2610",
+          "artifact": "Plans/_shards/finalguispec/006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md",
+          "error": "artifact_hash_stale",
+          "expected": "2ce37c932c583638734a439b55562f1467843990748bd6871dd2473161657f99",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "1cf00ae81b1bf3cfd917b910aceb7fb542826154ab682cf6e877bac2e6da93bb",
+          "artifact": "Plans/_shards/finalguispec/007-known-37-recovery-unavailable-gui-projection-2026-07-18.md",
+          "error": "artifact_hash_stale",
+          "expected": "7bf1820d75d506bee0984386007178df9dd162fa50ab905cf596b7cd53d74598",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "68624ffc05c676390d8451fbaedbda778c56969346fc6b7878091874cf8f0a46",
+          "artifact": "Plans/_shards/finalguispec/008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+          "error": "artifact_hash_stale",
+          "expected": "9513711b59decc90627a41b78830efd03f382af1d3796faffcf947712385b680",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "75753ad06606b4fcaa775d06be739ffccecb010d0061506d238350df364ca6fe",
+          "artifact": "Plans/_shards/finalguispec/009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+          "error": "artifact_hash_stale",
+          "expected": "6073a58113444e3db59379131a4cda87d2b0d17050666a6b8036613520001c74",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "00a702104f0307e699001f3c2b5b477a804c537c7e073167c3b52211895230f2",
+          "artifact": "Plans/_shards/finalguispec/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+          "error": "artifact_hash_stale",
+          "expected": "4b93c3c99e61d4db12272055e02f276c0662b70d5a5c6ca0089265955d312d0f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2abd2ec3991b47fc27abcbd7541630e592768342961cc411144257546c042010",
+          "artifact": "Plans/_shards/finalguispec/011-3.-master-layout.md",
+          "error": "artifact_hash_stale",
+          "expected": "d38e417bdf0d5730c840b56ea1f806f7a7b65486639ea554676b458052e16bad",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "a75d6f5195c9477b192516c0b120efa76bbb63664633270e016c19a864fa5885",
+          "artifact": "Plans/_shards/finalguispec/012-4.-navigation-architecture.md",
+          "error": "artifact_hash_stale",
+          "expected": "4cb4e722de4f35e2f89dd2280620e8d24699480d115c6c45a410de7bc7530bd5",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "f3f0099b9b59ab00c12b1099d42fc89f7c59c7287ad3d7f9b43d806c082119ec",
+          "artifact": "Plans/_shards/finalguispec/013-5.-panel-system.md",
+          "error": "artifact_hash_stale",
+          "expected": "b738a45af0a4f28147bd676c71d275a4df21a6008cfc462eecfa540b472cd0f7",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3b22fa2c272f307b053e46617529095fdfab9d3c4038756199e64b9cfe79e1aa",
+          "artifact": "Plans/_shards/finalguispec/014-6.-theme-system.md",
+          "error": "artifact_hash_stale",
+          "expected": "0b7102ff1b72943f3bef8f29f08706150a4cadd788915c42f40882e9d71322e0",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "61a6ef6514f4a176c4cc215259edc1284118bc354c06336715ea2f7f7f807e7f",
+          "artifact": "Plans/_shards/finalguispec/015-7.-views-specification.md",
+          "error": "artifact_hash_stale",
+          "expected": "78e60915c0fa02bf5ee921ea31ce22fcca7d7c7299b4cb48a48667df73afe112",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "20b5fc82808695a7c9ada4836aebb4f3a3bab0102d98060d0e0312aab80c3684",
+          "artifact": "Plans/_shards/finalguispec/016-8.-widget-catalog.md",
+          "error": "artifact_hash_stale",
+          "expected": "08eb4c4b16a2c918ff8e6e2b22aaac001a472212f8632d7d961edac7e1cb3048",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "a7269190f9619b83e69496b1e4167a816fbc13fe903f78cddeca4f6ee44b12cb",
+          "artifact": "Plans/_shards/finalguispec/017-9.-state-management.md",
+          "error": "artifact_hash_stale",
+          "expected": "082aa7076ca472c14937344609cd4ce94d9c90027abf4abbc8ccdc072252758c",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3315aad8364a105cf1ad1c293f91d4f7e54af11a8d6888075aea00db85d020fb",
+          "artifact": "Plans/_shards/finalguispec/018-10.-ux-patterns.md",
+          "error": "artifact_hash_stale",
+          "expected": "851174aa2289f0da9de4365f00aa59900e5e1b421c8c5cd3a0501cd4d9b989b7",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "cfa57867d12f3fd1378e9bc4b369ca4a5660cbe6238068b04679210113d258a9",
+          "artifact": "Plans/_shards/finalguispec/019-11.-anti-flickering-and-scroll-preservation.md",
+          "error": "artifact_hash_stale",
+          "expected": "fedb0e5306a58870e3782f5c760589ed8f258c94a344792457ed39bec9acf6bc",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "d17597f7dd1b6191c840faba9a67a88e35163a57d4309db6b0c018a6bdfa177c",
+          "artifact": "Plans/_shards/finalguispec/020-12.-responsive-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "9e2e2a052e599c91c841d915bc58913040191e372e6af32e8854b053d9c5b92b",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2725f07b7bcbc024de0016a30209dbc880d282bdd5ff8fe0e33786c7605dc8c5",
+          "artifact": "Plans/_shards/finalguispec/021-13.-accessibility.md",
+          "error": "artifact_hash_stale",
+          "expected": "0022751565527a5f9fcb040807cd60d79957d930da37e1f1e91cf41a013ddf6d",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "1b5060c4a4b118ca1001984f77d1124d3818669aa99f4fcdfba12df3b0dd800e",
+          "artifact": "Plans/_shards/finalguispec/022-14.-slint-file-organization.md",
+          "error": "artifact_hash_stale",
+          "expected": "8e4a4f0726dcc1c6387443cb0e48c6e7ea8c497cc392884f5cc250c29ae587e9",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "fa5574feb3c56aaab2c3781fa25711d7e1348b88514bc61efa6c2b878b5935b5",
+          "artifact": "Plans/_shards/finalguispec/023-15.-persistence.md",
+          "error": "artifact_hash_stale",
+          "expected": "c1d8c8360a136378f1a46c5ae4e23b12e9dfd2a535448640937bb671fd1adb2f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "a247c6a021495aba872f79a303bad1e2f82cf52689e9bf3f7c8249b69296927e",
+          "artifact": "Plans/_shards/finalguispec/024-16.-migration-mapping.md",
+          "error": "artifact_hash_stale",
+          "expected": "c9ac0445ae885bbe952723edad888e3633c5df382d6b0ac87af170fab4f8bf5e",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "b1fe403f356e4f653583cbb4e744fb92c3174331914010847213041dafa243fd",
+          "artifact": "Plans/_shards/finalguispec/025-17.-risks-and-mitigations.md",
+          "error": "artifact_hash_stale",
+          "expected": "39a3341e2c52f3be2d1031f95006a804dd3a0a0414dc967ca3587e8e6a906ee3",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "7be799380c607de21cf8f34ae12374f272d8837ec99658225318759dbf932316",
+          "artifact": "Plans/_shards/finalguispec/026-18.-promoted-features-formerly-future-considerations.md",
+          "error": "artifact_hash_stale",
+          "expected": "7eff7c2e95ffe9717b155904e6c4aa0d400ee1fd53de56489e7c2ecfc2220f09",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "f482f8562faa317d23cd9caa3a6bd1b3cbd47190190b66cb8f998cdd822478fc",
+          "artifact": "Plans/_shards/finalguispec/027-appendix-a-cross-references.md",
+          "error": "artifact_hash_stale",
+          "expected": "cbd30f8274cea7422dc778ed08b0708ebf264d9185428dc150e700a14badef7f",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "e0ce34ac16535a7867cb4fc2dd4613d0ba51e9cfeda1243d12bec6595c116614",
+          "artifact": "Plans/_shards/finalguispec/028-appendix-b-locked-decisions-summary.md",
+          "error": "artifact_hash_stale",
+          "expected": "af1dd38fdb0cf58aaa3a3463ee66ce0a5ae91743db90f274387549dc283d6384",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "09f5470955736b6049425d3d1890186dac49f9ff3b155289b6ac47aa8ddd379e",
+          "artifact": "Plans/_shards/finalguispec/029-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md",
+          "error": "artifact_hash_stale",
+          "expected": "14d6fd3d2d0d19c41a35c8c75cf923abceb53f7fb0c2733737caeab8dcc40a01",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "5d88738fb26923daba64859d303c2b302f3907a092636d73e0c759e6f484651c",
+          "artifact": "Plans/_shards/finalguispec/030-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md",
+          "error": "artifact_hash_stale",
+          "expected": "54f0794c500ca7dc6863340f05eb453b926aae7d61b976c7d090cbc941243a93",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "d7839bbe9e824b01ae091a904254335a4ae7483409e589646748a960b3e361fa",
+          "artifact": "Plans/_shards/finalguispec/031-rendering-surface-addendum-2026-03-07.md",
+          "error": "artifact_hash_stale",
+          "expected": "038a7ec034628c17ac95d220741a20af7902952e0496c47112591e7ff06e64c6",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "91ad5dc51d305ced3f2f7fd40c30f911c7a569378e83834f87ff9e1b16f39571",
+          "artifact": "Plans/_shards/finalguispec/032-assistant-planning-ux-addendum-2026-03-08.md",
+          "error": "artifact_hash_stale",
+          "expected": "22b3a0b85ea6545c7027744196f5ecee92eac29c4ac470ac19ea3974536ae05e",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "4a6852678e621186ae91d09840bb46ba47a2977f23d868f0ee6fd1821b1aa2c9",
+          "artifact": "Plans/_shards/finalguispec/033-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md",
+          "error": "artifact_hash_stale",
+          "expected": "b235d7b5a8b42a17d4d9d2f33db3c17ac1958283f45fdd7a1ce916777cbb582c",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3d1c58f0b3aa9e56d7202c3c17d5a8ff7905c14426a23bd09f8e0e94fe2b37b8",
+          "artifact": "Plans/_shards/finalguispec/034-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md",
+          "error": "artifact_hash_stale",
+          "expected": "4e86bd13a8bf3883b651d4955402b0fb270acb3c75cef70844d04ca57d6fd262",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2ee0d691d3b038525ba3398f9f97199b1f9819d94056ca423becba496570c7da",
+          "artifact": "Plans/_shards/finalguispec/035-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md",
+          "error": "artifact_hash_stale",
+          "expected": "13b43219fe90881e223a77b05f629b37596e038d077a01b8a3edac5bc61a693d",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "b4f4701b85f79f35051935b3b75d7fe9279b28197f62de9e9f4ae373f8c4fb85",
+          "artifact": "Plans/_shards/finalguispec/036-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md",
+          "error": "artifact_hash_stale",
+          "expected": "7199ebc32b9cddcfe2292400456230b082bdd95738f47f5bbea127c0944b5d48",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "39d29777bf293bdff2a0eccdb55ec446ed42693fd38a6a59242b995509482e56",
+          "artifact": "Plans/_shards/finalguispec/037-canonical-blocked-recovery-behavior.md",
+          "error": "artifact_hash_stale",
+          "expected": "4fed904238a7c4b992160b770292b5a85758c84fcca6b3950239644734f648ae",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "57155bb8f24c3337c2b1dd42d4dd128ed2f1da5ca04f49a732c72a5a7c09222c",
+          "artifact": "Plans/_shards/finalguispec/038-compatibility-source-lineage-blocked-state-visual-distinction-an.md",
+          "error": "artifact_hash_stale",
+          "expected": "e41c6b235960216ae5c4cbb57aeb3e76c01ad7612460363901c52242ebfcc9b1",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "2059150f031079362702e4e86aa3d3c0ce31fe1b321c513818197853732908c1",
+          "artifact": "Plans/_shards/finalguispec/039-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md",
+          "error": "artifact_hash_stale",
+          "expected": "c0beddfd8753a85c2ea42088098847f951ae8a336ff7e7e4e3b745e80520434a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "4e1d37b3a99125b2e462555bdb21d58d050a2aadc338f5ec5e3be2216a414795",
+          "artifact": "Plans/_shards/finalguispec/040-owner-consumer-map.md",
+          "error": "artifact_hash_stale",
+          "expected": "c77e7ed13da9c3ce6c8d623bd7202f7f8b226b7060115257a963823a60a5e6b1",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3cd8e533dda9582c639ae259518d50174a42baa424667c3a0a7fece3a21b2732",
+          "artifact": "Plans/_shards/finalguispec/041-planunits.md",
+          "error": "artifact_hash_stale",
+          "expected": "ddbe11dcb1fa8180da4690d1f2dbae3452e710ed233ffa70a89d917ad57b6e0a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "d5bbe3bd3afe36706adb966f0efb9117032f0a127ed7967bc1c19284397bab8a",
+          "artifact": "Plans/_shards/finalguispec/042-remaining-runtime-canon-closure-addendum-2026-08-14.md",
+          "error": "artifact_hash_stale",
+          "expected": "2cd00ce9e5ee157a6da24be5016ba253fc40c709ef2b608e9021cbcf966171a9",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "3d809bc760ea5a0bf7f7dbc702800eb529efbe516a162a83532030d371137daa",
+          "artifact": "Plans/_shards/finalguispec/043-shared-runtime-projection-addendum-2026-08-13.md",
+          "error": "artifact_hash_stale",
+          "expected": "b6f5af265bfd237bba3e6d01329443ac2adb39875bf4ba30f10683980f659131",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "6803778d37aca820404606b7509be2be333bbeb289b607a656377630f26ebdb8",
+          "artifact": "Plans/_shards/finalguispec/044-migration-coverage.md",
+          "error": "artifact_hash_stale",
+          "expected": "542f34c63ecae040b8dc5549a8a8bc99e66a3e8b66c80fc189b6de52e1e41b3a",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "actual": "db51c6f99735c9588b38b3f6e20a7a6c36356a567b7b919cc2a24717c2bdcb51",
+          "artifact": "Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260614-001.md",
+          "error": "artifact_hash_stale",
+          "expected": "1a4163f59cdc6d3c30061044d2362a2f50c190c385c3c8c954195fceaa7dd7f5",
+          "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "lint_path_refs",
+      "failures": [
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py predecessor packet audit only",
+          "line": 700,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ATS-020",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "K3 Backup",
+          "line": 2667,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "F3-528",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "Onboarding",
+          "line": 2667,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "F3-528",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "Doctor",
+          "line": 2667,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "F3-528",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "and Remote Access Slint components",
+          "line": 2667,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "F3-528",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "credential broker",
+          "line": 2679,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "FGI-006",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "credential broker",
+          "line": 3830,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ORI-003",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "effect reconciler",
+          "line": 5127,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "SCS-016",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "observer",
+          "line": 5127,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "SCS-016",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "and route coordinator",
+          "line": 5127,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "SCS-016",
+          "surface_error": "missing_ref"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_implementation_readiness",
+      "failures": [
+        {
+          "error": "buildability_gate_report_stale_or_not_canonical",
+          "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+          "repair_command": "python3 scripts/pm-implementation-readiness.py generate"
+        },
+        {
+          "actual": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
+          "error": "pnc019_source_hash_stale",
+          "expected": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/event_record.schema.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "b7e124a977c13a3bf85df83549a6a265eda0f98a73bbf7a9053183935e28c123",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/event_family_registry.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "actual": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
+          "error": "pnc019_source_hash_stale",
+          "expected": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_value_registry.schema.json"
+        },
+        {
+          "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+          "error": "pnc019_source_hash_stale",
+          "expected": "9d030e98346f4594999345282d649f784c3485a3de9754ad6131674d5719ffb1",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_value_registry.json"
+        },
+        {
+          "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
+          "error": "pnc019_source_hash_stale",
+          "expected": "de4da73fc489b3041304f58d5cf5d6563aa152b5ba4bd3256b81f4c1bc43351e",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Planning_Wizard.md"
+        },
+        {
+          "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
+          "error": "pnc019_source_hash_stale",
+          "expected": "fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Executor_Protocol.md"
+        },
+        {
+          "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
+          "error": "pnc019_source_hash_stale",
+          "expected": "905e3f1889eb2f6aaf3583d278b9d49b80cc69be4f01fecefbcbda7f3887d429",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
+          "error": "pnc019_source_hash_stale",
+          "expected": "a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Orchestrator_Page.md"
+        },
+        {
+          "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+          "error": "pnc019_source_hash_stale",
+          "expected": "d9088cb32285085b1df949842deb13a1346357974dd723292987bea02a7e9b0f",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "e98d34fbf1604e6c92aaf84693b0428dc0235d2bd4585fe3adcec14de3d7beb9",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "f09b36aca095a89c9de76ec314ef04d1e8b986d2b92185baacf9b56dcf1d026f",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Wiring_Rules.md"
+        },
+        {
+          "actual": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896",
+          "error": "pnc019_source_hash_stale",
+          "expected": "b8af598c932d95ef1132c663163602215cd2a3804e6efb87d17eebeeda2cd78d",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "scripts/pm-pnc019-certification-harness.py"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "scripts/pm_pnc019_currentness.py"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "8d4f98b2adaf3b770b9fd0b1290a2fd30f1f33c29000d2f9d11890bf93c4d2e4",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/00-plans-index.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Architecture_Invariants.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/BinaryLocator_Spec.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/CLI_Bridged_Providers.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Commands_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Containers_Registry_and_Unraid.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Contracts_V0.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Crosswalk.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/DRY_Rules.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/FileManager.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/FileSafe.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/GitHub_API_Auth_and_Flows.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/MCP_Integration.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/MiscPlan.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Models_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Multi-Account.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/PRD_Builder.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Permissions_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Personas.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Plan_Document_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Planning_Ledger_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Planning_Wizard.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Plugins_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Project_Output_Artifacts.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Prompt_Pipeline.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Release_Supply_Chain.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Run_Modes.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_plan_migration",
+      "failures": [
+        {
+          "error": "historical_successor_terminal_current_snapshot_invalid",
+          "historical_run_id": "pds-20260611-002-atomize-planunits",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+          "terminal_failure_count": 21273,
+          "terminal_failure_errors": [
+            "complete_final_summary_live_plan_unit_count_stale",
+            "current_snapshot_anchor_aliases_json_exact_mismatch",
+            "current_snapshot_batch_doc_invalid",
+            "current_snapshot_batch_doc_set_not_exactly_once",
+            "current_snapshot_batch_report_jsonl_exact_mismatch",
+            "current_snapshot_complete_md_exact_mismatch",
+            "current_snapshot_coverage_map_jsonl_exact_mismatch",
+            "current_snapshot_coverage_not_exact_same_document_planunit_set",
+            "current_snapshot_current_run_pointer_invalid",
+            "current_snapshot_doc_hash_missing",
+            "current_snapshot_final_summary_invalid",
+            "current_snapshot_final_validation_summary_json_exact_mismatch",
+            "current_snapshot_inventory_json_exact_mismatch",
+            "current_snapshot_live_bytes_mismatch",
+            "current_snapshot_live_line_count_mismatch",
+            "current_snapshot_live_sha256_mismatch",
+            "current_snapshot_live_span_count_mismatch",
+            "current_snapshot_live_span_metadata_mismatch",
+            "current_snapshot_live_span_set_mismatch",
+            "current_snapshot_original_hashes_json_exact_mismatch",
+            "current_snapshot_pilot_report_invalid",
+            "current_snapshot_pilot_report_json_exact_mismatch",
+            "current_snapshot_plan_unit_count_stale",
+            "current_snapshot_plans_manifest_sha256_mismatch",
+            "current_snapshot_span_map_jsonl_exact_mismatch",
+            "current_snapshot_span_sha256_mismatch",
+            "doc_count_mismatch",
+            "inventory_doc_set_mismatch",
+            "stale_batch_report_sha256_after"
+          ],
+          "terminal_run_id": "pds-20260830-008-current-planunit-snapshot"
+        },
+        {
+          "actual": 72,
+          "error": "doc_count_mismatch",
+          "expected": 94,
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        },
+        {
+          "error": "inventory_doc_set_mismatch",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 1
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 2
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 3
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 4
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 5
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 6
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 7
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 8
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 9
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3a7c8066cfd8103cbc605111d917224c61ae3d7ee19f2e6e354076306c67919e",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 10
+        },
+        {
+          "actual": "14ca33f9b339388e3a16fb29e2029affe98df43af5d9f086d740b51782064655",
+          "doc_index": 1,
+          "doc_path": "Plans/BinaryLocator_Spec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 13
+        },
+        {
+          "actual": "14ca33f9b339388e3a16fb29e2029affe98df43af5d9f086d740b51782064655",
+          "doc_index": 1,
+          "doc_path": "Plans/BinaryLocator_Spec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 14
+        },
+        {
+          "actual": "3d71c3787470639735ec333df9de0c01b2f0ba0c90101a322077f6f1b62425db",
+          "doc_index": 1,
+          "doc_path": "Plans/CLI_Bridged_Providers.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "53d1d3779e9c3f41567c015b7e879c5d021cc372a690db9bfeb6813495145459",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 24
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "f083fc0c7e53c324e4b735dc7df7db49667b8f504ac8c22329fa3aa4f6274487",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 25
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "f083fc0c7e53c324e4b735dc7df7db49667b8f504ac8c22329fa3aa4f6274487",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 26
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "f083fc0c7e53c324e4b735dc7df7db49667b8f504ac8c22329fa3aa4f6274487",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 27
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 28
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 29
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 30
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 31
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 32
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 33
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 34
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 35
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 36
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 37
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 38
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 39
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 40
+        },
+        {
+          "actual": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80",
+          "doc_index": 1,
+          "doc_path": "Plans/Crosswalk.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 41
+        },
+        {
+          "actual": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80",
+          "doc_index": 1,
+          "doc_path": "Plans/Crosswalk.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 42
+        },
+        {
+          "actual": "f39cd56d27a27c8bc55166b154e5924151b38f1d4e674aa413a1f2b14ae5c99b",
+          "doc_index": 1,
+          "doc_path": "Plans/DRY_Rules.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "595e587a48b45dbe60cfa50b0191bdfd70d86f1f7943227f32d39c85dd8ed3ec",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 49
+        },
+        {
+          "actual": "75c16d913e9410c6988a1e4d67c8bd9a03bf60216e0640aea83d5c0db65109bd",
+          "doc_index": 1,
+          "doc_path": "Plans/FileManager.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 54
+        },
+        {
+          "actual": "75c16d913e9410c6988a1e4d67c8bd9a03bf60216e0640aea83d5c0db65109bd",
+          "doc_index": 1,
+          "doc_path": "Plans/FileManager.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 55
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 56
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 57
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 58
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 59
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 60
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 61
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 62
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 63
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 64
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 65
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 66
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 67
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 68
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_pm7_gui_fixtures",
+      "failures": [
+        {
+          "error": "shared_runtime_command_contract_validator_failed",
+          "output": "nnot_emit_event\": true,\n    \"pm7_no_change_release_is_silent\": true,\n    \"pm7_owner_rejection_cannot_claim_dispatch_accepted\": true,\n    \"pm7_owner_rejection_cannot_claim_successful_write\": true,\n    \"pm7_persistence_failure_cannot_claim_successful_write\": true,\n    \"pm7_persistence_failure_requires_attempted_adapter_call\": true,\n    \"pm7_preview_cannot_dispatch\": true,\n    \"pm7_preview_is_local\": true,\n    \"pm7_usage_widget_commit_cannot_emit_workspace_event\": true,\n    \"pm7_usage_widget_commit_changed_once_without_workspace_event\": true,\n    \"pm7_usage_widget_owner_rejection_rolls_back_after_dispatch\": true,\n    \"pm7_usage_widget_persistence_adapter_failure_rolls_back\": true,\n    \"protected_auth_cancel_redacted_exact_return\": true,\n    \"protected_auth_cancel_requires_exact_operation_and_return_target\": true,\n    \"protected_auth_missing_initiating_client_fence\": true,\n    \"protected_auth_rejects_fallback_client\": true,\n    \"protected_auth_result_cannot_expose_content\": true,\n    \"protected_auth_result_rejects_shadow_returned_operation\": true,\n    \"protected_auth_resume_rejects_missing_operation_or_revision_fence\": true,\n    \"protected_auth_resume_same_operation_and_initiating_client\": true,\n    \"protected_auth_start_bound_to_initiating_active_client\": true,\n    \"protected_auth_timeout_cannot_report_success\": true,\n    \"protected_auth_timeout_failed_deadline_expired\": true,\n    \"protected_auth_verified_exact_return_without_content\": true,\n    \"replay_cannot_mint_new_operation_identity\": true,\n    \"replayed_result_requires_original_operation\": true,\n    \"request_cannot_embed_secret_shaped_actor_ref\": true,\n    \"request_missing_exact_execution_environment\": true,\n    \"runtime_local_action_emits_no_domain_event\": true,\n    \"runtime_local_action_grants_no_authentication_authority\": true,\n    \"runtime_local_action_grants_no_browser_authority\": true,\n    \"runtime_local_action_grants_no_filesystem_authority\": true,\n    \"runtime_local_action_grants_no_installation_authority\": true,\n    \"runtime_local_action_grants_no_provider_authority\": true,\n    \"runtime_local_action_has_no_domain_handler\": true,\n    \"runtime_local_action_is_non_persistent\": true,\n    \"runtime_local_action_is_not_registered_domain_command\": true,\n    \"runtime_local_action_is_presentation_only\": true,\n    \"runtime_local_action_return_is_deterministic\": true,\n    \"runtime_local_request.ui.execution_environment.open_details\": true,\n    \"runtime_local_request.ui.execution_environment.open_logs\": true,\n    \"runtime_local_request.ui.execution_host.open_details\": true,\n    \"runtime_local_request.ui.installation.open_details\": true,\n    \"runtime_local_request.ui.installation.open_logs\": true,\n    \"runtime_local_request.ui.project.source_location.open_details\": true,\n    \"runtime_local_request.ui.tool_package.open_provenance\": true,\n    \"runtime_local_request.ui.tool_package.review_license\": true,\n    \"runtime_local_result.ui.execution_environment.open_details\": true,\n    \"runtime_local_result.ui.execution_environment.open_logs\": true,\n    \"runtime_local_result.ui.execution_host.open_details\": true,\n    \"runtime_local_result.ui.installation.open_details\": true,\n    \"runtime_local_result.ui.installation.open_logs\": true,\n    \"runtime_local_result.ui.project.source_location.open_details\": true,\n    \"runtime_local_result.ui.tool_package.open_provenance\": true,\n    \"runtime_local_result.ui.tool_package.review_license\": true,\n    \"same_idempotency_key_different_binding\": true\n  },\n  \"passed\": false,\n  \"rejected_count\": 1,\n  \"schema_id\": \"pm.shared_runtime.command_contract_validation.v1\",\n  \"schema_resolution\": {\n    \"expansion_schema_id\": \"https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json\",\n    \"expansion_schema_path\": \"Plans/shared_integration_runtime_expansion_contracts.schema.json\",\n    \"network_retrieval\": \"forbidden\"\n  },\n  \"scope\": \"pre_build_static_contract_only\",\n  \"wrapper_count\": 1\n}\n"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_wiring_matrix",
+      "failures": [
+        {
+          "command_id": "cmd.browser.component.recapture",
+          "error": "catalog_command_missing_production_wiring",
+          "path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "command_id": "cmd.chat.add_folder_reference",
+          "error": "catalog_command_missing_production_wiring",
+          "path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "command_id": "cmd.chat.plan.build_as_goal",
+          "error": "catalog_command_missing_production_wiring",
+          "path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "command_id": "cmd.chat.plan.export_report",
+          "error": "catalog_command_missing_production_wiring",
+          "path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "command_id": "cmd.chat.plan.progress.set",
+          "error": "catalog_command_missing_production_wiring",
+          "path": "Plans/Wiring_Matrix.production.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_touch_closure",
+      "failures": [
+        "resolved server/Egolite closure denominator drift: expected {'row_count': 602, 'profile_count': 91, 'excluded_token_count': 58, 'alias_binding_count': 64, 'production_wiring_entry_count': 1066}, found {'row_count': 602, 'profile_count': 91, 'excluded_token_count': 58, 'alias_binding_count': 64, 'production_wiring_entry_count': 1155}"
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_audit_closure",
+      "failures": [
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:3: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:3: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:4: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:4: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:4: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:5: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:6: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:6: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 7fcd6ef30a113ac13345c458296b99bfabdabd08bcb1a291d38000ba648327fc, current 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 7fcd6ef30a113ac13345c458296b99bfabdabd08bcb1a291d38000ba648327fc, current 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:8: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:11: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:11: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:12: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:12: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:13: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:13: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:14: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:14: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:15: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:15: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:16: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:16: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 7fcd6ef30a113ac13345c458296b99bfabdabd08bcb1a291d38000ba648327fc, current 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 7fcd6ef30a113ac13345c458296b99bfabdabd08bcb1a291d38000ba648327fc, current 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:18: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:18: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:19: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:19: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:20: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:20: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:20: closure_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:20: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:22: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:23: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:24: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:24: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07, current 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:25: owner_evidence_hashes for Plans/Plan_Document_System.md is stale (stored f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c, current ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        }
+      ],
+      "status": "fail"
+    }
+  ],
+  "generated_at_utc": "2026-09-03T21:36:33Z",
+  "status": "fail"
+}

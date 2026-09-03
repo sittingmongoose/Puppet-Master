@@ -9433,3 +9433,18 @@ negative_constraints:
   - Do not expose Recovery Key, recovery kit, destination credential, connector state, authorization URL, pre-auth key, or AuthBrowserSession content to agents, adapters, logs, recordings, screenshots, receipts, Chat, or Usage.
   - Do not claim restore, prune, archival retrieval, identity reset, Funnel exposure, secret isolation, or runtime authorization from static fixtures.
 ```
+
+## Additive Correction v4 — Sandboxed Plan Content And Uncommitted Grants (2026-09-03)
+
+`PDET-010`, `MODAL-002`, `MODAL-016`. This owner **consumes** the correction.
+
+- Interactive content embedded in a Plan runs only in the shared artifact sandbox. Renderer
+  capability and origin are checked before render; Markdown-embedded HTML is never treated as
+  trusted application UI, and arbitrary untrusted script is not executed.
+- Opening or configuring a workflow modal grants nothing. No permission grant, no provisioning
+  approval, and no install occurs before a confirmed Start, and preflight never mutates host or
+  project.
+- Temporary MCP, tool, or package provisioning requested by BrainStorm is admitted only after
+  Start, through the normal approval path, scoped to the run and torn down at its end.
+- A scheduled build revalidates its permission snapshot at dispatch. A permission that no longer
+  holds yields `Held` or `Failed` with a reason; it is never widened to let the dispatch proceed.

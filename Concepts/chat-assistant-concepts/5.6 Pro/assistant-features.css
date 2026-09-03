@@ -1,0 +1,279 @@
+/* assistant-features.css — feature module styles.  OWNER: Assistant redesign wave
+ * (2026-09-03) — assistant-features agent.  Pairs with assistant-features.js: Teach,
+ * Teacher visibility, Automatic memory, ELI5, Revert Last Agent Edit, Debug /
+ * Investigation Context, and Thread title policy.
+ *
+ * Concatenated after every other feature module and before composer.css, so rules
+ * here win over styles.css/variants/other modules at equal specificity. Every colour
+ * is an existing theme token (see the class list below) so all eight themes work —
+ * nothing here hard-codes a hex value. Every animated rule has a
+ * prefers-reduced-motion counterpart at the bottom that removes DECORATION, never a
+ * state change (contract §7).
+ *
+ * Reused BASE classes (not redefined here, just relied on for free consistency):
+ * .dialog .drawer-head .dialog-body .menu-item .menu-icon .menu-copy .check .spacer
+ * .soft-button .primary-button .text-button .icon-button .plan-actions .event-card
+ * .event-icon .event-copy .system-card .system-card-head .system-card-body
+ * .meta-pill .chevron .shortcut
+ */
+
+/* =====================================================================
+   1. WAND ROWS
+   ===================================================================== */
+.af-wand-row .af-checkbox{
+  display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;
+  border-radius:4px;border:1px solid var(--border-strong);background:var(--surface-2);
+  color:var(--on-accent);flex:0 0 auto;
+}
+.af-wand-row .af-checkbox.checked{
+  background:var(--accent);border-color:var(--accent);
+}
+.af-wand-subrow{ padding-left:34px !important; }
+.af-wand-subrow .menu-copy span{ color:var(--muted); font-size:11px; }
+
+/* =====================================================================
+   2. SHARED DIALOG CHROME
+   ===================================================================== */
+.af-dialog-body{ display:grid; gap:9px; }
+.af-note{ margin:0; font-size:11px; line-height:1.5; color:var(--muted); }
+.af-danger-text{ color:var(--danger) !important; }
+.af-field-label{ font-size:10.5px; font-weight:700; letter-spacing:.02em; color:var(--muted); text-transform:uppercase; }
+.af-empty{
+  display:grid; justify-items:center; gap:8px; padding:22px 10px; text-align:center;
+  color:var(--muted); font-size:12px;
+}
+.af-empty svg{ opacity:.55; }
+.af-settings-h3{
+  margin:6px 0 -2px; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
+  color:var(--subtle); border-top:1px solid var(--border); padding-top:10px;
+}
+.af-dialog-body>.af-settings-h3:first-child{ border-top:0; padding-top:0; }
+
+/* =====================================================================
+   3. TEACH DIALOG
+   ===================================================================== */
+.af-teach-input{
+  width:100%; resize:vertical; min-height:76px; padding:9px 10px; border-radius:var(--radius-sm);
+  border:1px solid var(--border-strong); background:var(--surface-2); color:var(--text);
+  font:12.5px/1.5 var(--font-ui);
+}
+.af-teach-input:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+.af-teach-scopes{ display:flex; flex-wrap:wrap; gap:6px; }
+.af-chip-choice{
+  padding:5px 10px; border-radius:999px; border:1px solid var(--border-strong); background:var(--surface-2);
+  color:var(--muted); font-size:11px; font-weight:600; cursor:pointer; transition:background 160ms var(--ease), color 160ms var(--ease), border-color 160ms var(--ease);
+}
+.af-chip-choice:hover{ background:var(--surface-3); color:var(--text); }
+.af-chip-choice.active{
+  background:color-mix(in srgb, var(--accent) 16%, var(--surface-2)); border-color:var(--accent); color:var(--text);
+}
+.af-safety-row{
+  display:flex; align-items:center; gap:7px; padding:7px 9px; border-radius:var(--radius-sm);
+  border:1px solid var(--border); background:var(--surface-2); font-size:11px; color:var(--muted);
+}
+.af-safety-row.af-safety-clear{ border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); color:var(--positive); }
+.af-safety-row.af-safety-flagged{ border-color:color-mix(in srgb, var(--danger) 45%, var(--border)); color:var(--danger); background:color-mix(in srgb, var(--danger) 8%, var(--surface-2)); }
+.af-conflict-card{
+  display:grid; gap:5px; padding:9px 10px; border-radius:var(--radius-sm);
+  border:1px solid color-mix(in srgb, var(--warning) 45%, var(--border)); background:color-mix(in srgb, var(--warning) 10%, var(--surface-2));
+}
+.af-conflict-head{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--text); }
+.af-conflict-existing{ margin:0; font-size:11.5px; color:var(--muted); font-style:italic; }
+.af-lock-note{ display:inline-flex; align-items:center; gap:2px; font-style:normal; color:var(--subtle); }
+
+/* =====================================================================
+   4. MEMORY DIALOG (Taught vs Automatic — two owners, one panel)
+   ===================================================================== */
+.af-tabs{ display:flex; gap:4px; border-bottom:1px solid var(--border); padding-bottom:6px; }
+.af-tab{
+  padding:5px 10px; border-radius:var(--radius-sm) var(--radius-sm) 0 0; border:1px solid transparent;
+  background:transparent; color:var(--muted); font:600 11.5px var(--font-ui); cursor:pointer;
+}
+.af-tab:hover{ color:var(--text); }
+.af-tab.active{ background:var(--surface-2); border-color:var(--border); border-bottom-color:var(--surface-2); color:var(--text); margin-bottom:-1px; }
+.af-mem-list{ display:grid; gap:7px; max-height:min(46vh,420px); overflow:auto; }
+.af-mem-row{
+  display:grid; gap:5px; padding:9px 10px; border-radius:var(--radius-sm);
+  border:1px solid var(--border); background:var(--surface-2);
+}
+.af-mem-row.is-blocked{ border-color:color-mix(in srgb, var(--danger) 35%, var(--border)); }
+.af-mem-row.is-revoked{ opacity:.55; }
+.af-mem-row-head{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.af-mem-time{ font-size:10px; color:var(--subtle); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.af-mem-text{ margin:0; font-size:12px; line-height:1.5; color:var(--text); }
+.af-mem-meta{ font-size:10.5px; color:var(--muted); }
+.af-mem-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:1px; }
+.af-mem-actions .text-button{ font-size:11px; }
+.af-mem-foot{ display:flex; justify-content:flex-end; padding-top:2px; }
+.af-lock-badge, .af-scope-badge, .af-revoked-badge, .af-trigger-badge, .af-verify-badge{
+  display:inline-flex; align-items:center; gap:3px; padding:2px 7px; border-radius:999px;
+  font-size:9.5px; font-weight:700; letter-spacing:.02em; text-transform:uppercase;
+  border:1px solid var(--border-strong); background:var(--surface-3); color:var(--muted);
+}
+.af-lock-badge{ color:var(--text); border-color:color-mix(in srgb, var(--accent-2) 45%, var(--border)); background:color-mix(in srgb, var(--accent-2) 14%, var(--surface-3)); }
+.af-revoked-badge{ color:var(--subtle); }
+.af-verify-badge.af-verify-verified{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
+.af-verify-badge.af-verify-unverified{ color:var(--muted); }
+.af-verify-badge.af-verify-deferred{ color:var(--danger); border-color:color-mix(in srgb, var(--danger) 40%, var(--border)); }
+
+/* =====================================================================
+   5. HEADER CHIPS (Teacher active, title state)
+   ===================================================================== */
+.af-chip{
+  display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:999px;
+  border:1px solid var(--border-strong); background:var(--surface-2); color:var(--muted);
+  font:600 10.5px var(--font-ui); white-space:nowrap; cursor:default;
+}
+button.af-chip{ cursor:pointer; }
+button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
+.af-chip b{ font-weight:700; color:inherit; }
+.af-chip-teacher{
+  border-color:color-mix(in srgb, var(--accent-2) 50%, var(--border-strong));
+  background:color-mix(in srgb, var(--accent-2) 15%, var(--surface-2)); color:var(--text);
+}
+.af-chip-pending{ color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--border-strong)); }
+.af-chip-pending svg{ animation:af-spin 900ms linear infinite; }
+.af-chip-locked{ color:var(--text); }
+.af-chip-warn{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 50%, var(--border-strong)); background:color-mix(in srgb, var(--warning) 12%, var(--surface-2)); }
+@keyframes af-spin{ to{ transform:rotate(360deg); } }
+
+/* =====================================================================
+   6. REVERT LAST AGENT EDIT
+   ===================================================================== */
+.af-manifest-table{ display:grid; gap:4px; }
+.af-manifest-row{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:8px;
+  padding:6px 8px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface-2);
+  font-size:11px;
+}
+.af-manifest-compact .af-manifest-row{ font-size:10.5px; padding:5px 7px; }
+.af-manifest-kind{
+  padding:2px 6px; border-radius:5px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.02em;
+  border:1px solid var(--border-strong); background:var(--surface-3); color:var(--muted);
+}
+.af-manifest-kind.af-kind-modified{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 40%, var(--border)); }
+.af-manifest-kind.af-kind-created{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
+.af-manifest-kind.af-kind-deleted{ color:var(--danger); border-color:color-mix(in srgb, var(--danger) 40%, var(--border)); }
+.af-manifest-path{ font-family:var(--font-mono); font-size:11px; color:var(--text); overflow-wrap:anywhere; }
+.af-manifest-stat{ font-family:var(--font-mono); font-size:10px; color:var(--subtle); white-space:nowrap; }
+.af-manifest-reverted{ display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:700; color:var(--positive); white-space:nowrap; }
+.af-manifest-untouched{ font-size:10px; color:var(--subtle); white-space:nowrap; }
+.af-danger-btn{ background:var(--danger) !important; border-color:var(--danger) !important; color:var(--on-accent) !important; }
+.af-card.warning{ border-color:color-mix(in srgb, var(--warning) 45%, var(--border-strong)); }
+
+/* =====================================================================
+   7. DEBUG / INVESTIGATION CONTEXT
+   ===================================================================== */
+.af-investigation-card .system-card-body{ display:grid; gap:10px; }
+.af-phase-list{
+  list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:5px 3px;
+}
+.af-phase{
+  display:flex; align-items:center; gap:5px; padding:4px 8px 4px 4px; border-radius:999px;
+  border:1px solid var(--border); background:var(--surface-2); font-size:10px; color:var(--subtle);
+  flex:1 1 auto; min-width:96px;
+}
+.af-phase-dot{
+  display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%;
+  background:var(--surface-3); border:1px solid var(--border-strong); font-size:9px; font-weight:700; color:var(--muted);
+  flex:0 0 auto;
+}
+.af-phase-label{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.af-phase.af-phase-done{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 35%, var(--border)); }
+.af-phase.af-phase-done .af-phase-dot{ background:var(--positive); border-color:var(--positive); color:var(--on-accent); }
+.af-phase.af-phase-active{ color:var(--text); border-color:var(--accent); background:color-mix(in srgb, var(--accent) 10%, var(--surface-2)); }
+.af-phase.af-phase-active .af-phase-dot{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); animation:af-pulse 1.8s ease-in-out infinite; }
+.af-phase.af-phase-blocked{ color:var(--danger); border-color:color-mix(in srgb, var(--danger) 45%, var(--border)); background:color-mix(in srgb, var(--danger) 8%, var(--surface-2)); }
+.af-phase.af-phase-blocked .af-phase-dot{ background:var(--danger); border-color:var(--danger); color:var(--on-accent); }
+@keyframes af-pulse{ 0%,100%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 50%{ box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 0%, transparent); } }
+
+.af-evidence-tabs{ display:flex; gap:4px; }
+.af-evidence-tabs .af-tab{ font-size:10.5px; }
+.af-evidence-list{ display:grid; gap:5px; max-height:220px; overflow:auto; }
+.af-evidence-item{
+  display:grid; gap:4px; padding:7px 8px; border-radius:var(--radius-sm);
+  border:1px solid var(--border); background:var(--surface-2);
+}
+.af-evidence-item p{ margin:0; font-size:11px; line-height:1.5; color:var(--text); }
+.af-evidence-item.is-redacted p{ font-family:var(--font-mono); color:var(--subtle); letter-spacing:.04em; }
+.af-evidence-item.is-revoked{ opacity:.5; text-decoration:line-through; }
+.af-evidence-actions{ display:flex; align-items:center; gap:9px; }
+.af-evidence-actions .text-button{ font-size:10.5px; }
+.af-attention-card, .af-complete-card{
+  display:flex; gap:8px; align-items:flex-start; padding:9px 10px; border-radius:var(--radius-sm); border:1px solid var(--border);
+}
+.af-attention-card{ border-color:color-mix(in srgb, var(--danger) 45%, var(--border)); background:color-mix(in srgb, var(--danger) 9%, var(--surface-2)); color:var(--danger); }
+.af-attention-card p, .af-complete-card p{ margin:2px 0 0; font-size:11px; color:var(--text); font-weight:400; }
+.af-attention-card strong, .af-complete-card strong{ font-size:12px; }
+.af-complete-card{ border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); background:color-mix(in srgb, var(--positive) 8%, var(--surface-2)); color:var(--positive); }
+.af-file-label{ cursor:pointer; }
+.af-visually-hidden{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+.af-file-label:focus-within, input.af-visually-hidden:focus-visible + .af-file-label,
+.af-file-label:has(+ input.af-visually-hidden:focus-visible){ outline:2px solid var(--accent); outline-offset:2px; }
+
+/* =====================================================================
+   8. ELI5 PREVIEW CARD
+   ===================================================================== */
+.af-eli5-card .system-card-body{ display:grid; gap:9px; }
+.af-eli5-pair{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.af-eli5-col{
+  display:grid; gap:4px; padding:9px 10px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface-2);
+}
+.af-eli5-col label{ display:flex; align-items:center; gap:4px; font-size:9.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--subtle); }
+.af-eli5-col p{ margin:0; font-size:12px; line-height:1.55; color:var(--text); }
+.af-eli5-simple{ border-color:color-mix(in srgb, var(--accent) 40%, var(--border)); background:color-mix(in srgb, var(--accent) 8%, var(--surface-2)); }
+.af-eli5-simple label{ color:var(--accent); }
+.af-code-block{
+  margin:0; padding:9px 10px; border-radius:var(--radius-sm); border:1px solid var(--border-strong);
+  background:var(--surface-4); color:var(--text); font:11.5px/1.5 var(--font-mono); overflow:auto; white-space:pre;
+}
+
+/* =====================================================================
+   9. ASSISTANT DEFAULTS (Settings dialog) + THREAD MENU
+   ===================================================================== */
+.af-toggle-row{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text); cursor:pointer; }
+.af-toggle-row input{ width:15px; height:15px; accent-color:var(--accent); }
+.af-policy-rows{ display:grid; gap:4px; border:1px solid var(--border); border-radius:var(--radius-sm); padding:5px; background:var(--surface); }
+.af-scroll-rows{ max-height:min(38vh,300px); overflow:auto; }
+.af-attempt-log{ display:grid; gap:3px; margin-top:2px; }
+.af-attempt-row{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:8px; align-items:center;
+  padding:5px 7px; border-radius:var(--radius-sm); background:var(--surface-2); font-size:10.5px; color:var(--muted);
+}
+.af-attempt-row>span:nth-child(2){ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.af-attempt-outcome{
+  padding:1px 6px; border-radius:999px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.02em;
+  border:1px solid var(--border-strong); background:var(--surface-3); white-space:nowrap;
+}
+.af-attempt-outcome.af-outcome-generated{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
+.af-attempt-outcome.af-outcome-unavailable, .af-attempt-outcome.af-outcome-manual_rename_race, .af-attempt-outcome.af-outcome-skipped_locked{
+  color:var(--warning); border-color:color-mix(in srgb, var(--warning) 40%, var(--border));
+}
+.af-attempt-outcome.af-outcome-pending{ color:var(--accent); }
+
+.af-menu-divider{ height:1px; margin:4px 8px; background:var(--border); }
+.af-menu-note{
+  display:flex; align-items:center; gap:6px; padding:4px 12px 2px; font-size:10.5px; color:var(--subtle);
+}
+
+/* =====================================================================
+   10. RESPONSIVE
+   ===================================================================== */
+@media (max-width:590px){
+  .af-eli5-pair{ grid-template-columns:1fr; }
+  .af-manifest-row{ grid-template-columns:auto minmax(0,1fr); }
+  .af-manifest-row .af-manifest-stat{ display:none; }
+  .af-phase{ min-width:0; flex:1 1 42%; }
+}
+
+/* =====================================================================
+   11. REDUCED MOTION — remove decoration, never a state change
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce){
+  .af-chip-pending svg{ animation:none !important; }
+  .af-phase.af-phase-active .af-phase-dot{ animation:none !important; }
+  .af-chip-choice, .af-tab{ transition:none !important; }
+}

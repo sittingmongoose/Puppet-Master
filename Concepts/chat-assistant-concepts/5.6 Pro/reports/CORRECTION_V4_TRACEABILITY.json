@@ -1,0 +1,4224 @@
+{
+ "schema": "pm.correction_v4.traceability.v1",
+ "generated": "2026-09-03",
+ "requirements_total": 245,
+ "owner_docs_missing_correction_section": [],
+ "requirements_with_no_packet_test": [],
+ "concept_suite": "Concepts/chat-assistant-concepts/5.6 Pro/tests/correction-v4-verify.mjs",
+ "concept_suite_assertions": 112,
+ "family_concept_coverage": {
+  "BSTALE": {
+   "asserted": 8,
+   "total": 12
+  },
+  "CDRY": {
+   "asserted": 0,
+   "total": 20
+  },
+  "CONCEPT": {
+   "asserted": 1,
+   "total": 20
+  },
+  "FOLDER": {
+   "asserted": 4,
+   "total": 8
+  },
+  "GREPLAY": {
+   "asserted": 2,
+   "total": 12
+  },
+  "MODAL": {
+   "asserted": 3,
+   "total": 18
+  },
+  "PART": {
+   "asserted": 13,
+   "total": 24
+  },
+  "PDET": {
+   "asserted": 5,
+   "total": 12
+  },
+  "PFAIL": {
+   "asserted": 2,
+   "total": 10
+  },
+  "PGOAL": {
+   "asserted": 9,
+   "total": 15
+  },
+  "PPROG": {
+   "asserted": 9,
+   "total": 18
+  },
+  "PSCHED": {
+   "asserted": 3,
+   "total": 14
+  },
+  "QMAX": {
+   "asserted": 9,
+   "total": 20
+  },
+  "SMSG": {
+   "asserted": 9,
+   "total": 18
+  },
+  "TDG": {
+   "asserted": 9,
+   "total": 16
+  },
+  "WONV": {
+   "asserted": 2,
+   "total": 8
+  }
+ },
+ "note": "concept_asserted_by_suite means the live browser suite names that requirement id in an assertion. It is concept evidence only and never native proof.",
+ "requirements": [
+  {
+   "requirement_id": "QMAX-001",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-001"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-002",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-002"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-003",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-003"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-004",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-004"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-005",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-005",
+    "XINT-001"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-006",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-006",
+    "XINT-001"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-007",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-007",
+    "XINT-001"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-008",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-008",
+    "XINT-001"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-009",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-009",
+    "XINT-001"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-010",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-010"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-011",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-011"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-012",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-012"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-013",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-013"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-014",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-QMAX-014",
+    "XINT-002"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-015",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-015",
+    "XINT-002"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-016",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-016"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-017",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-017"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-018",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Settings_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-018",
+    "XINT-003"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-019",
+   "category": "Question budget and Grill Me",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Settings_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-019",
+    "XINT-003"
+   ]
+  },
+  {
+   "requirement_id": "QMAX-020",
+   "category": "Question budget and Grill Me",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/PRD_Builder.md",
+     "exists": true,
+     "correction_section": true
+    },
+    {
+     "doc": "Plans/Planning_Wizard.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-QMAX-020"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-001",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-001"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-002",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-002",
+    "XINT-004"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-003",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-003"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-004",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-004"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-005",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-005",
+    "XINT-004"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-006",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-006"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-007",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-007"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-008",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-008"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-009",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-009",
+    "XINT-004"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-010",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-010",
+    "XINT-004"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-011",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-011"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-012",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-012"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-013",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PPROG-013",
+    "XINT-004"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-014",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-014",
+    "XINT-004"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-015",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-015"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-016",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Runtime_Artifacts_Panel.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-016"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-017",
+   "category": "Real-time Plan progress",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-017"
+   ]
+  },
+  {
+   "requirement_id": "PPROG-018",
+   "category": "Real-time Plan progress",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PPROG-018"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-001",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PFAIL-001",
+    "XINT-005"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-002",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PFAIL-002",
+    "XINT-005"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-003",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-003",
+    "XINT-005"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-004",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-004",
+    "XINT-005"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-005",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-005"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-006",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-006",
+    "XINT-005"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-007",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-007"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-008",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-008"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-009",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-009"
+   ]
+  },
+  {
+   "requirement_id": "PFAIL-010",
+   "category": "Plan failure and recovery presentation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PFAIL-010",
+    "XINT-030"
+   ]
+  },
+  {
+   "requirement_id": "PDET-001",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PDET-001"
+   ]
+  },
+  {
+   "requirement_id": "PDET-002",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PDET-002"
+   ]
+  },
+  {
+   "requirement_id": "PDET-003",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PDET-003"
+   ]
+  },
+  {
+   "requirement_id": "PDET-004",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Runtime_Artifacts_Panel.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PDET-004",
+    "XINT-006"
+   ]
+  },
+  {
+   "requirement_id": "PDET-005",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PDET-005"
+   ]
+  },
+  {
+   "requirement_id": "PDET-006",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/storage-plan.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PDET-006"
+   ]
+  },
+  {
+   "requirement_id": "PDET-007",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PDET-007"
+   ]
+  },
+  {
+   "requirement_id": "PDET-008",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PDET-008",
+    "XINT-006"
+   ]
+  },
+  {
+   "requirement_id": "PDET-009",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PDET-009"
+   ]
+  },
+  {
+   "requirement_id": "PDET-010",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Runtime_Artifacts_Panel.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PDET-010"
+   ]
+  },
+  {
+   "requirement_id": "PDET-011",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PDET-011",
+    "XINT-006"
+   ]
+  },
+  {
+   "requirement_id": "PDET-012",
+   "category": "Plan details, storage, and embeds",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Runtime_Artifacts_Panel.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PDET-012",
+    "XINT-006"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-001",
+   "category": "Build as Goal",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PGOAL-001"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-002",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-002",
+    "XINT-007"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-003",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-003",
+    "XINT-007"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-004",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-004",
+    "XINT-007"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-005",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-005"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-006",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-006"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-007",
+   "category": "Build as Goal",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-007",
+    "XINT-007"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-008",
+   "category": "Build as Goal",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-008",
+    "XINT-007",
+    "XINT-030"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-009",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PGOAL-009",
+    "XINT-007"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-010",
+   "category": "Build as Goal",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PGOAL-010"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-011",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-011"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-012",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PGOAL-012"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-013",
+   "category": "Build as Goal",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PGOAL-013"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-014",
+   "category": "Build as Goal",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PGOAL-014"
+   ]
+  },
+  {
+   "requirement_id": "PGOAL-015",
+   "category": "Build as Goal",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "plans.js + goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PGOAL-015"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-001",
+   "category": "Scheduled Plan build topology",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PSCHED-001",
+    "XINT-008"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-002",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-002",
+    "XINT-008"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-003",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PSCHED-003",
+    "XINT-008"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-004",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-004",
+    "XINT-008"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-005",
+   "category": "Scheduled Plan build topology",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-005",
+    "XINT-008",
+    "XINT-030"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-006",
+   "category": "Scheduled Plan build topology",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-006"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-007",
+   "category": "Scheduled Plan build topology",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-007"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-008",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PSCHED-008"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-009",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-009"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-010",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-010"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-011",
+   "category": "Scheduled Plan build topology",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-011"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-012",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-012"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-013",
+   "category": "Scheduled Plan build topology",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-013"
+   ]
+  },
+  {
+   "requirement_id": "PSCHED-014",
+   "category": "Scheduled Plan build topology",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PSCHED-014",
+    "XINT-008"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-001",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-GREPLAY-001"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-002",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-002"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-003",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-003",
+    "XINT-009"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-004",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-004",
+    "XINT-009"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-005",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-005",
+    "XINT-009"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-006",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-006",
+    "XINT-009"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-007",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-007"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-008",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-008"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-009",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-009",
+    "XINT-009"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-010",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-GREPLAY-010",
+    "XINT-009"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-011",
+   "category": "Simple Goal replay and completion",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Goal_Runtime_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-011"
+   ]
+  },
+  {
+   "requirement_id": "GREPLAY-012",
+   "category": "Simple Goal replay and completion",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/CLI_Bridged_Providers.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "goals.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-GREPLAY-012"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-001",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-MODAL-001",
+    "XINT-010"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-002",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-MODAL-002",
+    "XINT-010"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-003",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-003"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-004",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-MODAL-004",
+    "XINT-010"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-005",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-005",
+    "XINT-010"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-006",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Settings_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-006"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-007",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-007"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-008",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Settings_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-008"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-009",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-009",
+    "XINT-011"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-010",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-010",
+    "XINT-011"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-011",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-011",
+    "XINT-012"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-012",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-012",
+    "XINT-012"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-013",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-013"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-014",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-014"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-015",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Back_Seat_Driver.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-015"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-016",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Shared_Integration_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-016"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-017",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-017",
+    "XINT-010"
+   ]
+  },
+  {
+   "requirement_id": "MODAL-018",
+   "category": "Workflow modal transaction boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-MODAL-018"
+   ]
+  },
+  {
+   "requirement_id": "PART-001",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-001",
+    "XINT-013"
+   ]
+  },
+  {
+   "requirement_id": "PART-002",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-002",
+    "XINT-013"
+   ]
+  },
+  {
+   "requirement_id": "PART-003",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-003",
+    "XINT-013"
+   ]
+  },
+  {
+   "requirement_id": "PART-004",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-004",
+    "XINT-013"
+   ]
+  },
+  {
+   "requirement_id": "PART-005",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-005"
+   ]
+  },
+  {
+   "requirement_id": "PART-006",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/usage-feature.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-006",
+    "XINT-013"
+   ]
+  },
+  {
+   "requirement_id": "PART-007",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-007",
+    "XINT-014"
+   ]
+  },
+  {
+   "requirement_id": "PART-008",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-008",
+    "XINT-014"
+   ]
+  },
+  {
+   "requirement_id": "PART-009",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-009",
+    "XINT-014"
+   ]
+  },
+  {
+   "requirement_id": "PART-010",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-010",
+    "XINT-014"
+   ]
+  },
+  {
+   "requirement_id": "PART-011",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-011",
+    "XINT-015"
+   ]
+  },
+  {
+   "requirement_id": "PART-012",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-012",
+    "XINT-015"
+   ]
+  },
+  {
+   "requirement_id": "PART-013",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-013"
+   ]
+  },
+  {
+   "requirement_id": "PART-014",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-014",
+    "XINT-015"
+   ]
+  },
+  {
+   "requirement_id": "PART-015",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-015",
+    "XINT-015"
+   ]
+  },
+  {
+   "requirement_id": "PART-016",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-016",
+    "XINT-016"
+   ]
+  },
+  {
+   "requirement_id": "PART-017",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-017",
+    "XINT-016"
+   ]
+  },
+  {
+   "requirement_id": "PART-018",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-018",
+    "XINT-017"
+   ]
+  },
+  {
+   "requirement_id": "PART-019",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-019",
+    "XINT-016"
+   ]
+  },
+  {
+   "requirement_id": "PART-020",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-PART-020",
+    "XINT-017"
+   ]
+  },
+  {
+   "requirement_id": "PART-021",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-021"
+   ]
+  },
+  {
+   "requirement_id": "PART-022",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-022",
+    "XINT-011"
+   ]
+  },
+  {
+   "requirement_id": "PART-023",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-023"
+   ]
+  },
+  {
+   "requirement_id": "PART-024",
+   "category": "Collaborative participant outcomes and quorum",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/CLI_Bridged_Providers.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-PART-024",
+    "XINT-011"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-001",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-001"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-002",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-002"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-003",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-003"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-004",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-004",
+    "XINT-018"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-005",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-005",
+    "XINT-019"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-006",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-006",
+    "XINT-018"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-007",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-007",
+    "XINT-018"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-008",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-008",
+    "XINT-018"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-009",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-009"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-010",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-010",
+    "XINT-018"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-011",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-011"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-012",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/storage-plan.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-012"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-013",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-013",
+    "XINT-019"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-014",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-014",
+    "XINT-019"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-015",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-015"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-016",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-SMSG-016",
+    "XINT-030"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-017",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-017",
+    "XINT-018"
+   ]
+  },
+  {
+   "requirement_id": "SMSG-018",
+   "category": "Scheduled message projection and snapshots",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "scheduling.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-SMSG-018"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-001",
+   "category": "Browser component currentness",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-001",
+    "XINT-020"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-002",
+   "category": "Browser component currentness",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-002",
+    "XINT-020"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-003",
+   "category": "Browser component currentness",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-003",
+    "XINT-020"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-004",
+   "category": "Browser component currentness",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-004"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-005",
+   "category": "Browser component currentness",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-005",
+    "XINT-020"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-006",
+   "category": "Browser component currentness",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-BSTALE-006"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-007",
+   "category": "Browser component currentness",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-BSTALE-007"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-008",
+   "category": "Browser component currentness",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-BSTALE-008",
+    "XINT-020"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-009",
+   "category": "Browser component currentness",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Runtime_Artifacts_Panel.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-BSTALE-009"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-010",
+   "category": "Browser component currentness",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-010"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-011",
+   "category": "Browser component currentness",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-011"
+   ]
+  },
+  {
+   "requirement_id": "BSTALE-012",
+   "category": "Browser component currentness",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "browser-capture.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-BSTALE-012",
+    "XINT-020"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-001",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/UI_Command_Catalog.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-FOLDER-001",
+    "XINT-021"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-002",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/UI_Command_Catalog.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-FOLDER-002",
+    "XINT-021"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-003",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-FOLDER-003",
+    "XINT-021"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-004",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/FileManager.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-FOLDER-004",
+    "XINT-021"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-005",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-FOLDER-005",
+    "XINT-021"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-006",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FileManager.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-FOLDER-006"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-007",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FileManager.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-FOLDER-007"
+   ]
+  },
+  {
+   "requirement_id": "FOLDER-008",
+   "category": "Folder attachment command reconciliation",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Prompt_Pipeline.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "attachments.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-FOLDER-008"
+   ]
+  },
+  {
+   "requirement_id": "TDG-001",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-001",
+    "XINT-022"
+   ]
+  },
+  {
+   "requirement_id": "TDG-002",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-002",
+    "XINT-022"
+   ]
+  },
+  {
+   "requirement_id": "TDG-003",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-003",
+    "XINT-022"
+   ]
+  },
+  {
+   "requirement_id": "TDG-004",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-004"
+   ]
+  },
+  {
+   "requirement_id": "TDG-005",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-005"
+   ]
+  },
+  {
+   "requirement_id": "TDG-006",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-TDG-006",
+    "XINT-023"
+   ]
+  },
+  {
+   "requirement_id": "TDG-007",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-TDG-007",
+    "XINT-022"
+   ]
+  },
+  {
+   "requirement_id": "TDG-008",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-008",
+    "XINT-022"
+   ]
+  },
+  {
+   "requirement_id": "TDG-009",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-009"
+   ]
+  },
+  {
+   "requirement_id": "TDG-010",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-010",
+    "XINT-022"
+   ]
+  },
+  {
+   "requirement_id": "TDG-011",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-TDG-011"
+   ]
+  },
+  {
+   "requirement_id": "TDG-012",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-TDG-012"
+   ]
+  },
+  {
+   "requirement_id": "TDG-013",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-TDG-013",
+    "XINT-023"
+   ]
+  },
+  {
+   "requirement_id": "TDG-014",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-TDG-014"
+   ]
+  },
+  {
+   "requirement_id": "TDG-015",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-TDG-015"
+   ]
+  },
+  {
+   "requirement_id": "TDG-016",
+   "category": "To-Do graph and replacement integrity",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/ToDo_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "todos.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-TDG-016",
+    "XINT-023"
+   ]
+  },
+  {
+   "requirement_id": "WONV-001",
+   "category": "Wonderer convergence boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Personas.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-WONV-001"
+   ]
+  },
+  {
+   "requirement_id": "WONV-002",
+   "category": "Wonderer convergence boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Personas.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-WONV-002"
+   ]
+  },
+  {
+   "requirement_id": "WONV-003",
+   "category": "Wonderer convergence boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-WONV-003",
+    "XINT-024"
+   ]
+  },
+  {
+   "requirement_id": "WONV-004",
+   "category": "Wonderer convergence boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-WONV-004",
+    "XINT-024"
+   ]
+  },
+  {
+   "requirement_id": "WONV-005",
+   "category": "Wonderer convergence boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-WONV-005",
+    "XINT-024"
+   ]
+  },
+  {
+   "requirement_id": "WONV-006",
+   "category": "Wonderer convergence boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-WONV-006",
+    "XINT-024"
+   ]
+  },
+  {
+   "requirement_id": "WONV-007",
+   "category": "Wonderer convergence boundary",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Collaborative_Workflows.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-WONV-007"
+   ]
+  },
+  {
+   "requirement_id": "WONV-008",
+   "category": "Wonderer convergence boundary",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Runtime_Artifacts_Panel.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "collaboration.js + plans.js",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-WONV-008"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-001",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-001"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-002",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-002"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-003",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": true,
+   "packet_test_ids": [
+    "T-CONCEPT-003",
+    "XINT-025"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-004",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-004",
+    "XINT-025"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-005",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-005",
+    "XINT-025"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-006",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-006"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-007",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-007"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-008",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-008"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-009",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-009"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-010",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-010",
+    "XINT-026"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-011",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-011",
+    "XINT-026"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-012",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-012"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-013",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-013"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-014",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-014"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-015",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-015"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-016",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-016"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-017",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-017",
+    "XINT-025"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-018",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-018",
+    "XINT-025"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-019",
+   "category": "5.6 Pro concept correction",
+   "gui_related": true,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-019",
+    "XINT-026"
+   ]
+  },
+  {
+   "requirement_id": "CONCEPT-020",
+   "category": "5.6 Pro concept correction",
+   "gui_related": false,
+   "owner_docs": [],
+   "concept_module": "build.py + companion files",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CONCEPT-020"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-001",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-001",
+    "XINT-027"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-002",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Assistant_Plan_Runtime.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-002"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-003",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Settings_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-003"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-004",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-004",
+    "XINT-027"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-005",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-005"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-006",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/FinalGUISpec.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-006",
+    "XINT-027"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-007",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-007"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-008",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Scheduling_and_Quota_Resume.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-008"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-009",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-009",
+    "XINT-027"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-010",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Commands_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-010"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-011",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Contracts_V0.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-011"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-012",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/UI_Wiring_Rules.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-012",
+    "XINT-027"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-013",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": true,
+   "owner_docs": [
+    {
+     "doc": "Plans/Settings_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-013"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-014",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-014",
+    "XINT-028"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-015",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/storage-plan.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-015",
+    "XINT-028"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-016",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [
+    {
+     "doc": "Plans/Automated_Testing_System.md",
+     "exists": true,
+     "correction_section": true
+    }
+   ],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-016",
+    "XINT-029"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-017",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-017",
+    "XINT-029"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-018",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-018",
+    "XINT-029"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-019",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-019"
+   ]
+  },
+  {
+   "requirement_id": "CDRY-020",
+   "category": "Commands, wiring, DRY, migration, and proof",
+   "gui_related": false,
+   "owner_docs": [],
+   "concept_module": "(canonical only \u2014 no concept surface)",
+   "concept_asserted_by_suite": false,
+   "packet_test_ids": [
+    "T-CDRY-020"
+   ]
+  }
+ ]
+}

@@ -38,7 +38,7 @@ POST_INTEGRATION_CSS = r'''
 <style id="pm7-t46f-forge-backup-css">
 /* PM7 T46F: Forge Backup tsnet post-integration GUI */
 .pm7-scm-context,
-.pm7-automation-context { display:grid; gap:8px; padding:9px 10px; border-bottom:1px solid var(--border); background:var(--surface-alt); }
+.pm7-automation-context { position:relative; z-index:5; display:grid; gap:8px; padding:9px 10px; border-bottom:1px solid var(--border); background-color:color-mix(in srgb,var(--surface-elevated) 92%,transparent); }
 .pm7-scm-context-row,
 .pm7-automation-context-row { display:flex; align-items:center; gap:7px; min-width:0; }
 .pm7-scm-context-main,
@@ -105,6 +105,8 @@ html[data-theme^="retro"] .pm7-automation-select,
 html[data-theme^="retro"] .pm7-automation-fact,
 html[data-theme^="retro"] .pm7-backup-destination,
 html[data-theme^="retro"] .pm7-backup-safety-note { border-radius:0; box-shadow:none; }
+[data-theme^="glass"] .pm7-scm-context,
+[data-theme^="glass"] .pm7-automation-context { background-color:color-mix(in srgb,var(--surface-elevated) 94%,transparent); }
 @media (max-width:520px) {
   .pm7-backup-status-strip,
   .pm7-backup-destination-grid { grid-template-columns:minmax(0,1fr); }
@@ -125,8 +127,8 @@ SOURCE_BANNER_NEW = '''          <div class="sh-banner"><span class="sh-bico"><i
           <div class="pm7-scm-context" data-requirements="GUI-002 GUI-003 GUI-004 GUI-006 GUI-007">
             <div class="pm7-scm-context-row"><div class="pm7-scm-context-main"><span class="pm7-context-title">tastebook</span><span class="pm7-context-detail">Home computer · this computer · Projects/tastebook</span></div><span class="pm7-post-state" data-state="ready">current</span></div>
             <div class="pm7-scm-engine-switch" role="group" aria-label="Local history engine">
-              <button type="button" class="pm7-scm-engine-button" aria-pressed="true" data-pm7-scm-engine="git" data-command-id="cmd.source_control.backend.select" data-availability="owner_unavailable_concept_preview" data-disabled-reason="native_handler_unavailable" data-pm-hover-label="Show Git history" data-pm-hover-detail="Git separates changes waiting to be saved from changes already staged for the next commit.">Git</button>
-              <button type="button" class="pm7-scm-engine-button" aria-pressed="false" data-pm7-scm-engine="jj" data-command-id="cmd.source_control.backend.select" data-availability="owner_unavailable_concept_preview" data-disabled-reason="native_handler_unavailable" data-pm-hover-label="Show Jujutsu history" data-pm-hover-detail="Jujutsu keeps a current change and operation history instead of Git staging and stashes.">Jujutsu</button>
+              <button type="button" class="pm7-scm-engine-button" aria-pressed="true" data-pm7-scm-engine="git" data-ui-action-id="ui.source_control.profile.preview" data-availability="concept_local_controller_available" data-pm-hover-label="Preview the Git view" data-pm-hover-detail="Shows how this project looks with Git. This preview does not switch the project's history tool.">Git</button>
+              <button type="button" class="pm7-scm-engine-button" aria-pressed="false" data-pm7-scm-engine="jj" data-ui-action-id="ui.source_control.profile.preview" data-availability="concept_local_controller_available" data-pm-hover-label="Preview the Jujutsu view" data-pm-hover-detail="Shows Jujutsu's current change and operation history. This preview does not switch the project's history tool.">Jujutsu</button>
             </div>
           </div>'''
 
@@ -206,7 +208,7 @@ POST_INTEGRATION_SCRIPT = r'''
   function escapeText(value){return String(value==null?'':value).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
   function commandButton(label,id,disabledReason){return '<button class="pm-btn" data-command-id="'+id+'" data-availability="owner_unavailable_concept_preview" data-disabled-reason="'+(disabledReason||'native_handler_unavailable')+'">'+label+'</button>';}
   function renderProvider(service){var p=providers[service],root=document.getElementById('pm7AutomationProviderView');if(!p||!root)return;var unknown=p.state==='unknown',generic=service==='generic';root.innerHTML='<section class="pm7-post-card"><div class="pm7-post-card-head"><div><div class="pm7-post-card-title">'+escapeText(p.name)+'</div><div class="pm7-post-card-subtitle">Current revision checks and provider-native names</div></div><span class="pm7-post-state" data-state="'+escapeText(p.state)+'">'+escapeText(p.state==='unknown'?'could not check':p.state)+'</span></div><dl class="pm7-post-kv"><dt>Revision</dt><dd class="sh-mono">abc12ef · current</dd><dt>Review</dt><dd>'+escapeText(p.review)+'</dd><dt>Definition</dt><dd>'+escapeText(p.definition)+'</dd><dt>Hierarchy</dt><dd>'+escapeText(p.hierarchy)+'</dd></dl><div class="pm7-post-actions">'+(generic?commandButton('Connect automation','cmd.forge.pipeline.open_in_browser','automation_service_not_configured'):commandButton('Refresh','cmd.forge.pipeline.refresh')+commandButton('Run','cmd.forge.pipeline.run')+commandButton(p.external,'cmd.forge.pipeline.open_in_browser'))+'</div></section><section class="pm7-post-card"><div class="pm7-post-card-head"><div><div class="pm7-post-card-title">Active and recent runs</div><div class="pm7-post-card-subtitle">Unknown and outcome-pending states never masquerade as failures.</div></div><span class="pm7-post-state" data-state="'+(unknown?'unknown':'pending')+'">'+(unknown?'unknown':'outcome pending')+'</span></div><div class="pm7-automation-run"><span class="dot '+(p.state==='running'?'dot-run':p.state==='failed'?'dot-err':'')+'"></span><span class="pm7-automation-run-copy"><strong>'+escapeText(p.run)+'</strong><small>'+escapeText(p.hierarchy)+' · logs bounded</small></span><span class="pm-chip">'+escapeText(p.state)+'</span></div><div class="pm7-post-actions">'+commandButton('Open job','cmd.forge.pipeline.open_job')+commandButton('Open logs','cmd.forge.pipeline.open_logs')+commandButton('Retry','cmd.forge.pipeline.retry')+'</div></section><section class="pm7-post-card"><div class="pm7-post-card-head"><div><div class="pm7-post-card-title">Artifacts, deployments, and settings</div><div class="pm7-post-card-subtitle">Provider artifacts stay distinct from Puppet Master outputs and backup exports.</div></div></div><dl class="pm7-post-kv"><dt>Artifact</dt><dd>test-report · checksum retained · expires in 6 days</dd><dt>Environment</dt><dd>staging · approval required</dd><dt>Runner</dt><dd>Self-hosted runner unavailable in this concept</dd><dt>Secrets</dt><dd>Names only · values never displayed</dd></dl><div class="pm7-post-actions">'+commandButton('Open artifacts in service','cmd.forge.pipeline.open_in_browser')+commandButton('Review gate','cmd.forge.pipeline.approve')+commandButton('Open service settings','cmd.forge.pipeline.open_in_browser')+'</div></section>';if(window.PM_HOVER_TAGS&&typeof window.PM_HOVER_TAGS.refresh==='function')window.PM_HOVER_TAGS.refresh(root);}
-  function setEngine(engine,focus){var panel=document.getElementById('panel-source');if(!panel||['git','jj'].indexOf(engine)<0)return;panel.dataset.scmEngine=engine;panel.querySelectorAll('[data-pm7-scm-engine]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.pm7ScmEngine===engine));});if(focus){var target=engine==='jj'?panel.querySelector('.pm7-scm-jj-view'):panel.querySelector('.pm-segtab');if(target)target.focus({preventScroll:true});}}
+  function setEngine(engine,focus){var panel=document.getElementById('panel-source');if(!panel||['git','jj'].indexOf(engine)<0)return;panel.dataset.scmEngine=engine;panel.querySelectorAll('[data-pm7-scm-engine]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.pm7ScmEngine===engine));});if(focus){var target=panel.querySelector('[data-pm7-scm-engine="'+engine+'"]');if(target)target.focus({preventScroll:true});}}
   function setService(service){var panel=document.getElementById('panel-git'),select=document.getElementById('pm7AutomationService');if(!panel||!select)return;if(service!=='github'&&!providers[service])service='github';panel.dataset.automationService=service;select.value=service;if(service!=='github')renderProvider(service);}
   function openBackup(){var tab=document.getElementById('tab-settings');if(tab)tab.click();if(window.PM12_KIMI&&typeof window.PM12_KIMI.navigate==='function')window.PM12_KIMI.navigate('system','backup');}
   document.addEventListener('click',function(event){var engine=event.target.closest('[data-pm7-scm-engine]');if(engine){event.preventDefault();setEngine(engine.dataset.pm7ScmEngine,true);return;}var backup=event.target.closest('[data-pm7-open-backup]');if(backup){event.preventDefault();openBackup();return;}},true);
@@ -264,6 +266,13 @@ def apply(doc, notes, need):
     doc = _replace_once(doc, "</head>", POST_INTEGRATION_CSS + "\n</head>", need, "CSS insertion")
     doc = _replace_once(
         doc,
+        '<div class="icon" title="Source Control" data-ab-id="source" data-target="panel-source">',
+        '<div class="icon" data-ab-id="source" data-target="panel-source" data-pm-hover-label="Source Control" data-pm-hover-detail="See what changed, keep safe local history, publish online, review work, and open project backups.">',
+        need,
+        "human Source Control activity help",
+    )
+    doc = _replace_once(
+        doc,
         '<div class="icon" title="GitHub Actions" data-ab-id="gh-actions" data-target="panel-git">',
         '<div class="icon" data-ab-id="repository_automation" data-legacy-ab-id="gh-actions github_actions git" data-canonical-occupant="repository_automation" data-target="panel-git" data-pm-hover-label="Actions &amp; Pipelines" data-pm-hover-detail="See checks, workflows, pipelines, logs, artifacts, and approvals from the connected service.">',
         need,
@@ -273,9 +282,16 @@ def apply(doc, notes, need):
     doc = _replace_once(
         doc,
         "if (!saved || Object.prototype.toString.call(saved) !== '[object Array]') saved = null;",
-        "if (!saved || Object.prototype.toString.call(saved) !== '[object Array]') saved = null;\n      if (saved) saved = saved.map(function (id) { return id === 'gh-actions' || id === 'github_actions' || id === 'git' ? 'repository_automation' : id; });",
+        "if (!saved || Object.prototype.toString.call(saved) !== '[object Array]') saved = null;\n      var migratedLegacyActivityOrder = false;\n      if (saved) saved = saved.map(function (id) { var canonical = id === 'gh-actions' || id === 'github_actions' || id === 'git' ? 'repository_automation' : id; if (canonical !== id) migratedLegacyActivityOrder = true; return canonical; });",
         need,
         "legacy activity state migration",
+    )
+    doc = _replace_once(
+        doc,
+        "      syncMore();\n    })();\n\n    /* ---- shared pointer-drag engine",
+        "      syncMore();\n      if (migratedLegacyActivityOrder) persist();\n    })();\n\n    /* ---- shared pointer-drag engine",
+        need,
+        "canonical activity state persistence after migration",
     )
     doc = _replace_once(
         doc,
@@ -364,6 +380,7 @@ def apply(doc, notes, need):
     need(doc.count(TRANSFORM_MARKER) == 2, "T46F: marker census mismatch")
     need('data-ab-id="gh-actions"' not in doc, "T46F: legacy activity ID survived as a primary identity")
     need(doc.count('data-ab-id="repository_automation"') == 1, "T46F: provider-neutral activity occupant mismatch")
+    need("if (migratedLegacyActivityOrder) persist();" in doc, "T46F: legacy activity migration is not durably canonicalized")
     need("GITHUB ACTIONS</span>" not in doc, "T46F: GitHub-only panel heading survived")
     need("Jujutsu operations are separate from backup snapshots." in doc, "T46F: JJ and backup separation missing")
     need("No staging or stash controls appear in Jujutsu mode." in doc, "T46F: JJ semantic negative missing")

@@ -491,7 +491,7 @@ Definition, references, hover, code actions, formatting, rename, and apply-edit 
 
 ## 11. File tree actions, local filter, and chat handoff
 
-FileManager owns the file-tree action surface. `cmd.chat.add_file_reference` is a lock, not a recommendation: Add to Assistant Chat inserts a visible file reference chip into the active composer/thread context and does not inline full file contents as a hidden side effect. File references are file-only in MVP; folder insertion is out of scope.
+FileManager owns the file-tree action surface. `cmd.chat.add_file_reference` is a lock, not a recommendation: Add to Assistant Chat inserts a visible file reference chip into the active composer/thread context and does not inline full file contents as a hidden side effect. This alias is file-only and rejects a folder; folder attachment is added through `cmd.chat.attachment.add` with `semantic_kind: folder` (FOLDER-001..003).
 
 Search entrypoints from command palette, keyboard shortcuts, Search panel chrome, and context menus normalize to the Search-owned `cmd.search.*` family. FileManager may reveal or open selected file results, but it must not duplicate search semantics under file-manager-local or legacy `/chat/lsp-local` names.
 
@@ -3097,7 +3097,8 @@ owner_doc: Plans/FileManager.md
 canonical_text: >-
   FileManager owns the file-tree action surface, and cmd.chat.add_file_reference is a lock: Add to
   Assistant Chat inserts a visible file reference chip into the active composer or thread context,
-  file references are file-only in MVP, and folder insertion is out of scope.
+  this alias is file-only and rejects a folder, and folder attachment is added through
+  cmd.chat.attachment.add with semantic_kind folder.
 gui_related: true
 gui_classification_reason: >-
   This unit governs the visible Add to Assistant Chat action and composer reference chip.
@@ -3129,10 +3130,10 @@ preserved_exact_tokens:
 - "visible file reference chip"
 - "active composer/thread context"
 - "file-only in MVP"
-- "folder insertion is out of scope"
+- "folder insertion goes through cmd.chat.attachment.add"
 negative_constraints:
 - "Add to Assistant Chat must not inline full file contents as a hidden side effect."
-- "Folder insertion is out of scope for MVP."
+- "Folder insertion must not use this file-only alias; it uses cmd.chat.attachment.add with semantic_kind folder."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -5015,3 +5016,59 @@ negative_constraints:
   - Do not expose raw Recovery Key/Kit material or foreign absolute paths in ordinary evidence.
 owner_hints: [Plans/FileManager.md, Plans/Backup_Restore_System.md, Plans/FileSafe.md, Plans/Permissions_System.md, Plans/Source_Control_System.md]
 ```
+
+## Additive Correction v4 — Folder Attachments Through The Shared Command (2026-09-03)
+
+This section applies `PM_Assistant_v2_Additive_Correction_v4` (`FOLDER-001..008`) to this owner.
+
+### FOLDER-001..003 — One attachment command, one owner
+
+Files and folders both normalize through `cmd.chat.attachment.add` with
+`semantic_kind: file | folder`, using the shared attachment request and result owner. The
+attachment picker, drag-and-drop, and a File Manager reference path all converge on it. No
+parallel folder attachment service exists.
+
+`cmd.chat.add_file_reference` survives only as a **file-specific compatibility alias** to the
+shared command. It rejects `semantic_kind: folder`. Its former statement that all folder
+references are out of scope is retired.
+
+No `cmd.chat.add_folder_reference` and no folder-specific handler, event, or storage family is
+created. A command census must find no independent folder effect; attachment ownership is not
+duplicated.
+
+### FOLDER-004 — A folder is a bounded manifest, not a dump
+
+A folder attachment carries a bounded manifest and reference:
+
+```text
+folder_root_identity      exact root path identity plus its stable reference
+entries / hash policy     which entries are enumerated and how they are hashed
+exclusions                ignore rules actually applied
+permissions               the read scope that was granted
+materialization_status    what has been materialized versus referenced
+```
+
+The context compiler selects bounded content from that manifest. A folder is never recursively
+dumped into every prompt.
+
+### FOLDER-005..006 — Scheduling and later change
+
+A scheduled folder reference freezes the exact retained manifest and hash and holds or fails when
+that version is unavailable at dispatch. Current folder contents are never substituted and the
+manifest is not rebuilt at dispatch without an explicit user policy. This is the folder side of
+`SMSG-008`.
+
+A folder that changed after a message was sent is disclosed through changed or stale state while
+preserving what the agent actually saw. Details show captured versus current identity; historical
+message context is never rewritten.
+
+### FOLDER-007..008 — Shared capabilities and separate identities
+
+Folder open, reveal, export, and download reuse File Manager and artifact capabilities with exact
+permission and currentness checks. An unsupported download or export is disabled with a stated
+reason rather than reimplemented as chat-local file transfer code.
+
+The folder manifest and any selected extracted contents keep separate identities, so context
+selection never mutates the attachment itself. A materialization receipt records what was
+included and what was omitted, and one extraction is never treated as the folder's canonical
+bytes.

@@ -1,0 +1,228 @@
+{
+  "suite": "attachments-composer-verify",
+  "total": 44,
+  "pass": 44,
+  "fail": 0,
+  "results": [
+    {
+      "name": "attachments.js registered PM56_ATTACHMENTS",
+      "pass": true,
+      "detail": "object"
+    },
+    {
+      "name": "composer-state.js registered PM56_COMPOSER_STATE",
+      "pass": true,
+      "detail": "object"
+    },
+    {
+      "name": "no undeclared action collisions",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "the attachment tray sits above the text-entry field in the DOM",
+      "pass": true,
+      "detail": "[\"att-tray\",\"icon-button bc-tray-btn\",\"composer-field\",\"composer-tools\",\"composer-hint\"]"
+    },
+    {
+      "name": "the tray is actually rendered (visible, not display:none/detached)",
+      "pass": true,
+      "detail": "{\"trayVisible\":true,\"trayAboveField\":true,\"attachInsideField\":true,\"attachIsLeftHalf\":true,\"attachIsBottomHalf\":true,\"sendInsideField\":true,\"sendIsRightHalf\":true,\"sendIsBottomHalf\":true}"
+    },
+    {
+      "name": "the tray renders above the text-entry region",
+      "pass": true,
+      "detail": "{\"trayVisible\":true,\"trayAboveField\":true,\"attachInsideField\":true,\"attachIsLeftHalf\":true,\"attachIsBottomHalf\":true,\"sendInsideField\":true,\"sendIsRightHalf\":true,\"sendIsBottomHalf\":true}"
+    },
+    {
+      "name": "Attach stays inside the text-entry field, bottom-left",
+      "pass": true,
+      "detail": "{\"trayVisible\":true,\"trayAboveField\":true,\"attachInsideField\":true,\"attachIsLeftHalf\":true,\"attachIsBottomHalf\":true,\"sendInsideField\":true,\"sendIsRightHalf\":true,\"sendIsBottomHalf\":true}"
+    },
+    {
+      "name": "Send/Stop stays inside the text-entry field, bottom-right",
+      "pass": true,
+      "detail": "{\"trayVisible\":true,\"trayAboveField\":true,\"attachInsideField\":true,\"attachIsLeftHalf\":true,\"attachIsBottomHalf\":true,\"sendInsideField\":true,\"sendIsRightHalf\":true,\"sendIsBottomHalf\":true}"
+    },
+    {
+      "name": "the tools row is centred (justify-content:center, symmetric gaps)",
+      "pass": true,
+      "detail": "{\"justify\":\"center\",\"leftGap\":22.2,\"rightGap\":22.2}"
+    },
+    {
+      "name": "the divider above .composer-tools is a thin (~1px) hairline",
+      "pass": true,
+      "detail": "1px"
+    },
+    {
+      "name": "focusing the composer changes neither the divider width, colour, style, nor shadow",
+      "pass": true,
+      "detail": "{\"before\":{\"w\":\"1px\",\"c\":\"rgb(53, 61, 80)\",\"style\":\"solid\",\"shadow\":\"none\"},\"after\":{\"w\":\"1px\",\"c\":\"rgb(53, 61, 80)\",\"style\":\"solid\",\"shadow\":\"none\"}}"
+    },
+    {
+      "name": "a real upload runs through multiple real, timer-driven processing states before Ready",
+      "pass": true,
+      "detail": "resolving -> uploading -> scanning -> ready"
+    },
+    {
+      "name": "the tracer is pinned to the top edge and thin (position:absolute, top:0, height<=4px)",
+      "pass": true,
+      "detail": "{\"position\":\"absolute\",\"top\":\"0px\",\"height\":2}"
+    },
+    {
+      "name": "no conventional <progress>/role=\"progressbar\" bar is used anywhere in the composer",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "the newly uploaded attachment has a real id",
+      "pass": true,
+      "detail": "att-mtm0hzdz-b-850yl"
+    },
+    {
+      "name": "the remove X is hidden at rest (opacity 0)",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "hovering the attachment reveals the X (opacity 1)",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "name": "clicking the body of a ready, previewable (image) attachment opens a real preview",
+      "pass": true,
+      "detail": "{\"present\":true,\"src\":\"blob:null/e12f349d-7cd2-\"}"
+    },
+    {
+      "name": "clicking the body of a non-previewable attachment opens its More Info (detail) surface",
+      "pass": true,
+      "detail": "{\"present\":true,\"name\":\"src/analytics/schema.rs\"}"
+    },
+    {
+      "name": "composer text returns after switching away and back",
+      "pass": true,
+      "detail": "{\"before\":\"Persistence probe: keep this text across a thread switch.\",\"after\":\"Persistence probe: keep this text across a thread switch.\"}"
+    },
+    {
+      "name": "attachments return after switching away and back",
+      "pass": true,
+      "detail": "{\"before\":3,\"after\":3}"
+    },
+    {
+      "name": "no Draft / Save Draft / Restore Draft control exists anywhere in the DOM",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no visible \"draft\" banner text anywhere inside the composer shell",
+      "pass": true,
+      "detail": "src/analytics/schema.rs | diagram.png | Query Benchmark Dashboard | Product Manager | Claude Sonnet 4.6 | Agent | Auto"
+    },
+    {
+      "name": "history test picked a starting point that will not land on a multiple of 6 after 3 sends (defect (b) now fixed; kept as a safe margin)",
+      "pass": true,
+      "detail": "starting count 13"
+    },
+    {
+      "name": "FIXED (regression check): the composer textarea visually clears after Send",
+      "pass": true,
+      "detail": "{\"dom\":\"\",\"state\":\"\"}"
+    },
+    {
+      "name": "Up on an empty composer recalls the most recently sent message first",
+      "pass": true,
+      "detail": "Testing message Charlie"
+    },
+    {
+      "name": "repeated Up moves further back through history in order",
+      "pass": true,
+      "detail": "Testing message Bravo | Testing message Alpha"
+    },
+    {
+      "name": "Down moves newer",
+      "pass": true,
+      "detail": "Testing message Bravo"
+    },
+    {
+      "name": "Down ultimately restores the original empty buffer",
+      "pass": true,
+      "detail": "\"\""
+    },
+    {
+      "name": "Up/Down never replaces existing composer text (normal caret navigation only)",
+      "pass": true,
+      "detail": "some unsent text"
+    },
+    {
+      "name": "composer textarea carries spellcheck=\"true\"",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "spellcheck attribute survives a real full re-render (trigger one, re-assert)",
+      "pass": true,
+      "detail": "true , true"
+    },
+    {
+      "name": "no spellcheck icon, button, or status control exists in the composer",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "found the seeded failed attachment with a real Retry control",
+      "pass": true,
+      "detail": "{\"att\":\"att-mtm0hvmy-7-mgcq4\",\"thread\":\"attachments\",\"message\":\"attachments-01\",\"name\":\"legacy-project.pkg\",\"siblingCount\":2}"
+    },
+    {
+      "name": "retry preserves the same attachment identity and name (never replaced)",
+      "pass": true,
+      "detail": "{\"before\":{\"att\":\"att-mtm0hvmy-7-mgcq4\",\"thread\":\"attachments\",\"message\":\"attachments-01\",\"name\":\"legacy-project.pkg\",\"siblingCount\":2},\"after\":{\"exists\":true,\"name\":\"legacy-project.pkg\",\"state\":\"resolving\",\"siblingCount\":2}}"
+    },
+    {
+      "name": "retry does not remove or alter sibling attachments on the same message",
+      "pass": true,
+      "detail": "{\"before\":2,\"after\":2}"
+    },
+    {
+      "name": "retry moves off \"failed\" immediately (data kept, not silently discarded)",
+      "pass": true,
+      "detail": "resolving"
+    },
+    {
+      "name": "retry is a WORKING retry — it eventually resolves to Ready, not a stub",
+      "pass": true,
+      "detail": "ready"
+    },
+    {
+      "name": "found the seeded drifted project-reference attachment (queries.rs)",
+      "pass": true,
+      "detail": "att-msg-thumb:att-mtm0hvmy-1-55ke8"
+    },
+    {
+      "name": "the download names the exact stored hash",
+      "pass": true,
+      "detail": "Puppet Master concept lab — stand-in download (no real File Manager/FileSafe store is wired into this concept). | File: src/analytics/queries.rs | Origin: Project r"
+    },
+    {
+      "name": "the download discloses that the live file has changed since the message (drift)",
+      "pass": true,
+      "detail": "Puppet Master concept lab — stand-in download (no real File Manager/FileSafe store is wired into this concept). | File: src/analytics/queries.rs | Origin: Project reference (live) | Exact stored hash: 360ab09c340d | Materialized: 9/3/2026, 9:03:07 PM | This download resolves the EXACT version referenced by the message (hash 360ab09c340d), not the current working-tree content. | The live file has since change"
+    },
+    {
+      "name": "a non-drifted reference download does NOT claim drift (honest contrast)",
+      "pass": true,
+      "detail": "Puppet Master concept lab — stand-in download (no real File Manager/FileSafe store is wired into this concept). | File: src/analytics/schema.rs | Origin: Project reference (live) | Exact stored hash: 31ce0d307c02 | Materialized: 9/3/2026, 9:03:10 PM"
+    },
+    {
+      "name": "no console errors during the substantive run (sections 0-9 above)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sending a message that brings the sent-count to a multiple of 6 does not hang or crash the renderer",
+      "pass": true,
+      "detail": "baseline=5 — {\"ok\":true,\"msgCount\":19}"
+    }
+  ]
+}

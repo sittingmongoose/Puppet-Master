@@ -1,0 +1,454 @@
+/* plans.css — feature module stylesheet. OWNER: Assistant-redesign wave (2026-09-03).
+   Styles the `plan-doc` card rendered by plans.js: the two document projections,
+   the single Build control, the historical compact card, and the four dialogs.
+   Concatenated LAST, so every rule is scoped under a class this module owns and
+   nothing here can leak into styles.css's components. Colour comes only from the
+   theme custom properties, so all eight themes work. */
+
+/* ---------------------------------------------------------------- card shell */
+.plan-doc{
+  display:block; padding:0; overflow:hidden;
+  border:1px solid var(--border); border-radius:var(--radius);
+  background:var(--surface-2);
+}
+.plan-doc .pd-head{
+  display:flex; align-items:flex-start; gap:10px;
+  padding:12px 14px 8px;
+}
+.plan-doc .pd-head-main{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+.plan-doc .pd-title{
+  margin:0; font:600 14px/1.35 var(--font-ui); color:var(--text);
+  overflow-wrap:anywhere;
+}
+.plan-doc .pd-strategy{ font:400 11px/1.4 var(--font-ui); color:var(--muted); }
+.plan-doc .pd-badge{
+  margin-left:auto; flex:0 0 auto; align-self:flex-start;
+  height:24px; display:inline-flex; align-items:center; padding:0 9px;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface-3); color:var(--text);
+  font:600 12px/1 var(--font-ui); white-space:nowrap;
+}
+
+/* Rich Text / Markdown — two projections, one document. */
+.plan-doc .pd-views{
+  display:flex; gap:4px; padding:0 14px 10px;
+  border-bottom:1px solid var(--border);
+}
+.plan-doc .pd-view{
+  height:24px; padding:0 10px; cursor:pointer;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface-3); color:var(--muted);
+  font:500 12px/1 var(--font-ui);
+  transition:background var(--spring-soft), color var(--spring-soft), border-color var(--spring-soft);
+}
+.plan-doc .pd-view:hover{ color:var(--text); }
+.plan-doc .pd-view.on{
+  background:var(--accent); color:var(--on-accent); border-color:var(--accent);
+}
+
+/* ------------------------------------------------------------------- body */
+.plan-doc .pd-body{ padding:12px 14px; max-height:520px; overflow:auto; }
+.plan-doc .pd-rich,.plan-doc .pd-md{ display:block; }
+
+/* No editable caret anywhere in either projection. This is belt-and-braces
+   over the markup, which contains no textarea and no contenteditable. */
+.plan-doc .pd-rich,.plan-doc .pd-rich *,
+.plan-doc .pd-md,.plan-doc .pd-md *{ -webkit-user-modify:read-only; }
+
+.plan-doc .pd-h{ margin:16px 0 6px; color:var(--text); font-family:var(--font-ui); line-height:1.3; }
+.plan-doc .pd-h:first-child{ margin-top:0; }
+.plan-doc .pd-h2{ font-size:13px; font-weight:600; letter-spacing:.01em; }
+.plan-doc .pd-h3{ font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+.plan-doc .pd-p{ margin:0 0 8px; font:400 12.5px/1.55 var(--font-ui); color:var(--text); }
+.plan-doc .pd-ul,.plan-doc .pd-ol{ margin:0 0 10px; padding-left:18px; }
+.plan-doc .pd-ul li,.plan-doc .pd-ol li{ margin:0 0 4px; font:400 12.5px/1.5 var(--font-ui); color:var(--text); }
+
+.plan-doc .pd-table-wrap{ margin:0 0 12px; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius-sm); }
+.plan-doc .pd-table{ width:100%; border-collapse:collapse; font:400 12px/1.45 var(--font-ui); }
+.plan-doc .pd-table th,.plan-doc .pd-table td{ padding:6px 10px; text-align:left; border-bottom:1px solid var(--border); }
+.plan-doc .pd-table th{ background:var(--surface-3); color:var(--muted); font-weight:600; white-space:nowrap; }
+.plan-doc .pd-table td{ color:var(--text); }
+.plan-doc .pd-table tr:last-child td{ border-bottom:0; }
+
+.plan-doc .pd-code{
+  margin:0 0 12px; padding:10px 12px; overflow-x:auto;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface-3); color:var(--text);
+  font:400 11.5px/1.6 var(--font-mono); white-space:pre;
+}
+
+.plan-doc .pd-artifact{
+  display:flex; align-items:center; gap:9px; width:100%; margin:0 0 12px;
+  padding:9px 11px; cursor:pointer; text-align:left;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface-3); color:var(--text);
+  transition:border-color var(--spring-soft), background var(--spring-soft);
+}
+.plan-doc .pd-artifact:hover{ border-color:var(--border-strong); }
+.plan-doc .pd-artifact-copy{ display:flex; flex-direction:column; gap:1px; min-width:0; }
+.plan-doc .pd-artifact-copy strong{ font:600 12px/1.3 var(--font-ui); }
+.plan-doc .pd-artifact-copy span{ font:400 11px/1.3 var(--font-ui); color:var(--muted); }
+
+.plan-doc .pd-callout{
+  display:flex; gap:9px; margin:0 0 12px; padding:9px 11px;
+  border:1px solid var(--border); border-left-width:3px; border-radius:var(--radius-sm);
+  background:var(--surface-3);
+}
+.plan-doc .pd-callout p{ margin:0; font:400 12px/1.5 var(--font-ui); color:var(--text); }
+.plan-doc .pd-callout svg{ flex:0 0 auto; margin-top:1px; }
+.plan-doc .pd-callout-info{ border-left-color:var(--accent); }
+.plan-doc .pd-callout-info svg{ color:var(--accent); }
+.plan-doc .pd-callout-warning{ border-left-color:var(--warning); }
+.plan-doc .pd-callout-warning svg{ color:var(--warning); }
+
+/* ------------------------------------------------------------- plan steps */
+.plan-doc .pd-step{
+  display:flex; gap:9px; margin:0 0 8px; padding:8px 10px;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface-3);
+  transition:border-color var(--spring-soft), background var(--spring-soft);
+}
+.plan-doc .pd-step-gutter{
+  flex:0 0 16px; height:16px; margin-top:1px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--border-strong); border-radius:50%;
+  color:var(--muted);
+}
+.plan-doc .pd-step-copy{ min-width:0; }
+.plan-doc .pd-step-copy strong{ display:block; font:600 12.5px/1.4 var(--font-ui); color:var(--text); }
+.plan-doc .pd-step-copy p{ margin:2px 0 0; font:400 12px/1.5 var(--font-ui); color:var(--muted); }
+.plan-doc .pd-step-meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:5px;
+  font:400 10.5px/1.4 var(--font-ui); color:var(--muted);
+}
+.plan-doc .pd-step-meta code{ font-family:var(--font-mono); font-size:10px; }
+.plan-doc .pd-step-dep,.plan-doc .pd-step-par{
+  display:inline-flex; align-items:center; height:16px; padding:0 6px;
+  border:1px solid var(--border); border-radius:5px; background:var(--surface-2);
+}
+/* The status gutter is a PROJECTION of build progress. It marks a step without
+   mutating one byte of the approved document. */
+.plan-doc .pd-step-active{ border-color:var(--accent); }
+.plan-doc .pd-step-active .pd-step-gutter{ border-color:var(--accent); color:var(--accent); }
+.plan-doc .pd-step-done .pd-step-gutter{
+  border-color:var(--accent); background:var(--accent); color:var(--on-accent);
+}
+
+/* ------------------------------------------------------------- markdown */
+.plan-doc .pd-md-pre{
+  margin:0; padding:0; white-space:pre-wrap; overflow-wrap:anywhere;
+  font:400 11.5px/1.65 var(--font-mono); color:var(--text);
+}
+.plan-doc .pd-md-block{ display:block; }
+
+/* ------------------------------------------------------------ the footer */
+.plan-doc .pd-foot{
+  display:flex; flex-wrap:wrap; align-items:center; gap:6px;
+  padding:10px 14px; border-top:1px solid var(--border); background:var(--surface-3);
+}
+/* ONE control. It changes LABEL; it is never replaced by a status badge. */
+.plan-doc .pd-build{
+  height:26px; padding:0 13px; cursor:pointer;
+  border:1px solid var(--accent); border-radius:var(--radius-sm);
+  background:var(--accent); color:var(--on-accent);
+  font:600 12px/1 var(--font-ui); white-space:nowrap;
+  transition:filter var(--spring-soft), background var(--spring-soft),
+             color var(--spring-soft), border-color var(--spring-soft);
+}
+.plan-doc .pd-build:hover:not([disabled]){ filter:brightness(1.08); }
+.plan-doc .pd-build[disabled]{ cursor:default; }
+.plan-doc .pd-build-building{
+  background:var(--surface-2); color:var(--text); border-color:var(--accent);
+}
+.plan-doc .pd-build-completed{
+  background:var(--surface-2); color:var(--muted); border-color:var(--border-strong);
+}
+.plan-doc .pd-build-canceled{
+  background:var(--surface-2); color:var(--muted); border-color:var(--border);
+  text-decoration:line-through; text-decoration-thickness:1px;
+}
+/* Building… breathes so "disabled" never reads as "stalled". */
+.plan-doc .pd-build-building::after{
+  content:''; display:inline-block; width:5px; height:5px; margin-left:7px;
+  vertical-align:middle; border-radius:50%; background:var(--accent);
+  animation:pd-breathe 1370ms var(--spring-soft-ease) infinite;
+}
+@keyframes pd-breathe{ 0%,100%{opacity:.25} 50%{opacity:1} }
+
+/* Support copy sits BESIDE the control, never inside it — a paused build still
+   reads "Building…" on the button. */
+.plan-doc .pd-wait{
+  display:inline-flex; align-items:center; gap:6px; margin-left:2px;
+  font:400 11px/1.4 var(--font-ui); color:var(--muted);
+}
+.plan-doc .pd-wait svg{ flex:0 0 auto; color:var(--accent); }
+.plan-doc .pd-act{ white-space:nowrap; }
+
+/* --------------------------------------------------- historical compact */
+.plan-doc-compact{ background:var(--surface-2); }
+.plan-doc-compact .pd-compact-row{
+  display:flex; align-items:center; gap:10px; padding:10px 14px;
+}
+.plan-doc-compact .pd-compact-dot{
+  flex:0 0 18px; height:18px; display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--border-strong); border-radius:50%; color:var(--muted);
+}
+.pd-completed .pd-compact-dot{ border-color:var(--accent); background:var(--accent); color:var(--on-accent); }
+.plan-doc-compact .pd-compact-copy{ display:flex; flex-direction:column; gap:1px; min-width:0; }
+.plan-doc-compact .pd-compact-copy strong{ font:600 12.5px/1.35 var(--font-ui); color:var(--text); }
+.plan-doc-compact .pd-compact-copy span{ font:400 11px/1.3 var(--font-ui); color:var(--muted); }
+.plan-doc-compact .pd-compact-why{
+  margin:0; padding:0 14px 10px 42px;
+  font:400 11px/1.5 var(--font-ui); color:var(--muted);
+}
+/* A canceled Plan's title reads as closed without relying on colour alone. */
+.pd-canceled .pd-compact-copy strong{ text-decoration:line-through; text-decoration-thickness:1px; }
+
+/* ------------------------------------------------------- wizard receipt */
+.pd-receipt .pd-attr{
+  margin:4px 0 0; font:400 11px/1.5 var(--font-ui); color:var(--muted);
+}
+
+/* ------------------------------------------------------------- dialogs */
+/* The base `.dialog` rule in styles.css owns position, centring, z-index,
+   pointer-events and the entrance animation. Overriding `position` here is what
+   dropped this dialog to the overlay's top-left and made it unclickable, so
+   these rules now only size it and set its own grid; they must not re-declare
+   position, left, top, transform or animation. */
+.pd-dialog{
+  width:min(680px, calc(100vw - 32px)); max-height:min(78vh, 720px);
+  grid-template-rows:auto minmax(0,1fr) auto;
+}
+.pd-dlg-head{
+  display:flex; align-items:flex-start; gap:10px;
+  padding:12px 14px; border-bottom:1px solid var(--border);
+}
+.pd-dlg-head strong{ display:block; font:600 13px/1.35 var(--font-ui); color:var(--text); }
+.pd-dlg-head span{ display:block; font:400 11px/1.4 var(--font-ui); color:var(--muted); }
+.pd-dlg-x{
+  margin-left:auto; flex:0 0 auto; width:24px; height:24px; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface-3); color:var(--muted);
+}
+.pd-dlg-x:hover{ color:var(--text); border-color:var(--border-strong); }
+.pd-dlg-body{ padding:12px 14px; overflow:auto; }
+.pd-dlg-foot{
+  display:flex; justify-content:flex-end; gap:6px;
+  padding:10px 14px; border-top:1px solid var(--border); background:var(--surface-3);
+}
+.pd-sec{ margin:0 0 16px; }
+.pd-sec:last-child{ margin-bottom:0; }
+.pd-sec h4{
+  margin:0 0 7px; font:600 11px/1.3 var(--font-ui); color:var(--muted);
+  text-transform:uppercase; letter-spacing:.06em;
+}
+.pd-kv{
+  display:flex; align-items:baseline; gap:10px; padding:4px 0;
+  border-bottom:1px solid var(--border);
+}
+.pd-kv:last-child{ border-bottom:0; }
+.pd-kv span{ flex:0 0 150px; font:400 11.5px/1.5 var(--font-ui); color:var(--muted); }
+.pd-kv strong{ font:500 11.5px/1.5 var(--font-mono); color:var(--text); overflow-wrap:anywhere; }
+.pd-note{ margin:7px 0 0; font:400 11.5px/1.55 var(--font-ui); color:var(--muted); }
+.pd-note code{ font-family:var(--font-mono); font-size:11px; }
+.pd-bad{ color:var(--danger); }
+.pd-sec-honest{
+  padding:10px 12px; border:1px solid var(--border); border-left:3px solid var(--warning);
+  border-radius:var(--radius-sm); background:var(--surface-3);
+}
+.pd-ledger,.pd-units,.pd-revs,.pd-exports,.pd-cmds{ margin:0; padding:0; list-style:none; }
+.pd-ledger li{
+  display:flex; gap:8px; padding:4px 0; border-bottom:1px solid var(--border);
+  font:400 11.5px/1.5 var(--font-ui); color:var(--text);
+}
+.pd-ledger li:last-child{ border-bottom:0; }
+.pd-ledger-k{
+  flex:0 0 72px; font:500 10.5px/1.5 var(--font-ui); color:var(--muted);
+  text-transform:uppercase; letter-spacing:.05em;
+}
+.pd-units li{
+  display:flex; flex-direction:column; gap:2px; padding:7px 0;
+  border-bottom:1px solid var(--border);
+}
+.pd-units li:last-child{ border-bottom:0; }
+.pd-units code{ font:500 10.5px/1.4 var(--font-mono); color:var(--accent); }
+.pd-units strong{ font:600 12px/1.4 var(--font-ui); color:var(--text); }
+.pd-units span{ font:400 11px/1.4 var(--font-ui); color:var(--muted); }
+.pd-units em{ font:400 11px/1.45 var(--font-ui); color:var(--muted); font-style:normal; }
+.pd-units em.neg{ color:var(--warning); }
+.pd-revs li{ padding:6px 0; border-bottom:1px solid var(--border); }
+.pd-revs li:last-child{ border-bottom:0; }
+.pd-revs strong{ font:600 12px/1.4 var(--font-ui); color:var(--text); margin-right:8px; }
+.pd-revs span{ font:400 11px/1.4 var(--font-mono); color:var(--muted); }
+.pd-revs p{ margin:2px 0 0; font:400 11.5px/1.5 var(--font-ui); color:var(--muted); }
+.pd-exports li{
+  display:flex; align-items:baseline; gap:10px; padding:5px 0;
+  border-bottom:1px solid var(--border); font:400 11.5px/1.5 var(--font-ui);
+}
+.pd-exports li:last-child{ border-bottom:0; }
+.pd-exports strong{ flex:0 0 90px; color:var(--text); }
+.pd-exports span{ flex:0 0 66px; color:var(--muted); font-family:var(--font-mono); font-size:11px; }
+.pd-exports em{ color:var(--muted); font-style:normal; }
+.pd-cmds li{ padding:2px 0; }
+.pd-cmds code{ font:400 11px/1.6 var(--font-mono); color:var(--muted); }
+.pd-export-row{ display:flex; flex-wrap:wrap; gap:6px; }
+.pd-field{ display:flex; flex-direction:column; gap:4px; margin:9px 0 0; }
+.pd-field span{ font:400 11.5px/1.4 var(--font-ui); color:var(--muted); }
+.pd-input{
+  height:28px; padding:0 9px;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface-3); color:var(--text); font:400 12px/1 var(--font-ui);
+}
+.pd-input:focus{ outline:none; border-color:var(--accent); }
+
+/* ---------------------------------------------------------- narrow panes */
+@media (max-width:590px){
+  .plan-doc .pd-foot{ gap:5px; }
+  .plan-doc .pd-kv span{ flex-basis:110px; }
+  .plan-doc .pd-body{ max-height:380px; }
+}
+
+/* --------------------------------------------------------- reduced motion
+   Decoration goes; state does not. The Building… dot stops animating but keeps
+   its accent fill, so "this Plan is running" is still legible. */
+@media (prefers-reduced-motion: reduce){
+  .plan-doc .pd-build-building::after{ animation:none; opacity:1; }
+  .pd-dialog{ animation:none; }
+  .plan-doc .pd-view,.plan-doc .pd-build,.plan-doc .pd-step,.plan-doc .pd-artifact{ transition:none; }
+}
+
+/* ===========================================================================
+   Additive Correction v4 (2026-09-03) — progress projection, attention,
+   typed embeds, bound Goals and the Markdown status rail.
+   Tokens only: --surface-2/3/4, --border, --border-strong, --text, --muted,
+   --subtle, --accent, --on-accent, --danger, --warning, --positive, --glass.
+   (`--text-dim` does not exist in this project.)
+   =========================================================================== */
+
+/* --- step states beyond active/done -------------------------------------- */
+.plan-doc .pd-step-blocked{ border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.plan-doc .pd-step-blocked .pd-step-gutter{ border-color:var(--warning); color:var(--warning); }
+.plan-doc .pd-step-skipped .pd-step-gutter{ border-color:var(--border-strong); color:var(--subtle); }
+.plan-doc .pd-step-skipped .pd-step-copy strong{ color:var(--muted); }
+.plan-doc .pd-step-mixed .pd-step-gutter{ border-color:var(--accent); color:var(--accent); opacity:.75; }
+.plan-doc .pd-step-none .pd-step-gutter{ border-style:dashed; color:transparent; }
+.plan-doc .pd-step-nested{ margin-left:18px; border-left:2px solid var(--border); }
+.plan-doc .pd-step-child,
+.plan-doc .pd-step-state,
+.plan-doc .pd-step-why,
+.plan-doc .pd-step-stale{
+  font:500 10px/1.4 var(--font-ui); letter-spacing:.02em; padding:1px 6px;
+  border:1px solid var(--border); border-radius:999px; color:var(--muted);
+  background:var(--surface-3);
+}
+.plan-doc .pd-step-state[data-step-state="completed"]{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
+.plan-doc .pd-step-state[data-step-state="in_progress"]{ color:var(--accent); border-color:color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.plan-doc .pd-step-state[data-step-state="blocked"]{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.plan-doc .pd-step-state[data-step-state="mixed"]{ color:var(--accent); }
+.plan-doc .pd-step-why{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.plan-doc .pd-step-stale{ color:var(--subtle); border-style:dashed; }
+
+/* --- the Markdown status rail: a SIBLING of the <pre>, never inside it ---- */
+.plan-doc .pd-md-with-rail{ display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:start; }
+.plan-doc .pd-md-rail{
+  display:flex; flex-direction:column; gap:0; padding-top:2px;
+  border-right:1px solid var(--border); padding-right:8px;
+}
+.plan-doc .pd-md-mark{
+  display:block; min-height:calc(var(--pd-md-lines,1) * 1.55em + 1.1em);
+  font:500 9.5px/1.4 var(--font-ui); color:var(--subtle); white-space:nowrap;
+  letter-spacing:.02em; text-align:right;
+}
+.plan-doc .pd-md-mark-done{ color:var(--positive); }
+.plan-doc .pd-md-mark-active{ color:var(--accent); }
+.plan-doc .pd-md-mark-blocked{ color:var(--warning); }
+.plan-doc .pd-md-mark-mixed{ color:var(--accent); opacity:.8; }
+
+/* --- the attention line beside the Build control ------------------------- */
+.plan-doc .pd-attn{ align-items:flex-start; gap:8px; flex-wrap:wrap; }
+.plan-doc .pd-attn-copy{ display:flex; flex-direction:column; gap:1px; min-width:0; }
+.plan-doc .pd-attn-copy strong{ font:600 11.5px/1.4 var(--font-ui); color:var(--text); }
+.plan-doc .pd-attn-copy span{ font:400 11px/1.5 var(--font-ui); color:var(--muted); }
+.plan-doc .pd-attn-warning svg{ color:var(--warning); }
+.plan-doc .pd-attn-warning .pd-attn-copy strong{ color:var(--warning); }
+.plan-doc .pd-attn-attempt{
+  align-self:flex-start; font:500 10px/1.4 var(--font-ui); color:var(--subtle);
+  border:1px solid var(--border); border-radius:999px; padding:0 6px; margin-top:2px;
+}
+.plan-doc .pd-attn-act{ font-size:11px; padding:3px 8px; }
+
+/* --- the compact To-Do completion summary (not a second lifecycle chip) --- */
+.plan-doc .pd-progress{
+  font:500 11px/1.5 var(--font-ui); color:var(--muted);
+  border:1px solid var(--border); border-radius:999px; padding:2px 9px;
+  background:var(--surface-3);
+}
+.plan-doc .pd-progress-stale{ color:var(--subtle); border-style:dashed; }
+
+/* --- typed embeds -------------------------------------------------------- */
+.plan-doc .pd-embed{
+  display:flex; gap:10px; align-items:flex-start; width:100%; text-align:left;
+  margin:10px 0; padding:10px 12px; border:1px solid var(--border);
+  border-radius:10px; background:var(--surface-3); color:var(--text);
+  font:inherit; cursor:default;
+}
+.plan-doc button.pd-embed{ cursor:pointer; }
+.plan-doc button.pd-embed:hover{ border-color:var(--border-strong); background:var(--surface-4); }
+.plan-doc .pd-embed svg{ flex:0 0 auto; margin-top:2px; color:var(--accent); }
+.plan-doc .pd-embed-copy{ display:flex; flex-direction:column; gap:2px; min-width:0; flex:1 1 auto; }
+.plan-doc .pd-embed-copy strong{ font:600 12.5px/1.4 var(--font-ui); }
+.plan-doc .pd-embed-sum{ font:400 11.5px/1.5 var(--font-ui); color:var(--muted); }
+.plan-doc .pd-embed-ver{ font:400 10.5px/1.5 var(--font-ui); color:var(--subtle); display:flex; gap:8px; flex-wrap:wrap; }
+.plan-doc .pd-embed-ver code{ font-family:var(--font-mono); font-size:10px; }
+.plan-doc .pd-embed-sandbox,
+.plan-doc .pd-embed-fallback{
+  border:1px solid var(--border); border-radius:999px; padding:0 6px; color:var(--subtle);
+}
+.plan-doc .pd-embed-unavailable{
+  border-style:dashed;
+  border-color:color-mix(in srgb, var(--warning) 45%, var(--border));
+  background:color-mix(in srgb, var(--warning) 7%, var(--surface-3));
+}
+.plan-doc .pd-embed-unavailable svg{ color:var(--warning); }
+.plan-doc .pd-embed-why{ font:600 10.5px/1.5 var(--font-ui); color:var(--warning); text-transform:uppercase; letter-spacing:.04em; }
+
+/* --- Details additions --------------------------------------------------- */
+.pd-dialog .pd-steps-proj,
+.pd-dialog .pd-embeds{ list-style:none; margin:6px 0 0; padding:0; display:flex; flex-direction:column; gap:4px; }
+.pd-dialog .pd-steps-proj li,
+.pd-dialog .pd-embeds li{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:baseline;
+  padding:5px 8px; border:1px solid var(--border); border-radius:7px; background:var(--surface-3);
+  font:400 11.5px/1.5 var(--font-ui); color:var(--muted);
+}
+.pd-dialog .pd-steps-proj code,
+.pd-dialog .pd-embeds code{ font-family:var(--font-mono); font-size:10.5px; color:var(--text); }
+.pd-dialog .pd-steps-proj strong,
+.pd-dialog .pd-embeds strong{ color:var(--text); font-weight:600; }
+.pd-dialog .pd-steps-proj em,
+.pd-dialog .pd-embeds em{ font-style:normal; color:var(--subtle); font-size:11px; }
+.pd-dialog .pd-steps-proj em.neg,
+.pd-dialog .pd-embeds em.neg{ color:var(--danger); }
+.pd-dialog .pd-steps-proj li[data-step-state="blocked"]{ border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.pd-dialog .pd-embeds li[data-embed-state="missing"],
+.pd-dialog .pd-embeds li[data-embed-state="stale"],
+.pd-dialog .pd-embeds li[data-embed-state="denied"],
+.pd-dialog .pd-embeds li[data-embed-state="unsupported"]{ border-style:dashed; }
+
+/* --- plan-bound Goals in Activity (never a thread card) ------------------- */
+.goal-bound-wrap{ display:flex; flex-direction:column; gap:8px; margin:10px 0; }
+.goal-bound-h{ margin:0; font:600 11px/1.4 var(--font-ui); color:var(--subtle); text-transform:uppercase; letter-spacing:.05em; }
+.goal-bound{
+  border:1px solid var(--border); border-radius:10px; padding:10px 12px;
+  background:var(--surface-3); display:flex; flex-direction:column; gap:8px;
+}
+.goal-bound-canceled{ opacity:.72; border-style:dashed; }
+.goal-bound-head{ display:flex; gap:8px; align-items:center; font:400 11px/1.5 var(--font-ui); color:var(--muted); }
+.goal-bound-chip{
+  font:600 10px/1.5 var(--font-ui); text-transform:uppercase; letter-spacing:.04em;
+  border:1px solid var(--border-strong); border-radius:999px; padding:0 7px; color:var(--text);
+}
+.goal-bound-active .goal-bound-chip{ color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.goal-bound-paused .goal-bound-chip{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.goal-bound-link{ font-family:var(--font-mono); font-size:10.5px; color:var(--subtle); }

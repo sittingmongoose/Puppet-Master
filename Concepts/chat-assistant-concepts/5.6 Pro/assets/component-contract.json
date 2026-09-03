@@ -1,0 +1,132 @@
+{
+ "schema": "pm.concept.component_contract.v1",
+ "concept": "Concepts/chat-assistant-concepts/5.6 Pro",
+ "generated_from": "the live surface, read through the modules’ public APIs",
+ "correction": "PM_Assistant_v2_Additive_Correction_v4",
+ "proof_boundary": "These are the deterministic state vocabularies the concept renders. They are concept contracts, not native runtime contracts.",
+ "contracts": {
+  "question_budget": {
+   "bases": {
+    "quick": 3,
+    "standard": 6,
+    "thorough": 8,
+    "deep_thorough": 10,
+    "deep_exhaustive": 15,
+    "brainstorm": 20
+   },
+   "grill_extension": 25,
+   "effective": {
+    "quick": 28,
+    "standard": 31,
+    "thorough": 33,
+    "deep_thorough": 35,
+    "deep_exhaustive": 40,
+    "brainstorm": 45
+   }
+  },
+  "plan_step_states": [
+   "blocked",
+   "completed",
+   "in_progress",
+   "mixed",
+   "pending",
+   "skipped"
+  ],
+  "build_labels": [
+   "Build",
+   "Building…",
+   "Completed",
+   "Canceled"
+  ],
+  "attention_conditions": [
+   "paused",
+   "quota",
+   "window",
+   "attention",
+   "failed",
+   "recovery"
+  ],
+  "embed_kinds": [
+   "cad",
+   "chart",
+   "checklist",
+   "diagram",
+   "graph",
+   "image",
+   "interactive",
+   "mermaid",
+   "video"
+  ],
+  "embed_states": [
+   "denied",
+   "missing",
+   "ok",
+   "stale",
+   "unsupported"
+  ],
+  "participant_outcomes": [
+   "completed",
+   "failed",
+   "timed_out",
+   "unavailable",
+   "canceled",
+   "explicitly_waived"
+  ],
+  "scheduled_message_states": [
+   "scheduled",
+   "held",
+   "sent",
+   "canceled",
+   "failed",
+   "expired"
+  ],
+  "schedule_topologies": [
+   "agent",
+   "goal_driven",
+   "crew"
+  ],
+  "browser_stale_reasons": [
+   "zero_matches",
+   "multiple_matches",
+   "frame_or_page_destroyed",
+   "identity_mismatch",
+   "source_mapping_changed",
+   "session_gone",
+   "page_or_frame_changed",
+   "locator_unusable",
+   "no_capture"
+  ],
+  "todo_graph_errors": [
+   "self_parent_ids",
+   "parent_cycles",
+   "dependency_cycles",
+   "unknown_refs",
+   "cross_thread_refs",
+   "duplicate_ids"
+  ],
+  "todo_replacement_dispositions": [
+   "retained",
+   "rebound",
+   "canceled",
+   "refused"
+  ],
+  "attachment_semantic_kinds": [
+   "file",
+   "folder"
+  ],
+  "workflow_effect_ledger_keys": [
+   "cards",
+   "events",
+   "installs",
+   "participants",
+   "providerCalls",
+   "runs",
+   "settingsWrites",
+   "usageRecords"
+  ],
+  "export_content_kinds": [
+   "plan_document",
+   "execution_report"
+  ]
+ }
+}

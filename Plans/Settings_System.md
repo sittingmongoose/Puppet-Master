@@ -1329,3 +1329,239 @@ owner_boundary_notes:
   - Forge_Integrations owns provider/instance and AutomationBinding semantics; Backup_Restore_System owns backup/recovery; Remote_Access_System owns connector/routes; newtools owns Doctor routing.
 owner_hints: [Plans/Settings_System.md, Plans/Forge_Integrations.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/newtools.md, Plans/FinalGUISpec.md]
 ```
+
+## Puppet Master Assistant Redesign Settings Registration - 2026-09-03
+
+The approved Assistant redesign adds fifty settings. This section records their canonical inventory identities, the manager each belongs to, and the packet spelling each reconciles, and it fixes the boundary between what Settings stores and what the domain owners store.
+
+### 1. Two new managers
+
+Settings gains a **Multi-Agent Workflows** manager with `Crew`, `BrainStorm`, `Review`, and `Chat Room` tabs, and a separate **Back Seat Driver** manager. Back Seat Driver is deliberately *not* inside the Multi-Agent Workflows manager: it is a passive read-only advisor, not a collaborative workflow, and presenting it as one would imply it participates in a run. Each Multi-Agent tab edits only that kind's defaults; the run itself and its frozen effective roster belong to `Plans/Collaborative_Workflows.md`.
+
+Scheduling and quota defaults are surfaced under approvals and usage rather than as a third manager, because they are consumed by several owners rather than configuring one subsystem.
+
+### 2. Ownership split
+
+Settings stores ordinary project-bound preferences and renders managers. Domain owners store operational records. Concretely:
+
+| Settings stores | Domain owner stores |
+|---|---|
+| default BrainStorm participant roles, core count, and Grill extension | the actual BrainStorm run and its frozen effective roster (`Plans/Collaborative_Workflows.md`) |
+| default reviewer count, blind-pass, and corroboration flags | the actual Review run, target pack, and findings (`Plans/Collaborative_Workflows.md`) |
+| Crew defaults, Auto criteria, and Auto ceilings | the committed Crew configuration and the run (`Plans/Collaborative_Workflows.md`) |
+| BSD mode, model, Persona, sensitivity, cooldown, and thresholds | BSD workflow bindings, assignments, review cycles, and findings (`Plans/Back_Seat_Driver.md`) |
+| wind-down, missed policy, grace, DST policy, auto-resume default | the actual schedules, windows, consents, and dispatch records (`Plans/Scheduling_and_Quota_Resume.md`) |
+| thread-title policy | title generation attempts and results (`Plans/Models_System.md`, `Plans/assistant-chat-design.md`) |
+| Plan and Deep Plan default depth and export format | the Plan documents, revisions, and PlanRuns (`Plans/Assistant_Plan_Runtime.md`) |
+| browser capture defaults | capture records and component contexts (`Plans/Section15_MVP_Promoted_Features_Spec.md`) |
+
+A default is read at the moment a modal opens or a record is created and is copied into that record. Changing a default afterwards never retroactively alters a committed configuration, a running workflow, an existing schedule, or an existing consent.
+
+### 3. Registered settings and packet reconciliation
+
+The packet proposed fifty setting IDs in an `assistant.*` / `browser.*` namespace with status `proposed_census_required`. A census over `Plans/settings_inventory.json` found no collision for any of them and confirmed that this inventory derives a setting's category and subgroup from its ID prefix. The packet spellings are therefore reconciled to canonical inventory IDs under the existing twelve categories, and each packet spelling is retained as a search alias on its canonical entry so an operator or a document that cites the packet ID still resolves. The packet spelling receives no second inventory row, no peer control, and no independent persistence identity.
+
+One reuse was found and is recorded rather than duplicated: `general.interaction.chat-eli5` already exists as the per-conversation ELI5 override. It is preserved unchanged, and the packet's `assistant.chat.eli5_default` is registered as the distinct application default `general.interaction.eli5-default`. The per-chat toggle continues to win for a chat the user has changed.
+
+The pre-existing `branching.crew.crew-enabled` toggle is preserved as the master Crew enable. The retired model in which Crew was *only* that switch is superseded by the configuration settings below; a Crew run now requires a committed configuration regardless of the toggle.
+
+| Canonical setting ID | Label | Type | Default | Manager | Packet spelling reconciled |
+|---|---|---|---|---|---|
+| `general.interaction.working-activity-style` | Working Animation | `select` | `Orbit` | `assistant-chat` | `assistant.chat.working_activity_style` |
+| `ai.models.thread-title-model` | Chat Title Model | `select` | `Default` | `assistant-chat` | `assistant.chat.thread_title_model` |
+| `general.interaction.eli5-default` | Explain Terms Everywhere | `toggle` | `false` | `assistant-chat` | `assistant.chat.eli5_default` |
+| `planning.interview.plan-default-depth` | Plan Depth | `select` | `Standard` | `assistant-chat` | `assistant.chat.plan.default_strategy` |
+| `planning.interview.deep-plan-default-depth` | Deep Plan Depth | `select` | `Thorough` | `assistant-chat` | `assistant.chat.deep_plan.default_strategy` |
+| `planning.interview.deep-plan-grill-me` | Grill Me By Default | `toggle` | `false` | `assistant-chat` | `assistant.chat.deep_plan.grill_me_default` |
+| `planning.interview.plan-default-export` | Plan Export Format | `select` | `Markdown` | `assistant-chat` | `assistant.chat.plan.default_export` |
+| `general.interaction.composer-persist-unsent` | Keep Unsent Messages | `toggle` | `true` | `assistant-chat` | `assistant.chat.composer.persist_unsent` |
+| `branching.crew.crew-participant-count` | Crew Size | `number` | `3` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.participant_count` |
+| `branching.crew.crew-coordinator` | Crew Coordinator | `select` | `Parent assistant` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.coordinator` |
+| `branching.crew.crew-assignment-strategy` | Crew Assignment | `select` | `Manager directed` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.assignment_strategy` |
+| `branching.crew.crew-parallelism` | Crew Parallelism | `number` | `3` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.parallelism` |
+| `branching.crew.crew-auto-enabled` | Crew Auto | `toggle` | `false` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.auto_enabled` |
+| `branching.crew.crew-auto-complexity` | Crew Auto Threshold | `select` | `High` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.auto_complexity` |
+| `branching.crew.crew-auto-max-members` | Crew Auto Size Limit | `number` | `4` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.auto_max_members` |
+| `branching.crew.brainstorm-core-participants` | BrainStorm Participants | `number` | `4` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.core_participants` |
+| `branching.crew.brainstorm-question-limit` | BrainStorm Question Limit | `number` | `20` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.question_limit` |
+| `branching.crew.grill-me-question-extension` | Grill Me Extra Questions | `number` | `25` | `multi-agent-workflows` | `assistant.multi_agent.grill_me.question_extension` |
+| `branching.plan.quick-question-limit` | Quick Plan Question Limit | `number` | `3` | `assistant-redesign` | `assistant.chat.plan.quick.question_limit` |
+| `branching.plan.standard-question-limit` | Standard Plan Question Limit | `number` | `6` | `assistant-redesign` | `assistant.chat.plan.standard.question_limit` |
+| `branching.plan.thorough-question-limit` | Thorough Plan Question Limit | `number` | `8` | `assistant-redesign` | `assistant.chat.plan.thorough.question_limit` |
+| `branching.deep-plan.thorough-question-limit` | Deep Plan Thorough Question Limit | `number` | `10` | `assistant-redesign` | `assistant.chat.deep_plan.thorough.question_limit` |
+| `branching.deep-plan.exhaustive-question-limit` | Deep Plan Exhaustive Question Limit | `number` | `15` | `assistant-redesign` | `assistant.chat.deep_plan.exhaustive.question_limit` |
+| `branching.crew.brainstorm-external-research` | BrainStorm Research Depth | `select` | `Maximum` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.external_research` |
+| `branching.crew.brainstorm-independent-proposals` | Independent Proposals First | `toggle` | `true` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.independent_proposals` |
+| `branching.crew.brainstorm-debate-rounds` | BrainStorm Debate Rounds | `number` | `2` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.debate_rounds` |
+| `branching.crew.brainstorm-voting` | BrainStorm Voting | `select` | `Evidence weighted` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.voting` |
+| `branching.crew.brainstorm-preserve-dissent` | Keep Dissent | `toggle` | `true` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.preserve_dissent` |
+| `planning.verification.review-strategy` | Review Strategy | `select` | `Multi-pass` | `multi-agent-workflows.review` | `assistant.multi_agent.review.strategy` |
+| `planning.verification.review-reviewer-count` | Reviewers | `number` | `3` | `multi-agent-workflows.review` | `assistant.multi_agent.review.reviewer_count` |
+| `planning.verification.review-blind-initial-pass` | Blind First Pass | `toggle` | `true` | `multi-agent-workflows.review` | `assistant.multi_agent.review.blind_initial_pass` |
+| `planning.verification.review-peer-corroboration` | Compare Findings | `toggle` | `true` | `multi-agent-workflows.review` | `assistant.multi_agent.review.peer_corroboration` |
+| `planning.verification.review-preserve-dissent` | Keep Review Dissent | `toggle` | `true` | `multi-agent-workflows.review` | `assistant.multi_agent.review.preserve_dissent` |
+| `planning.verification.review-auto-repair` | Review Fixes Things | `toggle` | `false` | `multi-agent-workflows.review` | `assistant.multi_agent.review.auto_repair` |
+| `branching.crew.chat-room-participant-count` | Chat Room Size | `number` | `4` | `multi-agent-workflows.chat-room` | `assistant.multi_agent.chat_room.participant_count` |
+| `branching.crew.chat-room-turn-policy` | Chat Room Turns | `select` | `Moderated` | `multi-agent-workflows.chat-room` | `assistant.multi_agent.chat_room.turn_policy` |
+| `branching.crew.chat-room-max-rounds` | Chat Room Rounds | `number` | `5` | `multi-agent-workflows.chat-room` | `assistant.multi_agent.chat_room.max_rounds` |
+| `safety.approvals.bsd-mode` | Back Seat Driver | `select` | `Auto` | `back-seat-driver` | `assistant.bsd.mode` |
+| `safety.approvals.bsd-model` | Adviser Model | `select` | `Default` | `back-seat-driver` | `assistant.bsd.model` |
+| `safety.approvals.bsd-persona` | Adviser Persona | `select` | `Critical Advisor` | `back-seat-driver` | `assistant.bsd.persona` |
+| `safety.approvals.bsd-trigger-sensitivity` | Adviser Sensitivity | `select` | `Balanced` | `back-seat-driver` | `assistant.bsd.trigger_sensitivity` |
+| `safety.approvals.bsd-catch-up-seconds` | Adviser Catch-Up | `select` | `30 seconds` | `back-seat-driver` | `assistant.bsd.catch_up_seconds` |
+| `safety.approvals.bsd-cooldown-turns` | Adviser Cooldown | `number` | `3` | `back-seat-driver` | `assistant.bsd.cooldown_turns` |
+| `safety.approvals.bsd-retain-transcript` | Keep Adviser Transcript | `toggle` | `true` | `back-seat-driver` | `assistant.bsd.retain_transcript` |
+| `safety.approvals.bsd-self-compact-threshold` | Adviser Compaction Point | `number` | `0.8` | `back-seat-driver` | `assistant.bsd.self_compact_threshold` |
+| `safety.approvals.schedule-wind-down-minutes` | Wind-Down Time | `number` | `10` | `scheduling-and-usage-resume` | `assistant.scheduling.wind_down_minutes` |
+| `safety.approvals.schedule-missed-policy` | If A Schedule Is Missed | `select` | `Hold` | `scheduling-and-usage-resume` | `assistant.scheduling.missed_dispatch_policy` |
+| `safety.approvals.schedule-grace-minutes` | Schedule Grace Period | `number` | `30` | `scheduling-and-usage-resume` | `assistant.scheduling.default_grace_minutes` |
+| `safety.approvals.schedule-resume-next-window` | Resume Next Window | `toggle` | `true` | `scheduling-and-usage-resume` | `assistant.scheduling.resume_next_window` |
+| `ai.usage.auto-resume-default` | Resume When Usage Resets | `toggle` | `false` | `scheduling-and-usage-resume` | `assistant.usage.auto_resume_default` |
+| `safety.approvals.schedule-dst-policy` | Daylight Saving Behavior | `select` | `Preserve local wall clock` | `scheduling-and-usage-resume` | `assistant.scheduling.dst_policy` |
+| `planning.testing.browser-capture-full-default` | Screenshot Scope | `select` | `Visible viewport` | `browser` | `browser.chat_capture.full_default` |
+| `planning.testing.browser-component-action` | After Picking A Component | `select` | `Last used, starting with Send now` | `browser` | `browser.chat_capture.component_action` |
+| `planning.testing.browser-component-crop` | Include Component Image | `toggle` | `true` | `browser` | `browser.chat_capture.include_component_crop` |
+| `planning.testing.browser-devtools-policy` | Agent DevTools Access | `select` | `On with permission` | `browser` | `browser.agent.devtools_policy` |
+
+All fifty entries are static inventory registrations. They do not assert that a Settings pane renders them, that a native writer persists them, or that any consuming owner reads them yet.
+
+### SSYS-027 - Assistant Redesign Settings Managers And Ownership Split
+
+```yaml
+plan_unit_id: SSYS-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Settings gains a Multi-Agent Workflows manager with Crew, BrainStorm, Review, and Chat Room tabs and a separate Back Seat Driver manager; Back Seat Driver is deliberately not inside the Multi-Agent manager because it is a passive read-only advisor rather than a collaborative workflow. Settings stores ordinary project-bound preferences and renders managers while domain owners store operational records: Settings holds default participant roles, counts, Grill extension, reviewer count and flags, Crew defaults and Auto ceilings, BSD policy defaults, scheduling wind-down/missed/grace/DST/auto-resume defaults, title policy, Plan depth and export defaults, and browser capture defaults, while Collaborative Workflows, Back Seat Driver, Scheduling and Quota Resume, Models System, Assistant Plan Runtime, and the browser owner hold the runs, rosters, bindings, findings, schedules, consents, generation results, documents, and capture records. A default is read when a modal opens or a record is created and copied into that record; a later default change never retroactively alters a committed configuration, a running workflow, an existing schedule, or an existing consent.
+gui_related: true
+gui_classification_reason: This unit defines two new Settings managers and their tab structure.
+depends_on: [SSYS-026]
+unblocks: [SSYS-028]
+acceptance_criteria:
+  - The Multi-Agent Workflows manager exposes exactly Crew, BrainStorm, Review, and Chat Room tabs.
+  - Back Seat Driver has its own manager outside the Multi-Agent Workflows manager.
+  - No manager stores an operational record that a domain owner owns.
+  - Changing a default does not alter a committed configuration or a running workflow.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: shadow_settings_ownership_or_retroactive_default
+reasoning_tier: high
+context_scope: assistant_redesign_settings_managers
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/Collaborative_Workflows.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/Scheduling_and_Quota_Resume.md
+node_compile_hint:
+  mode: settings_manager_registration
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:SET-001
+  - pm-assistant-implementation-2026-09-02-recovered:07_DRY_OWNERSHIP_MAP.md#8
+  - pm-assistant-implementation-2026-09-02-recovered:08_SETTINGS_AND_DEFAULTS.md
+preserved_exact_tokens:
+  - "Multi-Agent Workflows"
+  - "Back Seat Driver"
+negative_constraints:
+  - Do not place Back Seat Driver inside the Multi-Agent Workflows manager.
+  - Do not store an operational record in Settings.
+  - Do not let a default change mutate an existing record.
+owner_hints:
+  - Plans/Settings_System.md
+```
+
+### SSYS-028 - Assistant Redesign Setting Registration And Packet Spelling Reconciliation
+
+```yaml
+plan_unit_id: SSYS-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Fifty new settings are registered in Plans/settings_inventory.json under the existing twelve categories, because this inventory derives a setting's category and subgroup from its ID prefix. The packet's assistant.* and browser.* spellings are reconciled to those canonical IDs and retained as search aliases on the canonical entry; a packet spelling receives no second inventory row, no peer control, and no independent persistence identity. A census found one genuine reuse: general.interaction.chat-eli5 already exists as the per-conversation ELI5 override and is preserved unchanged, while the packet's application default is registered separately as general.interaction.eli5-default with the per-chat toggle still winning for a chat the user has changed. The pre-existing branching.crew.crew-enabled toggle is preserved as the master Crew enable, and the retired model in which Crew was only that switch is superseded because a Crew run now requires a committed configuration regardless of the toggle.
+gui_related: true
+gui_classification_reason: Each registered setting is a rendered control in a Settings pane with a category, subgroup, and tier.
+depends_on: [SSYS-027]
+unblocks: []
+acceptance_criteria:
+  - All fifty settings exist once each with a valid category, subgroup, type, default, scope, and tier.
+  - Every packet spelling resolves to exactly one canonical entry through its search aliases.
+  - No packet spelling receives its own row or persistence identity.
+  - The existing chat-eli5 override and crew-enabled toggle are preserved rather than duplicated.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: duplicate_setting_identity_or_namespace_drift
+reasoning_tier: high
+context_scope: assistant_redesign_settings_inventory
+implementation_surfaces:
+  - Plans/settings_inventory.json
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: settings_inventory_registration
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:machine/settings.json
+  - pm-assistant-implementation-2026-09-02-recovered:SET-002
+preserved_exact_tokens:
+  - "general.interaction.chat-eli5"
+  - "branching.crew.crew-enabled"
+  - "proposed_census_required"
+negative_constraints:
+  - Do not create a second inventory row for a packet spelling.
+  - Do not duplicate an existing setting that a census identified as reusable.
+  - Do not claim a Settings pane renders or a native writer persists these entries.
+owner_hints:
+  - Plans/Settings_System.md
+```
+
+## Additive Correction v4 — Corrected Question Values And The Transaction Boundary (2026-09-03)
+
+This section applies `PM_Assistant_v2_Additive_Correction_v4` (`QMAX-018..019`, `MODAL-006`,
+`MODAL-008`, `CDRY-003`, `CDRY-013`) to this owner.
+
+### QMAX-018 — Seven project-scoped values, no new commands
+
+Seven exact values are registered in `Plans/settings_inventory.json` and in the Multi-Agent
+Workflows and Assistant rows above, all written through the existing generic Settings
+transaction. No command is minted per number.
+
+| Setting ID | Factory |
+|---|---|
+| `assistant.chat.plan.quick.question_limit` | 3 |
+| `assistant.chat.plan.standard.question_limit` | 6 |
+| `assistant.chat.plan.thorough.question_limit` | 8 |
+| `assistant.chat.deep_plan.thorough.question_limit` | 10 |
+| `assistant.chat.deep_plan.exhaustive.question_limit` | 15 |
+| `assistant.multi_agent.brainstorm.question_limit` | 20 |
+| `assistant.multi_agent.grill_me.question_extension` | 25 |
+
+All seven are searchable and resettable like any other setting. The six effective totals — 28,
+31, 33, 35, 40, 45 — are derived at read time and are never stored as a second value.
+
+### QMAX-019 — Migration preserves an explicit override
+
+Migration changes an **untouched factory** BrainStorm limit from 15 to 20 and an untouched Grill
+extension from 10 to 25. A value whose source-of-value says the user set it is preserved exactly
+as the user set it, including a user who deliberately chose 15 or 10. Source-of-value is what
+distinguishes the two cases; a value's mere equality with the old factory number is not evidence
+that it was untouched.
+
+### MODAL-006, MODAL-008 — Defaults commit explicitly
+
+A workflow modal never writes a default as a side effect of starting a run. Defaults change only
+through an explicit `Save as Default` action routed through this owner's transaction. Crew Auto's
+stored value commits only after configuration confirmation and a successful transaction; a
+cancelled or failed commit preserves the prior stored state, and the menu check renders that
+stored state rather than an optimistic one.
+
+### CDRY-013 — The Settings boundary
+
+Settings owns the shell, the inventory, project-scoped values, transactions, defaults, and
+manager routing. Domain runtimes own their records and operations, and a manager action routes to
+its owner. Participant dispositions, run state, schedule state, and progress are never stored as
+settings values.

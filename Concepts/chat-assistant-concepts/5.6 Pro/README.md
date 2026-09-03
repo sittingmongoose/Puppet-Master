@@ -90,8 +90,48 @@ artifact cards. A feature matrix asserts this — 12 surfaces x 16 takes across
 - `index.html`, `PM_Chat_Assistant_5.6_Pro_Standalone.html` — generated. **Never
   hand-edit these**; `--check` exists because a previous hand-edit gave
   `index.html` a second copy of `app.js`.
-- `tests/`, `reports/` — audit scripts and prior results. See `REPAIR_STATUS.md`
-  for which of the older reports are still trustworthy.
+- **Assistant-redesign modules (2026-09-03)** — one owner per file, each
+  registering through `window.PM56_EXT` and loaded before `app.js`, each with a
+  matching `.css` concatenated last:
+  `composer-state` (buffers, destination, input history, spellcheck, quota strip) ·
+  `attachments` (tray, top-edge tracer, message chrome, More Info, downloads) ·
+  `plans` (the `plan-card-v2` document card, Rich/Markdown projections, the one
+  Build control) · `todos` (hierarchical per-thread list, receipts, refusals) ·
+  `collaboration` (Crew / Chat Room / Review / BrainStorm over one foundation) ·
+  `bsd` (Back Seat Driver policy, held/reconfirmed advice, Context and Usage) ·
+  `scheduling` (Schedule Message, Build At, execution windows, quota resume) ·
+  `browser-capture` (screenshots, region, component picker, DevTools) ·
+  `assistant-features` (Teach/Teacher, memory, ELI5, Revert, Debug, thread title).
+  `composer-state` loads first of the set because the others write the composer
+  destination it owns; `plans` installs the identity-preserving
+  `window.PM56_RUNTIME` merging accessor. Adding a module means one line in
+  `build.py` and nothing else.
+- `tests/`, `reports/` — audit scripts and results. `REPAIR_STATUS.md` says which
+  of the older reports are still trustworthy;
+  `reports/REDESIGN_READINESS.md` is generated from live report files by
+  `python3 reports/build-redesign-report.py` and is the current picture.
+
+## Verifying
+
+```bash
+python3 build.py && python3 build.py --check
+node tests/audit.mjs            # the standing concept audit
+node tests/orphan-gate.mjs      # every CSS selector can match emitted markup
+node tests/goal-verify.mjs      # simplified Goal runtime
+node tests/assistant-plan-verify.mjs
+node tests/todo-runtime-verify.mjs
+node tests/collaboration-verify.mjs
+node tests/bsd-verify.mjs
+node tests/attachments-composer-verify.mjs
+node tests/scheduling-verify.mjs
+node tests/browser-capture-verify.mjs
+node tests/restored-features-verify.mjs
+```
+
+Each redesign suite drives the real controls in a headless browser and asserts
+the resulting state. None of them greps the bundle for strings: a string search
+cannot tell a rendered control from a comment about one, and that mistake has
+produced false-positive defects in this directory before.
 
 ## Motion
 
@@ -115,5 +155,45 @@ file, scope its CSS under `.working-variant-N`, and add its name to
 `workingTakes` in `data.js`. Everything else — the mixer, the clamp bounds, the
 feature manifest — derives from that list.
 
-Canonical Puppet Master Plans were not modified. Stable product requirements
-found while concepting are recorded in `reports/PACKET_PLAN_DISPOSITION.md`.
+Stable product requirements found while concepting were recorded in
+`reports/PACKET_PLAN_DISPOSITION.md`. That note is superseded for the
+Assistant-redesign wave: canonical `Plans/**` owner documents **were** modified
+for it, deliberately and as the packet requires — see
+`reports/REDESIGN_TRACEABILITY.json` for the requirement-to-owner map.
+
+## Additive Correction v4 (2026-09-03)
+
+`PM_Assistant_v2_Additive_Correction_v4` was applied on top of the implemented
+v2 branch. It is additive — no v2 system was reimplemented, and the 5.6 Pro
+defaults, themes, Orbit and Step Rail, menus, history, questionnaires, Context
+Lens, activity bar, Send/Stop, follow-up queue and composer chrome are unchanged.
+
+What changed in this concept:
+
+| Area | Change |
+|---|---|
+| Question ceilings | 3 / 6 / 8 and 10 / 15 / 20, Grill Me **+25**, totals 28 / 31 / 33 / 35 / 40 / 45. One counter per run, charged once per question identity, typed `question_budget_exhausted` at the ceiling. |
+| Plan progress | `PlanProgressProjection` derived from the thread's To-Dos: pending / in_progress / completed / blocked / skipped, plus `mixed` on a parent. Rich markers and a Markdown gutter rail leave the document bytes untouched. |
+| Plan failure | `Building…` covers paused, waiting, failed-attempt, attention and recovery; the reason is secondary truth. Still exactly four button labels. |
+| Plan Details | Regular states "no ledger, no PlanUnits"; Deep shows ledger, scoped PlanUnits and the PlanUnit-to-To-Do mapping. |
+| Plan embeds | Ten renderer kinds at frozen artifact versions, PDF static fallbacks, and four explicit unavailable reasons. |
+| Export | `content_kind` of `plan_document` or `execution_report`; the report is a separate artifact and never changes the Plan hash. |
+| Build as Goal | One simple Goal + one PlanRun + one binding, atomically, reusing the existing To-Dos and scoped PlanUnits. |
+| Scheduling | Build schedules store one frozen topology; scheduled messages get a thread card with all six lifecycle states and exact attachment snapshots. |
+| Workflow modals | Open / configure / cancel produces zero durable effects, counted on an instrumented ledger. |
+| Participants | Six terminal outcomes, required/optional slots, retry / replacement / waiver, partial and single-pass Review truth, Wonderer abstention outside the quorum denominator. |
+| Browser | Dispatch-time revalidation with typed `stale_capture` and per-item list isolation. |
+| Folders | One `cmd.chat.attachment.add` with `semantic_kind`; the old file reference is a file-only alias. |
+| To-Dos | Graph validation, atomic list replacement with retain / rebind / cancel / refuse, and currentness-gated transitions. |
+
+Run the correction suite:
+
+```
+node tests/correction-v4-verify.mjs
+```
+
+**Proof boundary.** Everything the suites above assert is *concept* behaviour
+backed by fixtures. It is not native proof: no Rust handler, storage engine,
+scheduler, provider adapter or recovery path is exercised. `reports/REDESIGN_READINESS.md`
+reports canonical, concept and native readiness separately, and a concept pass
+never closes native work.

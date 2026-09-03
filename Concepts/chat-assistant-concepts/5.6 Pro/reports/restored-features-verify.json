@@ -1,0 +1,253 @@
+{
+  "suite": "restored-features-verify",
+  "total": 49,
+  "pass": 49,
+  "fail": 0,
+  "results": [
+    {
+      "name": "assistant-features.js registered PM56_FEATURES",
+      "pass": true,
+      "detail": "object"
+    },
+    {
+      "name": "no undeclared action collisions",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "\"Teach Puppet Master…\" opens a real capture dialog from the wand",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a clean teach text is screened and shown as safe (no secrets)",
+      "pass": true,
+      "detail": "No secrets or credentials detected in this text."
+    },
+    {
+      "name": "Teach never switches the active Persona",
+      "pass": true,
+      "detail": "Product Manager -> Product Manager"
+    },
+    {
+      "name": "Teach captures a real durable memory record with the exact text",
+      "pass": true,
+      "detail": "{\"before\":1,\"after\":2,\"lastText\":\"Always confirm the migration rollback path before applying a forward migration, for this project.\"}"
+    },
+    {
+      "name": "a durable, re-readable receipt is left in the transcript (not just a toast)",
+      "pass": true,
+      "detail": "Taught Puppet MasterAlways confirm the migration rollback path before applying a forward migration, for this project. · scope: This thread only View taught memo"
+    },
+    {
+      "name": "the taught record survives a thread switch and is visible in the Memory panel (session-durable)",
+      "pass": true,
+      "detail": "This thread onlySep 3 9:04 PMAlways confirm the migration rollback path before applying a forward migration, for this project.Source: thread-o0hw24b-mtm0jj95 · secret screen: clear Lock Narrow Revoke "
+    },
+    {
+      "name": "selecting the Teacher Persona actually sets it",
+      "pass": true,
+      "detail": "Teacher"
+    },
+    {
+      "name": "a visible header marker distinguishes Teacher-the-Persona from Teach",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "switching TO the Teacher Persona never calls /teach or writes a taught record",
+      "pass": true,
+      "detail": "2 -> 2"
+    },
+    {
+      "name": "a manual \"Simulate a checkpoint\" trigger really creates an automatic-memory event, with no /teach involved",
+      "pass": true,
+      "detail": "1 -> 2"
+    },
+    {
+      "name": "the first checkpoint on a fresh page collides with the locked taught seed record and is deferred (FEATURE-004)",
+      "pass": true,
+      "detail": "{\"id\":\"af-auto-pifs356-mtm0jqku\",\"trigger\":\"run_boundary\",\"threadId\":\"thread-k8isn5k-mtm0jotf\",\"summary\":\"Run boundary reached: query-perf benchmark suite mentioned again in this thread.\",\"verification\":\"deferred\",\"blocked\":true,\"blockedByRecordId\":\"af-teach-seed-1\",\"at\":\"2026-09-03T21:04:34.638Z\"}"
+    },
+    {
+      "name": "ELI5 toggles a real per-conversation capability",
+      "pass": true,
+      "detail": "{\"before\":\"false\",\"after\":true}"
+    },
+    {
+      "name": "ELI5 is independent of Persona and mode (neither changed)",
+      "pass": true,
+      "detail": "{\"beforeEli5\":{\"persona\":\"Product Manager\",\"mode\":\"Agent\",\"plan\":{\"status\":\"ready\",\"version\":5}},\"afterToggle\":{\"capability\":true,\"persona\":\"Product Manager\",\"mode\":\"Agent\"}}"
+    },
+    {
+      "name": "the ELI5 preview shows the SAME fact as two explanations (standard vs simple)",
+      "pass": true,
+      "detail": "{\"present\":true,\"standard\":\"Adding a composite index on (tenant_id, created_at DESC) lets the planner satisfy the tenant-scoped recency scan with an index-only range read instead of a filtered sequential scan.\",\"simple\":\"In simple terms: this creates a shortcut that lets the database jump straight to one tenant’s newest rows instead of checking almost every row.\",\"code\":\"CREATE INDEX CONCURRENTLY ix_events_tenant_created\\n  ON events (tenant_id, created_at DESC);\"}"
+    },
+    {
+      "name": "the ELI5 preview code block is present and shared (byte-identical either way — one block, not two)",
+      "pass": true,
+      "detail": "CREATE INDEX CONCURRENTLY ix_events_tenant_created | ON events (tenant_id, created_at DESC);"
+    },
+    {
+      "name": "ELI5 never mutates a Plan or other artifact (presentation only)",
+      "pass": true,
+      "detail": "{\"before\":{\"status\":\"ready\",\"version\":5},\"after\":{\"status\":\"ready\",\"version\":5}}"
+    },
+    {
+      "name": "an eligible agent turn shows a real, enabled \"Revert Last Agent Edit\" control",
+      "pass": true,
+      "detail": "{\"turnId\":\"af-agentturn-tslkidb-mtm0juuh\",\"disabled\":false}"
+    },
+    {
+      "name": "the preview shows the REAL, exact whole-turn file manifest (3 files, per the fixture)",
+      "pass": true,
+      "detail": "[\"modifiedsrc/query/planner.rs+42 -11\",\"modifiedsrc/query/executor.rs+9 -3\",\"createdtests/query_planner_test.rs+58\"]"
+    },
+    {
+      "name": "confirming an eligible revert produces a real \"Reverted\" result card with every file marked reverted",
+      "pass": true,
+      "detail": "Reverted last agent editFileSafe restored every file in the manifest to its pre-turn state.modifiedsrc/query/planner.rs revertedmodifiedsrc/query/executor.rs revertedcreatedtests/query_planner_test.rs reverted"
+    },
+    {
+      "name": "an ineligible turn (no file changes) shows Revert genuinely DISABLED with a stated reason, and no enabled route around it",
+      "pass": true,
+      "detail": "{\"hasEnabledControl\":false,\"hasDisabledControl\":true,\"reason\":\"This turn made no file changes — there is nothing for FileSafe to revert.\"}"
+    },
+    {
+      "name": "a conflicted-but-eligible turn still shows an enabled preview control",
+      "pass": true,
+      "detail": "{\"turnId\":\"af-agentturn-q7gjyak-mtm0jz5p\",\"disabled\":false}"
+    },
+    {
+      "name": "a currentness conflict REFUSES the revert with a reason — zero files touched (no partial success)",
+      "pass": true,
+      "detail": "{\"text\":\"Revert refusedschema_snapshot.json was modified again after this turn by a later change. Whole-turn revert refuses rather than applying to only 1 of 2 files.modifiedmigrations/runner.rsuntouchedmodifiedschema_snapshot.jsonuntouched Try again\",\"untouchedCount\":2}"
+    },
+    {
+      "name": "a refused revert offers a real Try again control",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "retrying a genuine conflict is still refused deterministically (not a coin flip)",
+      "pass": true,
+      "detail": "2"
+    },
+    {
+      "name": "Revert and Rewind are distinct, non-overlapping action namespaces",
+      "pass": true,
+      "detail": "{\"revertActions\":[\"af-revert-seed\",\"af-revert-preview\",\"af-revert-confirm\",\"af-revert-retry\"],\"rewindActions\":[\"rewind-to-message\",\"restore-rewind\"]}"
+    },
+    {
+      "name": "Debug is set as the PRIMARY mode",
+      "pass": true,
+      "detail": "Debug"
+    },
+    {
+      "name": "a full eight-phase Investigation Context is rendered",
+      "pass": true,
+      "detail": "8"
+    },
+    {
+      "name": "a real investigation id backs the card",
+      "pass": true,
+      "detail": "af-inv-u6o72va-mtm0k28f"
+    },
+    {
+      "name": "advancing walks target/baseline/instrumentation/reproduction/analysis/repair, collecting real evidence per phase",
+      "pass": true,
+      "detail": "{\"phaseIndex\":6,\"status\":\"in_progress\",\"terminalKeys\":[\"browser:2\",\"terminal:4\",\"dap:1\"]}"
+    },
+    {
+      "name": "a VERIFICATION phase happens before cleanup, and the first cleanup attempt hits a real, seeded failure/recovery example",
+      "pass": true,
+      "detail": "{\"status\":\"attention_required\",\"reason\":\"The temporary instrumentation hook could not be removed automatically: a bound file changed after instrumentation was attached, so the automatic removal patch no longer applies cleanly.\"}"
+    },
+    {
+      "name": "the attention-required state is visibly rendered, not just internal",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Recover completes the cleanup on the second attempt — a real RECOVERY state, not skipped",
+      "pass": true,
+      "detail": "{\"status\":\"complete\",\"attempts\":2}"
+    },
+    {
+      "name": "Redact is a real, irreversible action (item marked redacted; no un-redact control offered)",
+      "pass": true,
+      "detail": "{\"redacted\":true,\"redactButtonGone\":true}"
+    },
+    {
+      "name": "Revoke is a real, REVERSIBLE toggle (unlike Redact)",
+      "pass": true,
+      "detail": "true -> false"
+    },
+    {
+      "name": "Export bundle produces a real downloadable JSON file",
+      "pass": true,
+      "detail": "{ | \"demo\": true, | \"exportedAt\": \"2026-09-03T21:04:56.654Z\", | \"investigationId\": \"af-inv-u6o72va-mtm0k28f\", | \"target\": { | \"kind\": \"component\", | \"label\": \"New chat\" | }, | \"status\": \"complete\""
+    },
+    {
+      "name": "the exported bundle redacts the redacted item's content (label only, not the real content)",
+      "pass": true,
+      "detail": "{\"id\":\"af-ev-5sqojnh-mtm0k399\",\"at\":\"2026-09-03T21:04:51.069Z\",\"redacted\":true,\"label\":\"[redacted]\"}"
+    },
+    {
+      "name": "the Context Lens trigger is a real, visible top-level header control, left of thread search",
+      "pass": true,
+      "detail": "{\"lensPresent\":true,\"searchPresent\":true,\"lensBeforeSearchInDom\":true,\"lensLeftOfSearch\":true,\"lensVisible\":true}"
+    },
+    {
+      "name": "the wand menu contains NO Context Lens row",
+      "pass": true,
+      "detail": "{\"textMentionsLens\":false,\"lensAction\":false}"
+    },
+    {
+      "name": "Default resolver generates a real title from a bounded excerpt of the first message",
+      "pass": true,
+      "detail": "{\"title\":\"Investigate the write amplification on the\",\"lastAttempt\":{\"at\":\"2026-09-03T21:05:01.119Z\",\"policy\":\"default\",\"outcome\":\"generated\",\"titleText\":\"Investigate the write amplification on the\",\"route\":\"GPT-5 Mini · Work · openai-work\"}}"
+    },
+    {
+      "name": "the newly titled thread has a real row in history",
+      "pass": true,
+      "detail": "{\"rowExists\":true}"
+    },
+    {
+      "name": "Title policy \"None\" leaves the thread as \"New chat\" until manually renamed",
+      "pass": true,
+      "detail": "{\"title\":\"New chat\",\"lastAttempt\":{\"at\":\"2026-09-03T21:05:04.772Z\",\"policy\":\"none\",\"outcome\":\"skipped_none\"}}"
+    },
+    {
+      "name": "an explicitly selected but unavailable model is DISCLOSED, never silently substituted (title stays unchanged, reason recorded)",
+      "pass": true,
+      "detail": "{\"title\":\"New chat\",\"lastAttempt\":{\"at\":\"2026-09-03T21:05:08.939Z\",\"policy\":\"model:opus5-personal\",\"outcome\":\"unavailable\",\"reason\":\"Claude Opus 5 · Personal · anthropic-me — The five-hour window for this account is spent. It resets at 18:00 UTC; the Work account is unaffected.\"}}"
+    },
+    {
+      "name": "the header visibly shows the unavailable-title state (not silent)",
+      "pass": true,
+      "detail": "{\"chipText\":\"Title route unavailable: Claude Opus 5 · Personal · anthropic-me — The five-hour window for this account is spent. It resets at 18:00 UTC; the Work account is unaffected.\",\"selectedThread\":\"thread-m8003rd-mtm0kgj0\",\"expectedThread\":\"thread-m8003rd-mtm0kgj0\",\"locked\":false,\"pending\":false,\"headerExtrasHtml\":\"\\n      <button class=\\\"icon-button\\\" data-action=\\\"toggle-history\\\" data-hover-key=\\\"open-history\\\" data-hover-tip=\\\"Open thread history\\\" aria-label=\\\"Open thread history\\\"><svg class=\\\"\\\" width=\\\"14\\\" height=\\\"14\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"1.8\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\" aria-hidden=\\\"true\\\"><path d=\\\"M3 12a9 9 0 1 0 3-6.7L3 8\\\"></path><path d=\\\"M3 3v5h5\"}"
+    },
+    {
+      "name": "a manual rename that happens WHILE a generation is in flight wins — the late generation is discarded",
+      "pass": true,
+      "detail": "{\"title\":\"Renamed while generating\",\"outcomes\":[\"pending\",\"generated\",\"pending\",\"manual_rename_race\",\"skipped_locked\"]}"
+    },
+    {
+      "name": "the thread menu shows a real title-status line and a Regenerate control",
+      "pass": true,
+      "detail": "Investigate the write amplification on theReadyPin threadKeep at the topRenameChange the thread titleFork threadCreate a child branch with lineageArchiveHide from active groups but keep searchableDupl"
+    },
+    {
+      "name": "Regenerate explicitly re-runs generation and records a new attempt",
+      "pass": true,
+      "detail": "{\"before\":\"Investigate the write amplification on the\",\"after\":{\"title\":\"Investigate the write amplification on the\",\"attemptCount\":4,\"lastOutcome\":\"generated\"}}"
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

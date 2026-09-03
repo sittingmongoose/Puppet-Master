@@ -58,6 +58,9 @@
       "$ref": "#/$defs/source_control_projection"
     },
     {
+      "$ref": "#/$defs/source_graph_projection"
+    },
+    {
       "$ref": "#/$defs/backup_source_closure_record"
     },
     {
@@ -2713,6 +2716,151 @@
         }
       ],
       "additionalProperties": false
+    },
+    "source_graph_projection": {
+      "title": "SourceGraph",
+      "description": "A bounded, paginated, backend-native source-history projection. It is identity-bound presentation data, not repository identity authority, Jujutsu operation history, Backup history, a mutation command, or runtime proof.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "projection_id",
+        "repository_context_ref",
+        "repo_id",
+        "workspace_id",
+        "scm_backend",
+        "selected_revision_ref",
+        "graph_kind",
+        "currentness",
+        "page",
+        "nodes",
+        "edges",
+        "virtualization",
+        "history_separation",
+        "identity_authority",
+        "runtime_evidence_claimed"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.source_graph_projection.v1"},
+        "projection_id": {"$ref": "#/$defs/identity_id"},
+        "repository_context_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "repo_id": {"$ref": "#/$defs/identity_id"},
+        "workspace_id": {"$ref": "#/$defs/identity_id"},
+        "scm_backend": {"$ref": "#/$defs/scm_backend"},
+        "selected_revision_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "graph_kind": {"enum": ["git_commit_graph", "jujutsu_change_graph"]},
+        "currentness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "projection_generation", "observed_at_utc", "expires_at_utc"],
+          "properties": {
+            "state": {"enum": ["current", "stale", "partial", "unavailable"]},
+            "projection_generation": {"type": "integer", "minimum": 0},
+            "observed_at_utc": {"$ref": "#/$defs/timestamp"},
+            "expires_at_utc": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]}
+          }
+        },
+        "page": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cursor_ref", "next_cursor_ref", "page_size", "returned_count", "total_count", "has_more"],
+          "properties": {
+            "cursor_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+            "next_cursor_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+            "page_size": {"type": "integer", "minimum": 1, "maximum": 200},
+            "returned_count": {"type": "integer", "minimum": 0, "maximum": 200},
+            "total_count": {"type": ["integer", "null"], "minimum": 0},
+            "has_more": {"type": "boolean"}
+          }
+        },
+        "nodes": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["node_ref", "revision_ref", "stable_change_ref", "parent_refs", "label_ref", "node_state", "selected"],
+            "properties": {
+              "node_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "revision_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "stable_change_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+              "parent_refs": {"$ref": "#/$defs/non_secret_ref_list"},
+              "label_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "node_state": {"enum": ["normal", "rewritten", "abandoned", "conflicted"]},
+              "selected": {"type": "boolean"}
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "maxItems": 600,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["edge_ref", "from_node_ref", "to_node_ref", "kind"],
+            "properties": {
+              "edge_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "from_node_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "to_node_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "kind": {"enum": ["parent", "merge_parent", "rewrite_predecessor"]}
+            }
+          }
+        },
+        "virtualization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["page_bounded", "virtualized", "stable_node_identity", "selection_anchor_preserved", "unbounded_hydration"],
+          "properties": {
+            "page_bounded": {"const": true},
+            "virtualized": {"const": true},
+            "stable_node_identity": {"const": true},
+            "selection_anchor_preserved": {"const": true},
+            "unbounded_hydration": {"const": false}
+          }
+        },
+        "history_separation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["projection_kind", "jujutsu_operation_history_separate", "backup_history_separate"],
+          "properties": {
+            "projection_kind": {"const": "source_history"},
+            "jujutsu_operation_history_separate": {"const": true},
+            "backup_history_separate": {"const": true}
+          }
+        },
+        "identity_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository_context_authoritative", "display_path_authoritative", "shared_commit_authoritative"],
+          "properties": {
+            "repository_context_authoritative": {"const": true},
+            "display_path_authoritative": {"const": false},
+            "shared_commit_authoritative": {"const": false}
+          }
+        },
+        "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"scm_backend": {"const": "git"}}, "required": ["scm_backend"]},
+          "then": {
+            "properties": {
+              "graph_kind": {"const": "git_commit_graph"},
+              "nodes": {"items": {"properties": {"stable_change_ref": {"type": "null"}, "node_state": {"enum": ["normal", "conflicted"]}}}},
+              "edges": {"items": {"properties": {"kind": {"enum": ["parent", "merge_parent"]}}}}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"scm_backend": {"const": "jujutsu"}}, "required": ["scm_backend"]},
+          "then": {
+            "properties": {
+              "graph_kind": {"const": "jujutsu_change_graph"},
+              "nodes": {"items": {"properties": {"stable_change_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+            }
+          }
+        }
+      ]
     },
     "backup_source_closure_record": {
       "title": "BackupSourceClosureRecord",

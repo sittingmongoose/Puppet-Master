@@ -277,7 +277,13 @@ await safe('Plan and Deep Plan hover sidecars',async()=>{
 });
 await safe('Capability hover sidecars',async()=>{
   await openRootMenu('wand');
-  for(const sub of ['goal-menu','crew-menu','bsd-menu','eli5-menu','thought-menu']){
+  /* Assistant-redesign wave: the wand's BSD and ELI5 rows were superseded.
+     BSD now renders its own `bsd-v2` sidecar (Off/Auto/On + Configure…) from
+     bsd.js through the new `submenu` slot, and ELI5 is an independent
+     conversation toggle owned by assistant-features.js rather than a
+     capability sidecar. `bsd-menu`/`eli5-menu` still resolve in app.js as
+     fallbacks for a build without those modules, but nothing opens them. */
+  for(const sub of ['goal-menu','crew-menu','bsd-v2','thought-menu']){
     await page.locator(`[data-submenu="${sub}"]`).first().hover();
     await page.locator('[data-overlay="sidecar"]').waitFor();
     await inViewport('[data-overlay="sidecar"]',sub);
@@ -472,9 +478,28 @@ await safe('Working-card FLIP travels forward, in steps, and stops',async()=>{
   if(bad.length)throw new Error(bad.join(' || '));
 });
 
-await safe('Plan card has View, Revise, Build',async()=>{
+/* Assistant-redesign wave (2026-09-03). This asserted the RETIRED plan card:
+   `.plan-card` with a `View Plan` button. The Plan is now the `plan-card-v2`
+   document card owned by plans.js -- the document IS the card, so `View Plan`
+   is gone, and the footer is one Build control plus the eligible actions.
+   Rewritten to the new contract rather than deleted, and tightened: it now
+   also asserts the single-control invariant that the old test could not. */
+await safe('Plan card is the redesigned document card',async()=>{
   await page.evaluate(()=>PM56_DEMO.selectThread('query'));
-  for(const t of ['View Plan','Revise','Build'])await seeIn(page.locator('.plan-card'),t,{exact:true});
+  /* Scoped to the TRANSCRIPT copy. The editor pane renders the same record
+     through the same renderers (one Plan truth, not two), so an unscoped
+     selector matches both and trips strict mode. */
+  const card=page.locator('.transcript .plan-doc[data-plan-id="ap-index"]').first();
+  await card.waitFor();
+  for(const t of ['Rich Text','Markdown','Build','Revise','Build With Crew','Build At…','Export'])
+    await seeIn(card,t,{exact:true});
+  const builds=await card.locator('.pd-build').count();
+  if(builds!==1)throw new Error(`expected exactly one Build control, found ${builds}`);
+  const label=(await card.locator('.pd-build').textContent()).trim();
+  if(!['Build','Building…','Completed','Canceled'].includes(label))
+    throw new Error(`Build control label "${label}" is outside the four allowed states`);
+  const carets=await card.locator('textarea,[contenteditable="true"]').count();
+  if(carets)throw new Error(`Plan document must not be editable; found ${carets} caret hosts`);
 });
 async function waitOpenDecision(){
   const host=page.locator('.decision-host:not(.empty)');

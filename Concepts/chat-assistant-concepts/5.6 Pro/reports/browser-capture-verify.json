@@ -1,0 +1,183 @@
+{
+  "suite": "browser-capture-verify",
+  "total": 35,
+  "pass": 35,
+  "fail": 0,
+  "results": [
+    {
+      "name": "browser-capture.js registered PM56_BROWSER",
+      "pass": true,
+      "detail": "object"
+    },
+    {
+      "name": "no undeclared action collisions",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "the Browser surface opens as a real dialog",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "opening Browser from the wand also closes the wand menu (no stray overlay left open)",
+      "pass": true,
+      "detail": "null"
+    },
+    {
+      "name": "four distinct capture actions exist: full visible, full page, region, component",
+      "pass": true,
+      "detail": "{\"visible\":true,\"page\":true,\"region\":true,\"component\":true}"
+    },
+    {
+      "name": "CRITICAL: an immediate capture send leaves unrelated composer text completely untouched",
+      "pass": true,
+      "detail": "{\"composerText\":\"Unrelated composer text that must survive a capture send untouched.\",\"stateComposer\":\"Unrelated composer text that must survive a capture send untouched.\"}"
+    },
+    {
+      "name": "the capture itself WAS sent, as its own message",
+      "pass": true,
+      "detail": "26 -> 27"
+    },
+    {
+      "name": "the sent capture message carries a fixture image and is labelled honestly, not as a real screenshot",
+      "pass": true,
+      "detail": "{\"type\":\"bc-capture\",\"kind\":\"visible\"}"
+    },
+    {
+      "name": "the transcript card discloses the image is a fixture, not a real screenshot",
+      "pass": true,
+      "detail": "Full Screenshot · Visible Browsersent to Assistant667×298 px · https://app.internal/dashboards/query-performanceFixture image — not a real screenshot."
+    },
+    {
+      "name": "the module's own \"Verify isolation\" self-check confirms the same thing with a durable receipt",
+      "pass": true,
+      "detail": "{\"isoBefore\":\"Unrelated composer text that must survive a capture send untouched.\",\"isoAfter\":\"Unrelated composer text that must survive a capture send untouched.\",\"isoReceipt\":\"Isolation check passedComposer before: \\\"Unrelated composer text that must survive a capture send untouched.\\\". Composer after: \\\"Unrelated composer text that must\"}"
+    },
+    {
+      "name": "picking a component opens the mini prompt bar",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "the three modes render distinct, correct labels on the run button",
+      "pass": true,
+      "detail": "{\"send\":\"Send Now\",\"list\":\"Add To Composer List\",\"insert\":\"Insert Component At Cursor\"}"
+    },
+    {
+      "name": "the last-used component mode is persisted to storage",
+      "pass": true,
+      "detail": "list"
+    },
+    {
+      "name": "re-opening the browser and picking again keeps the last-used mode (\"list\")",
+      "pass": true,
+      "detail": "Add To Composer List"
+    },
+    {
+      "name": "two picks in \"list\" mode append a numbered plain-text instruction list to the composer",
+      "pass": true,
+      "detail": "Referenced components: | 1. <TenantFilter> — check the tenant filter | 2. <WindowFilter> — and the window filter too"
+    },
+    {
+      "name": "the numbered list is backed by hidden structured refs (not visible as raw text)",
+      "pass": true,
+      "detail": "[{\"id\":\"bcref-6-mtm0j0y4\",\"kind\":\"list\",\"number\":1,\"componentLabel\":\"<TenantFilter>\",\"instruction\":\"check the tenant filter\",\"contextId\":\"bctx-5-mtm0j0df\",\"addedAt\":\"2026-09-03T21:04:01.420Z\"},{\"id\":\"bcref-8-mtm0j270\",\"kind\":\"list\",\"number\":2,\"componentLabel\":\"<WindowFilter>\",\"instruction\":\"and the window filter too\",\"contextId\":\"bctx-7-mtm0j1m5\",\"addedAt\":\"2026-09-03T21:04:03.036Z\"}]"
+    },
+    {
+      "name": "a real list-manager panel shows the pending refs for reorder/removal",
+      "pass": true,
+      "detail": "2"
+    },
+    {
+      "name": "moving an item in the list manager renumbers it in place",
+      "pass": true,
+      "detail": "[\"bcref-8-mtm0j270\",\"bcref-6-mtm0j0y4\"]"
+    },
+    {
+      "name": "removing an item in the list manager drops it from the refs",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "name": "Insert Component At Cursor inserts a reference token exactly at the cursor, keeping surrounding text intact",
+      "pass": true,
+      "detail": "before [<LatencyChart> \"Pick <LatencyChart>: p95 482 ms\"]AFTER"
+    },
+    {
+      "name": "Insert Component At Cursor sends nothing",
+      "pass": true,
+      "detail": "29 -> 29"
+    },
+    {
+      "name": "a real BrowserElementContext is captured with a stable locator",
+      "pass": true,
+      "detail": "{\"strategy\":\"stable-id\",\"value\":\"[data-bc-id=\\\"el-row-3\\\"]\",\"stable\":true}"
+    },
+    {
+      "name": "simulating a re-render (shuffled row order + bumped generation) still re-resolves the stable locator",
+      "pass": true,
+      "detail": "Stable locator re-resolved to the same element after the re-render (row order changed, page is now generation 2). New rect 639×35 at (266,540). The fragile nth-of-type path recorded at capture time no longer matches this element’s position."
+    },
+    {
+      "name": "the page generation actually advanced",
+      "pass": true,
+      "detail": "1 -> 2"
+    },
+    {
+      "name": "the details panel marks the captured context stale relative to the new generation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "the stable locator genuinely still resolves a real DOM node after the shuffle",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a real DevTools entry exists with a policy-controlled capability grid",
+      "pass": true,
+      "detail": "{\"panelOpen\":true,\"policyRows\":14,\"consoleLines\":3}"
+    },
+    {
+      "name": "DevTools shows console output",
+      "pass": true,
+      "detail": "3"
+    },
+    {
+      "name": "each policy row really cycles Off / Ask / On on click",
+      "pass": true,
+      "detail": "ask -> on"
+    },
+    {
+      "name": "the protected session shows a real human-only banner",
+      "pass": true,
+      "detail": "Human-only sessionAgent capture, DevTools, Back Seat Driver review and persistence are refused here. Try a toolbar control below — the refusal is real, not a disabled button."
+    },
+    {
+      "name": "a capture attempt on the protected browser is refused with a clear, stated, visible reason",
+      "pass": true,
+      "detail": "Refused · Full ScreenshotThe protected authentication browser is human-only. Full Screenshot is refused here — it is excluded from agent capture, DevTools, Back Seat Driver review, and persistence."
+    },
+    {
+      "name": "the refusal produces NO capture (never silently proceeds)",
+      "pass": true,
+      "detail": "2 -> 2"
+    },
+    {
+      "name": "the refusal is recorded in the module's own refusal log",
+      "pass": true,
+      "detail": "0 -> 1"
+    },
+    {
+      "name": "DevTools is also refused on the protected session",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

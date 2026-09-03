@@ -1,0 +1,108 @@
+{
+  "suite": "goal-verify",
+  "total": 20,
+  "pass": 20,
+  "fail": 0,
+  "results": [
+    {
+      "name": "goals.js registered PM56_GOAL",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "the Goal is one text objective with no separate title field",
+      "pass": true,
+      "detail": "Reduce the tenant-scoped analytics query p95 below 100 ms wi…"
+    },
+    {
+      "name": "a Goal is not a mode",
+      "pass": true,
+      "detail": "null"
+    },
+    {
+      "name": "no retired Goal field on the record (phases/tranches/child goals/budgets/roles)",
+      "pass": true,
+      "detail": "none — 16 fields"
+    },
+    {
+      "name": "retired progress accessors answer truthfully instead of throwing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no retired Goal vocabulary rendered anywhere in the GUI",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "name": "Goal lives in Activity, not as a transcript card",
+      "pass": true,
+      "detail": "{\"inActivity\":true,\"goalCardsInTranscript\":0}"
+    },
+    {
+      "name": "pause/resume/cancel and an edit control are reachable from the Goal surface",
+      "pass": true,
+      "detail": "{\"goal-pause\":1,\"goal-resume\":0,\"goal-cancel\":1,\"goal-edit\":0,\"goal-open-editor\":1}"
+    },
+    {
+      "name": "Pause latches the Goal and bumps the stop epoch",
+      "pass": true,
+      "detail": "{\"beforePause\":{\"status\":\"active\",\"epoch\":0},\"afterPause\":{\"status\":\"paused\",\"epoch\":1}}"
+    },
+    {
+      "name": "Resume is explicit and returns the Goal to active",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "the Goal renders in Activity Detail",
+      "pass": true,
+      "detail": "{\"n\":1,\"panel\":true,\"classes\":[\"goal-compact\",\"goal-compact-head\",\"goal-chip goal-chip-active\",\"goal-dot goal-dot-active\",\"goal-rev\",\"ab-objective goal-objective-2\"]}"
+    },
+    {
+      "name": "the user can edit the objective directly in Goal Activity Detail",
+      "pass": true,
+      "detail": "{\"tag\":\"TEXTAREA\",\"editable\":true}"
+    },
+    {
+      "name": "Save is the user’s approved change: it bumps the revision and records the source",
+      "pass": true,
+      "detail": "{\"rev\":4,\"src\":\"user_direct\"}"
+    },
+    {
+      "name": "the agent-proposal demonstration has a real control",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "an agent-proposed Goal change raises an approval with both outcomes offered",
+      "pass": true,
+      "detail": "{\"approve\":true,\"deny\":true,\"revision\":4}"
+    },
+    {
+      "name": "denying an agent proposal leaves the objective unchanged",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "approving an agent proposal applies it and records agent provenance",
+      "pass": true,
+      "detail": "{\"rev\":5,\"src\":\"agent_proposed_user_approved\"}"
+    },
+    {
+      "name": "the Goal carries durable host continuation, not a single response",
+      "pass": true,
+      "detail": "{\"hasContinuations\":true,\"activeRunRef\":\"run-query-perf\"}"
+    },
+    {
+      "name": "reset restores the Goal fixture",
+      "pass": true,
+      "detail": "{\"status\":\"active\",\"revision\":3}"
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

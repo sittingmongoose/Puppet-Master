@@ -151,3 +151,37 @@ Established during this pass, and worth knowing before trusting any of them:
   gates `MISSING`. `reports/failure-markers/` is accurate.
 - Every browser audit under `reports/` failed to execute and says so
   (`playwright-core` not found); their provenance is other machines.
+
+## Additive Correction v4 status — 2026-09-03
+
+### Closed in this concept
+
+| Family | State |
+|---|---|
+| QMAX — six ceilings, shared counter, charge-once, typed exhaustion | closed, driven by `tests/correction-v4-verify.mjs` |
+| PPROG — derived projection, concurrency, out-of-order, stale, restart | closed |
+| PFAIL — four labels, secondary condition, allowed actions | closed |
+| PDET — Regular/Deep truth, versioned embeds, PDF fallback, unavailable | closed |
+| PGOAL — atomic Goal + PlanRun + binding, idempotent, lifecycle coupling | closed |
+| PSCHED — frozen topology, no pre-dispatch runtime, conjunction eligibility | closed |
+| SMSG — six card states, exact snapshots, no silent fallback | closed |
+| MODAL — zero durable effects before Start, held request restored on cancel | closed |
+| PART / WONV — outcomes, waivers, partial/single Review, abstention, ties | closed |
+| BSTALE — dispatch revalidation, four stale reasons, list isolation, epochs | closed |
+| FOLDER — one command, bounded manifest, file-only alias refuses a folder | closed |
+| TDG — graph validation, atomic replacement, currentness gates | closed |
+| CONCEPT — retired values removed, test renamed, both outputs byte-checked | closed |
+
+### Not closed here, and why
+
+| Item | Blocker |
+|---|---|
+| Real scheduler dispatch (PSCHED-004, SMSG-006) | Needs a server-owned timer and a real message pipeline. The concept models the states; it does not run them. |
+| Provider degradation at dispatch (PSCHED-007, SMSG-011) | Needs a live provider adapter. The concept records requested-versus-effective and refuses substitution; it makes no provider call. |
+| Modal zero-effect proof against real subsystems (MODAL-002) | Proved here against this module's own instrumented ledger. Native proof needs the real provider and Usage subsystems. |
+| Adapter conformance (PART-024, GREPLAY-012) | Needs a live direct/SDK/CLI/server adapter. Contract text only. |
+| Production wiring (CDRY-012) | Needs a source-hashed native dispatcher; every `cmd.*` here is still `handler_unavailable`. |
+| Storage migrations (CDRY-014..015) | Specified in `Plans/storage-plan.md`. No migration executes in a `file://` page. |
+
+Nothing above is recorded as a concept pass. `reports/REDESIGN_READINESS.md`
+keeps canonical, concept and native readiness in three separate columns.

@@ -1,0 +1,328 @@
+/* composer-state.css — styles for composer-state.js (destination ribbon,
+ * eligible-destination picker, quota wait strip, invisible persistence /
+ * input history / passive spellcheck have no visible chrome of their own).
+ * OWNER: ui-designer pass, Assistant-redesign wave (2026-09-03).
+ *
+ * This file loads first of the new module set (composer-state.css before
+ * bsd/attachments/plans/etc.) but `build.py` still appends `composer.css`
+ * LAST of the ENTIRE bundle, after every feature module including this one.
+ * So `.composer-tools`, `.composer-box`, `.selector-button` etc. stay
+ * entirely composer.css's — nothing here touches them, both to respect that
+ * ownership and because composer.css would win the cascade on them anyway.
+ * Every rule below is scoped under `.cs-*`, a class this module owns.
+ *
+ * `--cs-dest` is a custom property composer-state.js sets INLINE per element
+ * (`style="--cs-dest:var(--accent)"` etc., see destAccentVar() in the JS) —
+ * every "illuminated" surface below reads `var(--cs-dest, var(--accent))`,
+ * never re-declaring the destination-kind colour mapping itself.
+ *
+ * TOKEN NOTE: `--text-dim` is not defined in styles.css's theme blocks (only
+ * `--muted`/`--subtle` are) — see bsd.css's header for the same finding.
+ * Every secondary-text rule here reads `var(--text-dim, var(--muted))`.
+ */
+
+/* =====================================================================
+   1. DESTINATION RIBBON  (slot composerRibbon — first child of .composer-box,
+   directly above .composer-field)
+   §2.5's "illuminated destination glyph at its leading edge" lives here: a
+   22×22 square matching the composer's own capability-dot scale, filled and
+   haloed in the destination's own accent via --cs-dest. The ribbon clips its
+   OWN corners to nest under the box's radius (`overflow:hidden` here, not on
+   `.composer-box`, so nothing about the field/tools/send-button geometry the
+   brief protects is touched).
+   ===================================================================== */
+.cs-ribbon {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--cs-dest, var(--accent)) 6%, var(--surface-2));
+  animation: cs-ribbon-in 260ms var(--spring-soft-ease) both;
+}
+@keyframes cs-ribbon-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.cs-ribbon-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 4px 5px 6px;
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+}
+.cs-ribbon-main:hover {
+  background: color-mix(in srgb, var(--cs-dest, var(--accent)) 10%, transparent);
+}
+
+.cs-ribbon-glyph {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--cs-dest, var(--accent)) 24%, var(--surface-3));
+  color: var(--cs-dest, var(--accent));
+  border: 1px solid color-mix(in srgb, var(--cs-dest, var(--accent)) 46%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cs-dest, var(--accent)) 14%, transparent);
+}
+.cs-ribbon-glyph svg { width: 16px; height: 16px; }
+
+/* Single line, ellipsis-truncated as a block: text-overflow works across the
+   lead/label/detail inline children the same way it works on one text node,
+   truncating whatever overflows the line box. */
+.cs-ribbon-copy {
+  flex: 1;
+  min-width: 0;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  color: var(--text);
+}
+.cs-ribbon-lead {
+  color: var(--text-dim, var(--muted));
+  font-weight: 650;
+  margin-right: 1px;
+}
+.cs-ribbon-copy b { font-weight: 650; }
+.cs-ribbon-detail, .cs-ribbon-detail-short {
+  color: var(--text-dim, var(--muted));
+  font-weight: 500;
+}
+/* Both render in the DOM whenever splitDetail() found a leading count; which
+   one is visible is purely a container-width decision (§5.3's "participant
+   cluster may collapse to workflow icon + count"). */
+.cs-ribbon-detail-short { display: none; }
+@container composer (max-width: 360px) {
+  .cs-ribbon-detail { display: none; }
+  .cs-ribbon-detail-short { display: inline; }
+}
+
+.cs-ribbon-close {
+  flex: none;
+  align-self: center;
+  width: 22px;
+  height: 22px;
+  min-height: 22px;
+  margin: 0 6px 0 2px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text-dim, var(--muted));
+  display: grid;
+  place-items: center;
+}
+.cs-ribbon-close:hover {
+  background: var(--surface-4);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.cs-ribbon-close svg { width: 12px; height: 12px; }
+
+/* =====================================================================
+   2. QUOTA WAIT STRIP  (slot composerBelow, position:'above' — first child
+   of .composer, above .composer-box, inside .composer's own 7/10/8 padding)
+   Sized and proportioned like the existing .send-queue-row strip that
+   already floats in the same spot above the composer (max-width 980px,
+   centred, surface + 1px border + 9px radius) but warning-tinted, matching
+   .event-card.warning's exact colour-mix language, since this is a paused/
+   waiting state rather than a neutral one.
+   ===================================================================== */
+.cs-quota {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  max-width: 980px;
+  margin: 0 auto 7px;
+  padding: 6px 10px;
+  border: 1px solid color-mix(in srgb, var(--warning) 35%, var(--border));
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--warning) 8%, var(--surface-2));
+  animation: cs-quota-in 280ms var(--spring-soft-ease) both;
+}
+@keyframes cs-quota-in {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.cs-quota-icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--warning) 22%, var(--surface-3));
+  color: var(--warning);
+}
+.cs-quota-icon svg { width: 13px; height: 13px; }
+
+.cs-quota-copy {
+  flex: 1 1 220px;
+  min-width: 180px;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--text);
+}
+.cs-quota-state { color: var(--warning); font-weight: 750; }
+.cs-quota-sep, .cs-quota-scope { color: var(--text-dim, var(--muted)); }
+.cs-quota-cd {
+  font-family: var(--font-mono);
+  font-weight: 650;
+  color: var(--text);
+  margin-left: 2px;
+}
+/* The one honest state worth making louder than the rest: an unknown reset
+   source is not allowed to hide behind the same quiet italic as the other
+   three sources (§5.5 "never invents a reset time"). */
+.cs-quota-src {
+  color: var(--text-dim, var(--muted));
+  font-size: 10.5px;
+  font-style: italic;
+  margin-left: 2px;
+}
+.cs-quota-src.is-unknown {
+  color: var(--warning);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.cs-quota-supply { display: flex; align-items: center; gap: 5px; flex: none; }
+.cs-quota-input {
+  height: 24px;
+  width: 132px;
+  padding: 0 8px;
+  font-size: 11px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+.cs-quota-input:focus { border-color: var(--border-strong); }
+.cs-quota-set {
+  height: 24px;
+  padding: 0 10px;
+  flex: none;
+  font-size: 11px;
+  font-weight: 650;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--text);
+}
+.cs-quota-set:hover { background: var(--surface-4); border-color: var(--border-strong); }
+
+.cs-quota-resume {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  font-size: 11px;
+  color: var(--text-dim, var(--muted));
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cs-quota-resume input { accent-color: var(--accent); width: 14px; height: 14px; margin: 0; }
+
+.cs-quota-close {
+  width: 22px;
+  height: 22px;
+  min-height: 22px;
+  flex: none;
+  margin-left: auto;
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text-dim, var(--muted));
+  display: grid;
+  place-items: center;
+}
+.cs-quota-close:hover { background: var(--surface-4); border-color: var(--border-strong); color: var(--text); }
+.cs-quota-close svg { width: 12px; height: 12px; }
+
+/* =====================================================================
+   3. ELIGIBLE-DESTINATION PICKER  (dialog type cs-destinations)
+   This dialog already carries the base `.dialog` class in composer-state.js
+   (`<section class="dialog cs-dest-dialog" ...>`), so position, background,
+   blur, shadow, z-index and pointer-events all come from styles.css already
+   — only the row content below is this module's to style.
+   ===================================================================== */
+.cs-dest-dialog .dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-dest-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 9px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  text-align: left;
+  color: var(--text);
+  transition: background 140ms var(--ease), border-color 140ms var(--ease);
+}
+.cs-dest-row:hover { background: var(--surface-3); border-color: var(--border-strong); }
+.cs-dest-row.is-current {
+  background: color-mix(in srgb, var(--cs-dest, var(--accent)) 12%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--cs-dest, var(--accent)) 48%, var(--border));
+}
+
+.cs-dest-glyph {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--cs-dest, var(--accent)) 20%, var(--surface-3));
+  color: var(--cs-dest, var(--accent));
+  border: 1px solid color-mix(in srgb, var(--cs-dest, var(--accent)) 40%, var(--border));
+}
+.cs-dest-glyph svg { width: 14px; height: 14px; }
+
+.cs-dest-copy { flex: 1; min-width: 0; }
+.cs-dest-copy strong {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cs-dest-copy span {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text-dim, var(--muted));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cs-dest-check { flex: none; display: grid; place-items: center; color: var(--cs-dest, var(--accent)); }
+
+.cs-dest-note {
+  margin: 6px 2px 0;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--text-dim, var(--muted));
+}
+.cs-dest-note code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  background: var(--surface-3);
+  padding: 1px 4px;
+  border-radius: 5px;
+}
